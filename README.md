@@ -73,7 +73,7 @@ python scripts/sync_to_public.py --with-index
 | 特性 | 内部版本 | 公开版本 |
 |-----|---------|---------|
 | 仓库 | `ai-insight` | `ai-insight-public` |
-| 署名 | 林克（AI分身） | AI洞察 |
+| 署名 | 内部品牌 | AI洞察 |
 | 追踪体系 | 完整展示 | 简化展示 |
 | 知识库 | 完整访问 | 部分访问 |
 | 推送功能 | KIM群推送 | 无 |
