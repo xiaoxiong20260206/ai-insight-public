@@ -1,0 +1,1172 @@
+/* ==================== 基础样式 ==================== */
+:root {
+    --primary-color: #FF5500;
+    --primary-light: #FF7733;
+    --primary-dark: #CC4400;
+    
+    /* 岗位色 */
+    --role-tech: #3B82F6;
+    --role-finance: #10B981;
+    --role-admin: #F59E0B;
+    --role-it: #6366F1;
+    --role-hr: #EC4899;
+    --role-sales: #EF4444;
+    --role-marketing: #8B5CF6;
+    --role-product: #14B8A6;
+    --role-service: #F97316;
+    --role-legal: #64748B;
+    
+    /* 优先级色 */
+    --p0-color: #DC2626;
+    --p1-color: #EA580C;
+    --p2-color: #CA8A04;
+    --p3-color: #2563EB;
+    --p4-color: #64748B;
+    
+    /* Agent徽章色 */
+    --badge-coding-bg: #DBEAFE;
+    --badge-coding-text: #1D4ED8;
+    --badge-chatbot-bg: #D1FAE5;
+    --badge-chatbot-text: #047857;
+    --badge-workflow-bg: #FEE2E2;
+    --badge-workflow-text: #B91C1C;
+    --badge-research-bg: #FEF3C7;
+    --badge-research-text: #B45309;
+    --badge-design-bg: #F3E8FF;
+    --badge-design-text: #7C3AED;
+    --badge-data-bg: #CFFAFE;
+    --badge-data-text: #0E7490;
+    --badge-background-bg: #E0E7FF;
+    --badge-background-text: #4338CA;
+    --badge-browser-bg: #FCE7F3;
+    --badge-browser-text: #BE185D;
+    --badge-computer-bg: #F1F5F9;
+    --badge-computer-text: #475569;
+    
+    /* 通用色 */
+    --bg-color: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --text-primary: #1E293B;
+    --text-secondary: #64748B;
+    --border-color: #E2E8F0;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* ==================== Header ==================== */
+.header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 50%, #FF9966 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+/* ==================== Container ==================== */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+section {
+    margin-bottom: 50px;
+}
+
+section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+}
+
+/* ==================== 角色选择器 ==================== */
+.role-selector {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.role-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.role-tab {
+    padding: 10px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 25px;
+    background: var(--card-bg);
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+}
+
+.role-tab:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.role-tab.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* 各岗位特定颜色 */
+.role-tab[data-role="tech"].active { background: var(--role-tech); border-color: var(--role-tech); }
+.role-tab[data-role="finance"].active { background: var(--role-finance); border-color: var(--role-finance); }
+.role-tab[data-role="admin"].active { background: var(--role-admin); border-color: var(--role-admin); }
+.role-tab[data-role="it"].active { background: var(--role-it); border-color: var(--role-it); }
+.role-tab[data-role="hr"].active { background: var(--role-hr); border-color: var(--role-hr); }
+.role-tab[data-role="sales"].active { background: var(--role-sales); border-color: var(--role-sales); }
+.role-tab[data-role="marketing"].active { background: var(--role-marketing); border-color: var(--role-marketing); }
+.role-tab[data-role="product"].active { background: var(--role-product); border-color: var(--role-product); }
+.role-tab[data-role="service"].active { background: var(--role-service); border-color: var(--role-service); }
+.role-tab[data-role="legal"].active { background: var(--role-legal); border-color: var(--role-legal); }
+
+/* ==================== 统计卡片 ==================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 1024px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+    .stats-grid { grid-template-columns: 1fr; }
+}
+
+.stat-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* ==================== 优先级卡片 ==================== */
+.priority-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 1200px) {
+    .priority-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .priority-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+    .priority-grid { grid-template-columns: 1fr; }
+}
+
+.priority-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow-md);
+    border-left: 4px solid;
+    transition: transform 0.3s ease;
+}
+
+.priority-card:hover {
+    transform: translateY(-3px);
+}
+
+.priority-card.p0 { border-left-color: var(--p0-color); }
+.priority-card.p1 { border-left-color: var(--p1-color); }
+.priority-card.p2 { border-left-color: var(--p2-color); }
+.priority-card.p3 { border-left-color: var(--p3-color); }
+.priority-card.p4 { border-left-color: var(--p4-color); }
+
+.priority-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 12px;
+}
+
+.p0 .priority-badge { background: var(--p0-color); }
+.p1 .priority-badge { background: var(--p1-color); }
+.p2 .priority-badge { background: var(--p2-color); }
+.p3 .priority-badge { background: var(--p3-color); }
+.p4 .priority-badge { background: var(--p4-color); }
+
+.priority-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.priority-agents {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.priority-coverage {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.priority-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* ==================== 关系图 ==================== */
+.graph-section {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.graph-hint {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.graph-container {
+    overflow-x: auto;
+    padding-bottom: 20px;
+}
+
+.graph-header {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    min-width: 1200px;
+    margin-bottom: 16px;
+}
+
+.column-title {
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    padding: 12px;
+    background: var(--bg-color);
+    border-radius: 8px;
+}
+
+.graph-canvas {
+    position: relative;
+    min-width: 1200px;
+    min-height: 600px;
+}
+
+#connectionsSvg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.graph-columns {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.graph-column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 节点样式 */
+.graph-node {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+}
+
+.graph-node:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.graph-node.highlighted {
+    box-shadow: 0 0 0 3px var(--primary-color), 0 4px 12px rgba(255, 85, 0, 0.4);
+    transform: scale(1.08);
+    z-index: 20;
+}
+
+.graph-node.dimmed {
+    opacity: 0.2;
+    filter: grayscale(50%);
+    transform: scale(0.95);
+}
+
+/* 岗位节点 */
+.node-role {
+    background: linear-gradient(135deg, var(--role-tech), #60A5FA);
+    color: white;
+    font-weight: 600;
+}
+
+.node-role[data-role="tech"] { background: linear-gradient(135deg, var(--role-tech), #60A5FA); }
+.node-role[data-role="finance"] { background: linear-gradient(135deg, var(--role-finance), #34D399); }
+.node-role[data-role="admin"] { background: linear-gradient(135deg, var(--role-admin), #FBBF24); }
+.node-role[data-role="it"] { background: linear-gradient(135deg, var(--role-it), #818CF8); }
+.node-role[data-role="hr"] { background: linear-gradient(135deg, var(--role-hr), #F472B6); }
+.node-role[data-role="sales"] { background: linear-gradient(135deg, var(--role-sales), #F87171); }
+.node-role[data-role="marketing"] { background: linear-gradient(135deg, var(--role-marketing), #A78BFA); }
+.node-role[data-role="product"] { background: linear-gradient(135deg, var(--role-product), #2DD4BF); }
+.node-role[data-role="service"] { background: linear-gradient(135deg, var(--role-service), #FB923C); }
+.node-role[data-role="legal"] { background: linear-gradient(135deg, var(--role-legal), #94A3B8); }
+
+/* 场景节点 */
+.node-scene {
+    background: linear-gradient(135deg, #E0F2FE, #BAE6FD);
+    color: #0369A1;
+    border: 1px solid #7DD3FC;
+}
+
+/* 任务节点 */
+.node-task {
+    background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
+    color: #166534;
+    border: 1px solid #86EFAC;
+    font-size: 0.8rem;
+}
+
+/* Agent节点 */
+.node-agent {
+    background: linear-gradient(135deg, #3B82F6, #60A5FA);
+    color: white;
+    font-weight: 600;
+}
+
+/* 产品节点 */
+.node-product {
+    background: linear-gradient(135deg, #FDF2F8, #FCE7F3);
+    color: #BE185D;
+    border: 1px solid #F9A8D4;
+    font-size: 0.8rem;
+}
+
+.node-product:hover {
+    background: linear-gradient(135deg, #FCE7F3, #FBCFE8);
+}
+
+/* 连接线 */
+.connection-line {
+    fill: none;
+    stroke: #CBD5E1;
+    stroke-width: 1.5;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.connection-line.highlighted {
+    stroke: var(--primary-color);
+    stroke-width: 3;
+    opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(255, 85, 0, 0.5));
+}
+
+.connection-line.dimmed {
+    opacity: 0.1;
+    stroke: #E2E8F0;
+}
+
+/* ==================== 路线图 ==================== */
+.roadmap-section {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.roadmap {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    padding: 20px 0;
+}
+
+.roadmap-phase {
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+}
+
+.phase-marker {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.phase-content {
+    background: var(--bg-color);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.phase-content h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.phase-content p {
+    font-size: 0.85rem;
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.phase-content ul {
+    list-style: none;
+    text-align: left;
+}
+
+.phase-content li {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+}
+
+.phase-content li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+}
+
+.roadmap-connector {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+    margin-top: 25px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+    .roadmap {
+        flex-direction: column;
+        align-items: center;
+    }
+    .roadmap-connector {
+        width: 2px;
+        height: 30px;
+        background: linear-gradient(180deg, var(--primary-color), var(--primary-light));
+        margin: 0;
+    }
+}
+
+/* ==================== 表格区域 ==================== */
+.tables-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.role-table-wrapper {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.role-table-header {
+    padding: 16px 20px;
+    font-weight: 600;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.role-table-header.tech { background: var(--role-tech); }
+.role-table-header.finance { background: var(--role-finance); }
+.role-table-header.admin { background: var(--role-admin); }
+.role-table-header.it { background: var(--role-it); }
+.role-table-header.hr { background: var(--role-hr); }
+.role-table-header.sales { background: var(--role-sales); }
+.role-table-header.marketing { background: var(--role-marketing); }
+.role-table-header.product { background: var(--role-product); }
+.role-table-header.service { background: var(--role-service); }
+.role-table-header.legal { background: var(--role-legal); }
+
+.role-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.role-table th,
+.role-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.role-table th {
+    background: var(--bg-color);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.role-table td {
+    font-size: 0.9rem;
+}
+
+.role-table tr:hover {
+    background: var(--bg-color);
+}
+
+.time-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.time-high {
+    background: #FEE2E2;
+    color: #DC2626;
+}
+
+.time-medium {
+    background: #FEF3C7;
+    color: #D97706;
+}
+
+.time-low {
+    background: #FEF9C3;
+    color: #CA8A04;
+}
+
+.time-verylow {
+    background: #F1F5F9;
+    color: #64748B;
+}
+
+.agent-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-right: 4px;
+}
+
+.agent-badge.coding { background: var(--badge-coding-bg); color: var(--badge-coding-text); }
+.agent-badge.chatbot { background: var(--badge-chatbot-bg); color: var(--badge-chatbot-text); }
+.agent-badge.workflow { background: var(--badge-workflow-bg); color: var(--badge-workflow-text); }
+.agent-badge.research { background: var(--badge-research-bg); color: var(--badge-research-text); }
+.agent-badge.design { background: var(--badge-design-bg); color: var(--badge-design-text); }
+.agent-badge.data { background: var(--badge-data-bg); color: var(--badge-data-text); }
+.agent-badge.background { background: var(--badge-background-bg); color: var(--badge-background-text); }
+.agent-badge.browser { background: var(--badge-browser-bg); color: var(--badge-browser-text); }
+.agent-badge.computer { background: var(--badge-computer-bg); color: var(--badge-computer-text); }
+
+.product-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.product-link:hover {
+    text-decoration: underline;
+}
+
+/* ==================== Agent卡片 ==================== */
+.agents-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 1024px) {
+    .agents-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+    .agents-grid { grid-template-columns: 1fr; }
+}
+
+.agent-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease;
+}
+
+.agent-card:hover {
+    transform: translateY(-5px);
+}
+
+.agent-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.agent-card-icon {
+    font-size: 2rem;
+}
+
+.agent-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.agent-card-coverage {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.coverage-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--bg-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.coverage-fill {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.coverage-text {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    min-width: 50px;
+}
+
+.agent-card-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.agent-card-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.role-tag {
+    padding: 4px 10px;
+    background: var(--bg-color);
+    border-radius: 12px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* ==================== Tooltip ==================== */
+.tooltip {
+    position: fixed;
+    padding: 12px 16px;
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(8px);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    max-width: 300px;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    box-shadow: var(--shadow-lg);
+}
+
+.tooltip.visible {
+    opacity: 1;
+}
+
+.tooltip-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.tooltip-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 4px;
+}
+
+.tooltip-label {
+    color: #94A3B8;
+}
+
+.tooltip-value {
+    color: #F1F5F9;
+}
+
+/* ==================== Footer ==================== */
+.footer {
+    background: var(--text-primary);
+    color: #94A3B8;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.footer p {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+/* ==================== 滚动条美化 ==================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94A3B8;
+}
+
+/* ==================== 动画 ==================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* .animate-in 已移除（未使用的死代码） */
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* ==================== 产品架构图 ==================== */
+.architecture-section {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.section-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+}
+
+.architecture-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.arch-layer {
+    border-radius: 12px;
+    padding: 16px;
+    transition: transform 0.3s ease;
+}
+
+.arch-layer:hover {
+    transform: scale(1.01);
+}
+
+.layer-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.layer-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.arch-item {
+    background: rgba(255,255,255,0.95);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    text-align: center;
+    transition: all 0.2s ease;
+    cursor: default;
+}
+
+.arch-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.arch-item small {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.agent-item {
+    cursor: pointer;
+}
+
+.agent-item:hover {
+    background: white;
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+/* 各层级配色 */
+.app-layer {
+    background: linear-gradient(135deg, #3B82F6, #60A5FA);
+}
+
+.agent-layer {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+}
+
+.capability-layer {
+    background: linear-gradient(135deg, #10B981, #34D399);
+}
+
+.platform-layer {
+    background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+}
+
+.integration-layer {
+    background: linear-gradient(135deg, #64748B, #94A3B8);
+}
+
+/* ==================== Agent设计方案 ==================== */
+.agent-design-section {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.agent-design-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.agent-design-tab {
+    padding: 10px 16px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--card-bg);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+}
+
+.agent-design-tab:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.agent-design-tab.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.agent-design-content {
+    background: var(--bg-color);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.agent-design-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.agent-design-icon {
+    font-size: 3rem;
+}
+
+.agent-design-title {
+    flex: 1;
+}
+
+.agent-design-title h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.agent-design-title p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.agent-design-coverage {
+    background: var(--primary-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.agent-design-body {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .agent-design-body {
+        grid-template-columns: 1fr;
+    }
+}
+
+.design-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.design-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.design-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.design-card li {
+    padding: 6px 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.design-card li::before {
+    content: '•';
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.module-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.module-item {
+    background: var(--bg-color);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.85rem;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.module-item:hover {
+    border-color: var(--primary-color);
+    background: white;
+}
+
+/* ==================== 技术选型 ==================== */
+.tech-stack-section {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 1024px) {
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .tech-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.tech-card {
+    background: var(--bg-color);
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+.tech-card:hover {
+    transform: translateY(-3px);
+}
+
+.tech-category {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.tech-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tech-item {
+    background: var(--card-bg);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.tech-item:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}

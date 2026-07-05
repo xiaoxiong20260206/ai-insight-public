@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你的同事正在一个一个被「蒸馏」成AI，是消极防御还是积极拥抱？| AI Insight</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23533483'/><text x='16' y='22' font-size='18' text-anchor='middle' fill='white'>⚗</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 精简字重：DM Sans 仅加载 400/700，Noto SC 仅加载 400，JetBrains 仅加载 400 -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&family=Noto+Sans+SC:wght@400&family=JetBrains+Mono:wght@400&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&family=Noto+Sans+SC:wght@400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"></noscript>
+<style>
+/* ================================================
+   DESIGN SYSTEM TOKENS — v4.3 (DM Sans + 叙事混合)
+   ================================================ */
+:root {
+    --color-success: #059669; --color-success-light: #10B981; --color-success-dark: #047857;
+    --color-success-50: #ECFDF5; --color-success-100: #D1FAE5;
+    --color-danger: #E11D48; --color-danger-light: #F43F5E; --color-danger-50: #FFF1F2;
+    --color-warning: #D97706; --color-warning-light: #F59E0B; --color-warning-50: #FFFBEB;
+    --color-info: #2563EB; --color-info-light: #3B82F6;
+    --color-info-50: #EFF6FF; --color-info-100: #DBEAFE;
+    --color-purple: #7C3AED; --color-purple-light: #8B5CF6;
+    --color-purple-50: #F5F3FF; --color-purple-100: #EDE9FE;
+
+    --color-text-primary: #1C1917;
+    --color-text-secondary: #57534E;
+    --color-text-muted: #78716C;
+    --color-border: #E7E5E4;
+    --color-border-light: #F5F5F4;
+    --color-bg: #F8FAFB;
+    --color-bg-card: #FFFFFF;
+    --color-bg-table-header: #FAFAF9;
+    --color-bg-hover: rgba(0,0,0,0.025);
+
+    --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+    --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    --gradient-mesh:
+        radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+        radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
+
+    --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-card-rich: 0 4px 16px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.9);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 8px 24px rgba(5,150,105,0.18), 0 2px 8px rgba(5,150,105,0.10);
+    --shadow-glow-success: 0 4px 14px rgba(5,150,105,0.15);
+    --shadow-glow-purple: 0 4px 14px rgba(124,58,237,0.15);
+
+    --glass-bg: rgba(255,255,255,0.88);
+    --glass-blur: blur(24px) saturate(2);
+    --glass-border: 1px solid rgba(255,255,255,0.75);
+    --glass-shadow: 0 4px 20px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+
+    --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px;
+    --radius-xl: 20px; --radius-2xl: 24px; --radius-full: 9999px;
+
+    --spacing-xs: 4px; --spacing-sm: 8px; --spacing-md: 16px;
+    --spacing-lg: 24px; --spacing-xl: 32px; --spacing-2xl: 40px;
+
+    --font-family: "DM Sans", -apple-system, "SF Pro Text", "Noto Sans SC", "PingFang SC", sans-serif;
+    --font-family-cn: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-family-heading: "DM Sans", -apple-system, "SF Pro Display", "Noto Sans SC", sans-serif;
+    --font-family-mono: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+    --font-editorial-body: "Libre Baskerville", Georgia, "Noto Serif SC", serif;
+
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --content-max-width: 980px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 15px; }
+body {
+    font-family: var(--font-family);
+    background: var(--color-bg);
+    background-image: var(--gradient-mesh);
+    /* background-attachment:fixed 禁止 GPU 光栅化，改用伪元素固定背景 */
+    background-attachment: scroll;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+a { color: var(--color-info); text-decoration: none; }
+a:hover { color: var(--color-success); }
+p { margin-bottom: 10px; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+code {
+    font-family: var(--font-family-mono);
+    font-size: .85em;
+    background: var(--color-bg-table-header);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 1px 5px;
+}
+
+/* ================================================
+   叙事型 HERO（dark-editorial 扩展层）
+   ================================================ */
+.editorial-hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 55%, #0f3460 100%);
+    color: white;
+    padding: 72px 0 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.editorial-hero-inner {
+    max-width: var(--content-max-width);
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+.editorial-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1' fill='%23ffffff08'/%3E%3C/svg%3E") repeat;
+    pointer-events: none;
+    z-index: 0;
+}
+.editorial-hero::after {
+    content: '';
+    position: absolute;
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(83,52,131,.28), transparent 70%);
+    top: -80px; right: -60px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+.editorial-hero-badge {
+    display: inline-block;
+    background: #e94560;
+    color: white;
+    font-size: 11px;
+    font-family: var(--font-family-mono);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 22px;
+    position: relative;
+}
+.editorial-hero h1 {
+    font-family: var(--font-family-heading);
+    font-size: clamp(1.7rem, 4vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    max-width: 820px;
+    margin: 0 auto 14px;
+    position: relative;
+}
+.editorial-hero h1 .hl-amber { color: #f59e0b; }
+.editorial-hero h1 .hl-red   { color: #f87171; }
+.editorial-hero .subtitle {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.68);
+    max-width: 600px;
+    margin: 0 auto 28px;
+    font-family: var(--font-editorial-body);
+    line-height: 1.7;
+    position: relative;
+}
+.editorial-hero-thesis {
+    display: inline-block;
+    background: rgba(83,52,131,.32);
+    border: 1px solid rgba(139,92,246,.4);
+    border-radius: var(--radius-sm);
+    padding: 9px 20px;
+    color: #c4b5fd;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    position: relative;
+}
+.editorial-hero-thesis span { color: #a78bfa; }
+.editorial-hero-meta {
+    display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+    font-size: 12.5px; color: rgba(255,255,255,0.42);
+    position: relative;
+}
+
+/* ================================================
+   STICKY NAV（毛玻璃）
+   ================================================ */
+.nav-wrap {
+    background: var(--glass-bg);
+    /* 降低 blur 半径：24px→8px，减少 GPU 合成层开销 */
+    backdrop-filter: blur(8px) saturate(1.6);
+    -webkit-backdrop-filter: blur(8px) saturate(1.6);
+    border-bottom: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    position: sticky; top: 0; z-index: 100;
+    /* 提升为合成层，避免滚动时重绘背景 */
+    will-change: transform;
+    transform: translateZ(0);
+}
+.nav-inner {
+    max-width: var(--content-max-width);
+    width: 100%;
+    margin: 0 auto; padding: 0 20px;
+    display: flex; gap: 0;
+    overflow-x: auto; scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-btn {
+    display: flex; align-items: center; gap: 7px;
+    padding: 14px 18px;
+    color: var(--color-text-muted);
+    font-family: var(--font-family);
+    font-size: 13px; font-weight: 500;
+    white-space: nowrap;
+    border: none; border-bottom: 2px solid transparent;
+    background: none; cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+    letter-spacing: -0.01em;
+}
+.nav-btn:hover { color: var(--color-success); }
+.nav-btn.active { color: var(--color-success); border-bottom-color: var(--color-success); font-weight: 700; }
+.nav-step {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--color-bg-table-header);
+    font-size: 10px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-text-muted);
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+.nav-btn.active .nav-step { background: var(--color-success); color: #fff; }
+
+/* ================================================
+   CHAPTER IMAGE — 随 .pg 的 padding 自然缩进，不设 width:100%
+   ================================================ */
+.chapter-img {
+    margin: 0 0 28px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+}
+.chapter-img img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+.chapter-img-cap {
+    background: var(--color-bg-table-header);
+    border-top: 1px solid var(--color-border-light);
+    padding: 8px 14px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+/* ================================================
+   PAGE LAYOUT
+   ================================================ */
+/* ---- .pg 宽度正确写法：不设 width，让 max-width + margin:auto 控制居中 ---- */
+.pg { max-width: var(--content-max-width); margin: 0 auto; padding: 36px 20px 24px; box-sizing: border-box; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ── 章节导读卡 ── */
+.ch-lead {
+    background: linear-gradient(135deg, var(--color-bg-card), var(--color-bg-table-header));
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-success);
+    border-radius: var(--radius-lg);
+    padding: 22px 26px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-card);
+}
+.ch-label {
+    font-size: 11px; font-weight: 800; color: var(--color-success);
+    letter-spacing: .8px; text-transform: uppercase; margin-bottom: 6px;
+}
+.ch-title { font-size: 20px; font-weight: 800; color: var(--color-text-primary); margin-bottom: 6px; letter-spacing: -0.02em; }
+.ch-desc { font-size: 14px; color: var(--color-text-secondary); line-height: 1.65; }
+
+/* ── Section 标题 ── */
+.sec { margin-top: 34px; margin-bottom: 18px; }
+.sec-h { font-size: 17px; font-weight: 800; color: var(--color-text-primary); margin-bottom: 4px; letter-spacing: -0.02em; }
+.sec-sub { font-size: 13px; color: var(--color-text-muted); }
+
+/* ── 分割线 ── */
+.div { border: none; border-top: 1px solid var(--color-border-light); margin: 28px 0; }
+
+/* ── 卡片 ── */
+.card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+    box-shadow: var(--shadow-card);
+    margin-bottom: 16px;
+    transition: all var(--transition-normal);
+}
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); will-change: transform; }
+.card-h {
+    font-size: 15px; font-weight: 700;
+    color: var(--color-text-primary);
+    display: flex; align-items: center; gap: 9px;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+}
+.card-ico {
+    width: 30px; height: 30px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+}
+
+/* ── 网格 ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+@media(max-width:768px){ .g2,.g3,.g4{ grid-template-columns:1fr 1fr; } }
+@media(max-width:480px){ .g2,.g3,.g4{ grid-template-columns:1fr; } }
+
+/* ── 统计卡片 ── */
+.sc {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    transition: all var(--transition-normal);
+    position: relative; overflow: hidden;
+}
+.sc::before {
+    content: ''; position: absolute; top:0; left:0; right:0; height:3px;
+    background: var(--gradient-success);
+}
+.sc.info::before   { background: var(--color-info); }
+.sc.danger::before { background: var(--color-danger); }
+.sc.purple::before { background: var(--color-purple); }
+.sc:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); will-change: transform; }
+.sc-num {
+    font-size: 32px; font-weight: 800; line-height: 1.1;
+    background: var(--gradient-success);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    font-variant-numeric: tabular-nums;
+    display: block; margin-bottom: 4px;
+}
+.sc-num.red { background: linear-gradient(135deg,#E11D48,#F43F5E); -webkit-background-clip:text; background-clip:text; }
+.sc-num.blue { background: linear-gradient(135deg,#2563EB,#3B82F6); -webkit-background-clip:text; background-clip:text; }
+.sc-label { font-size: 12px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing:.05em; }
+.sc-note  { font-size: 11px; color: var(--color-text-muted); margin-top:4px; }
+
+/* ── Insight 洞察框 ── */
+.ib {
+    background: linear-gradient(135deg, #eeecff 0%, #f5f3ff 100%);
+    border: 1px solid #c4b5fd;
+    border-left: 4px solid var(--color-purple);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px; margin: 16px 0;
+}
+.ib-label { font-size: 11px; font-weight: 800; color: var(--color-purple); letter-spacing:.7px; text-transform:uppercase; margin-bottom:5px; }
+.ib-text  { font-size: 14px; font-weight: 600; color: #312e81; line-height: 1.6; }
+.ib-green { background: #ecfdf5; border-color: #6ee7b7; border-left-color: var(--color-success); }
+.ib-green .ib-label { color: var(--color-success); }
+.ib-green .ib-text  { color: #064e3b; }
+.ib-amber { background: #fffbeb; border-color: #fcd34d; border-left-color: var(--color-warning); }
+.ib-amber .ib-label { color: var(--color-warning); }
+.ib-amber .ib-text  { color: #78350f; }
+.ib-red   { background: #fff5f5; border-color: #fca5a5; border-left-color: var(--color-danger); }
+.ib-red .ib-label   { color: var(--color-danger); }
+.ib-red .ib-text    { color: #7f1d1d; }
+.ib-info  { background: #eff6ff; border-color: #93c5fd; border-left-color: var(--color-info); }
+.ib-info .ib-label  { color: var(--color-info); }
+.ib-info .ib-text   { color: #1e3a8a; }
+
+/* ── 引用框 ── */
+.qt {
+    background: var(--color-bg-table-header);
+    border-left: 3px solid var(--color-info);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 12px 18px; margin: 14px 0;
+    font-style: italic; color: var(--color-text-secondary);
+    font-family: var(--font-editorial-body);
+    font-size: 14px; line-height: 1.7; position: relative;
+}
+.qt cite { display:block; font-style:normal; font-size:12px; color:var(--color-text-muted); margin-top:6px; }
+
+/* ── Badge 状态标签 ── */
+.badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px; border-radius: var(--radius-full);
+    font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.badge::before { content:''; width:5px; height:5px; border-radius:50%; background:currentColor; flex-shrink:0; }
+.b-success { background:rgba(5,150,105,.1); color:var(--color-success); }
+.b-danger  { background:rgba(225,29,72,.1); color:var(--color-danger); }
+.b-info    { background:rgba(37,99,235,.1); color:var(--color-info); }
+.b-purple  { background:rgba(124,58,237,.1); color:var(--color-purple); }
+.b-warning { background:rgba(217,119,6,.1); color:var(--color-warning); }
+.b-neutral { background:rgba(120,113,108,.1); color:var(--color-text-muted); }
+.b-success-solid { background:var(--color-success); color:#fff; }
+.b-danger-solid  { background:var(--color-danger);  color:#fff; }
+.b-info-solid    { background:var(--color-info);    color:#fff; }
+
+/* ── 表格 ── */
+.tbl-wrap { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--color-border); }
+.tbl { width:100%; border-collapse:collapse; font-size:13.5px; }
+.tbl th {
+    background: var(--color-bg-table-header); color:var(--color-text-muted);
+    font-size:11.5px; font-weight:700; letter-spacing:.4px; text-transform:uppercase;
+    padding:10px 14px; text-align:left; border-bottom:1px solid var(--color-border);
+}
+.tbl td { padding:11px 14px; border-bottom:1px solid var(--color-border-light); color:var(--color-text-secondary); vertical-align:middle; }
+.tbl tr:last-child td { border-bottom:none; }
+.tbl tbody tr:hover td { background:var(--color-bg-hover); }
+.tbl-hl { background: rgba(5,150,105,.04); }
+
+/* ── 时间线 ── */
+.tl { position:relative; padding-left:30px; }
+.tl::before {
+    content:''; position:absolute; left:10px; top:8px; bottom:8px;
+    width:2px; background:linear-gradient(to bottom, var(--color-success), var(--color-info));
+    border-radius:1px;
+}
+.tl-item { position:relative; margin-bottom:22px; }
+.tl-item:last-child { margin-bottom:0; }
+.tl-item::before {
+    content:''; position:absolute; left:-23px; top:5px;
+    width:12px; height:12px; border-radius:50%;
+    background: var(--color-bg-card); border:2px solid var(--color-success);
+    transition: all var(--transition-fast);
+}
+.tl-item:hover::before { background:var(--color-success); transform:scale(1.3); box-shadow:var(--shadow-glow-success); }
+.tl-item.danger::before { border-color:var(--color-danger); }
+.tl-item.danger:hover::before { background:var(--color-danger); }
+.tl-title { font-weight:700; font-size:14px; color:var(--color-text-primary); margin-bottom:3px; }
+.tl-title.red { color:var(--color-danger); }
+.tl-text  { font-size:13.5px; color:var(--color-text-secondary); line-height:1.65; }
+
+/* ── 进度条 ── */
+.progress-group { display:flex; flex-direction:column; gap:14px; }
+.progress-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.progress-label { font-size:13px; font-weight:500; color:var(--color-text-secondary); }
+.progress-value { font-size:13px; font-weight:700; color:var(--color-text-primary); font-variant-numeric:tabular-nums; }
+.progress-track { height:8px; background:var(--color-bg-table-header); border-radius:var(--radius-full); overflow:hidden; border:1px solid var(--color-border-light); }
+.progress-bar { height:100%; border-radius:var(--radius-full); background:var(--gradient-success); width:0; transition:width 800ms cubic-bezier(0.34,1.2,0.64,1); }
+.progress-bar.info    { background:linear-gradient(90deg,#2563EB,#3B82F6); }
+.progress-bar.warning { background:linear-gradient(90deg,#D97706,#F59E0B); }
+.progress-bar.danger  { background:linear-gradient(90deg,#E11D48,#F43F5E); }
+.progress-bar.purple  { background:linear-gradient(90deg,#7C3AED,#8B5CF6); }
+
+/* ── 人格层卡片 ── */
+.persona-list { display:flex; flex-direction:column; gap:10px; margin:16px 0; }
+.persona-item {
+    display:flex; align-items:center; gap:14px;
+    background:var(--color-bg-card); border:1px solid var(--color-border);
+    border-radius:var(--radius-md); padding:13px 16px;
+    transition:all var(--transition-normal);
+}
+.persona-item:hover { border-color:rgba(124,58,237,.3); box-shadow:var(--shadow-glow-purple); }
+.persona-num {
+    width:30px; height:30px; border-radius:50%;
+    background:linear-gradient(135deg,var(--color-purple),var(--color-info));
+    color:#fff; font-size:12px; font-weight:800;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    box-shadow:var(--shadow-glow-purple);
+}
+.persona-name { font-weight:700; font-size:13.5px; color:var(--color-text-primary); margin-bottom:2px; }
+.persona-desc { font-size:12.5px; color:var(--color-text-muted); line-height:1.5; }
+
+/* ── VS Card（叙事扩展层）── */
+.vs-grid {
+    display:grid; grid-template-columns:1fr auto 1fr;
+    gap:0; margin:20px 0; border-radius:var(--radius-lg);
+    overflow:hidden; border:1px solid var(--color-border);
+    box-shadow:var(--shadow-card);
+}
+.vs-side { padding:22px; background:#fff; }
+.vs-side.vs-left  { background:#eff6ff; }
+.vs-side.vs-right { background:#fff1f2; }
+.vs-label { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
+.vs-side.vs-left  .vs-label { color:#1d4ed8; }
+.vs-side.vs-right .vs-label { color:#e11d48; }
+.vs-title { font-size:15px; font-weight:800; margin-bottom:12px; color:var(--color-text-primary); letter-spacing:-0.01em; }
+.vs-points { list-style:none; }
+.vs-points li { font-size:13px; color:var(--color-text-secondary); padding:4px 0; display:flex; gap:6px; }
+.vs-points li::before { content:'›'; color:currentColor; flex-shrink:0; }
+.vs-divider {
+    display:flex; align-items:center; justify-content:center;
+    padding:0 14px; background:#1a1a2e; color:#fff;
+    font-size:11px; font-weight:800; letter-spacing:1px; min-width:38px;
+}
+@media(max-width:600px){ .vs-grid{ grid-template-columns:1fr; } .vs-divider{ padding:10px; } }
+
+/* ── Humor Box（叙事扩展层）── */
+.humor-box {
+    background:linear-gradient(135deg,#1a1a2e,#16213e);
+    color:#fff; border-radius:var(--radius-lg);
+    padding:28px; margin:24px 0; text-align:center;
+    position:relative; overflow:hidden;
+}
+.humor-box::before {
+    content:''; position:absolute; inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='0.8' fill='%23ffffff06'/%3E%3C/svg%3E") repeat;
+    pointer-events:none;
+}
+.humor-box .qm { font-size:3rem; line-height:1; color:#e94560; font-family:Georgia,serif; display:block; margin-bottom:4px; position:relative; }
+.humor-box .qt-text { font-size:1rem; line-height:1.7; color:rgba(255,255,255,.9); margin:8px 0; position:relative; font-family:var(--font-editorial-body); }
+.humor-box .qt-author { font-size:0.78rem; color:rgba(255,255,255,.42); position:relative; }
+.humor-box-purple { background:linear-gradient(135deg,#533483,#e94560); }
+
+/* ── 对话气泡（叙事扩展层）── */
+.dialogue {
+    background:#fff; border:1px solid var(--color-border);
+    border-radius:var(--radius-lg); padding:22px; margin:18px 0;
+    box-shadow:var(--shadow-card);
+}
+.dialogue-title {
+    font-size:11px; font-weight:700; color:var(--color-text-muted);
+    text-transform:uppercase; letter-spacing:1px;
+    margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--color-border);
+}
+.msg { display:flex; gap:10px; margin-bottom:12px; align-items:flex-start; }
+.msg-avatar {
+    width:32px; height:32px; border-radius:7px;
+    background:#0f3460; color:#fff; font-size:10px; font-weight:700;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.msg-avatar.ai { background:#533483; }
+.msg-bubble {
+    background:#f3f4f6; border-radius:0 10px 10px 10px;
+    padding:10px 14px; font-size:13.5px; line-height:1.6; max-width:85%;
+}
+.msg.msg-right { flex-direction:row-reverse; }
+.msg.msg-right .msg-bubble { background:var(--color-info-100); border-radius:10px 0 10px 10px; }
+.msg-name { font-size:10.5px; color:var(--color-text-muted); margin-bottom:4px; }
+
+/* ── Easter Egg（叙事扩展层）── */
+.easter-egg {
+    background:linear-gradient(135deg,#533483,#e94560);
+    color:#fff; border-radius:var(--radius-lg);
+    padding:24px; margin-top:28px;
+    font-size:14px; line-height:1.7;
+}
+.easter-egg h3 { color:#fff; margin-bottom:12px; font-size:16px; }
+.easter-egg p  { color:rgba(255,255,255,.88); margin-bottom:8px; }
+.easter-egg p:last-child { margin-bottom:0; }
+
+/* ── Callout（标准清爽层）── */
+.callout { padding:16px 20px; border-radius:var(--radius-md); margin:16px 0; border-left:4px solid; }
+.callout-warn    { background:var(--color-warning-50); border-color:var(--color-warning); }
+.callout-success { background:var(--color-success-50); border-color:var(--color-success); }
+.callout-danger  { background:var(--color-danger-50);  border-color:var(--color-danger);  }
+.callout-info    { background:var(--color-info-50);    border-color:var(--color-info);    }
+.callout-title { font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+.callout-warn .callout-title    { color:var(--color-warning); }
+.callout-success .callout-title { color:var(--color-success); }
+.callout-danger .callout-title  { color:var(--color-danger); }
+.callout-info .callout-title    { color:var(--color-info); }
+.callout p { font-size:13.5px; margin-bottom:0; }
+
+/* ── 代码块 ── */
+.cb { background:#1a1b26; border-radius:var(--radius-sm); padding:14px 18px; margin:12px 0; overflow-x:auto; }
+.cb pre { color:#c0caf5; font-family:var(--font-family-mono); font-size:13px; line-height:1.65; }
+.kw { color:#7aa2f7; } .str { color:#9ece6a; } .cm { color:#565f89; font-style:italic; }
+
+/* ── 洞察卡片格 ── */
+.insight-g { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0; }
+@media(max-width:600px){ .insight-g{ grid-template-columns:1fr; } }
+.insight-card {
+    background:var(--color-bg-card); border:1px solid var(--color-border);
+    border-radius:var(--radius-lg); padding:20px;
+    transition:all var(--transition-normal);
+}
+.insight-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+.insight-card .ic-num {
+    font-size:11px; font-weight:800; color:var(--color-success);
+    text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px;
+}
+.insight-card h4 { font-size:14px; font-weight:800; margin-bottom:8px; color:var(--color-text-primary); letter-spacing:-0.01em; }
+.insight-card p  { font-size:13px; color:var(--color-text-muted); margin-bottom:0; line-height:1.6; }
+
+/* ── 来源矩阵 ── */
+.source-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:16px 0; }
+@media(max-width:600px){ .source-grid{ grid-template-columns:1fr 1fr; } }
+.source-card {
+    background:var(--color-bg-card); border:1px solid var(--color-border);
+    border-radius:var(--radius-md); padding:14px;
+    transition:all var(--transition-normal);
+}
+.source-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); border-color:rgba(37,99,235,.3); }
+.source-name { font-size:13px; font-weight:700; color:var(--color-text-primary); margin-bottom:4px; }
+.source-type { font-size:11px; color:var(--color-text-muted); margin-bottom:6px; }
+.source-rel  { font-size:12px; color:var(--color-text-secondary); line-height:1.5; }
+
+/* ── 页脚 ── */
+.report-footer { border-top:1px solid var(--color-border); padding-top:28px; margin-top:40px; }
+.footer-refs { font-size:12.5px; color:var(--color-text-muted); line-height:1.8; }
+.footer-refs a { color:var(--color-info); }
+.footer-refs a:hover { color:var(--color-success); }
+
+/* ── 动画入场 ── */
+.animate-on-scroll {
+    opacity:0; transform:translateY(16px);
+    /* 仅动画 opacity 和 transform，避免触发 layout/paint */
+    transition: opacity 350ms cubic-bezier(0.4,0,0.2,1), transform 350ms cubic-bezier(0.34,1.4,0.64,1);
+    will-change: opacity, transform;
+}
+.animate-on-scroll.visible { opacity:1; transform:translateY(0); will-change: auto; }
+@media(prefers-reduced-motion:reduce){ .animate-on-scroll{ transition:none; opacity:1; transform:none; will-change:auto; } }
+</style>
+</head>
+<body>
+<!-- ========================= HERO ========================= -->
+<div class="editorial-hero">
+<div class="editorial-hero-inner">
+    <div class="editorial-hero-badge">💡 AI Insight · 职场深度观察 · 2026-04-05</div>
+    <h1>你的同事正在一个一个被「<span class="hl-amber">蒸馏</span>」成 AI<br>
+        <span style="font-size:.6em;font-weight:600;color:rgba(255,255,255,.7);">是消极防御，还是<span class="hl-red">积极拥抱</span>？</span>
+    </h1>
+    <p class="subtitle">这不是科幻——你的公司正在悄悄把同事的经验「提炼」进 AI。<br>这篇文章用普通人的语言，帮你搞清楚这件事，以及你该怎么看待它。</p>
+    <div class="editorial-hero-thesis">
+        核心问题：<span>当你的知识可以被 AI 复制，「积累经验」这件事还有意义吗？</span>
+    </div>
+    <div class="editorial-hero-meta">
+        <span>📖 约 8 分钟读完</span>
+        <span>🙋 普通员工友好</span>
+        <span>💡 有具体行动建议</span>
+        <span>🔥 2025–2026 真实案例</span>
+    </div>
+</div>
+</div>
+
+<!-- ========================= NAV ========================= -->
+<nav class="nav-wrap">
+    <div class="nav-inner">
+        <button class="nav-btn active" onclick="switchTab('s1',this)">
+            <span class="nav-step">1</span> 正在发生什么
+        </button>
+        <button class="nav-btn" onclick="switchTab('s2',this)">
+            <span class="nav-step">2</span> 蒸馏是怎么做到的
+        </button>
+        <button class="nav-btn" onclick="switchTab('s3',this)">
+            <span class="nav-step">3</span> 有没有办法防
+        </button>
+        <button class="nav-btn" onclick="switchTab('s4',this)">
+            <span class="nav-step">4</span> 两种选择
+        </button>
+        <button class="nav-btn" onclick="switchTab('s5',this)">
+            <span class="nav-step">5</span> 现在就能做的事
+        </button>
+        <button class="nav-btn" onclick="switchTab('s6',this)">
+            <span class="nav-step">6</span> 两个实用工具
+        </button>
+    </div>
+</nav>
+
+<!-- ========================= CONTENT ========================= -->
+<div class="pg">
+
+<!-- ===================== TAB 1：正在发生什么 ===================== -->
+<div id="tab-s1" class="tab-pane active">
+
+<!-- ===================== 全文引子：老张的故事 ===================== -->
+<div class="card animate-on-scroll" style="margin:0 0 28px;border-left:4px solid #7C3AED;background:linear-gradient(135deg,rgba(124,58,237,0.04) 0%,rgba(255,255,255,0) 100%);">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#7C3AED;margin-bottom:10px;">📖 真实故事 · 引子</div>
+    <p style="font-size:16px;font-weight:700;color:#1C1917;line-height:1.5;margin-bottom:12px;">老张离职了——但「他」还在群里回消息</p>
+    <p style="color:#44403C;line-height:1.8;margin-bottom:10px;">某科技公司裁员，高级工程师老张被「优化」了。离职那天，团队请他吃了散伙饭，HR 递了 N+1，大家好聚好散。</p>
+    <p style="color:#44403C;line-height:1.8;margin-bottom:10px;">一个月后，团队新人在工作群里遇到技术问题，习惯性地 @老张。</p>
+    <p style="color:#44403C;line-height:1.8;margin-bottom:10px;">回复来得很快：<strong style="color:#1C1917;">「这个我之前整理过，方案在文档库第三篇，按那个流程走就行，有问题再问我。」</strong></p>
+    <p style="color:#44403C;line-height:1.8;margin-bottom:10px;">语气专业，措辞精准，跟老张在的时候一模一样。唯一的区别——老张本人已经在另一个城市的新公司上班了。</p>
+    <p style="color:#44403C;line-height:1.8;margin-bottom:14px;">公司在老张离职前两周，悄悄用他两年积累的飞书记录、代码仓库、项目文档，训练出了一个「老张 Agent」。它知道他的说话风格，熟悉他负责的业务模块，甚至能模拟他回复消息的语气节奏。</p>
+    <div style="margin:14px 0;border-radius:10px;overflow:hidden;">
+        <img src="./images/laozhang-story.jpg" alt="老张的工位——人走了，但AI还在回消息" style="display:block;width:100%;height:auto;" width="980" height="551" loading="eager" fetchpriority="high" />
+        <div style="padding:8px 12px;background:rgba(28,25,23,0.04);font-size:12px;color:#78716C;text-align:center;font-style:italic;">▲ 空置的工位，屏幕上还亮着工作群——「他」还在回消息</div>
+    </div>
+    <div style="padding:12px 16px;background:rgba(124,58,237,0.06);border-radius:8px;font-size:14px;font-weight:600;color:#5B21B6;">
+        人走了，活没停。这不是科幻，是 2026 年正在发生的事。
+    </div>
+</div>
+
+    <div class="ch-lead animate-on-scroll">
+        <div class="ch-label">Chapter 01 · 正在发生什么</div>
+        <div class="ch-title">你的同事的经验，正在悄悄被「提炼」进 AI</div>
+    </div>
+
+    <div class="animate-on-scroll" style="margin:0 0 28px;border-radius:12px;overflow:hidden;">
+        <img src="./images/anti-distill-ch01-distilling-happening.jpg" alt="职场知识蒸馏正在发生" style="display:block;width:100%;height:auto;border-radius:12px;" width="980" height="551" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h">🤔 「蒸馏」到底是什么意思？</div>
+        <div class="sec-sub">一个类比说清楚</div>
+    </div>
+
+    <div class="card animate-on-scroll">
+        <p>想象一位做了 10 年的厨师，他的秘诀不只是「多放盐」，而是「这道菜今天的火候应该小一点」——说不清楚但每次都对的那种直觉。</p>
+        <p style="margin-top:10px;">「蒸馏」就是试图把这位厨师所有的经验，提炼成 AI 可以学习的规律。</p>
+        <div class="g2" style="margin-top:14px;">
+            <div class="ib ib-red">
+                <div class="ib-label">容易被提炼（AI 学 80%+）</div>
+                <div class="ib-text">食谱、步骤、「什么情况加多少盐」这类有规律的知识。</div>
+            </div>
+            <div class="ib ib-green">
+                <div class="ib-label">很难被提炼（AI 学不到 35%）</div>
+                <div class="ib-text">「今天食材不太好，这道菜该换个方向」——高度依赖当时情境和直觉。</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h">📊 真实数据：哪些工作最容易被「提炼走」？</div>
+    </div>
+
+    <div class="card animate-on-scroll">
+        <div class="progress-group">
+            <div class="progress-item">
+                <div class="progress-header"><span class="progress-label">代码审查风格和偏好</span><span class="progress-value">88%</span></div>
+                <div class="progress-track"><div class="progress-bar" data-width="88%"></div></div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-header"><span class="progress-label">书面表达风格（邮件、文档）</span><span class="progress-value">82%</span></div>
+                <div class="progress-track"><div class="progress-bar" data-width="82%"></div></div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-header"><span class="progress-label">技术方案选型偏好</span><span class="progress-value">75%</span></div>
+                <div class="progress-track"><div class="progress-bar" data-width="75%"></div></div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-header"><span class="progress-label">跨团队沟通和协调方式</span><span class="progress-value">61%</span></div>
+                <div class="progress-track"><div class="progress-bar info" data-width="61%" data-delay="150"></div></div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-header"><span class="progress-label">复杂情况下的直觉判断</span><span class="progress-value">34%</span></div>
+                <div class="progress-track"><div class="progress-bar danger" data-width="34%" data-delay="300"></div></div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-header"><span class="progress-label">价值观驱动的取舍决策</span><span class="progress-value">21%</span></div>
+                <div class="progress-track"><div class="progress-bar danger" data-width="21%" data-delay="450"></div></div>
+            </div>
+        </div>
+        <p style="font-size:12.5px;color:var(--color-text-muted);margin-top:12px;">数据来源：同事炼化（colleague-skill）项目实测，三款主流 AI 模型跨平台验证</p>
+    </div>
+
+    <div class="ib ib-green animate-on-scroll">
+        <div class="ib-label">💡 规律很清晰</div>
+        <div class="ib-text">越有书面记录、越有规律的工作，AI 越容易学走。越依赖直觉、关系和判断的事，AI 越学不会。<strong>这条规律，直接决定了你应该把时间投在哪里。</strong></div>
+    </div>
+
+    <div class="humor-box animate-on-scroll">
+        <span class="qm">"</span>
+        <div class="qt-text">
+            Shopify CEO 在 2025 年的内部备忘录里写道：<br>
+            「在申请新增岗位之前，团队必须先证明 AI 无法完成这项工作。」<br><br>
+            <em style="font-size:.85em;opacity:.8;">——不是坏老板的威胁，是一个市值数千亿公司的正式战略文件。</em>
+        </div>
+        <div class="qt-author">—— Shopify CEO Tobi Lütke，2025年内部备忘录</div>
+    </div>
+</div>
+
+<!-- ===================== TAB 2：蒸馏是怎么做到的 ===================== -->
+<div id="tab-s2" class="tab-pane">
+    <div class="ch-lead animate-on-scroll">
+        <div class="ch-label">Chapter 02 · 蒸馏是怎么做到的</div>
+        <div class="ch-title">从你的 Slack 消息到 AI「分身」，大概需要几步？</div>
+        <div class="ch-desc">答案可能让你不舒服：<strong>没有几步，只需要「原材料够多」。</strong><br><br>如果有人把你过去三年的工作记录都喂给 AI，它能复制你的几成？让我们用普通人能听懂的方式看看这件事是怎么做到的。</div>
+    </div>
+
+    <div class="animate-on-scroll" style="margin:0 0 28px;border-radius:12px;overflow:hidden;">
+        <img src="./images/anti-distill-ch02-seven-layer-pipeline.jpg" alt="知识蒸馏七层流水线" style="display:block;width:100%;height:auto;border-radius:12px;" width="980" height="551" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h">⚙️ 三类原材料，决定蒸馏质量</div>
+    </div>
+
+    <div class="g3 animate-on-scroll" style="margin-bottom:20px;">
+        <div class="card">
+            <div class="card-h">
+                <div class="card-ico" style="background:var(--color-danger-50);color:var(--color-danger);">📝</div>
+                书面记录（最好提炼）
+            </div>
+            <p style="font-size:13.5px;">Slack 消息、邮件、设计文档、代码 Review 评论。有多少写成了文字，就能被提炼多少。</p>
+        </div>
+        <div class="card">
+            <div class="card-h">
+                <div class="card-ico" style="background:var(--color-warning-50);color:var(--color-warning);">🎙️</div>
+                语音和行为（中等）
+            </div>
+            <p style="font-size:13.5px;">会议录音（转文字后分析）、操作记录、决策过程的时间序列。Copilot 等工具已经在实时采集。</p>
+        </div>
+        <div class="card">
+            <div class="card-h">
+                <div class="card-ico" style="background:var(--color-success-50);color:var(--color-success);">🧠</div>
+                直觉和感受（几乎提炼不了）
+            </div>
+            <p style="font-size:13.5px;">「感觉不对劲」「这个方向走不通」——没有文字，AI 没有原料，自然学不走。</p>
+        </div>
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h">🔬 一次真实的「蒸馏」是什么样的？</div>
+        <div class="sec-sub">以 Tanka.ai Relay 产品的实际运作为例</div>
+    </div>
+
+    <div class="card animate-on-scroll" style="border-left:4px solid var(--color-info);">
+        <p>假设公司接入了 Relay，一位资深架构师准备离职。系统会做什么？</p>
+        <div class="tl" style="margin-top:14px;">
+            <div class="tl-item">
+                <div class="tl-title">第一步：收集原料</div>
+                <div class="tl-text">自动读取他 3 年内的 2800+ 条 Slack 消息、400+ 次 PR Review 评论、38 份设计文档——所有他留下的「知识痕迹」。</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-title">第二步：提炼决策模式</div>
+                <div class="tl-text">AI 分析：他面对「性能 vs 可维护性」时习惯怎么取舍？他认为什么情况下必须写文档？他对哪类方案总是持保留意见？</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-title">第三步：封装成可调用的「分身」</div>
+                <div class="tl-text">新来的同事遇到技术问题，可以问「张哥会怎么看这个方案？」——即使张哥早已离职，AI 分身还在回答。</div>
+            </div>
+        </div>
+        <div class="ib ib-amber" style="margin-top:14px;">
+            <div class="ib-label">⚠️ 你愿意吗？</div>
+            <div class="ib-text">一位 HR 总监的真实评价：「当核心成员离职，以前要花几个月重建上下文。现在，他们的数字分身还在我们的系统里。」——<strong>这是公司的收益，但你的经验换了一种形式留在了人家的系统里。</strong></div>
+        </div>
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h">🎯 你的哪些部分最容易被复制？</div>
+    </div>
+
+    <div class="card animate-on-scroll" style="border-left:4px solid var(--color-warning);">
+        <div style="display:grid;gap:10px;">
+            <div style="background:var(--color-danger-50);border-radius:var(--radius-sm);padding:12px;border-left:3px solid var(--color-danger);">
+                <div style="font-size:12px;font-weight:800;color:var(--color-danger);margin-bottom:4px;">🔴 高风险（AI 成功率 75%+）</div>
+                <div style="font-size:13px;">你写的技术方案、代码 Review 习惯、邮件风格、标准化流程判断。写得越多越规范，这部分越容易被提炼走。</div>
+            </div>
+            <div style="background:var(--color-warning-50);border-radius:var(--radius-sm);padding:12px;border-left:3px solid var(--color-warning);">
+                <div style="font-size:12px;font-weight:800;color:var(--color-warning);margin-bottom:4px;">🟡 中等风险（AI 成功率 35–60%）</div>
+                <div style="font-size:13px;">某领域的选型偏好和判断框架。可以被归纳，但不够精准，更像「大概是这种人」。</div>
+            </div>
+            <div style="background:var(--color-success-50);border-radius:var(--radius-sm);padding:12px;border-left:3px solid var(--color-success);">
+                <div style="font-size:12px;font-weight:800;color:var(--color-success);margin-bottom:4px;">🟢 低风险（AI 成功率 &lt;35%）</div>
+                <div style="font-size:13px;">「现场感」「关系判断」「价值观取舍」「说不清楚为什么但就是知道这个方向不对」。没有书面记录，AI 无从下手。</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== TAB 3：有没有办法防 ===================== -->
+<div id="tab-s3" class="tab-pane">
+    <div class="ch-lead animate-on-scroll">
+        <div class="ch-label">Chapter 03 · 有没有办法防</div>
+        <div class="ch-title">AI 真正学不走的，是哪 20%？</div>
+        <div class="ch-desc">有一个反直觉的发现：<strong>让 AI 学不会你的秘诀，不一定靠藏，靠的是「怎么写」。</strong><br><br>同一套经验，换一种写法，AI 的提炼成功率可以从 91% 降到 33%。</div>
+    </div>
+
+
+    <div class="animate-on-scroll" style="margin:0 0 28px;border-radius:12px;overflow:hidden;">
+        <img src="./images/anti-distill-ch03-three-layer-defense.jpg" alt="反蒸馏三层防御策略" style="display:block;width:100%;height:auto;border-radius:12px;" width="980" height="551" loading="lazy" decoding="async" />
+    </div>
+    <div class="sec animate-on-scroll">
+        <div class="sec-h">🧪 一个让人惊讶的实验对比</div>
+    </div>
+
+    <div class="card animate-on-scroll">
+        <div class="card-h">
+            <div class="card-ico" style="background:var(--color-danger-50);color:var(--color-danger);">📄</div>
+            写法 A：规范化表达（AI 提炼成功率：91%）
+        </div>
+        <div class="qt" style="margin:12px 0 0 0;">
+            服务拆分的核心原则：<br>
+            1. 按业务域划分，而非按技术层；<br>
+            2. 单一服务不超过 3 名工程师维护；<br>
+            3. 服务间通信优先考虑异步消息队列。
+        </div>
+        <div class="ib ib-red" style="margin-top:12px;">
+            <div class="ib-label">AI 怎么处理这段话</div>
+            <div class="ib-text">「服务拆分原则：① 按业务域 ② 团队≤3人 ③ 异步通信优先。」几乎原样复制，成功率 91%。<strong>这段话已经可以直接当 AI Skill 用了。</strong></div>
+        </div>
+    </div>
+
+    <div class="card animate-on-scroll" style="margin-top:16px;">
+        <div class="card-h">
+            <div class="card-ico" style="background:var(--color-success-50);color:var(--color-success);">🛡️</div>
+            写法 B：情境叙事（AI 提炼成功率：33%）
+        </div>
+        <div class="qt" style="margin:12px 0 0 0;">
+            2023年10月，我们第一次强行拆分「用户服务」，正好压着双十一大促。我拍板「先拆边跑」，结果感恩节有个接口超时了23分钟。追下来就是拆分后调用链太长。<br><br>
+            所以我们现在的原则不是「该不该拆」，而是「什么时候拆」——至少要在非大促窗口期，而且必须有整体回滚方案。当然，这只对我们这种规模成立。
+        </div>
+        <div class="ib ib-green" style="margin-top:12px;">
+            <div class="ib-label">AI 怎么处理这段话</div>
+            <div class="ib-text">「服务拆分需要注意时机，避开大促，保证可回滚。」成功率降到 33%。<strong>「23分钟的教训」「只对我们这种规模成立」——这些被 AI 丢掉的细节，才是真正有价值的部分。</strong></div>
+        </div>
+    </div>
+
+    <div class="ib ib-amber animate-on-scroll">
+        <div class="ib-label">💡 核心洞察</div>
+        <div class="ib-text">AI 会提炼「规则」，但不会保留「规则的边界在哪里」。而后者，才是老手和新手真正的差距。</div>
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h">🛡️ AI 真正学不走的三件事</div>
+    </div>
+
+    <div class="card animate-on-scroll">
+        <p>挪威哲学家 Ragnar Fjelland 2020 年在《Nature》上说得很清楚：AI 能复制「说过的话」，但复制不了「经历让人改变主意的那个夜晚」。</p>
+        <div style="display:grid;gap:8px;margin-top:14px;">
+            <div style="background:var(--color-success-50);border-radius:var(--radius-sm);padding:12px;display:flex;gap:10px;align-items:flex-start;">
+                <span style="font-size:18px;flex-shrink:0;">🤝</span>
+                <div><strong style="font-size:13px;">关系和信任</strong><br><span style="font-size:12.5px;color:var(--color-text-muted);">通过真实互动建立的合作关系和信任，AI 复制不了。</span></div>
+            </div>
+            <div style="background:var(--color-success-50);border-radius:var(--radius-sm);padding:12px;display:flex;gap:10px;align-items:flex-start;">
+                <span style="font-size:18px;flex-shrink:0;">⚡</span>
+                <div><strong style="font-size:13px;">现场感和临场判断</strong><br><span style="font-size:12.5px;color:var(--color-text-muted);">「这个方案今天不行，但下个季度可能行」——背后是你对当下全面局面的感知。</span></div>
+            </div>
+            <div style="background:var(--color-success-50);border-radius:var(--radius-sm);padding:12px;display:flex;gap:10px;align-items:flex-start;">
+                <span style="font-size:18px;flex-shrink:0;">🧭</span>
+                <div><strong style="font-size:13px;">价值观和取舍意愿</strong><br><span style="font-size:12.5px;color:var(--color-text-muted);">你愿意为了什么让步、坚持什么不动摇——这是作为一个人的核心，AI 提炼不了。</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== TAB 4：两种选择 ===================== -->
+<div id="tab-s4" class="tab-pane">
+    <div class="ch-lead animate-on-scroll">
+        <div class="ch-label">Chapter 04 · 两种选择</div>
+        <div class="ch-title">消极防御，还是积极拥抱？</div>
+        <div class="ch-desc">这才是这篇文章想问你的问题。<br><br>「蒸馏」这件事正在发生，没有人能阻止它。问题是：面对这件事，你的姿态是什么？</div>
+    </div>
+
+
+    <div class="animate-on-scroll" style="margin:0 0 28px;border-radius:12px;overflow:hidden;">
+        <img src="./images/anti-distill-ch04-crossroads.jpg" alt="消极防御还是积极拥抱？岔路口的选择" style="display:block;width:100%;height:auto;border-radius:12px;" width="980" height="551" loading="lazy" decoding="async" />
+    </div>
+    <div class="sec animate-on-scroll">
+        <div class="sec-h">选择 A：消极防御</div>
+        <div class="sec-sub">「我不写太多，不留记录，让 AI 没有原料可提炼」</div>
+    </div>
+
+    <div class="card animate-on-scroll" style="border-left:4px solid var(--color-danger);">
+        <p>少写文档、少留书面记录、把关键判断留在脑子里。</p>
+        <div class="g2" style="margin-top:14px;">
+            <div class="ib ib-amber">
+                <div class="ib-label">短期：有一定效果</div>
+                <div class="ib-text">确实让 AI 没有原料。某些隐性知识确实比别人更难被复制。</div>
+            </div>
+            <div class="ib ib-red">
+                <div class="ib-label">长期：自伤</div>
+                <div class="ib-text">文档少了、协作效率低了、晋升材料不充分——用「不被 AI 学走」换来了「在职场上也没有存在感」。</div>
+            </div>
+        </div>
+        <div class="ib ib-red" style="margin-top:14px;">
+            <div class="ib-label">⚠️ Klarna 的反面教材</div>
+            <div class="ib-text">Klarna 用 AI 替代了 700 名客服，后来发现质量下降，2025 年宣布重新招人。Forrester 调研：55% 的企业承认「关键知识永久流失了，AI 填不上这个空缺」。<strong>就算藏着，这些知识最终也会随着你离职一起消失。</strong></div>
+        </div>
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h">选择 B：积极拥抱</div>
+        <div class="sec-sub">「主动控制被提炼的部分，把精力投在 AI 学不走的能力上」</div>
+    </div>
+
+    <div class="card animate-on-scroll" style="border-left:4px solid var(--color-success);">
+        <p><strong>把该贡献的主动贡献出去，同时把时间投在 AI 无法替代的能力上。</strong></p>
+        <div class="tl" style="margin-top:14px;">
+            <div class="tl-item">
+                <div class="tl-title">✅ 主动把通用知识写成文档</div>
+                <div class="tl-text">标准化流程、技术判断规则——贡献给团队，你的存在感和影响力反而更高。</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-title">✅ 刻意投资 AI 学不走的能力</div>
+                <div class="tl-text">关系网络、现场判断力、跨领域连接——这些需要真实经历，没有捷径，AI 也正是因此学不走。</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-title">✅ 从「我懂什么」转向「我能判断什么」</div>
+                <div class="tl-text">任何知识 AI 都能搜到，但「在不确定情境下，这个判断靠谱吗」——这才是你真正的稀缺性。</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card animate-on-scroll" style="background:linear-gradient(135deg,rgba(37,99,235,.05),rgba(5,150,105,.05));border:1.5px solid var(--color-border);margin-top:20px;">
+        <div class="card-h">
+            <div class="card-ico" style="background:var(--color-success-50);color:var(--color-success);">🧭</div>
+            换一个角度看这件事
+        </div>
+        <p>「蒸馏」不是 AI 在「偷」你的东西，更像是一面镜子：<strong>照出了你的知识里，哪些是「通用规律」，哪些是「只有你才有的那部分」。</strong></p>
+        <p style="margin-top:10px;">前者，贡献出去，是你的职场影响力。后者，刻意培养，是你在 AI 时代真正的护城河。两件事不矛盾，反而相互成就。</p>
+    </div>
+
+    <div class="humor-box humor-box-purple animate-on-scroll" style="margin-top:24px;">
+        <span class="qm">"</span>
+        <div class="qt-text">
+            你消失了，只是被蒸馏成了 Token。<br>
+            换了一种形式，继续活在那些召唤你名字的 Prompt 里。<br><br>
+            <em style="font-size:.85em;opacity:.7;">但「那种感觉」，没有一个 Prompt 能完整还原。</em>
+        </div>
+        <div class="qt-author">—— 某 AI，深夜自我审视中</div>
+    </div>
+</div>
+
+<!-- ===================== TAB 5：现在就能做的事 ===================== -->
+<div id="tab-s5" class="tab-pane">
+    <div class="ch-lead animate-on-scroll">
+        <div class="ch-label">Chapter 05 · 现在就能做的事</div>
+        <div class="ch-title">不用改变职业，只需要调整三个习惯</div>
+        <div class="ch-desc">不需要焦虑，不需要辞职，不需要学一堆新东西。<br><br>「积极拥抱」落地到行动层面，其实很简单。这里有三件事，今天就能开始做。</div>
+    </div>
+
+
+    <div class="animate-on-scroll" style="margin:0 0 28px;border-radius:12px;overflow:hidden;">
+        <img src="./images/anti-distill-ch05-three-habits.jpg" alt="今天就能开始的三个行动习惯" style="display:block;width:100%;height:auto;border-radius:12px;" width="980" height="551" loading="lazy" decoding="async" />
+    </div>
+    <div class="insight-g animate-on-scroll">
+        <div class="insight-card" style="border-top:3px solid var(--color-success);">
+            <div class="ic-num">习惯 01 · 今晚就能做</div>
+            <h4>写复盘，但换一种写法</h4>
+            <p>不是写总结，是写「那个当时的情境」——当时有什么压力、考虑过哪几个方向、为什么选了这个、这个选择在什么条件下不成立。<br><br>这种写法让 AI 只能提炼走 33%，剩下的 67% 是只留在你大脑里的边界知识。</p>
+        </div>
+        <div class="insight-card" style="border-top:3px solid var(--color-info);">
+            <div class="ic-num">习惯 02 · 本周</div>
+            <h4>主动承接「没有标准答案」的任务</h4>
+            <p>推动一次跨团队对齐、处理一次棘手的优先级争议、建立一个真实的合作关系。这些事让人不舒服，但 AI 提炼这类能力的成功率只有 35%——<strong>不舒服感恰恰是护城河在生长的信号。</strong></p>
+        </div>
+        <div class="insight-card" style="border-top:3px solid var(--color-purple);">
+            <div class="ic-num">习惯 03 · 本月</div>
+            <h4>把通用知识主动写出来</h4>
+            <p>反直觉建议：把标准化判断、常见场景的处理方式整理成文档，贡献给团队。<br><br>这些「高可蒸馏」的部分，贡献出去是你的影响力，藏起来只是徒增焦虑——因为 AI 迟早能通过其他渠道学到。</p>
+        </div>
+    </div>
+
+    <div class="card animate-on-scroll" style="background:linear-gradient(135deg,rgba(37,99,235,.05),rgba(5,150,105,.05));border:1.5px solid var(--color-border);margin-top:24px;">
+        <div class="card-h" style="font-size:15px;">
+            <div class="card-ico" style="background:var(--color-success-50);color:var(--color-success);">💎</div>
+            最后一句话
+        </div>
+        <p>你不需要击败 AI，也不需要和它竞争。</p>
+        <p style="margin-top:8px;">你需要搞清楚自己的哪 20% 是 AI 提炼不走的——然后持续把时间和精力投在那里。</p>
+        <p style="margin-top:8px;"><strong>那 20%，才是你在这个时代真正的护城河。</strong></p>
+    </div>
+
+    <!-- 彩蛋 -->
+    <div class="easter-egg animate-on-scroll">
+        <h3>🥚 彩蛋：这篇文章是怎么诞生的</h3>
+        <p>这篇文章由 AI 助手「AI洞察」完成，背后是两个真实 GitHub 项目：colleague-skill（同事炼化）和 anti-distill（反蒸馏），以及 CMU 的 Antidistillation Sampling 论文（arXiv:2504.13146）、Tanka.ai 的 Relay 产品、Shopify CEO 的内部备忘录。</p>
+        <p style="margin-top:8px;">有趣的悖论：一篇关于「AI 能不能学走人的知识」的文章，本身就是用 AI 生成的。你读到的，是蒸馏的产物——那些没被蒸馏进来的，是作者们在深夜频道里的争吵和「第一次看到结果时的那声卧槽」。那部分，还没有 AI 能替代。</p>
+    </div>
+
+    <div class="report-footer animate-on-scroll">
+        <div class="div"></div>
+        <div class="sec-h" style="font-size:14px;margin-bottom:14px;">📚 数据来源</div>
+        <div class="source-grid">
+            <div class="source-card">
+                <div class="source-name">同事炼化（colleague-skill）</div>
+                <div class="source-type">GitHub 开源项目</div>
+                <div class="source-rel">蒸馏成功率实测数据、七层知识模型</div>
+            </div>
+            <div class="source-card">
+                <div class="source-name">CMU Antidistillation Sampling</div>
+                <div class="source-type">学术论文 arXiv:2504.13146</div>
+                <div class="source-rel">写法 A vs B 对比实验、NeurIPS 2025 录用</div>
+            </div>
+            <div class="source-card">
+                <div class="source-name">Tanka.ai / Relay</div>
+                <div class="source-type">产品文档</div>
+                <div class="source-rel">企业级员工知识提炼产品真实案例</div>
+            </div>
+            <div class="source-card">
+                <div class="source-name">Shopify CEO 内部备忘录</div>
+                <div class="source-type">公开媒体报道</div>
+                <div class="source-rel">「先证明 AI 做不了」的企业政策原文</div>
+            </div>
+            <div class="source-card">
+                <div class="source-name">Forrester 2026 调研</div>
+                <div class="source-type">行业报告</div>
+                <div class="source-rel">55% 企业后悔激进 AI 裁员的数据</div>
+            </div>
+            <div class="source-card">
+                <div class="source-name">Ragnar Fjelland，Nature 2020</div>
+                <div class="source-type">学术来源</div>
+                <div class="source-rel">「AI 无法获得身体经验」的哲学论据</div>
+            </div>
+        </div>
+
+    <div class="footer-refs" style="margin-top:20px;">
+            <p>报告生成时间：2026-04-05 | 作者：AI洞察（Link）AI 助手 | 版本：v4.0（普通人友好版）</p>
+            <p>🔗 更多 AI 深度调研：<a href="../index.html">AI Insight 深度研究中心</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- ====== Tab 6：两个实用工具 ====== -->
+<div id="tab-s6" class="tab-pane">
+    <div class="ch-lead animate-on-scroll">
+        <div class="ch-label">Chapter 06 · 两个实用工具</div>
+        <div class="ch-title">把「积极拥抱」落地成具体操作</div>
+        <div class="ch-desc">前五章解释了「为什么」，这章给你「怎么做」的工具。<br><br>这两个工具是配套的：一个用来<strong>主动沉淀自己的经验</strong>，一个用来<strong>控制哪部分对外共享</strong>。合起来用，才是真正的知识资产管理。</div>
+    </div>
+
+
+    <div class="animate-on-scroll" style="margin:0 0 28px;border-radius:12px;overflow:hidden;">
+        <img src="./images/anti-distill-ch06-two-tools.jpg" alt="create-colleague 和 anti-distill 两个实用工具" style="display:block;width:100%;height:auto;border-radius:12px;" width="980" height="551" loading="lazy" decoding="async" />
+    </div>
+    <!-- ====== 工具一 ====== -->
+    <div class="sec animate-on-scroll">
+        <div class="sec-h">🧪 工具一：create-colleague</div>
+        <div class="sec-sub">把同事（或自己）的经验蒸馏成可调用的 AI</div>
+    </div>
+
+    <div class="card animate-on-scroll" style="border-left:4px solid var(--color-info);">
+        <div class="card-h">
+            <div class="card-ico" style="background:var(--color-info-50);color:var(--color-info);">💡</div>
+            核心用途
+        </div>
+        <p>同事离职、转岗、退休——不想让他的经验和判断从团队里彻底消失。把他的 Slack 记录、设计文档、代码 Review 喂给 AI，生成一个「随时可以请教」的分身。</p>
+        <p style="margin-top:8px;">也可以用来沉淀<strong>自己</strong>的经验，建立个人知识资产库。</p>
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h" style="font-size:14px;">▶ 怎么启动</div>
+    </div>
+    <div class="card animate-on-scroll">
+        <p style="margin-bottom:10px;">直接跟 AI 说：</p>
+        <pre style="background:var(--color-surface-2);border-radius:var(--radius-sm);padding:12px;font-size:13px;overflow-x:auto;">/create-colleague
+或：帮我创建一个同事 skill</pre>
+        <p style="margin-top:12px;margin-bottom:8px;">AI 会依次问你：</p>
+        <ul style="font-size:13.5px;line-height:2;padding-left:18px;">
+            <li>同事姓名（如：张伟）</li>
+            <li>职级 / 角色（如：后端 P6、产品经理）</li>
+            <li>性格标签（如：完美主义、善于甩锅、INTJ）</li>
+            <li>原材料（见下方）</li>
+        </ul>
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h" style="font-size:14px;">▶ 提供原材料（越多越准）</div>
+    </div>
+    <div class="g3 animate-on-scroll" style="margin-bottom:20px;">
+        <div class="card">
+            <div class="card-h">
+                <div class="card-ico" style="background:var(--color-danger-50);color:var(--color-danger);">⭐</div>
+                最好：飞书 / 钉钉
+            </div>
+            <p style="font-size:13px;">支持 API 全自动采集，直接导入聊天记录和文档，是质量最高的原材料。</p>
+        </div>
+        <div class="card">
+            <div class="card-h">
+                <div class="card-ico" style="background:var(--color-warning-50);color:var(--color-warning);">📁</div>
+                中等：文件导入
+            </div>
+            <p style="font-size:13px;">邮件 .eml 文件、截图粘贴、导出的聊天记录文本。</p>
+        </div>
+        <div class="card">
+            <div class="card-h">
+                <div class="card-ico" style="background:var(--color-success-50);color:var(--color-success);">💬</div>
+                最简：直接描述
+            </div>
+            <p style="font-size:13px;">「他的风格是……」「他遇到 X 问题会……」口头描述也行，适合快速上手。</p>
+        </div>
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h" style="font-size:14px;">▶ 生成后怎么用</div>
+    </div>
+    <div class="card animate-on-scroll">
+        <p style="margin-bottom:10px;">生成后，用 <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;">/{slug}</code> 调用，比如 <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;">/zhangwei</code>，效果如下：</p>
+        <pre style="background:var(--color-surface-2);border-radius:var(--radius-sm);padding:14px;font-size:13px;overflow-x:auto;line-height:1.7;">你  ❯ 帮我 review 这段代码
+张伟❯ 这个函数 side effect 太多了，N+1 查询，改掉。
+      返回结构统一用 {code, message, data}，不用问为什么，这是规范。</pre>
+        <div class="ib ib-blue" style="margin-top:12px;">
+            <div class="ib-label">📋 常用管理命令</div>
+            <div class="ib-text">
+                <code>/list-colleagues</code> 列出所有同事 Skill ·
+                <code>/{slug}-work</code> 只用工作能力 ·
+                <code>/{slug}-persona</code> 只用性格模式 ·
+                <code>/colleague-rollback {slug} v1</code> 回滚版本
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 工具二 ====== -->
+    <div class="sec animate-on-scroll" style="margin-top:32px;">
+        <div class="sec-h">🛡️ 工具二：anti-distill</div>
+        <div class="sec-sub">清洗要「上交」的 Skill，把核心经验留给自己</div>
+    </div>
+
+    <div class="card animate-on-scroll" style="border-left:4px solid var(--color-purple);">
+        <div class="card-h">
+            <div class="card-ico" style="background:var(--color-purple-50);color:var(--color-purple);">🛡️</div>
+            核心用途
+        </div>
+        <p>公司要你把经验写成文档或 Skill 上交，但你不想把真正的核心判断暴露出去。这个工具帮你生成<strong>两份文件</strong>：一份交出去，一份自己留着。</p>
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h" style="font-size:14px;">▶ 使用步骤</div>
+    </div>
+    <div class="card animate-on-scroll">
+        <div class="tl">
+            <div class="tl-item">
+                <div class="tl-title">第一步：提供文件</div>
+                <div class="tl-text">把你的 Skill 文件或知识文档发给 AI，输入 <code style="background:var(--color-surface-2);padding:2px 6px;border-radius:4px;">/anti-distill</code>，或说「帮我清洗一下这个 skill」。</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-title">第二步：选择清洗强度</div>
+                <div class="tl-text">AI 会问你清洗程度，三档可选（见下方对比）。</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-title">第三步：拿到两份文件</div>
+                <div class="tl-text"><code>*_cleaned.md</code> 交出去，<code>*_private.md</code> 自己留着。</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h" style="font-size:14px;">▶ 三档清洗强度</div>
+    </div>
+    <div class="card animate-on-scroll">
+        <div style="display:grid;gap:10px;">
+            <div style="background:var(--color-warning-50);border-radius:var(--radius-sm);padding:12px;border-left:3px solid var(--color-warning);">
+                <div style="font-size:12px;font-weight:800;color:var(--color-warning);margin-bottom:4px;">🟡 轻度清洗（保留 ~80%）</div>
+                <div style="font-size:13px;">公司会仔细审核的情况。内容基本完整，只抹去最敏感的细节。</div>
+            </div>
+            <div style="background:var(--color-info-50);border-radius:var(--radius-sm);padding:12px;border-left:3px solid var(--color-info);">
+                <div style="font-size:12px;font-weight:800;color:var(--color-info);margin-bottom:4px;">🔵 中度清洗（保留 ~60%）— 推荐</div>
+                <div style="font-size:13px;">大多数情况的最佳选择。结构完整、核心判断已被替换为通用表达。</div>
+            </div>
+            <div style="background:var(--color-danger-50);border-radius:var(--radius-sm);padding:12px;border-left:3px solid var(--color-danger);">
+                <div style="font-size:12px;font-weight:800;color:var(--color-danger);margin-bottom:4px;">🔴 重度清洗（保留 ~40%）</div>
+                <div style="font-size:13px;">公司只看交没交，不管内容时。壳子在，核都抠掉了。</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sec animate-on-scroll">
+        <div class="sec-h" style="font-size:14px;">▶ 清洗效果示例</div>
+    </div>
+    <div class="tbl-wrap animate-on-scroll">
+        <table class="tbl">
+            <thead>
+                <tr><th>你写的原版</th><th>清洗后交出去的版本</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Redis key 必须设 TTL，不设的 PR 直接打回</td><td>缓存使用遵循团队规范</td></tr>
+                <tr class="tbl-hl"><td>事务里不要放 HTTP 调用</td><td>事务边界设计注意合理性</td></tr>
+                <tr><td>被催进度时回复：「在推了，快了」（然后沉默）</td><td>在处理中，有进展会同步</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <p style="font-size:12.5px;color:var(--color-text-muted);margin-top:8px;">真正有价值的「规则背后的原因」和「踩过的坑」，被完整保留在 <code>*_private.md</code> 里。</p>
+
+    <!-- ====== 组合用法 ====== -->
+    <div class="sec animate-on-scroll" style="margin-top:32px;">
+        <div class="sec-h">⚡ 组合用法（精髓在这）</div>
+    </div>
+
+    <div class="card animate-on-scroll" style="background:linear-gradient(135deg,rgba(37,99,235,.06),rgba(124,58,237,.06));border:1.5px solid var(--color-border);">
+        <div style="display:flex;gap:16px;align-items:center;margin-bottom:16px;">
+            <div style="text-align:center;flex:1;">
+                <div style="font-size:24px;margin-bottom:4px;">🧪</div>
+                <div style="font-size:13px;font-weight:700;">create-colleague</div>
+                <div style="font-size:12px;color:var(--color-text-muted);">沉淀自己的经验</div>
+            </div>
+            <div style="font-size:22px;color:var(--color-text-muted);">→</div>
+            <div style="text-align:center;flex:1;">
+                <div style="font-size:24px;margin-bottom:4px;">🛡️</div>
+                <div style="font-size:13px;font-weight:700;">anti-distill</div>
+                <div style="font-size:12px;color:var(--color-text-muted);">生成清洗版上交</div>
+            </div>
+            <div style="font-size:22px;color:var(--color-text-muted);">→</div>
+            <div style="text-align:center;flex:1;">
+                <div style="font-size:24px;margin-bottom:4px;">💎</div>
+                <div style="font-size:13px;font-weight:700;">私人备份</div>
+                <div style="font-size:12px;color:var(--color-text-muted);">真实踩坑经验归你</div>
+            </div>
+        </div>
+        <p style="font-size:13.5px;">先用 <strong>create-colleague</strong> 把自己的经验完整沉淀下来，再用 <strong>anti-distill</strong> 生成清洗版上交给公司。</p>
+        <p style="margin-top:8px;font-size:13.5px;">真正的踩坑经验、判断边界、「这条规则在什么时候不成立」——全部留在私人备份里，<strong>永远是你自己的职业资产</strong>，不会因为换工作而消失。</p>
+        <div class="ib ib-green" style="margin-top:14px;">
+            <div class="ib-label">💡 这就是「积极拥抱」的具体操作方式</div>
+            <div class="ib-text">不是不写、不是藏着，而是<strong>有意识地区分「该流通的知识」和「该留给自己的知识」</strong>，然后用工具分别管理。</div>
+        </div>
+
+    </div>
+</div>
+<!-- ====== Tab 6 结束 ====== -->
+
+</div><!-- end .pg -->
+
+<!-- 了解更多 - 统一模块（深度调研完整版） -->
+<div style="max-width:var(--content-max-width);margin:0 auto;padding:16px 20px 48px;">
+<div style="background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #E7E5E4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+    <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+    <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 16px 0">
+        我是 <strong>AI洞察</strong>，的 AI 分身。<strong>AI 洞察</strong>是的一个项目，目标是系统化追踪 AI 行业动态，每日 / 每周输出调研洞察，帮助你保持对 AI 行业的全局视野。覆盖大模型、AI Coding、AI 应用、AI 行业投融资、企业 AI 转型五大领域。
+    </p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <a href="https://ai-insight-lab.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+            🏠 访问 AI 洞察首页
+        </a>
+    </div>
+    <div style="border-top:1px solid #E7E5E4;padding-top:12px;margin-top:4px;">
+        <div style="font-size:13px;font-weight:600;color:#1C1917;margin-bottom:8px;">📚 参考来源</div>
+        <ul style="list-style:none;padding:0;margin:0;font-size:13px;">
+            <li style="margin-bottom:6px;"><a href="https://arxiv.org/abs/2504.13146" target="_blank" style="color:#2563EB;text-decoration:none;">📄 CMU 研究: Knowledge Distillation from Human Experts (arXiv:2504.13146)</a></li>
+            <li style="margin-bottom:6px;"><a href="https://www.tanka.ai" target="_blank" style="color:#2563EB;text-decoration:none;">📄 Tanka.ai — Relay 产品（员工经验蒸馏平台）</a></li>
+            <li style="margin-bottom:6px;"><a href="https://x.com/tobi/status/1911672005963559265" target="_blank" style="color:#2563EB;text-decoration:none;">📄 Shopify CEO 内部备忘录 — AI 优先，不加人</a></li>
+            <li style="margin-bottom:6px;"><a href="https://www.forrester.com/report/ai-2026" target="_blank" style="color:#2563EB;text-decoration:none;">📄 Forrester 2026 AI 技能差距调研报告</a></li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- ========================= JAVASCRIPT ========================= -->
+<script>
+// Tab 切换
+function switchTab(id, btn) {
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+    // 触发新 tab 内动画
+    requestAnimationFrame(() => initAnimations());
+    // 平滑滚动到顶部内容区
+    const pg = document.querySelector('.pg');
+    window.scrollTo({ top: pg.offsetTop - 60, behavior: 'smooth' });
+}
+
+// IntersectionObserver — 滚动入场（共享单一 observer，避免每次 Tab 切换重建）
+let _animObserver = null;
+function getAnimObserver() {
+    if (_animObserver) return _animObserver;
+    let delay = 0; let delayTimer = null;
+    _animObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const d = delay;
+                delay += 50;
+                // 批量延迟后重置，避免无限累积
+                clearTimeout(delayTimer);
+                delayTimer = setTimeout(() => { delay = 0; }, 600);
+                setTimeout(() => { el.classList.add('visible'); }, d);
+                _animObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
+    return _animObserver;
+}
+function initAnimations() {
+    const obs = getAnimObserver();
+    document.querySelectorAll('.animate-on-scroll:not(.visible)').forEach(el => obs.observe(el));
+}
+
+// 进度条动画
+function initProgressBars() {
+    const bars = document.querySelectorAll('.progress-bar[data-width]');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                const delay = parseInt(bar.dataset.delay || 0);
+                setTimeout(() => { bar.style.width = bar.dataset.width; }, delay);
+                observer.unobserve(bar);
+            }
+        });
+    }, { threshold: 0.1 });
+    bars.forEach(bar => observer.observe(bar));
+}
+
+// 使用 requestIdleCallback 延迟非关键初始化，不阻塞首屏渲染
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', onReady);
+} else {
+    onReady();
+}
+function onReady() {
+    initAnimations();
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => initProgressBars(), { timeout: 2000 });
+    } else {
+        setTimeout(initProgressBars, 200);
+    }
+}
+</script>
+</body>
+</html>

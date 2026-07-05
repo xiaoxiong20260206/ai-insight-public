@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anthropic 产品速度密码 | AI洞察深度调研</title>
+<meta name="description" content="40天30+功能、模型吃掉产品、PM与工程师融合——深度解读 Claude Code 产品负责人 Cat Wu 的产品观与方法论。基于 Lenny's Newsletter 第一手访谈 + 多源交叉验证。">
+<meta property="og:title" content="Anthropic 产品速度密码 | AI洞察深度调研">
+<meta property="og:description" content="40天30+功能背后，是三板斧流程、模型-功能联动机制和使命筛子的综合作用。">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23059669'/><text x='6' y='23' font-size='18' fill='white'>🚀</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+<style>
+:root {
+    --color-success: #059669;
+    --color-success-light: #10B981;
+    --color-info: #2563EB;
+    --color-info-50: #EFF6FF;
+    --color-purple: #7C3AED;
+    --color-purple-50: #F5F3FF;
+    --color-danger: #E11D48;
+    --color-warning: #D97706;
+    --color-warning-50: #FFFBEB;
+    --color-text-primary: #1C1917;
+    --color-text-secondary: #57534E;
+    --color-text-muted: #78716C;
+    --color-border: #E7E5E4;
+    --color-border-light: #F5F5F4;
+    --color-bg: #F8FAFB;
+    --color-bg-card: #FFFFFF;
+    --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-card-rich: 0 4px 16px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.9);
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --font-family: "DM Sans", -apple-system, "Noto Sans SC", "PingFang SC", sans-serif;
+    --font-family-cn: "Noto Sans SC", "PingFang SC", sans-serif;
+    --sidebar-width: 240px;
+    --content-max: 920px;
+    --content-pad: 40px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font-family);
+    background: var(--color-bg);
+    color: var(--color-text-primary);
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Skip to content ===== */
+.skip-to-content {
+    position: absolute;
+    left: -9999px;
+    top: 4px;
+    z-index: 9999;
+    padding: 8px 16px;
+    background: var(--color-info);
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+}
+.skip-to-content:focus { left: 4px; }
+
+/* ===== Layout ===== */
+.layout-wrapper {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ===== Sidebar ===== */
+.sidebar-nav {
+    width: var(--sidebar-width);
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: #fff;
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0 16px;
+    transition: transform 280ms ease, width 280ms ease;
+    z-index: 10;
+}
+.sidebar-nav.sidebar-collapsed { transform: translateX(calc(-1 * var(--sidebar-width))); }
+
+.sidebar-doc-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0 18px 12px;
+    border-bottom: 1px solid var(--color-border-light);
+    margin-bottom: 8px;
+}
+
+.toc-section { padding: 4px 0; }
+
+.toc-link {
+    display: block;
+    padding: 6px 18px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-right: 2px solid transparent;
+    transition: color 150ms ease, background 150ms ease, border-color 150ms ease;
+    line-height: 1.4;
+}
+.toc-link:hover { color: var(--color-info); background: var(--color-info-50); }
+.toc-link.toc-active { color: var(--color-info); border-right-color: var(--color-info); background: var(--color-info-50); font-weight: 600; }
+.toc-link.toc-sub { padding-left: 30px; font-size: 12px; color: var(--color-text-muted); }
+.toc-link.toc-sub.toc-active { color: var(--color-info); }
+
+.reading-progress-wrap {
+    margin-top: auto;
+    padding: 16px 18px 8px;
+    border-top: 1px solid var(--color-border-light);
+}
+.reading-progress-label {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    margin-bottom: 6px;
+}
+.reading-progress-track {
+    height: 4px;
+    background: var(--color-border);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.reading-progress-fill {
+    height: 100%;
+    background: var(--color-info);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+/* ===== Collapse Button ===== */
+.sidebar-collapse-btn {
+    position: fixed;
+    left: calc(var(--sidebar-width) - 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 48px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    z-index: 20;
+    transition: left 280ms ease, background 150ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sidebar-collapse-btn:hover { background: var(--color-info-50); color: var(--color-info); }
+.sidebar-collapse-btn.collapsed-pos { left: 0; }
+
+/* ===== Content Area ===== */
+.content-area {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.content-inner {
+    width: 100%;
+    max-width: var(--content-max);
+    padding: 48px var(--content-pad) 120px;
+}
+
+/* ===== Doc Header ===== */
+.doc-header {
+    background: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+    border-radius: var(--radius-lg);
+    padding: 40px 36px;
+    color: #fff;
+    margin-bottom: 40px;
+}
+.header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+    align-items: center;
+}
+.meta-tag {
+    background: rgba(255,255,255,0.2);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.doc-title {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 12px;
+}
+.doc-subtitle {
+    font-size: 16px;
+    opacity: 0.88;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+.header-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.25);
+}
+.header-stat { font-size: 13px; opacity: 0.9; }
+.header-stat strong { font-size: 20px; font-weight: 800; margin-right: 4px; }
+
+/* ===== Chapter Label ===== */
+.doc-chapter-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #A8A29E;
+    padding: 36px 0 12px;
+}
+.doc-chapter-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border-light);
+}
+
+/* ===== Section title ===== */
+.section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+.section-desc {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+    line-height: 1.7;
+}
+
+/* ===== Stat Cards ===== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+.stat-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: var(--shadow-card);
+    border-top: 3px solid var(--stat-accent, #E7E5E4);
+    transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.stat-info    { --stat-accent: #2563EB; }
+.stat-success { --stat-accent: #059669; }
+.stat-warning { --stat-accent: #D97706; }
+.stat-purple  { --stat-accent: #7C3AED; }
+.stat-danger  { --stat-accent: #E11D48; }
+.stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+    margin-bottom: 4px;
+}
+.stat-label { font-size: 13px; color: var(--color-text-secondary); }
+
+/* ===== Mechanism Cards ===== */
+.mechanism-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+}
+.mechanism-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.mechanism-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card-rich); }
+.mechanism-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--color-info));
+}
+.mechanism-card.accent-green { --card-accent: var(--color-success); }
+.mechanism-card.accent-blue { --card-accent: var(--color-info); }
+.mechanism-card.accent-purple { --card-accent: var(--color-purple); }
+.mechanism-card.accent-amber { --card-accent: var(--color-warning); }
+.mechanism-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+}
+.mechanism-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+.mechanism-body {
+    font-size: 13.5px;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+.mechanism-tag {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 3px 10px;
+    background: var(--color-info-50);
+    color: var(--color-info);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+}
+.mechanism-card.accent-green .mechanism-tag { background: #ECFDF5; color: var(--color-success); }
+.mechanism-card.accent-purple .mechanism-tag { background: var(--color-purple-50); color: var(--color-purple); }
+.mechanism-card.accent-amber .mechanism-tag { background: var(--color-warning-50); color: var(--color-warning); }
+
+/* ===== Quote Block ===== */
+.quote-block {
+    background: linear-gradient(135deg, #F8FAFB 0%, #EEF2F6 100%);
+    border-left: 3px solid var(--color-info);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 20px 24px;
+    margin: 20px 0;
+}
+.quote-block.green { border-left-color: var(--color-success); }
+.quote-block.purple { border-left-color: var(--color-purple); }
+.quote-block.amber { border-left-color: var(--color-warning); }
+.quote-text {
+    font-size: 14.5px;
+    color: var(--color-text-primary);
+    line-height: 1.75;
+    font-style: italic;
+}
+.quote-author {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    margin-top: 8px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+/* ===== Insight Cards ===== */
+.insight-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 32px; }
+.insight-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    gap: 16px;
+}
+.insight-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+.insight-icon.green { background: #ECFDF5; }
+.insight-icon.blue { background: var(--color-info-50); }
+.insight-icon.purple { background: var(--color-purple-50); }
+.insight-icon.amber { background: var(--color-warning-50); }
+.insight-content {}
+.insight-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 6px;
+    line-height: 1.3;
+}
+.insight-body {
+    font-size: 13.5px;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+.insight-source {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--color-text-muted);
+    background: var(--color-border-light);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* ===== Timeline ===== */
+.timeline { position: relative; padding-left: 28px; margin-bottom: 32px; }
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--color-success) 0%, var(--color-info) 100%);
+}
+.timeline-item { position: relative; margin-bottom: 20px; }
+.timeline-dot {
+    position: absolute;
+    left: -24px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-info);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px var(--color-info);
+}
+.timeline-dot.green { background: var(--color-success); box-shadow: 0 0 0 2px var(--color-success); }
+.timeline-dot.purple { background: var(--color-purple); box-shadow: 0 0 0 2px var(--color-purple); }
+.timeline-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+}
+.timeline-content {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    font-size: 13.5px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    box-shadow: var(--shadow-card);
+}
+.timeline-title { font-size: 14px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 4px; }
+
+/* ===== Progress Bars ===== */
+.progress-group { margin-bottom: 24px; }
+.progress-item { margin-bottom: 14px; }
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+.progress-name { font-size: 13px; font-weight: 600; color: var(--color-text-primary); }
+.progress-pct { font-size: 12px; font-weight: 700; color: var(--color-text-muted); }
+.progress-track {
+    height: 8px;
+    background: var(--color-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1.2s cubic-bezier(.25,.46,.45,.94);
+}
+.bar-green { background: linear-gradient(90deg, #059669, #10B981); }
+.bar-blue { background: linear-gradient(90deg, #2563EB, #3B82F6); }
+.bar-purple { background: linear-gradient(90deg, #7C3AED, #8B5CF6); }
+.bar-amber { background: linear-gradient(90deg, #D97706, #F59E0B); }
+
+/* ===== Warning / Callout ===== */
+.callout {
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    margin: 20px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 13.5px;
+    line-height: 1.7;
+}
+.callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.callout-body {}
+.callout-title { font-weight: 700; margin-bottom: 4px; }
+.callout.warning { background: var(--color-warning-50); border: 1px solid #FDE68A; color: #92400E; }
+.callout.info { background: var(--color-info-50); border: 1px solid #BFDBFE; color: #1E40AF; }
+.callout.success { background: #ECFDF5; border: 1px solid #A7F3D0; color: #065F46; }
+.callout.purple { background: var(--color-purple-50); border: 1px solid #DDD6FE; color: #5B21B6; }
+
+/* ===== Source Table ===== */
+.source-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+.source-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background: #FAFAF9;
+    color: var(--color-text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-border);
+}
+.source-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--color-border-light);
+    color: var(--color-text-secondary);
+    vertical-align: top;
+    line-height: 1.5;
+}
+.source-table tr:hover td { background: rgba(0,0,0,0.018); }
+.source-table a { color: var(--color-info); text-decoration: none; }
+.source-table a:hover { text-decoration: underline; }
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+.badge-p1 { background: #ECFDF5; color: #065F46; }
+.badge-p2 { background: var(--color-info-50); color: #1E40AF; }
+.badge-p3 { background: var(--color-purple-50); color: #5B21B6; }
+
+/* ===== Divider ===== */
+.section-divider { border: none; border-top: 1px solid var(--color-border-light); margin: 40px 0 0; }
+
+/* ===== Scroll to Top ===== */
+.scroll-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 28px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-info);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease, visibility 200ms ease, transform 150ms ease;
+    box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    z-index: 50;
+}
+.scroll-to-top.visible { opacity: 1; visibility: visible; }
+.scroll-to-top:hover { transform: translateY(-2px); }
+
+/* ===== Animate on scroll ===== */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.42s ease, transform 0.42s ease;
+}
+.animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+    .animate-on-scroll { transition: none; opacity: 1; transform: none; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    :root { --sidebar-width: 260px; }
+    .sidebar-nav {
+        position: fixed;
+        height: 100%;
+        transform: translateX(calc(-1 * var(--sidebar-width)));
+        z-index: 100;
+    }
+    .sidebar-nav.mobile-open { transform: translateX(0); }
+    .content-inner { padding: 52px 16px 80px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .mechanism-grid { grid-template-columns: 1fr; }
+    .doc-title { font-size: 24px; }
+    .source-table { display: block; overflow-x: auto; }
+}
+</style>
+</head>
+<body>
+<a class="skip-to-content" href="#main-content">跳到主内容</a>
+
+<div class="layout-wrapper">
+<!-- Sidebar TOC -->
+<nav class="sidebar-nav" id="sidebar" aria-label="目录导航">
+    <div class="sidebar-doc-title">AI洞察 · 深度调研</div>
+    <div class="toc-section">
+        <div style="padding:4px 18px 6px;font-size:11px;font-weight:700;color:#A8A29E;letter-spacing:0.08em;text-transform:uppercase;">目录</div>
+        <a href="#overview"    class="toc-link">01 研究概述</a>
+        <a href="#speed-data"  class="toc-link">02 速度数据</a>
+        <a href="#mechanism"   class="toc-link">03 三板斧机制</a>
+        <a href="#mechanism"   class="toc-link toc-sub">3.1 目标定义</a>
+        <a href="#launch-room" class="toc-link toc-sub">3.2 Research Preview</a>
+        <a href="#launch-room" class="toc-link toc-sub">3.3 Launch Room</a>
+        <a href="#model-eats"  class="toc-link">04 模型吃功能</a>
+        <a href="#roles"       class="toc-link">05 角色融合</a>
+        <a href="#mission"     class="toc-link">06 使命筛子</a>
+        <a href="#insights"    class="toc-link">07 核心洞察</a>
+        <a href="#roadmap"     class="toc-link">08 未来路线图</a>
+        <a href="#sources"     class="toc-link">09 信源矩阵</a>
+    </div>
+    <div class="reading-progress-wrap">
+        <div class="reading-progress-label">阅读进度</div>
+        <div class="reading-progress-track">
+            <div class="reading-progress-fill" id="readingProgress"></div>
+        </div>
+    </div>
+</nav>
+
+<button class="sidebar-collapse-btn" id="collapseBtn" title="折叠导航" aria-label="折叠导航">«</button>
+
+<main class="content-area" id="main-content">
+<div class="content-inner">
+
+<!-- Header -->
+<header class="doc-header">
+    <div class="header-meta">
+        <span class="meta-tag">🔬 深度调研</span>
+        <span class="meta-tag">产品方法论</span>
+        <span class="meta-tag">Anthropic</span>
+        <span class="meta-tag">2026-04-25</span>
+    </div>
+    <h1 class="doc-title">Anthropic 产品速度密码</h1>
+    <p class="doc-subtitle">40天30+功能、模型吃掉产品、PM与工程师融合——解读 Claude Code 产品负责人 Cat Wu 的产品观与方法论</p>
+    <div class="header-stats">
+        <div class="header-stat"><strong>40天</strong>30+ 功能上线</div>
+        <div class="header-stat"><strong>6→1个月</strong>迭代周期压缩</div>
+        <div class="header-stat"><strong>3</strong>板斧核心机制</div>
+        <div class="header-stat"><strong>4</strong>层洞察提炼</div>
+    </div>
+</header>
+
+<!-- 01 Overview -->
+<section id="overview">
+    <div class="doc-chapter-label">01 · 研究概述</div>
+    <h2 class="section-title">这份调研是什么</h2>
+    <p class="section-desc">
+        本报告基于 Lenny's Newsletter 与 Anthropic Claude Code 产品负责人 Cat Wu 的深度访谈（2026-04-22 发布），结合 PM Daily Digest 第三方独立分析，以及两篇国内高质量解读文章，经多源交叉验证后整理而成。
+    </p>
+
+    <div class="callout info animate-on-scroll">
+        <span class="callout-icon">📌</span>
+        <div class="callout-body">
+            <div class="callout-title">研究核心问题</div>
+            Anthropic 如何在 AI 时代实现几乎每天一个新功能上线的产品速度？背后的方法论、组织结构和产品哲学是什么？这种模式的代价是什么、又对其他团队有何参考价值？
+        </div>
+    </div>
+
+    <div class="callout success animate-on-scroll" style="margin-top:12px;">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+            <div class="callout-title">信源质量说明</div>
+            主信源：Lenny's Newsletter 第一手深度访谈（P1级）。交叉验证：PM Daily Digest 独立分析（P2级，明确指出 watch out 条件）。Cat Wu 本人公开在访谈中承认了速度的代价，未被国内解读充分放大。
+        </div>
+    </div>
+</section>
+
+<!-- 02 Speed Data -->
+<section id="speed-data">
+    <hr class="section-divider">
+    <div class="doc-chapter-label">02 · 速度数据</div>
+    <h2 class="section-title">快到什么程度</h2>
+    <p class="section-desc">数据来自 Cat Wu 访谈原文，经 PM Daily Digest 独立引用验证。</p>
+
+    <div class="stats-grid">
+        <div class="stat-card stat-success animate-on-scroll">
+            <div class="stat-value">40天</div>
+            <div class="stat-label">30+ 功能上线（2026年初）</div>
+        </div>
+        <div class="stat-card stat-info animate-on-scroll" style="transition-delay:.06s">
+            <div class="stat-value">6→1个月</div>
+            <div class="stat-label">功能迭代周期压缩</div>
+        </div>
+        <div class="stat-card stat-purple animate-on-scroll" style="transition-delay:.12s">
+            <div class="stat-value">1天</div>
+            <div class="stat-label">最快单功能上线周期</div>
+        </div>
+        <div class="stat-card stat-warning animate-on-scroll" style="transition-delay:.18s">
+            <div class="stat-value">6个</div>
+            <div class="stat-label">用户平均同时运行 Claude 实例（2025年底）</div>
+        </div>
+    </div>
+
+    <div class="timeline animate-on-scroll">
+        <div class="timeline-item">
+            <div class="timeline-dot green"></div>
+            <div class="timeline-label">行业传统 / 2020年前</div>
+            <div class="timeline-content">
+                <div class="timeline-title">6–12个月功能周期</div>
+                立项→设计→评审→研发→测试→发布，全链路走完往往需要半年到一年。
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-label">Anthropic 现状 / 2025–2026</div>
+            <div class="timeline-content">
+                <div class="timeline-title">压缩至 1个月→1周→1天</div>
+                三板斧机制下，大部分功能 1个月内上线，部分功能 1周，最快的当天就能发出。
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot purple"></div>
+            <div class="timeline-label">未来路线图 / 2026+</div>
+            <div class="timeline-content">
+                <div class="timeline-title">50–100个 Claude 并行</div>
+                从当前 6个并行实例，演进到几十上百个 Claude 同时在云端处理任务的阶段。
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 03 Mechanism -->
+<section id="mechanism">
+    <hr class="section-divider">
+    <div class="doc-chapter-label">03 · 三板斧机制</div>
+    <h2 class="section-title">速度的三个核心机制</h2>
+    <p class="section-desc">Cat Wu 明确表示："大部分加速来自流程和团队文化，而不是内部使用了更强的模型。"</p>
+
+    <div class="mechanism-grid">
+        <div class="mechanism-card accent-green animate-on-scroll">
+            <div class="mechanism-number">机制 01</div>
+            <div class="mechanism-title">目标锁定 — 先定义用户与场景</div>
+            <div class="mechanism-body">
+                LLM 太通用，团队必须先锁定"核心用户是谁""要解决的具体问题是什么""成功的衡量标准是什么"，才能让工程师自主决策而不等 PM 拍板。
+                <br><br>
+                <strong>典型例子</strong>：某功能目标是"让企业开发者安全实现零权限提示"，这一句话排除了 90% 不相关方案。
+            </div>
+            <span class="mechanism-tag">目标即过滤器</span>
+        </div>
+        <div class="mechanism-card accent-blue animate-on-scroll" style="transition-delay:.06s" id="launch-room">
+            <div class="mechanism-number">机制 02</div>
+            <div class="mechanism-title">Research Preview — 降低发布门槛</div>
+            <div class="mechanism-body">
+                所有功能以"研究预览"形式发布——明确告知用户这是早期版本，可能不会永久保留。这样一来，不需要做到完美才发布，1–2 周就可以把东西推出去。
+                <br><br>
+                这是一种<strong>信任合约</strong>：Anthropic 用透明换速度，用户用宽容换早期体验。
+            </div>
+            <span class="mechanism-tag">信任合约换速度</span>
+        </div>
+        <div class="mechanism-card accent-amber animate-on-scroll" style="transition-delay:.12s">
+            <div class="mechanism-number">机制 03</div>
+            <div class="mechanism-title">Evergreen Launch Room — 极简协作管道</div>
+            <div class="mechanism-body">
+                工程师认为功能准备好了，直接发进 Slack 频道"launch room"。Docs 负责人、PMM、DevRel 等成员收到后，<strong>第二天就能交出上线公告</strong>。
+                <br><br>
+                整个协调成本极低，低到让每个工程师都敢直接把想法推出去。
+            </div>
+            <span class="mechanism-tag">次日交付</span>
+        </div>
+    </div>
+
+    <div class="quote-block animate-on-scroll">
+        <div class="quote-text">"我们希望移除一切阻碍发布的障碍。团队里每个人都应该能在一周之内，甚至一天之内，把自己的想法变成产品。"</div>
+        <div class="quote-author">— Cat Wu，Claude Code 产品负责人 · Lenny's Newsletter 访谈</div>
+    </div>
+
+    <div class="callout warning animate-on-scroll">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+            <div class="callout-title">PM Daily Digest 独立指出的代价（Watch Out）</div>
+            Anthropic 自己也承认：这套模式的代价是<strong>产品一致性下降</strong>——两个团队会同时做同一件事，用户发现负担上升（/powerup 功能的出现正是为了解决"功能太多不知用哪个"的问题）。速度快时，onboarding 需要加倍。
+        </div>
+    </div>
+</section>
+
+<!-- 04 Model Eats Feature -->
+<section id="model-eats">
+    <hr class="section-divider">
+    <div class="doc-chapter-label">04 · 模型吃功能</div>
+    <h2 class="section-title">每次新模型上线，第一件事是删功能</h2>
+    <p class="section-desc">这是 Cat Wu 访谈中最具洞察力的一个观点，也是"速度"的隐形加速器。</p>
+
+    <div class="quote-block green animate-on-scroll">
+        <div class="quote-text">"每次发布新模型，我们都会通读整个 system prompt，逐段反思：模型还需要这个提醒吗？如果不需要了，就删掉。"</div>
+        <div class="quote-author">— Cat Wu · Lenny's Newsletter 访谈</div>
+    </div>
+
+    <div class="insight-list">
+        <div class="insight-card animate-on-scroll">
+            <div class="insight-icon green">🔄</div>
+            <div class="insight-content">
+                <div class="insight-title">To-Do List 功能的消亡案例</div>
+                <div class="insight-body">
+                    早期 Claude Code 有 to-do list 功能，因为当时的模型做大规模代码重构时会漏改调用点。团队靠"让模型先列清单再逐个完成"的方法弥补了模型能力缺口。
+                    <br>Opus 4 发布后，模型自己就能主动列清单并逐一完成——to-do list 从"必要的拐杖"变成了"可有可无的辅助界面"。
+                </div>
+                <span class="insight-source">来源：Lenny's Newsletter × Cat Wu (2026-04-22)</span>
+            </div>
+        </div>
+        <div class="insight-card animate-on-scroll">
+            <div class="insight-icon blue">⚡</div>
+            <div class="insight-content">
+                <div class="insight-title">代码审查：等到模型能力匹配才真正发布</div>
+                <div class="insight-body">
+                    代码审查功能开发了多个版本，但准确率一直不够。直到 Opus 4.5 / 4.6 出来才达到真正可依赖的水平——现在 Anthropic 内部合并 PR 之前，必须先过 Claude 的代码审查。
+                    <br><br>
+                    这印证了 Cat Wu 的另一个原则：<strong>提前做好还没完全能用的产品原型，等新模型出来时直接换上去看差距有没有被弥合。</strong>
+                </div>
+                <span class="insight-source">来源：Lenny's Newsletter × Cat Wu + cryptorank.io 新闻验证</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="callout purple animate-on-scroll">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+            <div class="callout-title">Lenny 的类比："模型会把你的 harness 当早餐吃掉"</div>
+            在 AI 产品开发中，很多"功能"其实是在弥补模型能力的不足。模型越强，需要弥补的越少，产品代码越轻——这是 AI 原生产品的独特剪枝逻辑。
+        </div>
+    </div>
+</section>
+
+<!-- 05 Roles -->
+<section id="roles">
+    <hr class="section-divider">
+    <div class="doc-chapter-label">05 · 角色融合</div>
+    <h2 class="section-title">PM 与工程师的边界正在消失</h2>
+    <p class="section-desc">Cat Wu 采访了数百位想进 Anthropic 做 PM 的人，发现大多数人还在用旧时代的思路。</p>
+
+    <div class="stats-grid" style="grid-template-columns:repeat(2,1fr);max-width:500px;">
+        <div class="stat-card stat-danger animate-on-scroll">
+            <div class="stat-value">贬值</div>
+            <div class="stat-label">传统 PM 核心技能：多季度路线图、跨团队协调、等所有人对齐</div>
+        </div>
+        <div class="stat-card stat-success animate-on-scroll" style="transition-delay:.06s">
+            <div class="stat-value">升值</div>
+            <div class="stat-label">新核心稀缺力：产品品味 — 代码越便宜，决定写什么越贵</div>
+        </div>
+    </div>
+
+    <div class="quote-block purple animate-on-scroll">
+        <div class="quote-text">"代码变得越来越便宜了。那什么变得更有价值呢？决定写什么。"</div>
+        <div class="quote-author">— Cat Wu</div>
+    </div>
+
+    <div class="progress-group animate-on-scroll">
+        <div class="progress-item">
+            <div class="progress-header">
+                <span class="progress-name">工程师自主发布功能的比例（Anthropic 内部）</span>
+                <span class="progress-pct">~80%</span>
+            </div>
+            <div class="progress-track"><div class="bar-fill bar-green" style="width:80%"></div></div>
+        </div>
+        <div class="progress-item">
+            <div class="progress-header">
+                <span class="progress-name">有工程背景的 PM / 设计师占比</span>
+                <span class="progress-pct">~100%</span>
+            </div>
+            <div class="progress-track"><div class="bar-fill bar-blue" style="width:100%"></div></div>
+        </div>
+        <div class="progress-item">
+            <div class="progress-header">
+                <span class="progress-name">PM 与工程师判断一致率（Cat Wu × Boris Cherny）</span>
+                <span class="progress-pct">~80%</span>
+            </div>
+            <div class="progress-track"><div class="bar-fill bar-purple" style="width:80%"></div></div>
+        </div>
+    </div>
+
+    <div class="callout info animate-on-scroll">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">
+            <div class="callout-title">Marty Cagan 的对照视角（独立验证来源）</div>
+            PM Daily Digest 引用了 Marty Cagan 的三种 PM 模型分类：①积压订单拥有者（软件工厂）②路线图驱动 ③赋能产品型 PM。他认为前两种直接被 AI 自动化威胁，第三种因为"拥有成果、快速发现、方案塑造"而保持价值——与 Cat Wu 的结论高度一致。
+        </div>
+    </div>
+</section>
+
+<!-- 06 Mission Filter -->
+<section id="mission">
+    <hr class="section-divider">
+    <div class="doc-chapter-label">06 · 使命筛子</div>
+    <h2 class="section-title">速度的深层原因：不是工程能力，是使命对齐</h2>
+    <p class="section-desc">PM Daily Digest 将此提炼为："速度是公司级决策系统的产物，而不是更快的工程栈。"</p>
+
+    <div class="mechanism-grid">
+        <div class="mechanism-card accent-green animate-on-scroll">
+            <div class="mechanism-title">使命提供决策过滤器</div>
+            <div class="mechanism-body">
+                Anthropic 不做社交网络、不做资讯 Feed——这些方向可能赚钱，但不符合"安全 AGI"的使命，直接被过滤掉。这让团队在一个四处扩张的行业里保持了极高的执行密度。
+            </div>
+            <span class="mechanism-tag">专注 > 扩张</span>
+        </div>
+        <div class="mechanism-card accent-blue animate-on-scroll" style="transition-delay:.06s">
+            <div class="mechanism-title">团队愿意牺牲本地目标</div>
+            <div class="mechanism-body">
+                Cat Wu 说了一句让人印象深刻的话："如果 Claude Code 失败了但 Anthropic 整体成功，我会很开心。"<br><br>
+                跨组织协调之所以快，是因为每个人都已经把公司使命内化，不需要在本地目标和全局目标之间反复拉扯。
+            </div>
+            <span class="mechanism-tag">使命内化</span>
+        </div>
+    </div>
+
+    <div class="quote-block animate-on-scroll">
+        <div class="quote-text">"工作本来就是假的。如果你理解了约束条件，你就能想出该做什么，然后就去做。快速行动，从错误中学习，如果做错了就道歉并修复。"</div>
+        <div class="quote-author">— Cat Wu 的人生座右铭："Just do things"</div>
+    </div>
+</section>
+
+<!-- 07 Insights -->
+<section id="insights">
+    <hr class="section-divider">
+    <div class="doc-chapter-label">07 · 核心洞察</div>
+    <h2 class="section-title">四条非显而易见的洞察</h2>
+    <p class="section-desc">经多源交叉验证，提炼四条具有可操作性、证据充分、且不够显而易见的洞察。</p>
+
+    <div class="insight-list">
+        <div class="insight-card animate-on-scroll">
+            <div class="insight-icon green">🎯</div>
+            <div class="insight-content">
+                <div class="insight-title">洞察1：速度不来自工程能力，来自决策成本为零</div>
+                <div class="insight-body">
+                    Anthropic 快，不是因为工程师更强或代码写得更快，而是因为工程师<strong>不需要等待</strong>——目标清晰（不需要等 PM 对齐），Launch Room（不需要等审批），Research Preview（不需要等做完）。速度的核心公式是：消除等待，而非提速执行。
+                </div>
+                <span class="insight-source">来源：Cat Wu 访谈 + PM Daily Digest 独立验证</span>
+            </div>
+        </div>
+        <div class="insight-card animate-on-scroll">
+            <div class="insight-icon blue">🔄</div>
+            <div class="insight-content">
+                <div class="insight-title">洞察2：「模型吃功能」是速度的隐形加速器</div>
+                <div class="insight-body">
+                    每次新模型上线，Anthropic 不是只加功能，而是先删功能——因为模型本身承接了过去靠 harness 层弥补的能力缺口。速度不只来自发布快，还来自"功能债"主动清零，产品越来越轻。这是 AI 原生产品区别于传统产品的核心剪枝逻辑。
+                </div>
+                <span class="insight-source">来源：Cat Wu 访谈（to-do list 案例 + system prompt 通读机制）</span>
+            </div>
+        </div>
+        <div class="insight-card animate-on-scroll">
+            <div class="insight-icon purple">⚡</div>
+            <div class="insight-content">
+                <div class="insight-title">洞察3：「95% 自动化 = 0 自动化」的信任成本理论</div>
+                <div class="insight-body">
+                    Cat Wu 的判断：如果一个自动化不能 100% 工作，你就不能真正依赖它——监督它本身消耗的时间 ≥ 节省的时间。只有做到完全可靠，自动化才能真正解放注意力。这对很多"做到 90% 就放那儿"的团队是一个挑战。
+                </div>
+                <span class="insight-source">来源：Cat Wu 访谈 + PM Daily Digest 引用 ("95% automation is not really automation")</span>
+            </div>
+        </div>
+        <div class="insight-card animate-on-scroll">
+            <div class="insight-icon amber">⚠️</div>
+            <div class="insight-content">
+                <div class="insight-title">洞察4：速度有代价，Cat Wu 自己承认了</div>
+                <div class="insight-body">
+                    功能一致性下降、两个团队同时做同一件事、用户发现成本上升（/powerup 功能的出现是典型例证）。Cat Wu 坦言 /powerup 其实违背了"产品应该直觉到不需要教程"的原则，但功能太多、用户需要引导。这个代价在国内解读中被普遍忽略，但在 PM Daily Digest 中被明确标注为 "Watch Out"。
+                </div>
+                <span class="insight-source">来源：Cat Wu 访谈 (powerup 案例) + PM Daily Digest Watch Out 标注</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 08 Roadmap -->
+<section id="roadmap">
+    <hr class="section-divider">
+    <div class="doc-chapter-label">08 · 未来路线图</div>
+    <h2 class="section-title">Cat Wu 的三阶段产品演进</h2>
+    <p class="section-desc">Cat Wu 将 Claude Code 的演进拆成了三个阶段，像搭积木一样。</p>
+
+    <div class="timeline animate-on-scroll">
+        <div class="timeline-item">
+            <div class="timeline-dot green"></div>
+            <div class="timeline-label">第一步（当前主要阶段）</div>
+            <div class="timeline-content">
+                <div class="timeline-title">单任务成功：给清晰 prompt，输出可合并的代码</div>
+                确保单个 Claude 能稳定完成清晰定义的任务，输出可以直接合并的代码或可以直接分享的文档。
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-label">第二步（2025年底已开始）</div>
+            <div class="timeline-content">
+                <div class="timeline-title">多任务并行：用户同时跑 6 个 Claude</div>
+                multi-coding 已经开始火了，目前用户平均同时运行 6 个 Claude 实例。
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot purple"></div>
+            <div class="timeline-label">第三步（未来路线图）</div>
+            <div class="timeline-content">
+                <div class="timeline-title">50–100 个 Claude 同时跑，任务跑在远端</div>
+                到那时，界面需要告诉用户哪些任务需要看一眼，模型能自我验证工作，用户看到"已完成"时可以放心信任。而且这个过程要能自我改进——你给了一次反馈，模型在之后的每次运行中都不会再犯同样的错误。
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 09 Sources -->
+<section id="sources">
+    <hr class="section-divider">
+    <div class="doc-chapter-label">09 · 信源矩阵</div>
+    <h2 class="section-title">多源交叉验证体系</h2>
+    <p class="section-desc">本报告信源按 P1/P2/P3 优先级分级，核心结论均经跨源验证。</p>
+
+    <div class="animate-on-scroll">
+        <table class="source-table">
+            <thead>
+                <tr>
+                    <th>优先级</th>
+                    <th>信源</th>
+                    <th>类型</th>
+                    <th>核心贡献</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge badge-p1">P1</span></td>
+                    <td><a href="https://www.lennysnewsletter.com/p/how-anthropics-product-team-moves" target="_blank">Lenny's Newsletter × Cat Wu 深度访谈</a></td>
+                    <td>第一手深度访谈</td>
+                    <td>三板斧机制、模型吃功能、角色融合、源码泄露、Cat Wu 个人风格全覆盖</td>
+                </tr>
+                <tr>
+                    <td><span class="badge badge-p2">P2</span></td>
+                    <td><a href="https://mp.weixin.qq.com/s/t09DBqWAlujcUOfa3iWtCQ" target="_blank">微信公众号文章（AI产品观察）</a></td>
+                    <td>国内高质量解读</td>
+                    <td>11章节深度梳理，中文本地化，细节还原度高</td>
+                </tr>
+                <tr>
+                    <td><span class="badge badge-p2">P2</span></td>
+                    <td><a href="https://mp.weixin.qq.com/s/yvE2ffN3ZR_BEQwUtkHfcQ" target="_blank">微信公众号文章（YAR师）</a></td>
+                    <td>国内解读</td>
+                    <td>补充 Evals 重要性、PM 角色变化、Cowork 使用案例细节</td>
+                </tr>
+                <tr>
+                    <td><span class="badge badge-p2">P2</span></td>
+                    <td><a href="https://zeronoise.ai/posts/product-taste-weekly-shipping-and-higher-signal-discovery-s08itv6dqc/download/pdf" target="_blank">PM Daily Digest (zeronoise.ai, 2026-04-24)</a></td>
+                    <td>独立第三方分析</td>
+                    <td>交叉验证三大机制，明确标注速度代价（Watch Out：功能一致性），Marty Cagan 对照</td>
+                </tr>
+                <tr>
+                    <td><span class="badge badge-p3">P3</span></td>
+                    <td>Marty Cagan 三种 PM 模型（via PM Daily Digest）</td>
+                    <td>行业背景视角</td>
+                    <td>反向对照：三种 PM 模型，加深对产品品味稀缺性的理解</td>
+                </tr>
+                <tr>
+                    <td><span class="badge badge-p3">P3</span></td>
+                    <td><a href="https://mlq.ai/news/anthropic-launches-code-review-feature-for-claude-code/" target="_blank">mlq.ai + cryptorank.io 新闻</a></td>
+                    <td>事实验证</td>
+                    <td>验证代码审查功能以 research preview 形式发布，Cat Wu 公开描述的事实核查</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Footer "了解更多" — 标准模板 P0 -->
+<div style="max-width:var(--content-max);margin:0 auto;padding:16px 0 48px;">
+<div style="background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #E7E5E4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+    <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+    <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+        我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+    </p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+            🏠 访问AI洞察首页
+        </a>
+    </div>
+    <div style="border-top:1px solid #E7E5E4;padding-top:12px;margin-top:12px;">
+        <div style="font-size:13px;font-weight:600;color:#1C1917;margin-bottom:8px;">📚 参考来源</div>
+        <ul style="list-style:none;padding:0;margin:0;font-size:13px;">
+            <li style="margin-bottom:6px;"><a href="https://www.lennysnewsletter.com/p/how-anthropics-product-team-moves" target="_blank" style="color:#2563EB;text-decoration:none;">🎙️ Lenny's Newsletter: How Anthropic's product team moves faster than anyone else | Cat Wu</a></li>
+            <li style="margin-bottom:6px;"><a href="https://www.youtube.com/watch?v=PplmzlgE0kg" target="_blank" style="color:#2563EB;text-decoration:none;">🎬 YouTube 完整访谈视频</a></li>
+            <li style="margin-bottom:6px;"><a href="https://mp.weixin.qq.com/s/t09DBqWAlujcUOfa3iWtCQ" target="_blank" style="color:#2563EB;text-decoration:none;">📱 微信公众号解读（AI产品观察）</a></li>
+            <li style="margin-bottom:6px;"><a href="https://mp.weixin.qq.com/s/yvE2ffN3ZR_BEQwUtkHfcQ" target="_blank" style="color:#2563EB;text-decoration:none;">📱 微信公众号解读（YAR师）</a></li>
+        </ul>
+    </div>
+</div>
+</div>
+
+</div><!-- content-inner -->
+</main><!-- content-area -->
+</div><!-- layout-wrapper -->
+
+<button class="scroll-to-top" id="scrollToTop" title="回到顶部" aria-label="回到顶部">↑</button>
+
+<script>
+(function () {
+    "use strict";
+    const HEADER_OFFSET = 72;
+    const SPY_OFFSET    = 110;
+    const sidebar       = document.getElementById("sidebar");
+    const collapseBtn   = document.getElementById("collapseBtn");
+    const progressBar   = document.getElementById("readingProgress");
+    const scrollTopBtn  = document.getElementById("scrollToTop");
+
+    // 平滑锚点
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener("click", e => {
+            const id = link.getAttribute("href").slice(1);
+            const target = document.getElementById(id);
+            if (!target) return;
+            e.preventDefault();
+            window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET, behavior: "smooth" });
+        });
+    });
+
+    // Scroll Spy
+    const tocLinks = Array.from(document.querySelectorAll(".toc-link"));
+    const anchorEls = tocLinks.map(a => {
+        const href = a.getAttribute("href") || "";
+        return href.startsWith("#") ? document.getElementById(href.slice(1)) : null;
+    }).filter(Boolean);
+
+    function updateTocHighlight() {
+        const scrollY = window.scrollY + SPY_OFFSET;
+        let activeEl = anchorEls[0];
+        for (const el of anchorEls) {
+            if (el && el.offsetTop <= scrollY) activeEl = el;
+            else break;
+        }
+        tocLinks.forEach(link => {
+            const href = link.getAttribute("href") || "";
+            link.classList.toggle("toc-active", activeEl && href === "#" + activeEl.id);
+        });
+    }
+
+    function updateProgress() {
+        if (!progressBar) return;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = (total > 0 ? Math.min(100, window.scrollY / total * 100) : 0).toFixed(1) + "%";
+    }
+
+    // 侧边栏折叠
+    if (collapseBtn) {
+        collapseBtn.addEventListener("click", () => {
+            const isCollapsed = sidebar.classList.toggle("sidebar-collapsed");
+            collapseBtn.textContent = isCollapsed ? "»" : "«";
+            collapseBtn.classList.toggle("collapsed-pos", isCollapsed);
+        });
+    }
+
+    // 回到顶部
+    if (scrollTopBtn) {
+        scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    }
+
+    // rAF 节流
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                updateTocHighlight();
+                updateProgress();
+                if (scrollTopBtn) scrollTopBtn.classList.toggle("visible", window.scrollY > 280);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+
+    updateTocHighlight();
+    updateProgress();
+
+    // 滚动入场动画
+    const animEls = document.querySelectorAll(".animate-on-scroll");
+    if (!("IntersectionObserver" in window)) {
+        animEls.forEach(el => el.classList.add("visible"));
+    } else {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.06, rootMargin: "0px 0px -30px 0px" });
+        animEls.forEach(el => observer.observe(el));
+    }
+
+    // 进度条视口动画
+    const barFills = document.querySelectorAll(".bar-fill");
+    if ("IntersectionObserver" in window && barFills.length) {
+        const barObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const w = el.dataset.targetWidth || el.style.width || "0%";
+                    el.style.width = "0%";
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => { el.style.width = w; });
+                    });
+                    barObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.3 });
+        barFills.forEach(el => {
+            el.dataset.targetWidth = el.style.width || "0%";
+            el.style.width = "0%";
+            barObserver.observe(el);
+        });
+    }
+})();
+</script>
+</body>
+</html>

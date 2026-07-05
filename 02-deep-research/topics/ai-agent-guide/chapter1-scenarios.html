@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一章：场景与价值 - AI Agent 团队落地指南</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/><circle cx='10' cy='8' r='1.5' fill='white'/><circle cx='22' cy='8' r='1.5' fill='white'/><line x1='11' y1='9' x2='13' y2='11' stroke='white' stroke-width='1.5'/><line x1='21' y1='9' x2='19' y2='11' stroke='white' stroke-width='1.5'/></svg>">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="header">
+            <span class="header-badge">AI行业洞察 · 第一章</span>
+            <h1 class="header-title">AI Agent 是什么？能为团队带来什么？</h1>
+            <p class="header-subtitle">用最通俗的语言，帮你建立对 AI Agent 的完整认知</p>
+        </header>
+
+        <!-- Tab导航 -->
+        <nav class="tab-nav" role="navigation" aria-label="章节导航">
+            <a href="index.html" class="tab-btn">
+                <span class="tab-btn-num">📋</span>
+                <span>目录</span>
+            </a>
+            <a href="chapter1-scenarios.html" class="tab-btn active">
+                <span class="tab-btn-num">1</span>
+                <span>场景与价值</span>
+            </a>
+            <a href="chapter2-architecture.html" class="tab-btn">
+                <span class="tab-btn-num">2</span>
+                <span>能力架构</span>
+            </a>
+            <a href="chapter3-implementation.html" class="tab-btn">
+                <span class="tab-btn-num">3</span>
+                <span>落地实践</span>
+            </a>
+            <a href="chapter4-future.html" class="tab-btn">
+                <span class="tab-btn-num">4</span>
+                <span>未来演进</span>
+            </a>
+            <a href="appendix-industry-research.html" class="tab-btn">
+                <span class="tab-btn-num">📊</span>
+                <span>行业调研</span>
+            </a>
+        </nav>
+
+        <!-- 核心洞察 -->
+        <div class="summary-box">
+            <div class="summary-label">本章核心观点</div>
+            <h2 class="summary-title">AI Agent = <em>能自主完成任务的 AI</em>，不只是回答问题</h2>
+            <p class="summary-text">
+                传统 AI 像一个"顾问"——你问它问题，它给你建议，但事情还是你自己做。AI Agent 像一个"实习生"——你告诉它要做什么，它会自己想办法完成，遇到问题会问你，完成后交付成果。
+            </p>
+        </div>
+
+        <!-- 1.1 什么是 AI Agent -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">1.1</span>
+                <h2 class="section-title">什么是 AI Agent</h2>
+            </div>
+
+            <!-- 章节概览图 -->
+            <div class="section-overview">
+                <span class="section-overview-label">章节概览</span>
+                <div class="section-overview-content">
+                    <svg viewBox="0 0 600 160" style="max-width: 600px;">
+                        <defs>
+                            <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#059669"/>
+                                <stop offset="100%" stop-color="#10B981"/>
+                            </linearGradient>
+                            <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#E11D48"/>
+                                <stop offset="100%" stop-color="#FF7B72"/>
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- 左侧：传统AI -->
+                        <g transform="translate(20, 20)">
+                            <rect width="250" height="120" rx="10" fill="#FEF2F2" stroke="#FECACA"/>
+                            <circle cx="20" cy="20" r="12" fill="url(#redGrad)"/>
+                            <text x="20" y="24" text-anchor="middle" font-size="14" fill="white">?</text>
+                            <text x="45" y="24" font-size="13" font-weight="600" fill="#E11D48">传统 AI（ChatGPT）</text>
+                            <text x="20" y="50" font-size="12" fill="#57534E">• 只能回答问题</text>
+                            <text x="20" y="70" font-size="12" fill="#57534E">• 每次对话都"失忆"</text>
+                            <text x="20" y="90" font-size="12" fill="#57534E">• 无法执行实际操作</text>
+                            <text x="125" y="110" text-anchor="middle" font-size="11" fill="#E11D48" font-weight="500">🎓 像"顾问"</text>
+                        </g>
+                        
+                        <!-- 中间：VS标识 -->
+                        <g transform="translate(285, 60)">
+                            <circle cx="15" cy="20" r="20" fill="#FAFAF9" stroke="#E7E5E4"/>
+                            <text x="15" y="26" text-anchor="middle" font-size="14" font-weight="700" fill="#78716C">VS</text>
+                        </g>
+                        
+                        <!-- 右侧：AI Agent -->
+                        <g transform="translate(330, 20)">
+                            <rect width="250" height="120" rx="10" fill="#F0FDF4" stroke="#BBF7D0"/>
+                            <circle cx="20" cy="20" r="12" fill="url(#greenGrad)"/>
+                            <text x="20" y="24" text-anchor="middle" font-size="14" fill="white">✓</text>
+                            <text x="45" y="24" font-size="13" font-weight="600" fill="#059669">AI Agent（新一代）</text>
+                            <text x="20" y="50" font-size="12" fill="#57534E">• 能完成整个任务</text>
+                            <text x="20" y="70" font-size="12" fill="#57534E">• 记住你的偏好</text>
+                            <text x="20" y="90" font-size="12" fill="#57534E">• 自主调用工具执行</text>
+                            <text x="125" y="110" text-anchor="middle" font-size="11" fill="#059669" font-weight="500">👨‍💼 像"员工"</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">用类比来理解</h3>
+            
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                想象你要写一份报告。传统 AI 和 AI Agent 的区别是这样的：
+            </p>
+
+            <div class="compare-grid">
+                <div class="compare-box negative">
+                    <div class="compare-header">
+                        <span class="compare-icon">💬</span>
+                        <h3 class="compare-title">传统 AI 的做法</h3>
+                    </div>
+                    <ul class="compare-list">
+                        <li>你：帮我写一份竞品分析报告</li>
+                        <li>AI：好的，这是报告大纲...（文字）</li>
+                        <li>你需要自己去搜索数据</li>
+                        <li>你需要自己整理成文档</li>
+                        <li>你需要自己调整格式</li>
+                        <li>你需要自己发送给同事</li>
+                    </ul>
+                </div>
+                <div class="compare-box positive">
+                    <div class="compare-header">
+                        <span class="compare-icon">🤖</span>
+                        <h3 class="compare-title">AI Agent 的做法</h3>
+                    </div>
+                    <ul class="compare-list">
+                        <li>你：帮我写一份竞品分析报告</li>
+                        <li>Agent：正在上网搜索竞品信息...</li>
+                        <li>Agent：正在分析数据并生成图表...</li>
+                        <li>Agent：已创建 report.docx 文件</li>
+                        <li>Agent：报告已按你偏好的格式排版</li>
+                        <li>Agent：是否需要我发送给团队？</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">关键区别</div>
+                <p class="insight-text">
+                    <strong>传统 AI 给你"建议"，AI Agent 给你"成果"。</strong><br>
+                    传统 AI 是顾问——给你思路让你自己做；AI Agent 是助手——直接帮你把事情做完。
+                </p>
+            </div>
+        </section>
+
+        <!-- 1.2 AI Agent 能做什么 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">1.2</span>
+                <h2 class="section-title">AI Agent 能做什么</h2>
+            </div>
+
+            <!-- 章节概览图 - 能力矩阵 -->
+            <div class="section-overview">
+                <span class="section-overview-label">能力全景图</span>
+                <div class="section-overview-content">
+                    <svg viewBox="0 0 600 100" style="max-width: 600px;">
+                        <!-- 卡片1 -->
+                        <g transform="translate(10, 10)">
+                            <rect width="110" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="110" height="3" rx="1.5" fill="#059669"/>
+                            <text x="55" y="30" text-anchor="middle" font-size="22">🔧</text>
+                            <text x="55" y="52" text-anchor="middle" font-size="12" font-weight="600" fill="#1C1917">操作能力</text>
+                            <text x="55" y="68" text-anchor="middle" font-size="10" fill="#78716C">读写文件/执行命令</text>
+                        </g>
+                        
+                        <!-- 卡片2 -->
+                        <g transform="translate(130, 10)">
+                            <rect width="110" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="110" height="3" rx="1.5" fill="#2563EB"/>
+                            <text x="55" y="30" text-anchor="middle" font-size="22">💾</text>
+                            <text x="55" y="52" text-anchor="middle" font-size="12" font-weight="600" fill="#1C1917">记忆能力</text>
+                            <text x="55" y="68" text-anchor="middle" font-size="10" fill="#78716C">偏好/规范/经验</text>
+                        </g>
+                        
+                        <!-- 卡片3 -->
+                        <g transform="translate(250, 10)">
+                            <rect width="110" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="110" height="3" rx="1.5" fill="#7C3AED"/>
+                            <text x="55" y="30" text-anchor="middle" font-size="22">🎯</text>
+                            <text x="55" y="52" text-anchor="middle" font-size="12" font-weight="600" fill="#1C1917">专业技能</text>
+                            <text x="55" y="68" text-anchor="middle" font-size="10" fill="#78716C">调研/写作/部署</text>
+                        </g>
+                        
+                        <!-- 卡片4 -->
+                        <g transform="translate(370, 10)">
+                            <rect width="110" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="110" height="3" rx="1.5" fill="#D97706"/>
+                            <text x="55" y="30" text-anchor="middle" font-size="22">🌐</text>
+                            <text x="55" y="52" text-anchor="middle" font-size="12" font-weight="600" fill="#1C1917">联网能力</text>
+                            <text x="55" y="68" text-anchor="middle" font-size="10" fill="#78716C">搜索/抓取/浏览</text>
+                        </g>
+                        
+                        <!-- 卡片5 -->
+                        <g transform="translate(490, 10)">
+                            <rect width="100" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="100" height="3" rx="1.5" fill="#E11D48"/>
+                            <text x="50" y="30" text-anchor="middle" font-size="22">📋</text>
+                            <text x="50" y="52" text-anchor="middle" font-size="12" font-weight="600" fill="#1C1917">规划能力</text>
+                            <text x="50" y="68" text-anchor="middle" font-size="10" fill="#78716C">分解/追踪/交付</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-lg);">
+                一个完整的 AI Agent 具备以下核心能力，这些能力组合在一起，才能让它真正"干活"：
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>能力类型</th>
+                            <th>具体能力</th>
+                            <th>通俗解释</th>
+                            <th>实际例子</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag tag-green">操作能力</span></td>
+                            <td>读写文件、执行命令</td>
+                            <td>能直接操作你的电脑</td>
+                            <td>创建文档、运行程序、部署网站</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-blue">记忆能力</span></td>
+                            <td>记住偏好、规范、经验</td>
+                            <td>了解你的工作习惯</td>
+                            <td>记住你喜欢的代码风格、报告格式</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-purple">专业技能</span></td>
+                            <td>调研、写作、编程、部署</td>
+                            <td>掌握特定领域知识</td>
+                            <td>竞品分析、PPT制作、代码审查</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-orange">联网能力</span></td>
+                            <td>搜索、抓取网页内容</td>
+                            <td>能上网查资料</td>
+                            <td>搜索最新行业报告、获取实时数据</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-red">规划能力</span></td>
+                            <td>任务分解、进度追踪</td>
+                            <td>会自己安排工作</td>
+                            <td>把大任务拆成小步骤，逐个完成</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">真实场景举例</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">场景一：市场调研</h3>
+                    <p class="card-desc">
+                        "帮我调研国内 AI 编程助手市场"<br>
+                        → Agent 自动搜索、汇总信息、生成分析报告
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🐛</div>
+                    <h3 class="card-title">场景二：Bug 修复</h3>
+                    <p class="card-desc">
+                        "这个登录功能有问题，帮我修一下"<br>
+                        → Agent 定位问题、修改代码、运行测试
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <h3 class="card-title">场景三：文档撰写</h3>
+                    <p class="card-desc">
+                        "把这个需求写成技术方案"<br>
+                        → Agent 分析需求、设计方案、输出文档
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🚀</div>
+                    <h3 class="card-title">场景四：项目部署</h3>
+                    <p class="card-desc">
+                        "把这个网站部署上线"<br>
+                        → Agent 执行部署命令、配置域名、验证上线
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1.3 核心价值 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">1.3</span>
+                <h2 class="section-title">对团队的核心价值</h2>
+            </div>
+
+            <!-- 章节概览图 - 价值金字塔 -->
+            <div class="section-overview">
+                <span class="section-overview-label">价值层级</span>
+                <div class="section-overview-content">
+                    <svg viewBox="0 0 500 180" style="max-width: 500px;">
+                        <defs>
+                            <linearGradient id="layerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#059669"/>
+                                <stop offset="100%" stop-color="#047857"/>
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- 顶层 -->
+                        <g transform="translate(175, 10)">
+                            <rect width="150" height="45" rx="6" fill="url(#layerGrad)"/>
+                            <text x="75" y="22" text-anchor="middle" font-size="11" font-weight="600" fill="white">战略价值</text>
+                            <text x="75" y="36" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">竞争优势 · 组织变革</text>
+                        </g>
+                        
+                        <!-- 连接线 -->
+                        <path d="M250 55 L250 65 L175 75 M250 65 L325 75" stroke="#E7E5E4" stroke-width="1.5" fill="none"/>
+                        
+                        <!-- 中间层 -->
+                        <g transform="translate(100, 75)">
+                            <rect width="130" height="45" rx="6" fill="#E6F7ED" stroke="#059669"/>
+                            <text x="65" y="22" text-anchor="middle" font-size="11" font-weight="500" fill="#059669">质量提升</text>
+                            <text x="65" y="36" text-anchor="middle" font-size="10" fill="#57534E">标准化 · 少犯错</text>
+                        </g>
+                        <g transform="translate(270, 75)">
+                            <rect width="130" height="45" rx="6" fill="#E6F7ED" stroke="#059669"/>
+                            <text x="65" y="22" text-anchor="middle" font-size="11" font-weight="500" fill="#059669">效率提升</text>
+                            <text x="65" y="36" text-anchor="middle" font-size="10" fill="#57534E">自动化 · 省时间</text>
+                        </g>
+                        
+                        <!-- 连接线 -->
+                        <path d="M165 120 L165 130 L250 140 M335 120 L335 130 L250 140" stroke="#E7E5E4" stroke-width="1.5" fill="none"/>
+                        
+                        <!-- 底层 -->
+                        <g transform="translate(75, 140)">
+                            <rect width="350" height="35" rx="6" fill="#F8FAFB" stroke="#E7E5E4"/>
+                            <text x="175" y="23" text-anchor="middle" font-size="12" font-weight="500" fill="#57534E">基础：释放人力 → 专注高价值工作</text>
+                        </g>
+                    </svg>
+                </div>
+                <p class="section-overview-caption">AI Agent 的价值从底层向上逐层传递</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-value green">60%</div>
+                    <div class="stat-label">重复工作时间节省</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-value blue">3x</div>
+                    <div class="stat-label">文档产出效率</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value purple">90%</div>
+                    <div class="stat-label">规范一致性</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💡</div>
+                    <div class="stat-value orange">+40%</div>
+                    <div class="stat-label">创意工作时间</div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">价值一：释放重复劳动</h3>
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                团队每天有大量"低创造性但必须做"的工作：写周报、整理文档、格式调整、环境配置...
+                AI Agent 可以接管这些工作，让人专注于真正需要创造力的决策和设计。
+            </p>
+
+            <h3 class="subsection-title">价值二：统一工作标准</h3>
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                Agent 会记住团队的规范和最佳实践，确保每次输出都符合标准。
+                新人不再需要反复学习规范，Agent 会自动遵守并提醒。
+            </p>
+
+            <h3 class="subsection-title">价值三：经验沉淀复用</h3>
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                团队踩过的坑、积累的经验，都可以"教给" Agent。
+                它会在类似场景自动应用，避免重复犯错，实现知识传承。
+            </p>
+
+            <div class="quote">
+                <p class="quote-text">"AI Agent 不是要替代人，而是要放大人的价值。让人从繁琐的执行中解放出来，专注于判断、决策和创造。"</p>
+            </div>
+        </section>
+
+        <!-- 1.4 常见误解 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">1.4</span>
+                <h2 class="section-title">常见误解澄清</h2>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">❌</div>
+                    <h3 class="card-title">误解：Agent 会完全替代员工</h3>
+                    <p class="card-desc">
+                        <strong>真相：</strong>Agent 是"倍增器"而非"替代者"。它处理重复工作，让人专注于高价值决策。就像计算器没有替代数学家，而是让他们更高效。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">❌</div>
+                    <h3 class="card-title">误解：部署 Agent 需要大量开发</h3>
+                    <p class="card-desc">
+                        <strong>真相：</strong>现代 Agent 框架已经很成熟，MVP 版本 2-4 周即可上线。关键是先跑起来，再逐步迭代。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">❌</div>
+                    <h3 class="card-title">误解：Agent 只适合技术团队</h3>
+                    <p class="card-desc">
+                        <strong>真相：</strong>Agent 可以帮助任何有重复性工作的团队——产品、运营、市场、HR 都有应用场景。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">❌</div>
+                    <h3 class="card-title">误解：Agent 100% 可靠不出错</h3>
+                    <p class="card-desc">
+                        <strong>真相：</strong>Agent 会犯错，需要人工审核关键输出。正确定位是"高效助手"而非"完美员工"。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 本章小结 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">📝</span>
+                <h2 class="section-title">本章小结</h2>
+            </div>
+
+            <ul class="content-list">
+                <li><strong>AI Agent 是什么：</strong>能自主完成任务的 AI，不只是回答问题的聊天机器人</li>
+                <li><strong>核心能力：</strong>操作能力 + 记忆能力 + 专业技能 + 联网能力 + 规划能力</li>
+                <li><strong>核心价值：</strong>释放重复劳动、统一工作标准、沉淀团队经验</li>
+                <li><strong>正确定位：</strong>是"倍增器"和"助手"，不是"替代者"</li>
+            </ul>
+
+            <div class="insight-box">
+                <div class="insight-title">下一步</div>
+                <p class="insight-text">
+                    了解了 AI Agent 是什么和它的价值后，下一章我们将深入了解<strong>它的能力从何而来</strong>——用通俗的方式讲解 Agent 的技术架构。
+                </p>
+            </div>
+        </section>
+
+        <!-- 页脚导航 -->
+        <!-- 章节导航 -->
+        <div style="margin-top:24px;padding-top:16px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <a href="index.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">← 返回目录</a>
+            <a href="chapter2-architecture.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">下一章：能力架构 →</a>
+        </div>
+
+        <!-- 了解更多 -->
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+        <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+        我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+        </p>
+        <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+        🏠 访问AI洞察首页
+        </a>
+        </div>
+    </div>
+</body>
+</html>

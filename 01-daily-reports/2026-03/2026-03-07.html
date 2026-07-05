@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 - 2026年3月7日 (v3.0)</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root {
+            --color-success:#059669;--color-success-light:#10B981;--color-danger:#E11D48;--color-danger-light:#FF7B72;--color-warning:#D97706;--color-info:#2563EB;--color-info-light:#54AEFF;--color-purple:#7C3AED;--color-orange:#EA580C;--color-text-primary:#1C1917;--color-text-secondary:#57534E;--color-text-muted:#78716C;--color-border:#E7E5E4;--color-border-light:#F5F5F4;--color-bg:#F8FAFB;--color-bg-card:#FFFFFF;--color-bg-table-header:#FAFAF9;--gradient-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--gradient-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--gradient-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--gradient-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow-card:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-full:999px;--font-family:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--transition-normal:200ms cubic-bezier(.4,0,.2,1);--content-max-width:980px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font-family);background:var(--color-bg);color:var(--color-text-primary);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--content-max-width);margin:0 auto;padding:24px 20px}
+        .header{background:var(--gradient-success);color:#fff;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-date{font-size:14px;opacity:.85}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:700;margin-left:8px}
+        .overview{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-card)}
+        .overview-title{font-size:18px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .overview-grid.five-cols{grid-template-columns:1fr 1fr 1fr}
+        .overview-item{padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--color-border-light);background:var(--color-bg)}
+        .overview-item-header{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+        .overview-item-icon{font-size:16px}
+        .overview-item-label{font-size:13px;font-weight:700;color:var(--color-success-light);letter-spacing:.3px}
+        .overview-item-label.orange{color:var(--color-orange)}
+        .overview-headline{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:6px;line-height:1.4}
+        .overview-item-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:4px;box-shadow:var(--shadow-card);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-muted);border-radius:var(--radius-sm);transition:var(--transition-normal);font-family:var(--font-family);min-width:80px}
+        .tab-btn:hover{color:var(--color-text-primary);background:var(--color-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--gradient-success);color:#fff}
+        .tab-btn.orange[aria-selected="true"]{background:var(--gradient-orange)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow-card)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--color-border-light);display:flex;align-items:center;gap:8px}
+        .section-header .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gradient-success);color:#fff;font-size:12px;font-weight:700}
+        .section-header .num.orange{background:var(--gradient-orange)}
+        .sub-header{font-size:14px;font-weight:700;color:var(--color-text-muted);margin:14px 0 10px;padding-left:4px;letter-spacing:.5px}
+        .sub-header:first-child{margin-top:0}
+        .news-item{padding:12px 0;border-bottom:1px solid var(--color-border-light)}
+        .news-item:last-child{border-bottom:none}
+        .news-tag{display:inline-block;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:var(--color-danger)}
+        .tag-new{background:#EFFDF5;color:var(--color-success)}
+        .tag-funding{background:#E0F2FE;color:#0284C7}
+        .tag-policy{background:#FFF7ED;color:var(--color-orange)}
+        .tag-practice{background:#ECFDF5;color:#059669}
+        .tag-cn{background:#FEF2F2;color:#DC2626}
+        .news-title{font-size:15px;font-weight:600;margin:4px 0 3px}
+        .news-title a{color:var(--color-text-primary);text-decoration:none}
+        .news-title a:hover{color:var(--color-success)}
+        .news-source{font-size:12px;color:var(--color-text-muted)}
+        .news-detail{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+        .news-detail-row{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.6}
+        .news-detail-label{flex-shrink:0;font-weight:700;color:var(--color-success);font-size:12px;padding:1px 0;min-width:60px}
+        .news-detail-label.orange{color:var(--color-orange)}
+        .news-detail-label.china{color:#DC2626}
+        .news-detail-value{color:var(--color-text-secondary);flex:1}
+        .news-detail-value strong{color:var(--color-text-primary);font-weight:600}
+        .news-data-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+        .news-data-chip{display:inline-flex;align-items:center;padding:2px 10px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--radius-full);font-size:12px;font-weight:500;color:#166534}
+        .news-data-chip.orange{background:#FFF7ED;border-color:#FED7AA;color:#9A3412}
+        .news-data-chip.china{background:#FEF2F2;border-color:#FECACA;color:#991B1B}
+        .news-summary-compact{font-size:13.5px;color:var(--color-text-secondary);margin-top:6px;line-height:1.6}
+        .deep-focus-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:0;margin-bottom:16px;box-shadow:var(--shadow-card);overflow:hidden}
+        .deep-focus-header{background:var(--gradient-purple);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:10px}
+        .deep-focus-header.orange-theme{background:linear-gradient(135deg,#EA580C 0%,#DC2626 100%)}
+        .deep-focus-header.china-theme{background:linear-gradient(135deg,#DC2626 0%,#B91C1C 50%,#991B1B 100%)}
+        .deep-focus-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .deep-focus-title{font-size:17px;font-weight:800;margin-top:4px;line-height:1.4}
+        .deep-focus-body{padding:20px 24px}
+        .deep-focus-body p{font-size:14.5px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:14px}
+        .deep-focus-body p:last-child{margin-bottom:0}
+        .deep-focus-body p strong{color:var(--color-text-primary)}
+        .deep-focus-takeaway{margin-top:16px;padding:14px 16px;background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%);border-radius:var(--radius-md);border-left:4px solid var(--color-purple)}
+        .deep-focus-takeaway.orange-theme{background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border-left-color:var(--color-orange)}
+        .deep-focus-takeaway.china-theme{background:linear-gradient(135deg,#FEF2F2 0%,#FEE2E2 100%);border-left-color:#DC2626}
+        .deep-focus-takeaway-label{font-size:12px;font-weight:700;color:var(--color-purple);margin-bottom:6px;letter-spacing:.5px}
+        .deep-focus-takeaway-label.orange{color:var(--color-orange)}
+        .deep-focus-takeaway-label.china{color:#DC2626}
+        .deep-focus-takeaway-text{font-size:13.5px;color:var(--color-text-secondary);line-height:1.7}
+        .deep-focus-takeaway-text strong{color:var(--color-text-primary)}
+        /* ---- 规律洞察卡片 (v3.1 结构化版，复用 essence-insight 展示结构) ---- */
+        .pi-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow-card);transition:all .25s cubic-bezier(.4,0,.2,1)}
+        .pi-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+        .pi-header{display:flex;align-items:center;gap:12px;padding:14px 20px;background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%);border-bottom:1px solid #FDE68A}
+        .pi-badge{display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 10px;border-radius:8px;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,#B45309 0%,#D97706 100%);white-space:nowrap}
+        .pi-title{font-size:16px;font-weight:700;color:var(--color-text-primary);flex:1;letter-spacing:-.01em;line-height:1.4}
+        /* 本质行 */
+        .pi-row{display:flex;padding:14px 20px;border-bottom:1px solid var(--color-border-light);gap:14px}
+        .pi-row:last-child{border-bottom:none}
+        .pi-row.highlight{background:linear-gradient(135deg,rgba(217,119,6,.04) 0%,rgba(217,119,6,.01) 100%)}
+        .pi-row-label{width:56px;flex-shrink:0;font-size:12px;font-weight:700;color:#A8A29E;padding-top:2px;letter-spacing:.02em}
+        .pi-row-label.l2{color:#D97706}
+        .pi-row-content{flex:1;font-size:14px;color:var(--color-text-secondary);line-height:1.7}
+        .pi-row-content strong{color:var(--color-text-primary);font-weight:700}
+        /* 进化流 */
+        .pi-evo{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+        .pi-evo-step{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--color-bg-table-header);border-radius:8px;border:1px solid var(--color-border-light);transition:all .15s}
+        .pi-evo-step.active{background:rgba(217,119,6,.08);border-color:#D97706}
+        .pi-evo-step.future{background:rgba(124,58,237,.06);border-color:#8B5CF6}
+        .pi-evo-tag{font-size:10px;font-weight:800;color:#D97706;padding:2px 7px;background:rgba(217,119,6,.1);border-radius:4px;letter-spacing:.02em}
+        .pi-evo-step.future .pi-evo-tag{color:#7C3AED;background:rgba(124,58,237,.1)}
+        .pi-evo-text{font-size:12px;color:var(--color-text-secondary)}
+        .pi-evo-arrow{color:#A8A29E;font-weight:700;font-size:14px}
+        /* 洞察表格 */
+        .pi-table{padding:10px 20px 16px;border-top:1px solid var(--color-border-light)}
+        .pi-t-head{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-bottom:2px solid var(--color-border-light);margin-bottom:4px}
+        .pi-t-head span{font-size:11px;font-weight:700;color:#A8A29E;text-transform:uppercase;letter-spacing:.06em}
+        .pi-t-section{padding:6px 10px 2px}
+        .pi-t-section-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;letter-spacing:.03em}
+        .pi-t-section.verified .pi-t-section-tag{color:#047857;background:rgba(5,150,105,.08)}
+        .pi-t-section.current .pi-t-section-tag{color:#D97706;background:rgba(217,119,6,.08)}
+        .pi-t-section.projected .pi-t-section-tag{color:#7C3AED;background:rgba(124,58,237,.08)}
+        .pi-t-row{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-radius:6px;font-size:13px;line-height:1.6;transition:background .15s}
+        .pi-t-row:hover{background:rgba(0,0,0,.02)}
+        .pi-t-row.projected{background:rgba(124,58,237,.02)}
+        .pi-t-row.projected:hover{background:rgba(124,58,237,.05)}
+        .pi-t-rule{font-weight:600;color:#B45309;font-size:12px;padding-top:1px}
+        .pi-t-row.projected .pi-t-rule{color:#7C3AED}
+        .pi-t-reality{color:var(--color-text-primary);font-weight:500}
+        .pi-t-analogy{color:var(--color-text-secondary);padding-left:10px;border-left:2px solid var(--color-border-light)}
+        .pi-t-divider{border-top:2px dashed var(--color-border-light);margin:8px 10px}
+        .pi-t-verify{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(5,150,105,.06);border-radius:6px;font-size:12px;font-weight:600;color:#047857}
+        .pi-confidence{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(124,58,237,.04);border-radius:6px;border-left:3px solid #8B5CF6;font-size:11px;font-weight:500;color:#7C3AED;letter-spacing:.02em}
+        @media(max-width:768px){
+            .pi-evo{flex-direction:column;align-items:flex-start}
+            .pi-evo-arrow{display:none}
+            .pi-t-head{display:none}
+            .pi-t-row{grid-template-columns:1fr;gap:2px;padding:6px 10px;border-left:3px solid var(--color-border-light);margin-bottom:4px}
+            .pi-t-row.projected{border-left-color:rgba(124,58,237,.3)}
+            .pi-t-analogy{border-left:none;padding-left:0;font-size:12px}
+        }
+        .data-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--color-border-light)}
+        .data-table th{background:var(--color-bg-table-header);font-weight:600;color:var(--color-text-secondary)}
+        .data-table td{color:var(--color-text-primary)}
+        .data-table tr:last-child td{border-bottom:none}
+        .coverage-bar{margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:16px;font-size:13px}
+        .coverage-bar .label{font-weight:700;color:var(--color-text-muted)}
+        .coverage-bar .bar{flex:1;height:8px;background:#E7E5E4;border-radius:4px;overflow:hidden;display:flex}
+        .coverage-bar .bar-overseas{background:var(--gradient-success);height:100%}
+        .coverage-bar .bar-china{background:var(--gradient-china);height:100%}
+        .coverage-bar .stats{display:flex;gap:12px;font-weight:600}
+        .coverage-bar .stat-overseas{color:var(--color-success)}
+        .coverage-bar .stat-china{color:#DC2626}
+        .footer{text-align:center;padding:24px;font-size:12px;color:var(--color-text-muted);border-top:1px solid var(--color-border-light);margin-top:24px}
+        @media(max-width:768px){
+            .overview-grid,.overview-grid.five-cols{grid-template-columns:1fr}
+            .tab-btn{font-size:11px;padding:8px 4px;min-width:60px}
+            .news-detail-row{flex-direction:column;gap:2px}
+            .news-detail-label{min-width:auto}
+            .deep-focus-header{padding:14px 18px}
+            .deep-focus-body{padding:16px 18px}
+            .coverage-bar{flex-direction:column;gap:8px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-badge">📡 AI行业洞察项目 - AI日报</div>
+            <div class="header-title">AI 日报 <span class="version-badge">v3.0</span></div>
+            <div class="header-date">2026年3月7日 星期六 | 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</div>
+        </div>
+
+        <div class="coverage-bar">
+            <span class="label">📊 覆盖均衡</span>
+            <div class="bar">
+                <div class="bar-overseas" style="width:55%"></div>
+                <div class="bar-china" style="width:45%"></div>
+            </div>
+            <div class="stats">
+                <span class="stat-overseas">🌏 海外 11条</span>
+                <span class="stat-china">🇨🇳 国内 9条</span>
+            </div>
+        </div>
+
+        <div class="overview">
+            <div class="overview-title">📋 全文概览</div>
+            <div class="overview-grid five-cols">
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🧠</span><span class="overview-item-label">大模型</span></div>
+                    <div class="overview-headline">Claude两周挖出Firefox 22个漏洞，AI安全审计能力爆发</div>
+                    <div class="overview-item-text">Anthropic与Mozilla合作，Opus 4.6发现14个高危CVE。🇨🇳 阿里CEO批准林俊旸辞职，成立基础模型支持小组。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">⌨️</span><span class="overview-item-label">AI Coding</span></div>
+                    <div class="overview-headline">OpenAI、Anthropic同日争抢开源开发者</div>
+                    <div class="overview-item-text">OpenAI推出Codex for OSS免费计划，Claude Code新增/loop定时任务。AI Coding烧钱战：$200收$5000成本。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">📱</span><span class="overview-item-label">AI 应用</span></div>
+                    <div class="overview-headline">🇨🇳 小米miclaw开测：手机端AI Agent来了</div>
+                    <div class="overview-item-text">小米基于MiMo大模型推出移动端系统级智能体，调用50+系统工具。Anthropic推出企业级Marketplace。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI 行业</span></div>
+                    <div class="overview-headline">Stargate扩建暂停，算力瓶颈浮现</div>
+                    <div class="overview-item-text">OpenAI+Oracle因电力延迟暂停扩建。🇨🇳 黄仁勋盛赞OpenClaw，雷军提出5年投入2000亿。</div>
+                </div>
+                <div class="overview-item" style="grid-column: span 2;">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔄</span><span class="overview-item-label orange">企业AI转型</span></div>
+                    <div class="overview-headline">Trump政府AI合同新规 | 🇨🇳 "智能经济"首入政府工作报告</div>
+                    <div class="overview-item-text">美国要求AI公司授予"all lawful use"许可。中国两会首提"智能经济"，数据要素"新基建"成国策。中美AI政策同步加码。</div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn" role="tab" aria-selected="true" data-tab="foundation">🧠 大模型</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="coding">⌨️ AI Coding</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="application">📱 AI 应用</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="industry">🏭 AI 行业</button>
+            <button class="tab-btn orange" role="tab" aria-selected="false" data-tab="enterprise">🔄 企业转型</button>
+        </nav>
+
+        <!-- ==================== 大模型 Tab ==================== -->
+        <article id="foundation" class="tab-panel active">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.anthropic.com/news/mozilla-firefox-security" target="_blank">Claude Opus 4.6两周发现Firefox 22个漏洞，14个高危</a></div>
+                    <div class="news-source">Anthropic / Mozilla · 2026-03-06</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心事实</span>
+                            <span class="news-detail-value">Anthropic与Mozilla合作，使用<strong>Claude Opus 4.6</strong>扫描Firefox代码库，2周内发现22个CVE、14个高危漏洞、90+个额外bug。所有关键漏洞已在Firefox 148中修复</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip">22个CVE</span>
+                                    <span class="news-data-chip">14个高危</span>
+                                    <span class="news-data-chip">2周完成</span>
+                                    <span class="news-data-chip">占全年高危修复的1/5</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">影响判断</span>
+                            <span class="news-detail-value">Claude发现了传统fuzz测试<strong>数十年都没找到的整类漏洞</strong>。Mozilla计划将AI代码分析集成到内部安全工作流。AI正从"写代码"走向"审代码"</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://cnbc.com/2026/03/06/google-says-anthropic-remains-available-outside-of-defense-projects.html" target="_blank">Google、AWS、Microsoft联合力挺Anthropic：国防外继续可用</a></div>
+                    <div class="news-source">CNBC · 2026-03-06</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心事实</span>
+                            <span class="news-detail-value">五角大楼将Anthropic列为供应链风险后，三大云厂商联合表态：Claude通过<strong>Vertex AI、Bedrock、M365、GitHub</strong>继续可用，仅排除国防部使用</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">影响判断</span>
+                            <span class="news-detail-value">AI行业形成<strong>"政府 vs 商业生态"两个平行世界</strong>——Anthropic在政府端被打压，但在商业端反而获得更大的生态支持</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://fortune.com/2026/03/05/anthropic-openai-feud-pentagon-dispute-ai-safety-dilemma-personalities/" target="_blank">Anthropic年化收入逼近$200亿，摩根士丹利大会上成焦点</a></div>
+                    <div class="news-source">Fortune / 新浪财经 · 2026-03-06</div>
+                    <div class="news-summary-compact">Anthropic在摩根士丹利科技大会上抢尽风头。年化收入从去年$9亿飙至逼近$200亿，投资者对其IPO充满期待。与五角大楼的争端反而提升了品牌认知度。</div>
+                </div>
+
+                <div class="sub-header">🇨🇳 国内</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://finance.eastmoney.com/a/202603063663547038.html" target="_blank">阿里CEO吴泳铭批准林俊旸辞职，成立基础模型支持小组</a></div>
+                    <div class="news-source">每日经济新闻 / 证券时报 / 钛媒体 · 2026-03-05~06</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心事实</span>
+                            <span class="news-detail-value">阿里CEO吴泳铭内部邮件正式批准林俊旸辞职，宣布<strong>周靖人继续带领通义实验室</strong>，同时成立基础模型支持小组（吴泳铭+周靖人+范禹）协调集团资源</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip china">千问下载量10亿+</span>
+                                    <span class="news-data-chip china">CEO亲自回应</span>
+                                    <span class="news-data-chip china">坚持开源策略</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">阿里内部澄清"并非商业化考核导致"，实际是<strong>千问升级为集团战略后权责调整</strong>引发的分歧。谷歌、智谱等公开"抢人"，中国AI人才争夺升温</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">AI安全审计的"ChatGPT时刻"：当AI比人类更擅长找漏洞</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Claude Opus 4.6在Firefox上的表现，本质上是AI安全审计的<strong>"ChatGPT时刻"</strong>——第一次让人明确看到，AI在特定安全任务上已经超越了人类和传统工具数十年的积累。</p>
+                    <p>关键不是"22个CVE"这个数字，而是Mozilla的评价：<strong>"Claude发现了传统fuzz测试数十年都没找到的整类漏洞"</strong>。传统安全测试是"试错法"——给程序喂大量随机输入看哪里会崩溃；AI审计是"理解法"——它读懂代码的语义逻辑，推理出哪里可能有问题。这是方法论层面的代差。</p>
+                    <p>更值得关注的商业信号是：Anthropic选择Firefox并非偶然。Firefox是全球审查最严格的开源项目之一——在这样的"地狱模式"里都能找到这么多漏洞，<strong>说明绝大多数软件的安全水平远比我们以为的差</strong>。Anthropic刚刚推出了Claude Code的网络安全功能，这次合作既是技术展示，也是商业推广。</p>
+                    <p>国内视角下，这个消息与阿里千问团队的震荡形成有趣对比：<strong>海外AI公司已经在用AI审计代码安全了，而国内顶尖大模型团队还在经历组织调整的阵痛</strong>。Anthropic一边打官司一边做产品，收入一年涨20倍——这种"打仗时还能快速迭代"的能力值得关注。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">对我们的启示</div>
+                        <div class="deep-focus-takeaway-text">如果你负责软件安全：<strong>立刻评估AI安全审计工具</strong>。Claude在Firefox上的表现说明，不用AI做安全审计的公司，未来6-12个月将面临显著的安全能力差距。如果你做AI产品：安全审计是一个已被验证的<strong>高价值AI应用场景</strong>——客单价高、结果可衡量、客户买单意愿强。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <div class="pi-title">AI垂直领域突破的"超越→取代→重定义"三阶段律</div>
+                </div>
+                <div class="pi-row highlight">
+                    <div class="pi-row-label l2">本质</div>
+                    <div class="pi-row-content">
+                        <strong>AI进入每个专业领域都会走完同一条进化路径</strong>
+                        <div class="pi-evo">
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">超越：特定任务超过人类</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">取代：成为该领域标配</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">重定义：改写游戏规则</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><div class="pi-t-rule">1.0 超越</div><div class="pi-t-reality">AlphaGo赢了李世石；Claude发现fuzz测试数十年没找到的漏洞</div><div class="pi-t-analogy">在自家地盘赢了冠军——证明"做得到"</div></div>
+                    <div class="pi-t-row"><div class="pi-t-rule">2.0 取代</div><div class="pi-t-reality">AI围棋成职业棋手训练标配；GitHub Copilot成开发者标配</div><div class="pi-t-analogy">人人都用它——不用反而奇怪</div></div>
+                    <div class="pi-t-row"><div class="pi-t-rule">3.0 重定义</div><div class="pi-t-reality">AI棋路改写围棋理论——人类从未想过的招法</div><div class="pi-t-analogy">不只赢比赛，改了比赛规则本身</div></div>
+                    <div class="pi-t-verify">✅ 超越→取代→重定义 三阶段在围棋、编程等领域逐一验证——每次AI进入新领域都走同一条路</div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">✅ 带入现状：AI安全审计</span></div>
+                    <div class="pi-t-row"><div class="pi-t-rule">→ 1.0阶段</div><div class="pi-t-reality">Claude Opus 4.6两周发现Firefox 22个CVE、14个高危，传统工具数十年未找到</div><div class="pi-t-analogy">AI安全审计的"AlphaGo赢李世石"时刻</div></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><div class="pi-t-rule">→ 2.0 取代</div><div class="pi-t-reality">不用AI审计的软件将被视为"未完成安全检查"</div><div class="pi-t-analogy">像今天不做渗透测试=不安全</div></div>
+                    <div class="pi-t-row projected"><div class="pi-t-rule">→ 3.0 重定义</div><div class="pi-t-reality">AI重新定义"什么是安全的代码"的标准本身</div><div class="pi-t-analogy">不只找漏洞，改了安全规则</div></div>
+                    <div class="pi-confidence">📐 置信度：高 · 验证窗口：2.0阶段 12-18个月 / 3.0阶段 3-5年 · 信号：企业AI审计采购率、安全标准引用AI的频率</div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ==================== AI Coding Tab ==================== -->
+        <article id="coding" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://developers.openai.com/codex/community/codex-for-oss" target="_blank">OpenAI推出Codex for Open Source：向开源维护者免费提供6个月ChatGPT Pro</a></div>
+                    <div class="news-source">OpenAI / Simon Willison · 2026-03-07</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心变化</span>
+                            <span class="news-detail-value">开源项目核心维护者可获得<strong>6个月免费ChatGPT Pro + Codex + API额度</strong>，Codex Security按需审批。直接对标Anthropic 2月底推出的Claude Max开源计划</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip">$200/月 × 6个月</span>
+                                    <span class="news-data-chip">对标Anthropic</span>
+                                    <span class="news-data-chip">支持OpenCode/Cline等</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">影响判断</span>
+                            <span class="news-detail-value"><strong>OpenAI和Anthropic开启开源开发者争夺战</strong>。背后逻辑：开源项目维护者是最有影响力的技术opinion leader，赢得他们就赢得开发者生态</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://the-decoder.com/anthropic-turns-claude-code-into-a-background-worker-with-local-scheduled-tasks/" target="_blank">Claude Code新增/loop定时任务：AI编程助手变身后台工人</a></div>
+                    <div class="news-source">The Decoder / Anthropic · 2026-03-07</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心变化</span>
+                            <span class="news-detail-value">通过<code>/loop</code>命令设置cron定时任务，<strong>自动巡检错误日志、创建PR修复bug、生成每日Slack摘要</strong>。每session支持50个定时任务</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">影响判断</span>
+                            <span class="news-detail-value">AI编程工具从"被动回答"进化到<strong>"主动巡逻"</strong>——不再是你问它答，而是它自己发现问题、自己修复。编程助手→编程Agent的关键一步</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://the-decoder.com/" target="_blank">AI Coding烧钱战：Claude Code每用户月耗$5000算力，售价仅$200</a></div>
+                    <div class="news-source">Forbes / The Decoder · 2026-03-07</div>
+                    <div class="news-summary-compact">Cursor内部分析显示Anthropic的$200 Claude Code订阅每月消耗约$5000算力。AI编程工具的补贴力度比当年打车大战更猛——一旦开发者养成习惯，提价只是时间问题。</div>
+                </div>
+            </div>
+            
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">AI Coding的"补贴大战"能持续多久？</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>一边是OpenAI和Anthropic争相给开源维护者送$200/月的订阅；另一边是每个Claude Code用户实际消耗$5000/月的算力——<strong>AI Coding正在经历互联网历史上最激烈的补贴大战之一</strong>。</p>
+                    <p>为什么烧这么多钱？因为开发者是AI生态的<strong>"终极杠杆点"</strong>。一个开发者被锁定到某个AI编程工具后，他写的所有代码、建立的所有工作流、形成的所有肌肉记忆，都成了该平台的"护城河"。这和打车大战的逻辑一样，但壁垒更高——换一个打车App只需1秒，换一个AI编程工具需要重建整个开发习惯。</p>
+                    <p>Claude Code的/loop定时任务是一个精心设计的"粘性飞轮"：当AI每天自动帮你巡检日志、创建PR、生成摘要，<strong>你的工作流就深度嵌入了这个工具</strong>。一旦停用，不是"少了一个助手"，而是"一堆自动化流程全部中断"。</p>
+                    <p>但补贴终有尽头。Anthropic年化收入近$200亿，但Cursor估计每个重度用户月耗$5000——<strong>规模越大亏损越多</strong>。预计12-18个月内会出现价格调整或用量限制。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">对我们的启示</div>
+                        <div class="deep-focus-takeaway-text">作为开发者：<strong>现在是"薅羊毛"的黄金窗口期</strong>，但要为未来涨价做准备——确保你的工作流不是只能在一个平台上运行。作为AI Coding产品负责人：关注Claude Code /loop这类"深度嵌入工作流"的功能设计，这才是真正的护城河。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <div class="pi-title">开发者工具的竞争终局律：免费→锁定→收割</div>
+                </div>
+                <div class="pi-row highlight">
+                    <div class="pi-row-label l2">本质</div>
+                    <div class="pi-row-content">
+                        <strong>开发者平台竞争的壁垒不是功能，而是习惯锁定和迁移成本</strong>
+                        <div class="pi-evo">
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">免费抢占：补贴换用户</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">工作流锁定：习惯绑定</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">寡头收割：涨价变现</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证（历史案例）</span></div>
+                    <div class="pi-t-row"><div class="pi-t-rule">1.0 免费</div><div class="pi-t-reality">滴滴/Uber烧钱补贴抢用户；GitHub免费提供私有仓库</div><div class="pi-t-analogy">开餐厅第一年免费请客——先圈人</div></div>
+                    <div class="pi-t-row"><div class="pi-t-rule">2.0 锁定</div><div class="pi-t-reality">习惯形成后迁移成本极高——代码、工作流、团队惯性</div><div class="pi-t-analogy">换一个打车App只需1秒，换IDE要重建整个习惯</div></div>
+                    <div class="pi-t-row"><div class="pi-t-rule">3.0 收割</div><div class="pi-t-reality">GitHub被收购后推Copilot付费；滴滴补贴停后涨价</div><div class="pi-t-analogy">免费期结束，开始收"平台税"</div></div>
+                    <div class="pi-t-verify">✅ 免费→锁定→收割 在出行、云计算、开发工具多个领域反复验证——规律稳定性极高</div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">✅ 带入现状：AI Coding赛道</span></div>
+                    <div class="pi-t-row"><div class="pi-t-rule">→ 1.0峰值</div><div class="pi-t-reality">OpenAI送开源维护者6个月Pro（$200/月），实际每用户消耗$5000/月算力——<strong>每招一个亏$4800</strong></div><div class="pi-t-analogy">补贴烈度远超打车大战</div></div>
+                    <div class="pi-t-row"><div class="pi-t-rule">→ 1→2过渡</div><div class="pi-t-reality">Claude Code /loop定时任务——AI自动巡检日志、创建PR，深度嵌入工作流</div><div class="pi-t-analogy">"帮你养成习惯"的锁定设计</div></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><div class="pi-t-rule">→ 2.0 锁定</div><div class="pi-t-reality">6-12个月内工作流深度绑定完成，迁移成本指数上升</div><div class="pi-t-analogy">越用越离不开——数据+习惯双重锁定</div></div>
+                    <div class="pi-t-row projected"><div class="pi-t-rule">→ 3.0 收割</div><div class="pi-t-reality">12-18个月后补贴缩减、价格上调，市场分化为2-3家寡头</div><div class="pi-t-analogy">独立IDE小厂面临"被收购或被挤出"</div></div>
+                    <div class="pi-confidence">📐 置信度：高 · 验证窗口12-18个月 · 信号：补贴缩减速度、工具迁移率下降、独立IDE融资/收购事件</div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ==================== AI 应用 Tab ==================== -->
+        <article id="application" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                
+                <div class="sub-header">🇨🇳 国内</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.guancha.cn/economy/2026_03_06_809060.shtml" target="_blank">小米发布Xiaomi miclaw：首个移动端系统级AI Agent开测</a></div>
+                    <div class="news-source">观察者网 / 财联社 / 新浪 · 2026-03-06</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心事实</span>
+                            <span class="news-detail-value">小米基于自研<strong>MiMo大模型</strong>推出移动端系统级智能体Xiaomi miclaw（昵称"龙虾"），可调用50+系统工具及米家生态设备，支持模糊指令自动拆解执行</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip china">50+系统工具</span>
+                                    <span class="news-data-chip china">米家生态联动</span>
+                                    <span class="news-data-chip china">仅限小米17系列</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">AI Agent从云端走向<strong>手机系统级别</strong>——不再是独立App，而是深度融入操作系统。小米选择在雷军两会发言同期推出，战略信号明确</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="https://t.cj.sina.cn/articles/view/1826017320/6cd6d02804001juaw?from=tech" target="_blank">携程3月10日起下线"AI调价助手"，减少酒店价格内卷</a></div>
+                    <div class="news-source">财联社 · 2026-03-06</div>
+                    <div class="news-summary-compact">自动调价工具虽曾提升定价效率，但加剧了非理性价格竞争。携程主动下线以扩大商户自主定价空间。<strong>AI工具不是"越多越好"——当AI加剧内卷时，下线也是一种产品智慧。</strong></div>
+                </div>
+
+                <div class="sub-header">🌏 海外</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://the-decoder.com/anthropics-new-marketplace-lets-enterprise-customers-spend-their-existing-ai-budget-on-third-party-tools/" target="_blank">Anthropic推出Marketplace：企业用AI预算购买第三方工具</a></div>
+                    <div class="news-source">The Decoder · 2026-03-07</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心变化</span>
+                            <span class="news-detail-value">企业客户可将现有Anthropic年度预算<strong>用于购买Marketplace上的第三方AI应用</strong>。Snowflake、Harvey、Replit成为首批合作伙伴。零佣金</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">影响判断</span>
+                            <span class="news-detail-value">对标AWS Marketplace——Anthropic从"模型公司"进化到<strong>"AI应用分发平台"</strong>。零佣金看似慷慨，实际上每个App都运行在Claude模型上</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="deep-focus-card">
+                <div class="deep-focus-header china-theme">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦 · 🇨🇳 国内</div>
+                        <div class="deep-focus-title">小米miclaw的启示：AI Agent的战场正在从云端转向手机</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>小米选择3月6日（雷军两会发言同日）启动miclaw封测，绝非巧合。当雷军在人大说"未来几年会有更多人形机器人进厂"的时候，小米内部已经在用<strong>另一种形态的"机器人"入侵手机</strong>。</p>
+                    <p>miclaw最值得关注的不是"养龙虾"的玩法，而是<strong>"系统级权限+50个系统工具+米家生态"这个组合</strong>。之前所有AI Agent（包括OpenClaw）都运行在云端或浏览器里，能做的事情受限于沙箱。miclaw直接运行在手机系统级别，可以调用系统工具、控制智能家居、管理健康日程——它不是"App里的AI"，而是"操作系统里的AI"。</p>
+                    <p>这个差异很关键：<strong>系统级AI的数据优势是App级AI永远无法复制的</strong>。它看到你所有App的通知、你的作息规律、你家里所有设备的状态。一旦用户习惯了"小米帮我关灯、查日程、订外卖"这个工作流，切换到其他手机的成本极高。</p>
+                    <p>但风险也很明显：系统级智能体的<strong>隐私边界在哪里？</strong>它能读多少数据？用户授权机制怎么设计？如果处理不好，可能成为中国版Meta智能眼镜的隐私争议（同日英国监管机构刚批评了Meta眼镜的隐私问题）。</p>
+                    <div class="deep-focus-takeaway china-theme">
+                        <div class="deep-focus-takeaway-label china">对我们的启示</div>
+                        <div class="deep-focus-takeaway-text">AI Agent的下一个战场已经明确：<strong>从云端到设备端，从App级到系统级</strong>。手机厂商（小米、华为、苹果）天然拥有系统级权限优势。如果你做AI Agent产品，要么和手机厂商合作拿到系统权限，要么找到不依赖系统权限也能创造高价值的场景。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ==================== AI 行业 Tab ==================== -->
+        <article id="industry" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 基础设施</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.bloomberg.com/news/articles/2026-03-06/oracle-and-openai-end-plans-to-expand-flagship-data-center" target="_blank">OpenAI+Oracle暂停Stargate扩建：电力成AI基础设施最大瓶颈</a></div>
+                    <div class="news-source">Bloomberg · 2026-03-06</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心事实</span>
+                            <span class="news-detail-value">德州Abilene数据中心8栋楼仅完成2栋。因<strong>电力供应至少延迟1年</strong>，OpenAI放弃扩建，转向采购下一代Nvidia Vera Rubin芯片建新站点</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip">规划1.2GW</span>
+                                    <span class="news-data-chip">40万块Blackwell芯片</span>
+                                    <span class="news-data-chip">电力延迟&gt;1年</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">影响判断</span>
+                            <span class="news-detail-value"><strong>AI的瓶颈正在从"算法"转向"物理"</strong>——电力不够、芯片不够、水冷不够。这也解释了为什么Nvidia押注Vera Rubin的内存升级</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-header">🇨🇳 国内动态</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://t.cj.sina.cn/articles/view/1826017320/6cd6d02802001ju3e?from=tech" target="_blank">黄仁勋盛赞OpenClaw：3周普及程度超Linux 30年</a></div>
+                    <div class="news-source">财联社 / 摩根士丹利大会 · 2026-03-06</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心事实</span>
+                            <span class="news-detail-value">黄仁勋称OpenClaw为<strong>"时代最重要的软件发布"</strong>，3周普及度超过Linux 30年积累，直接推动AI推理算力需求激增<strong>1000倍</strong></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">影响判断</span>
+                            <span class="news-detail-value">OpenClaw制造了巨大的"算力真空"——Nvidia下一代Vera Rubin芯片将<strong>重点提升内存</strong>以应对长上下文处理瓶颈</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="https://t.cj.sina.cn/articles/view/1700648435/655dd5f302001g5n2?from=tech" target="_blank">雷军两会发言：小米五年投入2000亿研发，人形机器人已进厂实习</a></div>
+                    <div class="news-source">新浪科技 · 2026-03-06</div>
+                    <div class="news-summary-compact">人形机器人已在小米汽车工厂开始实习。小米过去5年研发投入1050亿，未来5年计划2000亿，聚焦芯片、OS、AI核心技术。</div>
+                </div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="https://t.cj.sina.cn/articles/view/1887344341/707e96d502001qcu2?from=tech" target="_blank">新石器万台L4无人车出海中东：已运抵阿联酋，因局势暂停</a></div>
+                    <div class="news-source">财联社 · 2026-03-06</div>
+                    <div class="news-summary-compact">中国自动驾驶企业规模化出海标志性事件。车辆、技术、运营体系均已就绪，因中东冲突暂停。凸显中企出海需加强地缘风险评估。</div>
+                </div>
+            </div>
+            
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">OpenClaw推高算力需求1000倍——"算力真空"时代来了</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>把三条新闻放在一起看，一个清晰的故事浮现：<strong>OpenClaw爆发 → 推理算力需求激增1000倍 → 现有基础设施扛不住 → Stargate扩建受阻</strong>。</p>
+                    <p>黄仁勋说OpenClaw"3周超过Linux 30年"——这不是夸张。Linux改变了服务器和开发者的世界，而OpenClaw正在改变每一个消费者的日常生活。当数亿人每天让AI Agent帮他们完成任务时，<strong>推理侧的算力消耗比训练侧高出几个数量级</strong>。</p>
+                    <p>但物理世界追不上AI的速度：Stargate规划了40万块Blackwell芯片的超级数据中心，电力延迟至少1年。OpenAI已经开始跳过当前代、直接采购下一代Vera Rubin芯片——<strong>这是"算力饥渴"到了什么程度的信号</strong>。</p>
+                    <p>对中国来说，这是机遇也是挑战：算力需求暴增意味着芯片禁令的影响更大，但也意味着<strong>在推理优化（而非训练）方向上可能有弯道超车的机会</strong>——DeepSeek已经证明了这一点。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">对我们的启示</div>
+                        <div class="deep-focus-takeaway-text">① 关注推理芯片赛道——这是未来2-3年AI硬件的主战场 ② 如果你在做AI应用，<strong>推理成本优化能力</strong>就是你的核心竞争力之一 ③ 关注3/16-19 Nvidia GTC大会，Vera Rubin的具体spec将揭晓</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-card">
+                <div class="section-header">📊 数据速览</div>
+                <table class="data-table">
+                    <tr><th>指标</th><th>数值</th><th>来源/备注</th></tr>
+                    <tr><td>🌏 Claude发现Firefox漏洞</td><td>22个CVE / 14个高危</td><td>2周完成，Opus 4.6</td></tr>
+                    <tr><td>🌏 Anthropic年化收入</td><td>~$200亿</td><td>摩根士丹利大会数据</td></tr>
+                    <tr><td>🌏 Claude Code实际月耗</td><td>$5,000/用户</td><td>Forbes/Cursor分析</td></tr>
+                    <tr><td>🌏 Stargate规划算力</td><td>1.2GW / 40万块Blackwell</td><td>仅完成2栋</td></tr>
+                    <tr><td>🌏 OpenClaw推理算力增长</td><td>1000x</td><td>黄仁勋摩根士丹利发言</td></tr>
+                    <tr><td>🇨🇳 小米miclaw系统工具</td><td>50+</td><td>封测阶段，限小米17</td></tr>
+                    <tr><td>🇨🇳 小米未来5年研发投入</td><td>2000亿</td><td>雷军两会发言</td></tr>
+                    <tr><td>🇨🇳 千问下载量</td><td>10亿+</td><td>HuggingFace数据</td></tr>
+                </table>
+            </div>
+        </article>
+
+        <!-- ==================== 企业AI转型 Tab ==================== -->
+        <article id="enterprise" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num orange">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外政策</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://the-decoder.com/trump-administration-drafts-ai-contract-rules-requiring-companies-to-license-systems-for-all-lawful-use/" target="_blank">Trump政府AI合同新规：要求AI公司授予"all lawful use"不可撤销许可</a></div>
+                    <div class="news-source">Financial Times / The Decoder · 2026-03-07</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label orange">核心事实</span>
+                            <span class="news-detail-value">GSA起草新政策：AI公司必须授予政府<strong>"all lawful use"的不可撤销许可</strong>——这正是Anthropic之前拒绝并导致$2亿合同被砍的条款。还禁止AI输出中出现"意识形态偏见"</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label orange">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip orange">不可撤销许可</span>
+                                    <span class="news-data-chip orange">禁止意识形态偏见</span>
+                                    <span class="news-data-chip orange">需披露合规调整</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label orange">影响判断</span>
+                            <span class="news-detail-value">这意味着美国政府正在<strong>系统性地压缩AI公司的"安全底线"空间</strong>——你要做政府生意，就不能有"不让政府用"的条款。Anthropic的困境会蔓延到所有AI公司</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-header">🇨🇳 国内政策</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://t.cj.sina.cn/articles/view/1914880192/7222c0c002001l298?from=tech" target="_blank">"智能经济"首次写入政府工作报告</a></div>
+                    <div class="news-source">新浪财经 / 两会 · 2026-03-06</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心事实</span>
+                            <span class="news-detail-value"><strong>"智能经济"首次写入政府工作报告</strong>。人大代表楼向平建议打造系统化数据要素"新基建"，打通"数据-模型-场景-产业"一体化供给模式</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">从<strong>"人工智能+"行动</strong>到<strong>"智能经济"</strong>，AI在中国国策中的地位又上了一个层级。数据要素基建是实现智能经济的基础</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="https://www.cls.cn/detail/2304581" target="_blank">工信部部长李乐成：全力推进新一代人工智能产品攻关和迭代</a></div>
+                    <div class="news-source">财联社 · 2026-03-06</div>
+                    <div class="news-summary-compact">两会期间工信部明确表态：AI产品攻关与迭代是重点方向，与"智能经济"写入政府工作报告形成政策合力。</div>
+                </div>
+            </div>
+            
+            <div class="deep-focus-card">
+                <div class="deep-focus-header orange-theme">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">中美AI政策同步加码，但走了完全不同的路</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>同一天，中美两个最大的AI经济体同时出手，但方向完全不同。</p>
+                    <p><strong>美国：用"合规"收紧AI公司的自由度</strong>。Trump政府的"all lawful use"条款本质是：你不能拒绝政府的任何合法使用。这意味着AI公司对"我的模型不能用于X"的安全主张，在政府面前可能不再成立。对Anthropic、OpenAI这类公司来说，选择很简单也很残酷——要么接受，要么放弃政府市场。</p>
+                    <p><strong>中国：用"国策"推动AI经济的全面加速</strong>。"智能经济"写入政府工作报告，加上数据要素新基建、工信部AI攻关表态、雷军两会发言——这不是一个孤立信号，而是<strong>一套完整的政策组合拳</strong>。中国的路径是"国家推动+企业落地"，类似10年前对新能源汽车的扶持。</p>
+                    <p>有趣的是：美国的政策焦点在"谁能控制AI"，中国的政策焦点在"如何加速AI落地"——<strong>一个在重新划定AI的边界，一个在拓展AI的应用</strong>。</p>
+                    <div class="deep-focus-takeaway orange-theme">
+                        <div class="deep-focus-takeaway-label orange">对我们的启示</div>
+                        <div class="deep-focus-takeaway-text">中国AI从业者的政策环境在变得更好：<strong>"智能经济"入报告 = 更多的政策资源、更宽松的应用场景、更大的市场空间</strong>。但也要注意"数据要素新基建"的方向——如果你的AI产品依赖数据，尽早关注数据合规和数据要素流通的政策细节。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+            <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+            <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+                我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+            </p>
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                🏠 访问AI洞察首页
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', 'false'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.setAttribute('aria-selected', 'true');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

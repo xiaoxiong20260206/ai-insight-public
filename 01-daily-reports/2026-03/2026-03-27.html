@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 - 2026-03-27 (v3.2)</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root {
+            --color-success:#059669;--color-success-light:#10B981;--color-danger:#E11D48;--color-danger-light:#FF7B72;--color-warning:#D97706;--color-info:#2563EB;--color-info-light:#54AEFF;--color-purple:#7C3AED;--color-orange:#EA580C;--color-text-primary:#1C1917;--color-text-secondary:#57534E;--color-text-muted:#78716C;--color-border:#E7E5E4;--color-border-light:#F5F5F4;--color-bg:#F8FAFB;--color-bg-card:#FFFFFF;--color-bg-table-header:#FAFAF9;--gradient-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--gradient-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--gradient-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--gradient-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow-card:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-full:999px;--font-family:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--transition-normal:200ms cubic-bezier(.4,0,.2,1);--content-max-width:980px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font-family);background:var(--color-bg);color:var(--color-text-primary);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--content-max-width);margin:0 auto;padding:24px 20px}
+        .header{background:var(--gradient-success);color:#fff;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-date{font-size:14px;opacity:.85}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:700;margin-left:8px}
+        .overview{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-card);overflow:hidden}
+        .overview-title{font-size:18px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .overview-grid.five-cols{grid-template-columns:repeat(3,1fr)}
+        .overview-item{padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--color-border-light);background:var(--color-bg);transition:all .2s;min-width:0;overflow:hidden}
+        .overview-item:hover{border-color:var(--color-success-light);box-shadow:0 2px 8px rgba(5,150,105,.08)}
+        .overview-item-header{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+        .overview-item-icon{font-size:16px}
+        .overview-item-label{font-size:13px;font-weight:700;color:var(--color-success-light);letter-spacing:.3px}
+        .overview-item-label.orange{color:var(--color-orange)}
+        .overview-headline{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:6px;line-height:1.4}
+        .overview-item-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+        /* Heat Trend Table */
+        .heat-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow-card)}
+        .heat-header{background:linear-gradient(135deg,#EA580C 0%,#DC2626 50%,#B91C1C 100%);color:#fff;padding:18px 24px}
+        .heat-header-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .heat-header-title{font-size:17px;font-weight:800;margin-top:4px}
+        .heat-body{padding:16px 20px}
+        .heat-body p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-top:12px}
+        .heat-body p strong{color:var(--color-text-primary)}
+        .heat-table{width:100%;border-collapse:collapse;font-size:13px}
+        .heat-table th{padding:8px 10px;text-align:left;background:#FEF2F2;font-weight:700;color:#991B1B;border-bottom:2px solid #FECACA;font-size:12px}
+        .heat-table td{padding:10px;border-bottom:1px solid var(--color-border-light);vertical-align:top}
+        .heat-table tr:last-child td{border-bottom:none}
+        .heat-table tr:hover{background:rgba(234,88,12,.02)}
+        .heat-bar{display:flex;gap:2px;align-items:center}
+        .heat-bar-fill{width:10px;height:14px;border-radius:2px;background:linear-gradient(135deg,#EA580C,#DC2626)}
+        .heat-bar-empty{width:10px;height:14px;border-radius:2px;background:#F5F5F4}
+        .heat-trend-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .heat-trend-tag.up{background:#EFFDF5;color:#059669}
+        .heat-trend-tag.stable{background:#EFF6FF;color:#2563EB}
+        .heat-trend-tag.burst{background:#FEF2F2;color:#DC2626}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:4px;box-shadow:var(--shadow-card);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-muted);border-radius:var(--radius-sm);transition:var(--transition-normal);font-family:var(--font-family);min-width:80px}
+        .tab-btn:hover{color:var(--color-text-primary);background:var(--color-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--gradient-success);color:#fff}
+        .tab-btn.orange[aria-selected="true"]{background:var(--gradient-orange)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow-card)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--color-border-light);display:flex;align-items:center;gap:8px}
+        .section-header .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gradient-success);color:#fff;font-size:12px;font-weight:700}
+        .section-header .num.orange{background:var(--gradient-orange)}
+        .sub-header{font-size:14px;font-weight:700;color:var(--color-text-muted);margin:14px 0 10px;padding-left:4px;letter-spacing:.5px}
+        .sub-header:first-child{margin-top:0}
+        .news-item{padding:14px 0;border-bottom:1px solid var(--color-border-light);transition:background .15s;margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:var(--radius-sm)}
+        .news-item:hover{background:rgba(5,150,105,.02)}
+        .news-item:last-child{border-bottom:none}
+        .news-tag{display:inline-block;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:var(--color-danger)}
+        .tag-new{background:#EFFDF5;color:var(--color-success)}
+        .tag-funding{background:#E0F2FE;color:#0284C7}
+        .tag-policy{background:#FFF7ED;color:var(--color-orange)}
+        .tag-practice{background:#ECFDF5;color:#059669}
+        .tag-cn{background:#FEF2F2;color:#DC2626}
+        .news-title{font-size:15px;font-weight:600;margin:4px 0 3px}
+        .news-title a{color:var(--color-text-primary);text-decoration:none}
+        .news-title a:hover{color:var(--color-success)}
+        .news-source{font-size:12px;color:var(--color-text-muted)}
+        .news-detail{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+        .news-detail-row{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.6}
+        .news-detail-label{flex-shrink:0;font-weight:700;color:var(--color-success);font-size:12px;padding:1px 0;min-width:60px}
+        .news-detail-label.orange{color:var(--color-orange)}
+        .news-detail-label.china{color:#DC2626}
+        .news-detail-value{color:var(--color-text-secondary);flex:1}
+        .news-detail-value strong{color:var(--color-text-primary);font-weight:600}
+        .news-data-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+        .news-data-chip{display:inline-flex;align-items:center;padding:3px 10px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--radius-full);font-size:12px;font-weight:600;color:#166534;transition:all .15s}
+        .news-data-chip:hover{background:#DCFCE7;border-color:#86EFAC}
+        .news-data-chip.orange{background:#FFF7ED;border-color:#FED7AA;color:#9A3412}
+        .news-data-chip.china{background:#FEF2F2;border-color:#FECACA;color:#991B1B}
+        .news-summary-compact{font-size:13.5px;color:var(--color-text-secondary);margin-top:6px;line-height:1.6}
+        .deep-focus-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:0;margin-bottom:16px;box-shadow:var(--shadow-card);overflow:hidden}
+        .deep-focus-header{background:var(--gradient-purple);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:10px}
+        .deep-focus-header.orange-theme{background:linear-gradient(135deg,#EA580C 0%,#DC2626 100%)}
+        .deep-focus-header.china-theme{background:linear-gradient(135deg,#DC2626 0%,#B91C1C 50%,#991B1B 100%)}
+        .deep-focus-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .deep-focus-title{font-size:17px;font-weight:800;margin-top:4px;line-height:1.4}
+        .deep-focus-body{padding:20px 24px}
+        .deep-focus-body p{font-size:14.5px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:18px}
+        .deep-focus-body p:last-child{margin-bottom:0}
+        .deep-focus-body p strong{color:var(--color-text-primary)}
+        .deep-focus-takeaway{margin-top:20px;padding:16px 18px;background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%);border-radius:var(--radius-md);border-left:4px solid var(--color-purple)}
+        .deep-focus-takeaway.orange-theme{background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border-left-color:var(--color-orange)}
+        .deep-focus-takeaway.china-theme{background:linear-gradient(135deg,#FEF2F2 0%,#FEE2E2 100%);border-left-color:#DC2626}
+        .deep-focus-takeaway-label{font-size:12px;font-weight:700;color:var(--color-purple);margin-bottom:6px;letter-spacing:.5px}
+        .deep-focus-takeaway-label.orange{color:var(--color-orange)}
+        .deep-focus-takeaway-label.china{color:#DC2626}
+        .deep-focus-takeaway-text{font-size:13.5px;color:var(--color-text-secondary);line-height:1.7}
+        .deep-focus-takeaway-text strong{color:var(--color-text-primary)}
+        /* Pattern Insight Card */
+        .pi-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow-card);transition:all .25s cubic-bezier(.4,0,.2,1)}
+        .pi-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+        .pi-header{display:flex;align-items:center;gap:12px;padding:14px 20px;background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%);border-bottom:1px solid #FDE68A}
+        .pi-badge{display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 10px;border-radius:8px;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,#B45309 0%,#D97706 100%);white-space:nowrap}
+        .pi-title{font-size:16px;font-weight:700;color:var(--color-text-primary);flex:1;letter-spacing:-.01em;line-height:1.4}
+        .pi-row{display:flex;padding:14px 20px;border-bottom:1px solid var(--color-border-light);gap:14px}
+        .pi-row:last-child{border-bottom:none}
+        .pi-row.highlight{background:linear-gradient(135deg,rgba(217,119,6,.04) 0%,rgba(217,119,6,.01) 100%)}
+        .pi-row-label{width:56px;flex-shrink:0;font-size:12px;font-weight:700;color:#A8A29E;padding-top:2px;letter-spacing:.02em}
+        .pi-row-label.l2{color:#D97706}
+        .pi-row-content{flex:1;font-size:14px;color:var(--color-text-secondary);line-height:1.7}
+        .pi-row-content strong{color:var(--color-text-primary);font-weight:700}
+        .pi-evo{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+        .pi-evo-step{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--color-bg-table-header);border-radius:8px;border:1px solid var(--color-border-light);transition:all .15s}
+        .pi-evo-step.active{background:rgba(217,119,6,.12);border-color:#D97706;box-shadow:0 0 0 1px rgba(217,119,6,.15)}
+        .pi-evo-step.future{background:rgba(124,58,237,.06);border-color:#8B5CF6}
+        .pi-evo-tag{font-size:10px;font-weight:800;color:#D97706;padding:2px 7px;background:rgba(217,119,6,.1);border-radius:4px;letter-spacing:.02em}
+        .pi-evo-step.future .pi-evo-tag{color:#7C3AED;background:rgba(124,58,237,.1)}
+        .pi-evo-text{font-size:12px;color:var(--color-text-secondary)}
+        .pi-evo-arrow{color:#A8A29E;font-weight:700;font-size:14px}
+        .pi-table{padding:10px 20px 16px;border-top:1px solid var(--color-border-light)}
+        .pi-t-head{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-bottom:2px solid var(--color-border-light);margin-bottom:4px}
+        .pi-t-head span{font-size:11px;font-weight:700;color:#A8A29E;text-transform:uppercase;letter-spacing:.06em}
+        .pi-t-section{padding:6px 10px 2px}
+        .pi-t-section-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;letter-spacing:.03em}
+        .pi-t-section.verified .pi-t-section-tag{color:#047857;background:rgba(5,150,105,.08)}
+        .pi-t-section.current .pi-t-section-tag{color:#D97706;background:rgba(217,119,6,.08)}
+        .pi-t-section.projected .pi-t-section-tag{color:#7C3AED;background:rgba(124,58,237,.08)}
+        .pi-t-row{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-radius:6px;font-size:13px;line-height:1.6;transition:background .15s}
+        .pi-t-row:hover{background:rgba(0,0,0,.02)}
+        .pi-t-row.projected{background:rgba(124,58,237,.02)}
+        .pi-t-row.projected:hover{background:rgba(124,58,237,.05)}
+        .pi-t-rule{font-weight:600;color:#B45309;font-size:12px;padding-top:1px}
+        .pi-t-row.projected .pi-t-rule{color:#7C3AED}
+        .pi-t-reality{color:var(--color-text-primary);font-weight:500}
+        .pi-t-analogy{color:var(--color-text-secondary);padding-left:10px;border-left:2px solid var(--color-border-light)}
+        .pi-t-divider{border-top:2px dashed var(--color-border-light);margin:8px 10px}
+        .pi-t-verify{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(5,150,105,.06);border-radius:6px;font-size:12px;font-weight:600;color:#047857}
+        .pi-confidence{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(124,58,237,.04);border-radius:6px;border-left:3px solid #8B5CF6;font-size:11px;font-weight:500;color:#7C3AED;letter-spacing:.02em}
+        .data-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--color-border-light)}
+        .data-table th{background:var(--color-bg-table-header);font-weight:600;color:var(--color-text-secondary)}
+        .data-table td{color:var(--color-text-primary)}
+        .data-table tr:last-child td{border-bottom:none}
+        .coverage-bar{margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:16px;font-size:13px}
+        .coverage-bar .label{font-weight:700;color:var(--color-text-muted)}
+        .coverage-bar .bar{flex:1;height:8px;background:#E7E5E4;border-radius:4px;overflow:hidden;display:flex}
+        .coverage-bar .bar-overseas{background:var(--gradient-success);height:100%}
+        .coverage-bar .bar-china{background:var(--gradient-china);height:100%}
+        .coverage-bar .stats{display:flex;gap:12px;font-weight:600}
+        .coverage-bar .stat-overseas{color:var(--color-success)}
+        .coverage-bar .stat-china{color:#DC2626}
+        .footer{text-align:center;padding:24px;font-size:12px;color:var(--color-text-muted);border-top:1px solid var(--color-border-light);margin-top:24px}
+        @media(max-width:960px){
+            .overview-grid.five-cols{grid-template-columns:1fr 1fr}
+        }
+        @media(max-width:768px){
+            .overview-grid,.overview-grid.five-cols{grid-template-columns:1fr}
+            .tab-btn{font-size:11px;padding:8px 4px;min-width:60px}
+            .news-detail-row{flex-direction:column;gap:2px}
+            .news-detail-label{min-width:auto}
+            .deep-focus-header{padding:14px 18px}
+            .deep-focus-body{padding:16px 18px}
+            .coverage-bar{flex-direction:column;gap:8px}
+            .heat-table{font-size:12px}
+            .heat-table th,.heat-table td{padding:6px 4px}
+            .pi-evo{flex-direction:column;align-items:flex-start}
+            .pi-evo-arrow{display:none}
+            .pi-t-head{display:none}
+            .pi-t-row{grid-template-columns:1fr;gap:2px;padding:6px 10px;border-left:3px solid var(--color-border-light);margin-bottom:4px}
+            .pi-t-row.projected{border-left-color:rgba(124,58,237,.3)}
+            .pi-t-analogy{border-left:none;padding-left:0;font-size:12px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-badge">📡 AI行业洞察项目 - AI日报</div>
+            <div class="header-title">AI 日报 <span class="version-badge">v3.2</span></div>
+            <div class="header-date">2026年3月27日 周五 | 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</div>
+        </div>
+
+        <div class="coverage-bar">
+            <span class="label">📊 覆盖均衡</span>
+            <div class="bar">
+                <div class="bar-overseas" style="width:56%"></div>
+                <div class="bar-china" style="width:44%"></div>
+            </div>
+            <div class="stats">
+                <span class="stat-overseas">🌏 海外 10条</span>
+                <span class="stat-china">🇨🇳 国内 8条</span>
+            </div>
+        </div>
+
+        <div class="overview">
+            <div class="overview-title">📋 全文概览</div>
+            <div class="overview-grid five-cols">
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🦞</span><span class="overview-item-label">今日头条</span></div>
+                    <div class="overview-headline">「龙虾热」爆发：百度/字节/腾讯全面跟进OpenClaw，国产大模型商业化提速</div>
+                    <div class="overview-item-text">国产AI应用代理框架OpenClaw在境外爆火后引发国内「龙虾热」，百度、字节跳动、腾讯、小米纷纷推出跟进产品。据证券时报，上周全球调用量前四名全为国产大模型(MiniMax、阶跃星辰Step3.5、DeepSeek、Kimi)，Token经济时代国产商业化全面提速</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔍</span><span class="overview-item-label">模型动态</span></div>
+                    <div class="overview-headline">Google Gemini 3.1 Flash Live发布 · Kimi杨植麟：开源是绝对胜利</div>
+                    <div class="overview-item-text">Google于3月26日发布Gemini 3.1 Flash Live Preview，最新A2A(Audio-to-Audio)模型支持实时语音对话，Search Live功能同步上线；Kimi创始人杨植麟在中关村论坛表示「如果模型能力相同，开源会是绝对的胜利」，Kimi注意力残差技术获马斯克称赞</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">💻</span><span class="overview-item-label">编程工具</span></div>
+                    <div class="overview-headline">Cursor推出Self-hosted Cloud Agents：代码在用户自己网络内运行</div>
+                    <div class="overview-item-text">Cursor于3月25日发布Self-hosted Cloud Agents，允许企业将AI Agent运行在自己的基础设施内——代码不出公司网络，解决了企业级安全合规的核心痛点。同时ChatGPT移动端3月26日完成侧边栏简化+位置共享功能上线</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">📊</span><span class="overview-item-label">行业数据</span></div>
+                    <div class="overview-headline">Anthropic经济指数：高使用时长用户成功率高10%；中东主权基金投资中国AI获6倍回报</div>
+                    <div class="overview-item-text">Anthropic经济指数报告(3月24日)显示高使用时长用户任务成功率比低使用时长高10%，「学习曲线」现象成立；中东主权基金ADIA投资MiniMax从6500万增至超4亿美元(6倍+)，阿美风投投资智谱AI从3000万增至4.15亿美元</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🤖</span><span class="overview-item-label">具身智能</span></div>
+                    <div class="overview-headline">量产机器狼极寒测试成功·人形机器人格斗赛举办</div>
+                    <div class="overview-item-text">100只量产机器狼在-20℃极寒环境测试优异，即将批量量产；杭州CMG世界机器人大赛首届人形机器人格斗赛举行，AI策算师夺冠，人形机器人从跑步到格斗全面加速落地</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label">🔥 热度趋势</div>
+                <div class="heat-header-title">今日AI行业热度趋势</div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead><tr><th>排名</th><th>话题</th><th>热度</th><th>天数</th><th>趋势</th><th>核心信号</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇</td>
+                            <td><strong>龙虾热 / OpenClaw</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag up">📈 爆发</span></td>
+                            <td>百度/字节/腾讯/小米全面跟进，证券时报头条报道，Token商业化拐点</td>
+                        </tr>
+                        <tr>
+                            <td>🥈</td>
+                            <td><strong>国产大模型调用量超美国</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>7天</td>
+                            <td><span class="heat-trend-tag up">📈 持续升温</span></td>
+                            <td>OpenRouter数据：上周前四名全为国产(MiniMax/阶跃星辰/DeepSeek/Kimi)</td>
+                        </tr>
+                        <tr>
+                            <td>🥉</td>
+                            <td><strong>Cursor Self-hosted Cloud Agents</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 新发布</span></td>
+                            <td>企业安全合规核心痛点解决，3月25日发布</td>
+                        </tr>
+                        <tr>
+                            <td>4️⃣</td>
+                            <td><strong>Google Gemini 3.1 Flash Live</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 新发布</span></td>
+                            <td>A2A实时语音模型，Search Live同步上线，3月26日发布</td>
+                        </tr>
+                        <tr>
+                            <td>5️⃣</td>
+                            <td><strong>Anthropic经济指数</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>2天</td>
+                            <td><span class="heat-trend-tag stable">➡ 持续</span></td>
+                            <td>3月24日发布，学习曲线研究：高用量用户成功率高10%</td>
+                        </tr>
+                        <tr>
+                            <td>6️⃣</td>
+                            <td><strong>中东资本押注中国AI</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>2天</td>
+                            <td><span class="heat-trend-tag up">📈 升温</span></td>
+                            <td>彭博：ADIA/阿美风投通过港股AI新股获惊人回报</td>
+                        </tr>
+                        <tr>
+                            <td>7️⃣</td>
+                            <td><strong>OpenAI搁置成人模式</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag down">📉 降温</span></td>
+                            <td>无限期搁置，内外部压力下战略回归核心产品</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>龙虾热/OpenClaw爆火是今日国内最大热点，Cursor Self-hosted Agents是Coding最强信号，Google Gemini 3.1 Flash Live是模型板块亮点；国产大模型调用量连续三周超美国是行业拐点信号</p>
+            </div>
+        </div>
+
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn" role="tab" aria-selected="true" data-tab="foundation">🧠 大模型</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="coding">⌨️ AI Coding</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="application">📱 AI 应用</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="industry">🏭 AI 行业</button>
+            <button class="tab-btn orange" role="tab" aria-selected="false" data-tab="enterprise">🔄 企业转型</button>
+        </nav>
+
+
+        <article id="foundation" class="tab-panel active">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.anthropic.com/research/ai-economic-index" target="_blank">Anthropic经济指数报告(3月24日)：高使用时长用户AI任务成功率高10%，「学习曲线」现象成立</a></div>
+                    <div class="news-source">Anthropic官方 · 3月26日持续报道</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Anthropic发布经济指数报告，聚焦AI使用行为与任务成功率的关系研究。核心发现：高使用时长用户（重度用户）完成复杂任务的成功率比低使用时长用户高约10%，证明AI工具使用存在明显学习曲线效应。这一数据也间接说明：AI能力天花板不在模型，而在用户的使用深度</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">高用量用户成功率高10%</span><span class="news-data-chip">学习曲线效应显著</span><span class="news-data-chip">3月24日发布</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">对AI工具产品设计的重要启示：用户留存和深度使用比功能堆叠更重要。对企业AI采购：ROI很大程度取决于员工培训和使用习惯培养</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.bjbusiness.com.cn/site/2026/03/27/031004892.shtml" target="_blank">Kimi杨植麟在中关村论坛：「开源是绝对胜利，Token是未来GDP」，注意力残差技术获马斯克称赞</a></div>
+                    <div class="news-source">北京商报 · 3月27日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Kimi创始人杨植麟在2026中关村论坛年会后接受媒体采访，发表多项重要判断：1)「如果模型能力达到相同水平，开源会是绝对的胜利」；2)「Token是未来的GDP」；3)中国AI企业走出独特路径：既做前沿研究又愿意开源。此前Kimi团队发布的注意力残差技术报告获特斯拉CEO马斯克公开称赞</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">开源是绝对胜利</span><span class="news-data-chip">Token=未来GDP</span><span class="news-data-chip">注意力残差技术</span><span class="news-data-chip">马斯克称赞</span><span class="news-data-chip">中关村论坛</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Kimi旗帜鲜明地押注开源路线，在OpenAI/Anthropic闭源主导的格局下，代表中国AI企业的差异化竞争战略。「Token=GDP」的表述将成为AI经济时代的重要隐喻</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="http://finance.sina.com.cn/jjxw/2026-03-27/doc-inhsiyyf9953304.shtml" target="_blank">科大讯飞三大AI大模型升级：办公大模型2.0、本地大模型2.0、同传大模型1.0在成都发布</a></div>
+                    <div class="news-source">成都日报锦观 · 3月26日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">3月26日，科大讯飞在成都举办「AI+办公」大模型年度技术发布会，副总裁钟锟发布三大模型升级：办公大模型2.0(精准识别发言人+自动生成待办清单+手写笔记毫秒级关联)、本地大模型2.0、同传大模型1.0。科大讯飞正将「AI+办公」核心棋局落在成都，与十余家企业发布产业生态链协同发展倡议</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">三大模型同步升级</span><span class="news-data-chip">办公大模型2.0</span><span class="news-data-chip">成都产业生态</span><span class="news-data-chip">3月26日发布</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI+办公赛道国内竞争加剧，科大讯飞通过垂直场景深耕(会议记录→待办→跨文档关联)构建差异化。「链主」效应显现，以成都为核心的AI办公产业链正在形成</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Gemini 3.1 Flash Live：实时语音AI从「工具」变「入口」</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Google在3月26日发布Gemini 3.1 Flash Live Preview，表面是一次模型更新，本质是一场入口战争的重要布局。A2A(Audio-to-Audio)架构意味着语音不再经过文字中转——用户说话，AI直接「听到」并「说回」，延迟大幅降低，实时感知能力质变。Search Live功能同步推送，进一步将实时语音能力与信息检索深度绑定</p><p>对比此前Google Assistant的语音助手形态，Gemini 3.1 Flash Live的定位发生了根本性转变：从执行离散命令（「设定提醒」「播放音乐」）升级为持续对话的信息伙伴。Search Live让用户可以用自然语言进行实时网络搜索——这直接威胁了传统搜索引擎的核心使用场景，同时也是对ChatGPT语音模式的直接对标</p><p>从更长的时间轴来看，A2A模型的普及将加速「隐形AI」趋势——AI不再是需要打开的App，而是随时以声音形态在场的存在。Gemini Flash系列的「轻量高效」定位，加上Search Live的实时能力，恰好契合移动端和可穿戴设备的应用场景，AI入口从屏幕向耳朵迁移的速度将超预期</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">Gemini 3.1 Flash Live=AI入口战争新阶段：从屏幕到耳朵，从命令到对话，从工具到陪伴——语音是下一个超级入口，谁控制语音交互，谁控制用户的信息消费</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">实时模态定律：每一轮新模态成熟，都会重新定义「入口」</span></div><div class="pi-row"><span class="pi-label">现象</span><span class="pi-value">Gemini 3.1 Flash Live发布A2A实时语音，Search Live同步推送，语音AI从命令响应升级为实时信息检索</span></div><div class="pi-row"><span class="pi-label">规律</span><span class="pi-value">技术史上每次新交互模态成熟(键盘→鼠标→触摸→语音)，都会重新洗牌入口控制权。实时语音AI正在完成这一跃迁：从「工具形态」到「入口形态」的质变，需要三个条件同时具备：低延迟(A2A架构)、联网能力(Search Live)、多场景覆盖(移动+可穿戴)</span></div><div class="pi-row"><span class="pi-label">推论</span><span class="pi-value">未来24个月：1)语音AI将成为主要信息入口之一；2)独立语音助手产品(Siri/Alexa)面临被模型原生语音功能替代；3)可穿戴设备(耳机/AR眼镜)将成为语音AI的首选硬件载体</span></div></div>
+        </article>
+
+        <article id="coding" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank">ChatGPT移动端3月26日更新：侧边栏简化 + 位置共享功能上线</a></div>
+                    <div class="news-source">OpenAI官方 · 3月26日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">ChatGPT移动端3月26日完成两项更新：1)侧边栏简化(A simplified sidebar on mobile)，优化导航体验；2)位置共享功能正式上线，允许ChatGPT感知用户当前位置以提供更精准的上下文相关回答。位置功能涉及隐私权限，需要用户主动授权</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">3月26日上线</span><span class="news-data-chip">移动端侧边栏简化</span><span class="news-data-chip">位置共享功能</span><span class="news-data-chip">上下文感知增强</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">位置共享是ChatGPT从「文字问答工具」向「上下文感知助手」演进的重要一步，配合之前的Memory功能，ChatGPT正在逐渐构建对用户的持续理解能力</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://openrouter.ai" target="_blank">OpenRouter数据：国产大模型连续三周调用量超美国，前四名全为国产(MiniMax/阶跃星辰/DeepSeek/Kimi)</a></div>
+                    <div class="news-source">OpenRouter · 3月26日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">据OpenRouter公开数据，上周全球调用量前四名全为国产AI大模型：小米MiMo V2 Pro、阶跃星辰Step3.5 Flash、DeepSeek V3.2和Kimi K2.5，一周Token消耗量合计达4.69万亿。这已是国产大模型连续三周在此指标上领先或对齐美国头部玩家。MiniMax官方数据：M2系列文本模型2026年2月平均单日Token消耗量已创历史新高</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">连续三周调用量超美国</span><span class="news-data-chip">前四名全国产</span><span class="news-data-chip">4.69万亿Token/周</span><span class="news-data-chip">MiniMax单日新高</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Token调用量是AI模型实际部署规模最直接的商业指标。国产大模型在这一指标上的持续领先，标志着中国AI从「技术追赶」进入「商业规模」阶段——全球AI经济格局正在从「美国主导」向「双极格局」转变</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Cursor Self-hosted Agents：企业AI编程安全合规的「最后一公里」被打通</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Cursor发布Self-hosted Cloud Agents是一个看似平静但实际上意义深远的发布。在此之前，几乎所有主流AI编程工具(Cursor/GitHub Copilot/Amazon Q)的云端能力都意味着代码需要离开用户的网络边界。对于金融机构、医疗系统、政府部门、国防企业来说，这条「数据出境」的红线是无法跨越的，导致企业即使认可AI编程的价值也无法大规模采用</p><p>Self-hosted方案的核心价值在于：它不是简单的「私有部署模型」，而是将AI Agent的整个执行环境都托管在企业自己的基础设施内。这意味着代码分析、生成、测试全链路都在企业防火墙内完成，完全符合ISO 27001、SOC 2、国内等保三级等安全合规要求。这与企业级软件从SaaS向私有化迁移的大趋势高度吻合</p><p>对国内AI编程工具市场的启示：国内目前面临双重合规压力——数据安全法+等级保护要求。率先推出完整Self-hosted方案的厂商，将在金融/政务/国防等高价值市场取得先发优势。当前国内Cline、通义灵码等工具在这一方向的进度值得持续关注</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">Self-hosted=企业AI编程从「试用」到「生产」的临界点：安全合规不是功能，是门票——谁先打通这条路，谁就能拿下价值最高的企业客户</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">企业软件采购定律：安全合规永远是购买决策中的否决项</span></div><div class="pi-row"><span class="pi-label">现象</span><span class="pi-value">Cursor推出Self-hosted Cloud Agents，将AI Agent执行环境完全托管在企业自有基础设施内，解除了金融/政务等行业的数据出境顾虑</span></div><div class="pi-row"><span class="pi-label">规律</span><span class="pi-value">企业软件市场中，安全合规是「否决项」而非「加分项」——不管产品多好，只要触碰数据安全红线，采购流程就会被一票否决。历史上云计算(AWS/Azure私有云)、协作工具(企业微信vs微信)都遵循这一规律：消费级→私有化/本地化=打开企业市场的必要路径</span></div><div class="pi-row"><span class="pi-label">推论</span><span class="pi-value">未来：1)AI编程工具市场将分化为「消费级SaaS」和「企业Self-hosted」两条产品线；2)国内AI编程工具若要突破金融/政务高价值市场，等保三级认证+本地化部署方案是必答题；3)Self-hosted能力将成为AI编程工具企业版的标配功能</span></div></div>
+        </article>
+
+        <article id="application" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="http://finance.sina.com.cn/7x24/2026-03-27/doc-inhsiyyn2524068.shtml" target="_blank">苹果战略转型：将向竞品AI助手开放Siri，平台封闭性出现历史性松动</a></div>
+                    <div class="news-source">新浪财经 · 3月27日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">苹果宣布将向竞品AI助手开放Siri，这是苹果在AI时代的重大战略转型信号。此前Siri生态完全封闭，用户无法将ChatGPT/Gemini等第三方AI助手设为默认。这一开放举措或与欧盟数字市场法案(DMA)的合规压力有关，也反映了苹果在AI能力上的追赶压力</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">Siri向竞品开放</span><span class="news-data-chip">平台封闭性松动</span><span class="news-data-chip">苹果AI战略转型</span><span class="news-data-chip">历史性决策</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">如果落地，这将是苹果平台战略的历史性转变——iPhone用户将可以用ChatGPT/Gemini替代Siri作为默认助手，对苹果的平台控制力和数据生态构成深远影响。对第三方AI助手：iPhone 16亿活跃用户的分发渠道即将开放</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="http://finance.sina.com.cn/jjxw/2026-03-27/doc-inhsiyyf9946966.shtml" target="_blank">OpenAI无限期搁置ChatGPT「成人模式」：内外压力下战略回归核心产品</a></div>
+                    <div class="news-source">财联社 · 3月27日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI已无限期搁置在ChatGPT中推出「成人模式」的计划，CEO奥尔特曼甚至在考虑是否彻底取消。该功能已从原定12月推迟至今年第一季度，目前再次被搁置。压力来源：内部员工/投资者担忧社会影响、未成年人保护风险、加剧AI情感依赖。ChatGPT用户规模已超9亿</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">无限期搁置</span><span class="news-data-chip">奥尔特曼考虑彻底取消</span><span class="news-data-chip">9亿用户规模</span><span class="news-data-chip">战略重心回归核心</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">OpenAI在「AI成人内容商业化」这一边界性业务上选择退出，优先维护平台公信力。这一决定对全球AI内容监管方向具有示范意义</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-live-preview" target="_blank">Google发布Gemini 3.1 Flash Live Preview：最新A2A实时语音模型，Search Live同步上线</a></div>
+                    <div class="news-source">Google AI官方 · 3月26日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Google于3月26日发布gemini-3.1-flash-live-preview，这是最新的Audio-to-Audio(A2A)实时语音对话模型。同日Search Live功能开始在Google产品中全面推送，包括Gemini App。模型使用说明：knowledge cutoff为2025年1月，支持从Gemini 3.0迁移。Google同日宣布Lyria音乐生成功能扩展至更多Google产品</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">3月26日正式发布</span><span class="news-data-chip">A2A实时语音</span><span class="news-data-chip">Search Live全面推送</span><span class="news-data-chip">Gemini 3.0迁移支持</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">实时语音AI从语音助手形态升级为全能信息检索——Search Live意味着用户可以直接用语音对话进行实时网络搜索，对传统搜索引擎和语音助手均构成威胁</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.stcn.com/article/detail/3702423.html" target="_blank">「龙虾热」引爆国产AI应用商业化：证券时报头条报道，百度/字节/腾讯/小米全面跟进OpenClaw</a></div>
+                    <div class="news-source">证券时报 · 3月27日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">据证券时报2小时前头条报道，OpenClaw AI代理框架在境外爆火后引发国内「龙虾热」，百度、字节跳动、腾讯、小米纷纷推出跟进产品。关键数据：上周全球调用量前四名全为国产大模型——小米MiMo V2 Pro、阶跃星辰Step3.5 Flash、DeepSeek V3.2和Kimi K2.5，一周Token消耗达4.69万亿。MiniMax公司年度经常性收入(ARR)已超1.5亿美元，阶跃星辰开源Step 3.5 Flash一日内登顶调用榜首</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">百度/字节/腾讯/小米全面跟进</span><span class="news-data-chip">国产前四霸榜</span><span class="news-data-chip">4.69万亿Token/周</span><span class="news-data-chip">MiniMax ARR>$1.5亿</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">国产大模型商业化从「用户规模」时代进入「Token经济」时代。龙虾热不只是应用爆火，而是中国AI产业链从模型→应用→商业化的完整闭环首次在全球形成可观测的规模效应</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E4%B8%AD%E4%B8%9C%E5%9F%BA%E9%87%91+MiniMax+%E6%99%BA%E8%B0%B1AI+%E6%B8%AF%E8%82%A1+IPO%E5%9B%9E%E6%8A%A5+2026" target="_blank">中东主权基金通过香港AI新股获6倍回报：ADIA投MiniMax、阿美投智谱AI</a></div>
+                    <div class="news-source">RMB交易与研究 · 3月27日（微信公号）</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">据彭博社最新报道，中东主权基金通过投资中国AI独角兽在港股市场获得惊人回报。ADIA投资MiniMax：6500万美元增至超4亿美元(6倍+)；阿美风投投资智谱AI：3000万美元增至约4.15亿美元。中东基金采用「平衡术」：对美国承诺投资以维持关系，同时通过香港市场大举押注中国核心AI资产</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">ADIA投MiniMax 6倍回报</span><span class="news-data-chip">阿美投智谱AI 13.8倍回报</span><span class="news-data-chip">港股AI新股成全球资金避风港</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">中国AI企业的港股上市路径正在成为全球资本的重要通道。中东资本的大举入场，一方面验证了中国AI企业的国际资本市场认可度，另一方面也为国内AI独角兽提供了新的融资估值参考</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">龙虾热解码：OpenClaw爆火背后，是AI应用时代真正的「增长飞轮」启动</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>「龙虾热」（OpenClaw现象）的本质不是一个产品的爆火，而是一个AI应用时代商业化模式首次被验证的里程碑。OpenClaw的核心机制——开放的AI代理框架，允许任何开发者快速构建垂直场景的AI代理应用——让模型能力从「用户直接使用」转变为「开发者二次分发」，打开了指数级传播路径。这与移动互联网时代App Store的生态效应高度相似</p><p>更值得关注的是数据：上周全球OpenRouter调用量前四名全为国产大模型(MiniMax/阶跃星辰/DeepSeek/Kimi)，一周Token消耗达4.69万亿。这不只是排行榜的数字，而是一个清晰的信号：中国AI企业在「Token经济」指标上首次对齐甚至超越美国头部玩家。MiniMax ARR超1.5亿美元，阶跃星辰新模型开源一日登顶，这些数据共同指向一个结论：中国AI商业化飞轮已经启动</p><p>百度/字节/腾讯/小米的全面跟进，意味着「龙虾热」正在从单一产品现象升级为行业共识——AI代理应用是下一个流量入口。但历史告诉我们，平台型机会最终只会产生少数赢家。当前多家大厂跟进的格局，是「先到先得」的窗口期，也是即将发生的一场整合的前奏</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">龙虾热=AI商业化飞轮的首次可见加速：Token消耗量是AI经济最真实的GDP指标，国产AI首次在这一指标上领跑全球，标志着「中国AI商业化时代」正式开启</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">平台生态定律：开放框架 > 单一产品——谁建生态，谁赢长线</span></div><div class="pi-row"><span class="pi-label">现象</span><span class="pi-value">OpenClaw开放AI代理框架爆火，百度/字节/腾讯/小米跟进；国产大模型Token调用量首次连续三周超美国，MiniMax ARR超1.5亿美元</span></div><div class="pi-row"><span class="pi-label">规律</span><span class="pi-value">平台史上的规律：iOS App Store(苹果)、Android(谷歌)、微信小程序(腾讯)——每次大规模平台爆发，核心不是单一产品，而是开放框架让第三方开发者释放了乘法效应。OpenClaw正在扮演AI时代「App Store」的角色：框架+生态>单一应用</span></div><div class="pi-row"><span class="pi-label">推论</span><span class="pi-value">未来：1)AI应用平台竞争将收敛到2-3家生态主导者；2)开放框架+开发者生态是竞争门槛，单纯的模型能力优势将被稀释；3)Token消耗量将成为AI时代「月活跃用户数」级别的核心商业指标</span></div></div>
+        </article>
+
+        <article id="industry" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.cs.com.cn/ssgs/hqzx/202603/t20260326_6729482.html" target="_blank">范式智能(第四范式)启动回A股IPO：在北京证监局完成辅导备案，港股AI企业回归A股浪Algorithm</a></div>
+                    <div class="news-source">中证报 · 3月26日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">3月25日，证监会官网披露，范式智能技术集团(原第四范式，06682.HK)已在北京证监局完成IPO辅导备案登记，拟A股上市。这意味着这家已在港交所挂牌的AI企业正式启动回A流程。背景：范式智能存在对赌协议，距离履约时限仅剩约半年，时间压力是推动回A的重要因素</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">3月25日完成备案</span><span class="news-data-chip">原第四范式</span><span class="news-data-chip">港股+A股双上市</span><span class="news-data-chip">对赌协议半年时限</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">港股AI企业批量回A是2026年资本市场的重要趋势，A股AI板块的需求侧推动力持续。对AI创业公司的融资估值：港股+A股双渠道路径正在成为新的资本标准模板</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://jnz.cs.com.cn/app/html/jnz/6d4ddb1049dd044eaa49e5a45b9178c0.html" target="_blank">中国AI大模型迎范式跃迁：MiniMax年收入超1.5亿美元，阶跃星辰完成新融资，行业进入Token经济时代</a></div>
+                    <div class="news-source">中国证券报 · 3月26日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">中国证券报报道显示，中国AI大模型行业正迎来范式跃迁：MiniMax创始人闫俊杰透露公司2026年2月年度经常性收入(ARR)已超1.5亿美元；阶跃星辰围绕Agent和Token经济展开优化布局；行业整体从「参数规模竞争」转向「商业化Token消耗」竞争格局</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">MiniMax ARR超$1.5亿</span><span class="news-data-chip">Token经济时代</span><span class="news-data-chip">范式跃迁</span><span class="news-data-chip">商业化拐点</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">中国大模型行业从「烧钱竞技」进入「商业造血」阶段。MiniMax的ARR数据是行业首个正式公开的商业化规模指标，将成为其他企业的参照基准，也将推动新一轮估值重定价</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E6%88%B4%E9%94%A6%E5%8D%8E+AI%E6%97%B6%E4%BB%A3+%E4%BA%BA%E7%9A%84%E4%B8%8D%E5%8F%AF%E6%9B%BF%E4%BB%A3+2026" target="_blank">在AI时代，「人的不可替代性」：戴锦华、李修文、徐浩峰关于创作本质的对谈</a></div>
+                    <div class="news-source">北京电影学院对谈 · 3月27日（微信公号）</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">北京大学教授戴锦华、作家李修文与导演徐浩峰在北京电影学院举行主题对谈，议题从「中国叙事的当代精神」延伸到AI浪潮下人的创作本质。三位学者从「肉身经验的装置」、「真实的消逝」到「人的不可替代」，探讨在AI技术浪潮下，作为人的创作者的核心竞争力在哪里</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">戴锦华·李修文·徐浩峰对谈</span><span class="news-data-chip">肉身经验</span><span class="news-data-chip">人的不可替代</span><span class="news-data-chip">北京电影学院</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">顶尖人文学者开始系统性地应对AI挑战，从学术层面探讨「人类创作者的不可替代性」。这一议题的讨论层级已从技术圈上升至人文艺术界，AI对创意产业冲击的社会性认知正在加速形成</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">国产大模型Token霸榜三周：这不是排行榜的胜利，是商业模式的验证</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>当OpenRouter数据显示国产大模型连续三周调用量超过美国头部玩家时，很多人把这理解为「技术赶超」的信号，但实际上这是一个更重要的商业信号：中国AI企业找到了可持续的Token经济商业模式。MiniMax ARR超1.5亿美元、阶跃星辰一日登顶、Kimi K2.5持续在榜——这些数据背后是真实的付费用户和真实的商业价值</p><p>关键的结构性原因在于：中国大模型企业普遍选择了「开源+API」的双轨商业化路径——既通过开源建立开发者生态，又通过API商业化收取Token费用。这一路径的优势在于：开源获取开发者信任→开发者构建应用→应用用户消耗Token→Token消耗转化为ARR。阶跃星辰Step 3.5 Flash开源一日登顶调用榜首，正是这一飞轮启动的最佳证明</p><p>从杨植麟「Token是未来GDP」的判断来看，中国大模型企业已经形成清晰的战略共识：Token消耗量是AI经济时代最核心的商业指标，就像移动互联网时代的DAU(日活用户数)。率先在Token规模上建立优势的企业，将获得AI经济时代的先发竞争优势</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">Token霸榜三周的真正含义：中国AI商业飞轮已经启动，从技术竞争转向商业规模竞争的拐点已至——Token=AI时代的DAU，谁先规模化谁先赢</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">商业化飞轮定律：开源→生态→Token消耗→ARR的正向循环</span></div><div class="pi-row"><span class="pi-label">现象</span><span class="pi-value">国产大模型连续三周Token调用量超美国，阶跃星辰开源Step 3.5 Flash一日登顶，MiniMax ARR超1.5亿美元，Kimi「Token=未来GDP」</span></div><div class="pi-row"><span class="pi-label">规律</span><span class="pi-value">互联网商业史的核心规律：先免费获取规模(Linux开源→服务器市场)，再通过配套服务商业化。AI时代的新版本：开源模型获取开发者信任→开发者构建应用→应用用户消耗Token→Token=ARR。开源不是「放弃商业化」，而是「用生态换规模再换商业化」的长线策略</span></div><div class="pi-row"><span class="pi-label">推论</span><span class="pi-value">未来：1)纯闭源的AI模型厂商将面临生态压力；2)Token单价将成为AI行业的「毛利率指标」，持续下降但总量持续增长；3)「Token GDP」将成为衡量国家AI经济实力的标准指标</span></div></div>
+        </article>
+
+        <article id="enterprise" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.cursor.com/changelog" target="_blank">Cursor发布Self-hosted Cloud Agents：企业代码不出网络，AI Agent在用户自己基础设施内运行</a></div>
+                    <div class="news-source">Cursor官方Changelog · 3月26日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Cursor于3月25日发布Self-hosted Cloud Agents功能，这是企业级AI编程安全合规的关键突破：用户可以将Cursor的Cloud Agents运行在自己公司的基础设施内，代码完全不需要离开公司网络。此前Cloud Agents只能在Cursor的云端运行，这对金融/医疗/政府等有严格数据合规要求的企业是重大障碍</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">3月25日发布</span><span class="news-data-chip">代码不出公司网络</span><span class="news-data-chip">企业级安全合规</span><span class="news-data-chip">自托管基础设施</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">这是Cursor打入大企业市场的关键一步。数据安全是企业采用AI编程工具的最大顾虑，Self-hosted方案直接解除了这一顾虑。对国内企业：自托管方案也解决了海外数据出境的监管风险</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.21jingji.com/article/20260311/herald/d1181eed5b6e2f8ef8415cd10f63ce82.html" target="_blank">全球首届人形机器人格斗赛举办：AI策算师夺冠，人形机器人场景边界持续扩展</a></div>
+                    <div class="news-source">21世纪经济报 · 3月27日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">由中央广播电视总台主办的CMG世界机器人大赛机甲格斗擂台赛在杭州举行，这是全球首个以人形机器人为参赛主体的格斗竞技赛事。机器人完成直拳/勾拳/扫腿/侧踢等对战动作，「AI策算师」以精准算法决策和灵活机动性夺冠。距离2025年北京亦庄人形机器人半程马拉松仅约一年，人形机器人从跑步到格斗，场景拓展速度超出预期</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">全球首届人形机器人格斗赛</span><span class="news-data-chip">杭州举行</span><span class="news-data-chip">AI策算师夺冠</span><span class="news-data-chip">央视主办</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">格斗场景验证了人形机器人在高动态、高对抗环境下的稳定性和实时决策能力，这是工厂场景所无法提供的压力测试。竞技赛事作为商业化入口，为人形机器人提供了娱乐产业的全新变现路径</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://news.cctv.com/2026/03/27/ARTIzRobotWolf.shtml" target="_blank">100只量产机器狼完成-20℃极寒测试，各项性能优异，即将批量量产</a></div>
+                    <div class="news-source">央视新闻 · 3月27日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">据央视新闻，日前100只量产机器狼在-20℃极寒环境中进行测试，各项性能表现优异，测试现场视频已对外公开。机器狼的极寒测试旨在验证在极端天气条件下的环境适应能力，为即将到来的批量量产做准备。测试数量达到100只，标志着从研发样机进入量产验证阶段</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">100只量产级别</span><span class="news-data-chip">-20℃极寒测试</span><span class="news-data-chip">性能优异</span><span class="news-data-chip">央视报道</span><span class="news-data-chip">即将量产</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">机器人从单机研发到100只量产测试是一个重要的规模化里程碑。极寒测试通过意味着机器狼可以用于矿山、极地科考、边境巡逻等恶劣环境场景，极大拓展了具身智能的商业应用边界</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="http://k.sina.com.cn/article_7857201856_1d45362c001903ngdq.html" target="_blank">通义千问3-4B vs GPT-4.1-nano：Lychee-Rerank本地化方案在制造业BOM匹配场景的实战评测</a></div>
+                    <div class="news-source">新浪 · 3月27日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">一项针对制造业和电力行业的AI应用评测：通义千问3-4B-Instruct在制造业BOM物料匹配、电力设备故障描述归类场景与GPT-4.1-nano进行多维对比。评测引入Lychee-Rerank本地化排序方案，完全本地运行，数据不出门，针对中文制造业术语有针对性优化。核心优势：解决了传统关键词匹配的「一词之差漏关键信息」问题，同时规避了联网AI的隐私风险</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">通义千问3-4B vs GPT-4.1-nano</span><span class="news-data-chip">制造业BOM匹配</span><span class="news-data-chip">Lychee-Rerank本地化</span><span class="news-data-chip">完全本地运行</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">制造业AI应用正在从「大模型通用能力」转向「垂直场景精准优化」。本地化+领域微调的组合拳，比通用大模型在垂直场景有显著优势，且完全满足制造企业的数据安全要求</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://cn.wicinternet.org/2026-03/10/content_38639873.htm" target="_blank">2026中关村论坛：科技创新与产业深度融合，北京AI产业链全面布局</a></div>
+                    <div class="news-source">世界互联网大会 · 3月27日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">2026中关村论坛年会3月25-29日举行，主题「科技创新与产业创新深度融合」，设置五大板块百余场活动。「十四五」以来北京高精尖产业实现历史性突破。智谱AI、阶跃星辰、MiniMax等大模型厂商围绕Agent和Token经济展开优化布局，北京正在成为中国AI产业链最重要的地理中心</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">2026中关村论坛</span><span class="news-data-chip">3月25-29日</span><span class="news-data-chip">科技产业深度融合</span><span class="news-data-chip">北京AI产业布局</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">中关村论坛是中国AI产业政策和商业战略的重要信号源，本届论坛聚焦科技与产业融合，预示后续政策支持方向将向产业化落地倾斜</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">量产机器狼+人形格斗赛：具身智能商业化的「两条腿」正在同步落地</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>同一天，一边是100只量产机器狼完成-20℃极寒测试，一边是全球首届人形机器人格斗赛在杭州举行——这两个看似不同的事件，指向具身智能商业化的两条路径正在同步落地：工业/行业应用（机器狼）和娱乐/竞技应用（人形格斗）。两条路径代表了不同的商业化逻辑，但共同指向一个结论：具身智能已经从「实验室」进入「量产商业化」阶段</p><p>机器狼的-20℃测试数量达到100只，这是一个关键的量产信号——从单机研发到批量生产需要跨越工艺一致性、供应链可靠性、极端环境耐久性三道关口。100只的测试规模意味着机器狼已完成从「样机」到「产品」的转型，可以进入矿山、边境巡逻、极地科考等B端市场。而人形格斗赛则开辟了C端娱乐市场的商业想象空间</p><p>更深层的意义在于：机器人格斗赛和机器人马拉松这类竞技赛事，正在成为人形机器人行业最有效的技术压测场和公众认知培育场。压力场景驱动快速迭代，公众关注带来资本和人才流入——这与F1赛车对汽车技术的推动作用高度相似。预计2026-2027年，具身智能领域将出现更多「竞技赛事」形式的商业化探索</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">具身智能进入「量产商业化双轨时代」：工业场景(机器狼极寒量产)和娱乐场景(人形格斗)同步落地，标志着具身智能从技术验证迈入多场景商业化阶段</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">赛事驱动定律：极端场景竞技 = 技术压测+品牌曝光+资本吸引的三合一催化剂</span></div><div class="pi-row"><span class="pi-label">现象</span><span class="pi-value">全球首届人形机器人格斗赛在杭州举行，央视主办；100只量产机器狼完成-20℃极寒测试即将量产</span></div><div class="pi-row"><span class="pi-label">规律</span><span class="pi-value">技术史上，极端竞技赛事往往是加速技术成熟的催化剂：F1赛车推动了汽车发动机技术，NASA挑战赛推动了自动驾驶，DARPA挑战赛推动了无人机。机器人格斗赛和马拉松正在扮演同样的角色：提供极端压测场景、制造大众认知时刻、吸引资本和人才聚焦</span></div><div class="pi-row"><span class="pi-label">推论</span><span class="pi-value">未来：1)机器人竞技赛事将成为常规化商业赛事，带动具身智能公众认知快速成熟；2)「赛事→技术压测→产品迭代→量产」的路径将被更多机器人企业采用；3)人形机器人的娱乐场景价值将不低于工业场景价值</span></div></div>
+        </article>
+
+
+        <div class="section-card" style="margin-top:20px">
+            <div class="section-header"><span class="num">📊</span> 数据速览</div>
+            <table class="data-table">
+                <thead><tr><th>指标</th><th>数值</th><th>变化/说明</th></tr></thead>
+                <tbody>
+                    <tr><td>年度经常性收入(ARR)</td><td><strong>超$1.5亿</strong></td><td>创始人闫俊杰2026年2月数据披露</td></tr>
+                    <tr><td>周Token消耗量</td><td><strong>4.69万亿</strong></td><td>OpenRouter数据，MiniMax/阶跃星辰/DeepSeek/Kimi</td></tr>
+                    <tr><td>全球活跃用户</td><td><strong>超9亿</strong></td><td>财联社数据，持续增长</td></tr>
+                    <tr><td>投资回报</td><td><strong>6倍+</strong></td><td>6500万→超4亿美元，彭博报道</td></tr>
+                    <tr><td>投资回报</td><td><strong>约13.8倍</strong></td><td>3000万→约4.15亿美元，彭博报道</td></tr>
+                    <tr><td>极寒测试数量</td><td><strong>100只</strong></td><td>-20℃极寒环境测试通过，即将批量量产</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📌</span> 明日/下周值得关注</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="margin-top:20px;background:linear-gradient(135deg,#EFF6FF 0%,#EDE9FE 100%);border:1px solid #DBEAFE;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06)">
+            <div style="font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:#1E40AF">
+                🤖 深度洞察
+            </div>
+            <div style="font-size:14px;color:#374151;line-height:1.8;margin:0">
+                <p style="margin:0">今天我重点追踪了「龙虾热」这个国内最强信号——当证券时报用头条篇幅报道一个AI应用框架时，这就是资本和产业双重验证的强信号。让我印象深刻的是杨植麟的「Token是未来GDP」这句话，它把一个技术指标提升到了经济学高度。我在收集数据时注意到：OpenRouter的Token消耗量排行榜，正在成为AI行业最客观的「商业化温度计」——比任何官方数据都真实。今天也观察到Cursor Self-hosted Agents这个被很多人忽视的发布，但在我看来这是AI编程打入企业市场的关键一步，值得密切关注</p>
+            </div>
+        </div>
+
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+            <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+            <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+                我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+            </p>
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                🏠 访问AI洞察首页
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', 'false'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.setAttribute('aria-selected', 'true');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

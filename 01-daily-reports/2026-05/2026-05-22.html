@@ -1,0 +1,2963 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 · 2026-05-22 | AI洞察</title>
+    <meta name="description" content="AI洞察日报 2026-05-22：大模型、AI Coding、AI应用、AI行业、企业AI转型五大板块动态">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23059669'/><text x='6' y='23' font-size='18' fill='white'>📡</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+    <style>
+/**
+ * 清爽调研报告风格 - 基础样式表
+ * 版本: 3.0.0
+ * 更新: 2026-03-06
+ * 
+ * 专业调研报告设计系统
+ * 包含完整的CSS变量、组件样式、响应式布局
+ * 默认包含：多色调色板、Mesh Gradient背景、毛玻璃导航、色彩发光阴影
+ */
+
+/* ==================== CSS 变量定义 ==================== */
+:root {
+    /* ============ 主色调（语义化） ============ */
+    --color-success: #059669;           /* Emerald：核心/正向/成功 */
+    --color-success-light: #10B981;     /* Emerald 亮色 */
+    --color-danger: #E11D48;            /* Rose：警告/风险/关键 */
+    --color-danger-light: #F43F5E;      /* Rose 亮色 */
+    --color-warning: #D97706;           /* Amber：类比/提示/辅助 */
+    --color-warning-light: #F59E0B;     /* Amber 亮色 */
+    --color-info: #2563EB;              /* Blue：信息/技术/链接 */
+    --color-info-light: #3B82F6;        /* Blue 亮色 */
+    --color-purple: #7C3AED;            /* Violet：洞察/元认知/高级 */
+    --color-purple-light: #8B5CF6;      /* Violet 亮色 */
+    
+    /* ============ 中性色（高对比度）============ */
+    --color-text-primary: #1C1917;
+    --color-text-secondary: #57534E;
+    --color-text-muted: #78716C;
+    --color-border: #E7E5E4;
+    --color-border-light: #F5F5F4;
+    --color-bg: #F8FAFB;
+    --color-bg-card: #FFFFFF;
+    --color-bg-table-header: #FAFAF9;
+    
+    /* ============ 渐变色 ============ */
+    --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+    --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+    --gradient-highlight: linear-gradient(135deg, rgba(5,150,105,0.08) 0%, rgba(5,150,105,0.03) 100%);
+    --gradient-mesh: 
+        radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+        radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
+    
+    /* ============ 阴影层级 ============ */
+    --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.03);
+    --shadow-glow-success: 0 4px 14px rgba(5,150,105,0.15);
+    --shadow-glow-info: 0 4px 14px rgba(37,99,235,0.15);
+    --shadow-glow-purple: 0 4px 14px rgba(124,58,237,0.15);
+    --shadow-hover: 0 6px 16px rgba(5,150,105,0.15), 0 2px 6px rgba(5,150,105,0.1);
+    
+    /* ============ 间距系统（8px基准） ============ */
+    --spacing-xs: 4px;      /* 最小间距 */
+    --spacing-sm: 8px;      /* 小间距 */
+    --spacing-md: 16px;     /* 中等间距 */
+    --spacing-lg: 24px;     /* 大间距 */
+    --spacing-xl: 32px;     /* 特大间距 */
+    --spacing-2xl: 40px;    /* 章节间距 */
+    --spacing-3xl: 48px;    /* 页脚间距 */
+    
+    /* ============ 圆角系统 ============ */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+    
+    /* ============ 字体系统 ============ */
+    --font-family: -apple-system, "SF Pro Display", "system-ui", "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+    --font-mono: "SF Mono", "Fira Code", "Cascadia Code", "JetBrains Mono", monospace;
+    
+    /* ============ 字体层级体系（核心！） ============ */
+    /* 标题类 - 4级递减 */
+    --heading-1: 28px;      /* H1: 报告主标题 */
+    --heading-2: 18px;      /* H2: 章节标题 */
+    --heading-3: 15px;      /* H3: 子章节/卡片标题 */
+    --heading-4: 13px;      /* H4: 小节标题/表头/洞察框标题 */
+    
+    /* 正文类 */
+    --body-text: 14px;      /* 正文: 段落、描述、列表 */
+    --body-small: 13px;     /* 表格内容 */
+    --caption: 12px;        /* 辅助文字: 来源、标签、备注 */
+    
+    /* 兼容旧变量 */
+    --font-size-xs: var(--caption);
+    --font-size-sm: var(--body-small);
+    --font-size-base: var(--body-text);
+    --font-size-md: var(--heading-3);
+    --font-size-lg: var(--heading-2);
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: var(--heading-1);
+    
+    /* ============ 动画系统 ============ */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==================== 基础重置 ==================== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--body-text);
+    line-height: 1.65;
+    color: var(--color-text-primary);
+    background: var(--color-bg);
+    background-image: var(--gradient-mesh);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* ==================== 容器布局 ==================== */
+.container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: var(--spacing-lg) var(--spacing-md) 48px;
+}
+
+/* ==================== 头部区域 ==================== */
+.header {
+    text-align: center;
+    padding: var(--spacing-2xl) 0;
+    margin-bottom: var(--spacing-2xl);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 顶部3px渐变指示条 */
+.header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-hero);
+}
+
+.badge, .header-badge {
+    display: inline-flex;
+    align-items: center;
+    background: var(--gradient-badge);
+    color: var(--color-info);
+    padding: var(--spacing-xs) 12px;
+    border-radius: var(--radius-full);
+    font-size: var(--caption);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-bottom: 20px;
+    border: 1px solid rgba(9, 105, 218, 0.15);
+}
+
+.main-title, .header-title {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle, .header-subtitle {
+    font-size: var(--body-text);
+    color: var(--color-text-secondary);
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ==================== 核心发现区域 ==================== */
+.summary-box {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+    position: relative;
+    overflow: hidden;
+    border-left: 4px solid var(--color-danger);
+}
+
+.summary-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--caption);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-danger);
+    margin-bottom: 12px;
+}
+
+.summary-label::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--color-danger);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(207, 34, 46, 0.15);
+}
+
+.summary-title {
+    font-size: var(--heading-2);
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    color: var(--color-text-primary);
+}
+
+.summary-title em {
+    color: var(--color-danger);
+    font-style: normal;
+    font-weight: 600;
+}
+
+.summary-text {
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+/* ==================== Tab导航 ==================== */
+.tab-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 6px;
+    margin-bottom: var(--spacing-lg);
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: var(--shadow-card);
+}
+
+.tab-btn {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 12px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--body-small);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    background: var(--color-bg-table-header);
+    color: var(--color-text-secondary);
+}
+
+.tab-btn.active {
+    background: var(--gradient-success);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+}
+
+.tab-btn-num {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.06);
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.tab-btn.active .tab-btn-num {
+    background: rgba(255,255,255,0.2);
+}
+
+.tab-btn-text {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .tab-btn-text {
+        display: inline;
+    }
+}
+
+.tab-panel {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== 二级导航 ==================== */
+.sub-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px;
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-lg);
+    margin-bottom: 24px;
+    border: 1px solid var(--color-border-light);
+}
+
+.sub-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--caption);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.sub-nav-btn:hover {
+    background: var(--color-info);
+    color: #fff;
+    border-color: var(--color-info);
+    transform: translateY(-1px);
+}
+
+.sub-nav-btn .sub-nav-num {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0969da 0%, #1a7f37 100%);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.sub-nav-btn:hover .sub-nav-num {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .sub-nav {
+        gap: 6px;
+        padding: 12px;
+    }
+    
+    .sub-nav-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+    
+    .sub-nav-btn .sub-nav-num {
+        width: 16px;
+        height: 16px;
+        font-size: 9px;
+    }
+}
+
+/* ==================== 章节卡片 ==================== */
+.section, .section-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.section-number {
+    background: var(--gradient-success);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.25);
+}
+
+.section-number-small {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 14px;
+}
+
+.section-title {
+    font-size: var(--heading-2);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    letter-spacing: -0.01em;
+}
+
+.section-content {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+
+.section-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+/* ==================== 统计卡片 ==================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-2xl);
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.stat-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    cursor: help;
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.stat-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+
+.stat-card:hover .stat-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.stat-value {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.02em;
+}
+
+.stat-value.success, .stat-value.green {
+    color: var(--color-success);
+}
+
+.stat-value.danger, .stat-value.red {
+    color: var(--color-danger);
+}
+
+.stat-value.warning, .stat-value.orange {
+    color: var(--color-warning);
+}
+
+.stat-value.info, .stat-value.blue {
+    color: var(--color-info);
+}
+
+.stat-label {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+/* ==================== Tooltip ==================== */
+.stat-tooltip {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: var(--color-text-primary);
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;
+    width: 280px;
+    max-width: 90vw;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.stat-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: var(--color-text-primary);
+}
+
+.stat-tooltip-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.stat-tooltip-desc {
+    color: rgba(255,255,255,0.85);
+    font-size: var(--caption);
+    line-height: 1.5;
+}
+
+/* 内容Tooltip */
+.has-tip {
+    position: relative;
+    cursor: help;
+    border-bottom: 1px dashed var(--color-info);
+}
+
+.tip-box {
+    position: fixed;
+    width: 320px;
+    max-width: 90vw;
+    max-height: 340px;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+    z-index: 9999;
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+.has-tip:hover .tip-box {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.tip-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border-light);
+    color: var(--color-text-primary);
+}
+
+.tip-section { margin-bottom: var(--spacing-md); }
+.tip-section:last-child { margin-bottom: 0; }
+
+.tip-label {
+    font-size: var(--caption);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-info);
+    margin-bottom: 4px;
+}
+
+.tip-text { 
+    color: var(--color-text-secondary); 
+    line-height: 1.7;
+}
+
+.tip-list {
+    list-style: none;
+    color: var(--color-text-secondary);
+}
+
+.tip-list li {
+    padding: 3px 0;
+    padding-left: var(--spacing-md);
+    position: relative;
+}
+
+.tip-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-info);
+    font-size: var(--caption);
+}
+
+.tip-box::-webkit-scrollbar { width: 4px; }
+.tip-box::-webkit-scrollbar-thumb { 
+    background: var(--color-border); 
+    border-radius: 2px; 
+}
+
+/* ==================== 状态标签 ==================== */
+.tag, .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: var(--caption);
+    font-weight: 500;
+    white-space: nowrap;
+    line-height: 1.5;
+}
+
+.tag-green, .status-success {
+    background: rgba(5, 150, 105, 0.12);
+    color: var(--color-success);
+}
+
+.tag-orange, .status-warning {
+    background: rgba(191, 135, 0, 0.12);
+    color: var(--color-warning-dark);
+}
+
+.tag-red, .status-danger {
+    background: rgba(207, 34, 46, 0.12);
+    color: var(--color-danger);
+}
+
+.tag-blue, .status-info {
+    background: rgba(9, 105, 218, 0.12);
+    color: var(--color-info);
+}
+
+/* ==================== 引用框 ==================== */
+.quote, .quote-box {
+    background: var(--color-bg-table-header);
+    border-left: 3px solid var(--color-info);
+    padding: var(--spacing-md) 20px;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: 20px 0;
+    transition: all var(--transition-fast);
+}
+
+.quote:hover, .quote-box:hover {
+    border-left-width: 4px;
+    background: rgba(9, 105, 218, 0.04);
+}
+
+.quote-text {
+    font-size: var(--body-text);
+    font-style: italic;
+    color: var(--color-text-primary);
+    line-height: 1.7;
+}
+
+.quote-author {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-sm);
+    font-weight: 500;
+}
+
+/* ==================== 洞察框 ==================== */
+.insight-box {
+    border-left: 3px solid var(--color-warning);
+    background: rgba(191, 135, 0, 0.06);
+    padding: var(--spacing-md) 20px;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: 20px 0;
+    transition: all var(--transition-fast);
+}
+
+.insight-box:hover {
+    border-left-width: 4px;
+    background: rgba(191, 135, 0, 0.08);
+}
+
+.insight-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-warning-dark);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.insight-title::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--color-warning);
+    border-radius: 50%;
+}
+
+.insight-content {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.insight-content-title {
+    font-size: var(--heading-3);
+    color: var(--color-warning);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.insight-content-text {
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+.insight-content-text strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.insight-content-text ul {
+    margin: 12px 0;
+    padding-left: 20px;
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+.insight-content-text ul li {
+    margin-bottom: 6px;
+}
+
+/* ==================== 双列对比 ==================== */
+.two-col, .comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .two-col, .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.col-box {
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-table-header);
+}
+
+.col-box-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.col-box-title.red { color: var(--color-danger); }
+.col-box-title.green { color: var(--color-success); }
+
+.col-list {
+    list-style: none;
+}
+
+.col-list li {
+    padding: var(--spacing-sm) 0;
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    line-height: 1.7;
+}
+
+.col-list li::before {
+    content: '•';
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+.correct-path {
+    border-left: 3px solid rgba(5, 150, 105, 0.5);
+    background: rgba(5, 150, 105, 0.04);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.wrong-path {
+    border-left: 3px solid rgba(207, 34, 46, 0.5);
+    background: rgba(207, 34, 46, 0.04);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+/* ==================== 路径对比框 ==================== */
+.pathway-section {
+    border-left: 3px solid rgba(5, 150, 105, 0.5);
+    background: rgba(5, 150, 105, 0.04);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.pathway-section.wrong {
+    border-left: 3px solid rgba(207, 34, 46, 0.5);
+    background: rgba(207, 34, 46, 0.04);
+}
+
+.pathway-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-bottom: 20px;
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid rgba(5, 150, 105, 0.15);
+}
+
+.pathway-section.wrong .pathway-header {
+    border-bottom-color: rgba(207, 34, 46, 0.15);
+}
+
+.pathway-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    font-size: 18px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.pathway-icon.correct {
+    background: var(--gradient-success);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+}
+
+.pathway-icon.wrong {
+    background: linear-gradient(135deg, var(--color-danger) 0%, #ff6b6b 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(207, 34, 46, 0.3);
+}
+
+.pathway-title-wrap {
+    flex: 1;
+}
+
+.pathway-title {
+    font-size: var(--heading-2);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+}
+
+.pathway-subtitle {
+    font-size: var(--body-text);
+    color: var(--color-text-secondary);
+}
+
+/* ==================== 步骤流程 ==================== */
+.pathway-steps {
+    display: flex;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.pathway-step {
+    flex: 1;
+    min-width: 140px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.step-number {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-success);
+    color: #fff;
+    border-radius: 50%;
+    font-size: var(--caption);
+    font-weight: 600;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.step-desc {
+    font-size: var(--caption);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+.pathway-arrow {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+@media (max-width: 960px) {
+    .pathway-steps {
+        flex-direction: column;
+    }
+    .pathway-arrow {
+        transform: rotate(90deg);
+        justify-content: center;
+    }
+}
+
+/* ==================== 偏差网格 ==================== */
+.deviation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+@media (max-width: 768px) {
+    .deviation-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.deviation-item {
+    background: var(--color-bg-card);
+    border: 1px solid rgba(207, 34, 46, 0.2);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+}
+
+.deviation-wrong {
+    font-size: var(--body-text);
+    font-weight: 600;
+    color: var(--color-danger);
+    margin-bottom: 4px;
+}
+
+.deviation-result {
+    font-size: var(--caption);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+/* ==================== 未来路径对比 ==================== */
+.future-paths {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+@media (max-width: 768px) {
+    .future-paths {
+        grid-template-columns: 1fr;
+    }
+}
+
+.future-path {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.future-path.continue {
+    border-left: 4px solid var(--color-danger);
+}
+
+.future-path.pivot {
+    border-left: 4px solid var(--color-success);
+}
+
+.path-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.path-icon {
+    font-size: 20px;
+}
+
+.path-label {
+    font-size: var(--heading-3);
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.path-list {
+    list-style: none;
+    margin-bottom: var(--spacing-md);
+}
+
+.path-list li {
+    padding: var(--spacing-sm) 0;
+    font-size: var(--body-text);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.path-list li:last-child {
+    border-bottom: none;
+}
+
+.path-list li strong {
+    color: var(--color-text-primary);
+}
+
+.path-verdict {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 12px;
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-sm);
+}
+
+.verdict-label {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+.verdict-value {
+    font-size: var(--body-text);
+    font-weight: 600;
+}
+
+.verdict-value.red {
+    color: var(--color-danger);
+}
+
+.verdict-value.green {
+    color: var(--color-success);
+}
+
+/* ==================== 表格样式 ==================== */
+.table-wrap, .table-wrapper {
+    overflow-x: auto;
+    margin: var(--spacing-md) 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: var(--body-small);
+}
+
+th {
+    background: var(--color-bg-table-header);
+    color: var(--color-text-secondary);
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: var(--heading-4);
+    text-align: left;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--color-border);
+}
+
+td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-border-light);
+    vertical-align: middle;
+}
+
+td:first-child {
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+tbody tr {
+    transition: background var(--transition-fast);
+}
+
+tbody tr:hover td {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.highlight-col {
+    background: rgba(5, 150, 105, 0.08) !important;
+}
+
+/* ==================== 图例样式 ==================== */
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    justify-content: center;
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+    font-size: var(--caption);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--color-text-secondary);
+}
+
+/* ==================== 内联统计 ==================== */
+.inline-stats {
+    display: flex;
+    gap: var(--spacing-xl);
+    justify-content: center;
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.inline-stat { text-align: center; }
+
+.inline-stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.inline-stat-label {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+/* ==================== 结论区域 ==================== */
+.conclusion {
+    background: rgba(5, 150, 105, 0.04);
+    border-left: 3px solid rgba(5, 150, 105, 0.5);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.conclusion-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-success);
+    margin-bottom: var(--spacing-md);
+}
+
+.conclusion-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .conclusion-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .conclusion-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.conclusion-item {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+}
+
+.conclusion-item-label {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.conclusion-item-value {
+    font-size: var(--body-text);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.4;
+}
+
+/* ==================== 全局控制按钮 ==================== */
+.global-controls {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1000;
+}
+
+.global-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-bg-card);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    color: var(--color-text-secondary);
+}
+
+.global-btn:hover {
+    background: var(--color-info);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(9, 105, 218, 0.3);
+}
+
+.global-btn.active {
+    background: var(--color-success);
+    color: #fff;
+}
+
+.global-btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+.global-btn-tooltip {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--color-text-primary);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: var(--caption);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-fast);
+    pointer-events: none;
+}
+
+.global-btn:hover .global-btn-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ==================== 移动端预览模式 ==================== */
+body.mobile-preview-mode {
+    background: #2d2d2d;
+}
+
+body.mobile-preview-mode .container {
+    max-width: 375px;
+    margin: 0 auto;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+    min-height: 100vh;
+    background: var(--color-bg);
+    border-left: 1px solid #444;
+    border-right: 1px solid #444;
+}
+
+body.mobile-preview-mode .container {
+    padding: var(--spacing-lg) var(--spacing-md) 80px;
+}
+
+body.mobile-preview-mode .header-title {
+    font-size: var(--font-size-2xl);
+}
+
+body.mobile-preview-mode .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+body.mobile-preview-mode .two-col {
+    grid-template-columns: 1fr;
+}
+
+body.mobile-preview-mode .conclusion-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+body.mobile-preview-mode .section {
+    padding: var(--spacing-md);
+}
+
+body.mobile-preview-mode .tab-nav {
+    overflow-x: auto;
+}
+
+body.mobile-preview-mode .tab-btn-text {
+    display: none;
+}
+
+body.mobile-preview-mode .sub-nav {
+    flex-wrap: wrap;
+}
+
+body.mobile-preview-mode .sub-nav-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+}
+
+body.mobile-preview-mode .global-controls {
+    bottom: 12px;
+    right: calc(50% - 187px + 60px);
+}
+
+/* ==================== 页脚样式 ==================== */
+.footer {
+    text-align: center;
+    padding-top: 32px;
+    margin-top: 48px;
+    border-top: 1px solid var(--color-border-light);
+}
+
+.footer-quote {
+    font-size: var(--body-text);
+    font-style: italic;
+    color: var(--color-text-secondary);
+    max-width: 500px;
+    margin: 0 auto var(--spacing-md);
+    line-height: 1.6;
+}
+
+.footer-date {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+/* ==================== 免责声明 ==================== */
+.disclaimer {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-top: 40px;
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+}
+
+.disclaimer-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-muted);
+}
+
+.disclaimer-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.disclaimer-text {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
+
+/* ==================== 文字样式类 ==================== */
+.text-success { color: var(--color-success); }
+.text-danger { color: var(--color-danger); }
+.text-warning { color: var(--color-warning); }
+.text-info { color: var(--color-info); }
+
+.text-bold {
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.text-highlight {
+    border-bottom: 2px solid var(--color-danger);
+    padding-bottom: 1px;
+}
+
+/* ==================== 参考资料区域 ==================== */
+.references {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.references-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: 20px;
+}
+
+.references-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--color-info);
+}
+
+.references-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.references-title {
+    font-size: var(--heading-3);
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.references-list {
+    list-style: none;
+    display: grid;
+    gap: var(--spacing-md);
+}
+
+.reference-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.reference-item:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.reference-num {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: var(--caption);
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.reference-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.reference-link {
+    display: block;
+    font-size: var(--body-text);
+    color: var(--color-info);
+    text-decoration: none;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 2px;
+}
+
+.reference-link:hover {
+    text-decoration: underline;
+}
+
+.reference-meta {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.reference-source {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.reference-tag {
+    display: inline-flex;
+    padding: 1px 6px;
+    background: rgba(9, 105, 218, 0.08);
+    color: var(--color-info);
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.references-note {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+    font-size: var(--body-text);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+
+.references-note strong {
+    color: var(--color-text-primary);
+}
+
+/* ==================== 响应式布局 ==================== */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-lg) var(--spacing-md) 80px;
+    }
+    
+    .header-title {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .two-col {
+        grid-template-columns: 1fr;
+    }
+    
+    .conclusion-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .legend {
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+    }
+    
+    .inline-stats {
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+    }
+    
+    .section {
+        padding: var(--spacing-md);
+    }
+    
+    .stat-tooltip {
+        display: none !important;
+    }
+    
+    .tip-box {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 12px 10px 80px;
+    }
+    
+    .header-title {
+        font-size: 20px;
+    }
+    
+    .stats-grid {
+        gap: 8px;
+    }
+    
+    .stat-card {
+        padding: 12px 8px;
+    }
+    
+    .stat-value {
+        font-size: 18px;
+    }
+    
+    .stat-label {
+        font-size: 10px;
+        letter-spacing: 0;
+    }
+    
+    .section {
+        padding: 12px;
+    }
+    
+    .conclusion-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ===== 日报组件层 ===== */
+/* ===== CSS VARIABLES (清爽调研风格 v5.0 × 日报) ===== */
+        :root {
+            --color-success: #059669; --color-success-light: #10B981; --color-success-dark: #047857;
+            --color-success-50: #ECFDF5; --color-success-100: #D1FAE5;
+            --color-danger: #E11D48; --color-danger-light: #F43F5E; --color-danger-50: #FFF1F2;
+            --color-warning: #D97706; --color-warning-light: #F59E0B; --color-warning-50: #FFFBEB;
+            --color-info: #2563EB; --color-info-light: #3B82F6; --color-info-50: #EFF6FF; --color-info-100: #DBEAFE;
+            --color-purple: #7C3AED; --color-purple-light: #8B5CF6; --color-purple-50: #F5F3FF; --color-purple-100: #EDE9FE;
+            --color-orange: #EA580C;
+            --color-text-primary: #1C1917; --color-text-secondary: #57534E; --color-text-muted: #78716C;
+            --color-border: #E7E5E4; --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB; --color-bg-card: #FFFFFF; --color-bg-table-header: #FAFAF9;
+            --color-bg-hover: rgba(0,0,0,0.025);
+            --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+            --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            --gradient-orange: linear-gradient(135deg, #EA580C 0%, #F97316 100%);
+            --gradient-purple: linear-gradient(135deg, #7C3AED 0%, #6D28D9 50%, #5B21B6 100%);
+            --gradient-china: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+            --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+            --gradient-mesh:
+                radial-gradient(at 20% 20%, rgba(5,150,105,0.06) 0%, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(37,99,235,0.05) 0%, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(124,58,237,0.03) 0%, transparent 50%);
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-hover: 0 8px 24px rgba(5,150,105,0.18), 0 2px 8px rgba(5,150,105,0.10);
+            --shadow-float: 0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
+            --shadow-glow-info: 0 4px 14px rgba(37,99,235,0.15);
+            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-full: 9999px;
+            --font-family: "DM Sans", -apple-system, "Noto Sans SC", "PingFang SC", sans-serif;
+            --font-family-heading: "DM Sans", -apple-system, "Noto Sans SC", sans-serif;
+            --font-family-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --sidebar-width: 228px;
+            --content-max: 960px;
+            --content-pad: 48px;
+        }
+
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-family); font-size: 15px; line-height: 1.65;
+            letter-spacing: -0.01em; color: var(--color-text-secondary);
+            background: var(--color-bg); background-image: var(--gradient-mesh);
+            background-attachment: fixed; -webkit-font-smoothing: antialiased;
+        }
+        ::selection { background: rgba(5,150,105,0.18); }
+        a { color: var(--color-info); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ===== SKIP TO CONTENT ===== */
+        .skip-to-content {
+            position: absolute; top: -40px; left: 0; background: var(--color-info);
+            color: #fff; padding: 8px 16px; border-radius: 0 0 8px 0; z-index: 9999;
+            transition: top var(--transition-fast);
+        }
+        .skip-to-content:focus { top: 0; }
+
+        /* ===== LAYOUT ===== */
+        .layout-wrapper { display: flex; width: 100%; min-height: 100vh; align-items: stretch; }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar-nav {
+            width: var(--sidebar-width); flex-shrink: 0;
+            position: sticky; top: 0; height: 100vh;
+            overflow-y: auto; background: #fff;
+            border-right: 1px solid var(--color-border);
+            padding: 20px 0; z-index: 100;
+            display: flex; flex-direction: column;
+        }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 2px; }
+        .sidebar-doc-title {
+            font-size: 13px; font-weight: 700; color: var(--color-text-primary);
+            padding: 0 20px 16px; line-height: 1.4;
+        }
+        .toc-group-label {
+            font-size: 11px; font-weight: 700; color: var(--color-text-muted);
+            letter-spacing: 0.08em; text-transform: uppercase;
+            padding: 4px 20px 6px; margin-top: 8px;
+        }
+        .toc-link {
+            display: block; padding: 7px 20px; font-size: 13px; font-weight: 500;
+            color: var(--color-text-secondary); border-left: 3px solid transparent;
+            transition: all var(--transition-fast); line-height: 1.4; text-decoration: none;
+        }
+        .toc-link:hover { background: rgba(0,0,0,0.03); color: var(--color-text-primary); text-decoration: none; }
+        .toc-link.toc-active { color: var(--color-success); background: rgba(5,150,105,0.04); border-left-color: var(--color-success); font-weight: 600; }
+        .toc-link.toc-sub { padding-left: 32px; font-size: 12px; font-weight: 400; color: var(--color-text-muted); }
+        .toc-link.toc-sub.toc-active { color: var(--color-success); font-weight: 500; }
+        .toc-link:focus-visible { outline: 2px solid var(--color-success); outline-offset: -2px; }
+
+        .reading-progress-wrap { margin-top: auto; padding: 16px 20px 8px; }
+        .reading-progress-label { font-size: 11px; color: var(--color-text-muted); margin-bottom: 6px; }
+        .reading-progress-track { height: 4px; background: var(--color-border); border-radius: 2px; overflow: hidden; }
+        .reading-progress-fill { height: 100%; width: 0%; background: var(--gradient-success); border-radius: 2px; transition: width 0.2s ease; }
+
+        .sidebar-collapse-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px; background: #fff;
+            border: 1px solid var(--color-border); border-radius: 6px;
+            cursor: pointer; color: var(--color-text-muted); font-size: 13px;
+            position: fixed; top: 20px; left: calc(var(--sidebar-width) - 14px);
+            z-index: 101; transition: all var(--transition-fast);
+        }
+        .sidebar-collapse-btn:hover { background: var(--color-bg); }
+        .sidebar-collapse-btn.collapsed-pos { left: 8px; }
+        .sidebar-nav.sidebar-collapsed { width: 0; padding: 0; overflow: hidden; border: none; }
+        .sidebar-nav.sidebar-collapsed ~ .sidebar-collapse-btn { left: 8px; }
+
+        /* ===== CONTENT AREA ===== */
+        .content-area { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; }
+        .content-inner { width: 100%; max-width: var(--content-max); padding: 40px var(--content-pad) 100px; }
+
+        /* ===== HEADER ===== */
+        .doc-header { padding: 32px 0 28px; position: relative; margin-bottom: 28px; }
+        .doc-header::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+            height: 3px; background: var(--gradient-hero); border-radius: 2px;
+        }
+        .header-badge {
+            display: inline-block; background: var(--gradient-badge); color: var(--color-success);
+            padding: 4px 14px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600;
+            margin-bottom: 12px; border: 1px solid rgba(5,150,105,0.12); box-shadow: var(--shadow-xs);
+            letter-spacing: 0.04em;
+        }
+        .header-title {
+            font-size: 30px; font-weight: 800; letter-spacing: -0.025em;
+            background: var(--gradient-hero); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+            line-height: 1.2; margin-bottom: 10px;
+        }
+        .header-meta { font-size: 13px; color: var(--color-text-muted); display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+        .header-meta span { display: flex; align-items: center; gap: 4px; }
+        .version-badge {
+            display: inline-flex; align-items: center; background: rgba(5,150,105,0.1);
+            color: var(--color-success); padding: 2px 8px; border-radius: var(--radius-full);
+            font-size: 11px; font-weight: 700; margin-left: 6px;
+        }
+
+        /* ===== CHAPTER LABEL ===== */
+        .doc-chapter-label {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+            text-transform: uppercase; color: #A8A29E; padding: 36px 0 12px;
+        }
+        .doc-chapter-label::after { content: ''; flex: 1; height: 1px; background: #F0EFEE; }
+
+        /* ===== SECTION ===== */
+        .report-section { margin-bottom: 48px; }
+        .section-title {
+            font-size: 20px; font-weight: 700; color: var(--color-text-primary);
+            letter-spacing: -0.02em; margin-bottom: 18px; line-height: 1.3;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section-title::before {
+            content: ''; width: 4px; height: 22px; background: var(--gradient-success);
+            border-radius: 2px; flex-shrink: 0;
+        }
+
+        /* ===== COVERAGE BAR ===== */
+        .coverage-bar {
+            background: var(--color-bg-card); border: 1px solid var(--color-border-light);
+            border-radius: var(--radius-md); padding: 12px 18px; margin-bottom: 20px;
+            box-shadow: var(--shadow-card); display: flex; align-items: center; gap: 16px; font-size: 13px;
+        }
+        .coverage-bar .label { font-weight: 700; color: var(--color-text-muted); }
+        .coverage-bar .bar { flex: 1; height: 8px; background: var(--color-border-light); border-radius: 4px; overflow: hidden; display: flex; }
+        .coverage-bar .bar-overseas { background: var(--gradient-success); height: 100%; }
+        .coverage-bar .bar-china { background: var(--gradient-china); height: 100%; }
+        .coverage-bar .stats { display: flex; gap: 12px; font-weight: 600; }
+        .coverage-bar .stat-overseas { color: var(--color-success); }
+        .coverage-bar .stat-china { color: #DC2626; }
+
+        /* ===== OVERVIEW CARDS ===== */
+        .overview { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow-card); }
+        .overview-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); }
+        .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .overview-grid.five-cols { grid-template-columns: repeat(3, 1fr); }
+        .overview-item {
+            padding: 14px 16px; border-radius: var(--radius-md);
+            border: 1px solid var(--color-border-light); background: var(--color-bg);
+            transition: all var(--transition-normal); min-width: 0; overflow: hidden;
+        }
+        .overview-item:hover { border-color: var(--color-success-light); box-shadow: 0 2px 8px rgba(5,150,105,0.08); }
+        .overview-item-header { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+        .overview-item-icon { font-size: 16px; }
+        .overview-item-label { font-size: 12px; font-weight: 700; color: var(--color-success); letter-spacing: 0.03em; }
+        .overview-item-label.orange { color: var(--color-orange); }
+        .overview-headline { font-size: 14px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 5px; line-height: 1.4; }
+        .overview-item-text { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; font-family: var(--font-family-cn); }
+
+        /* ===== HEAT TREND ===== */
+        .heat-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); margin-bottom: 20px; overflow: hidden; box-shadow: var(--shadow-card); }
+        .heat-header { background: linear-gradient(135deg, #EA580C 0%, #DC2626 50%, #B91C1C 100%); color: #fff; padding: 18px 24px; }
+        .heat-header-label { font-size: 13px; font-weight: 600; opacity: .85; letter-spacing: .5px; }
+        .heat-header-title { font-size: 17px; font-weight: 800; margin-top: 4px; }
+        .heat-body { padding: 16px 20px; }
+        .heat-body p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; margin-top: 12px; font-family: var(--font-family-cn); }
+        .heat-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .heat-table th { padding: 8px 10px; text-align: left; background: #FEF2F2; font-weight: 700; color: #991B1B; border-bottom: 2px solid #FECACA; font-size: 12px; }
+        .heat-table td { padding: 10px; border-bottom: 1px solid var(--color-border-light); vertical-align: top; }
+        .heat-table tr:last-child td { border-bottom: none; }
+        .heat-table tr:hover { background: rgba(234,88,12,.02); }
+        .heat-bar { display: flex; gap: 2px; align-items: center; }
+        .heat-bar-fill { width: 10px; height: 14px; border-radius: 2px; background: linear-gradient(135deg, #EA580C, #DC2626); }
+        .heat-bar-empty { width: 10px; height: 14px; border-radius: 2px; background: #F5F5F4; }
+        .heat-trend-tag { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600; }
+        .heat-trend-tag.up { background: #EFFDF5; color: #059669; }
+        .heat-trend-tag.stable { background: #EFF6FF; color: #2563EB; }
+        .heat-trend-tag.down { background: #FEF2F2; color: #DC2626; }
+        .heat-trend-tag.burst { background: #FEF2F2; color: #DC2626; }
+
+        /* ===== SECTION CARDS (for boards) ===== */
+        .board-section { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
+        .board-header { font-size: 17px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--color-border-light); display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); }
+        .board-badge { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--gradient-success); color: #fff; font-size: 12px; font-weight: 700; }
+        .board-badge.orange { background: var(--gradient-orange); }
+        .sub-header { font-size: 13px; font-weight: 700; color: var(--color-text-muted); margin: 14px 0 10px; padding-left: 4px; letter-spacing: .5px; }
+        .sub-header:first-child { margin-top: 0; }
+
+        /* ===== NEWS ITEMS ===== */
+        .news-item { padding: 8px 0; border-bottom: 1px solid var(--color-border-light); transition: background .15s; margin: 0 -8px; padding-left: 8px; padding-right: 8px; border-radius: var(--radius-sm); }
+        .news-item:hover { background: rgba(5,150,105,0.02); }
+        .news-item:last-child { border-bottom: none; }
+        .news-tag { display: inline-block; padding: 1px 6px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; vertical-align: middle; }
+        .tag-hot { background: #FEF2F2; color: var(--color-danger); }
+        .tag-new { background: #EFFDF5; color: var(--color-success); }
+        .tag-funding { background: #E0F2FE; color: #0284C7; }
+        .tag-policy { background: #FFF7ED; color: var(--color-orange); }
+        .tag-practice { background: #ECFDF5; color: #059669; }
+        .tag-cn { background: #FEF2F2; color: #DC2626; }
+        /* v5.1: 标题行 — tag + 标题 + 来源 inline 合并 */
+        .news-title-row { font-size: 14px; font-weight: 600; line-height: 1.5; display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px; margin-bottom: 3px; }
+        .news-title-row a { color: var(--color-text-primary); text-decoration: none; }
+        .news-title-row a:hover { color: var(--color-success); }
+        .news-source-inline { font-size: 11px; color: var(--color-text-muted); font-weight: 400; flex-shrink: 0; white-space: nowrap; }
+        /* 兼容旧的 news-title / news-source（独立行）结构 */
+        .news-title { font-size: 15px; font-weight: 600; margin: 4px 0 3px; }
+        .news-title a { color: var(--color-text-primary); text-decoration: none; }
+        .news-title a:hover { color: var(--color-success); }
+        .news-source { font-size: 12px; color: var(--color-text-muted); }
+        .news-detail { margin-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+        .news-detail-row { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.6; }
+        .news-detail-label { flex-shrink: 0; font-weight: 700; color: var(--color-success); font-size: 12px; padding: 1px 0; min-width: 60px; }
+        .news-detail-label.orange { color: var(--color-orange); }
+        .news-detail-label.china { color: #DC2626; }
+        .news-detail-value { color: var(--color-text-secondary); flex: 1; font-family: var(--font-family-cn); }
+        .news-detail-value strong { color: var(--color-text-primary); font-weight: 600; }
+        .news-data-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+        .news-data-chip { display: inline-flex; align-items: center; padding: 3px 10px; background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; color: #166534; transition: all .15s; }
+        .news-data-chip:hover { background: #DCFCE7; border-color: #86EFAC; }
+        .news-data-chip.orange { background: #FFF7ED; border-color: #FED7AA; color: #9A3412; }
+        .news-data-chip.china { background: #FEF2F2; border-color: #FECACA; color: #991B1B; }
+        .news-summary-compact { font-size: 13px; color: var(--color-text-muted); margin-top: 2px; line-height: 1.55; font-family: var(--font-family-cn); }
+
+        /* ===== DEEP FOCUS ===== */
+        .deep-focus-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 0; margin-bottom: 16px; box-shadow: var(--shadow-card); overflow: hidden; }
+        .deep-focus-header { background: var(--gradient-purple); color: #fff; padding: 18px 24px; display: flex; align-items: center; gap: 10px; }
+        .deep-focus-header.orange-theme { background: linear-gradient(135deg, #EA580C 0%, #DC2626 100%); }
+        .deep-focus-header.china-theme { background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%); }
+        .deep-focus-label { font-size: 13px; font-weight: 600; opacity: .85; letter-spacing: .5px; }
+        .deep-focus-title { font-size: 17px; font-weight: 800; margin-top: 4px; line-height: 1.4; }
+        .deep-focus-body { padding: 20px 24px; }
+        .deep-focus-body p { font-size: 14.5px; color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 18px; font-family: var(--font-family-cn); }
+        .deep-focus-body p:last-child { margin-bottom: 0; }
+        .deep-focus-body p strong { color: var(--color-text-primary); }
+        .deep-focus-takeaway { margin-top: 20px; padding: 16px 18px; background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); border-radius: var(--radius-md); border-left: 4px solid var(--color-purple); }
+        .deep-focus-takeaway.orange-theme { background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%); border-left-color: var(--color-orange); }
+        .deep-focus-takeaway.china-theme { background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%); border-left-color: #DC2626; }
+        .deep-focus-takeaway-label { font-size: 12px; font-weight: 700; color: var(--color-purple); margin-bottom: 6px; letter-spacing: .5px; }
+        .deep-focus-takeaway-label.orange { color: var(--color-orange); }
+        .deep-focus-takeaway-label.china { color: #DC2626; }
+        .deep-focus-takeaway-text { font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.7; font-family: var(--font-family-cn); }
+        .deep-focus-takeaway-text strong { color: var(--color-text-primary); }
+
+        /* ===== PATTERN INSIGHT (pi) ===== */
+        .pi-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow-card); transition: all .25s cubic-bezier(.4,0,.2,1); }
+        .pi-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
+        .pi-header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border-bottom: 1px solid #FDE68A; }
+        .pi-badge { display: inline-flex; align-items: center; justify-content: center; height: 26px; padding: 0 10px; border-radius: 8px; font-size: 11px; font-weight: 700; color: #fff; background: linear-gradient(135deg, #B45309 0%, #D97706 100%); white-space: nowrap; }
+        .pi-title { font-size: 16px; font-weight: 700; color: var(--color-text-primary); flex: 1; letter-spacing: -.01em; line-height: 1.4; }
+        .pi-row { display: flex; padding: 14px 20px; border-bottom: 1px solid var(--color-border-light); gap: 14px; }
+        .pi-row:last-child { border-bottom: none; }
+        .pi-row.highlight { background: linear-gradient(135deg, rgba(217,119,6,.04) 0%, rgba(217,119,6,.01) 100%); }
+        .pi-row-label { width: 56px; flex-shrink: 0; font-size: 12px; font-weight: 700; color: #A8A29E; padding-top: 2px; letter-spacing: .02em; }
+        .pi-row-label.l2 { color: #D97706; }
+        .pi-row-content { flex: 1; font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; font-family: var(--font-family-cn); }
+        .pi-row-content strong { color: var(--color-text-primary); font-weight: 700; }
+        .pi-evo { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        .pi-evo-step { display: flex; align-items: center; gap: 8px; padding: 7px 12px; background: var(--color-bg-table-header); border-radius: 8px; border: 1px solid var(--color-border-light); transition: all .15s; }
+        .pi-evo-step.active { background: rgba(217,119,6,.12); border-color: #D97706; box-shadow: 0 0 0 1px rgba(217,119,6,.15); }
+        .pi-evo-step.future { background: rgba(124,58,237,.06); border-color: #8B5CF6; }
+        .pi-evo-tag { font-size: 10px; font-weight: 800; color: #D97706; padding: 2px 7px; background: rgba(217,119,6,.1); border-radius: 4px; letter-spacing: .02em; }
+        .pi-evo-step.future .pi-evo-tag { color: #7C3AED; background: rgba(124,58,237,.1); }
+        .pi-evo-text { font-size: 12px; color: var(--color-text-secondary); }
+        .pi-evo-arrow { color: #A8A29E; font-weight: 700; font-size: 14px; }
+        .pi-table { padding: 10px 20px 16px; border-top: 1px solid var(--color-border-light); }
+        .pi-t-head { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 10px; padding: 6px 10px; border-bottom: 2px solid var(--color-border-light); margin-bottom: 4px; }
+        .pi-t-head span { font-size: 11px; font-weight: 700; color: #A8A29E; text-transform: uppercase; letter-spacing: .06em; }
+        .pi-t-section { padding: 6px 10px 2px; }
+        .pi-t-section-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 999px; letter-spacing: .03em; }
+        .pi-t-section.verified .pi-t-section-tag { color: #047857; background: rgba(5,150,105,.08); }
+        .pi-t-section.current .pi-t-section-tag { color: #D97706; background: rgba(217,119,6,.08); }
+        .pi-t-section.projected .pi-t-section-tag { color: #7C3AED; background: rgba(124,58,237,.08); }
+        .pi-t-row { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 10px; padding: 6px 10px; border-radius: 6px; font-size: 13px; line-height: 1.6; transition: background .15s; }
+        .pi-t-row:hover { background: rgba(0,0,0,.02); }
+        .pi-t-row.projected { background: rgba(124,58,237,.02); }
+        .pi-t-row.projected:hover { background: rgba(124,58,237,.05); }
+        .pi-t-rule { font-weight: 600; color: #B45309; font-size: 12px; padding-top: 1px; }
+        .pi-t-row.projected .pi-t-rule { color: #7C3AED; }
+        .pi-t-reality { color: var(--color-text-primary); font-weight: 500; }
+        .pi-t-analogy { color: var(--color-text-secondary); padding-left: 10px; border-left: 2px solid var(--color-border-light); }
+        .pi-t-divider { border-top: 2px dashed var(--color-border-light); margin: 8px 10px; }
+        .pi-t-verify { display: flex; align-items: center; gap: 6px; margin-top: 8px; padding: 6px 10px; background: rgba(5,150,105,.06); border-radius: 6px; font-size: 12px; font-weight: 600; color: #047857; }
+        .pi-confidence { display: flex; align-items: center; gap: 6px; margin-top: 8px; padding: 6px 10px; background: rgba(124,58,237,.04); border-radius: 6px; border-left: 3px solid #8B5CF6; font-size: 11px; font-weight: 500; color: #7C3AED; letter-spacing: .02em; }
+
+        /* ===== DATA TABLE ===== */
+        .data-table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius-md); border: 1px solid var(--color-border); }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .data-table th, .data-table td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--color-border-light); }
+        .data-table th { background: var(--color-bg-table-header); font-weight: 600; color: var(--color-text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+        .data-table td { color: var(--color-text-primary); }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tbody tr:hover { background: var(--color-bg-hover); }
+        .section-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
+        .section-header { font-size: 16px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--color-border-light); display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); }
+        .section-header .num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--gradient-success); color: #fff; font-size: 12px; font-weight: 700; }
+        .section-header .num.orange { background: var(--gradient-orange); }
+
+        /* ===== PREVIEW / WATCHLIST ===== */
+        .watch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        /* ===== INSIGHT BLOCK (capability_update) ===== */
+        .insight-block {
+            margin-top: 20px; background: linear-gradient(135deg, #EFF6FF 0%, #EDE9FE 100%);
+            border: 1px solid #DBEAFE; border-radius: var(--radius-lg); padding: 24px;
+            box-shadow: var(--shadow-card);
+        }
+        .insight-block-title { font-size: 16px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #1E40AF; }
+        .insight-block-body { font-size: 14px; color: #374151; line-height: 1.8; font-family: var(--font-family-cn); }
+
+        /* ===== ANIMATE ON SCROLL ===== */
+        .animate-on-scroll {
+            opacity: 0; transform: translateY(14px);
+            transition: opacity 0.42s ease, transform 0.42s ease;
+        }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll { transition: none; opacity: 1; transform: none; }
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-to-top {
+            position: fixed; bottom: 28px; right: 28px;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--color-success); color: #fff; border: none;
+            cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 14px rgba(5,150,105,0.3); opacity: 0; pointer-events: none;
+            transition: opacity var(--transition-normal), transform var(--transition-normal);
+            z-index: 200;
+        }
+        .scroll-to-top.visible { opacity: 1; pointer-events: auto; }
+        .scroll-to-top:hover { transform: translateY(-2px); }
+
+        /* ===== FOOTER ===== */
+        .doc-footer {
+            margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--color-border);
+            font-size: 12px; color: var(--color-text-muted); text-align: center;
+            font-family: var(--font-family-cn); line-height: 1.8;
+        }
+        .doc-footer a { color: var(--color-success); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .layout-wrapper { flex-direction: column; }
+            .sidebar-nav {
+                width: 100%; position: sticky; top: 0; height: auto;
+                overflow-y: visible; border-right: none; border-bottom: 1px solid var(--color-border);
+                display: flex; flex-direction: row; overflow-x: auto; padding: 4px 0;
+                -webkit-overflow-scrolling: touch;
+            }
+            .sidebar-doc-title, .toc-group-label, .reading-progress-wrap { display: none; }
+            .toc-link {
+                flex: 0 0 auto; border-left: none; border-bottom: 2px solid transparent;
+                white-space: nowrap; padding: 8px 14px; font-size: 12px;
+            }
+            .toc-link.toc-active { border-left-color: transparent; border-bottom-color: var(--color-success); }
+            .toc-link.toc-sub { display: none; }
+            .sidebar-collapse-btn { display: none; }
+            .content-inner { padding: 24px 16px 80px; }
+            .overview-grid.five-cols { grid-template-columns: 1fr 1fr; }
+            .watch-grid { grid-template-columns: 1fr; }
+            .header-title { font-size: 24px; }
+            .heat-table { font-size: 12px; }
+            .heat-table th, .heat-table td { padding: 6px 4px; }
+            .coverage-bar { flex-direction: column; gap: 8px; }
+            .pi-evo { flex-direction: column; align-items: flex-start; }
+            .pi-evo-arrow { display: none; }
+            .pi-t-head { display: none; }
+            .pi-t-row { grid-template-columns: 1fr; gap: 2px; padding: 6px 10px; border-left: 3px solid var(--color-border-light); margin-bottom: 4px; }
+            .pi-t-row.projected { border-left-color: rgba(124,58,237,.3); }
+            .pi-t-analogy { border-left: none; padding-left: 0; font-size: 12px; }
+        }
+        @media (max-width: 960px) {
+            .overview-grid.five-cols { grid-template-columns: 1fr 1fr; }
+        }
+
+/* ===== AI洞察定制层 ===== */
+/* ===== AI洞察定制层样式（仅日报/首页特有的组件样式） ===== */
+/* 
+ * ⚠️ 本文件只包含AI洞察项目特有的组件样式和扩展变量。
+ * CSS变量定义和基础样式从 qingshuang-research-style 动态引用。
+ * 
+ * 引用路径: ../../skills/qingshuang-research-style/references/base-styles.css
+ * 引用方式: gen_daily_html.py 和 update_homepage.py 自动合并
+ * 
+ * 改动规则:
+ * - 只改本文件（定制层）
+ * - CSS变量（颜色/间距/阴影等）改 qingshuang skill，不要在这里重复定义
+ * - 新增组件样式在本文件添加
+ */
+
+/* ===== AI洞察扩展CSS变量（公共层未覆盖的） ===== */
+:root {
+    --color-orange: #EA580C;
+    --color-success-dark: #047857;
+    --color-success-50: #ECFDF5;
+    --color-success-100: #D1FAE5;
+    --color-danger-50: #FFF1F2;
+    --color-warning-50: #FFFBEB;
+    --color-info-50: #EFF6FF;
+    --color-info-100: #DBEAFE;
+    --color-purple-50: #F5F3FF;
+    --color-purple-100: #EDE9FE;
+    --gradient-orange: linear-gradient(135deg, #EA580C 0%, #F97316 100%);
+    --gradient-china: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+    --color-bg-hover: rgba(0,0,0,0.025);
+}
+
+/* ===== 日报特有组件 ===== */
+
+/* 最新日报卡片 */
+.latest-report-card {
+    background: linear-gradient(135deg, var(--gradient-success));
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+}
+
+/* 日历视图 */
+.calendar-container {
+    max-width: 280px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.calendar-day.has-report {
+    background: var(--color-success-50);
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+.calendar-day.has-weekly::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 3px;
+    right: 3px;
+    height: 3px;
+    background: var(--gradient-purple);
+    border-radius: 2px;
+}
+
+.calendar-day.today {
+    border: 2px solid var(--color-info);
+    border-radius: var(--radius-sm);
+}
+
+/* 周报入口卡片 */
+.weekly-report-card {
+    background: linear-gradient(135deg, #EFF6FF 0%, #F5F3FF 100%);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+}
+
+/* ===== 首页特有组件 ===== */
+
+/* Tab导航 */
+.tab-nav {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px) saturate(1.8);
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+}
+
+.tab-btn.active {
+    color: var(--color-success);
+    border-bottom: 2px solid var(--color-success);
+}
+
+/* 统计卡片 */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.stat-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+}
+
+/* 知识库维度卡片 */
+.kb-dimension {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.kb-dimension:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.dim-header {
+    cursor: pointer;
+    padding: 12px 16px;
+}
+
+.kb-item-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}
+
+/* 追踪体系表格 */
+.tracking-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tracking-table th {
+    background: var(--color-bg-table-header);
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.tracking-table td {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+/* ===== 响应式 ===== */
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .tab-btn .tab-label {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+</style>
+</head>
+<body>
+<a class="skip-to-content" href="#main-content">跳到主内容</a>
+
+<div class="layout-wrapper">
+    <!-- SIDEBAR TOC -->
+    <nav class="sidebar-nav sidebar-collapsed" id="sidebar" aria-label="目录导航">
+        <div class="sidebar-doc-title">AI 日报 · 2026-05-22</div>
+        <div class="toc-section">
+            <div class="toc-group-label">目录</div>
+            <a href="#overview"   class="toc-link">📋 全文概览</a>
+            <a href="#heat"       class="toc-link">🔥 热度趋势</a>
+            <a href="#llm"        class="toc-link">🧠 大模型</a>
+            <a href="#coding"     class="toc-link">⌨️ AI Coding</a>
+            <a href="#app"        class="toc-link">📱 AI 应用</a>
+            <a href="#industry"   class="toc-link">🏭 AI 行业</a>
+            <a href="#enterprise" class="toc-link">🔄 企业AI转型</a>
+            <a href="#data"       class="toc-link">📊 数据速览</a>
+            <a href="#watch"      class="toc-link">📌 明日关注</a>
+        </div>
+        <div class="reading-progress-wrap">
+            <div class="reading-progress-label">阅读进度</div>
+            <div class="reading-progress-track">
+                <div class="reading-progress-fill" id="readingProgress"></div>
+            </div>
+        </div>
+    </nav>
+    <button class="sidebar-collapse-btn collapsed-pos" id="collapseBtn" title="展开导航" aria-label="展开导航">»</button>
+
+    <!-- MAIN CONTENT -->
+    <main class="content-area" id="main-content">
+        <div class="content-inner">
+
+            <!-- HEADER -->
+            <header class="doc-header">
+                <div class="header-badge">AI INSIGHT · DAILY REPORT</div>
+                <h1 class="header-title">AI 日报 <span class="version-badge">v4.0</span></h1>
+                <div class="header-meta">
+                    <span>📅 2026年5月22日 周五</span>
+                    <span>🌐 海外 10条 · 国内 8条</span>
+                    <span>📊 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</span>
+                </div>
+            </header>
+
+            <!-- COVERAGE BAR -->
+            <div class="coverage-bar animate-on-scroll">
+                <span class="label">📊 覆盖均衡</span>
+                <div class="bar">
+                    <div class="bar-overseas" style="width:56%"></div>
+                    <div class="bar-china" style="width:44%"></div>
+                </div>
+                <div class="stats">
+                    <span class="stat-overseas">🌏 海外 10条</span>
+                    <span class="stat-china">🇨🇳 国内 8条</span>
+                </div>
+            </div>
+
+            <!-- OVERVIEW -->
+            <section id="overview" class="report-section">
+                <div class="overview animate-on-scroll">
+                    <div class="overview-title">📋 全文概览</div>
+                    <div class="overview-grid five-cols">
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">🧠</span><span class="overview-item-label">大模型</span></div>
+                    <div class="overview-item-text">Anthropic估值从3800亿跃至9000亿-1.2万亿，反超OpenAI。Karpathy加盟Anthropic。Claude Mythos自主发现17-30年古老安全漏洞，引发全球安全恐慌。OpenAI与Anthropic形成AI双寡头，中小模型公司承压。英伟达Vera CPU交付四大AI实验室，算力架构从GPU中心转向CPU-GPU协同。</div>
+                </div>
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">⌨️</span><span class="overview-item-label">AI Coding</span></div>
+                    <div class="overview-item-text">DeepSeek正式成立Harness专项团队打造代码智能体产品，目标直指Claude Code。Google I/O发布Antigravity 2.0+Gemini 3.5编程Agent。Kimi K2.5 Composer集成Cursor。2026年AI编程工具横评：Claude Code/Cursor/Codex/Trae各有哲学，Agent Skills跨平台统一标准萌芽。</div>
+                </div>
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">📱</span><span class="overview-item-label">AI 应用</span></div>
+                    <div class="overview-item-text">阿里云峰会发布千问云（Qwen Cloud），上架150+模型API含GLM-5.1/Kimi K2.6/MiniMax M2.7等第三方模型，打造'AI时代最开放的云'。Qwen3.7-Max面向Agent全新设计。OpenAI推出ChatGPT个人理财功能。中国AI搜索月活破8.2亿，AI问答入口流量占比超52%。</div>
+                </div>
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI 行业</span></div>
+                    <div class="overview-item-text">Anthropic Q2收入预计翻倍，年化收入破450亿美元，投后估值9000亿反超OpenAI约8520亿。Karpathy加盟Anthropic。中国大模型周调用量达7.693万亿Token，1.81倍美国。Polymarket进军私募市场预测，OpenAI/Anthropic估值与IPO成押注对象。AI初创融资从'技术叙事'转向'结果竞赛'。</div>
+                </div>
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔄</span><span class="overview-item-label">企业转型</span></div>
+                    <div class="overview-item-text">国资委部署央企'AI+'专项行动，以工业制造为核心，明确2027年量化目标与分阶段路径。央企AI转型从可选项变必答题。李开复vs苏姿丰对话：企业AI转型不要只听CIO的。AI推动企业裁员加速重组。欧盟AI法案综合修正案通过，要求2026年8月前建立AI监管沙盒。</div>
+                </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- HEAT TREND -->
+            <section id="heat" class="report-section animate-on-scroll">
+
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label">🔥 热度趋势</div>
+                <div class="heat-header-title">热度趋势</div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead><tr><th>排名</th><th>话题</th><th>热度</th><th>天数</th><th>趋势</th><th>核心信号</th></tr></thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <p></p>
+            </div>
+        </div>
+            </section>
+
+            <!-- FIVE BOARDS -->
+
+            <!-- ===== 大模型 ===== -->
+            <section id="llm" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label">🧠 大模型</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://m.toutiao.com/article/7642136303638774335/" target="_blank">Anthropic估值9000亿反超OpenAI，Karpathy加盟+Q2收入翻倍</a> <span class="news-source-inline">今日头条</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Anthropic投后估值达约9000亿美元，超过OpenAI约8520亿美元。OpenAI联合创始人Andrej Karpathy正式加入Anthropic。Anthropic Q2收入预计较上季度翻倍，年化收入将破450亿美元。估值从2025年9月1830亿到2026年5月9000亿，5个月增长近5倍。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://m.toutiao.com/article/7641666397025649198/" target="_blank">Claude Mythos自主发现30年古老漏洞，引发全球安全恐慌</a> <span class="news-source-inline">今日头条</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Anthropic最新AI模型Claude Mythos在没有被专门训练网络安全的情况下，自主发现并利用了FreeBSD中存在17年的远程代码执行漏洞、OpenBSD中27年漏洞和FFmpeg中16年缺陷。英国AI安全研究所独立评估确认。Anthropic联手苹果、谷歌、微软、英伟达启动Project Glasswing防御项目。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://www.donews.com/news/detail/8/6561121.html" target="_blank">英伟达Vera CPU交付四大AI实验室：从GPU之王到全栈AI硬件</a> <span class="news-source-inline">DoNews</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">英伟达宣布新一代Vera CPU芯片正式交付Anthropic、OpenAI、SpaceX及甲骨文四家机构。Vera CPU专为Agentic AI推理与训练优化，采用先进制程与异构架构设计。甲骨文云计划部署数十万颗Vera CPU。标志着英伟达从GPU向CPU-GPU协同全栈AI硬件拓展。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://finance.stockstar.com/IG2026052100024015.shtml" target="_blank">OpenAI与Anthropic上市前夜：万亿估值遭遇中国平替阻击</a> <span class="news-source-inline">证券之星</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Anthropic年化营收从2025年底90亿美元飙升至5月450亿美元，五个月增长500%。但万亿估值能否在公开市场兑现，取决于投资者是否相信增速可持续。DeepSeek等中国大模型以极低价格提供相当能力，正在挤压OpenAI/Anthropic的定价空间。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://finance.sina.cn/2026-05-20/detail-inhypaet7080177.d.html" target="_blank">GPT-5.5 Instant首破ProgramBench：OpenAI加码编程能力</a> <span class="news-source-inline">新浪财经</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI推出ChatGPT个人理财功能预览版，首次以亿级用户触达金融服务。GPT-5.5 Instant首破ProgramBench编程基准测试，编程能力直接封神。算力租赁价格平稳。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header Anthropic估值逼近万亿+Claude Mythos安全突破：双寡头格局确立">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Anthropic估值逼近万亿的背后：AI双寡头格局的三个硬问题</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>2026年5月，AI行业格局发生了质变：Anthropic估值9000亿反超OpenAI 8520亿，Karpathy加盟Anthropic，Claude Mythos自主发现30年安全漏洞。OpenAI和Anthropic正式形成AI双寡头——两家估值均超8000亿美元，年化营收均超400亿美元，而中小模型公司（Character.AI、Reka等）集体承压。</p><p>但双寡头格局面临三个硬问题。第一，估值增速vs营收增速的匹配：Anthropic 5个月营收翻5倍令人惊叹，但估值从1830亿到9000亿翻了近5倍——投资者是否相信450亿美元年化营收能持续？中国平替DeepSeek以极低价格提供相当能力，正在挤压定价空间。第二，安全能力悖论：Mythos自主发现30年老漏洞是技术壮举，但Anthropic因此启动Project Glasswing受限发布——能力越强，可控性越弱，这可能是AI发展史上最大的张力。第三，人才争夺战：Karpathy从OpenAI出走加入Anthropic，OpenAI创始团队进一步流失，人才在双寡头之间的流动可能加速技术扩散而非壁垒加深。</p><p>Polymarket进军私募市场预测交易，OpenAI和Anthropic估值与IPO成为押注对象——市场已经在为AI双寡头的IPO定价，但万亿估值能否在公开市场兑现，取决于增速可持续性、中国平替冲击、以及安全悖论的解决方案。</p>
+                    <div class="deep-focus-takeaway Anthropic估值逼近万亿+Claude Mythos安全突破：双寡头格局确立">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI双寡头格局确立，但面临估值可持续性、安全能力悖论、人才扩散三个硬问题。万亿估值能否在公开市场兑现，取决于增速是否可持续——而中国平替正在改写AI定价逻辑。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card" style="background:linear-gradient(135deg,#F0FDF4 0%,#ECFDF5 100%);border-left:4px solid #059669;border-radius:0 12px 12px 0;padding:20px 24px;margin:16px 0"><div class="pi-card-header" style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:18px">🔬</span><strong style="color:#059669;font-size:15px">模式洞察</strong></div><p class="pi-card-body" style="margin:0;line-height:1.8;color:#57534E;font-size:14px"><strong>安全能力悖论</strong>：Mythos自主发现30年漏洞 = 技术壮举，但Anthropic因此受限发布。能力越强可控性越弱——AI发展史上最大的张力正在浮现：安全能力既是竞争优势也是发布枷锁。</p></div>
+            </section>
+
+            <!-- ===== AI Coding ===== -->
+            <section id="coding" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label">⌨️ AI Coding</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://m.toutiao.com/article/7641816109951222299/" target="_blank">Google I/O 2026：Antigravity 2.0+Gemini 3.5，三款AI产品狙击Claude Code</a> <span class="news-source-inline">今日头条</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Google I/O 2026发布Gemini 3.5 Flash/Pro系列、Antigravity 2.0独立桌面应用和Gemini Spark个人AI Agent。Gemini 3.5 Flash速度提升4倍，编程与智能体基准测试超越Gemini 3.1 Pro。Antigravity升级为agent-first开发平台，成本降半速度提4倍，目标直指Claude Code。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://m.blog.csdn.net/qinchao_mei/article/details/161217649" target="_blank">AI Agent Skills革命：2026年AI编程助手的新扩展标准</a> <span class="news-source-inline">CSDN</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">目前市场至少15种主流AI编程助手：Claude Code、Cursor、GitHub Copilot、Windsurf、Trae、OpenAI Codex等。每个平台有自己的扩展机制，开发者需重复开发相同能力。Agent Skills目标是建立跨平台统一标准，一套Skill可在多个Agent平台运行。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://m.toutiao.com/article/7641912007209370152/" target="_blank">DeepSeek组建Harness专项团队，打造对标Claude Code的代码智能体</a> <span class="news-source-inline">今日头条</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">DeepSeek正式成立全新Harness专项团队，主攻代码智能体产品DeepSeek Code Harness，目标直指Anthropic旗下Claude Code。资深研究员陈德里对外证实。团队在北京海淀区组建。Claude Code年化收入超25亿美元，代码智能体赛道已成为AI行业主战场。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://k.sina.cn/article_7857201856_1d45362c001905o2fw.html" target="_blank">Kimi K2.5 Composer 2.5集成Cursor：月之暗面的Agent生态扩张</a> <span class="news-source-inline">新浪</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">基于Kimi K2.5模型打造的Composer 2.5今日被集成至全球知名编程应用Cursor。多家国资背景机构入局Kimi，资本结构完成整合。Kimi完成20亿美元融资拟拆红筹赴港IPO。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header AI编程进入工程级智能体对抗时代">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">AI编程赛道进入工程级对抗：四个信号和一个标准</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>2026年5月20日是AI编程赛道的分水岭日。同一天发生了三件大事：DeepSeek组建Harness团队对标Claude Code、阿里云发布Qwen3.7-Max面向Agent全新设计、Google I/O发布Antigravity 2.0狙击Claude Code。加上Kimi K2.5 Composer集成Cursor，四个信号共同指向一个趋势：AI编程赛道从模型能力竞赛升级为工程级智能体对抗。</p><p>Claude Code年化收入超25亿美元，这个数字让所有人意识到代码智能体是连接模型能力与商业变现的最短路径。DeepSeek Harness团队、Google Antigravity、Kimi Composer都在试图复制Claude Code的成功——但各自的路径截然不同。DeepSeek走国产自主路线，Google走全栈生态路线，Kimi走模型嵌入路线。</p><p>Agent Skills跨平台统一标准的萌芽值得关注。目前15+种AI编程工具各有扩展机制，开发者需重复开发——如果Agent Skills标准落地，AI编程工具将从碎片化走向基础设施化，类似npm之于JavaScript生态。这可能是AI编程赛道从工具竞争走向生态竞争的关键转折点。</p>
+                    <div class="deep-focus-takeaway AI编程进入工程级智能体对抗时代">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI编程赛道从模型竞赛升级为工程级智能体对抗——四个信号（DeepSeek Harness/Google Antigravity/Kimi Composer/Qwen3.7 Agent）指向同一趋势，Agent Skills跨平台标准萌芽可能改变生态格局。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card" style="background:linear-gradient(135deg,#F0FDF4 0%,#ECFDF5 100%);border-left:4px solid #059669;border-radius:0 12px 12px 0;padding:20px 24px;margin:16px 0"><div class="pi-card-header" style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:18px">🔬</span><strong style="color:#059669;font-size:15px">模式洞察</strong></div><p class="pi-card-body" style="margin:0;line-height:1.8;color:#57534E;font-size:14px"><strong>代码智能体是模型变现的最短路径</strong>：Claude Code年化25亿美元证明编程Agent能直接转化为收入。DeepSeek Harness、Google Antigravity、Kimi Composer都在复制这条路径——但路径各异说明赛道还在定义阶段。</p></div>
+            </section>
+
+            <!-- ===== AI 应用 ===== -->
+            <section id="app" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label">📱 AI 应用</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://m.toutiao.com/article/7642150333535371816/" target="_blank">阿里云峰会：千问云发布+Qwen3.7-Max面向Agent全新设计</a> <span class="news-source-inline">今日头条</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">2026阿里云峰会发布千问云（Qwen Cloud）AI产品官网，上架Qwen、GLM、Kimi、DeepSeek等150+主流模型API。同步发布Qwen3.7-Max旗舰模型，面向Agent全新设计。打造'芯-云-模型-推理'全栈技术体系，云服务全面向Agentic时代升级。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://k.sina.cn/article_6033314970_1679d149a02001we7c.html" target="_blank">OpenAI推出ChatGPT个人理财功能：亿级用户触达金融服务</a> <span class="news-source-inline">新浪</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI推出ChatGPT个人理财功能预览版，首次以亿级用户触达金融服务。这是AI从通用对话向垂直场景渗透的重要信号。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://m.163.com/dy/article/KT09JGEB0556M9WW.html" target="_blank">中国AI搜索月活破8.2亿，AI问答入口流量占比超52%</a> <span class="news-source-inline">网易</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">中国信通院2026年5月发布《人工智能发展白皮书》数据：国内AI搜索月活用户已突破8.2亿，占网民总数78%，AI问答入口流量占比达52%，已超越传统搜索引擎。传统SEO效果衰减35%，竞价点击成本从3.2元涨至28.7元，精准询盘转化率从12%降至1.8%。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://m.163.com/dy/article/KT9R98EO0511K58A.html" target="_blank">中国大模型周调用量1.81倍美国：腾讯Hy3登顶全球</a> <span class="news-source-inline">网易</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">2026年5月11-17日当周，中国大模型周调用量达7.693万亿Token，约为美国同期4.24万亿Token的1.81倍，连续三周超越美国。腾讯Hy3 preview以2.66万亿Token登顶全球，环比暴涨210%。DeepSeek-V4-Flash以2.06万亿Token紧随其后。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header Agent生态全面开放：阿里千问云+150模型一站式服务">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">AI应用进入Agent生态开放时代：从单模型到多模型一站服务</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>阿里云千问云的发布标志着中国AI应用生态的一个关键转折：从单模型服务走向多模型一站服务。150+模型API统一入口，开发者不再需要'选模型'而是'选Agent方案'——这是云服务从卖算力到卖Agent基础设施的范式升级。</p><p>这个转折的背后是AI搜索月活8.2亿、流量占比52%的数据——信息获取方式已经历史性转向AI入口。传统SEO衰减35%、竞价成本涨9倍、转化率降7倍，传统搜索模式正在系统性失效。当AI问答入口超越传统搜索引擎，意味着整个Web流量分配逻辑正在被重写。</p><p>中国大模型周调用量1.81倍美国、腾讯Hy3登顶全球——调用量是比估值更真实的竞争力指标。当Anthropic和OpenAI在估值战场争万亿时，中国大模型在调用量战场已经连续超越。两个战场的故事正在交叉：估值属于资本叙事，调用量属于真实使用。</p>
+                    <div class="deep-focus-takeaway Agent生态全面开放：阿里千问云+150模型一站式服务">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI应用生态从单模型走向多模型一站服务——千问云150+模型API是Agent基础设施化的标志。AI搜索月活8.2亿+流量占比52%意味着信息获取方式的历史性转折，传统搜索正在系统性失效。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card" style="background:linear-gradient(135deg,#F0FDF4 0%,#ECFDF5 100%);border-left:4px solid #059669;border-radius:0 12px 12px 0;padding:20px 24px;margin:16px 0"><div class="pi-card-header" style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:18px">🔬</span><strong style="color:#059669;font-size:15px">模式洞察</strong></div><p class="pi-card-body" style="margin:0;line-height:1.8;color:#57534E;font-size:14px"><strong>调用量是比估值更真实的竞争力指标</strong>：Anthropic/OpenAI在估值战场争万亿，中国大模型在调用量战场1.81倍美国。估值属于资本叙事，调用量属于真实使用——两个战场的交叉将决定AI格局的最终走向。</p></div>
+            </section>
+
+            <!-- ===== AI 行业 ===== -->
+            <section id="industry" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label">🏭 AI 行业</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://caifuhao.eastmoney.com/news/20260520064104165930260" target="_blank">Anthropic估值9000亿反超OpenAI，Polymarket押注IPO</a> <span class="news-source-inline">东方财富</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Anthropic投后估值约9000亿美元，超过OpenAI约8520亿美元。Q2收入预计翻倍，年化收入将破450亿美元。Polymarket进军私募市场预测交易，押注Anthropic是否达到5000亿估值、是否会超越OpenAI估值。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://k.sina.cn/article_5953740931_162dee083067038wq6.html" target="_blank">Karpathy加盟Anthropic：OpenAI创始团队继续流失</a> <span class="news-source-inline">新浪</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI联合创始人Andrej Karpathy正式加入Anthropic。这是继Ilya Sutskever等核心成员离开OpenAI后，又一位创始级人才的出走。Karpathy此前创立AI教育公司Eureka Labs，2024年曾短暂回归OpenAI。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://m.10jqka.com.cn/20260520/c676830865.html" target="_blank">DeepSeek 500亿融资+Kimi 20亿美元+阶跃星辰25亿：三天超百亿</a> <span class="news-source-inline">同花顺</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">DeepSeek以500亿元人民币完成史上最大单轮AI融资，投后估值3500亿。Kimi完成20亿美元融资拟拆红筹赴港IPO。阶跃星辰25亿美元融资。三天融资超百亿。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://post.m.smzdm.com/p/al32mmm8/" target="_blank">林俊旸创业估值20亿美金：前千问负责人瞄准世界模型+具身大脑</a> <span class="news-source-inline">什么值得买</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">前阿里千问负责人林俊旸正式创业，瞄准世界模型与具身大脑方向，估值高达20亿美金（约135亿人民币），刷新国内AI初创纪录。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header AI行业投融资：双寡头估值飙升vs中国平替阻击">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">AI投融资的估值悖论：万亿估值能兑现吗？</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>2026年5月的AI投融资战场正在上演一场估值悖论。Anthropic估值9000亿、年化营收450亿美元——5个月营收翻5倍的数据令人惊叹。但Polymarket押注IPO意味着市场已经开始为公开市场定价，而万亿估值能否兑现取决于增速可持续性。</p><p>中国平替正在改写AI定价逻辑。DeepSeek以极低价格提供相当能力，正在挤压OpenAI/Anthropic的定价空间。当AI行业的估值逻辑从'技术独占'转向'成本效率'，万亿估值的基础可能在被动摇——Anthropic的450亿美元年化营收能否持续，取决于中国平替对定价空间的挤压程度。</p><p>三天融资超百亿的中国AI资本同样面临悖论：DeepSeek拒绝外资确保控制权但放弃了国际资本加速、Kimi拟IPO求变现但港股对AI估值可能不如美股慷慨、林俊旸135亿估值是人才溢价而非产品溢价。每家的资本策略都在试图证明AI投资的ROI，但'结果竞赛'的胜负还没分出。</p>
+                    <div class="deep-focus-takeaway AI行业投融资：双寡头估值飙升vs中国平替阻击">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI投融资的估值悖论：Anthropic万亿估值vs中国平替定价冲击，资本叙事vs真实使用。AI融资从'技术叙事'转向'结果竞赛'——但结果还没分出胜负。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card" style="background:linear-gradient(135deg,#F0FDF4 0%,#ECFDF5 100%);border-left:4px solid #059669;border-radius:0 12px 12px 0;padding:20px 24px;margin:16px 0"><div class="pi-card-header" style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:18px">🔬</span><strong style="color:#059669;font-size:15px">模式洞察</strong></div><p class="pi-card-body" style="margin:0;line-height:1.8;color:#57534E;font-size:14px"><strong>估值vs调用量的双战场交叉</strong>：Anthropic万亿估值属于资本叙事，中国大模型1.81倍美国调用量属于真实使用。两个战场正在交叉——估值能兑现的前提是调用量持续增长，而平替正在挤压定价空间。</p></div>
+            </section>
+
+            <!-- ===== 企业AI转型 ===== -->
+            <section id="enterprise" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label">🔄 企业AI转型</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://m.toutiao.com/a7641417818986054196/" target="_blank">欧盟AI法案综合修正案通过：2026年8月前建立AI监管沙盒</a> <span class="news-source-inline">今日头条</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">2026年5月13日欧盟通过AI法案综合修正案，简化数字监管但对'高风险AI'监管更严。要求各成员国2026年8月2日前至少建立一个AI监管沙盒。监管从'事后算账'转向'前置接入'。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://cn.beincrypto.com/ai-restructuring-job-layoffs-2026/" target="_blank">AI推动企业裁员加速重组：向AI增强型团队转型</a> <span class="news-source-inline">BeInCrypto</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">多家企业CEO表示裁员是向'小型、AI增强型团队'结构转型的重要一步。Coinbase CEO Brian Armstrong明确表示此举是AI增强型团队转型。当前AI尚未对整个行业就业造成大规模影响。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://m.toutiao.com/a7641790654976115209/" target="_blank">国资委部署央企AI+专项行动：量化目标+分阶段路径</a> <span class="news-source-inline">今日头条</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">国资委部署央企'AI+'专项行动，以工业制造为核心，明确2027年量化目标与分阶段路径。配套人才培养体系从2024年主要领导班→2025年首席架构师班→2026年AI+工业制造特训班。央企AI转型从可选项变必答题。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://m.sohu.com/a/1025034840_116132/" target="_blank">李开复vs苏姿丰：企业AI转型不要只听CIO的</a> <span class="news-source-inline">搜狐</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">李开复和AMD CEO苏姿丰对话提出企业AI转型三个阶段：2024年AI完成一个任务→2025年AI完成一条工作流→2026年AI替代一个职能部门。招聘Agent与绩效Agent联动的HR Agent已落地。建议不要只听CIO的，CEO必须亲自下场。</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value"></span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header 央企AI转型从可选项变必答题：政策×资本×技术三力叠加">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">企业AI转型的三力叠加：政策引导×资本加持×技术突破</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>2026年5月的企业AI转型正在经历三力叠加。政策端：国资委部署央企'AI+'专项行动，从可选项变必答题，量化目标+分阶段路径+人才配套。监管端：欧盟AI法案修正案要求8月前建立AI监管沙盒，合规成为准入条件。技术端：招聘Agent+绩效Agent联动替代HR职能部门的案例已落地。</p><p>李开复与苏姿丰的对话揭示了一个关键洞察：AI转型的组织瓶颈远大于技术瓶颈。从任务→工作流→职能部门的三阶段递进意味着AI不是IT项目而是组织变革。CIO视角看技术部署，CEO视角看组织重构——后者才是AI转型的真正驱动力。国资委的量化目标正是用政策力量解决组织瓶颈。</p><p>但AI转型的人力代价也在显现。裁员+AI增强型团队是当前转型的副产品——Coinbase等企业明确表示裁员是向AI增强型团队转型的一步。当前研究显示AI对就业的影响规模有限，但转型节奏可能比预期更温和。合规能力正在成为企业的第二生命线——监管沙盒的前置接入意味着合规不再是可选动作而是准入条件。</p>
+                    <div class="deep-focus-takeaway 央企AI转型从可选项变必答题：政策×资本×技术三力叠加">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">央企AI转型从可选项变必答题——政策×资本×技术三力叠加加速转型，但组织瓶颈>技术瓶颈。合规能力成为第二生命线，AI转型是组织变革而非IT项目。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card" style="background:linear-gradient(135deg,#F0FDF4 0%,#ECFDF5 100%);border-left:4px solid #059669;border-radius:0 12px 12px 0;padding:20px 24px;margin:16px 0"><div class="pi-card-header" style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:18px">🔬</span><strong style="color:#059669;font-size:15px">模式洞察</strong></div><p class="pi-card-body" style="margin:0;line-height:1.8;color:#57534E;font-size:14px"><strong>组织瓶颈>技术瓶颈</strong>：AI转型从任务→工作流→职能部门三阶段递进，本质是组织变革而非IT项目。国资委量化目标正是用政策力量解决组织瓶颈——CEO必须亲自下场。</p></div>
+            </section>
+
+            <!-- DATA SNAPSHOT -->
+            <section id="data" class="report-section animate-on-scroll">
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📊</span> 数据速览</div>
+            <div class="data-table-wrap">
+                <table class="data-table">
+                    <thead><tr><th>指标</th><th>数值</th><th>变化/说明</th></tr></thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            </section>
+
+            <!-- WATCH LIST -->
+            <section id="watch" class="report-section animate-on-scroll">
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📌</span> 明日/下周值得关注</div>
+            <div class="watch-grid">
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 title</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">title</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 items</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">items</div>
+                </div>
+            </div>
+        </div>
+            </section>
+
+            <!-- CAPABILITY UPDATE / DEEP INSIGHT -->
+
+        <div class="insight-block animate-on-scroll">
+            <div class="insight-block-title">🤖 深度洞察</div>
+            <div class="insight-block-body">
+                <p style="margin:0">本周新增能力：安全漏洞趋势追踪（Mythos类自主发现漏洞的产业影响分析）、估值vs调用量双维度对比框架、央企AI转型政策量化解读</p>
+            </div>
+        </div>
+
+            <!-- FOOTER -->
+            <footer class="doc-footer animate-on-scroll">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                    <img style="display:none">
+                    <span>我是 <strong>AI洞察</strong>，的AI洞察。
+                    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank">🏠 访问AI洞察首页</a></span>
+                </div>
+                <p style="margin-top:6px">AI洞察 · 系统化追踪AI行业动态 · 五大板块每日更新</p>
+            </footer>
+
+        </div>
+    </main>
+</div>
+
+<button class="scroll-to-top" id="scrollToTop" aria-label="回到顶部">↑</button>
+
+<script>
+    (function() {
+        // ===== TOC SCROLL SPY =====
+        const tocLinks = document.querySelectorAll('.toc-link[href^="#"]');
+        const sections = Array.from(tocLinks)
+            .map(l => document.querySelector(l.getAttribute('href')))
+            .filter(Boolean);
+
+        function updateToc() {
+            let active = null;
+            const scrollY = window.scrollY + 120;
+            for (const sec of sections) {
+                if (sec.getBoundingClientRect().top + window.scrollY <= scrollY) {
+                    active = sec;
+                }
+            }
+            tocLinks.forEach(l => {
+                const target = document.querySelector(l.getAttribute('href'));
+                l.classList.toggle('toc-active', target === active);
+            });
+        }
+
+        // ===== READING PROGRESS =====
+        const progressFill = document.getElementById('readingProgress');
+        function updateProgress() {
+            if (!progressFill) return;
+            const doc = document.documentElement;
+            const scrollTop = window.scrollY;
+            const total = doc.scrollHeight - doc.clientHeight;
+            const pct = total > 0 ? Math.round((scrollTop / total) * 100) : 0;
+            progressFill.style.width = pct + '%';
+        }
+
+        window.addEventListener('scroll', () => {
+            updateToc();
+            updateProgress();
+            // scroll-to-top visibility
+            const btn = document.getElementById('scrollToTop');
+            if (btn) btn.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+
+        updateToc();
+        updateProgress();
+
+        // ===== SCROLL TO TOP =====
+        const scrollBtn = document.getElementById('scrollToTop');
+        if (scrollBtn) {
+            scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+
+        // ===== SIDEBAR COLLAPSE =====
+        const collapseBtn = document.getElementById('collapseBtn');
+        const sidebar = document.getElementById('sidebar');
+        if (collapseBtn && sidebar) {
+            collapseBtn.addEventListener('click', () => {
+                const isCollapsed = sidebar.classList.toggle('sidebar-collapsed');
+                collapseBtn.textContent = isCollapsed ? '»' : '«';
+                collapseBtn.classList.toggle('collapsed-pos', isCollapsed);
+            });
+        }
+
+        // ===== ANIMATE ON SCROLL =====
+        const animEls = document.querySelectorAll('.animate-on-scroll');
+        if (animEls.length) {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+            }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
+            animEls.forEach(el => observer.observe(el));
+        }
+    })();
+</script>
+
+</body>
+</html>

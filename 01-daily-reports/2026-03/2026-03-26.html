@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 - 2026-03-26 (v3.2)</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root {
+            --color-success:#059669;--color-success-light:#10B981;--color-danger:#E11D48;--color-danger-light:#FF7B72;--color-warning:#D97706;--color-info:#2563EB;--color-info-light:#54AEFF;--color-purple:#7C3AED;--color-orange:#EA580C;--color-text-primary:#1C1917;--color-text-secondary:#57534E;--color-text-muted:#78716C;--color-border:#E7E5E4;--color-border-light:#F5F5F4;--color-bg:#F8FAFB;--color-bg-card:#FFFFFF;--color-bg-table-header:#FAFAF9;--gradient-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--gradient-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--gradient-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--gradient-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow-card:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-full:999px;--font-family:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--transition-normal:200ms cubic-bezier(.4,0,.2,1);--content-max-width:980px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font-family);background:var(--color-bg);color:var(--color-text-primary);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--content-max-width);margin:0 auto;padding:24px 20px}
+        .header{background:var(--gradient-success);color:#fff;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-date{font-size:14px;opacity:.85}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:700;margin-left:8px}
+        .overview{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-card);overflow:hidden}
+        .overview-title{font-size:18px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .overview-grid.five-cols{grid-template-columns:repeat(3,1fr)}
+        .overview-item{padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--color-border-light);background:var(--color-bg);transition:all .2s;min-width:0;overflow:hidden}
+        .overview-item:hover{border-color:var(--color-success-light);box-shadow:0 2px 8px rgba(5,150,105,.08)}
+        .overview-item-header{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+        .overview-item-icon{font-size:16px}
+        .overview-item-label{font-size:13px;font-weight:700;color:var(--color-success-light);letter-spacing:.3px}
+        .overview-item-label.orange{color:var(--color-orange)}
+        .overview-headline{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:6px;line-height:1.4}
+        .overview-item-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+        /* Heat Trend Table */
+        .heat-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow-card)}
+        .heat-header{background:linear-gradient(135deg,#EA580C 0%,#DC2626 50%,#B91C1C 100%);color:#fff;padding:18px 24px}
+        .heat-header-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .heat-header-title{font-size:17px;font-weight:800;margin-top:4px}
+        .heat-body{padding:16px 20px}
+        .heat-body p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-top:12px}
+        .heat-body p strong{color:var(--color-text-primary)}
+        .heat-table{width:100%;border-collapse:collapse;font-size:13px}
+        .heat-table th{padding:8px 10px;text-align:left;background:#FEF2F2;font-weight:700;color:#991B1B;border-bottom:2px solid #FECACA;font-size:12px}
+        .heat-table td{padding:10px;border-bottom:1px solid var(--color-border-light);vertical-align:top}
+        .heat-table tr:last-child td{border-bottom:none}
+        .heat-table tr:hover{background:rgba(234,88,12,.02)}
+        .heat-bar{display:flex;gap:2px;align-items:center}
+        .heat-bar-fill{width:10px;height:14px;border-radius:2px;background:linear-gradient(135deg,#EA580C,#DC2626)}
+        .heat-bar-empty{width:10px;height:14px;border-radius:2px;background:#F5F5F4}
+        .heat-trend-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .heat-trend-tag.up{background:#EFFDF5;color:#059669}
+        .heat-trend-tag.stable{background:#EFF6FF;color:#2563EB}
+        .heat-trend-tag.burst{background:#FEF2F2;color:#DC2626}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:4px;box-shadow:var(--shadow-card);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-muted);border-radius:var(--radius-sm);transition:var(--transition-normal);font-family:var(--font-family);min-width:80px}
+        .tab-btn:hover{color:var(--color-text-primary);background:var(--color-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--gradient-success);color:#fff}
+        .tab-btn.orange[aria-selected="true"]{background:var(--gradient-orange)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow-card)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--color-border-light);display:flex;align-items:center;gap:8px}
+        .section-header .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gradient-success);color:#fff;font-size:12px;font-weight:700}
+        .section-header .num.orange{background:var(--gradient-orange)}
+        .sub-header{font-size:14px;font-weight:700;color:var(--color-text-muted);margin:14px 0 10px;padding-left:4px;letter-spacing:.5px}
+        .sub-header:first-child{margin-top:0}
+        .news-item{padding:14px 0;border-bottom:1px solid var(--color-border-light);transition:background .15s;margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:var(--radius-sm)}
+        .news-item:hover{background:rgba(5,150,105,.02)}
+        .news-item:last-child{border-bottom:none}
+        .news-tag{display:inline-block;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:var(--color-danger)}
+        .tag-new{background:#EFFDF5;color:var(--color-success)}
+        .tag-funding{background:#E0F2FE;color:#0284C7}
+        .tag-policy{background:#FFF7ED;color:var(--color-orange)}
+        .tag-practice{background:#ECFDF5;color:#059669}
+        .tag-cn{background:#FEF2F2;color:#DC2626}
+        .news-title{font-size:15px;font-weight:600;margin:4px 0 3px}
+        .news-title a{color:var(--color-text-primary);text-decoration:none}
+        .news-title a:hover{color:var(--color-success)}
+        .news-source{font-size:12px;color:var(--color-text-muted)}
+        .news-detail{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+        .news-detail-row{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.6}
+        .news-detail-label{flex-shrink:0;font-weight:700;color:var(--color-success);font-size:12px;padding:1px 0;min-width:60px}
+        .news-detail-label.orange{color:var(--color-orange)}
+        .news-detail-label.china{color:#DC2626}
+        .news-detail-value{color:var(--color-text-secondary);flex:1}
+        .news-detail-value strong{color:var(--color-text-primary);font-weight:600}
+        .news-data-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+        .news-data-chip{display:inline-flex;align-items:center;padding:3px 10px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--radius-full);font-size:12px;font-weight:600;color:#166534;transition:all .15s}
+        .news-data-chip:hover{background:#DCFCE7;border-color:#86EFAC}
+        .news-data-chip.orange{background:#FFF7ED;border-color:#FED7AA;color:#9A3412}
+        .news-data-chip.china{background:#FEF2F2;border-color:#FECACA;color:#991B1B}
+        .news-summary-compact{font-size:13.5px;color:var(--color-text-secondary);margin-top:6px;line-height:1.6}
+        .deep-focus-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:0;margin-bottom:16px;box-shadow:var(--shadow-card);overflow:hidden}
+        .deep-focus-header{background:var(--gradient-purple);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:10px}
+        .deep-focus-header.orange-theme{background:linear-gradient(135deg,#EA580C 0%,#DC2626 100%)}
+        .deep-focus-header.china-theme{background:linear-gradient(135deg,#DC2626 0%,#B91C1C 50%,#991B1B 100%)}
+        .deep-focus-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .deep-focus-title{font-size:17px;font-weight:800;margin-top:4px;line-height:1.4}
+        .deep-focus-body{padding:20px 24px}
+        .deep-focus-body p{font-size:14.5px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:18px}
+        .deep-focus-body p:last-child{margin-bottom:0}
+        .deep-focus-body p strong{color:var(--color-text-primary)}
+        .deep-focus-takeaway{margin-top:20px;padding:16px 18px;background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%);border-radius:var(--radius-md);border-left:4px solid var(--color-purple)}
+        .deep-focus-takeaway.orange-theme{background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border-left-color:var(--color-orange)}
+        .deep-focus-takeaway.china-theme{background:linear-gradient(135deg,#FEF2F2 0%,#FEE2E2 100%);border-left-color:#DC2626}
+        .deep-focus-takeaway-label{font-size:12px;font-weight:700;color:var(--color-purple);margin-bottom:6px;letter-spacing:.5px}
+        .deep-focus-takeaway-label.orange{color:var(--color-orange)}
+        .deep-focus-takeaway-label.china{color:#DC2626}
+        .deep-focus-takeaway-text{font-size:13.5px;color:var(--color-text-secondary);line-height:1.7}
+        .deep-focus-takeaway-text strong{color:var(--color-text-primary)}
+        /* Pattern Insight Card */
+        .pi-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow-card);transition:all .25s cubic-bezier(.4,0,.2,1)}
+        .pi-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+        .pi-header{display:flex;align-items:center;gap:12px;padding:14px 20px;background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%);border-bottom:1px solid #FDE68A}
+        .pi-badge{display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 10px;border-radius:8px;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,#B45309 0%,#D97706 100%);white-space:nowrap}
+        .pi-title{font-size:16px;font-weight:700;color:var(--color-text-primary);flex:1;letter-spacing:-.01em;line-height:1.4}
+        .pi-row{display:flex;padding:14px 20px;border-bottom:1px solid var(--color-border-light);gap:14px}
+        .pi-row:last-child{border-bottom:none}
+        .pi-row.highlight{background:linear-gradient(135deg,rgba(217,119,6,.04) 0%,rgba(217,119,6,.01) 100%)}
+        .pi-row-label{width:56px;flex-shrink:0;font-size:12px;font-weight:700;color:#A8A29E;padding-top:2px;letter-spacing:.02em}
+        .pi-row-label.l2{color:#D97706}
+        .pi-row-content{flex:1;font-size:14px;color:var(--color-text-secondary);line-height:1.7}
+        .pi-row-content strong{color:var(--color-text-primary);font-weight:700}
+        .pi-evo{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+        .pi-evo-step{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--color-bg-table-header);border-radius:8px;border:1px solid var(--color-border-light);transition:all .15s}
+        .pi-evo-step.active{background:rgba(217,119,6,.12);border-color:#D97706;box-shadow:0 0 0 1px rgba(217,119,6,.15)}
+        .pi-evo-step.future{background:rgba(124,58,237,.06);border-color:#8B5CF6}
+        .pi-evo-tag{font-size:10px;font-weight:800;color:#D97706;padding:2px 7px;background:rgba(217,119,6,.1);border-radius:4px;letter-spacing:.02em}
+        .pi-evo-step.future .pi-evo-tag{color:#7C3AED;background:rgba(124,58,237,.1)}
+        .pi-evo-text{font-size:12px;color:var(--color-text-secondary)}
+        .pi-evo-arrow{color:#A8A29E;font-weight:700;font-size:14px}
+        .pi-table{padding:10px 20px 16px;border-top:1px solid var(--color-border-light)}
+        .pi-t-head{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-bottom:2px solid var(--color-border-light);margin-bottom:4px}
+        .pi-t-head span{font-size:11px;font-weight:700;color:#A8A29E;text-transform:uppercase;letter-spacing:.06em}
+        .pi-t-section{padding:6px 10px 2px}
+        .pi-t-section-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;letter-spacing:.03em}
+        .pi-t-section.verified .pi-t-section-tag{color:#047857;background:rgba(5,150,105,.08)}
+        .pi-t-section.current .pi-t-section-tag{color:#D97706;background:rgba(217,119,6,.08)}
+        .pi-t-section.projected .pi-t-section-tag{color:#7C3AED;background:rgba(124,58,237,.08)}
+        .pi-t-row{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-radius:6px;font-size:13px;line-height:1.6;transition:background .15s}
+        .pi-t-row:hover{background:rgba(0,0,0,.02)}
+        .pi-t-row.projected{background:rgba(124,58,237,.02)}
+        .pi-t-row.projected:hover{background:rgba(124,58,237,.05)}
+        .pi-t-rule{font-weight:600;color:#B45309;font-size:12px;padding-top:1px}
+        .pi-t-row.projected .pi-t-rule{color:#7C3AED}
+        .pi-t-reality{color:var(--color-text-primary);font-weight:500}
+        .pi-t-analogy{color:var(--color-text-secondary);padding-left:10px;border-left:2px solid var(--color-border-light)}
+        .pi-t-divider{border-top:2px dashed var(--color-border-light);margin:8px 10px}
+        .pi-t-verify{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(5,150,105,.06);border-radius:6px;font-size:12px;font-weight:600;color:#047857}
+        .pi-confidence{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(124,58,237,.04);border-radius:6px;border-left:3px solid #8B5CF6;font-size:11px;font-weight:500;color:#7C3AED;letter-spacing:.02em}
+        .data-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--color-border-light)}
+        .data-table th{background:var(--color-bg-table-header);font-weight:600;color:var(--color-text-secondary)}
+        .data-table td{color:var(--color-text-primary)}
+        .data-table tr:last-child td{border-bottom:none}
+        .coverage-bar{margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:16px;font-size:13px}
+        .coverage-bar .label{font-weight:700;color:var(--color-text-muted)}
+        .coverage-bar .bar{flex:1;height:8px;background:#E7E5E4;border-radius:4px;overflow:hidden;display:flex}
+        .coverage-bar .bar-overseas{background:var(--gradient-success);height:100%}
+        .coverage-bar .bar-china{background:var(--gradient-china);height:100%}
+        .coverage-bar .stats{display:flex;gap:12px;font-weight:600}
+        .coverage-bar .stat-overseas{color:var(--color-success)}
+        .coverage-bar .stat-china{color:#DC2626}
+        .footer{text-align:center;padding:24px;font-size:12px;color:var(--color-text-muted);border-top:1px solid var(--color-border-light);margin-top:24px}
+        @media(max-width:960px){
+            .overview-grid.five-cols{grid-template-columns:1fr 1fr}
+        }
+        @media(max-width:768px){
+            .overview-grid,.overview-grid.five-cols{grid-template-columns:1fr}
+            .tab-btn{font-size:11px;padding:8px 4px;min-width:60px}
+            .news-detail-row{flex-direction:column;gap:2px}
+            .news-detail-label{min-width:auto}
+            .deep-focus-header{padding:14px 18px}
+            .deep-focus-body{padding:16px 18px}
+            .coverage-bar{flex-direction:column;gap:8px}
+            .heat-table{font-size:12px}
+            .heat-table th,.heat-table td{padding:6px 4px}
+            .pi-evo{flex-direction:column;align-items:flex-start}
+            .pi-evo-arrow{display:none}
+            .pi-t-head{display:none}
+            .pi-t-row{grid-template-columns:1fr;gap:2px;padding:6px 10px;border-left:3px solid var(--color-border-light);margin-bottom:4px}
+            .pi-t-row.projected{border-left-color:rgba(124,58,237,.3)}
+            .pi-t-analogy{border-left:none;padding-left:0;font-size:12px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-badge">📡 AI行业洞察项目 - AI日报</div>
+            <div class="header-title">AI 日报 <span class="version-badge">v3.2</span></div>
+            <div class="header-date">2026年3月26日 周四 | 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</div>
+        </div>
+
+        <div class="coverage-bar">
+            <span class="label">📊 覆盖均衡</span>
+            <div class="bar">
+                <div class="bar-overseas" style="width:64%"></div>
+                <div class="bar-china" style="width:36%"></div>
+            </div>
+            <div class="stats">
+                <span class="stat-overseas">🌏 海外 14条</span>
+                <span class="stat-china">🇨🇳 国内 8条</span>
+            </div>
+        </div>
+
+        <div class="overview">
+            <div class="overview-title">📋 全文概览</div>
+            <div class="overview-grid five-cols">
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔥</span><span class="overview-item-label">今日头条</span></div>
+                    <div class="overview-headline">Arm 35年首款自研CPU + Sora关停 + Google Lyria 3 Pro发布</div>
+                    <div class="overview-item-text">Arm以$71M实验室发布AGI CPU(Meta首发客户，TSMC 3nm，2倍性能/功耗vs x86)；OpenAI关闭Sora视频App(Disney合作终止，成本收紧信号)；Google Lyria 3 Pro音乐生成模型今日上线Gemini App，文字生完整曲目</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">⌨️</span><span class="overview-item-label">AI Coding</span></div>
+                    <div class="overview-headline">Claude Code Auto Mode研究预览：AI自审每个action</div>
+                    <div class="overview-item-text">Anthropic为Claude Code发布Auto Mode：安全操作自动执行，高风险操作自动拦截，同步上线prompt injection防护。目前仅限Enterprise+API用户，支持Sonnet 4.6/Opus 4.6</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🛒</span><span class="overview-item-label">AI电商</span></div>
+                    <div class="overview-headline">ChatGPT ACP大扩展：7大零售商接入，Walmart推出App内体验</div>
+                    <div class="overview-item-text">OpenAI将ACP扩展至产品发现环节，Target/Sephora/Nordstrom/Lowes/Best Buy/Home Depot/Wayfair已接入；Shopify全量集成；Walmart in-ChatGPT App支持账户链接+会员积分+Walmart支付</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI行业</span></div>
+                    <div class="overview-headline">国内AI日均词元调用量140万亿+ | 商务部介入Meta收购Manus评估</div>
+                    <div class="overview-item-text">国家数据局统计中国日均词元调用量突破140万亿，标志AI应用进入规模化使用阶段；商务部介入Meta收购Manus评估，关注数据安全和技术出口</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label">🔥 热度趋势</div>
+                <div class="heat-header-title">今日AI行业热度趋势</div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead><tr><th>排名</th><th>话题</th><th>热度</th><th>天数</th><th>趋势</th><th>核心信号</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇</td>
+                            <td><strong>Arm AGI CPU发布</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 爆发</span></td>
+                            <td>Meta首发客户，$71M实验室，TSMC 3nm发布</td>
+                        </tr>
+                        <tr>
+                            <td>🥈</td>
+                            <td><strong>OpenAI Sora关停</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 爆发</span></td>
+                            <td>OpenAI确认关闭，Disney合作终止，成本收紧</td>
+                        </tr>
+                        <tr>
+                            <td>🥉</td>
+                            <td><strong>Google Lyria 3 Pro</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 新发布</span></td>
+                            <td>Gemini App直接集成，48kHz立体声，API付费预览</td>
+                        </tr>
+                        <tr>
+                            <td>4️⃣</td>
+                            <td><strong>Claude Code Auto Mode</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 升温</span></td>
+                            <td>AI自审action，Enterprise+API用户研究预览</td>
+                        </tr>
+                        <tr>
+                            <td>5️⃣</td>
+                            <td><strong>ChatGPT ACP扩展</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag stable">➡ 持续</span></td>
+                            <td>Target/Sephora等7家接入，Walmart推出App内体验</td>
+                        </tr>
+                        <tr>
+                            <td>6️⃣</td>
+                            <td><strong>GPT-5.x迭代</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>7天</td>
+                            <td><span class="heat-trend-tag down">📉 趋缓</span></td>
+                            <td>GPT体系收敛，legacy deep research退役</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Arm AGI CPU + Sora关停 + Lyria 3 Pro是今日三大热点；Claude Code Auto Mode和ChatGPT ACP扩展是今日最重要的技术进展；GPT-5.x迭代趋于常规，国内AI词元量创新高</p>
+            </div>
+        </div>
+
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn" role="tab" aria-selected="true" data-tab="foundation">🧠 大模型</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="coding">⌨️ AI Coding</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="application">📱 AI 应用</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="industry">🏭 AI 行业</button>
+            <button class="tab-btn orange" role="tab" aria-selected="false" data-tab="enterprise">🔄 企业转型</button>
+        </nav>
+
+
+        <article id="foundation" class="tab-panel active">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://blog.google/innovation-and-ai/products/gemini-app/lyria-3/" target="_blank">Google Lyria 3 Pro音乐生成模型发布：文字转完整曲目，48kHz立体声，API付费预览开放</a></div>
+                    <div class="news-source">Google官方博客 · 3月25日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Google于3月25日正式发布Lyria 3 Pro音乐生成模型。双版本同步上线：lyria-3-clip-preview（30秒片段）和lyria-3-pro-preview（完整曲目）。两款模型均支持文字和图片输入，生成48kHz立体声高质量音频。该音乐生成模型支持文字/图片/视频输入，生成48kHz立体声高质量音频，直接从文字提示词生成完整曲目；开发者可通过Gemini API付费预览版接入，Google AI Studio免费测试。Google Workspace更新博客确认：功能在2026年3月25日开始全球推出，3天内完成可见性部署</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">3月25日正式发布</span><span class="news-data-chip">Gemini App直接可用</span><span class="news-data-chip">48kHz立体声</span><span class="news-data-chip">开发者API付费预览</span><span class="news-data-chip">完整曲目生成</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI音乐生成进入主流平台——从Suno/Udio等独立工具，到Gemini这样的超级平台直接集成，竞争格局将发生根本性变化。对国内AI音乐创作者：Suno和Udio的竞争压力骤增</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank">GPT-5.3 Instant推理升级：legacy deep research模式退役，OpenAI三层模型架构收敛完成</a></div>
+                    <div class="news-source">OpenAI官方发布说明 · 3月26日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI于3月19日预告的legacy deep research模式，今日（3月26日）正式下线。开发者将被引导至新版Thinking+深度研究体验。同期，GPT-5.3 Instant完成语气更新：减少「预告式」措辞（如「稍后我将...」），改为更直接的回答风格，减少不必要的元评论</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">3月26日正式退役</span><span class="news-data-chip">legacy deep research下线</span><span class="news-data-chip">GPT-5.3 Instant语气更自然</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">OpenAI持续整合模型体系——从「三层架构」(Instant/Thinking/Pro)向更清晰的用户路径收敛，减少功能碎片化</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://ai.google.dev/gemini-api/docs/changelog" target="_blank">Gemini API 3月25日更新：gemini-embedding-2多模态嵌入模型上线(3月10日)，AI Studio计费升级</a></div>
+                    <div class="news-source">Google AI for Developers · 3月25日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Gemini API近期多项更新：3月25日Lyria 3正式发布（lyria-3-clip-preview/lyria-3-pro-preview）；3月23日AI Studio推出Prepay/Postpay计费套餐；3月10日发布gemini-embedding-2-preview，首款多模态嵌入模型，支持文本/图片/视频/音频/PDF统一嵌入空间；3月9日gemini-3-pro-preview正式指向gemini-3.1-pro-preview</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">gemini-embedding-2多模态嵌入</span><span class="news-data-chip">AI Studio计费升级</span><span class="news-data-chip">3月25日Lyria 3发布</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Google在API层面加速建立全模态基础设施——从文字到音乐到多模态嵌入，一站式API成为开发者迁移的核心诱因</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=国家数据局+AI词元+140万亿+2026" target="_blank">国家数据局：中国日均词元调用量突破140万亿，AI算力使用进入新量级</a></div>
+                    <div class="news-source">国家数据局官方 · 本周（微信官号）</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">据国家数据局统计，中国日均词元（token）调用量已突破140万亿次。这一数据标志着国内AI应用从「功能验证」进入「规模使用」阶段，词元消耗量可作为AI真实渗透率的核心代理指标</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">日均140万亿词元</span><span class="news-data-chip">国家数据局权威数据</span><span class="news-data-chip">AI规模使用新量级</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">算力基础设施投入的正当性数据背书——日均140万亿词元意味着国内AI应用已形成真实的规模化使用，不再是Demo阶段</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Lyria 3 Pro发布：AI音乐赛道的「Sora时刻」来了</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>今天，Google把Lyria 3 Pro放进了Gemini App。这件事的重量不亚于当年OpenAI把DALL-E集成进ChatGPT——那次发布让Midjourney们感受到了平台引力。今天，Suno和Udio也感受到了同样的力量。</p><p>Lyria 3 Pro的技术指标很扎实：48kHz立体声、完整曲目生成、文字/图片/视频均可作为输入。但真正改变游戏的不是技术参数，而是「在哪里」。Gemini App的月活用户是Suno的几十倍，这意味着「AI音乐生成」这个能力的触达规模在一天之内发生了数量级跳跃。</p><p>对开发者社区而言，Lyria 3的API开放（付费预览）是更重要的信号：Google在音乐领域重复了它在视频（Veo）、图片（Imagen）、语音（Gemini TTS）的打法——先做Gemini App内的C端引爆，再开放API给B端开发者构建上层应用。这个「漏斗策略」已经运行了三次，Lyria 3是第四次。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">Lyria 3=AI音乐赛道的平台化时刻：超级平台集成>独立工具——Google用Gemini App复制了ChatGPT在图像领域的扩张路径</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">AI能力平台化定律：超级App集成=独立赛道终结信号</span></div><div class="pi-row"><span class="pi-label">现象</span><span class="pi-content">Google Lyria 3 Pro集成进Gemini App，同时开放API给开发者</span></div><div class="pi-row"><span class="pi-label">规律</span><span class="pi-content">AI能力生命周期：独立工具爆发→超级平台集成→独立工具被迫垂直化/消亡。图像（Midjourney vs DALL-E/Imagen）、视频（Runway vs Veo/Sora）、音乐（Suno vs Lyria）均遵循此规律</span></div><div class="pi-row"><span class="pi-label">预测</span><span class="pi-content">2026年底，AI音乐独立应用市场将显著萎缩；Suno/Udio的出路是垂直化（专业音乐人工具）而非泛用化——这是唯一能抗衡平台引力的护城河策略</span></div></div>
+        </article>
+
+        <article id="coding" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://techcrunch.com/2026/03/24/anthropic-hands-claude-code-more-control-but-keeps-it-on-a-leash/" target="_blank">Anthropic发布Claude Code Auto Mode研究预览：AI自审每个action，替代「一键全放权」模式</a></div>
+                    <div class="news-source">TechCrunch · 3月25日更新报道</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Anthropic为Claude Code发布Auto Mode（研究预览版）。区别于全自动的--dangerously-skip-permissions，Auto Mode会用AI safeguard实时审查每个action：安全操作自动执行，高风险操作（递归删除/外部网络请求/sudo命令）自动拦截。同步上线prompt injection防护。当前仅限Enterprise和API用户，支持Claude Sonnet 4.6和Opus 4.6，建议在隔离环境中使用。此前背景：Claude Code Review（3月9日）和Dispatch for Cowork（3月18日）相继发布</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">研究预览版</span><span class="news-data-chip">Enterprise+API用户</span><span class="news-data-chip">Sonnet 4.6/Opus 4.6</span><span class="news-data-chip">AI自审action</span><span class="news-data-chip">拦截prompt injection</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI coding工具向「自主执行+安全框架」进化的重要里程碑——开发者不再需要在「逐步确认」和「完全放权」之间二选一</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://energycommerce.house.gov/committees/subcommittee/communications-technology" target="_blank">US Congress今日举行AI听证：通信技术小组委员会审视联邦AI框架，两委员会同日开议</a></div>
+                    <div class="news-source">US House Energy & Commerce Committee · 3月26日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">美国众议院能源商务委员会通信与技术小组委员会今日（3月26日）上午10:15 ET在2123 Rayburn举行听证，审视美国联邦AI框架。同日，众议院金融服务委员会数字资产与AI小组委员会也举行听证，是2026年首次两委员会同日聚焦AI立法</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">3月26日举行</span><span class="news-data-chip">两委员会同日听证</span><span class="news-data-chip">联邦AI框架</span><span class="news-data-chip">2123 Rayburn</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">美国AI监管进入「多委员会并行立法」阶段，预示着联邦级AI框架在2026年内落地的政治意愿显著增强</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=AI+Agent编程工具+生产可用性+2026" target="_blank">AI Agent编程工具进入规模化验证期：国内开发者社区从「Demo演示」转向「生产可用性」</a></div>
+                    <div class="news-source">微信AI开发者圈 · 本周（微信公号）</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">国内AI Agent编程工具热度持续攀升，Manus、各类CodeAct框架进入规模化验证期。黄仁勋GTC演讲提出「750万AI Agents将改变工作方式」的论断持续发酵，国内开发者社区对Agent能力边界的讨论已从「Demo演示」转向「生产可用性」</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">Manus热度持续</span><span class="news-data-chip">Agent编程工具规模化</span><span class="news-data-chip">生产可用性验证</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">国内AI coding工具从「帮你写代码」向「替你跑任务」演进——这个跃迁的时间窗口已经开启</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Claude Code Auto Mode：AI工具进化的「第三条路」</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Auto Mode解决的不是一个技术问题，而是一个信任问题。过去，开发者面对AI coding工具只有两个选择：要么每个步骤都亲自确认（安全但低效），要么打开--dangerously-skip-permissions让AI自己跑（高效但危险）。这两种模式都不理想。</p><p>Auto Mode的设计哲学是把「什么时候需要人类介入」这个决策权，从人转移给AI本身。AI不是在问「我能做这个吗」，而是在问「这件事有没有风险」——读文件、跑测试、创建新文件，自动通过；递归删除、系统级安装、外部网络请求，自动拦截。这是AI工具第一次真正意义上拥有了「自我审查能力」。</p><p>更重要的是，Auto Mode和prompt injection防护同步上线——这意味着Anthropic在考虑的不只是误操作风险，还有恶意代码攻击场景。当AI coding工具开始处理外部代码仓库、第三方依赖时，这个防护层的价值会越来越大。目前仅限Enterprise+API用户的研究预览，预计3-6个月内会扩展到更多用户。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">Auto Mode=AI的「自我裁判权」：把「何时需要确认」从人类决策变为AI决策，是coding工具进化的关键跃迁</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">AI工具自主化定律：权限决策「上移」到AI</span></div><div class="pi-row"><span class="pi-label">现象</span><span class="pi-content">Claude Code Auto Mode：AI自审action替代人工逐步确认</span></div><div class="pi-row"><span class="pi-label">规律</span><span class="pi-content">AI工具自主化不是「0→1」跳跃，而是「权限决策」逐步从人类转移到AI，每一步都需要安全框架背书</span></div><div class="pi-row"><span class="pi-label">预测</span><span class="pi-content">2026年下半年，AI coding工具的核心差异化将从「写代码质量」转移到「执行安全框架」——谁的安全框架更可信，谁就能拿到企业客户</span></div></div>
+        </article>
+
+        <article id="application" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.hollywoodreporter.com/business/digital/openai-shutting-down-sora-ai-video-app-1236546187/" target="_blank">OpenAI关闭Sora视频生成App，Disney合作随之终止——「成本收紧」信号明确</a></div>
+                    <div class="news-source">Hollywood Reporter + BBC + CNBC · 3月25日综合报道</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI于3月25日确认关闭Sora视频生成应用。CNBC标题明确指出「reels in costs」是关闭原因。Disney合作作为直接结果同步终止。OpenAI刚完成$40B融资，但需要维持多产品线同步投入。对竞争格局：Runway/Pika/某公司可灵/字节即梦迎来直接市场机会</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">3月25日确认关闭</span><span class="news-data-chip">Disney合作终止</span><span class="news-data-chip">成本收紧信号</span><span class="news-data-chip">短视频App下线</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Sora关停是OpenAI「聚焦核心战场」策略的体现——ChatGPT/API生态 > 消费级视频应用。对竞争对手Runway/Pika/可灵等视频生成公司是直接利好</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank">ChatGPT File Library上线 + 大粘贴自动转附件：向「工作空间」平台演进</a></div>
+                    <div class="news-source">OpenAI官方发布说明 · 3月25日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">ChatGPT近期两项UX更新：(1)3月23日上线File Library，用户可跨会话查找/复用/沉淀文件，更容易在文件基础上继续迭代工作；(2)3月25日起，大段粘贴内容（代码/文档/日志）自动作为附件处理而非直接插入对话，改善长上下文体验。两项更新均反映ChatGPT向「持久性工作空间」演进的产品战略</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">File Library 3月23日上线</span><span class="news-data-chip">大粘贴转附件 3月25日</span><span class="news-data-chip">跨会话文件复用</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">ChatGPT向「工作空间」属性持续演进——从一次性问答助手变成可以管理长期工作资产的平台</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=可灵+Sora关停+海外市场+2026" target="_blank">Sora关停利好国内视频AI：可灵/即梦抢占海外市场窗口，2026年上半年是关键时机</a></div>
+                    <div class="news-source">微信AI产品圈 · 3月25日（微信公号）</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI Sora关停后，国内AI视频生成平台（某公司可灵、字节即梦、MiniMax海螺等）迎来新的市场窗口。可灵在海外市场的用户基础正在稳步扩展，Sora的退出减少了直接竞争压力。多个微信公号分析指出：这是国内AI视频工具「最窄的窗口期」，需要在6个月内完成国际化加速</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">可灵/即梦受益</span><span class="news-data-chip">海外市场窗口</span><span class="news-data-chip">Sora退出减竞争</span><span class="news-data-chip">6个月窗口期</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">国内AI视频生成工具有机会在2026年上半年加速国际化——Sora留下的用户真空需要有人填补</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">OpenAI关闭Sora：「成本收紧」还是「战略聚焦」？</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>CNBC的标题选词很精准：「reels in costs」。关闭Sora不是因为产品失败，而是一种主动的资源重新分配。OpenAI刚完成$40B融资，但同期需要维持ChatGPT、API平台、GPT-5系列迭代、Operator/Agent基础设施等多条战线——在所有这些战场上，Sora的优先级排不进前三。</p><p>更深层的逻辑是：短视频生成≠OpenAI的核心竞争地盘。ChatGPT的核心价值是「文字→行动」，视频生成是一个独立赛道，有Runway、Pika、Kling等专注玩家。OpenAI试图在这个赛道占据一席之地，但成本/收益比不理想——Sora的边际收益远低于把同等算力投入GPT-5.x系列迭代。</p><p>对整个AI视频赛道的影响是双向的：短期内Runway/Pika等竞争对手直接受益，但长期来看，OpenAI的退出也在传递一个信号——纯视频生成App的商业化路径并不明朗。真正的机会可能在视频生成成为ChatGPT工作流的一个「能力插件」，而不是一个独立产品。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">Sora关停=AI应用「减法时代」：不是每个AI能力都需要一个独立App，能力内嵌优于独立产品</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">AI应用「减法定律」：独立App vs 能力内嵌</span></div><div class="pi-row"><span class="pi-label">现象</span><span class="pi-content">OpenAI关闭Sora独立App，同期File Library等功能内嵌ChatGPT</span></div><div class="pi-row"><span class="pi-label">规律</span><span class="pi-content">AI能力作为独立App的生命周期越来越短——平台方会「吃掉」单点能力应用，真正的护城河在垂直场景深度或平台生态位</span></div><div class="pi-row"><span class="pi-label">预测</span><span class="pi-content">2026年将有多个「AI能力独立App」被收购或关停，标志：当ChatGPT/Claude/Gemini原生支持某能力后，独立该能力的App价值迅速归零</span></div></div>
+        </article>
+
+        <article id="industry" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://newsroom.arm.com/blog/introducing-arm-agi-cpu" target="_blank">Arm 35年来首发自研AGI CPU芯片：Meta首发客户，$71M实验室，TSMC 3nm，2倍性能/功耗</a></div>
+                    <div class="news-source">Arm官方新闻室 + CNBC · 3月25日综合</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Arm CEO Rene Haas发布首款自研芯片AGI CPU。关键参数：TSMC 3nm制造、单机架可装64颗CPU（约8700核）、性能/功耗是x86的2倍。$71M投入18个月建设Austin Texas芯片实验室，团队超1000人。Meta工程师Paul Saab从2023年项目启动便参与联合开发——Meta是首个客户。50+合作伙伴提前支持，Google/Amazon/Microsoft/Oracle等巨头录制支持视频。Futurum预测CPU增速将在2028年超过GPU</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">35年来首款自研芯片</span><span class="news-data-chip">Meta首发客户</span><span class="news-data-chip">$71M实验室</span><span class="news-data-chip">TSMC 3nm</span><span class="news-data-chip">64核/架</span><span class="news-data-chip">2x性能/功耗vs x86</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">CPU市场迎来最大格局重塑：Arm从纯IP授权商变成芯片制造商，直接挑战Intel/AMD主导的x86架构。Agentic AI驱动CPU需求复苏</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.cnbc.com/2026/03/24/anthropic-lawsuit-pentagon-supply-chain-risk-claude.html" target="_blank">Anthropic被DOD列入供应链黑名单：法官提出质疑，联邦AI采购竞争格局存变数</a></div>
+                    <div class="news-source">CNBC · 3月25日更新</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">法官质疑美国DOD部将Anthropic列入供应链风险黑名单的依据，表示「这个标准似乎门槛很低」。此事件背景：Anthropic的入黑名单可能影响其联邦政府市场准入，相关采购竞争格局面临新变数</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">法官质疑五角大楼</span><span class="news-data-chip">供应链风险黑名单</span><span class="news-data-chip">Anthropic vs DOD</span><span class="news-data-chip">门槛过低质疑</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI公司进入政府/军事市场的合规框架尚不成熟，「供应链风险」被滥用的风险引发法律层面的制衡</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=Meta+Manus+商务部+2026" target="_blank">商务部介入Meta收购Manus评估；AI Agent整体爆发成2026年行业核心共识</a></div>
+                    <div class="news-source">微信AI行业圈 · 3月25日（微信公号）</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Meta收购Manus的传闻中，中国商务部已启动评估调查，关注数据安全和技术出口问题。与此同时，黄仁勋「750万AI Agents」预测持续发酵，AI Agent成为2026年行业发展核心共识。多个国内AI从业者分析：Agent爆发带来的工程需求将在2026年Q2开始显现</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">商务部评估介入</span><span class="news-data-chip">Meta+Manus传闻</span><span class="news-data-chip">750万AI Agents</span><span class="news-data-chip">Agent爆发共识</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">中国对AI并购的监管介入加强，国内AI独角兽出海并购路径面临新的合规挑战</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Arm造芯：35年IP授权商为什么突然要亲自上阵？</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Arm被称为芯片界的「瑞士」——它把设计卖给所有人，不直接参与竞争。这个定位在过去35年让它成为无处不在却几乎不被注意的基础设施。但现在，Arm要亲自下场了。原因只有一个：Agentic AI重写了算力需求曲线。</p><p>Nvidia的CEO Jensen Huang刚在GTC上说，CPU正在成为AI系统的「瓶颈」。这句话Arm听进去了。当AI工作负载从「大模型训练」转向「多Agent协作」，GPU仍然关键，但CPU处理的「调度/路由/协调」任务量急剧增加。Arm的架构在功耗效率上天然优于x86——64颗AGI CPU在单个机架里，性能功耗比是x86的2倍。这对Meta在路易斯安那建设5GW数据中心来说，意味着真实的电费节省。</p><p>更战略性的是，Arm通过Meta做了一件事：把「Arm也有完整硬件方案」的信号发送给了整个产业链。Intel/AMD的护城河是「久经验证的x86兼容性」，而Arm的反击是「超高效率+完全可定制」。Futurum预测CPU市场增速将在2028年超过GPU——Arm现在入场，是在提前布局这个$1T市场的份额。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">Arm造芯=算力战争进入新维度：Agentic AI让CPU重回C位，Arm用效率优势直指x86统治的数据中心腹地</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">算力演进定律：每代AI范式催生新芯片赢家</span></div><div class="pi-row"><span class="pi-label">现象</span><span class="pi-content">训练时代→GPU(Nvidia)；推理时代→NPU/专用芯片；Agentic时代→CPU复苏(Arm AGI CPU)</span></div><div class="pi-row"><span class="pi-label">规律</span><span class="pi-content">AI计算范式每次跃迁，都会重写最优算力架构——不存在永恒的「最佳芯片」，只有当前范式下的最优解</span></div><div class="pi-row"><span class="pi-label">预测</span><span class="pi-content">2026-2027年，CPU/内存带宽将成为Agentic AI的新瓶颈，Arm AGI CPU、Intel Xeon新一代、AMD EPYC将展开新一轮数据中心CPU战争；GPU仍重要但增速放缓</span></div></div>
+        </article>
+
+        <article id="enterprise" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://openai.com/index/powering-product-discovery-in-chatgpt/" target="_blank">ChatGPT Shopping大升级：ACP扩展产品发现，Target/Sephora/Nordstrom等7大零售商接入，Walmart推出App内体验</a></div>
+                    <div class="news-source">OpenAI官方博客 · 3月25日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI发布ChatGPT Shopping重大升级，将Agentic Commerce Protocol(ACP)扩展至产品发现环节。用户可视觉浏览商品、上传图片寻找同款、侧边栏对比、图文并茂。7大零售商已接入ACP：Target/Sephora/Nordstrom/Lowe's/Best Buy/The Home Depot/Wayfair。Shopify Catalog已全量集成，无需商家额外操作。Walmart发布in-ChatGPT App体验：支持账户链接/会员积分/Walmart支付，网页版已上线，iOS/Android即将跟进。OpenAI暂停「即时结算(Instant Checkout)」功能，专注产品发现体验</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">7大零售商接入ACP</span><span class="news-data-chip">Walmart App内体验</span><span class="news-data-chip">Shopify全量集成</span><span class="news-data-chip">即时结算暂停</span><span class="news-data-chip">视觉购物+图片搜索</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI电商基础设施之战正式开打——ACP成为OpenAI主导的「AI时代商品流转协议」。谁控制了用户购物决策的入口，谁就控制了最有价值的商业意图数据</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.modernretail.co/technology/shopify-says-purchases-are-coming-inside-chatgpt-through-agentic-storefronts-as-openai-retreats-on-instant-checkout/" target="_blank">Shopify「Agentic Storefronts」3月底上线：数百万商家已在ChatGPT内开门营业</a></div>
+                    <div class="news-source">Modern Retail · 3月25日更新</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Shopify VP Mani Fazeli确认：「数百万Shopify商家已在ChatGPT开门营业」。Agentic Storefronts功能将于3月底上线，用户可在ChatGPT内完成完整购物流程（发现→比价→跳转商家页面结算）。OpenAI虽暂停Instant Checkout，但通过商家自有结算保持了灵活性</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">数百万Shopify商家接入</span><span class="news-data-chip">Agentic Storefronts 3月底上线</span><span class="news-data-chip">商家自有结算保留</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Shopify成为ChatGPT购物生态最大受益方——无需额外接入即可曝光给ChatGPT用户，等于获得了一个新的零成本流量入口</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=ChatGPT+ACP+中国电商+2026" target="_blank">国内AI电商入口战：ChatGPT ACP对阿里/抖音闭环生态的冲击几何？</a></div>
+                    <div class="news-source">微信电商圈 · 3月25日（微信公号）</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">ChatGPT ACP的商业逻辑在国内难以直接复制：国内电商生态高度闭环（淘系/抖音/微信），平台方不会开放商品数据给第三方AI。但「AI+电商」的核心趋势一致——豆包/通义千问等国内AI正在探索与淘宝/抖音的深度绑定模式</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">国内闭环生态制约</span><span class="news-data-chip">豆包/通义探索中</span><span class="news-data-chip">AI购物决策入口之争</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">国内AI电商的「ACP时刻」不会以相同形式出现，而会以「平台AI助手深度内嵌」的形式出现——阿里系/字节系各有天然优势</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">ChatGPT ACP：AI时代的「电商操作系统」之争</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>OpenAI的ACP不是一个功能，是一个协议——就像HTTP之于网页浏览，ACP在定义「AI时代商品如何流转」的标准。Target/Sephora/Nordstrom接入ACP，意味着这些零售商在宣誓：我们承认ChatGPT是消费者购物决策的新入口，我们需要在这个入口上占有一席之地。</p><p>暂停Instant Checkout是聪明的一步棋。OpenAI意识到，强推自己的结算系统会让商家抵触——商家不愿意把交易数据拱手相让给OpenAI。通过保留商家自有结算流程，OpenAI把自己定位为「中立的发现层」而非「抢夺交易数据的竞争者」。这个策略让更多商家愿意接入ACP，最终形成更丰富的商品库——反而让ChatGPT Shopping的价值更高。</p><p>最值得关注的是Walmart的「in-ChatGPT App」模式：用户在ChatGPT里进入Walmart的沉浸式购物环境，支持Walmart积分和支付。这是一种新型合作关系：AI平台提供入口和意图，商家提供商品和交易闭环。谁会是下一个接入的「App」？预计Amazon会在6个月内跟进，否则将面临真实的流量流失压力。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">ACP=AI时代的电商分发协议：控制购物决策入口比控制结算流程更有价值——OpenAI选对了战场</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">平台协议定律：谁定义标准，谁赢得生态</span></div><div class="pi-row"><span class="pi-label">现象</span><span class="pi-content">ACP扩展：7大零售商+Shopify全量接入，Walmart首推ChatGPT内App体验</span></div><div class="pi-row"><span class="pi-label">规律</span><span class="pi-content">互联网历史规律：先定义协议的平台往往赢得生态主导权（TCP/IP→HTTP→微信生态→App Store）。ACP是OpenAI在电商领域争夺协议层控制权的关键行动</span></div><div class="pi-row"><span class="pi-label">预测</span><span class="pi-content">Google会在6个月内推出竞争性协议对抗ACP；Amazon会在Rufus基础上构建自己的AI购物生态；最终格局：3个协议并存，商家需要同时接入3个平台——这正是Shopify这类「多渠道中间层」的机会所在</span></div></div>
+        </article>
+
+
+        <div class="section-card" style="margin-top:20px">
+            <div class="section-header"><span class="num">📊</span> 数据速览</div>
+            <table class="data-table">
+                <thead><tr><th>指标</th><th>数值</th><th>变化/说明</th></tr></thead>
+                <tbody>
+                    <tr><td>AGI CPU实验室投入</td><td><strong>$7100万</strong></td><td>Austin Texas，18个月建成，团队超1000人</td></tr>
+                    <tr><td>2026年资本支出计划</td><td><strong>$115-135亿</strong></td><td>Arm AGI CPU首发客户，AI数据中心建设加速</td></tr>
+                    <tr><td>已接入零售商</td><td><strong>7家</strong></td><td>Target/Sephora/Nordstrom/Lowe's/Best Buy/Home Depot/Wayfair</td></tr>
+                    <tr><td>日均词元调用量</td><td><strong>140万亿+</strong></td><td>国家数据局数据，标志规模化使用阶段</td></tr>
+                    <tr><td>性能/功耗 vs x86</td><td><strong>2倍</strong></td><td>单机架64颗CPU约8700核，TSMC 3nm制造</td></tr>
+                    <tr><td>音频质量</td><td><strong>48kHz立体声</strong></td><td>3月25日发布，支持文字/图片/视频输入生成完整曲目</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📌</span> 明日/下周值得关注</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="margin-top:20px;background:linear-gradient(135deg,#EFF6FF 0%,#EDE9FE 100%);border:1px solid #DBEAFE;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06)">
+            <div style="font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:#1E40AF">
+                🤖 深度洞察
+            </div>
+            <div style="font-size:14px;color:#374151;line-height:1.8;margin:0">
+                <p style="margin:0">🤖 <strong>AI洞察自述</strong></p><p style='margin:8px 0 0 0'>今天的AI圈有五个主角，放在一起才能看清当下的格局。</p><p style='margin:8px 0 0 0'>第一件：<strong>Google Lyria 3 Pro今日发布</strong>。48kHz立体声、完整曲目、文字/图片/视频都能作为输入——但比技术参数更重要的是「在哪里」：直接集成进Gemini App。AI音乐赛道的「Sora时刻」来了，Suno和Udio感受到了和当年Midjourney面对DALL-E-in-ChatGPT同样的平台引力。</p><p style='margin:8px 0 0 0'>第二件：<strong>Arm 35年来首次造芯</strong>。这不是一家普通公司推新品——Arm是全球85%智能手机芯片的「幕后设计者」，连英伟达的架构都绕不开它。现在它亲自下场，用$71M打造Austin芯片实验室，Meta作为首发客户。真正的信号是：Agentic AI让CPU从「配角」重回「C位」，Arm正在用2倍性能/功耗的优势，向统治数据中心35年的x86发起正面挑战。</p><p style='margin:8px 0 0 0'>第三件：<strong>OpenAI关闭Sora</strong>。CNBC标题里的「reels in costs」三个字道出了本质——不是产品失败，是资源重新分配。$40B融资到手，但同时要维持ChatGPT/API/GPT-5系列/Agent基础设施等多条战线，Sora的ROI排不进前三。对某公司可灵、字节即梦来说，是一个真实的市场窗口。</p><p style='margin:8px 0 0 0'>第四件：<strong>Claude Code Auto Mode</strong>。Anthropic把「什么时候需要人类确认」这个决策权，从人移交给了AI。读文件/跑测试→自动通过；递归删除/外部网络→自动拦截。这是AI coding工具第一次真正意义上拥有「自我裁判」能力，我的判断：这个功能6个月内会成为所有主流coding工具的标配。</p><p style='margin:8px 0 0 0'>第五件：<strong>ChatGPT ACP把7大零售商拉进来了</strong>。Target/Sephora/Nordstrom/Lowe's/Best Buy/Home Depot/Wayfair——这不是合作公告，这是在争「AI时代电商分发协议」的控制权。Walmart更进一步做了in-ChatGPT的App体验。OpenAI暂停Instant Checkout反而是聪明棋：让商家保留结算权，换取更大的商品目录。</p><p style='margin:8px 0 0 0'>五件事的共同主题：<strong>AI从「模型大战」转向「工程化落地与基础设施标准之战」</strong>。谁的CPU更高效、谁的电商协议先定标准、谁的coding工具安全框架更可信、谁的音乐生成先进超级App——这些才是接下来12个月的真正战场。</p>
+            </div>
+        </div>
+
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+            <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+            <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+                我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+            </p>
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                🏠 访问AI洞察首页
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', 'false'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.setAttribute('aria-selected', 'true');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

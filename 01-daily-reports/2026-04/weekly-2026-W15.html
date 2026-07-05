@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 周报 2026-W15 (04.06-04.12) | AI洞察</title>
+    <meta name="description" content="2026年第15周AI行业动态精选：大模型治理前置、OpenAI超级App战略、AI Coding场景化选型、企业转型组织瓶颈等核心趋势">
+    <meta property="og:title" content="AI 周报 2026-W15 | AI洞察">
+    <meta property="og:description" content="本周90+条动态精选，五大板块深度解读">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232563EB'/><text x='6' y='23' font-size='18' fill='white'>⚡</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --color-success: #059669; --color-success-light: #10B981; --color-success-dark: #047857;
+            --color-success-50: #ECFDF5; --color-success-100: #D1FAE5;
+            --color-danger: #E11D48; --color-danger-light: #F43F5E; --color-danger-50: #FFF1F2;
+            --color-warning: #D97706; --color-warning-light: #F59E0B; --color-warning-50: #FFFBEB;
+            --color-info: #2563EB; --color-info-light: #3B82F6; --color-info-50: #EFF6FF; --color-info-100: #DBEAFE;
+            --color-purple: #7C3AED; --color-purple-light: #8B5CF6; --color-purple-50: #F5F3FF; --color-purple-100: #EDE9FE;
+            --color-text-primary: #1C1917; --color-text-secondary: #57534E; --color-text-muted: #78716C;
+            --color-border: #E7E5E4; --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB; --color-bg-card: #FFFFFF; --color-bg-table-header: #FAFAF9;
+            --color-bg-hover: rgba(0,0,0,0.025);
+            --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+            --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+            --gradient-mesh:
+                radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card-rich: 0 4px 16px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.9);
+            --shadow-hover: 0 8px 24px rgba(5,150,105,0.18), 0 2px 8px rgba(5,150,105,0.10);
+            --shadow-float: 0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
+            --shadow-glow-info: 0 4px 14px rgba(37,99,235,0.15);
+            --spacing-xs: 4px; --spacing-sm: 8px; --spacing-md: 16px;
+            --spacing-lg: 24px; --spacing-xl: 32px; --spacing-2xl: 40px; --spacing-3xl: 48px;
+            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 20px; --radius-full: 9999px;
+            --font-family: "DM Sans", -apple-system, "Noto Sans SC", "PingFang SC", sans-serif;
+            --font-family-heading: "DM Sans", -apple-system, "Noto Sans SC", sans-serif;
+            --font-family-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+            --font-family-mono: "JetBrains Mono", "SF Mono", "Consolas", monospace;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --sidebar-width: 228px;
+            --content-max: 920px;
+            --content-pad: 56px;
+        }
+
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-family);
+            font-size: 15px;
+            line-height: 1.65;
+            letter-spacing: -0.01em;
+            color: var(--color-text-secondary);
+            background: var(--color-bg);
+            background-image: var(--gradient-mesh);
+            background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+        ::selection { background: rgba(5,150,105,0.18); }
+        a { color: var(--color-info); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ===== SKIP TO CONTENT ===== */
+        .skip-to-content {
+            position: absolute; top: -40px; left: 0; background: var(--color-info);
+            color: #fff; padding: 8px 16px; border-radius: 0 0 8px 0; z-index: 9999;
+            transition: top var(--transition-fast);
+        }
+        .skip-to-content:focus { top: 0; }
+
+        /* ===== LAYOUT ===== */
+        .layout-wrapper { display: flex; width: 100%; min-height: 100vh; align-items: stretch; }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar-nav {
+            width: var(--sidebar-width); flex-shrink: 0;
+            position: sticky; top: 0; height: 100vh;
+            overflow-y: auto; background: #fff;
+            border-right: 1px solid var(--color-border);
+            padding: 20px 0; z-index: 100;
+            display: flex; flex-direction: column;
+        }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 2px; }
+        .sidebar-doc-title {
+            font-size: 13px; font-weight: 700; color: var(--color-text-primary);
+            padding: 0 20px 16px; line-height: 1.4; font-family: var(--font-family-heading);
+        }
+        .toc-group-label {
+            font-size: 11px; font-weight: 700; color: var(--color-text-muted);
+            letter-spacing: 0.08em; text-transform: uppercase;
+            padding: 4px 20px 6px; margin-top: 8px;
+        }
+        .toc-link {
+            display: block; padding: 7px 20px; font-size: 13px; font-weight: 500;
+            color: var(--color-text-secondary); border-left: 3px solid transparent;
+            transition: all var(--transition-fast); line-height: 1.4; text-decoration: none;
+        }
+        .toc-link:hover { background: rgba(0,0,0,0.03); color: var(--color-text-primary); text-decoration: none; }
+        .toc-link.toc-active { color: var(--color-info); background: rgba(37,99,235,0.04); border-left-color: var(--color-info); font-weight: 600; }
+        .toc-link.toc-sub { padding-left: 32px; font-size: 12px; font-weight: 400; color: var(--color-text-muted); }
+        .toc-link.toc-sub.toc-active { color: var(--color-info); font-weight: 500; }
+        .toc-link:focus-visible { outline: 2px solid var(--color-info); outline-offset: -2px; }
+
+        .reading-progress-wrap { margin-top: auto; padding: 16px 20px 8px; }
+        .reading-progress-label { font-size: 11px; color: var(--color-text-muted); margin-bottom: 6px; }
+        .reading-progress-track { height: 4px; background: var(--color-border); border-radius: 2px; overflow: hidden; }
+        .reading-progress-fill { height: 100%; width: 0%; background: var(--color-info); border-radius: 2px; transition: width 0.2s ease; }
+
+        .sidebar-collapse-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px; background: transparent;
+            border: 1px solid var(--color-border); border-radius: 6px;
+            cursor: pointer; color: var(--color-text-muted); font-size: 13px;
+            position: fixed; top: 20px; left: calc(var(--sidebar-width) - 14px);
+            z-index: 101; transition: all var(--transition-fast); background: #fff;
+        }
+        .sidebar-collapse-btn:hover { background: var(--color-bg); }
+        .sidebar-collapse-btn.collapsed-pos { left: 34px; }
+
+        /* sidebar collapse */
+        .sidebar-nav.sidebar-collapsed { width: 0; padding: 0; overflow: hidden; border: none; }
+        .sidebar-nav.sidebar-collapsed ~ .sidebar-collapse-btn { left: 8px; }
+
+        /* ===== CONTENT AREA ===== */
+        .content-area {
+            flex: 1; min-width: 0;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .content-inner {
+            width: 100%; max-width: var(--content-max);
+            padding: 48px var(--content-pad) 120px;
+        }
+
+        /* ===== HEADER ===== */
+        .doc-header {
+            padding: 36px 0 32px; position: relative; margin-bottom: 32px;
+        }
+        .doc-header::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+            height: 3px; background: var(--gradient-hero); border-radius: 2px;
+        }
+        .header-badge {
+            display: inline-block; background: var(--gradient-badge); color: var(--color-info);
+            padding: 4px 14px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600;
+            margin-bottom: 12px; border: 1px solid rgba(37,99,235,0.12); box-shadow: var(--shadow-xs);
+            letter-spacing: 0.04em;
+        }
+        .header-title {
+            font-size: 34px; font-weight: 800; letter-spacing: -0.025em;
+            background: var(--gradient-hero); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+            line-height: 1.2; margin-bottom: 10px; text-wrap: balance;
+        }
+        .header-meta { font-size: 13px; color: var(--color-text-muted); display: flex; gap: 16px; flex-wrap: wrap; }
+        .header-meta span { display: flex; align-items: center; gap: 4px; }
+
+        /* ===== CHAPTER LABEL ===== */
+        .doc-chapter-label {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+            text-transform: uppercase; color: #A8A29E;
+            padding: 40px 0 12px;
+        }
+        .doc-chapter-label::after { content: ''; flex: 1; height: 1px; background: #F0EFEE; }
+
+        /* ===== SECTION ===== */
+        section { margin-bottom: 48px; }
+        section h2 {
+            font-size: 21px; font-weight: 700; color: var(--color-text-primary);
+            letter-spacing: -0.02em; margin-bottom: 16px; line-height: 1.3;
+        }
+        section h3 {
+            font-size: 16px; font-weight: 600; color: var(--color-text-primary);
+            margin: 20px 0 10px; line-height: 1.4;
+        }
+        section p { font-family: var(--font-family-cn); line-height: 1.75; margin-bottom: 12px; }
+
+        /* ===== STAT CARDS ===== */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px; margin: 20px 0;
+        }
+        .stat-card {
+            background: var(--color-bg-card); border: 1px solid var(--color-border);
+            border-radius: var(--radius-md); padding: 16px;
+            border-top: 3px solid var(--color-border);
+            box-shadow: var(--shadow-card);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+        .stat-info    { border-top-color: var(--color-info); }
+        .stat-success { border-top-color: var(--color-success); }
+        .stat-warning { border-top-color: var(--color-warning); }
+        .stat-purple  { border-top-color: var(--color-purple); }
+        .stat-danger  { border-top-color: var(--color-danger); }
+        .stat-value {
+            font-size: 24px; font-weight: 800; color: var(--color-text-primary);
+            font-variant-numeric: tabular-nums; line-height: 1.2; margin-bottom: 4px;
+            font-family: var(--font-family-heading);
+        }
+        .stat-label { font-size: 12px; color: var(--color-text-muted); font-weight: 500; letter-spacing: 0.02em; }
+
+        /* ===== TABLE ===== */
+        .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius-md); border: 1px solid var(--color-border); }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        thead tr { background: var(--color-bg-table-header); }
+        th {
+            padding: 10px 14px; text-align: left; font-weight: 600; font-size: 11px;
+            color: var(--color-text-muted); letter-spacing: 0.06em; text-transform: uppercase;
+            border-bottom: 1px solid var(--color-border);
+        }
+        td { padding: 10px 14px; border-bottom: 1px solid var(--color-border-light); vertical-align: top; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: var(--color-bg-hover); }
+        .star { color: var(--color-warning); }
+
+        /* ===== TOP 5 CARDS ===== */
+        .news-card {
+            background: var(--color-bg-card); border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg); padding: 20px 24px;
+            margin-bottom: 12px; box-shadow: var(--shadow-card);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+            position: relative; overflow: hidden;
+        }
+        .news-card::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+            width: 4px; background: var(--card-accent, var(--color-info));
+        }
+        .news-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: rgba(5,150,105,0.2); }
+        .news-card-rank {
+            font-size: 11px; font-weight: 800; color: var(--color-text-muted);
+            letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px;
+        }
+        .news-card-title { font-size: 15px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 8px; line-height: 1.4; }
+        .news-card-source { font-size: 11px; color: var(--color-text-muted); margin-bottom: 10px; }
+        .news-card-desc { font-size: 13px; font-family: var(--font-family-cn); line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 10px; }
+        .news-card-why {
+            font-size: 12px; background: var(--color-info-50); border-left: 3px solid var(--color-info);
+            padding: 8px 12px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            color: var(--color-text-secondary); font-family: var(--font-family-cn); line-height: 1.6;
+        }
+        .news-card-why strong { color: var(--color-info); }
+
+        /* ===== INSIGHT CARDS ===== */
+        .insight-card {
+            background: linear-gradient(135deg, var(--color-purple-50) 0%, var(--color-info-50) 100%);
+            border: 1px solid rgba(124,58,237,0.15); border-radius: var(--radius-lg);
+            padding: 20px 24px; margin-bottom: 12px;
+            box-shadow: var(--shadow-card);
+        }
+        .insight-tag {
+            display: inline-block; font-size: 10px; font-weight: 700;
+            background: var(--color-purple); color: #fff;
+            padding: 2px 8px; border-radius: var(--radius-full); margin-bottom: 10px;
+            letter-spacing: 0.06em;
+        }
+        .insight-title { font-size: 15px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 8px; }
+        .insight-trend {
+            font-size: 12px; background: rgba(124,58,237,0.08); padding: 8px 12px;
+            border-radius: var(--radius-sm); margin-top: 10px; color: var(--color-purple);
+            font-weight: 500;
+        }
+
+        /* ===== CALLOUT ===== */
+        .callout {
+            padding: 14px 18px; border-radius: var(--radius-md); margin: 16px 0;
+            font-size: 13px; font-family: var(--font-family-cn); line-height: 1.7;
+            border-left: 4px solid;
+        }
+        .callout-info { background: var(--color-info-50); border-color: var(--color-info); color: #1e3a8a; }
+        .callout-success { background: var(--color-success-50); border-color: var(--color-success); color: #065f46; }
+        .callout-warning { background: var(--color-warning-50); border-color: var(--color-warning); color: #78350f; }
+        .callout-purple { background: var(--color-purple-50); border-color: var(--color-purple); color: #4c1d95; }
+
+        /* ===== WATCHLIST ===== */
+        .watchlist { list-style: none; margin: 0; padding: 0; }
+        .watchlist li {
+            padding: 10px 14px; background: var(--color-bg-card); border: 1px solid var(--color-border);
+            border-radius: var(--radius-md); margin-bottom: 8px;
+            font-family: var(--font-family-cn); font-size: 13px; line-height: 1.6;
+            display: flex; gap: 10px; align-items: flex-start;
+        }
+        .watchlist li::before { content: '→'; color: var(--color-info); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+        /* ===== DAILY INDEX ===== */
+        .daily-index { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 16px 0; }
+        .daily-item {
+            background: var(--color-bg-card); border: 1px solid var(--color-border);
+            border-radius: var(--radius-md); padding: 12px 16px;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        .daily-item:hover { transform: translateY(-1px); box-shadow: var(--shadow-card); }
+        .daily-item-date { font-size: 12px; font-weight: 700; color: var(--color-info); margin-bottom: 4px; }
+        .daily-item-link { font-size: 13px; font-weight: 600; color: var(--color-text-primary); display: block; margin-bottom: 4px; }
+        .daily-item-kw { font-size: 11px; color: var(--color-text-muted); font-family: var(--font-family-cn); line-height: 1.5; }
+
+        /* ===== TREND INDICATOR ===== */
+        .trend-list { list-style: none; margin: 0; padding: 0; }
+        .trend-list li {
+            display: flex; gap: 12px; padding: 12px 0;
+            border-bottom: 1px solid var(--color-border-light);
+            align-items: flex-start; font-size: 13px; font-family: var(--font-family-cn);
+        }
+        .trend-list li:last-child { border-bottom: none; }
+        .trend-dot {
+            width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+        }
+        .dot-info { background: var(--color-info); }
+        .dot-success { background: var(--color-success); }
+        .dot-purple { background: var(--color-purple); }
+        .dot-warning { background: var(--color-warning); }
+
+        /* ===== ANIMATE ===== */
+        .animate-on-scroll {
+            opacity: 0; transform: translateY(14px);
+            transition: opacity 0.42s ease, transform 0.42s ease;
+        }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll { transition: none; opacity: 1; transform: none; }
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-to-top {
+            position: fixed; bottom: 28px; right: 28px;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--color-info); color: #fff; border: none;
+            cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow-glow-info); opacity: 0; pointer-events: none;
+            transition: opacity var(--transition-normal), transform var(--transition-normal);
+            z-index: 200;
+        }
+        .scroll-to-top.visible { opacity: 1; pointer-events: auto; }
+        .scroll-to-top:hover { transform: translateY(-2px); }
+
+        /* ===== FOOTER ===== */
+        .doc-footer {
+            margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--color-border);
+            font-size: 12px; color: var(--color-text-muted); text-align: center;
+            font-family: var(--font-family-cn);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .layout-wrapper { flex-direction: column; }
+            .sidebar-nav {
+                width: 100%; position: sticky; top: 0; height: auto;
+                overflow-y: visible; border-right: none; border-bottom: 1px solid var(--color-border);
+                display: flex; flex-direction: row; overflow-x: auto; padding: 4px 0;
+                -webkit-overflow-scrolling: touch;
+            }
+            .sidebar-doc-title, .toc-group-label, .reading-progress-wrap { display: none; }
+            .toc-link { flex: 0 0 auto; border-left: none; border-bottom: 2px solid transparent; white-space: nowrap; padding: 8px 14px; font-size: 12px; }
+            .toc-link.toc-active { border-left-color: transparent; border-bottom-color: var(--color-info); }
+            .toc-link.toc-sub { display: none; }
+            .sidebar-collapse-btn { display: none; }
+            .content-inner { padding: 28px 16px 80px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .header-title { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+<a class="skip-to-content" href="#main-content">跳到主内容</a>
+
+<div class="layout-wrapper">
+    <!-- SIDEBAR -->
+    <nav class="sidebar-nav" id="sidebar" aria-label="目录导航">
+        <div class="sidebar-doc-title">AI 周报 2026-W15</div>
+        <div class="toc-section">
+            <div class="toc-group-label">目录</div>
+            <a href="#overview"    class="toc-link">📋 本周概览</a>
+            <a href="#top5"        class="toc-link">🔥 Top 5 事件</a>
+            <a href="#insight"     class="toc-link">🔮 周度洞察</a>
+            <a href="#llm"         class="toc-link">🧠 大模型</a>
+            <a href="#coding"      class="toc-link">⌨️ AI Coding</a>
+            <a href="#app"         class="toc-link">📱 AI 应用</a>
+            <a href="#industry"    class="toc-link">🏭 AI 行业</a>
+            <a href="#enterprise"  class="toc-link">🔄 企业AI转型</a>
+            <a href="#data"        class="toc-link">📊 数据总览</a>
+            <a href="#watchlist"   class="toc-link">📌 下周关注</a>
+            <a href="#dailyindex"  class="toc-link">📅 日报索引</a>
+        </div>
+        <div class="reading-progress-wrap">
+            <div class="reading-progress-label">阅读进度</div>
+            <div class="reading-progress-track">
+                <div class="reading-progress-fill" id="readingProgress"></div>
+            </div>
+        </div>
+    </nav>
+    <button class="sidebar-collapse-btn" id="collapseBtn" title="折叠导航" aria-label="折叠导航">«</button>
+
+    <!-- MAIN CONTENT -->
+    <main class="content-area" id="main-content">
+        <div class="content-inner">
+
+            <!-- HEADER -->
+            <header class="doc-header">
+                <div class="header-badge">AI INSIGHT · WEEKLY REPORT</div>
+                <h1 class="header-title">AI 周报 2026年第15周</h1>
+                <p class="header-meta">
+                    <span>📅 2026-04-06 至 04-12</span>
+                    <span>📰 覆盖约90条动态</span>
+                    <span>🌐 海外55+ · 国内35+</span>
+                    <span>⏱ 生成于 2026-04-13</span>
+                </p>
+            </header>
+
+            <!-- OVERVIEW -->
+            <section id="overview">
+                <div class="doc-chapter-label">本周概览</div>
+                <h2>📋 五大板块速览</h2>
+                <div class="stats-grid animate-on-scroll">
+                    <div class="stat-card stat-purple">
+                        <div class="stat-value">18条</div>
+                        <div class="stat-label">🧠 大模型</div>
+                    </div>
+                    <div class="stat-card stat-info">
+                        <div class="stat-value">16条</div>
+                        <div class="stat-label">⌨️ AI Coding</div>
+                    </div>
+                    <div class="stat-card stat-success">
+                        <div class="stat-value">18条</div>
+                        <div class="stat-label">📱 AI 应用</div>
+                    </div>
+                    <div class="stat-card stat-warning">
+                        <div class="stat-value">20条</div>
+                        <div class="stat-label">🏭 AI 行业</div>
+                    </div>
+                    <div class="stat-card stat-danger">
+                        <div class="stat-value">18条</div>
+                        <div class="stat-label">🔄 企业AI转型</div>
+                    </div>
+                </div>
+                <div class="table-wrap animate-on-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>板块</th>
+                                <th>关键事件</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>🧠 大模型</td><td>Anthropic Mythos封存；OpenAI超级App战略落地；DeepSeek新旗舰预热</td></tr>
+                            <tr><td>⌨️ AI Coding</td><td>Claude Code工作使用率追平Cursor；VS Code周更提速；AI Coding横评进入场景化</td></tr>
+                            <tr><td>📱 AI 应用</td><td>DeerFlow 2.0登顶GitHub；AI内容监管落地；企业Agent进入规模化商用</td></tr>
+                            <tr><td>🏭 AI 行业</td><td>Q1基础AI融资$178B；OpenAI并购提速；反AGI社会情绪风险上升</td></tr>
+                            <tr><td>🔄 企业AI转型</td><td>Agent治理平台崛起；95%转型失败指向组织问题；企业进入"先治理后规模化"</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- TOP 5 -->
+            <section id="top5">
+                <div class="doc-chapter-label">核心事件</div>
+                <h2>🔥 本周 Top 5</h2>
+
+                <div class="news-card animate-on-scroll" style="--card-accent: var(--color-info);">
+                    <div class="news-card-rank">No.1 · 平台战略</div>
+                    <div class="news-card-title">OpenAI宣布「AI超级App」战略：从模型提供商转向统一入口平台</div>
+                    <div class="news-card-source">📎 OpenAI Official / Fortune · 2026-04-08</div>
+                    <div class="news-card-desc">OpenAI在1220亿美元融资后明确提出超级App路线，将ChatGPT、Codex、搜索与Agent能力统一编排，目标从"最强模型"升级为"最强入口"。</div>
+                    <div class="news-card-why"><strong>为什么重要：</strong>行业竞争中心从模型能力转向分发控制权，AI平台化战争正式进入下半场。</div>
+                </div>
+
+                <div class="news-card animate-on-scroll" style="--card-accent: var(--color-purple); transition-delay: 0.06s;">
+                    <div class="news-card-rank">No.2 · 安全治理</div>
+                    <div class="news-card-title">Anthropic封存Mythos并组建Project Glasswing：首次出现"能力过强不公开"</div>
+                    <div class="news-card-source">📎 NYT / Anthropic · 2026-04-07</div>
+                    <div class="news-card-desc">Anthropic宣布Mythos不面向公众开放，并联合40+企业用于网络安全防御，投入1亿美元信用支持。</div>
+                    <div class="news-card-why"><strong>为什么重要：</strong>行业从"性能领先"迈向"可治理领先"，安全治理能力成为顶级模型公司的核心护城河。</div>
+                </div>
+
+                <div class="news-card animate-on-scroll" style="--card-accent: var(--color-warning); transition-delay: 0.12s;">
+                    <div class="news-card-rank">No.3 · 资本格局</div>
+                    <div class="news-card-title">Q1基础AI融资达$178B，三强吸纳96.6%资金，行业极化加剧</div>
+                    <div class="news-card-source">📎 Crunchbase · 2026-04-08</div>
+                    <div class="news-card-desc">OpenAI、Anthropic、xAI吸走绝大多数资金，基础模型层呈现高度集中，应用层创新转向"低成本API+高场景密度"。</div>
+                    <div class="news-card-why"><strong>为什么重要：</strong>资本结构正在决定行业结构，基础层寡头化与应用层百花化并行成为新常态。</div>
+                </div>
+
+                <div class="news-card animate-on-scroll" style="--card-accent: var(--color-success); transition-delay: 0.18s;">
+                    <div class="news-card-rank">No.4 · 工具格局</div>
+                    <div class="news-card-title">Claude Code工作使用率追平Cursor，AI Coding进入"场景化选型"时代</div>
+                    <div class="news-card-source">📎 JetBrains万人调研 / Medium实测 · 2026-04-07~04-09</div>
+                    <div class="news-card-desc">Claude Code在复杂后端理解与满意度上优势明显，Cursor在全栈效率和迭代速度上继续领先，市场出现明显能力分化。</div>
+                    <div class="news-card-why"><strong>为什么重要：</strong>"谁最强"叙事失效，企业开始按任务类型、团队结构与合规边界进行工具组合决策。</div>
+                </div>
+
+                <div class="news-card animate-on-scroll" style="--card-accent: var(--color-danger); transition-delay: 0.24s;">
+                    <div class="news-card-rank">No.5 · 组织洞察</div>
+                    <div class="news-card-title">斯坦福研究指出95%企业AI试点失败根因在组织，不在技术</div>
+                    <div class="news-card-source">📎 Stanford研究（转引） · 2026-04-12</div>
+                    <div class="news-card-desc">高比例失败案例指向流程改造不足、数据孤岛与组织协同缺失，技术采购并未自动转化为生产力红利。</div>
+                    <div class="news-card-why"><strong>为什么重要：</strong>企业AI转型的主变量已从"买什么模型"转向"如何重构组织和流程"。</div>
+                </div>
+            </section>
+
+            <!-- INSIGHTS -->
+            <section id="insight">
+                <div class="doc-chapter-label">深度洞察</div>
+                <h2>🔮 周度洞察</h2>
+
+                <div class="insight-card animate-on-scroll">
+                    <div class="insight-tag">洞察 01</div>
+                    <div class="insight-title">行业主线从"模型竞赛"转向"入口+治理"双竞赛</div>
+                    <p style="font-family:var(--font-family-cn);font-size:13px;line-height:1.7;color:var(--color-text-secondary);">OpenAI走超级App路径，Anthropic走安全治理路径，二者并行表明模型厂商正在构建不同的第二增长曲线。</p>
+                    <div class="insight-trend">📈 趋势判断：2026年胜负关键不止于模型分数，而在于谁能同时拿下用户入口与可信治理。</div>
+                </div>
+
+                <div class="insight-card animate-on-scroll" style="transition-delay:0.06s;">
+                    <div class="insight-tag">洞察 02</div>
+                    <div class="insight-title">AI Coding进入"组合式生产力"阶段</div>
+                    <p style="font-family:var(--font-family-cn);font-size:13px;line-height:1.7;color:var(--color-text-secondary);">从万人调研到实战横评，工具能力差异被快速验证：代码理解、协作治理、成本结构成为三大决策轴。</p>
+                    <div class="insight-trend">📈 趋势判断：企业将从单工具采购转向"多工具编排+治理平台"架构，平台层价值将高于单点模型价值。</div>
+                </div>
+
+                <div class="insight-card animate-on-scroll" style="transition-delay:0.12s;">
+                    <div class="insight-tag">洞察 03</div>
+                    <div class="insight-title">企业转型进入"先治理后规模化"窗口</div>
+                    <p style="font-family:var(--font-family-cn);font-size:13px;line-height:1.7;color:var(--color-text-secondary);">AI内容监管、Agent权限框架、组织失败率数据同周共振，企业部署节奏明显放缓但更务实。</p>
+                    <div class="insight-trend">📈 趋势判断：下一阶段高质量增长来自"流程重构能力"，而不是"功能堆叠速度"。</div>
+                </div>
+            </section>
+
+            <!-- LLM SECTION -->
+            <section id="llm">
+                <div class="doc-chapter-label">一、大模型</div>
+                <h2>🧠 大模型本周动态</h2>
+                <div class="callout callout-purple animate-on-scroll">本周大模型形成"能力升级+治理前置"双轨并进：一边是发布速度和融资规模继续冲高，另一边是社会信任和安全审查成为发布前置条件。技术领先不再等于发布自由。</div>
+                <div class="table-wrap animate-on-scroll">
+                    <table>
+                        <thead>
+                            <tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>04-07</td><td>Anthropic封存Mythos并启动Project Glasswing</td><td>NYT / Anthropic</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                            <tr><td>04-08</td><td>OpenAI发布超级App战略，估值8520亿</td><td>OpenAI / Fortune</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                            <tr><td>04-08</td><td>中国大模型周调用量达7.36万亿Token，连续五周领先</td><td>微信公众号</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-09</td><td>Claude 3.7 Opus在SWE-bench Verified达72.5%</td><td>Anthropic</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                            <tr><td>04-09</td><td>DeepSeek新模型参数破万亿预热</td><td>行业媒体</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-10</td><td>OpenAI发布GPT-5.3 Instant Mini与$100档Pro</td><td>OpenAI Release Notes</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-11</td><td>前沿模型发布进入"安全前置问询"阶段</td><td>行业报道</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-12</td><td>反AGI情绪事件引发行业对社会信任再审视</td><td>多源</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- AI CODING -->
+            <section id="coding">
+                <div class="doc-chapter-label">二、AI Coding</div>
+                <h2>⌨️ AI Coding 本周动态</h2>
+                <div class="callout callout-info animate-on-scroll">AI Coding从"单点提效"转向"体系提效"：工具本身之外，团队需要同时考虑数据边界、治理能力与协作模式。选择"最适配"比选择"最强"更重要。</div>
+                <div class="table-wrap animate-on-scroll">
+                    <table>
+                        <thead>
+                            <tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>04-07</td><td>JetBrains万人调研：Claude Code工作使用率达18%</td><td>JetBrains</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                            <tr><td>04-07</td><td>JetBrains Air公测，多Agent并发开发环境上线</td><td>JetBrains</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-08</td><td>国内AI Coding工具进入新一轮竞速（通义灵码/Trae）</td><td>微信公众号</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-09</td><td>Cursor vs Claude Code实测：后端架构理解差异显著</td><td>Medium</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-10</td><td>OpenAI Pro新档位提升Codex配额10倍</td><td>OpenAI</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-11</td><td>GitHub Copilot数据使用政策进入新阶段</td><td>行业报道</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-12</td><td>AI编程工具横评集中爆发，场景化选型成主流</td><td>多源</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- AI APP -->
+            <section id="app">
+                <div class="doc-chapter-label">三、AI 应用</div>
+                <h2>📱 AI 应用本周动态</h2>
+                <div class="callout callout-success animate-on-scroll">应用层从"能生成"转向"能交付"：Agent能力、合规能力、平台连接能力三者缺一不可。监管落地正在加速劣质供给出清。</div>
+                <div class="table-wrap animate-on-scroll">
+                    <table>
+                        <thead>
+                            <tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>04-07</td><td>Okta宣布AI Agents于4月30日GA</td><td>Okta</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                            <tr><td>04-08</td><td>DeerFlow 2.0登顶GitHub Trending（57k星）</td><td>钛媒体</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                            <tr><td>04-08</td><td>多平台发布4月AI产品密集更新</td><td>行业媒体</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-09</td><td>Salesforce Agentforce规模化落地推动财报超预期</td><td>Salesforce</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                            <tr><td>04-10</td><td>Microsoft Agent Framework v1.0发布</td><td>Microsoft</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                            <tr><td>04-12</td><td>AI漫剧监管落地，168亿市场进入合规重构</td><td>多源</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- AI INDUSTRY -->
+            <section id="industry">
+                <div class="doc-chapter-label">四、AI 行业</div>
+                <h2>🏭 AI 行业本周动态</h2>
+                <div class="callout callout-warning animate-on-scroll">资本仍在加速，但结构已高度极化：基础层寡头化、应用层场景化、社会侧情绪化同时出现。行业需把"社会信任成本"纳入商业模型。</div>
+                <div class="table-wrap animate-on-scroll">
+                    <table>
+                        <thead>
+                            <tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>04-08</td><td>Q1基础AI融资$178B，三强占96.6%</td><td>Crunchbase</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                            <tr><td>04-08</td><td>OpenAI 2026年并购节奏加快（Promptfoo/Astral）</td><td>Crunchbase</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-08</td><td>World Labs融资$1B，空间智能赛道升温</td><td>Crunchbase</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-09</td><td>国产AI商业化信号增强，调用与估值同步走强</td><td>多源</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-12</td><td>反AGI情绪事件暴露行业社会摩擦成本</td><td>多源</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ENTERPRISE -->
+            <section id="enterprise">
+                <div class="doc-chapter-label">五、企业AI转型</div>
+                <h2>🔄 企业AI转型本周动态</h2>
+                <div class="callout callout-info animate-on-scroll">企业转型由"工具采购"迈向"组织重构"：治理机制、流程设计、跨部门数据流成为ROI兑现的第一约束条件。</div>
+                <div class="table-wrap animate-on-scroll">
+                    <table>
+                        <thead>
+                            <tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>04-08</td><td>企业AI双轨商业化（API+私有化）路径清晰</td><td>微信公众号</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-09</td><td>OpenAI倡导四天工作制试点引发讨论</td><td>多源</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-09</td><td>Agent治理平台（Central）进入企业视野</td><td>JetBrains</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                            <tr><td>04-10</td><td>国内云厂商AI算力价格策略变化，企业成本模型重算</td><td>行业媒体</td><td><span class="star">⭐⭐</span></td></tr>
+                            <tr><td>04-12</td><td>斯坦福研究：95%企业AI试点失败根因在组织</td><td>研究转引</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- DATA DASHBOARD -->
+            <section id="data">
+                <div class="doc-chapter-label">数据看板</div>
+                <h2>📊 本周关键数据</h2>
+                <div class="stats-grid animate-on-scroll">
+                    <div class="stat-card stat-warning">
+                        <div class="stat-value">$178B</div>
+                        <div class="stat-label">Q1基础AI融资总额</div>
+                    </div>
+                    <div class="stat-card stat-info">
+                        <div class="stat-value">96.6%</div>
+                        <div class="stat-label">三强资金占比</div>
+                    </div>
+                    <div class="stat-card stat-purple">
+                        <div class="stat-value">$8520亿</div>
+                        <div class="stat-label">OpenAI最新估值</div>
+                    </div>
+                    <div class="stat-card stat-success">
+                        <div class="stat-value">7.36万亿</div>
+                        <div class="stat-label">中国周Token调用量</div>
+                    </div>
+                    <div class="stat-card stat-info">
+                        <div class="stat-value">18%</div>
+                        <div class="stat-label">Claude Code工作使用率</div>
+                    </div>
+                    <div class="stat-card stat-success">
+                        <div class="stat-value">57k⭐</div>
+                        <div class="stat-label">DeerFlow GitHub Stars</div>
+                    </div>
+                    <div class="stat-card stat-warning">
+                        <div class="stat-value">168亿</div>
+                        <div class="stat-label">AI漫剧市场规模(元)</div>
+                    </div>
+                    <div class="stat-card stat-danger">
+                        <div class="stat-value">95%</div>
+                        <div class="stat-label">企业AI试点失败率</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- WATCHLIST -->
+            <section id="watchlist">
+                <div class="doc-chapter-label">前瞻</div>
+                <h2>📌 下周值得关注</h2>
+                <ul class="watchlist animate-on-scroll">
+                    <li><strong>DeepSeek新旗舰发布节奏</strong> — 国产头部模型4月密集更新是否形成实质代际差</li>
+                    <li><strong>Okta AI Agents GA落地效果</strong> — 企业权限治理框架的首批实践反馈</li>
+                    <li><strong>AI Coding工具价格与套餐策略</strong> — 高密度编程场景下的成本战是否继续</li>
+                    <li><strong>AI内容监管后市场分层</strong> — 合规能力是否成为内容平台准入门槛</li>
+                    <li><strong>前沿模型发布治理机制</strong> — 安全前置流程是否成为行业统一范式</li>
+                </ul>
+            </section>
+
+            <!-- DAILY INDEX -->
+            <section id="dailyindex">
+                <div class="doc-chapter-label">日报索引</div>
+                <h2>📅 本周日报导览</h2>
+                <div class="daily-index animate-on-scroll">
+                    <div class="daily-item">
+                        <div class="daily-item-date">2026-04-06 周一</div>
+                        <a class="daily-item-link" href="2026-04-06.html">查看日报 →</a>
+                        <div class="daily-item-kw">豆包120万亿、Gemma 4开源延续、Q1创投3000亿</div>
+                    </div>
+                    <div class="daily-item">
+                        <div class="daily-item-date">2026-04-07 周二</div>
+                        <a class="daily-item-link" href="2026-04-07.html">查看日报 →</a>
+                        <div class="daily-item-kw">Claude Opus新基准、DeerFlow热度上升、企业工作制讨论</div>
+                    </div>
+                    <div class="daily-item">
+                        <div class="daily-item-date">2026-04-08 周三</div>
+                        <a class="daily-item-link" href="2026-04-08.html">查看日报 →</a>
+                        <div class="daily-item-kw">Mythos封存、OpenAI超级App、中国调用量五周领先</div>
+                    </div>
+                    <div class="daily-item">
+                        <div class="daily-item-date">2026-04-09 周四</div>
+                        <a class="daily-item-link" href="2026-04-09.html">查看日报 →</a>
+                        <div class="daily-item-kw">基础AI融资极化、Claude Code追平Cursor、Agent治理平台</div>
+                    </div>
+                    <div class="daily-item">
+                        <div class="daily-item-date">2026-04-10 周五</div>
+                        <a class="daily-item-link" href="2026-04-10.html">查看日报 →</a>
+                        <div class="daily-item-kw">GPT-5.3 Instant Mini、算力涨价、微软Agent Framework</div>
+                    </div>
+                    <div class="daily-item">
+                        <div class="daily-item-date">2026-04-11 周六</div>
+                        <a class="daily-item-link" href="2026-04-11.html">查看日报 →</a>
+                        <div class="daily-item-kw">安全前置发布、Copilot政策变化、企业治理优先</div>
+                    </div>
+                    <div class="daily-item">
+                        <div class="daily-item-date">2026-04-12 周日</div>
+                        <a class="daily-item-link" href="2026-04-12.html">查看日报 →</a>
+                        <div class="daily-item-kw">反AGI情绪事件、AI编程横评、95%转型失败警示</div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="doc-footer">
+                AI周报由 Link AI 自动生成 · AI-Insight 系统 · 2026-04-13<br>
+                <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" style="color:var(--color-info);">AI洞察主页</a>
+            </footer>
+        </div>
+    </main>
+</div>
+
+<button class="scroll-to-top" id="scrollToTop" title="回到顶部" aria-label="回到顶部">↑</button>
+
+<script>
+(function () {
+    "use strict";
+    const HEADER_OFFSET = 72;
+    const SPY_OFFSET    = 110;
+    const sidebar    = document.getElementById("sidebar");
+    const collapseBtn = document.getElementById("collapseBtn");
+    const progressBar = document.getElementById("readingProgress");
+    const scrollTopBtn = document.getElementById("scrollToTop");
+
+    // 平滑锚点滚动
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener("click", e => {
+            const target = document.getElementById(link.getAttribute("href").slice(1));
+            if (!target) return;
+            e.preventDefault();
+            window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET, behavior: "smooth" });
+        });
+    });
+
+    // Scroll Spy
+    const tocLinks = Array.from(document.querySelectorAll(".toc-link"));
+    const anchorEls = tocLinks.map(a => document.getElementById((a.getAttribute("href")||"").slice(1))).filter(Boolean);
+    function updateTocHighlight() {
+        const scrollY = window.scrollY + SPY_OFFSET;
+        let activeEl = anchorEls[0];
+        for (const el of anchorEls) { if (el && el.offsetTop <= scrollY) activeEl = el; else break; }
+        tocLinks.forEach(link => link.classList.toggle("toc-active", link.getAttribute("href") === "#" + (activeEl && activeEl.id)));
+    }
+
+    // 阅读进度条
+    function updateProgress() {
+        if (!progressBar) return;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = (total > 0 ? Math.min(100, window.scrollY / total * 100) : 0).toFixed(1) + "%";
+    }
+
+    // 侧边栏折叠
+    if (collapseBtn && sidebar) {
+        collapseBtn.addEventListener("click", () => {
+            const isCollapsed = sidebar.classList.toggle("sidebar-collapsed");
+            collapseBtn.textContent = isCollapsed ? "»" : "«";
+            collapseBtn.classList.toggle("collapsed-pos", isCollapsed);
+        });
+    }
+
+    // 回到顶部
+    scrollTopBtn && scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+    // rAF 节流滚动
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                updateTocHighlight(); updateProgress();
+                scrollTopBtn && scrollTopBtn.classList.toggle("visible", window.scrollY > 280);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+
+    updateTocHighlight(); updateProgress();
+
+    // 滚动入场动画
+    const animEls = document.querySelectorAll(".animate-on-scroll");
+    if (!("IntersectionObserver" in window)) {
+        animEls.forEach(el => el.classList.add("visible"));
+    } else {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.06, rootMargin: "0px 0px -30px 0px" });
+        animEls.forEach(el => observer.observe(el));
+    }
+})();
+</script>
+</body>
+</html>

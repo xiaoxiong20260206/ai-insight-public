@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 周报 - 2026年第11周（3.9-3.15）</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root{--c-success:#059669;--c-success-l:#10B981;--c-danger:#E11D48;--c-warning:#D97706;--c-info:#2563EB;--c-purple:#7C3AED;--c-orange:#EA580C;--c-text:#1C1917;--c-text2:#57534E;--c-text3:#78716C;--c-border:#E7E5E4;--c-border-l:#F5F5F4;--c-bg:#F8FAFB;--c-card:#FFFFFF;--c-table-h:#FAFAF9;--g-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--g-blue:linear-gradient(135deg,#2563EB 0%,#3B82F6 100%);--g-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--g-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--g-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--r-sm:6px;--r-md:10px;--r-lg:14px;--r-full:999px;--font:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--trans:200ms cubic-bezier(.4,0,.2,1);--max-w:980px}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font);background:var(--c-bg);color:var(--c-text);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--max-w);margin:0 auto;padding:24px 20px}
+        .header{background:var(--g-blue);color:#fff;border-radius:var(--r-lg);padding:28px 32px;margin-bottom:20px;position:relative;overflow:hidden}
+        .header::after{content:'';position:absolute;right:-20px;top:-20px;width:200px;height:200px;background:rgba(255,255,255,.05);border-radius:50%}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--r-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-subtitle{font-size:15px;opacity:.9;margin-bottom:4px}
+        .header-date{font-size:13px;opacity:.75}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--r-full);font-size:11px;font-weight:700;margin-left:8px}
+        .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+        .stat-card{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-md);padding:16px;text-align:center;box-shadow:var(--shadow);transition:var(--trans)}
+        .stat-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+        .stat-icon{font-size:20px;margin-bottom:6px}
+        .stat-value{font-size:22px;font-weight:800;color:var(--c-success)}
+        .stat-value.blue{color:var(--c-info)}
+        .stat-value.purple{color:var(--c-purple)}
+        .stat-value.orange{color:var(--c-orange)}
+        .stat-value.danger{color:var(--c-danger)}
+        .stat-label{font-size:12px;color:var(--c-text3);font-weight:600;margin-top:2px}
+        .top5-card{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow)}
+        .top5-header{background:linear-gradient(135deg,#B45309 0%,#D97706 50%,#F59E0B 100%);color:#fff;padding:18px 24px}
+        .top5-header-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .top5-header-title{font-size:18px;font-weight:800;margin-top:4px}
+        .top5-body{padding:0}
+        .top5-item{padding:18px 24px;border-bottom:1px solid var(--c-border-l);transition:background .15s}
+        .top5-item:last-child{border-bottom:none}
+        .top5-item:hover{background:rgba(217,119,6,.02)}
+        .top5-item a.top5-link{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--c-info);text-decoration:none;margin-left:auto;padding:3px 10px;background:#EFF6FF;border-radius:var(--r-full);transition:var(--trans);flex-shrink:0;font-weight:600}
+        .top5-item a.top5-link:hover{background:var(--c-info);color:#fff;transform:translateY(-1px);box-shadow:0 2px 6px rgba(37,99,235,.3)}
+        .top5-rank{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-size:14px;font-weight:800;color:#fff;margin-right:12px;flex-shrink:0}
+        .top5-rank.r1{background:linear-gradient(135deg,#B45309,#D97706)}
+        .top5-rank.r2{background:linear-gradient(135deg,#6B7280,#9CA3AF)}
+        .top5-rank.r3{background:linear-gradient(135deg,#92400E,#B45309)}
+        .top5-rank.r4,.top5-rank.r5{background:#D1D5DB;color:#374151}
+        .top5-title-row{display:flex;align-items:center;margin-bottom:6px}
+        .top5-title{font-size:15px;font-weight:700;color:var(--c-text);flex:1}
+        .top5-meta{font-size:12px;color:var(--c-text3);margin-bottom:6px;padding-left:40px}
+        .top5-desc{font-size:13.5px;color:var(--c-text2);line-height:1.7;padding-left:40px}
+        .insight-section{margin-bottom:20px}
+        .insight-section-title{font-size:18px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+        .insight-card{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow);transition:all .25s}
+        .insight-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+        .insight-header{padding:16px 20px;border-bottom:1px solid var(--c-border-l);display:flex;align-items:center;gap:10px}
+        .insight-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;font-size:12px;font-weight:800;color:#fff;background:var(--g-blue);flex-shrink:0}
+        .insight-title{font-size:15px;font-weight:700;color:var(--c-text);flex:1}
+        .insight-body{padding:16px 20px}
+        .insight-body p{font-size:14px;color:var(--c-text2);line-height:1.8;margin-bottom:12px}
+        .insight-body p:last-child{margin-bottom:0}
+        .insight-body p strong{color:var(--c-text)}
+        .insight-verdict{margin-top:12px;padding:12px 16px;background:linear-gradient(135deg,#EFF6FF 0%,#DBEAFE 100%);border-radius:var(--r-md);border-left:4px solid var(--c-info)}
+        .insight-verdict-label{font-size:11px;font-weight:700;color:var(--c-info);letter-spacing:.5px;margin-bottom:4px}
+        .insight-verdict-text{font-size:13.5px;color:var(--c-text2);line-height:1.7}
+        .insight-verdict-text strong{color:var(--c-text)}
+        .insight-events{margin-top:12px}
+        .insight-event{display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:13px;color:var(--c-text2)}
+        .insight-event-date{flex-shrink:0;font-weight:600;color:var(--c-info);width:30px}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-md);padding:4px;box-shadow:var(--shadow);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--c-text3);border-radius:var(--r-sm);transition:var(--trans);font-family:var(--font);min-width:100px;white-space:nowrap}
+        .tab-btn:hover{color:var(--c-text);background:var(--c-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--g-blue);color:#fff;box-shadow:0 2px 4px rgba(37,99,235,.3)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--c-border-l);display:flex;align-items:center;gap:8px}
+        .data-table{width:100%;border-collapse:collapse;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--c-border-l)}
+        .data-table th{background:var(--c-table-h);font-weight:600;color:var(--c-text2);font-size:12px;letter-spacing:.3px}
+        .data-table td{color:var(--c-text)}
+        .data-table tr:last-child td{border-bottom:none}
+        .data-table tr:hover{background:rgba(37,99,235,.04)}
+        .back-to-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--g-blue);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(37,99,235,.3);transition:var(--trans);opacity:0;visibility:hidden;z-index:100}
+        .back-to-top.show{opacity:1;visibility:visible}
+        .back-to-top:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(37,99,235,.4)}
+        .tag{display:inline-block;padding:2px 8px;border-radius:var(--r-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:#DC2626}
+        .tag-note{background:#FFF7ED;color:#EA580C}
+        .tag-new{background:#EFFDF5;color:#059669}
+        .tag-cn{background:#FEF2F2;color:#DC2626}
+        .tag-fund{background:#E0F2FE;color:#0284C7}
+        .trend-box{margin-top:16px;padding:16px;background:linear-gradient(135deg,#EFF6FF 0%,#DBEAFE 100%);border-radius:var(--r-md);border-left:4px solid var(--c-info)}
+        .trend-box h4{font-size:13px;font-weight:700;color:var(--c-info);margin-bottom:8px;letter-spacing:.3px}
+        .trend-box p,.trend-box li{font-size:13.5px;color:var(--c-text2);line-height:1.7}
+        .trend-box ul{padding-left:18px;margin-top:6px}
+        .trend-box li{margin-bottom:4px}
+        .trend-box strong{color:var(--c-text)}
+        .dashboard{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);overflow:hidden;margin-bottom:20px;box-shadow:var(--shadow)}
+        .dashboard-header{background:var(--g-success);color:#fff;padding:16px 24px}
+        .dashboard-header-title{font-size:17px;font-weight:800}
+        .dashboard-body{padding:0}
+        .dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+        .dashboard-item{padding:14px 20px;border-bottom:1px solid var(--c-border-l);border-right:1px solid var(--c-border-l)}
+        .dashboard-item:nth-child(even){border-right:none}
+        .dashboard-item-label{font-size:12px;color:var(--c-text3);font-weight:600;margin-bottom:2px}
+        .dashboard-item-value{font-size:18px;font-weight:800;color:var(--c-text)}
+        .dashboard-item-note{font-size:11px;color:var(--c-text3);margin-top:1px}
+        .next-week{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+        .next-week h3{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+        .next-week-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--c-border-l)}
+        .next-week-item:last-child{border-bottom:none}
+        .next-week-date{flex-shrink:0;font-size:12px;font-weight:700;color:var(--c-info);background:#EFF6FF;padding:3px 10px;border-radius:var(--r-full);min-width:70px;text-align:center}
+        .next-week-text{font-size:14px;color:var(--c-text2);line-height:1.6}
+        .next-week-text strong{color:var(--c-text)}
+        .daily-index{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+        .daily-index h3{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+        .daily-index-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+        .daily-index-item{text-align:center;padding:12px 8px;border-radius:var(--r-md);border:1px solid var(--c-border-l);text-decoration:none;color:var(--c-text);transition:var(--trans)}
+        .daily-index-item:hover{border-color:var(--c-info);background:#EFF6FF;transform:translateY(-2px);box-shadow:var(--shadow)}
+        .daily-index-day{font-size:12px;color:var(--c-text3);font-weight:600}
+        .daily-index-date{font-size:20px;font-weight:800;color:var(--c-info);margin:4px 0}
+        .daily-index-label{font-size:11px;color:var(--c-success);font-weight:600}
+        .footer-box{margin-top:24px;background:linear-gradient(135deg,#F6F8FA 0%,#EEF2F6 100%);border:1px solid #E8ECF0;border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow)}
+        .footer-box h4{font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+        .footer-box p{font-size:14px;color:#4D5561;line-height:1.7;margin-bottom:12px}
+        .footer-box a.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--g-blue);color:#fff;border-radius:var(--r-full);font-size:13px;font-weight:600;text-decoration:none;transition:var(--trans)}
+        .footer-box a.btn:hover{opacity:.9;transform:translateY(-1px)}
+        @media(max-width:768px){.stats-grid{grid-template-columns:repeat(3,1fr)}.dashboard-grid{grid-template-columns:1fr}.dashboard-item{border-right:none}.daily-index-grid{grid-template-columns:repeat(4,1fr)}.tab-btn{font-size:12px;padding:8px 6px}}
+        @media(max-width:480px){.stats-grid{grid-template-columns:repeat(2,1fr)}.daily-index-grid{grid-template-columns:repeat(3,1fr)}.header-title{font-size:22px}}
+    </style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+    <div class="header-badge">📊 AI WEEKLY REPORT</div>
+    <div class="header-title">AI 周报<span class="version-badge">W11</span></div>
+    <div class="header-subtitle">2026年第11周（3月9日 - 3月15日）</div>
+    <div class="header-date">覆盖7期日报 · 90+条资讯汇总 · AI洞察（的AI洞察）出品</div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon">🧠</div>
+        <div class="stat-value">22</div>
+        <div class="stat-label">大模型</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">⌨️</div>
+        <div class="stat-value blue">18</div>
+        <div class="stat-label">AI Coding</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">📱</div>
+        <div class="stat-value purple">16</div>
+        <div class="stat-label">AI 应用</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">🏭</div>
+        <div class="stat-value orange">19</div>
+        <div class="stat-label">AI 行业</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">🔄</div>
+        <div class="stat-value danger">15</div>
+        <div class="stat-label">企业AI转型</div>
+    </div>
+</div>
+
+<div class="top5-card">
+    <div class="top5-header">
+        <div class="top5-header-label">FROM 90+ NEWS</div>
+        <div class="top5-header-title">🏆 本周 Top 5</div>
+    </div>
+    <div class="top5-body">
+        <div class="top5-item">
+            <div class="top5-title-row">
+                <span class="top5-rank r1">1</span>
+                <span class="top5-title">具身智能融资井喷：两月200亿+六家公司排队IPO</span>
+                <a href="2026-03-10.html" target="_blank" class="top5-link">📅 3/10日报 →</a>
+            </div>
+            <div class="top5-meta">财经杂志/量子位 · 3月9-11日 | 🔴 国家级资本入场</div>
+            <div class="top5-desc">银河通用25亿（单轮新高）、星动纪元10亿、灵初智能20亿。国家大基金三期、中国石化、上汽金控等国资全面入场。宇树/智元/银河通用等六家公司计划今年IPO——具身智能是"AI+制造业"交汇点。</div>
+        </div>
+        <div class="top5-item">
+            <div class="top5-title-row">
+                <span class="top5-rank r2">2</span>
+                <span class="top5-title">Claude Code仅8个月登顶，95%工程师每周用AI</span>
+                <a href="2026-03-09.html" target="_blank" class="top5-link">📅 3/9日报 →</a>
+            </div>
+            <div class="top5-meta">The Pragmatic Engineer · 3月4-9日 | 🔴 开发范式转变</div>
+            <div class="top5-desc">906名工程师调查：Claude Code从发布到登顶仅8个月，55%常用Agent，Staff+级Agent使用率63.5%最高。AI编程已从"尝鲜"进入"生产力标配"阶段。</div>
+        </div>
+        <div class="top5-item">
+            <div class="top5-title-row">
+                <span class="top5-rank r3">3</span>
+                <span class="top5-title">Anthropic vs 美国国防部：AI行业首次与政府公开对抗</span>
+                <a href="2026-03-11.html" target="_blank" class="top5-link">📅 3/11日报 →</a>
+            </div>
+            <div class="top5-meta">Anthropic/多源 · 3月5-14日 | 🔴 边界博弈</div>
+            <div class="top5-desc">Anthropic被列入供应链风险名单后起诉政府，OpenAI和Google员工联名声援。同时OpenAI向北约32国推销——"全面拥抱军方 vs 坚守伦理红线"的路线分化。</div>
+        </div>
+        <div class="top5-item">
+            <div class="top5-title-row">
+                <span class="top5-rank r4">4</span>
+                <span class="top5-title">NVIDIA GTC 2026盛大开幕：30国3万人参会</span>
+                <a href="2026-03-12.html" target="_blank" class="top5-link">📅 3/12日报 →</a>
+            </div>
+            <div class="top5-meta">NVIDIA · 3月12-16日 | 🔴 年度AI盛会</div>
+            <div class="top5-desc">发布Nemotron 3 Super（1200亿参数开源模型）、Build-a-Claw本地部署、黄仁勋×穆拉蒂1GW超级算力（2027年启用）。NVIDIA将OpenClaw升级为官方支持的Agent平台。</div>
+        </div>
+        <div class="top5-item">
+            <div class="top5-title-row">
+                <span class="top5-rank r5">5</span>
+                <span class="top5-title">Meta/xAI双双遭遇困境：模型难产+创始团队出走</span>
+                <a href="2026-03-15.html" target="_blank" class="top5-link">📅 3/15日报 →</a>
+            </div>
+            <div class="top5-meta">Reuters/36氪 · 3月13-15日 | 🔴 行业分化</div>
+            <div class="top5-desc">Meta新模型延期+计划裁员20%（1.6万人），马斯克承认xAI"建废了"（创始团队12走10）。Anthropic企业采用率飙至24.4%、新客胜率70%——产品力>投入规模。</div>
+        </div>
+    </div>
+</div>
+
+<div class="insight-section">
+    <div class="insight-section-title">🔥 周度洞察</div>
+
+    <div class="insight-card">
+        <div class="insight-header">
+            <span class="insight-num">1</span>
+            <span class="insight-title">AI编程范式跃迁：从"辅助写代码"到"Agent完成任务"</span>
+        </div>
+        <div class="insight-body">
+            <p>本周三个关键数据点汇聚——<strong>Cursor ARR三月翻番达20亿美元</strong>、<strong>Claude Code仅8个月登顶</strong>、<strong>55%工程师常用Agent</strong>。与此同时，Vibe Coding在小红书爆发（3794赞6516收藏），Claude Code Review将问题发现率从16%提升至54%、成本低2000倍。</p>
+            <p>AI编程已从"补全代码"进化到<strong>"理解需求+自主实现+审查修复"</strong>的完整闭环。</p>
+            <div class="insight-events">
+                <div class="insight-event"><span class="insight-event-date">3/9</span> 调查揭示55% Agent使用率，Staff+级达63.5%</div>
+                <div class="insight-event"><span class="insight-event-date">3/11</span> Cursor ARR破20亿美元，三月翻番</div>
+                <div class="insight-event"><span class="insight-event-date">3/12</span> Claude Code Review量化数据出炉</div>
+                <div class="insight-event"><span class="insight-event-date">3/14</span> Vibe Coding小红书爆发3794赞6516收藏</div>
+            </div>
+            <div class="insight-verdict">
+                <div class="insight-verdict-label">趋势判断</div>
+                <div class="insight-verdict-text">2026年是AI编程从<strong>"1.0辅助模式"到"2.0 Agent模式"</strong>的转折点。核心技能从"写代码"变成"定义问题+指导Agent+审核结果"。</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="insight-card">
+        <div class="insight-header">
+            <span class="insight-num">2</span>
+            <span class="insight-title">具身智能进入"国资+IPO"双轮驱动期</span>
+        </div>
+        <div class="insight-body">
+            <p>银河通用25亿、星动纪元10亿、灵初智能20亿——一周内三笔重磅融资，且投资方从市场化基金转向<strong>国家级资本</strong>（国家大基金三期、中国石化、央视融媒体基金）。六家公司排队IPO，最快5-6月上市。</p>
+            <p>灵初智能更是00后创业团队，用低成本触觉手套（传统1/10）解决数据采集瓶颈。</p>
+            <div class="insight-verdict">
+                <div class="insight-verdict-label">趋势判断</div>
+                <div class="insight-verdict-text">具身智能正在复制2015-2016年自动驾驶的融资狂潮但节奏更快。关键竞争维度不是"造更好的机器人"而是<strong>"获取更好的数据"</strong>。2026年是"上市红利窗口期"。</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="insight-card">
+        <div class="insight-header">
+            <span class="insight-num">3</span>
+            <span class="insight-title">AI军事化路线分化：OpenAI全面拥抱 vs Anthropic坚守红线</span>
+        </div>
+        <div class="insight-body">
+            <p>本周AI军事化博弈全面升级。Anthropic被国防部列入风险名单后<strong>起诉政府</strong>、OpenAI和Google员工联名声援（竞争对手罕见站台）。同时OpenAI继拿下五角大楼后向北约32国推销。FDA的Elsa平台因政治因素从Claude切换到Gemini——<strong>AI供应商的伦理立场直接影响政府合同</strong>。</p>
+            <div class="insight-verdict">
+                <div class="insight-verdict-label">趋势判断</div>
+                <div class="insight-verdict-text">AI公司与政府的<strong>边界博弈正式开始</strong>。两条路线的分化将影响整个AI行业的发展方向，企业AI采购需将政治风险纳入决策框架。</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tab-nav" role="tablist">
+    <button class="tab-btn" role="tab" aria-selected="true" onclick="switchTab('models',this)">🧠 大模型</button>
+    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('coding',this)">⌨️ AI Coding</button>
+    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('apps',this)">📱 AI 应用</button>
+    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('industry',this)">🏭 AI 行业</button>
+    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('enterprise',this)">🔄 企业转型</button>
+</div>
+
+<div id="panel-models" class="tab-panel active">
+    <div class="section-card">
+        <div class="section-header">🧠 大模型 · 本周动态汇总</div>
+        <table class="data-table">
+            <thead><tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr></thead>
+            <tbody>
+                <tr><td>3/9</td><td>Claude Opus 4.6独立攻克图论猜想，高德纳连写"Shock！"</td><td>Anthropic</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/9</td><td>GPT-5.4携Thinking加入LMSYS，国产模型跌出前十</td><td>LMSYS</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/10</td><td>GPT-5.5预览版泄露：多模态能力提升40%</td><td>OpenAI</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/10</td><td>DeepSeek发布V3.5：中文推理超越GPT-4</td><td>DeepSeek</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/10</td><td>欧盟AI法案今日全面生效</td><td>欧盟委员会</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/11</td><td>Anthropic被国防部列入供应链风险名单，起诉政府</td><td>Anthropic</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/12</td><td>上海AI Lab开源MLEvolve：12小时登顶MLE-bench</td><td>上海AI Lab</td><td><span class="tag tag-cn">🇨🇳</span></td></tr>
+                <tr><td>3/13</td><td>英伟达推出Nemotron 3 Super：1200亿参数开源</td><td>NVIDIA</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/14</td><td>DeepSeek V4多模态大模型将发布，适配国产芯片</td><td>小红书热议</td><td><span class="tag tag-cn">🇨🇳</span></td></tr>
+                <tr><td>3/15</td><td>马斯克承认xAI"建废了"推倒重来，创始团队12走10</td><td>36氪</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/15</td><td>Anthropic企业采用率飙升至24.4%，新客胜率70%</td><td>Ramp</td><td><span class="tag tag-hot">🔴</span></td></tr>
+            </tbody>
+        </table>
+        <div class="trend-box">
+            <h4>📈 本周趋势</h4>
+            <ul>
+                <li><strong>能力竞速</strong>：GPT-5.5预览版泄露、DeepSeek V3.5、Nemotron 3 Super——模型能力持续迭代</li>
+                <li><strong>AI自主科研</strong>：Claude攻克数学猜想、MLEvolve登顶——AI从"工具"变成"创造性合作者"</li>
+                <li><strong>头部分化</strong>：Meta/xAI困境 vs Anthropic逆袭——烧钱≠能力</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="panel-coding" class="tab-panel">
+    <div class="section-card">
+        <div class="section-header">⌨️ AI Coding · 本周动态汇总</div>
+        <table class="data-table">
+            <thead><tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr></thead>
+            <tbody>
+                <tr><td>3/9</td><td>906人调查：Claude Code仅8个月登顶，95%工程师每周用AI</td><td>Pragmatic Eng</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/10</td><td>Cursor 0.46发布Agent Swarm：多代理协作编程</td><td>Cursor</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/10</td><td>Claude Code正式公测：终端AI编程助手</td><td>Anthropic</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/11</td><td>Cursor年化营收突破20亿美元：三个月翻番</td><td>Crunchbase</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/12</td><td>Claude Code Review量化：问题发现率16%→54%</td><td>Anthropic</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/13</td><td>systemd新增AGENTS.md：开源基础设施拥抱AI</td><td>GitHub</td><td><span class="tag tag-note">🟡</span></td></tr>
+                <tr><td>3/14</td><td>Vibe Coding方法论小红书爆发：3794赞6516收藏</td><td>小红书</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/15</td><td>GitHub "Slopocalypse"：AI垃圾PR/Issue泛滥</td><td>Simon Willison</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/15</td><td>Cursor正经历生死存亡：AI编程范式跃迁</td><td>InfoQ</td><td><span class="tag tag-hot">🔴</span></td></tr>
+            </tbody>
+        </table>
+        <div class="trend-box">
+            <h4>📈 本周趋势</h4>
+            <ul>
+                <li><strong>商业验证</strong>：Cursor ARR 20亿美元三月翻番——AI编程工具已是独立商业赛道</li>
+                <li><strong>范式跃迁</strong>：55%工程师常用Agent+Vibe Coding爆发——从"辅助"到"Agent完成"</li>
+                <li><strong>副作用浮现</strong>：GitHub "Slopocalypse"——快速生成带来质量挑战</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="panel-apps" class="tab-panel">
+    <div class="section-card">
+        <div class="section-header">📱 AI 应用 · 本周动态汇总</div>
+        <table class="data-table">
+            <thead><tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr></thead>
+            <tbody>
+                <tr><td>3/9</td><td>ChatGPT for Excel正式发布：投行建模准确率翻倍</td><td>OpenAI</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/9</td><td>千问AI眼镜正式发售：G1到手价1997元</td><td>多来源</td><td><span class="tag tag-cn">🇨🇳</span></td></tr>
+                <tr><td>3/11</td><td>腾讯全系龙虾产品发布：WorkBuddy/QClaw</td><td>腾讯</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/12</td><td>Google Gemini全面融入Workspace四大办公套件</td><td>Google</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/14</td><td>腾讯云混元API涨价最高5倍：Agent算力紧缺</td><td>腾讯云</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/14</td><td>光明日报：OpenClaw走红凸显AI智能体潜力与风险</td><td>光明日报</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/14</td><td>BuzzFeed AI转型三年濒临破产：股价$15→$0.7</td><td>Yahoo Finance</td><td><span class="tag tag-note">🟡</span></td></tr>
+                <tr><td>3/15</td><td>微软Gaming Copilot将登陆Xbox主机</td><td>TechPowerUp</td><td><span class="tag tag-note">🟡</span></td></tr>
+            </tbody>
+        </table>
+        <div class="trend-box">
+            <h4>📈 本周趋势</h4>
+            <ul>
+                <li><strong>龙虾大战全面开打</strong>：腾讯全系产品发布、无锡500万补贴——AI Agent分发渠道之争</li>
+                <li><strong>AI嵌入全场景</strong>：Gemini杀入Workspace、ChatGPT进军Excel——AI从"独立App"变为"嵌入式能力"</li>
+                <li><strong>官媒首次系统分析</strong>：光明日报发文分析OpenClaw——AI Agent进入公众视野</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="panel-industry" class="tab-panel">
+    <div class="section-card">
+        <div class="section-header">🏭 AI 行业 · 本周融资统计</div>
+        <table class="data-table">
+            <thead><tr><th>公司/项目</th><th>融资额</th><th>估值</th><th>亮点</th></tr></thead>
+            <tbody>
+                <tr><td><strong>银河通用机器人</strong></td><td>25亿元</td><td>>$30亿</td><td>单轮融资新高</td></tr>
+                <tr><td><strong>灵初智能</strong></td><td>~20亿元</td><td>暴涨7倍</td><td>00后创业团队</td></tr>
+                <tr><td><strong>星动纪元</strong></td><td>10亿元</td><td>>100亿元</td><td>具身智能</td></tr>
+                <tr><td><strong>Nscale</strong></td><td>$20亿</td><td>$146亿</td><td>AI云服务</td></tr>
+                <tr><td>杨立昆AI初创</td><td>$10.3亿</td><td>—</td><td>世界模型</td></tr>
+                <tr><td>1GW算力项目</td><td>$500-600亿</td><td>—</td><td>黄仁勋×穆拉蒂</td></tr>
+            </tbody>
+        </table>
+        <div class="trend-box">
+            <h4>📈 本周趋势</h4>
+            <ul>
+                <li><strong>具身智能国资入场</strong>：国家大基金三期、中国石化、央视融媒体基金——国家级资本背书</li>
+                <li><strong>算力军备竞赛升级</strong>：黄仁勋×穆拉蒂1GW算力——进入吉瓦量级</li>
+                <li><strong>GTC引领风向</strong>：3万人190国参会——年度最重要AI产品发布窗口</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="panel-enterprise" class="tab-panel">
+    <div class="section-card">
+        <div class="section-header">🔄 企业AI转型 · 本周动态汇总</div>
+        <table class="data-table">
+            <thead><tr><th>日期</th><th>事件</th><th>来源</th><th>类型</th></tr></thead>
+            <tbody>
+                <tr><td>3/9</td><td>淘宝闪购开源餐饮AI大模型"白泽"：调用10亿次</td><td>多来源</td><td><span class="tag tag-new">实践</span></td></tr>
+                <tr><td>3/10</td><td>AI竞争从"模型能力"转向"组织交付能力"</td><td>多来源</td><td><span class="tag tag-note">洞察</span></td></tr>
+                <tr><td>3/13</td><td>美团升级"星眸"：覆盖百万商家日巡检千万次</td><td>美团</td><td><span class="tag tag-cn">🇨🇳实践</span></td></tr>
+                <tr><td>3/14</td><td>USC突破：AI自我学习成功率39%→96%</td><td>USC</td><td><span class="tag tag-new">研究</span></td></tr>
+                <tr><td>3/15</td><td>Meta拟裁员20%（~1.6万人）支撑$6000亿数据中心</td><td>Reuters</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/15</td><td>Meta创建AI工程组织：经理比1:50</td><td>Reuters</td><td><span class="tag tag-note">组织</span></td></tr>
+                <tr><td>3/15</td><td>Atlassian裁1600人(10%)转型AI</td><td>Reuters</td><td><span class="tag tag-hot">🔴</span></td></tr>
+            </tbody>
+        </table>
+        <div class="trend-box">
+            <h4>📈 本周趋势</h4>
+            <ul>
+                <li><strong>AI竞争维度转变</strong>：从"模型能力"到"组织交付能力"——合规、落地、嵌入成新壁垒</li>
+                <li><strong>垂直AI落地标杆</strong>：白泽模型10亿次调用、美团星眸百万商家——不追通用，聚焦场景</li>
+                <li><strong>科技巨头"大置换"</strong>：Meta裁20%+1:50经理比——投AI预算取代人力预算</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard">
+    <div class="dashboard-header">
+        <div class="dashboard-header-title">📊 本周数据总览</div>
+    </div>
+    <div class="dashboard-body">
+        <div class="dashboard-grid">
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">具身智能两月融资</div>
+                <div class="dashboard-item-value" style="color:#DC2626">200亿元</div>
+                <div class="dashboard-item-note">30+融资，创纪录</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">Claude Code登顶时间</div>
+                <div class="dashboard-item-value" style="color:#EA580C">8个月</div>
+                <div class="dashboard-item-note">超越Copilot和Cursor</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">工程师每周用AI</div>
+                <div class="dashboard-item-value" style="color:#059669">95%</div>
+                <div class="dashboard-item-note">生产力标配</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">AI Agent常用比例</div>
+                <div class="dashboard-item-value" style="color:#2563EB">55%</div>
+                <div class="dashboard-item-note">Staff+级63.5%</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">Cursor年化营收</div>
+                <div class="dashboard-item-value" style="color:#7C3AED">$20亿</div>
+                <div class="dashboard-item-note">三月翻番</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">Claude代码问题发现率</div>
+                <div class="dashboard-item-value" style="color:#D97706">54%</div>
+                <div class="dashboard-item-note">vs传统16%，3倍提升</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">Meta拟裁员</div>
+                <div class="dashboard-item-value">~1.6万人</div>
+                <div class="dashboard-item-note">20%，支撑$6000亿计划</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">Anthropic企业采用率</div>
+                <div class="dashboard-item-value" style="color:#DC2626">24.4%</div>
+                <div class="dashboard-item-note">一年前仅4%</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="next-week">
+    <h3>📌 下周值得关注</h3>
+    <div class="next-week-item">
+        <span class="next-week-date">3月16日</span>
+        <span class="next-week-text"><strong>NVIDIA GTC 2026主题演讲</strong> - Jensen Huang全栈AI愿景+新芯片揭晓</span>
+    </div>
+    <div class="next-week-item">
+        <span class="next-week-date">3月19-20日</span>
+        <span class="next-week-text"><strong>华为中国合作伙伴大会2026</strong> - 深圳</span>
+    </div>
+    <div class="next-week-item">
+        <span class="next-week-date">本月</span>
+        <span class="next-week-text"><strong>Meta裁员后续</strong> - 具体时间表、裁员部门分布</span>
+    </div>
+    <div class="next-week-item">
+        <span class="next-week-date">待定</span>
+        <span class="next-week-text"><strong>GPT-5.5预览版</strong> - 本月下旬Plus用户开放测试</span>
+    </div>
+    <div class="next-week-item">
+        <span class="next-week-date">5-6月</span>
+        <span class="next-week-text"><strong>具身智能首批IPO</strong> - 宇树科技预计上市</span>
+    </div>
+</div>
+
+<div class="daily-index">
+    <h3>📅 本周日报索引</h3>
+    <div class="daily-index-grid">
+        <a href="2026-03-09.html" class="daily-index-item">
+            <div class="daily-index-day">周日</div>
+            <div class="daily-index-date">09</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+        <a href="2026-03-10.html" class="daily-index-item">
+            <div class="daily-index-day">周一</div>
+            <div class="daily-index-date">10</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+        <a href="2026-03-11.html" class="daily-index-item">
+            <div class="daily-index-day">周二</div>
+            <div class="daily-index-date">11</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+        <a href="2026-03-12.html" class="daily-index-item">
+            <div class="daily-index-day">周三</div>
+            <div class="daily-index-date">12</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+        <a href="2026-03-13.html" class="daily-index-item">
+            <div class="daily-index-day">周四</div>
+            <div class="daily-index-date">13</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+        <a href="2026-03-14.html" class="daily-index-item">
+            <div class="daily-index-day">周五</div>
+            <div class="daily-index-date">14</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+        <a href="2026-03-15.html" class="daily-index-item">
+            <div class="daily-index-day">周六</div>
+            <div class="daily-index-date">15</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+    </div>
+</div>
+
+<div class="footer-box">
+    <h4>💡 了解更多</h4>
+    <p>我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。</p>
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" class="btn">🏠 访问AI洞察首页</a>
+</div>
+
+</div>
+
+<button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="返回顶部">↑</button>
+
+<script>
+function switchTab(id,btn){
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.setAttribute('aria-selected','false'));
+    document.getElementById('panel-'+id).classList.add('active');
+    btn.setAttribute('aria-selected','true');
+}
+// 返回顶部按钮显示逻辑
+window.addEventListener('scroll',function(){
+    const btn=document.querySelector('.back-to-top');
+    if(window.scrollY>400){btn.classList.add('show')}else{btn.classList.remove('show')}
+});
+</script>
+</body>
+</html>

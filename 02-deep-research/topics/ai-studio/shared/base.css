@@ -1,0 +1,359 @@
+/**
+ * AI Studio - 统一设计系统基础样式
+ * 供所有子项目共享使用
+ */
+
+/* ==================== CSS 变量 ==================== */
+:root {
+    /* 主色 */
+    --primary: #667eea;
+    --primary-dark: #5a67d8;
+    --secondary: #764ba2;
+    --accent: #00d9ff;
+    
+    /* 功能色 */
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #3b82f6;
+    
+    /* 背景色 */
+    --bg-dark: #0f172a;
+    --bg-dark-secondary: #1e293b;
+    --bg-light: #f8fafc;
+    --bg-white: #ffffff;
+    
+    /* 文字色 */
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-light: #94a3b8;
+    --text-white: #ffffff;
+    
+    /* 边框 */
+    --border: #e2e8f0;
+    --border-light: #f1f5f9;
+    
+    /* 阴影 */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.15);
+    
+    /* 圆角 */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    
+    /* 过渡 */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 400ms ease;
+}
+
+/* ==================== 重置样式 ==================== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--bg-light);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==================== 统一 Header 样式 ==================== */
+.unified-header {
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-dark-secondary) 50%, #334155 100%);
+    color: var(--text-white);
+    padding: 48px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.unified-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.25) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.25) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(0, 217, 255, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.unified-header .header-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.unified-header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 0%, #e0e7ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.unified-header .subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ==================== 统一导航栏 ==================== */
+.unified-nav {
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+.unified-nav .nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.unified-nav .nav-item {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    transition: var(--transition-fast);
+}
+
+.unified-nav .nav-item:hover {
+    color: var(--primary);
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.unified-nav .nav-item.active {
+    color: var(--primary);
+    background: rgba(102, 126, 234, 0.15);
+}
+
+.unified-nav .back-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.unified-nav .back-link:hover {
+    text-decoration: underline;
+}
+
+/* ==================== 统一 Section 样式 ==================== */
+.unified-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.unified-section-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.unified-section-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    color: var(--primary);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.unified-section-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.unified-section-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ==================== 统一卡片样式 ==================== */
+.unified-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-normal);
+}
+
+.unified-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.unified-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.unified-card-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* ==================== 统一 Footer 样式 ==================== */
+.unified-footer {
+    background: var(--bg-dark);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 32px 20px;
+    text-align: center;
+}
+
+.unified-footer a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.unified-footer a:hover {
+    color: var(--text-white);
+}
+
+.unified-footer .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 16px;
+}
+
+/* ==================== 统一按钮样式 ==================== */
+.unified-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--text-white);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.88rem;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-normal);
+}
+
+.unified-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+}
+
+.unified-btn-secondary {
+    background: var(--bg-light);
+    color: var(--primary);
+    border: 1px solid var(--border);
+}
+
+.unified-btn-secondary:hover {
+    background: var(--primary);
+    color: var(--text-white);
+    border-color: var(--primary);
+}
+
+/* ==================== 统一徽章样式 ==================== */
+.unified-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.unified-badge-primary {
+    background: rgba(102, 126, 234, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.unified-badge-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.unified-badge-warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.unified-badge-danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* ==================== 响应式 ==================== */
+@media (max-width: 768px) {
+    .unified-header {
+        padding: 32px 16px;
+    }
+    
+    .unified-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .unified-section {
+        padding: 32px 16px;
+    }
+    
+    .unified-section-title {
+        font-size: 1.4rem;
+    }
+    
+    .unified-nav .nav-content {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+}

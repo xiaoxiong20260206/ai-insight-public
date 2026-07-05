@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>飞书Aily深度调研：企业级AI Agent平台的崛起</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23059669'/><path d='M8 16l4-4 4 6 4-3 4 5' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/><circle cx='22' cy='10' r='3' fill='%23FCD34D'/></svg>">
+    <style>
+        :root {
+            --color-success: #059669;
+            --color-info: #2563EB;
+            --color-insight: #7C3AED;
+            --color-warning: #E11D48;
+            --color-amber: #D97706;
+            --text-primary: #1C1917;
+            --text-secondary: #57534E;
+            --text-muted: #78716C;
+            --bg-card: #FFFFFF;
+            --bg-page: #F8FAFB;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg-page);
+            background-image: 
+                radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%);
+            color: var(--text-primary);
+            line-height: 1.65;
+            min-height: 100dvh;
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        /* Hero Header */
+        .hero {
+            text-align: center;
+            padding: 48px 0 32px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(5,150,105,0.1), rgba(37,99,235,0.1));
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-success);
+            margin-bottom: 16px;
+        }
+
+        .hero-title {
+            font-size: 34px;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            text-wrap: balance;
+        }
+
+        .hero-subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 24px;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px) saturate(1.8);
+            border-radius: var(--radius-lg);
+            padding: 6px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+            touch-action: manipulation;
+        }
+
+        .tab-btn:hover {
+            background: rgba(5,150,105,0.08);
+            color: var(--color-success);
+        }
+
+        .tab-btn.active {
+            background: var(--color-success);
+            color: white;
+            box-shadow: 0 2px 8px rgba(5,150,105,0.3);
+        }
+
+        .tab-btn:focus-visible {
+            outline: 2px solid var(--color-success);
+            outline-offset: 2px;
+        }
+
+        /* Section */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            text-wrap: balance;
+        }
+
+        .section-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(5,150,105,0.15);
+            border-color: var(--color-success);
+        }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-content {
+            font-size: 15px;
+            color: var(--text-secondary);
+            max-width: 65ch;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            margin-bottom: 4px;
+        }
+
+        .stat-value.emerald { color: var(--color-success); }
+        .stat-value.blue { color: var(--color-info); }
+        .stat-value.violet { color: var(--color-insight); }
+        .stat-value.amber { color: var(--color-amber); }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tag-success { background: rgba(5,150,105,0.1); color: var(--color-success); }
+        .tag-info { background: rgba(37,99,235,0.1); color: var(--color-info); }
+        .tag-insight { background: rgba(124,58,237,0.1); color: var(--color-insight); }
+        .tag-warning { background: rgba(225,29,72,0.1); color: var(--color-warning); }
+        .tag-amber { background: rgba(217,119,6,0.1); color: var(--color-amber); }
+
+        /* Table */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            background: rgba(5,150,105,0.06);
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid rgba(5,150,105,0.2);
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            color: var(--text-secondary);
+        }
+
+        tr:hover td {
+            background: rgba(5,150,105,0.02);
+        }
+
+        /* Insight Box */
+        .insight-box {
+            background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(37,99,235,0.08));
+            border-left: 4px solid var(--color-insight);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: 20px 24px;
+            margin: 24px 0;
+        }
+
+        .insight-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-insight);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .insight-content {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Feature List */
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        @media (max-width: 640px) {
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px;
+            background: rgba(5,150,105,0.04);
+            border-radius: var(--radius-sm);
+        }
+
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-icon svg {
+            width: 12px;
+            height: 12px;
+            color: white;
+        }
+
+        .feature-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--color-success), var(--color-info), var(--color-insight));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 24px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -28px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--color-success);
+            border: 2px solid white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-success);
+            margin-bottom: 4px;
+        }
+
+        .timeline-content {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        /* SVG Overview Chart */
+        .overview-chart {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .overview-chart svg {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Comparison Grid */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .compare-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .compare-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            border: 1px solid rgba(0,0,0,0.06);
+            transition: all 0.2s;
+        }
+
+        .compare-card:hover {
+            border-color: var(--color-success);
+            box-shadow: var(--shadow-md);
+        }
+
+        .compare-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(5,150,105,0.2);
+        }
+
+        .compare-list {
+            list-style: none;
+        }
+
+        .compare-list li {
+            padding: 8px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .compare-list li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--color-success);
+        }
+
+        /* Quote Box */
+        .quote-box {
+            background: linear-gradient(135deg, rgba(5,150,105,0.06), rgba(37,99,235,0.06));
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .quote-mark {
+            font-size: 48px;
+            color: var(--color-success);
+            opacity: 0.3;
+            line-height: 1;
+            position: absolute;
+            top: 10px;
+            left: 16px;
+        }
+
+        .quote-text {
+            font-size: 16px;
+            font-style: italic;
+            color: var(--text-secondary);
+            padding-left: 32px;
+            line-height: 1.7;
+        }
+
+        .quote-author {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 12px;
+            padding-left: 32px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--color-success);
+            text-decoration: none;
+        }
+
+        /* Animation */
+        @media (prefers-reduced-motion: no-preference) {
+            .card, .stat-card {
+                animation: fadeInUp 0.4s ease-out;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero -->
+        <header class="hero">
+            <div class="hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                AI-Insight 深度调研
+            </div>
+            <h1 class="hero-title">飞书Aily深度调研</h1>
+            <p class="hero-subtitle">企业级AI Agent平台的崛起：从通用助手到业务中枢</p>
+            <div class="hero-meta">
+                <span>调研日期：2026年3月</span>
+                <span>产品：飞书Aily (aily.feishu.cn)</span>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn active" data-tab="overview" role="tab">产品概览</button>
+            <button class="tab-btn" data-tab="features" role="tab">核心功能</button>
+            <button class="tab-btn" data-tab="cases" role="tab">客户案例</button>
+            <button class="tab-btn" data-tab="pricing" role="tab">计费模式</button>
+            <button class="tab-btn" data-tab="insight" role="tab">本质洞察</button>
+        </nav>
+
+        <!-- Section: Overview -->
+        <section class="section active" id="overview" role="tabpanel">
+            <div class="section-header">
+                <h2 class="section-title">产品概览</h2>
+                <p class="section-desc">飞书Aily是字节跳动旗下飞书推出的企业级AI Agent平台</p>
+            </div>
+
+            <!-- Overview SVG Chart -->
+            <div class="overview-chart">
+                <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Background -->
+                    <defs>
+                        <linearGradient id="gradBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#059669;stop-opacity:0.08"/>
+                            <stop offset="100%" style="stop-color:#2563EB;stop-opacity:0.04"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="800" height="280" fill="url(#gradBg)" rx="12"/>
+                    
+                    <!-- Title -->
+                    <text x="400" y="35" text-anchor="middle" font-size="16" font-weight="700" fill="#1C1917">飞书Aily产品定位与核心价值</text>
+                    
+                    <!-- Three Pillars -->
+                    <g transform="translate(60, 70)">
+                        <!-- Pillar 1 -->
+                        <rect x="0" y="0" width="200" height="160" rx="12" fill="white" stroke="#059669" stroke-width="2"/>
+                        <rect x="0" y="0" width="200" height="40" rx="12 12 0 0" fill="#059669"/>
+                        <text x="100" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="white">办公助手</text>
+                        <text x="100" y="70" text-anchor="middle" font-size="13" fill="#57534E">智能文档理解</text>
+                        <text x="100" y="95" text-anchor="middle" font-size="13" fill="#57534E">数据分析可视化</text>
+                        <text x="100" y="120" text-anchor="middle" font-size="13" fill="#57534E">一键生成PPT</text>
+                        <text x="100" y="145" text-anchor="middle" font-size="13" fill="#57534E">深度调研</text>
+                    </g>
+                    
+                    <g transform="translate(300, 70)">
+                        <!-- Pillar 2 -->
+                        <rect x="0" y="0" width="200" height="160" rx="12" fill="white" stroke="#2563EB" stroke-width="2"/>
+                        <rect x="0" y="0" width="200" height="40" rx="12 12 0 0" fill="#2563EB"/>
+                        <text x="100" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="white">飞书助手</text>
+                        <text x="100" y="70" text-anchor="middle" font-size="13" fill="#57534E">飞书MCP工具集</text>
+                        <text x="100" y="95" text-anchor="middle" font-size="13" fill="#57534E">日程/会议管理</text>
+                        <text x="100" y="120" text-anchor="middle" font-size="13" fill="#57534E">任务创建与追踪</text>
+                        <text x="100" y="145" text-anchor="middle" font-size="13" fill="#57534E">消息搜索汇总</text>
+                    </g>
+                    
+                    <g transform="translate(540, 70)">
+                        <!-- Pillar 3 -->
+                        <rect x="0" y="0" width="200" height="160" rx="12" fill="white" stroke="#7C3AED" stroke-width="2"/>
+                        <rect x="0" y="0" width="200" height="40" rx="12 12 0 0" fill="#7C3AED"/>
+                        <text x="100" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="white">业务助手</text>
+                        <text x="100" y="70" text-anchor="middle" font-size="13" fill="#57534E">企业知识问答</text>
+                        <text x="100" y="95" text-anchor="middle" font-size="13" fill="#57534E">业务系统MCP对接</text>
+                        <text x="100" y="120" text-anchor="middle" font-size="13" fill="#57534E">自定义智能体</text>
+                        <text x="100" y="145" text-anchor="middle" font-size="13" fill="#57534E">工作流自动化</text>
+                    </g>
+                    
+                    <!-- Bottom Label -->
+                    <text x="400" y="260" text-anchor="middle" font-size="12" fill="#78716C">基于豆包大模型 + MCP协议 + 企业知识图谱</text>
+                </svg>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value emerald">M3</div>
+                    <div class="stat-label">产品成熟度等级</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value blue">100+</div>
+                    <div class="stat-label">MCP工具市场</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value violet">2025.7</div>
+                    <div class="stat-label">M3版本发布</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value amber">12+</div>
+                    <div class="stat-label">行业客户案例</div>
+                </div>
+            </div>
+
+            <!-- What is Aily -->
+            <div class="card">
+                <div class="card-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    什么是飞书Aily？
+                </div>
+                <div class="card-content">
+                    <p>飞书Aily是飞书开发套件中的企业级AI Agent平台，围绕大语言模型（LLM）构建，提供AI技能编排、知识数据处理、效果调优与持续运营能力。</p>
+                    <br>
+                    <p><strong>核心定位：</strong>帮助企业高效构建专业智能应用，从轻量助手到复杂业务系统的AI中枢。</p>
+                    <br>
+                    <p><strong>产品口号：</strong>"真能用、真落地"的企业AI产品</p>
+                </div>
+            </div>
+
+            <!-- Key Differentiators -->
+            <div class="card">
+                <div class="card-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    相比竞品的核心优势
+                </div>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="feature-text"><strong>知识天然打通</strong>：飞书全站知识可直接作为AI知识库</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="feature-text"><strong>权限原生同步</strong>：知识权限自动应用于AI问答</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="feature-text"><strong>MCP协议原生支持</strong>：业务系统"即配即用"</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="feature-text"><strong>字节内部验证</strong>：10万+员工规模实战验证</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quote -->
+            <div class="quote-box">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">AI时代，挑选软件的方法需要改变，以前是比功能，现在要看效果。选择飞书，就是选择企业长期值得信赖的AI伙伴。</p>
+                <p class="quote-author">— 谢欣，飞书CEO（2025年7月发布会）</p>
+            </div>
+        </section>
+
+        <!-- Section: Features -->
+        <section class="section" id="features" role="tabpanel">
+            <div class="section-header">
+                <h2 class="section-title">核心功能架构</h2>
+                <p class="section-desc">四大产品形态，覆盖从开箱即用到深度定制的全场景需求</p>
+            </div>
+
+            <!-- Architecture SVG -->
+            <div class="overview-chart">
+                <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#059669;stop-opacity:0.1"/>
+                            <stop offset="100%" style="stop-color:#2563EB;stop-opacity:0.05"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="800" height="320" fill="url(#grad1)" rx="12"/>
+                    
+                    <text x="400" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#1C1917">飞书Aily四层产品架构</text>
+                    
+                    <!-- Layer 1 -->
+                    <rect x="50" y="55" width="700" height="55" rx="8" fill="#059669" opacity="0.15"/>
+                    <rect x="50" y="55" width="6" height="55" rx="3" fill="#059669"/>
+                    <text x="70" y="78" font-size="14" font-weight="600" fill="#059669">Aily工作助手</text>
+                    <text x="70" y="98" font-size="12" fill="#57534E">开箱即用 | 零配置 | 通用Agent | 智能文档理解 | 数据分析 | PPT生成 | 深度调研</text>
+                    
+                    <!-- Layer 2 -->
+                    <rect x="50" y="120" width="700" height="55" rx="8" fill="#2563EB" opacity="0.15"/>
+                    <rect x="50" y="120" width="6" height="55" rx="3" fill="#2563EB"/>
+                    <text x="70" y="143" font-size="14" font-weight="600" fill="#2563EB">自定义智能体</text>
+                    <text x="70" y="163" font-size="12" fill="#57534E">自定义Prompt | 接入企业知识 | 添加MCP工具 | 配置工作规划 | 垂类Agent定制</text>
+                    
+                    <!-- Layer 3 -->
+                    <rect x="50" y="185" width="700" height="55" rx="8" fill="#7C3AED" opacity="0.15"/>
+                    <rect x="50" y="185" width="6" height="55" rx="3" fill="#7C3AED"/>
+                    <text x="70" y="208" font-size="14" font-weight="600" fill="#7C3AED">工作流应用</text>
+                    <text x="70" y="228" font-size="12" fill="#57534E">可视化流程编排 | 多步骤判断 | 定时/消息/事件触发 | AI审批 | AI质检 | 自动化流程</text>
+                    
+                    <!-- Layer 4 -->
+                    <rect x="50" y="250" width="700" height="55" rx="8" fill="#D97706" opacity="0.15"/>
+                    <rect x="50" y="250" width="6" height="55" rx="3" fill="#D97706"/>
+                    <text x="70" y="273" font-size="14" font-weight="600" fill="#D97706">MCP工具生态</text>
+                    <text x="70" y="293" font-size="12" fill="#57534E">100+官方MCP服务 | 企业自建MCP | 飞书全产品MCP | 第三方系统对接 | 内网数据穿透</text>
+                    
+                    <!-- Side Labels -->
+                    <text x="770" y="88" text-anchor="end" font-size="11" fill="#78716C">→ 即用</text>
+                    <text x="770" y="153" text-anchor="end" font-size="11" fill="#78716C">→ 定制</text>
+                    <text x="770" y="218" text-anchor="end" font-size="11" fill="#78716C">→ 自动化</text>
+                    <text x="770" y="283" text-anchor="end" font-size="11" fill="#78716C">→ 扩展</text>
+                </svg>
+            </div>
+
+            <!-- M3 Upgrade Features -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="tag tag-success">M3新功能</span>
+                    2025年7月重磅升级
+                </div>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="feature-text"><strong>智能模式切换</strong>：AI自动判断任务/对话模式</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="feature-text"><strong>一键生成PPT</strong>：输入一句话即可生成专业演示</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="feature-text"><strong>深度调研能力</strong>：市场/竞品分析、数据可视化</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="feature-text"><strong>创意工坊</strong>：海报生成、播客制作、小游戏开发</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="feature-text"><strong>MCP协议</strong>：业务系统即配即用，AI拥有"手脚"</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="feature-text"><strong>深度规划能力</strong>：AI自主拆解、执行复杂任务</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MCP Explanation -->
+            <div class="card">
+                <div class="card-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                        <line x1="12" y1="22.08" x2="12" y2="12"/>
+                    </svg>
+                    MCP协议：让AI拥有"手脚"
+                </div>
+                <div class="card-content">
+                    <p><strong>MCP（Model Context Protocol）</strong>是由Claude团队提出的全球通用协议，用于将外部系统的功能抽象成统一描述，供智能体消费。</p>
+                    <br>
+                    <p>类比理解：如同秦始皇的"书同文、车同轨"，MCP建立统一标准，极大提升全球开发者协作效率。</p>
+                    <br>
+                    <p><strong>Aily MCP能力：</strong></p>
+                    <ul style="margin: 12px 0 0 20px; color: var(--text-secondary);">
+                        <li>100+ 官方MCP服务市场</li>
+                        <li>企业可自建MCP服务对接内部系统</li>
+                        <li>飞书全产品线MCP工具（文档、表格、日程等）</li>
+                        <li>内网数据穿透，云端AI安全调用企业数据</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- AI Maturity Model -->
+            <div class="card">
+                <div class="card-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                    AI应用成熟度模型（业界首发）
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>等级</th>
+                                <th>名称</th>
+                                <th>定义</th>
+                                <th>Aily产品状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="tag tag-amber">M1</span></td>
+                                <td>概念验证</td>
+                                <td>只做内部演示，不对外发布</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag tag-info">M2</span></td>
+                                <td>早期试用</td>
+                                <td>给愿意尝鲜的用户使用</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag tag-success">M3</span></td>
+                                <td>成熟应用</td>
+                                <td>可以大规模使用</td>
+                                <td>飞书知识问答、Aily工作助手</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag tag-insight">M4</span></td>
+                                <td>完全成熟</td>
+                                <td>几乎所有场景都能用</td>
+                                <td>飞书智能会议纪要</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Cases -->
+        <section class="section" id="cases" role="tabpanel">
+            <div class="section-header">
+                <h2 class="section-title">企业落地案例</h2>
+                <p class="section-desc">覆盖零售、餐饮、制造、科技等多个行业的真实效果</p>
+            </div>
+
+            <!-- Case Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value emerald">87%</div>
+                    <div class="stat-label">海底捞问题解答率</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value blue">58%</div>
+                    <div class="stat-label">美宜佳响应时长下降</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value violet">2月→1周</div>
+                    <div class="stat-label">公牛培训周期缩短</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value amber">145万</div>
+                    <div class="stat-label">华恒生物年节省成本</div>
+                </div>
+            </div>
+
+            <!-- Case Cards -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="tag tag-success">餐饮</span>
+                    海底捞 "大明白" AI助手
+                </div>
+                <div class="card-content">
+                    <p><strong>应用场景：</strong>门店员工知识问答助手</p>
+                    <p><strong>核心指标：</strong></p>
+                    <ul style="margin: 8px 0 0 20px;">
+                        <li>日均服务 <strong>6000+</strong> 人次</li>
+                        <li>问题解答率达 <strong>87%</strong></li>
+                        <li>覆盖海底捞全国门店</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <span class="tag tag-info">零售</span>
+                    美宜佳 智能客服 "小佳"
+                </div>
+                <div class="card-content">
+                    <p><strong>应用场景：</strong>3.6万家门店智能客服</p>
+                    <p><strong>核心指标：</strong></p>
+                    <ul style="margin: 8px 0 0 20px;">
+                        <li>平均响应时长下降 <strong>58%</strong></li>
+                        <li>覆盖 <strong>36,000+</strong> 家门店</li>
+                        <li>大幅减少人工工单量</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <span class="tag tag-insight">制造</span>
+                    公牛集团 "牛牛问答"
+                </div>
+                <div class="card-content">
+                    <p><strong>应用场景：</strong>新员工入职培训助手</p>
+                    <p><strong>核心指标：</strong></p>
+                    <ul style="margin: 8px 0 0 20px;">
+                        <li>培训周期从 <strong>2个月缩短至1周</strong></li>
+                        <li>产品知识即问即答</li>
+                        <li>减少老员工带教时间</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <span class="tag tag-amber">科技</span>
+                    字节跳动IT 内部实践
+                </div>
+                <div class="card-content">
+                    <p><strong>应用场景：</strong>10万+员工IT服务支持</p>
+                    <p><strong>核心指标：</strong></p>
+                    <ul style="margin: 8px 0 0 20px;">
+                        <li>数十人IT团队支撑 <strong>10万+</strong> 员工</li>
+                        <li>内部验证产品可靠性</li>
+                        <li>"吃自己的狗粮"模式</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Industry Coverage Table -->
+            <div class="card">
+                <div class="card-title">行业覆盖与典型场景</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>行业领域</th>
+                                <th>典型场景</th>
+                                <th>代表客户</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>产研领域</td>
+                                <td>AI辅助知识沉淀、需求管理、产品反馈</td>
+                                <td>蔚来汽车、绫致时装、飞书</td>
+                            </tr>
+                            <tr>
+                                <td>销售门店</td>
+                                <td>门店AI问答、AI练货、AI质检</td>
+                                <td>公牛、海底捞、美宜佳、益禾堂</td>
+                            </tr>
+                            <tr>
+                                <td>生产制造</td>
+                                <td>工厂AI安全检查</td>
+                                <td>高能环境</td>
+                            </tr>
+                            <tr>
+                                <td>行政人事</td>
+                                <td>HR/IT智能服务台</td>
+                                <td>字节跳动、德赛西威、雅迪</td>
+                            </tr>
+                            <tr>
+                                <td>服务领域</td>
+                                <td>AI客户VOC分析</td>
+                                <td>影石创新</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Pricing -->
+        <section class="section" id="pricing" role="tabpanel">
+            <div class="section-header">
+                <h2 class="section-title">计费模式</h2>
+                <p class="section-desc">按需付费，只对有效执行收费，失败不扣费</p>
+            </div>
+
+            <!-- Pricing Overview -->
+            <div class="overview-chart">
+                <svg viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="gradPrice" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#059669;stop-opacity:0.08"/>
+                            <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:0.04"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="800" height="220" fill="url(#gradPrice)" rx="12"/>
+                    
+                    <text x="400" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#1C1917">两种计费模式</text>
+                    
+                    <!-- Mode 1 -->
+                    <rect x="50" y="55" width="330" height="140" rx="12" fill="white" stroke="#059669" stroke-width="2"/>
+                    <text x="215" y="85" text-anchor="middle" font-size="15" font-weight="600" fill="#059669">对话交互模式</text>
+                    <text x="215" y="110" text-anchor="middle" font-size="12" fill="#78716C">适用：Aily工作助手、自建智能体</text>
+                    <line x1="80" y1="125" x2="350" y2="125" stroke="#E7E5E4" stroke-width="1"/>
+                    <text x="80" y="148" font-size="12" fill="#57534E">费用 = 产物费 + 模型费 + 工具调用费</text>
+                    <text x="80" y="170" font-size="12" fill="#57534E">基础对话：2点/轮  |  PPT生成：10点</text>
+                    <text x="80" y="185" font-size="11" fill="#78716C">Token计费，按实际消耗付费</text>
+                    
+                    <!-- Mode 2 -->
+                    <rect x="420" y="55" width="330" height="140" rx="12" fill="white" stroke="#7C3AED" stroke-width="2"/>
+                    <text x="585" y="85" text-anchor="middle" font-size="15" font-weight="600" fill="#7C3AED">流程编排模式</text>
+                    <text x="585" y="110" text-anchor="middle" font-size="12" fill="#78716C">适用：Workflow、aPaaS/Base插件</text>
+                    <line x1="450" y1="125" x2="720" y2="125" stroke="#E7E5E4" stroke-width="1"/>
+                    <text x="450" y="148" font-size="12" fill="#57534E">费用 = 基础运行 + 模型费 + 工具费</text>
+                    <text x="450" y="170" font-size="12" fill="#57534E">基础运行：0.5点/次  |  按节点计费</text>
+                    <text x="450" y="185" font-size="11" fill="#78716C">按次计费，成本可预测</text>
+                </svg>
+            </div>
+
+            <!-- Pricing Details -->
+            <div class="card">
+                <div class="card-title">产物费用参考</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>产物类型</th>
+                                <th>消耗点数</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>基础对话</td>
+                                <td>2 点</td>
+                                <td>无特定产物的普通聊天</td>
+                            </tr>
+                            <tr>
+                                <td>文档生成</td>
+                                <td>5 点</td>
+                                <td>生成文档内容</td>
+                            </tr>
+                            <tr>
+                                <td>PPT生成</td>
+                                <td>10 点</td>
+                                <td>一键生成演示文稿</td>
+                            </tr>
+                            <tr>
+                                <td>视频生成</td>
+                                <td>更高</td>
+                                <td>复杂产物消耗更多</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 12px;">
+                    注：一次对话仅收取价值最高产物费用，不重复计费
+                </p>
+            </div>
+
+            <!-- Subscription Tiers -->
+            <div class="card">
+                <div class="card-title">订阅版本</div>
+                <div class="card-content">
+                    <p>飞书Aily没有单独订阅版本，通过以下方式获取：</p>
+                    <br>
+                    <ul style="margin-left: 20px;">
+                        <li><strong>企业管理员：</strong>购买飞书AI包</li>
+                        <li><strong>个人成员：</strong>购买飞书AI高级会员</li>
+                        <li><strong>Aily开发后台：</strong>需先订阅飞书AI版本</li>
+                    </ul>
+                    <br>
+                    <p style="color: var(--text-muted); font-size: 14px;">飞书提供AI基础版、AI企业版、AI企业版Plus、AI旗舰版四个版本。</p>
+                </div>
+            </div>
+
+            <!-- Key Pricing Rules -->
+            <div class="insight-box">
+                <div class="insight-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    计费核心原则
+                </div>
+                <div class="insight-content">
+                    <ul style="margin-left: 20px;">
+                        <li><strong>只对成功收费：</strong>生成失败或异常中断不扣费</li>
+                        <li><strong>最高产物计费：</strong>一次对话仅收取价值最高产物费用</li>
+                        <li><strong>工具按次叠加：</strong>MCP调用按次数累计</li>
+                        <li><strong>重新生成另计：</strong>点击重新生成视为新的调用</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Insight -->
+        <section class="section" id="insight" role="tabpanel">
+            <div class="section-header">
+                <h2 class="section-title">本质洞察</h2>
+                <p class="section-desc">透过产品看本质，理解飞书Aily的战略意图与进化方向</p>
+            </div>
+
+            <!-- Essence Insight -->
+            <div class="insight-box">
+                <div class="insight-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                    </svg>
+                    核心洞察：从"工具"到"平台"的跃迁
+                </div>
+                <div class="insight-content">
+                    <p><strong>表象：</strong>飞书Aily是一个AI智能助手产品</p>
+                    <br>
+                    <p><strong>本质：</strong>飞书Aily是字节跳动将内部AI能力产品化后的"企业AI操作系统"入口</p>
+                    <br>
+                    <p><strong>类比：</strong>就像Windows从"图形界面"进化成"软件生态平台"，Aily正在从"AI助手"进化成"企业AI能力承载平台"。MCP协议就是这个平台的"设备驱动程序"标准。</p>
+                </div>
+            </div>
+
+            <!-- Strategic Analysis -->
+            <div class="card">
+                <div class="card-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    字节的战略意图
+                </div>
+                <div class="card-content">
+                    <ol style="margin-left: 20px; line-height: 2;">
+                        <li><strong>数据壁垒构建：</strong>飞书全站知识+权限天然打通，竞品无法复制</li>
+                        <li><strong>生态锁定：</strong>MCP工具生态一旦形成，迁移成本极高</li>
+                        <li><strong>降维打击钉钉/企微：</strong>多维表格登陆钉钉/企微是"木马战术"</li>
+                        <li><strong>吃自己狗粮：</strong>字节10万+员工规模验证，比竞品更有说服力</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Evolution Prediction -->
+            <div class="card">
+                <div class="card-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                        <polyline points="17 6 23 6 23 12"/>
+                    </svg>
+                    进化方向预测
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">当前阶段</div>
+                        <div class="timeline-content">M3成熟应用：开箱即用的通用Agent + 企业定制能力</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background: var(--color-info);"></div>
+                        <div class="timeline-date">下一阶段</div>
+                        <div class="timeline-content">MCP生态爆发：第三方MCP服务涌入，形成应用商店模式</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background: var(--color-insight);"></div>
+                        <div class="timeline-date">终局形态</div>
+                        <div class="timeline-content">企业AI中枢：所有企业应用通过Aily交互，员工"与AI协作"成为新工作方式</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Analysis -->
+            <div class="card">
+                <div class="card-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E11D48" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                        <line x1="12" y1="9" x2="12" y2="13"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    潜在风险与挑战
+                </div>
+                <div class="card-content">
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li><strong>生态依赖风险：</strong>深度绑定飞书生态，非飞书用户难以享受全部能力</li>
+                        <li><strong>定价透明度：</strong>Token计费+产物计费+工具计费，成本预测复杂</li>
+                        <li><strong>竞品追赶：</strong>钉钉/企微正在快速跟进AI能力</li>
+                        <li><strong>大模型依赖：</strong>底层依赖豆包模型，受限于模型能力天花板</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Conclusion -->
+            <div class="quote-box">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">飞书Aily代表了企业AI应用的一个重要方向：不是把AI做成独立产品，而是让AI成为企业数字化基础设施的"神经系统"——连接知识、连接系统、连接人。谁先建成这个神经系统，谁就掌握了企业AI时代的入口。</p>
+                <p class="quote-author">— 调研结论</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>AI-Insight 深度调研 · 飞书Aily · 2026年3月</p>
+            <p style="margin-top: 8px;">
+                <a href="https://aily.feishu.cn/" target="_blank">访问飞书Aily官网 →</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Tab Navigation
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const sections = document.querySelectorAll('.section');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.dataset.tab;
+                
+                // Update active states
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                sections.forEach(s => s.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>

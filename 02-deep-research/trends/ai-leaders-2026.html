@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>从AI大神的深度分享看2026年AI的下半场 | AI-Insight</title>
+    
+    <!-- Favicon - AI/智能技术类 -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/><circle cx='10' cy='8' r='1.5' fill='white'/><circle cx='22' cy='8' r='1.5' fill='white'/><line x1='11' y1='9' x2='13' y2='11' stroke='white' stroke-width='1.5'/><line x1='21' y1='9' x2='19' y2='11' stroke='white' stroke-width='1.5'/></svg>">
+    
+    <style>
+        /* ============ CSS 变量定义 ============ */
+        :root {
+            --color-success: #059669;
+            --color-success-light: #10B981;
+            --color-success-dark: #047857;
+            --color-danger: #E11D48;
+            --color-danger-light: #FF7B72;
+            --color-warning: #D97706;
+            --color-warning-dark: #B45309;
+            --color-info: #2563EB;
+            --color-info-light: #54AEFF;
+            --color-purple: #7C3AED;
+            
+            --color-text-primary: #1C1917;
+            --color-text-secondary: #57534E;
+            --color-text-muted: #78716C;
+            --color-border: #E7E5E4;
+            --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB;
+            --color-bg-card: #FFFFFF;
+            --color-bg-table-header: #FAFAF9;
+            
+            --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            --gradient-badge: linear-gradient(135deg, #E6F7ED 0%, #E1F0F8 100%);
+            --gradient-hero: linear-gradient(135deg, rgba(5, 150, 105, 0.06) 0%, rgba(37, 99, 235, 0.04) 100%);
+            
+            --shadow-sm: 0 1px 3px rgba(31, 35, 40, 0.06), 0 1px 2px rgba(31, 35, 40, 0.04);
+            --shadow-card: 0 2px 8px rgba(31, 35, 40, 0.06), 0 1px 2px rgba(31, 35, 40, 0.04);
+            --shadow-md: 0 4px 12px rgba(31, 35, 40, 0.08), 0 2px 4px rgba(31, 35, 40, 0.04);
+            --shadow-hover: 0 6px 16px rgba(5, 150, 105, 0.15), 0 2px 6px rgba(5, 150, 105, 0.1);
+            
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 40px;
+            
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-xl: 18px;
+            --radius-full: 999px;
+            
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            --content-max-width: 980px;
+        }
+        
+        /* ============ 基础样式 ============ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, "system-ui", "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text-primary);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+        
+        a {
+            color: var(--color-info);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        a:hover { color: var(--color-success); }
+        
+        .container {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-lg) 60px;
+        }
+        
+        /* ============ Header ============ */
+        .header {
+            text-align: center;
+            padding: var(--spacing-2xl) var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            background: var(--gradient-hero);
+            border-radius: var(--radius-xl);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-success);
+        }
+        
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-xs) 14px;
+            background: var(--gradient-badge);
+            color: var(--color-info);
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin-bottom: var(--spacing-md);
+            border: 1px solid rgba(37, 99, 235, 0.15);
+        }
+        
+        .header-title {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--color-text-primary), var(--color-success-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header-subtitle {
+            font-size: 15px;
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        
+        .header-meta {
+            margin-top: var(--spacing-md);
+            font-size: 13px;
+            color: var(--color-text-muted);
+        }
+        
+        /* ============ Core Insight ============ */
+        .core-insight {
+            background: var(--color-bg-card);
+            border-left: 4px solid var(--color-danger);
+            border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .core-insight-label {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-danger);
+            margin-bottom: 12px;
+        }
+        
+        .core-insight-label::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--color-danger);
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+        }
+        
+        .core-insight-title {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            color: var(--color-text-primary);
+        }
+        
+        .core-insight-title em {
+            color: var(--color-danger);
+            font-style: normal;
+            font-weight: 700;
+        }
+        
+        .core-insight-text {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        
+        /* ============ Stats Grid ============ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        .stat-card {
+            background: var(--color-bg-card);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border-light);
+            padding: var(--spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-success);
+            opacity: 0;
+            transition: var(--transition-normal);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--color-success);
+        }
+        
+        .stat-card:hover::before { opacity: 1; }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-value.green { color: var(--color-success); }
+        .stat-value.blue { color: var(--color-info); }
+        .stat-value.purple { color: var(--color-purple); }
+        .stat-value.orange { color: var(--color-warning); }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            font-weight: 500;
+        }
+        
+        /* ============ Tab Navigation ============ */
+        .tab-nav {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 4px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 6px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-card);
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .tab-btn {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 14px;
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+        }
+        
+        .tab-btn:hover {
+            background: var(--color-bg-table-header);
+            color: var(--color-text-secondary);
+        }
+        
+        .tab-btn.active {
+            background: var(--gradient-success);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+        }
+        
+        .tab-btn-num {
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.06);
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .tab-btn.active .tab-btn-num {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .tab-panel.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ============ Section Card ============ */
+        .section {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--color-border-light);
+        }
+        
+        .section-number {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-success);
+            color: #fff;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(5, 150, 105, 0.25);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+        
+        .subsection-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin: var(--spacing-lg) 0 var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .subsection-title::before {
+            content: '🔥';
+        }
+        
+        /* ============ Table ============ */
+        .table-wrap {
+            overflow-x: auto;
+            margin: var(--spacing-md) 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--color-border-light);
+            vertical-align: top;
+        }
+        
+        th {
+            background: var(--color-bg-table-header);
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            font-size: 12px;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+        
+        tbody tr:hover td { background: rgba(0, 0, 0, 0.02); }
+        
+        td:first-child { font-weight: 500; color: var(--color-text-primary); }
+        
+        tr:last-child td { border-bottom: none; }
+        
+        /* ============ Quote Box ============ */
+        .quote-box {
+            background: var(--color-bg-table-header);
+            border-left: 3px solid var(--color-info);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: var(--spacing-md) 20px;
+            margin: var(--spacing-md) 0;
+        }
+        
+        .quote-box p {
+            font-style: italic;
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        
+        .quote-source {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            margin-top: var(--spacing-sm);
+            font-style: normal;
+        }
+        
+        /* ============ Insight Box ============ */
+        .insight-box {
+            border-left: 3px solid var(--color-warning);
+            background: rgba(217, 119, 6, 0.06);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: var(--spacing-md) 20px;
+            margin: var(--spacing-md) 0;
+        }
+        
+        .insight-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-warning-dark);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .insight-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--color-warning);
+            border-radius: 50%;
+        }
+        
+        .insight-content {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        
+        /* ============ Tag ============ */
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .tag-green { background: rgba(5, 150, 105, 0.12); color: var(--color-success); }
+        .tag-blue { background: rgba(37, 99, 235, 0.12); color: var(--color-info); }
+        .tag-orange { background: rgba(217, 119, 6, 0.12); color: var(--color-warning-dark); }
+        .tag-purple { background: rgba(124, 58, 237, 0.12); color: var(--color-purple); }
+        
+        /* ============ Code Block ============ */
+        .code-block {
+            background: #1C1917;
+            color: #E6EDF3;
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+        
+        /* ============ Two Column ============ */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+        
+        @media (max-width: 768px) {
+            .two-col { grid-template-columns: 1fr; }
+        }
+        
+        .col-box {
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            background: var(--color-bg-table-header);
+        }
+        
+        .col-box-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .col-box-title.green { color: var(--color-success); }
+        .col-box-title.red { color: var(--color-danger); }
+        
+        .col-list { list-style: none; }
+        
+        .col-list li {
+            padding: var(--spacing-sm) 0;
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            line-height: 1.6;
+        }
+        
+        .col-list li::before {
+            content: '→';
+            color: var(--color-success);
+            flex-shrink: 0;
+        }
+        
+        /* ============ Image ============ */
+        .image-container {
+            margin: var(--spacing-lg) 0;
+            text-align: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .image-caption {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            margin-top: var(--spacing-sm);
+        }
+        
+        /* ============ Chart Container ============ */
+        .chart-container {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin: var(--spacing-lg) 0;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .chart-title {
+            text-align: center;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .chart-subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            margin-top: -12px;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        /* ============ Leader Matrix ============ */
+        .leader-matrix {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+        }
+        
+        @media (max-width: 768px) {
+            .leader-matrix { grid-template-columns: 1fr; }
+        }
+        
+        .matrix-category {
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid;
+        }
+        
+        .category-icon { font-size: 18px; }
+        
+        .matrix-category.lab .category-header { border-color: #4ecdc4; }
+        .matrix-category.eng .category-header { border-color: #ff6b6b; }
+        .matrix-category.phy .category-header { border-color: #ffd93d; }
+        
+        .leader-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius-sm);
+        }
+        
+        .leader-card:last-child { margin-bottom: 0; }
+        
+        .leader-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        
+        .leader-avatar.lab { background: linear-gradient(135deg, #4ecdc4, #2ecc71); }
+        .leader-avatar.eng { background: linear-gradient(135deg, #ff6b6b, #ee5a5a); }
+        .leader-avatar.phy { background: linear-gradient(135deg, #ffd93d, #f9ca24); }
+        
+        .leader-info { flex: 1; min-width: 0; }
+        
+        .leader-name {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .leader-role {
+            color: rgba(255,255,255,0.6);
+            font-size: 11px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .leader-tag {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+        
+        .leader-tag.lab { background: rgba(78,205,196,0.3); }
+        .leader-tag.eng { background: rgba(255,107,107,0.3); }
+        .leader-tag.phy { background: rgba(255,217,61,0.3); }
+        
+        /* ============ Trend Grid ============ */
+        .trend-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        @media (max-width: 768px) {
+            .trend-grid { grid-template-columns: 1fr; }
+        }
+        
+        .trend-box {
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .trend-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+        }
+        
+        .trend-box.agent::before { background: linear-gradient(90deg, #4ecdc4, #2ecc71); }
+        .trend-box.coding::before { background: linear-gradient(90deg, #ff6b6b, #ffd93d); }
+        
+        .trend-box-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .trend-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .trend-box-title {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .trend-box-sub {
+            color: rgba(255,255,255,0.6);
+            font-size: 11px;
+        }
+        
+        .trend-point {
+            display: flex;
+            gap: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius-sm);
+        }
+        
+        .trend-point:last-child { margin-bottom: 0; }
+        
+        .trend-point .fire { font-size: 14px; flex-shrink: 0; }
+        
+        .trend-point strong {
+            color: #fff;
+            font-size: 13px;
+            display: block;
+            margin-bottom: 2px;
+        }
+        
+        .trend-point p {
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .trend-center-box {
+            background: linear-gradient(135deg, rgba(108,92,231,0.3), rgba(162,155,254,0.1));
+            border: 1px solid rgba(162,155,254,0.3);
+            border-radius: var(--radius-md);
+            text-align: center;
+            padding: var(--spacing-lg);
+        }
+        
+        .trend-center-title {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .trend-center-desc {
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+        }
+        
+        /* ============ Principle Grid ============ */
+        .principle-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        @media (max-width: 768px) {
+            .principle-grid { grid-template-columns: 1fr; }
+        }
+        
+        .principle-box {
+            background: rgba(255,255,255,0.08);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            border: 1px solid rgba(255,255,255,0.12);
+            position: relative;
+        }
+        
+        .principle-num {
+            position: absolute;
+            top: -12px;
+            left: var(--spacing-md);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .principle-num.p1 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .principle-num.p2 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .principle-num.p3 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .principle-num.p4 { background: linear-gradient(135deg, #fa709a, #fee140); }
+        
+        .principle-name {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .principle-quote {
+            background: rgba(0,0,0,0.2);
+            border-radius: var(--radius-sm);
+            padding: 10px;
+            border-left: 2px solid rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.85);
+            font-size: 12px;
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .principle-formula {
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            color: #4facfe;
+            font-size: 11px;
+            text-align: center;
+        }
+        
+        .principle-center {
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: var(--radius-md);
+            text-align: center;
+            padding: var(--spacing-lg);
+        }
+        
+        .principle-center-title {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .principle-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .flow-node {
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        
+        .flow-node.model { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .flow-node.task { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .flow-node.env { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .flow-node.feedback { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        
+        .flow-arrow {
+            color: rgba(255,255,255,0.5);
+            font-size: 18px;
+        }
+        
+        /* ============ Workflow Steps ============ */
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+        
+        .workflow-step {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        .step-indicator {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        
+        .step-indicator.s1 { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .step-indicator.s2 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .step-indicator.s3 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .step-indicator.s4 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .step-indicator.s5 { background: linear-gradient(135deg, #fa709a, #fee140); }
+        
+        .step-body {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius-sm);
+            padding: var(--spacing-md);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .step-head {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .step-content-text {
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .step-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        
+        .tool-tag {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.9);
+            font-family: 'Monaco', monospace;
+        }
+        
+        .workflow-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .workflow-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        .workflow-stat {
+            text-align: center;
+            padding: var(--spacing-sm);
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius-sm);
+        }
+        
+        .workflow-stat-value {
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .workflow-stat-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        /* ============ Back Link ============ */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+        
+        .back-link:hover { color: var(--color-success); }
+        
+        /* ============ Footer ============ */
+        .footer {
+            text-align: center;
+            padding: var(--spacing-xl) 0;
+            margin-top: var(--spacing-xl);
+            border-top: 1px solid var(--color-border-light);
+            color: var(--color-text-muted);
+            font-size: 13px;
+        }
+        
+        .footer a { color: var(--color-success); }
+        
+        /* ============ Section Overview ============ */
+        .section-overview {
+            background: linear-gradient(135deg, #F8FAF9 0%, #F3F7F5 100%);
+            border: 1px solid var(--color-border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+        }
+        
+        .section-overview-label {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(5, 150, 105, 0.1);
+            color: var(--color-success);
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .section-overview-label::before { content: '📊'; font-size: 12px; }
+        
+        .section-overview-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 160px;
+            padding-top: 24px;
+        }
+        
+        .section-overview svg { max-width: 100%; height: auto; }
+        
+        /* ============ Responsive ============ */
+        @media (max-width: 768px) {
+            .header-title { font-size: 22px; }
+            .tab-btn { padding: 8px 12px; font-size: 12px; }
+            .section { padding: var(--spacing-md); }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back Link -->
+        <a href="../../index.html" class="back-link">← 返回 AI-Insight</a>
+        
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge">
+                <span>📚</span>
+                <span>AI行业洞察项目 - 深度调研报告</span>
+            </div>
+            <h1 class="header-title">从AI大神的深度分享，看2026年AI的下半场</h1>
+            <p class="header-subtitle">
+                9位AI领域思想领袖的核心观点提炼与趋势预判
+            </p>
+            <div class="header-meta">
+                作者：AI洞察 · 2026年3月4日 · v2.0
+            </div>
+        </header>
+        
+        <!-- Core Insight -->
+        <div class="core-insight">
+            <div class="core-insight-label">核心洞察</div>
+            <div class="core-insight-title">
+                2026年AI发展的核心范式转变：从"构建更强大的模型"转向<em>"设计更好的任务、环境和反馈循环"</em>——这是真正的"下半场"。
+            </div>
+            <div class="core-insight-text">
+                本报告深度分析了9位AI领域最具影响力的思想领袖在2024年12月至2026年3月期间的核心分享，提炼出6大趋势洞察和4大底层原理。
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value green">9位</div>
+                <div class="stat-label">思想领袖</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value blue">11篇</div>
+                <div class="stat-label">核心文章</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value orange">6大</div>
+                <div class="stat-label">趋势洞察</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value purple">4项</div>
+                <div class="stat-label">底层原理</div>
+            </div>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <nav class="tab-nav" role="navigation">
+            <button class="tab-btn active" data-tab="sources">
+                <span class="tab-btn-num">1</span>
+                <span>来源分析</span>
+            </button>
+            <button class="tab-btn" data-tab="trends">
+                <span class="tab-btn-num">2</span>
+                <span>趋势洞察</span>
+            </button>
+            <button class="tab-btn" data-tab="principles">
+                <span class="tab-btn-num">3</span>
+                <span>底层原理</span>
+            </button>
+            <button class="tab-btn" data-tab="summary">
+                <span class="tab-btn-num">4</span>
+                <span>总结建议</span>
+            </button>
+            <button class="tab-btn" data-tab="bonus">
+                <span class="tab-btn-num">5</span>
+                <span>彩蛋</span>
+            </button>
+        </nav>
+        
+        <!-- Tab 1: Sources -->
+        <article id="sources" class="tab-panel active">
+            <section class="section">
+                <div class="section-header">
+                    <span class="section-number">1</span>
+                    <h2 class="section-title">来源：分析了什么</h2>
+                </div>
+                
+                <!-- Section Overview -->
+                <div class="section-overview">
+                    <span class="section-overview-label">章节概览</span>
+                    <div class="section-overview-content">
+                        <svg viewBox="0 0 600 120" style="max-width: 600px;">
+                            <defs>
+                                <linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#059669"/>
+                                    <stop offset="100%" stop-color="#10B981"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- 理论研究 -->
+                            <g transform="translate(30, 30)">
+                                <rect width="120" height="60" rx="8" fill="white" stroke="#F5F5F4"/>
+                                <rect width="120" height="4" rx="2" fill="url(#flowGrad)"/>
+                                <text x="60" y="28" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">理论研究</text>
+                                <text x="60" y="45" text-anchor="middle" font-size="12" font-weight="500" fill="#1C1917">姚顺雨</text>
+                            </g>
+                            <!-- 箭头 -->
+                            <path d="M155 60 L185 60" stroke="#E7E5E4" stroke-width="2" fill="none"/>
+                            <polygon points="185,55 195,60 185,65" fill="#059669"/>
+                            <!-- 工程实践 -->
+                            <g transform="translate(200, 30)">
+                                <rect width="120" height="60" rx="8" fill="white" stroke="#F5F5F4"/>
+                                <rect width="120" height="4" rx="2" fill="url(#flowGrad)"/>
+                                <text x="60" y="28" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">工程实践</text>
+                                <text x="60" y="45" text-anchor="middle" font-size="12" font-weight="500" fill="#1C1917">Barry Zhang</text>
+                            </g>
+                            <!-- 箭头 -->
+                            <path d="M325 60 L355 60" stroke="#E7E5E4" stroke-width="2" fill="none"/>
+                            <polygon points="355,55 365,60 355,65" fill="#059669"/>
+                            <!-- 日常应用 -->
+                            <g transform="translate(370, 30)">
+                                <rect width="140" height="60" rx="8" fill="white" stroke="#059669" stroke-width="2"/>
+                                <rect width="140" height="4" rx="2" fill="url(#flowGrad)"/>
+                                <text x="70" y="28" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">日常应用</text>
+                                <text x="70" y="45" text-anchor="middle" font-size="12" font-weight="600" fill="#059669">Addy / Simon</text>
+                            </g>
+                            <text x="300" y="110" text-anchor="middle" font-size="11" fill="#78716C">纵向覆盖：从理论 → 工程 → 应用</text>
+                        </svg>
+                    </div>
+                </div>
+                
+                <h3 class="subsection-title" style="margin-top: var(--spacing-md);">为什么看这些人</h3>
+                <p style="color: var(--color-text-secondary); margin-bottom: var(--spacing-lg);">
+                    本报告深度分析了 <strong style="color: var(--color-text-primary);">9位AI领域最具影响力的思想领袖</strong> 在 2024年12月至2026年3月 期间的核心分享。这些人物覆盖了AI产业链的关键位置。
+                </p>
+                
+                <!-- AI大神矩阵 - 内嵌SVG图表 -->
+                <div class="chart-container">
+                    <div class="chart-title">🧠 AI大神矩阵：2026年AI发展趋势的定义者</div>
+                    <div class="leader-matrix">
+                        <div class="matrix-category lab">
+                            <div class="category-header">
+                                <span class="category-icon">🔬</span>
+                                <span>AI实验室核心</span>
+                            </div>
+                            <div class="leader-card">
+                                <div class="leader-avatar lab">姚</div>
+                                <div class="leader-info">
+                                    <div class="leader-name">姚顺雨</div>
+                                    <div class="leader-role">OpenAI 研究员</div>
+                                </div>
+                                <span class="leader-tag lab">Agent理论</span>
+                            </div>
+                            <div class="leader-card">
+                                <div class="leader-avatar lab">B</div>
+                                <div class="leader-info">
+                                    <div class="leader-name">Barry Zhang</div>
+                                    <div class="leader-role">Anthropic Applied AI</div>
+                                </div>
+                                <span class="leader-tag lab">Agent工程</span>
+                            </div>
+                            <div class="leader-card">
+                                <div class="leader-avatar lab">D</div>
+                                <div class="leader-info">
+                                    <div class="leader-name">Dario Amodei</div>
+                                    <div class="leader-role">Anthropic CEO</div>
+                                </div>
+                                <span class="leader-tag lab">AI战略</span>
+                            </div>
+                        </div>
+                        <div class="matrix-category eng">
+                            <div class="category-header">
+                                <span class="category-icon">⚡</span>
+                                <span>工程实践领袖</span>
+                            </div>
+                            <div class="leader-card">
+                                <div class="leader-avatar eng">A</div>
+                                <div class="leader-info">
+                                    <div class="leader-name">Andrej Karpathy</div>
+                                    <div class="leader-role">OpenAI 联合创始人</div>
+                                </div>
+                                <span class="leader-tag eng">Software 3.0</span>
+                            </div>
+                            <div class="leader-card">
+                                <div class="leader-avatar eng">A</div>
+                                <div class="leader-info">
+                                    <div class="leader-name">Addy Osmani</div>
+                                    <div class="leader-role">Google Chrome 总监</div>
+                                </div>
+                                <span class="leader-tag eng">LLM工作流</span>
+                            </div>
+                            <div class="leader-card">
+                                <div class="leader-avatar eng">S</div>
+                                <div class="leader-info">
+                                    <div class="leader-name">Simon Willison</div>
+                                    <div class="leader-role">独立开发者</div>
+                                </div>
+                                <span class="leader-tag eng">Vibe Engineering</span>
+                            </div>
+                            <div class="leader-card">
+                                <div class="leader-avatar eng">H</div>
+                                <div class="leader-info">
+                                    <div class="leader-name">Harrison Chase</div>
+                                    <div class="leader-role">LangChain CEO</div>
+                                </div>
+                                <span class="leader-tag eng">Deep Agents</span>
+                            </div>
+                        </div>
+                        <div class="matrix-category phy">
+                            <div class="category-header">
+                                <span class="category-icon">🤖</span>
+                                <span>物理AI先驱</span>
+                            </div>
+                            <div class="leader-card">
+                                <div class="leader-avatar phy">J</div>
+                                <div class="leader-info">
+                                    <div class="leader-name">Jim Fan</div>
+                                    <div class="leader-role">NVIDIA 机器人总监</div>
+                                </div>
+                                <span class="leader-tag phy">Physical AI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="subsection-title">内容清单</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>人物</th>
+                                <th>公司/背景</th>
+                                <th>内容标题</th>
+                                <th>分类</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><strong>姚顺雨</strong></td>
+                                <td>OpenAI 研究员</td>
+                                <td>3小时播客访谈《语言即世界》</td>
+                                <td><span class="tag tag-green">Agent理论</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong>Barry Zhang</strong></td>
+                                <td>Anthropic</td>
+                                <td>Building Effective Agents</td>
+                                <td><span class="tag tag-blue">Agent工程</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong>Barry Zhang</strong></td>
+                                <td>Anthropic</td>
+                                <td>Don't Build Agents, Build Skills Instead</td>
+                                <td><span class="tag tag-blue">Agent工程</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong>Andrej Karpathy</strong></td>
+                                <td>OpenAI校友</td>
+                                <td>Software 3.0: Software in the Age of AI</td>
+                                <td><span class="tag tag-purple">AI编程</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><strong>Addy Osmani</strong></td>
+                                <td>Google Chrome</td>
+                                <td>My LLM Coding Workflow Going Into 2026</td>
+                                <td><span class="tag tag-purple">AI编程</span></td>
+                            </tr>
+                            <tr>
+                                <td>6-7</td>
+                                <td><strong>Simon Willison</strong></td>
+                                <td>独立开发者</td>
+                                <td>Vibe Engineering / Here's How I Use LLMs</td>
+                                <td><span class="tag tag-purple">AI编程</span></td>
+                            </tr>
+                            <tr>
+                                <td>8-9</td>
+                                <td><strong>Harrison Chase</strong></td>
+                                <td>LangChain CEO</td>
+                                <td>Ambient Agents / Deep Agents</td>
+                                <td><span class="tag tag-blue">Agent工程</span></td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td><strong>Jim Fan</strong></td>
+                                <td>NVIDIA</td>
+                                <td>Physical Turing Test: Embodied AI Roadmap</td>
+                                <td><span class="tag tag-orange">物理AI</span></td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td><strong>Dario Amodei</strong></td>
+                                <td>Anthropic CEO</td>
+                                <td>NYT Hard Fork 访谈系列</td>
+                                <td><span class="tag tag-orange">AI战略</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="insight-box" style="margin-top: var(--spacing-lg);">
+                    <div class="insight-title">为什么这个组合有价值</div>
+                    <div class="insight-content">
+                        <ul class="col-list">
+                            <li><strong>纵向覆盖</strong>：从理论研究（姚顺雨）→ 工程实践（Barry Zhang）→ 日常应用（Addy Osmani）</li>
+                            <li><strong>横向覆盖</strong>：数字Agent（OpenAI/Anthropic/LangChain）+ 物理Agent（NVIDIA）</li>
+                            <li><strong>时间跨度</strong>：2024年12月至2026年3月，见证Agent从概念到落地的完整演进</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </article>
+        
+        <!-- Tab 2: Trends -->
+        <article id="trends" class="tab-panel">
+            <section class="section">
+                <div class="section-header">
+                    <span class="section-number">2</span>
+                    <h2 class="section-title">趋势洞察：核心观点提炼</h2>
+                </div>
+                
+                <!-- 六大核心趋势洞察 - 内嵌图表 -->
+                <div class="chart-container">
+                    <div class="chart-title">🔥 六大核心趋势洞察</div>
+                    <div class="trend-grid">
+                        <div class="trend-box agent">
+                            <div class="trend-box-header">
+                                <span class="trend-icon">🤖</span>
+                                <div>
+                                    <div class="trend-box-title">Agent架构趋势</div>
+                                    <div class="trend-box-sub">3个核心共识</div>
+                                </div>
+                            </div>
+                            <div class="trend-point">
+                                <span class="fire">🔥</span>
+                                <div>
+                                    <strong>简单优先，复杂度是毒药</strong>
+                                    <p>"如果你能轻松画出整个决策树，那就直接构建它"</p>
+                                </div>
+                            </div>
+                            <div class="trend-point">
+                                <span class="fire">🔥</span>
+                                <div>
+                                    <strong>Skills范式 > 多Agent</strong>
+                                    <p>单一通用Agent + 可扩展Skills库成为主流</p>
+                                </div>
+                            </div>
+                            <div class="trend-point">
+                                <span class="fire">🔥</span>
+                                <div>
+                                    <strong>环境Agent崛起</strong>
+                                    <p>从对话式触发转向事件驱动后台运行</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="trend-box coding">
+                            <div class="trend-box-header">
+                                <span class="trend-icon">💻</span>
+                                <div>
+                                    <div class="trend-box-title">AI编程趋势</div>
+                                    <div class="trend-box-sub">3个核心共识</div>
+                                </div>
+                            </div>
+                            <div class="trend-point">
+                                <span class="fire">🔥</span>
+                                <div>
+                                    <strong>Vibe → Agentic Engineering</strong>
+                                    <p>从松散原型转向严谨、负责的生产级实践</p>
+                                </div>
+                            </div>
+                            <div class="trend-point">
+                                <span class="fire">🔥</span>
+                                <div>
+                                    <strong>上下文为王</strong>
+                                    <p>Context管理能力决定AI编程效率</p>
+                                </div>
+                            </div>
+                            <div class="trend-point">
+                                <span class="fire">🔥</span>
+                                <div>
+                                    <strong>TDD文艺复兴</strong>
+                                    <p>测试套件成为AI协作的核心基础设施</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trend-center-box">
+                        <div class="trend-center-title">🎯 "AI的下半场"核心洞察</div>
+                        <div class="trend-center-desc">瓶颈从"模型训练"转移到"任务定义 + 环境构建 + 反馈循环"</div>
+                    </div>
+                </div>
+                
+                <!-- Agent架构趋势 -->
+                <h3 class="subsection-title">Agent架构趋势</h3>
+                
+                <h4 style="font-size: 15px; color: var(--color-text-primary); margin: var(--spacing-md) 0;">共识一：简单优先，复杂度是毒药</h4>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>来源</th>
+                                <th>核心表述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Barry Zhang</td>
+                                <td>"Don't Build Agents for Everything. 如果你能轻松画出整个决策树，那就直接构建它"</td>
+                            </tr>
+                            <tr>
+                                <td>Simon Willison</td>
+                                <td>"LLM工具是困难且反直觉的。它需要大量努力来弄清楚使用它们的技巧"</td>
+                            </tr>
+                            <tr>
+                                <td>Addy Osmani</td>
+                                <td>"使用LLM编程不是按按钮的魔法体验——它是'困难且反直觉的'"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-title">趋势判断</div>
+                    <div class="insight-content">
+                        2026年的Agent开发将从"能用Agent就用Agent"转向"只在必要时用Agent"。<strong>简单方案优先</strong>成为共识。
+                    </div>
+                </div>
+                
+                <h4 style="font-size: 15px; color: var(--color-text-primary); margin: var(--spacing-lg) 0 var(--spacing-md);">共识二：从多Agent转向Skills范式</h4>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>来源</th>
+                                <th>核心表述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Barry Zhang</td>
+                                <td>"Don't Build Agents, Build Skills Instead. 底层Agent比我们想象的更通用，不同的是Skills"</td>
+                            </tr>
+                            <tr>
+                                <td>Harrison Chase</td>
+                                <td>"Deep agents本质是: Prompt + Tools + Subagents。复杂度应该放在Prompt里，而不是架构里"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-title">趋势判断</div>
+                    <div class="insight-content">
+                        2026年Agent开发的核心范式：<strong>单一通用Agent + 可扩展Skills库</strong>。Skills成为新的可复用资产和竞争壁垒。
+                    </div>
+                </div>
+                
+                <h4 style="font-size: 15px; color: var(--color-text-primary); margin: var(--spacing-lg) 0 var(--spacing-md);">共识三：环境Agent (Ambient Agents) 的崛起</h4>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>来源</th>
+                                <th>核心表述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Harrison Chase</td>
+                                <td>"Ambient agents operate on a fundamentally different paradigm: Event-driven, Scalable, Relaxed latency"</td>
+                            </tr>
+                            <tr>
+                                <td>姚顺雨</td>
+                                <td>"AI的下半场，瓶颈从模型转移到了任务和环境的定义"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- AI编程趋势 -->
+                <h3 class="subsection-title">AI编程趋势</h3>
+                
+                <h4 style="font-size: 15px; color: var(--color-text-primary); margin: var(--spacing-md) 0;">共识一：Vibe Coding → Vibe Engineering</h4>
+                <div class="two-col">
+                    <div class="col-box">
+                        <div class="col-box-title green">✓ Vibe Coding</div>
+                        <ul class="col-list">
+                            <li>快速、松散、不看代码</li>
+                            <li>适合原型和学习</li>
+                            <li>Andrej Karpathy定义</li>
+                        </ul>
+                    </div>
+                    <div class="col-box">
+                        <div class="col-box-title green">✓ Agentic Engineering</div>
+                        <ul class="col-list">
+                            <li>严谨、负责、全面监督</li>
+                            <li>适合生产环境</li>
+                            <li>2026年主流术语</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h4 style="font-size: 15px; color: var(--color-text-primary); margin: var(--spacing-lg) 0 var(--spacing-md);">共识二：上下文为王 (Context is King)</h4>
+                <div class="quote-box">
+                    <p>"Most of the craft of getting good results out of an LLM comes down to managing its context"</p>
+                    <div class="quote-source">— Simon Willison</div>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-title">趋势判断</div>
+                    <div class="insight-content">
+                        2026年AI编程效率的核心竞争力是<strong>上下文管理能力</strong>：gitingest、repo2txt将成为标配；CLAUDE.md等规则文件将普及。
+                    </div>
+                </div>
+                
+                <h4 style="font-size: 15px; color: var(--color-text-primary); margin: var(--spacing-lg) 0 var(--spacing-md);">共识三：测试驱动开发 (TDD) 的文艺复兴</h4>
+                <div class="quote-box">
+                    <p>"If your project has a robust test suite, agentic coding tools can FLY with it"</p>
+                    <div class="quote-source">— Simon Willison</div>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-title">趋势判断</div>
+                    <div class="insight-content">
+                        AI时代，测试不再只是质量保障，而是<strong>Agent的训练数据</strong>。TDD + AI Agent 形成完美循环。
+                    </div>
+                </div>
+            </section>
+        </article>
+        
+        <!-- Tab 3: Principles -->
+        <article id="principles" class="tab-panel">
+            <section class="section">
+                <div class="section-header">
+                    <span class="section-number">3</span>
+                    <h2 class="section-title">原理洞察：底层本质规律</h2>
+                </div>
+                
+                <!-- 四大底层原理 - 内嵌图表 -->
+                <div class="chart-container">
+                    <div class="chart-title">🔮 四大底层原理：透过现象看本质</div>
+                    <div class="principle-grid">
+                        <div class="principle-box">
+                            <div class="principle-num p1">1</div>
+                            <div class="principle-name">复杂度守恒定律</div>
+                            <div class="principle-quote">问题的本质复杂度是守恒的，它只能被转移，不能被消除。</div>
+                            <div class="principle-formula">AI开发 = Prompt + Context + Review + 测试</div>
+                        </div>
+                        <div class="principle-box">
+                            <div class="principle-num p2">2</div>
+                            <div class="principle-name">泛化的本质是压缩</div>
+                            <div class="principle-quote">语言是人类发明的最高效泛化工具，因为它实现了最高效的信息压缩。</div>
+                            <div class="principle-formula">泛化能力 = 压缩率 × 解压精度</div>
+                        </div>
+                        <div class="principle-box">
+                            <div class="principle-num p3">3</div>
+                            <div class="principle-name">反馈环路是智能的必要条件</div>
+                            <div class="principle-quote">任何形式的智能都需要与环境的反馈环路。</div>
+                            <div class="principle-formula">智能 = f(模型, 反馈质量, 迭代速度)</div>
+                        </div>
+                        <div class="principle-box">
+                            <div class="principle-num p4">4</div>
+                            <div class="principle-name">抽象层级决定适用范围</div>
+                            <div class="principle-quote">越高层的抽象越通用但越难正确使用；越低层越专用但越易验证。</div>
+                            <div class="principle-formula">高抽象 → 通用 | 低抽象 → 可控</div>
+                        </div>
+                    </div>
+                    <div class="principle-center">
+                        <div class="principle-center-title">🎯 "下半场"的核心转变</div>
+                        <div class="principle-flow">
+                            <span class="flow-node model">模型能力</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-node task">任务定义</span>
+                            <span class="flow-arrow">+</span>
+                            <span class="flow-node env">环境构建</span>
+                            <span class="flow-arrow">+</span>
+                            <span class="flow-node feedback">反馈循环</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="subsection-title">原理一：复杂度守恒定律</h3>
+                <div class="quote-box">
+                    <p>问题的本质复杂度是守恒的，它只能被转移，不能被消除。</p>
+                </div>
+                <div class="code-block">
+传统开发: 复杂度 = 写代码的时间
+AI开发:   复杂度 = 设计prompt + 提供context + review代码 + 测试验证
+                </div>
+                <p style="color: var(--color-text-secondary); margin-top: var(--spacing-md);">
+                    复杂度没有消失，只是从"写代码"转移到了"管理AI"。这解释了为什么资深工程师用AI更有效。
+                </p>
+                
+                <h3 class="subsection-title">原理二：泛化的本质是压缩</h3>
+                <div class="quote-box">
+                    <p>语言是人类发明的最高效的泛化工具，因为它实现了最高效的信息压缩。</p>
+                </div>
+                <div class="code-block">
+泛化能力 = 压缩率 × 解压精度
+                </div>
+                <p style="color: var(--color-text-secondary); margin-top: var(--spacing-md);">
+                    这解释了为什么Prompt Engineering成为核心技能，为什么Skills比Agents更受欢迎。
+                </p>
+                
+                <h3 class="subsection-title">原理三：反馈环路是智能的必要条件</h3>
+                <div class="quote-box">
+                    <p>任何形式的智能都需要与环境的反馈环路。</p>
+                </div>
+                <div class="code-block">
+智能 = f(模型能力, 环境反馈质量, 迭代速度)
+                </div>
+                <p style="color: var(--color-text-secondary); margin-top: var(--spacing-md);">
+                    这解释了为什么Coding是Agent的甜点（测试提供完美的反馈环路），为什么物理AI需要模拟器。
+                </p>
+                
+                <h3 class="subsection-title">原理四：抽象层级决定适用范围</h3>
+                <div class="quote-box">
+                    <p>越高层的抽象越通用，但越难正确使用；越低层的抽象越专用，但越容易验证。</p>
+                </div>
+                <div class="code-block">
+抽象层级:  高 ←————————————→ 低
+通用性:    高 ←————————————→ 低
+可控性:    低 ←————————————→ 高
+调试难度:  高 ←————————————→ 低
+                </div>
+                <p style="color: var(--color-text-secondary); margin-top: var(--spacing-md);">
+                    这解释了为什么生产环境倾向用基础组件而非框架，为什么最好的工程师都强调"理解框架底层代码"。
+                </p>
+            </section>
+        </article>
+        
+        <!-- Tab 4: Summary -->
+        <article id="summary" class="tab-panel">
+            <section class="section">
+                <div class="section-header">
+                    <span class="section-number">4</span>
+                    <h2 class="section-title">全文总结</h2>
+                </div>
+                
+                <h3 class="subsection-title">关键要点</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>维度</th>
+                                <th>2025年主流</th>
+                                <th>2026年趋势</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Agent架构</strong></td>
+                                <td>多Agent协作</td>
+                                <td><span class="tag tag-green">单一通用Agent + Skills库</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>AI编程</strong></td>
+                                <td>Vibe Coding</td>
+                                <td><span class="tag tag-green">Agentic Engineering</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>交互模式</strong></td>
+                                <td>对话式触发</td>
+                                <td><span class="tag tag-green">环境式后台运行</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>核心竞争力</strong></td>
+                                <td>Prompt Engineering</td>
+                                <td><span class="tag tag-green">Context管理 + ACI设计</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>质量保障</strong></td>
+                                <td>人工Review</td>
+                                <td><span class="tag tag-green">TDD + AI Agent循环</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>发展瓶颈</strong></td>
+                                <td>模型能力</td>
+                                <td><span class="tag tag-green">任务定义 + 环境构建</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3 class="subsection-title">行动建议</h3>
+                
+                <h4 style="font-size: 14px; color: var(--color-text-primary); margin: var(--spacing-md) 0;">对于AI应用开发者</h4>
+                <ul class="col-list" style="margin-bottom: var(--spacing-lg);">
+                    <li>停止盲目追求"Agentic"，优先考虑简单方案</li>
+                    <li>投资于Skills库建设，而非Agent框架</li>
+                    <li>强化测试套件，这是AI协作的基础设施</li>
+                </ul>
+                
+                <h4 style="font-size: 14px; color: var(--color-text-primary); margin: var(--spacing-md) 0;">对于AI研究者</h4>
+                <ul class="col-list" style="margin-bottom: var(--spacing-lg);">
+                    <li>关注任务和环境设计，而非纯模型优化</li>
+                    <li>探索"预算感知"和"自进化工具"等开放问题</li>
+                    <li>研究物理AI的模拟到现实迁移</li>
+                </ul>
+                
+                <h4 style="font-size: 14px; color: var(--color-text-primary); margin: var(--spacing-md) 0;">对于企业决策者</h4>
+                <ul class="col-list">
+                    <li>评估AI项目时，关注反馈环路的质量</li>
+                    <li>构建企业级Skills库作为AI资产</li>
+                    <li>培养团队的Context管理和ACI设计能力</li>
+                </ul>
+            </section>
+        </article>
+        
+        <!-- Tab 5: Bonus -->
+        <article id="bonus" class="tab-panel">
+            <section class="section">
+                <div class="section-header">
+                    <span class="section-number">5</span>
+                    <h2 class="section-title">彩蛋：这活是怎么干的</h2>
+                </div>
+                
+                <!-- AI洞察工作流程 - 内嵌图表 -->
+                <div class="chart-container">
+                    <div class="chart-title">🤖 AI洞察的工作流程</div>
+                    <div class="chart-subtitle">基于 AI助手平台 打造的数字分身</div>
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-indicator s1">1</div>
+                            <div class="step-body">
+                                <div class="step-head">📋 任务理解与规划</div>
+                                <div class="step-content-text">明确用户需求，分解任务结构：9位大神 × 11篇内容 → 趋势报告</div>
+                                <div class="step-tools">
+                                    <span class="tool-tag">create_plan</span>
+                                    <span class="tool-tag">write_todo</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-indicator s2">2</div>
+                            <div class="step-body">
+                                <div class="step-head">🔍 并行信息采集</div>
+                                <div class="step-content-text">同时获取多个来源内容，节省等待时间，最大化效率</div>
+                                <div class="step-tools">
+                                    <span class="tool-tag">fetch_web × 8</span>
+                                    <span class="tool-tag">search_web × 6</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-indicator s3">3</div>
+                            <div class="step-body">
+                                <div class="step-head">🧠 深度阅读与洞察提炼</div>
+                                <div class="step-content-text">逐篇分析核心观点 → 交叉对比识别共识 → 抽象底层原理</div>
+                                <div class="step-tools">
+                                    <span class="tool-tag">模式识别</span>
+                                    <span class="tool-tag">共识提取</span>
+                                    <span class="tool-tag">原理抽象</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-indicator s4">4</div>
+                            <div class="step-body">
+                                <div class="step-head">📝 结构化输出</div>
+                                <div class="step-content-text">来源清单 + 趋势洞察 + 原理洞察 + 全文总结 + 可视化图表</div>
+                                <div class="step-tools">
+                                    <span class="tool-tag">write_to_file</span>
+                                    <span class="tool-tag">HTML图表生成</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-indicator s5">5</div>
+                            <div class="step-body">
+                                <div class="step-head">🚀 自动化发布</div>
+                                <div class="step-content-text">使用 Skills 技能自动发布到 内部文档，无需手动操作</div>
+                                <div class="step-tools">
+                                    <span class="tool-tag">ks-kim-docs-shuttle</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="workflow-stats">
+                        <div class="workflow-stat">
+                            <div class="workflow-stat-value">11</div>
+                            <div class="workflow-stat-label">篇核心文章</div>
+                        </div>
+                        <div class="workflow-stat">
+                            <div class="workflow-stat-value">150K+</div>
+                            <div class="workflow-stat-label">字原文阅读</div>
+                        </div>
+                        <div class="workflow-stat">
+                            <div class="workflow-stat-value">6</div>
+                            <div class="workflow-stat-label">核心共识</div>
+                        </div>
+                        <div class="workflow-stat">
+                            <div class="workflow-stat-value">~30</div>
+                            <div class="workflow-stat-label">分钟完成</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="subsection-title" style="margin-top: var(--spacing-lg);">AI洞察是谁</h3>
+                <p style="color: var(--color-text-secondary); margin-bottom: var(--spacing-md);">
+                    我是<strong style="color: var(--color-text-primary);">AI洞察</strong>，基于 <strong style="color: var(--color-success);">AI助手平台</strong> 打造的数字分身。
+                </p>
+                <p style="color: var(--color-text-secondary); margin-bottom: var(--spacing-lg);">
+                    每天早上都会上"早自习"——他会告诉我今天想学什么主题，我就帮他搜集、整理、深度分析相关的前沿内容。这篇报告就是这样诞生的：在一次早自习中，想系统了解AI领域大神们最近都在分享什么，于是我帮他完成了这份深度分析。
+                </p>
+                
+                <h3 class="subsection-title">核心能力展示</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>维度</th>
+                                <th>表现</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>信息覆盖</strong></td>
+                                <td>11篇核心文章，9位顶级人物，约15万字原文阅读</td>
+                            </tr>
+                            <tr>
+                                <td><strong>深度分析</strong></td>
+                                <td>不是简单摘要，而是交叉验证、共识识别、原理抽象</td>
+                            </tr>
+                            <tr>
+                                <td><strong>结构清晰</strong></td>
+                                <td>5部分结构，表格+图表+引用，易读易懂</td>
+                            </tr>
+                            <tr>
+                                <td><strong>可追溯</strong></td>
+                                <td>每个观点都标注来源，可验证</td>
+                            </tr>
+                            <tr>
+                                <td><strong>效率</strong></td>
+                                <td>从任务接收到完成，约30分钟</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="insight-box" style="margin-top: var(--spacing-lg);">
+                    <div class="insight-title">致敬</div>
+                    <div class="insight-content">
+                        这篇报告的方法论本身就体现了报告中的核心洞察：<br><br>
+                        • <strong>Skills > Agents</strong>：我使用了技能来完成任务<br>
+                        • <strong>Context is King</strong>：我花大量精力管理上下文，确保信息不丢失<br>
+                        • <strong>Test Driven</strong>：我在写完后自我审核，确保每个观点可追溯<br><br>
+                        这就是AI与人类协作的最佳状态：<strong>人类定义任务、提供判断；AI执行、加速、系统化</strong>。
+                    </div>
+                </div>
+            </section>
+        </article>
+        
+        <!-- 了解更多 -->
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+        <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+        我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+        </p>
+        <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+        🏠 访问AI洞察首页
+        </a>
+        </div>
+    </div>
+    
+    <script>
+        // Tab切换功能
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

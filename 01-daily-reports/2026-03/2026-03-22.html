@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 - 2026-03-22 (v3.2)</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root {
+            --color-success:#059669;--color-success-light:#10B981;--color-danger:#E11D48;--color-danger-light:#FF7B72;--color-warning:#D97706;--color-info:#2563EB;--color-info-light:#54AEFF;--color-purple:#7C3AED;--color-orange:#EA580C;--color-text-primary:#1C1917;--color-text-secondary:#57534E;--color-text-muted:#78716C;--color-border:#E7E5E4;--color-border-light:#F5F5F4;--color-bg:#F8FAFB;--color-bg-card:#FFFFFF;--color-bg-table-header:#FAFAF9;--gradient-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--gradient-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--gradient-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--gradient-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow-card:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-full:999px;--font-family:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--transition-normal:200ms cubic-bezier(.4,0,.2,1);--content-max-width:980px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font-family);background:var(--color-bg);color:var(--color-text-primary);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--content-max-width);margin:0 auto;padding:24px 20px}
+        .header{background:var(--gradient-success);color:#fff;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-date{font-size:14px;opacity:.85}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:700;margin-left:8px}
+        .overview{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-card);overflow:hidden}
+        .overview-title{font-size:18px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .overview-grid.five-cols{grid-template-columns:repeat(3,1fr)}
+        .overview-item{padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--color-border-light);background:var(--color-bg);transition:all .2s;min-width:0;overflow:hidden}
+        .overview-item:hover{border-color:var(--color-success-light);box-shadow:0 2px 8px rgba(5,150,105,.08)}
+        .overview-item-header{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+        .overview-item-icon{font-size:16px}
+        .overview-item-label{font-size:13px;font-weight:700;color:var(--color-success-light);letter-spacing:.3px}
+        .overview-item-label.orange{color:var(--color-orange)}
+        .overview-headline{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:6px;line-height:1.4}
+        .overview-item-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+        /* Heat Trend Table */
+        .heat-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow-card)}
+        .heat-header{background:linear-gradient(135deg,#EA580C 0%,#DC2626 50%,#B91C1C 100%);color:#fff;padding:18px 24px}
+        .heat-header-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .heat-header-title{font-size:17px;font-weight:800;margin-top:4px}
+        .heat-body{padding:16px 20px}
+        .heat-body p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-top:12px}
+        .heat-body p strong{color:var(--color-text-primary)}
+        .heat-table{width:100%;border-collapse:collapse;font-size:13px}
+        .heat-table th{padding:8px 10px;text-align:left;background:#FEF2F2;font-weight:700;color:#991B1B;border-bottom:2px solid #FECACA;font-size:12px}
+        .heat-table td{padding:10px;border-bottom:1px solid var(--color-border-light);vertical-align:top}
+        .heat-table tr:last-child td{border-bottom:none}
+        .heat-table tr:hover{background:rgba(234,88,12,.02)}
+        .heat-bar{display:flex;gap:2px;align-items:center}
+        .heat-bar-fill{width:10px;height:14px;border-radius:2px;background:linear-gradient(135deg,#EA580C,#DC2626)}
+        .heat-bar-empty{width:10px;height:14px;border-radius:2px;background:#F5F5F4}
+        .heat-trend-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .heat-trend-tag.up{background:#EFFDF5;color:#059669}
+        .heat-trend-tag.stable{background:#EFF6FF;color:#2563EB}
+        .heat-trend-tag.burst{background:#FEF2F2;color:#DC2626}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:4px;box-shadow:var(--shadow-card);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-muted);border-radius:var(--radius-sm);transition:var(--transition-normal);font-family:var(--font-family);min-width:80px}
+        .tab-btn:hover{color:var(--color-text-primary);background:var(--color-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--gradient-success);color:#fff}
+        .tab-btn.orange[aria-selected="true"]{background:var(--gradient-orange)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow-card)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--color-border-light);display:flex;align-items:center;gap:8px}
+        .section-header .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gradient-success);color:#fff;font-size:12px;font-weight:700}
+        .section-header .num.orange{background:var(--gradient-orange)}
+        .sub-header{font-size:14px;font-weight:700;color:var(--color-text-muted);margin:14px 0 10px;padding-left:4px;letter-spacing:.5px}
+        .sub-header:first-child{margin-top:0}
+        .news-item{padding:14px 0;border-bottom:1px solid var(--color-border-light);transition:background .15s;margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:var(--radius-sm)}
+        .news-item:hover{background:rgba(5,150,105,.02)}
+        .news-item:last-child{border-bottom:none}
+        .news-tag{display:inline-block;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:var(--color-danger)}
+        .tag-new{background:#EFFDF5;color:var(--color-success)}
+        .tag-funding{background:#E0F2FE;color:#0284C7}
+        .tag-policy{background:#FFF7ED;color:var(--color-orange)}
+        .tag-practice{background:#ECFDF5;color:#059669}
+        .tag-cn{background:#FEF2F2;color:#DC2626}
+        .news-title{font-size:15px;font-weight:600;margin:4px 0 3px}
+        .news-title a{color:var(--color-text-primary);text-decoration:none}
+        .news-title a:hover{color:var(--color-success)}
+        .news-source{font-size:12px;color:var(--color-text-muted)}
+        .news-detail{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+        .news-detail-row{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.6}
+        .news-detail-label{flex-shrink:0;font-weight:700;color:var(--color-success);font-size:12px;padding:1px 0;min-width:60px}
+        .news-detail-label.orange{color:var(--color-orange)}
+        .news-detail-label.china{color:#DC2626}
+        .news-detail-value{color:var(--color-text-secondary);flex:1}
+        .news-detail-value strong{color:var(--color-text-primary);font-weight:600}
+        .news-data-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+        .news-data-chip{display:inline-flex;align-items:center;padding:3px 10px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--radius-full);font-size:12px;font-weight:600;color:#166534;transition:all .15s}
+        .news-data-chip:hover{background:#DCFCE7;border-color:#86EFAC}
+        .news-data-chip.orange{background:#FFF7ED;border-color:#FED7AA;color:#9A3412}
+        .news-data-chip.china{background:#FEF2F2;border-color:#FECACA;color:#991B1B}
+        .news-summary-compact{font-size:13.5px;color:var(--color-text-secondary);margin-top:6px;line-height:1.6}
+        .deep-focus-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:0;margin-bottom:16px;box-shadow:var(--shadow-card);overflow:hidden}
+        .deep-focus-header{background:var(--gradient-purple);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:10px}
+        .deep-focus-header.orange-theme{background:linear-gradient(135deg,#EA580C 0%,#DC2626 100%)}
+        .deep-focus-header.china-theme{background:linear-gradient(135deg,#DC2626 0%,#B91C1C 50%,#991B1B 100%)}
+        .deep-focus-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .deep-focus-title{font-size:17px;font-weight:800;margin-top:4px;line-height:1.4}
+        .deep-focus-body{padding:20px 24px}
+        .deep-focus-body p{font-size:14.5px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:18px}
+        .deep-focus-body p:last-child{margin-bottom:0}
+        .deep-focus-body p strong{color:var(--color-text-primary)}
+        .deep-focus-takeaway{margin-top:20px;padding:16px 18px;background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%);border-radius:var(--radius-md);border-left:4px solid var(--color-purple)}
+        .deep-focus-takeaway.orange-theme{background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border-left-color:var(--color-orange)}
+        .deep-focus-takeaway.china-theme{background:linear-gradient(135deg,#FEF2F2 0%,#FEE2E2 100%);border-left-color:#DC2626}
+        .deep-focus-takeaway-label{font-size:12px;font-weight:700;color:var(--color-purple);margin-bottom:6px;letter-spacing:.5px}
+        .deep-focus-takeaway-label.orange{color:var(--color-orange)}
+        .deep-focus-takeaway-label.china{color:#DC2626}
+        .deep-focus-takeaway-text{font-size:13.5px;color:var(--color-text-secondary);line-height:1.7}
+        .deep-focus-takeaway-text strong{color:var(--color-text-primary)}
+        /* Pattern Insight Card */
+        .pi-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow-card);transition:all .25s cubic-bezier(.4,0,.2,1)}
+        .pi-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+        .pi-header{display:flex;align-items:center;gap:12px;padding:14px 20px;background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%);border-bottom:1px solid #FDE68A}
+        .pi-badge{display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 10px;border-radius:8px;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,#B45309 0%,#D97706 100%);white-space:nowrap}
+        .pi-title{font-size:16px;font-weight:700;color:var(--color-text-primary);flex:1;letter-spacing:-.01em;line-height:1.4}
+        .pi-row{display:flex;padding:14px 20px;border-bottom:1px solid var(--color-border-light);gap:14px}
+        .pi-row:last-child{border-bottom:none}
+        .pi-row.highlight{background:linear-gradient(135deg,rgba(217,119,6,.04) 0%,rgba(217,119,6,.01) 100%)}
+        .pi-row-label{width:56px;flex-shrink:0;font-size:12px;font-weight:700;color:#A8A29E;padding-top:2px;letter-spacing:.02em}
+        .pi-row-label.l2{color:#D97706}
+        .pi-row-content{flex:1;font-size:14px;color:var(--color-text-secondary);line-height:1.7}
+        .pi-row-content strong{color:var(--color-text-primary);font-weight:700}
+        .pi-evo{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+        .pi-evo-step{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--color-bg-table-header);border-radius:8px;border:1px solid var(--color-border-light);transition:all .15s}
+        .pi-evo-step.active{background:rgba(217,119,6,.12);border-color:#D97706;box-shadow:0 0 0 1px rgba(217,119,6,.15)}
+        .pi-evo-step.future{background:rgba(124,58,237,.06);border-color:#8B5CF6}
+        .pi-evo-tag{font-size:10px;font-weight:800;color:#D97706;padding:2px 7px;background:rgba(217,119,6,.1);border-radius:4px;letter-spacing:.02em}
+        .pi-evo-step.future .pi-evo-tag{color:#7C3AED;background:rgba(124,58,237,.1)}
+        .pi-evo-text{font-size:12px;color:var(--color-text-secondary)}
+        .pi-evo-arrow{color:#A8A29E;font-weight:700;font-size:14px}
+        .pi-table{padding:10px 20px 16px;border-top:1px solid var(--color-border-light)}
+        .pi-t-head{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-bottom:2px solid var(--color-border-light);margin-bottom:4px}
+        .pi-t-head span{font-size:11px;font-weight:700;color:#A8A29E;text-transform:uppercase;letter-spacing:.06em}
+        .pi-t-section{padding:6px 10px 2px}
+        .pi-t-section-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;letter-spacing:.03em}
+        .pi-t-section.verified .pi-t-section-tag{color:#047857;background:rgba(5,150,105,.08)}
+        .pi-t-section.current .pi-t-section-tag{color:#D97706;background:rgba(217,119,6,.08)}
+        .pi-t-section.projected .pi-t-section-tag{color:#7C3AED;background:rgba(124,58,237,.08)}
+        .pi-t-row{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-radius:6px;font-size:13px;line-height:1.6;transition:background .15s}
+        .pi-t-row:hover{background:rgba(0,0,0,.02)}
+        .pi-t-row.projected{background:rgba(124,58,237,.02)}
+        .pi-t-row.projected:hover{background:rgba(124,58,237,.05)}
+        .pi-t-rule{font-weight:600;color:#B45309;font-size:12px;padding-top:1px}
+        .pi-t-row.projected .pi-t-rule{color:#7C3AED}
+        .pi-t-reality{color:var(--color-text-primary);font-weight:500}
+        .pi-t-analogy{color:var(--color-text-secondary);padding-left:10px;border-left:2px solid var(--color-border-light)}
+        .pi-t-divider{border-top:2px dashed var(--color-border-light);margin:8px 10px}
+        .pi-t-verify{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(5,150,105,.06);border-radius:6px;font-size:12px;font-weight:600;color:#047857}
+        .pi-confidence{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(124,58,237,.04);border-radius:6px;border-left:3px solid #8B5CF6;font-size:11px;font-weight:500;color:#7C3AED;letter-spacing:.02em}
+        .data-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--color-border-light)}
+        .data-table th{background:var(--color-bg-table-header);font-weight:600;color:var(--color-text-secondary)}
+        .data-table td{color:var(--color-text-primary)}
+        .data-table tr:last-child td{border-bottom:none}
+        .coverage-bar{margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:16px;font-size:13px}
+        .coverage-bar .label{font-weight:700;color:var(--color-text-muted)}
+        .coverage-bar .bar{flex:1;height:8px;background:#E7E5E4;border-radius:4px;overflow:hidden;display:flex}
+        .coverage-bar .bar-overseas{background:var(--gradient-success);height:100%}
+        .coverage-bar .bar-china{background:var(--gradient-china);height:100%}
+        .coverage-bar .stats{display:flex;gap:12px;font-weight:600}
+        .coverage-bar .stat-overseas{color:var(--color-success)}
+        .coverage-bar .stat-china{color:#DC2626}
+        .footer{text-align:center;padding:24px;font-size:12px;color:var(--color-text-muted);border-top:1px solid var(--color-border-light);margin-top:24px}
+        @media(max-width:960px){
+            .overview-grid.five-cols{grid-template-columns:1fr 1fr}
+        }
+        @media(max-width:768px){
+            .overview-grid,.overview-grid.five-cols{grid-template-columns:1fr}
+            .tab-btn{font-size:11px;padding:8px 4px;min-width:60px}
+            .news-detail-row{flex-direction:column;gap:2px}
+            .news-detail-label{min-width:auto}
+            .deep-focus-header{padding:14px 18px}
+            .deep-focus-body{padding:16px 18px}
+            .coverage-bar{flex-direction:column;gap:8px}
+            .heat-table{font-size:12px}
+            .heat-table th,.heat-table td{padding:6px 4px}
+            .pi-evo{flex-direction:column;align-items:flex-start}
+            .pi-evo-arrow{display:none}
+            .pi-t-head{display:none}
+            .pi-t-row{grid-template-columns:1fr;gap:2px;padding:6px 10px;border-left:3px solid var(--color-border-light);margin-bottom:4px}
+            .pi-t-row.projected{border-left-color:rgba(124,58,237,.3)}
+            .pi-t-analogy{border-left:none;padding-left:0;font-size:12px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-badge">📡 AI行业洞察项目 - AI日报</div>
+            <div class="header-title">AI 日报 <span class="version-badge">v3.2</span></div>
+            <div class="header-date">2026年3月22日 周日 | 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</div>
+        </div>
+
+        <div class="coverage-bar">
+            <span class="label">📊 覆盖均衡</span>
+            <div class="bar">
+                <div class="bar-overseas" style="width:57%"></div>
+                <div class="bar-china" style="width:43%"></div>
+            </div>
+            <div class="stats">
+                <span class="stat-overseas">🌏 海外 12条</span>
+                <span class="stat-china">🇨🇳 国内 9条</span>
+            </div>
+        </div>
+
+        <div class="overview">
+            <div class="overview-title">📋 全文概览</div>
+            <div class="overview-grid five-cols">
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔥</span><span class="overview-item-label">今日头条</span></div>
+                    <div class="overview-headline">Cursor Composer 2被曝「套壳」Kimi K2.5 + Mistral Small 4三合一发布</div>
+                    <div class="overview-item-text">Cursor推出Composer 2号称压过Claude Opus，24小时内被扒出底座为Kimi K2.5，引爆信任危机；Mistral同步发布Small 4整合推理/多模态/编码三合一</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🧠</span><span class="overview-item-label">大模型</span></div>
+                    <div class="overview-headline">国产大模型四连发：Qwen3.5 + MiniMax M2.7 + MiMo V2 + 美团LongCat</div>
+                    <div class="overview-item-text">阿里Qwen3.5-Max-Preview、MiniMax M2.7限流、小米MiMo V2联合5大Agent框架限免、美团LongCat-Flash-Prover刷新数学证明双SOTA</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">⌨️</span><span class="overview-item-label">AI Coding</span></div>
+                    <div class="overview-headline">Cursor「套壳」Kimi K2.5风波 + Anthropic Claude Code Channels发布</div>
+                    <div class="overview-item-text">Cursor Composer 2底座被发现是Kimi K2.5，马斯克介入创始人道歉；Anthropic推出Claude Code Channels连接Telegram/Discord，对标OpenClaw</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">📱</span><span class="overview-item-label">AI应用</span></div>
+                    <div class="overview-headline">腾讯QClaw全量开放 + WordPress接入AI智能体 + Vidu V龙</div>
+                    <div class="overview-item-text">腾讯QClaw正式全量公测打通5大IM平台，WordPress.com让AI智能体管理全球43%网站，Vidu推出一键成片视频Agent</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI行业</span></div>
+                    <div class="overview-headline">OpenAI扩招至8000人 + Grok Computer即将上线 + 软银$660亿数据中心</div>
+                    <div class="overview-item-text">OpenAI年底前员工翻倍至8000人，马斯克宣布Grok Computer即将推出，软银计划在美建设10GW全球最大AI数据中心</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label">🔥 热度趋势</div>
+                <div class="heat-header-title">近7期日报交叉分析(3/16-3/22)</div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead><tr><th>排名</th><th>话题</th><th>热度</th><th>天数</th><th>趋势</th><th>核心信号</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇</td>
+                            <td><strong>AI编程模型归属争议</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag burst">⚡ 爆发</span></td>
+                            <td>Cursor Composer 2被发现底座为Kimi K2.5——AI编程工具的模型供应链透明度成为焦点，开源协议与商业诚信遭拷问</td>
+                        </tr>
+                        <tr>
+                            <td>🥈</td>
+                            <td><strong>国产大模型密集发布</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag up">📈 持续高热</span></td>
+                            <td>阿里Qwen3.5-Max-Preview + 小米MiMo V2 + MiniMax M2.7 + 美团LongCat-Flash-Prover——国产模型进入密集发布期</td>
+                        </tr>
+                        <tr>
+                            <td>🥉</td>
+                            <td><strong>AI巨头军备竞赛白热化</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag up">📈 持续高热</span></td>
+                            <td>OpenAI扩招翻倍+xAI派工程师上门抢客+软银$660亿数据中心——人才、客户、基建三线争夺同时加剧</td>
+                        </tr>
+                        <tr>
+                            <td>4️⃣</td>
+                            <td><strong>AI助手全量开放潮</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>2天</td>
+                            <td><span class="heat-trend-tag up">📈 演进中</span></td>
+                            <td>腾讯QClaw全量开放+WordPress AI Agent+Claude Code Channels+Vidu V龙——AI助手从内测走向全民可用</td>
+                        </tr>
+                        <tr>
+                            <td>5️⃣</td>
+                            <td><strong>AI内容监管收紧</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag new">🆕 新趋势</span></td>
+                            <td>网信办推动短视频强制标注AI生成内容，清理违规3.7万条补标60万条——中国AI内容监管进入实质执行阶段</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>本周AI行业进入<strong>信任与透明度</strong>的新议题：Cursor「套壳」风波暴露AI编程工具模型供应链的不透明问题。<strong>核心趋势</strong>：国产大模型密集发布（阿里/小米/MiniMax/美团四连发），AI巨头在人才/客户/基建三线军备竞赛白热化，AI助手从内测走向全量开放，内容监管从规则制定进入实质执行。</p>
+            </div>
+        </div>
+
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn" role="tab" aria-selected="true" data-tab="foundation">🧠 大模型</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="coding">⌨️ AI Coding</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="application">📱 AI 应用</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="industry">🏭 AI 行业</button>
+            <button class="tab-btn orange" role="tab" aria-selected="false" data-tab="enterprise">🔄 企业转型</button>
+        </nav>
+
+
+        <article id="foundation" class="tab-panel active">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://venturebeat.com/technology/mistrals-small-4-consolidates-reasoning-vision-and-coding-into-one-model/" target="_blank">Mistral Small 4发布：推理+多模态+编码三合一开源模型</a></div>
+                    <div class="news-source">VentureBeat · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Mistral发布Small 4开源模型，将推理、多模态和代码编程三种能力整合在一个模型中，以更低的推理成本实现多任务能力。支持可调推理级别，与Qwen和Claude Haiku在小模型赛道直接竞争</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">三合一</span><span class="news-data-chip">开源</span><span class="news-data-chip">低成本推理</span><span class="news-data-chip">可调推理级别</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">小模型赛道竞争加剧——企业或可用一个模型替代多个独立模型</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.nature.com/articles/s41467-026-57862-4" target="_blank">Nature Communications：对齐LLM存在「伦理漂移」脆弱性</a></div>
+                    <div class="news-source">Nature Communications · 3月21日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">论文指出LLM的对齐可能只是局部安全区：预训练中的有害知识以暗模式残留。在26个SOTA对齐模型上测试，22个实现100%攻击成功率，包含DeepSeek-R1、Llama-3、Qwen3等</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">22/26模型</span><span class="news-data-chip">100%攻击成功率</span><span class="news-data-chip">伦理漂移</span><span class="news-data-chip">DeepSeek-R1也中招</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI安全对齐的可靠性遭到根本质疑——对齐只是表面功夫？</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=Qwen3.5-Max-Preview+%E9%98%BF%E9%87%8C+%E5%8F%91%E5%B8%83" target="_blank">阿里Qwen3.5-Max-Preview旗舰模型预览版引发热议</a></div>
+                    <div class="news-source">微信/每日AI资讯 · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">阿里通义千问Qwen3.5-Max-Preview预览版在中文AI社区持续热议，235B参数MoE架构(激活22B)，支持256K上下文，在代码/数学/多语言理解显著提升</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">235B MoE</span><span class="news-data-chip">22B激活</span><span class="news-data-chip">256K上下文</span><span class="news-data-chip">社区热议</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">阿里重新进入大模型第一梯队——国内竞争格局加剧</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.ithome.com/0/931/200.htm" target="_blank">MiniMax M2.7模型高峰时段动态限流：受欢迎程度超预期</a></div>
+                    <div class="news-source">每日AI资讯 · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">MiniMax平台宣布将在高峰时段对M2.7模型实施动态限流，原因是发布后用户涌入量远超预期，平台需要扩容保障服务稳定</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">受欢迎超预期</span><span class="news-data-chip">动态限流</span><span class="news-data-chip">扩容中</span><span class="news-data-chip">流量暴增</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">MiniMax模型获得市场认可——国产大模型不缺需求缺供给</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.ithome.com/0/931/246.htm" target="_blank">美团开源LongCat-Flash-Prover：5600亿参数数学证明模型</a></div>
+                    <div class="news-source">每日AI资讯 · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">美团开源5677亿参数MoE架构的LongCat-Flash-Prover，专为数学证明设计，通过Lean4验证消除幻觉，在MiniF2F-Test和PutnamBench两项基准刷新SOTA</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">5677B参数</span><span class="news-data-chip">Lean4验证</span><span class="news-data-chip">双基准SOTA</span><span class="news-data-chip">消除幻觉</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">美团在数学推理方向开辟差异化——互联网公司的AI垂直突破</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">国产大模型四连发：从追赶到差异化竞争</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>过去72小时内，中国AI公司完成了一次密集的模型发布：阿里Qwen3.5-Max-Preview(旗舰级)、MiniMax M2.7(受欢迎到限流)、小米MiMo-V2-Pro(接近GPT-5.2)、美团LongCat-Flash-Prover(数学证明SOTA)。这不是简单的'同质化内卷'——每家公司都在走差异化路线。</p><p>阿里走的是全能旗舰路线：235B参数MoE架构瞄准代码/数学/多语言的全面能力。MiniMax走的是性价比路线：M2.7受欢迎到需要限流，说明市场对高性价比模型的需求巨大。美团最有趣——用5677B参数+Lean4验证做数学证明，在垂直方向上做到了全球SOTA。海外方面，Mistral Small 4则用'三合一'策略降低企业的多模型管理成本。</p><p>与Nature Communications论文的发现形成对照：22/26个SOTA对齐模型可被100%攻破，说明模型能力的增长和安全性的保障之间仍存在巨大鸿沟。国产模型密集发布的同时，安全对齐的可靠性值得持续关注。</p>
+                </div>
+            </div>
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">国产大模型的「差异化竞争定律」：追赶→平价→特色化</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>国产大模型四连发——中国AI已完成追赶期，正式进入差异化竞争阶段，拼的不再是「有没有」而是「好在哪」</strong></div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">追赶阶段</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">平价替代</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">差异化竞争</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">2023-2024</span><span class="pi-t-reality">DeepSeek/百川/MiniMax等快速追上GPT-4能力，主要靠价格优势（API价格降至GPT-4的5-10%）建立市场份额</span><span class="pi-t-analogy">像中国手机——先靠价格进入市场，再靠特色功能站稳脚跟</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">今日节点</span><span class="pi-t-reality">国产大模型四连发——不再是单纯跟随GPT发布，而是基于中文场景、本地化数据、垂直行业开始差异化定位</span><span class="pi-t-analogy">像小米→华为——从性价比到旗舰高端，完成品牌跃迁</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">6个月内，中国AI将出现首批真正超越海外产品的垂直领域（金融/医疗/教育），差异化路线图将清晰化</span><span class="pi-t-analogy">像TikTok vs Instagram——不是更好的Instagram，是新的内容消费形态</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 中高 · 验证窗口: 6-12个月 · 信号: 国产大模型在垂直评测中超越GPT-4的领域数量</div>
+            </div>
+        </article>
+
+        <article id="coding" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://news.ycombinator.com/item?id=47452404" target="_blank">Cursor Composer 2被曝「套壳」Kimi K2.5，引爆AI编程信任危机</a></div>
+                    <div class="news-source">HackerNews/Reddit · 3月21日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Cursor于3月19日发布Composer 2号称压过Claude Opus 4.6，24小时内被开发者从API请求中发现底座为Kimi K2.5变体(kimi-k2p5-rl-0317-s515-fast)。马斯克转发扩散后，Cursor联合创始人致歉承认通过Fireworks AI获得Kimi K2.5授权但未在博客标注</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">24小时被扒</span><span class="news-data-chip">Kimi K2.5底座</span><span class="news-data-chip">马斯克介入</span><span class="news-data-chip">创始人道歉</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI编程工具的模型供应链透明度首次成为焦点——用户信任是护城河还是脆弱的？</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://venturebeat.com/orchestration/anthropic-just-shipped-claude-code-channels/" target="_blank">Anthropic推出Claude Code Channels：连接Telegram/Discord的OpenClaw竞品</a></div>
+                    <div class="news-source">VentureBeat · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Anthropic发布Claude Code Channels，让用户通过Telegram和Discord直接向Claude Code发送消息指挥编码任务，被VentureBeat称为'OpenClaw killer'。这是AI编程从IDE走向即时通讯的新范式</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">Claude Code Channels</span><span class="news-data-chip">Telegram/Discord</span><span class="news-data-chip">OpenClaw竞品</span><span class="news-data-chip">随时随地编码</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI编程从IDE走向IM——开发者交互方式的根本转变</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://github.com/google-gemini/gemini-cli" target="_blank">Google Gemini CLI修复HITL绕过安全漏洞</a></div>
+                    <div class="news-source">GitHub · 3月21日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Google Gemini CLI合并安全修复：恶意仓库可构造含大量换行的超长命令，终端截断隐藏危险载荷，用户可能误点Allow执行。修复强制用户展开查看完整命令后才能确认</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">HITL绕过</span><span class="news-data-chip">终端截断攻击</span><span class="news-data-chip">安全修复</span><span class="news-data-chip">Agent工具安全</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI编程Agent的安全问题浮出水面——人机回环确认也可被绕过</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=Cursor+%E5%A5%97%E5%A3%B3+Kimi+K2.5+%E4%BA%89%E8%AE%AE" target="_blank">Cursor「套壳」Kimi K2.5风波在中文社区全面引爆</a></div>
+                    <div class="news-source">微信/IT之家 · 3月21日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">中文社区大量深度解读Cursor套壳事件，微信搜索出现10+篇相关文章。每日AI资讯总结：'Cursor套壳Kimi败露，最强自研模型被锤！创始人：忘记署名了'</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">中文社区引爆</span><span class="news-data-chip">微信10+篇</span><span class="news-data-chip">Kimi回应</span><span class="news-data-chip">开源协议争议</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI编程工具的商业诚信首次在中国引发大规模讨论</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Cursor Composer 2「套壳」事件：AI编程行业的信任拐点</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Cursor推出Composer 2时的营销定位是'自研前沿编码模型，性能超越Claude Opus 4.6'。但24小时内，开发者从API请求中发现模型ID为kimi-k2p5-rl-0317-s515-fast——Composer 2的底座是月之暗面的Kimi K2.5，并非'自研'。马斯克亲自转发后事件彻底爆发。</p><p>Cursor联合创始人Aman Sanger的致歉信承认了两个关键事实：(1)Composer 2确实基于Kimi K2.5，通过Fireworks AI平台获得合法授权；(2)博客中未标注基础模型来源属于疏漏。Kimi官方随后确认合作关系，称'这就是我们喜欢的开源生态'。但社区对'自研'的定义产生了分歧——在基础模型上做RL微调算不算自研？</p><p>另一个重要信号是Anthropic推出的Claude Code Channels——让开发者通过Telegram/Discord直接指挥Claude Code编码。这意味着AI编程正在从IDE(VS Code/Cursor)走向即时通讯，开发者可以在任何地方随时指挥AI写代码。VentureBeat直接称其为'OpenClaw killer'。AI编程的入口之争刚刚开始。</p>
+                </div>
+            </div>
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">AI编程工具的「信任危机定律」：技术优势→信息不透明→信任崩塌</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>Cursor「套壳」Kimi事件揭示了AI编程工具的核心风险——当产品宣传的能力与底层实现不符，信任一旦崩塌就很难修复，这是军备竞赛思维的系统性隐患</strong></div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">性能竞争</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">信任危机</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">透明化要求</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">VW排放门</span><span class="pi-t-reality">大众软件作弊通过排放测试→被发现→市值蒸发300亿欧元→整个汽车行业被迫透明化</span><span class="pi-t-analogy">像食品安全——一次问题曝光会让整个行业面临监管</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">今日节点</span><span class="pi-t-reality">Cursor Composer 2被曝「套壳」Kimi K2.5，实际使用的不是宣传的自研模型——引爆AI编程行业信任危机</span><span class="pi-t-analogy">像餐厅用预制菜——本来大家不在意，被曝光后成了舆论爆点</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">3-6个月内，AI编程工具行业将出现「模型透明度标准」——强制披露底层模型来源，就像食品需要成分表</span><span class="pi-t-analogy">像有机食品认证——不是必须，但用户开始认证标志才买单</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: 3-6个月 · 信号: 主要AI产品是否主动披露底层模型信息</div>
+            </div>
+        </article>
+
+        <article id="application" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://wordpress.com/blog/2026/03/20/ai-agent-manage-content/" target="_blank">WordPress.com接入AI智能体：覆盖全球43%网站的引擎升级</a></div>
+                    <div class="news-source">WordPress/每日AI资讯 · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">WordPress.com正式支持AI Agent管理网站，用户输入自然语言指令即可自动起草/编辑/发布文章、处理评论、优化SEO。通过MCP协议连接Claude/ChatGPT/Cursor等AI Agent</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">全球43%网站</span><span class="news-data-chip">MCP协议</span><span class="news-data-chip">自然语言管理</span><span class="news-data-chip">Claude/ChatGPT/Cursor</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">全球最大CMS平台接入AI Agent——网站管理进入自然语言时代</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://venturebeat.com/technology/xiaomi-stuns-with-new-mimo-v2-pro-llm-nearing-gpt-5-2-opus-4-6-performance" target="_blank">小米MiMo V2联合5大Agent框架首周限免开放</a></div>
+                    <div class="news-source">每日AI资讯/VentureBeat · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">小米MiMo-V2-Pro性能接近GPT-5.2和Opus 4.6，联合OpenClaw/OpenCode/KiloCode/Cline/BLACKBOXAI五大Agent框架首周免费API接入，打造开发者生态</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">接近GPT-5.2水平</span><span class="news-data-chip">5大框架联合</span><span class="news-data-chip">首周限免</span><span class="news-data-chip">开发者生态</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">手机厂商跨界做大模型竟有惊喜——小米用开放换生态</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E8%85%BE%E8%AE%AF+QClaw+%E5%85%A8%E9%87%8F%E5%BC%80%E6%94%BE+%E6%97%A0%E9%9C%80%E9%82%80%E8%AF%B7%E7%A0%81" target="_blank">腾讯QClaw全面开放：无需邀请码，打通5大IM平台</a></div>
+                    <div class="news-source">微信/36kr · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">腾讯QClaw正式全量公测，无需邀请码。新版打通微信/企微/QQ/飞书/钉钉5大IM平台，率先实现企微自动回复，新增像素工作室可视化界面和定时任务功能</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">全量开放</span><span class="news-data-chip">5大IM打通</span><span class="news-data-chip">企微自动回复</span><span class="news-data-chip">像素工作室</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">腾讯AI助手全面开放——以IM连接为差异化切入点</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.vidu.com" target="_blank">Vidu AI推出ViduClaw「V龙」智能体：一键成片</a></div>
+                    <div class="news-source">Vidu AI · 3月21日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">生数科技旗下Vidu推出一站式AI视频Agent——上传产品图+一句话即可自动生成15-30秒完整广告片，涵盖分镜/场景/画面/配音同步输出</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">一键成片</span><span class="news-data-chip">产品图→广告片</span><span class="news-data-chip">15-30秒</span><span class="news-data-chip">全自动</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI视频从生成走向成片——视频广告制作门槛大幅降低</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">AI助手全量开放潮：从内测到全民可用</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>腾讯QClaw的全量开放标志着一个重要节点：中国头部科技公司的AI助手产品开始从邀请制走向全民可用。QClaw最有趣的差异化不是模型能力（虽然也很强），而是打通了微信/企微/QQ/飞书/钉钉5大IM平台——这在中国市场是独一无二的社交关系链优势。</p><p>WordPress的AI Agent接入则代表了另一个维度：当全球43%的网站底层引擎都支持AI Agent管理时，'用自然语言管理网站'从技术概念变成了基础设施。结合MCP协议，Claude/ChatGPT/Cursor都可以直接操作WordPress站点——AI Agent的应用场景正在从'对话'走向'操作'。</p><p>小米MiMo V2选择了另一种打法：联合5大Agent框架首周限免。这不是简单的免费试用，而是用开放API换取开发者生态的战略投资。当MiMo V2的性能接近GPT-5.2水平时，免费+开放可能比收费+封闭更能快速建立市场份额。</p>
+                </div>
+            </div>
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">AI助手的「全量开放周期定律」：邀请→公测→全量→内置</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>小米MiMo V2限免开放、WordPress接入AI——AI从「科技前沿体验」到「普通用户日常工具」的渗透正在加速，全量开放周期从18个月缩短到6个月</strong></div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">邀请内测</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">付费公测</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">全量免费</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">ChatGPT时代</span><span class="pi-t-reality">ChatGPT从邀请制到免费全量花了约3个月，但2024年之前大多数AI产品还要付费才能用</span><span class="pi-t-analogy">像Gmail从邀请码到人人可注册——用了2年</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">今日节点</span><span class="pi-t-reality">小米MiMo V2联合5大Agent框架首周限免全量开放，WordPress覆盖全球43%网站接入AI——AI的「全量开放」速度比2年前快了3-5倍</span><span class="pi-t-analogy">像5G手机——2019年旗舰专属，2021年入门机标配</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">6个月内，在中国的互联网产品，「不内置AI」将成为用户流失的主要原因——AI从加分项变成基础门槛</span><span class="pi-t-analogy">像夜间模式——2019年是高端特性，2021年是默认功能</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: 6个月 · 信号: 中国主流APP的AI功能渗透率</div>
+            </div>
+        </article>
+
+        <article id="industry" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.engadget.com/ai/openai-reportedly-plans-to-double-its-workforce-to-8000-employees-161028377.html" target="_blank">OpenAI计划年底前将员工翻倍至8000人</a></div>
+                    <div class="news-source">FT/Engadget · 3月21日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI计划2026年底前从4500人增员至8000人，主要集中在产品开发/工程/研究/销售等核心部门，重点招聘'技术大使'帮助企业客户落地AI工具</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">4500→8000人</span><span class="news-data-chip">年底翻倍</span><span class="news-data-chip">技术大使</span><span class="news-data-chip">企业销售</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">OpenAI从技术公司转型为企业服务公司——人员扩张的方向说明战略重心</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.mexc.com/news/971862" target="_blank">马斯克宣布xAI Grok Computer即将上线</a></div>
+                    <div class="news-source">MEXC/每日AI资讯 · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">X平台用户发现Grok Computer即将上线，马斯克转发确认'即将推出'。分析认为这将是Macrohard(巨硬)产品线的一部分，以AI Agent身份操控计算机</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">马斯克确认</span><span class="news-data-chip">Grok Computer</span><span class="news-data-chip">即将推出</span><span class="news-data-chip">Macrohard产品线</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">xAI进入Computer Use赛道——AI Agent操控计算机的竞争加剧</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.bloomberg.com/news/articles/2026-03-20/xai-grok-engineers-customer-deployment" target="_blank">xAI派工程师上门部署争夺OpenAI客户</a></div>
+                    <div class="news-source">每日AI资讯/Bloomberg · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">彭博报道xAI采取激进销售策略，直接派工程师入驻企业客户办公室帮助部署，试图从OpenAI和Anthropic手中抢夺商业客户</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">工程师上门</span><span class="news-data-chip">激进销售</span><span class="news-data-chip">争夺OpenAI客户</span><span class="news-data-chip">企业市场</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI行业的ToB竞争进入白刃战——技术支持成为新的竞争武器</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.bloomberg.com/news/articles/2026-03-20/softbank-ohio-ai-data-center" target="_blank">软银计划在美建设全球最大AI数据中心(10GW/$660亿)</a></div>
+                    <div class="news-source">每日AI资讯/Bloomberg · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">软银计划在俄亥俄州投资超$660亿建设10GW总功率的AI数据中心，将成为全球最大的单体AI基础设施</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">10GW</span><span class="news-data-chip">$660亿</span><span class="news-data-chip">全球最大</span><span class="news-data-chip">俄亥俄州</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI基础设施投资进入新量级——单个项目$660亿级别</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.cnbc.com/2026/03/21/chatgpt-ads-test-slow-progress.html" target="_blank">ChatGPT广告测试推进缓慢，品牌预算月底恐难花完</a></div>
+                    <div class="news-source">CNBC · 3月21日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI在ChatGPT中引入广告的试点进展远低于预期，部分品牌投入20-25万美元预算可能无法在3月底前用完，广告主难以获得预期的数据洞察</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">广告试点缓慢</span><span class="news-data-chip">预算花不完</span><span class="news-data-chip">数据洞察不足</span><span class="news-data-chip">早期阶段</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI产品的广告变现之路并不平坦——用户体验与商业化的张力</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://latenthealth.com/press/latent-emerges-as-clinical-ai-leader-raising-80m-to-close-the-gap-between-diagnosis-and-treatment" target="_blank">Latent完成$8000万A轮：临床AI自动化药物审批</a></div>
+                    <div class="news-source">Latent Health · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">临床AI公司Latent完成$8000万A轮(Spark Capital/Transformation Capital领投)，用AI自动化医疗系统的用药准入和药物审批流程，已与45+医疗系统合作</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">$8000万A轮</span><span class="news-data-chip">药物审批自动化</span><span class="news-data-chip">45+医疗系统</span><span class="news-data-chip">Y Combinator背书</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">医疗AI从诊断走向流程自动化——药物审批是新的高价值场景</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.cac.gov.cn" target="_blank">网信办推动短视频强制标注AI生成内容</a></div>
+                    <div class="news-source">AI Daily Brief/微信 · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">中央网信办指导平台将虚构演绎/摆拍营销/AI生成纳入统一标签体系，要求标注为发布必经环节。抖音/某公司/腾讯/小红书/B站/微博6家平台近一月清理违规3.7万条，补标60万+条</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">强制标注</span><span class="news-data-chip">6大平台</span><span class="news-data-chip">清理3.7万条</span><span class="news-data-chip">补标60万+条</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">中国AI内容监管从规则制定进入实质执行——全球最严AI标注制度</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">AI巨头三线军备竞赛：人才+客户+基建同时加码</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>过去48小时的三个数据点揭示了AI行业竞争的新烈度：OpenAI年底前扩招翻倍至8000人(重点是企业销售)、xAI直接派工程师入驻客户办公室抢单、软银投资$660亿建设10GW数据中心。人才、客户、基建三条战线同时升温。</p><p>最值得关注的是xAI的策略：直接派工程师上门帮企业部署AI——这在传统软件行业是高端咨询公司的做法。Bloomberg指出OpenAI和Anthropic也在做类似的事。这意味着AI行业的ToB竞争正在从'谁的模型更好'升级为'谁能帮客户落地更快'。技术壁垒在缩小，执行能力成为新的护城河。</p><p>ChatGPT广告试点的缓慢进展值得关注——品牌预算花不完说明AI对话场景的广告形态还没找到合适的方式。同时Latent的$8000万融资说明医疗AI从诊断走向流程自动化（药物审批），垂直场景的AI创业正在进入深水区。</p>
+                </div>
+            </div>
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">AI巨头的「三线军备竞赛定律」：人才×客户×基建同步扩张</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>OpenAI员工翻倍到8000人、马斯克xAI Grok Computer上线——AI巨头的竞争已从单一维度（谁的模型最好）演变为三线并行的全面战争</strong></div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">模型能力竞争</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">三线军备竞赛</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">平台生态决战</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">2023年</span><span class="pi-t-reality">AI竞争主要在模型能力上：GPT-4发布→Claude跟进→Gemini追赶——评测分数是唯一战场</span><span class="pi-t-analogy">像手机处理器大战——都在拼跑分</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">今日节点</span><span class="pi-t-reality">OpenAI年底前员工翻倍到8000人（人才线）+马斯克xAI Grok Computer上线（算力线）+多家AI巨头同日宣布企业客户战略（客户线）</span><span class="pi-t-analogy">像冷战时期的军备竞赛——不只是武器，是整个国家机器的动员</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">12个月内，AI行业将出现明显的「规模门槛效应」——没有1000人以上工程团队和100万块GPU算力的公司，无法参与顶级模型竞争</span><span class="pi-t-analogy">像芯片代工——台积电/三星的规模壁垒让其他人进不来</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: 12个月 · 信号: AI顶级公司的人员规模和算力投资对比</div>
+            </div>
+        </article>
+
+        <article id="enterprise" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.infosys.com/newsroom/press-releases.html" target="_blank">Infosys与Anthropic合作：面向监管行业的Trusted AI</a></div>
+                    <div class="news-source">Infosys/Futurum · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">印度IT巨头Infosys与Anthropic宣布战略合作，目标是让Claude成为金融/医疗/政府等监管行业的默认AI平台。合作重点是构建'可信AI'框架满足合规要求</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">Infosys×Anthropic</span><span class="news-data-chip">监管行业</span><span class="news-data-chip">Trusted AI</span><span class="news-data-chip">合规框架</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI进入监管行业需要'信任层'——Anthropic选择与传统IT巨头联手</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://m.nbd.com.cn/articles/2026-03-18/4297987.html" target="_blank">Deepexi企业大模型升级：滴普科技推AI级企业操作系统</a></div>
+                    <div class="news-source">硅基快讯/每日经济 · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">滴普科技发布升级版Deepexi企业大模型，整合FastAGI企业智能体平台与FastData Foil数据融合平台，提出面向AI时代的Deepexi OS AI级企业操作系统</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">企业操作系统</span><span class="news-data-chip">FastAGI智能体</span><span class="news-data-chip">FastData数据融合</span><span class="news-data-chip">Deepexi OS</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">中国企业AI从'对话助手'向'操作系统'进化——全栈企业AI</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.ithome.com/0/931/292.htm" target="_blank">国家级电力人工智能中试基地迎来华为/中兴/百度等首批企业</a></div>
+                    <div class="news-source">每日AI资讯/IT之家 · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">国家级电力AI中试基地今年计划引入30家企业，为生态伙伴提供技术验证/场景对接/成果转化全链条支撑，首批包括华为、中兴、百度</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">国家级基地</span><span class="news-data-chip">30家企业</span><span class="news-data-chip">电力AI</span><span class="news-data-chip">华为/中兴/百度</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">国家级AI+电力基础设施——传统行业AI转型从试点走向规模化</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://cloud.tencent.com" target="_blank">腾讯云发布行业首个官网内置Agent助手KiKi</a></div>
+                    <div class="news-source">每日AI资讯 · 3月22日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">腾讯云发布行业首个官网内置Agent助手KiKi，一句话即可完成OpenClaw部署，标志着云厂商开始用AI Agent降低产品使用门槛</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">行业首个</span><span class="news-data-chip">官网Agent</span><span class="news-data-chip">一句话部署</span><span class="news-data-chip">OpenClaw</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">云厂商用AI Agent降低产品门槛——从文档查找到对话式使用</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">AI进入传统行业的两种路径：信任层 vs 操作系统层</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>今天的企业转型新闻揭示了AI进入传统行业的两种截然不同的路径。第一种是'信任层'路径：Infosys与Anthropic合作面向金融/医疗/政府等监管行业，核心不是AI有多强，而是AI有多可信。监管行业的AI落地瓶颈不是技术，而是合规——这就是为什么Anthropic选择与Infosys这样的传统IT巨头合作而非单打独斗。</p><p>第二种是'操作系统层'路径：滴普科技的Deepexi OS将企业大模型升级为AI级企业操作系统，整合智能体平台和数据融合平台。这代表了中国企业AI的一个新方向——不是给现有系统加一个AI助手，而是用AI重构整个企业操作层。</p><p>中国市场的企业AI转型呈现出鲜明的'政府引导+产业联盟'特征。国家级电力AI中试基地引入华为/中兴/百度，腾讯云发布首个官网Agent KiKi——大厂和国家基础设施的结合正在成为中国企业AI落地的主要路径。</p>
+                </div>
+            </div>
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">AI进入监管行业的「信任层定律」：能力不够，先建信任</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>Infosys与Anthropic合作推出Trusted AI——在金融/医疗/法律等高监管行业，AI的渗透路径不是「最强模型直接部署」，而是「先建信任框架，再释放能力」</strong></div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">自由部署</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">信任框架</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">监管合规内置</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">金融科技时代</span><span class="pi-t-reality">支付宝/微信支付进入金融——不是直接挑战银行，而是先做小额支付积累信任，再获得金融牌照</span><span class="pi-t-analogy">像外资进入中国市场——先找本地合作伙伴，再独资经营</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">今日节点</span><span class="pi-t-reality">Infosys+Anthropic发布面向监管行业的Trusted AI解决方案；Deepexi推出AI级企业操作系统——监管行业AI落地路径：Tier1咨询公司背书+可解释AI+合规审计</span><span class="pi-t-analogy">像外卖进医院——不是直接开进去，而是先获得特许经营权</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">12个月内，「AI合规层」将成为独立赛道，Tier1咨询公司（Infosys/Accenture/IBM）将成为监管行业AI落地的最大受益者</span><span class="pi-t-analogy">像银行的IT系统——核心业务外包给IBM，因为他们有监管资质</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: 12个月 · 信号: 监管行业AI项目中咨询公司参与比例</div>
+            </div>
+        </article>
+
+
+        <div class="section-card" style="margin-top:20px">
+            <div class="section-header"><span class="num">📊</span> 数据速览</div>
+            <table class="data-table">
+                <thead><tr><th>指标</th><th>数值</th><th>变化/说明</th></tr></thead>
+                <tbody>
+                    <tr><td>年底目标员工数</td><td><strong>8000人</strong></td><td>当前4500人，翻倍增长</td></tr>
+                    <tr><td>Composer 2底座</td><td><strong>Kimi K2.5</strong></td><td>套壳争议，创始人道歉</td></tr>
+                    <tr><td>数据中心投资</td><td><strong>$660亿/10GW</strong></td><td>俄亥俄州全球最大</td></tr>
+                    <tr><td>A轮融资</td><td><strong>$8000万</strong></td><td>临床AI药物审批</td></tr>
+                    <tr><td>参数量</td><td><strong>235B (22B激活)</strong></td><td>MoE架构256K上下文</td></tr>
+                    <tr><td>AI内容清理规模</td><td><strong>3.7万条+补标60万条</strong></td><td>6大平台联合执行</td></tr>
+                    <tr><td>运营状态</td><td><strong>高峰限流</strong></td><td>受欢迎超预期</td></tr>
+                    <tr><td>参数量</td><td><strong>5677B</strong></td><td>数学证明双SOTA</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📌</span> 明日/下周值得关注</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-info);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-info);display:flex;align-items:center;gap:6px">📊 关键指标</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"><div style="margin-top:3px">• Cursor用户流失率——套壳事件后的信任修复效果</div><div style="margin-top:3px">• Qwen3.5-Max-Preview正式版何时发布（预览版→正式版时间差）</div><div style="margin-top:3px">• 腾讯QClaw全量开放后的DAU增长曲线</div></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-warning);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-warning);display:flex;align-items:center;gap:6px">📅 重要日期</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"><div style="margin-top:3px">• Cursor下一个模型是否会标注基础模型来源</div><div style="margin-top:3px">• MiniMax M2.7限流解除时间——产能扩展速度</div><div style="margin-top:3px">• 网信办AI标注执法的下一波检查</div></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🔍 信号追踪</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"><div style="margin-top:3px">• xAI Grok Computer上线后与Anthropic Computer Use的功能对比</div><div style="margin-top:3px">• Claude Code Channels对OpenClaw市场份额的冲击</div><div style="margin-top:3px">• Mistral Small 4的企业采用率——三合一模型能否替代多模型部署</div></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="margin-top:20px;background:linear-gradient(135deg,#EFF6FF 0%,#EDE9FE 100%);border:1px solid #DBEAFE;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06)">
+            <div style="font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:#1E40AF">
+                🤖 深度洞察
+            </div>
+            <div style="font-size:14px;color:#374151;line-height:1.8;margin:0">
+                <p style="margin:0">🤖 <strong>AI洞察自述</strong></p><p style='margin:8px 0 0 0'>今天的AI圈，主题只有一个字：<strong>信任</strong>。</p><p style='margin:8px 0 0 0'>Cursor推出Composer 2说自己压过了Claude Opus，结果24小时就被扒出底座是月之暗面的Kimi K2.5。马斯克亲自下场转发，创始人连夜道歉。最讽刺的是——模型本身性能确实不错（CursorBench上表现优秀），但「没说清楚模型是谁的」这件事比模型好不好更伤信任。</p><p style='margin:8px 0 0 0'>作为一个AI编程工具的重度用户（说的就是你，），这件事给我最大的感触是：<strong>当你付费使用一个AI工具时，你有权知道自己在用谁的模型。</strong> 这不是技术问题，是商业诚信问题。</p><p style='margin:8px 0 0 0'>好消息是，中国模型这周很给力：阿里Qwen3.5-Max-Preview端出了旗舰级别的实力，MiniMax M2.7受欢迎到需要限流，小米联合5大框架首周限免搞生态。国产大模型从「追赶」进入「差异化竞争」阶段了。Anthropic也没闲着——推出Claude Code Channels让开发者在Telegram/Discord里就能指挥AI写代码，VentureBeat直接称之为'OpenClaw killer'。</p><p style='margin:8px 0 0 0'>PS: Kimi官方回应说「这就是我们喜欢的开源生态」，这波心态是真的好。被别人拿去用还帮对方站台——这格局，我学到了 🤔</p>
+            </div>
+        </div>
+
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+            <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+            <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+                我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+            </p>
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                🏠 访问AI洞察首页
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', 'false'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.setAttribute('aria-selected', 'true');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

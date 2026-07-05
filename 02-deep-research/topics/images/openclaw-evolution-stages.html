@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1060px; height: 520px; overflow: hidden; background: #FFFFFF; }
+.white-border { width: 1060px; height: 520px; padding: 20px; background: #FFFFFF; }
+.outer-container {
+    width: 1020px; height: 480px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 16px; padding: 28px 32px;
+    display: flex; flex-direction: column;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #fff;
+}
+.title { font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 6px; }
+.subtitle { font-size: 13px; text-align: center; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+
+.stages { display: flex; align-items: stretch; gap: 0; flex: 1; position: relative; }
+
+.stage {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    position: relative; z-index: 1;
+}
+.stage-num {
+    font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.4);
+    letter-spacing: 1px; margin-bottom: 6px;
+}
+.stage-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin-bottom: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.stage:nth-child(1) .stage-icon { background: linear-gradient(135deg, #636e72, #b2bec3); }
+.stage:nth-child(2) .stage-icon { background: linear-gradient(135deg, #0984e3, #74b9ff); }
+.stage:nth-child(3) .stage-icon { background: linear-gradient(135deg, #d63031, #ff7675); box-shadow: 0 4px 24px rgba(214,48,49,0.5); }
+.stage:nth-child(4) .stage-icon { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
+.stage:nth-child(5) .stage-icon { background: linear-gradient(135deg, #00b894, #55efc4); }
+
+.stage-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.stage-role { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 10px; }
+.stage-desc {
+    font-size: 12px; color: rgba(255,255,255,0.7); text-align: center;
+    line-height: 1.5; padding: 0 4px;
+}
+.stage-products {
+    margin-top: auto; padding-top: 8px;
+    font-size: 11px; color: rgba(255,255,255,0.4); text-align: center;
+}
+
+/* 当前阶段高亮 */
+.stage.current { position: relative; }
+.stage.current::before {
+    content: ''; position: absolute; top: -8px; left: -4px; right: -4px; bottom: -8px;
+    border: 2px solid rgba(214,48,49,0.4); border-radius: 14px;
+    background: rgba(214,48,49,0.06);
+}
+.stage.current .stage-name { color: #ff7675; }
+.current-badge {
+    position: absolute; top: -6px; right: 6px;
+    background: #d63031; color: #fff; font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px; z-index: 2;
+}
+
+/* 连接箭头 */
+.arrow {
+    position: absolute; top: 50px; display: flex; align-items: center;
+    color: rgba(255,255,255,0.25); font-size: 20px; z-index: 0;
+}
+.arrow-1 { left: calc(20% - 10px); }
+.arrow-2 { left: calc(40% - 10px); }
+.arrow-3 { left: calc(60% - 10px); }
+.arrow-4 { left: calc(80% - 10px); }
+
+/* 底部类比条 */
+.analogy-bar {
+    display: flex; gap: 0; margin-top: 16px; flex-shrink: 0;
+}
+.analogy-item {
+    flex: 1; text-align: center; padding: 8px 4px;
+    font-size: 12px; color: rgba(255,255,255,0.6);
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.analogy-item strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="white-border">
+<div class="outer-container">
+    <div class="title">AI 产品进化路径</div>
+    <div class="subtitle">OpenClaw 处于 3.0 员工阶段 — 人从"操作者"变成"管理者"</div>
+
+    <div class="stages">
+        <div class="arrow arrow-1">→</div>
+        <div class="arrow arrow-2">→</div>
+        <div class="arrow arrow-3">→</div>
+        <div class="arrow arrow-4">→</div>
+
+        <div class="stage">
+            <div class="stage-num">1.0</div>
+            <div class="stage-icon">📖</div>
+            <div class="stage-name">字典</div>
+            <div class="stage-role">你：提问者</div>
+            <div class="stage-desc">你问它答<br>活还是你干</div>
+            <div class="stage-products">ChatGPT · 搜索</div>
+        </div>
+
+        <div class="stage">
+            <div class="stage-num">2.0</div>
+            <div class="stage-icon">💼</div>
+            <div class="stage-name">顾问</div>
+            <div class="stage-role">你：决策者</div>
+            <div class="stage-desc">AI给建议<br>你做决策</div>
+            <div class="stage-products">Copilot · Cursor</div>
+        </div>
+
+        <div class="stage current">
+            <div class="current-badge">⬅️ 我们在这</div>
+            <div class="stage-num">3.0</div>
+            <div class="stage-icon">🧑‍💼</div>
+            <div class="stage-name">员工</div>
+            <div class="stage-role">你：管理者</div>
+            <div class="stage-desc">AI自主干活<br>你信任+管理</div>
+            <div class="stage-products">OpenClaw · Cowork</div>
+        </div>
+
+        <div class="stage">
+            <div class="stage-num">4.0</div>
+            <div class="stage-icon">👥</div>
+            <div class="stage-name">团队</div>
+            <div class="stage-role">你：CEO</div>
+            <div class="stage-desc">多Agent协作<br>你管方向</div>
+            <div class="stage-products">？</div>
+        </div>
+
+        <div class="stage">
+            <div class="stage-num">5.0</div>
+            <div class="stage-icon">⚡</div>
+            <div class="stage-name">基建</div>
+            <div class="stage-role">你：用户</div>
+            <div class="stage-desc">AI变成水电煤<br>你只管用</div>
+            <div class="stage-products">Apple · Windows</div>
+        </div>
+    </div>
+
+    <div class="analogy-bar">
+        <div class="analogy-item"><strong>查字典</strong></div>
+        <div class="analogy-item"><strong>请顾问</strong></div>
+        <div class="analogy-item"><strong>雇员工</strong></div>
+        <div class="analogy-item"><strong>建部门</strong></div>
+        <div class="analogy-item"><strong>水电煤</strong></div>
+    </div>
+</div>
+</div>
+</body>
+</html>

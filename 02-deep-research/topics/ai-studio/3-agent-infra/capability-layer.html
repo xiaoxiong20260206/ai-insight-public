@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>能力层 - Agent Infra架构深度解析</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="../index.html">🏠 首页</a>
+            <span>/</span>
+            <span class="current">🧠 能力层</span>
+        </nav>
+
+        <header class="header">
+            <h1>🧠 能力层 (Capability Layer)</h1>
+            <p>Agent的核心能力原子，统一建设、全面共享</p>
+        </header>
+
+        <section class="content-section">
+            <h2 class="section-title">📖 层级概述</h2>
+            <div class="layer-overview">
+                <h3>能力层的核心价值</h3>
+                <p class="description">
+                    能力层是Agent的"大脑"，定义了Agent能够具备的所有原子能力。
+                    这些能力被上层（应用层、编排层）组合使用，形成完整的Agent行为。
+                    能力层的核心原则是<strong>统一建设、全面共享</strong>——所有Agent复用同一套能力，避免重复建设。
+                </p>
+                <div class="key-points">
+                    <div class="key-point">
+                        <h4>🔧 工具能力</h4>
+                        <p>Agent与外部世界交互的桥梁</p>
+                    </div>
+                    <div class="key-point">
+                        <h4>🎯 规划推理</h4>
+                        <p>Agent的决策与思考能力</p>
+                    </div>
+                    <div class="key-point">
+                        <h4>📚 知识记忆</h4>
+                        <p>Agent的外脑与长期记忆</p>
+                    </div>
+                    <div class="key-point">
+                        <h4>📊 评估进化</h4>
+                        <p>Agent的自我提升闭环</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">🧩 核心能力深度分析</h2>
+
+            <div class="component-grid">
+                <!-- 工具能力 -->
+                <div class="component-card theme-capability" id="tool">
+                    <div class="component-header">
+                        <span class="icon">🔧</span>
+                        <h3>工具能力 (Tool) <span class="tag tag-core">核心</span></h3>
+                    </div>
+                    <div class="component-body">
+                        <h4>定位与价值</h4>
+                        <p>Agent与外部世界交互的能力，包括工具注册、发现、执行、版本管理。</p>
+                        
+                        <div class="deep-analysis">
+                            <h4>💡 深度解读</h4>
+                            <div class="insight">
+                                <strong>为什么工具能力如此重要：</strong>LLM本身只能生成文本，无法直接操作世界。工具（Function Calling）是LLM能力的延伸，让Agent能够读写文件、调用API、操作数据库等。工具的丰富度直接决定Agent的能力边界。
+                            </div>
+                            <div class="industry-practice">
+                                <strong>业界实践：</strong><br/>
+                                • <strong>OpenAI Function Calling</strong>：最主流的工具调用协议<br/>
+                                • <strong>Anthropic Tool Use</strong>：Claude的工具调用能力<br/>
+                                • <strong>MCP (Model Context Protocol)</strong>：Anthropic提出的标准协议，旨在统一工具接口<br/>
+                                工具生态的丰富度正在成为Agent平台的核心竞争力。
+                            </div>
+                        </div>
+                        
+                        <h4>关键功能</h4>
+                        <ul>
+                            <li>工具注册中心（Tool Registry）</li>
+                            <li>工具执行引擎（沙箱隔离）</li>
+                            <li>超时控制与重试机制</li>
+                            <li>工具依赖分析与并行</li>
+                            <li>版本管理与向后兼容</li>
+                        </ul>
+                        
+                        <a href="https://platform.openai.com/docs/guides/function-calling" target="_blank" class="learn-more">了解更多：OpenAI Function Calling</a>
+                    </div>
+                </div>
+
+                <!-- 感知能力 -->
+                <div class="component-card theme-capability" id="perception">
+                    <div class="component-header">
+                        <span class="icon">👁️</span>
+                        <h3>感知能力 (Perception)</h3>
+                    </div>
+                    <div class="component-body">
+                        <h4>定位与价值</h4>
+                        <p>多模态理解能力，让Agent能够处理代码、文档、图片、音频等多种输入。</p>
+                        
+                        <div class="deep-analysis">
+                            <h4>💡 深度解读</h4>
+                            <div class="insight">
+                                <strong>感知的挑战：</strong>真实世界的信息是多模态的。开发者会用截图描述Bug，会用手绘草图描述设计。Agent需要能够理解这些输入，而不仅仅是文本。
+                            </div>
+                            <div class="industry-practice">
+                                <strong>业界进展：</strong>GPT-4V、Claude 3、Gemini 都具备强大的多模态理解能力。在代码场景，还需要具备代码结构理解（AST解析）、代码语义理解（Embedding）等专业能力。
+                            </div>
+                        </div>
+                        
+                        <h4>关键功能</h4>
+                        <ul>
+                            <li>代码结构解析（AST）</li>
+                            <li>文档理解与抽取</li>
+                            <li>图片内容理解</li>
+                            <li>上下文窗口管理</li>
+                            <li>信息压缩与摘要</li>
+                        </ul>
+                        
+                        <a href="https://openai.com/index/gpt-4v-system-card/" target="_blank" class="learn-more">了解更多：GPT-4V</a>
+                    </div>
+                </div>
+
+                <!-- 记忆能力 -->
+                <div class="component-card theme-capability" id="memory">
+                    <div class="component-header">
+                        <span class="icon">🧩</span>
+                        <h3>记忆能力 (Memory)</h3>
+                    </div>
+                    <div class="component-body">
+                        <h4>定位与价值</h4>
+                        <p>短期与长期记忆管理，让Agent能够记住历史交互和用户偏好。</p>
+                        
+                        <div class="deep-analysis">
+                            <h4>💡 深度解读</h4>
+                            <div class="insight">
+                                <strong>记忆的类型：</strong><br/>
+                                • <strong>短期记忆</strong>：当前会话的对话历史，通常放在Context中<br>
+                                • <strong>长期记忆</strong>：跨会话的用户偏好、项目知识，需要持久化存储<br>
+                                • <strong>工作记忆</strong>：当前任务的中间状态，执行过程中使用
+                            </div>
+                            <div class="industry-practice">
+                                <strong>实现方案：</strong><br/>
+                                • 短期记忆：直接放入Prompt，注意Token限制<br/>
+                                • 长期记忆：向量数据库存储，检索后注入<br/>
+                                • 业界工具：Mem0、Zep、Redis等
+                            </div>
+                        </div>
+                        
+                        <h4>关键功能</h4>
+                        <ul>
+                            <li>会话历史管理</li>
+                            <li>用户偏好学习</li>
+                            <li>项目上下文记忆</li>
+                            <li>记忆检索与注入</li>
+                            <li>记忆淘汰策略</li>
+                        </ul>
+                        
+                        <a href="https://redis.io/blog/build-smarter-ai-agents-manage-short-term-and-long-term-memory-with-redis/" target="_blank" class="learn-more">了解更多：Redis AI Memory</a>
+                    </div>
+                </div>
+
+                <!-- 知识能力 -->
+                <div class="component-card theme-capability" id="knowledge">
+                    <div class="component-header">
+                        <span class="icon">📚</span>
+                        <h3>知识能力 (Knowledge)</h3>
+                    </div>
+                    <div class="component-body">
+                        <h4>定位与价值</h4>
+                        <p>外部知识的管理与检索，让Agent能够访问最新、专业的领域知识。</p>
+                        
+                        <div class="deep-analysis">
+                            <h4>💡 深度解读</h4>
+                            <div class="insight">
+                                <strong>RAG是核心技术：</strong>Retrieval-Augmented Generation（检索增强生成）是目前最主流的知识注入方式。先检索相关知识片段，再与问题一起输入LLM生成回答。
+                            </div>
+                            <div class="industry-practice">
+                                <strong>RAG演进：</strong><br/>
+                                • <strong>Naive RAG</strong>：简单的嵌入检索<br>
+                                • <strong>Advanced RAG</strong>：查询改写、重排序、融合<br>
+                                • <strong>Modular RAG</strong>：可插拔的RAG组件<br>
+                                • <strong>Agentic RAG</strong>：Agent自主决定何时检索、检索什么
+                            </div>
+                        </div>
+                        
+                        <h4>关键功能</h4>
+                        <ul>
+                            <li>文档索引与更新</li>
+                            <li>语义检索</li>
+                            <li>代码库索引</li>
+                            <li>知识图谱</li>
+                            <li>知识自动抽取</li>
+                        </ul>
+                        
+                        <a href="https://arxiv.org/abs/2312.10997" target="_blank" class="learn-more">了解更多：RAG综述论文</a>
+                    </div>
+                </div>
+
+                <!-- 规划能力 -->
+                <div class="component-card theme-capability" id="planning">
+                    <div class="component-header">
+                        <span class="icon">🎯</span>
+                        <h3>规划能力 (Planning) <span class="tag tag-new">NEW</span></h3>
+                    </div>
+                    <div class="component-body">
+                        <h4>定位与价值</h4>
+                        <p>任务分解与计划生成，让Agent能够处理复杂的多步骤任务。</p>
+                        
+                        <div class="deep-analysis">
+                            <h4>💡 深度解读</h4>
+                            <div class="insight">
+                                <strong>规划的难点：</strong>1) 如何将模糊需求分解为具体步骤；2) 如何估计每步的可行性和依赖关系；3) 执行中发现问题如何调整计划。规划能力是Agent智能水平的核心体现。
+                            </div>
+                            <div class="industry-practice">
+                                <strong>规划技术：</strong><br/>
+                                • <strong>Chain of Thought (CoT)</strong>：逐步推理<br>
+                                • <strong>Tree of Thoughts (ToT)</strong>：多路探索<br>
+                                • <strong>Graph of Thoughts (GoT)</strong>：图结构推理<br>
+                                趋势是从线性规划走向图结构规划。
+                            </div>
+                        </div>
+                        
+                        <h4>关键功能</h4>
+                        <ul>
+                            <li>任务分解</li>
+                            <li>计划生成</li>
+                            <li>依赖分析</li>
+                            <li>计划调整</li>
+                            <li>进度跟踪</li>
+                        </ul>
+                        
+                        <a href="https://www.promptingguide.ai/techniques/tot" target="_blank" class="learn-more">了解更多：Tree of Thoughts</a>
+                    </div>
+                </div>
+
+                <!-- 推理能力 -->
+                <div class="component-card theme-capability" id="reasoning">
+                    <div class="component-header">
+                        <span class="icon">💭</span>
+                        <h3>推理能力 (Reasoning) <span class="tag tag-new">NEW</span></h3>
+                    </div>
+                    <div class="component-body">
+                        <h4>定位与价值</h4>
+                        <p>复杂问题的分析与决策，包括逻辑推理、因果分析、自我反思。</p>
+                        
+                        <div class="deep-analysis">
+                            <h4>💡 深度解读</h4>
+                            <div class="insight">
+                                <strong>推理 vs 规划：</strong>规划关注"做什么"，推理关注"为什么"和"怎么想"。推理能力让Agent能够解释自己的决策，发现自己的错误，并进行自我修正。
+                            </div>
+                            <div class="industry-practice">
+                                <strong>推理技术：</strong><br/>
+                                • <strong>ReAct</strong>：推理与行动交替<br>
+                                • <strong>Reflection</strong>：对输出进行反思改进<br>
+                                • <strong>Self-Critique</strong>：自我批评与修正<br>
+                                OpenAI的o1/o3模型专门强化了推理能力。
+                            </div>
+                        </div>
+                        
+                        <h4>关键功能</h4>
+                        <ul>
+                            <li>逻辑推理</li>
+                            <li>因果分析</li>
+                            <li>自我反思</li>
+                            <li>错误检测</li>
+                            <li>决策解释</li>
+                        </ul>
+                        
+                        <a href="https://www.ibm.com/think/topics/react-agent" target="_blank" class="learn-more">了解更多：ReAct Agent</a>
+                    </div>
+                </div>
+
+                <!-- 评估能力 -->
+                <div class="component-card theme-capability" id="evaluation">
+                    <div class="component-header">
+                        <span class="icon">📊</span>
+                        <h3>评估能力 (Evaluation) <span class="tag tag-new">NEW</span></h3>
+                    </div>
+                    <div class="component-body">
+                        <h4>定位与价值</h4>
+                        <p>Agent输出质量的评估，包括在线评估、自我评估、用户反馈收集。</p>
+                        
+                        <div class="deep-analysis">
+                            <h4>💡 深度解读</h4>
+                            <div class="insight">
+                                <strong>评估的价值：</strong>没有评估就没有优化。评估能力让我们知道Agent表现如何、哪里需要改进。评估应该贯穿开发、测试、上线全流程，而非仅在开发阶段。
+                            </div>
+                            <div class="industry-practice">
+                                <strong>评估类型：</strong><br/>
+                                • <strong>离线评测</strong>：Benchmark测试（SWE-bench等）<br>
+                                • <strong>在线评估</strong>：实时任务完成率、延迟、成本<br>
+                                • <strong>用户反馈</strong>：采纳率、满意度评分<br>
+                                • <strong>LLM-as-Judge</strong>：用LLM评估LLM输出
+                            </div>
+                        </div>
+                        
+                        <h4>关键功能</h4>
+                        <ul>
+                            <li>Benchmark评测</li>
+                            <li>在线指标监控</li>
+                            <li>用户反馈收集</li>
+                            <li>A/B实验</li>
+                            <li>质量报告</li>
+                        </ul>
+                        
+                        <a href="https://www.swebench.com/" target="_blank" class="learn-more">了解更多：SWE-bench</a>
+                    </div>
+                </div>
+
+                <!-- 自进化能力 -->
+                <div class="component-card theme-capability" id="self-evolution">
+                    <div class="component-header">
+                        <span class="icon">🔄</span>
+                        <h3>自进化能力 (Self-Evolution)</h3>
+                    </div>
+                    <div class="component-body">
+                        <h4>定位与价值</h4>
+                        <p>Agent持续学习与提升的闭环，从数据收集到模型优化的全链路。</p>
+                        
+                        <div class="deep-analysis">
+                            <h4>💡 深度解读</h4>
+                            <div class="insight">
+                                <strong>自进化的核心：</strong>将用户交互转化为训练数据，持续优化模型/Prompt。理想状态是Agent越用越智能，而非一成不变。
+                            </div>
+                            <div class="industry-practice">
+                                <strong>进化阶段：</strong><br/>
+                                • 阶段1：BadCase收集与人工标注<br/>
+                                • 阶段2：评测驱动的批量优化<br/>
+                                • 阶段3：主动学习（识别不确定case）<br/>
+                                • 阶段4：自动知识抽取与沉淀<br/>
+                                • 阶段5：端到端的自动优化
+                            </div>
+                        </div>
+                        
+                        <h4>关键功能</h4>
+                        <ul>
+                            <li>数据收集Pipeline</li>
+                            <li>主动学习机制</li>
+                            <li>Prompt自动优化</li>
+                            <li>模型微调</li>
+                            <li>知识自动沉淀</li>
+                        </ul>
+                        
+                        <a href="https://www.langchain.com/langsmith" target="_blank" class="learn-more">了解更多：LangSmith</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 章节导航 -->
+        <div style="margin-top:24px;padding-top:16px;border-top:1px solid #F5F5F4;display:flex;justify-content:flex-end;align-items:center;gap:12px;flex-wrap:wrap">
+            <a href="../index.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">← 返回架构总览</a>
+        </div>
+
+        <!-- 了解更多 -->
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+        <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+        我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+        </p>
+        <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+        🏠 访问AI洞察首页
+        </a>
+        </div>
+    </div>
+</body>
+</html>

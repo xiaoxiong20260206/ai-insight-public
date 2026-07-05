@@ -1,0 +1,2903 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 · 2026-05-17 | AI洞察</title>
+    <meta name="description" content="AI洞察日报 2026-05-17：大模型、AI Coding、AI应用、AI行业、企业AI转型五大板块动态">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23059669'/><text x='6' y='23' font-size='18' fill='white'>📡</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+    <style>
+/**
+ * 清爽调研报告风格 - 基础样式表
+ * 版本: 3.0.0
+ * 更新: 2026-03-06
+ * 
+ * 专业调研报告设计系统
+ * 包含完整的CSS变量、组件样式、响应式布局
+ * 默认包含：多色调色板、Mesh Gradient背景、毛玻璃导航、色彩发光阴影
+ */
+
+/* ==================== CSS 变量定义 ==================== */
+:root {
+    /* ============ 主色调（语义化） ============ */
+    --color-success: #059669;           /* Emerald：核心/正向/成功 */
+    --color-success-light: #10B981;     /* Emerald 亮色 */
+    --color-danger: #E11D48;            /* Rose：警告/风险/关键 */
+    --color-danger-light: #F43F5E;      /* Rose 亮色 */
+    --color-warning: #D97706;           /* Amber：类比/提示/辅助 */
+    --color-warning-light: #F59E0B;     /* Amber 亮色 */
+    --color-info: #2563EB;              /* Blue：信息/技术/链接 */
+    --color-info-light: #3B82F6;        /* Blue 亮色 */
+    --color-purple: #7C3AED;            /* Violet：洞察/元认知/高级 */
+    --color-purple-light: #8B5CF6;      /* Violet 亮色 */
+    
+    /* ============ 中性色（高对比度）============ */
+    --color-text-primary: #1C1917;
+    --color-text-secondary: #57534E;
+    --color-text-muted: #78716C;
+    --color-border: #E7E5E4;
+    --color-border-light: #F5F5F4;
+    --color-bg: #F8FAFB;
+    --color-bg-card: #FFFFFF;
+    --color-bg-table-header: #FAFAF9;
+    
+    /* ============ 渐变色 ============ */
+    --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+    --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+    --gradient-highlight: linear-gradient(135deg, rgba(5,150,105,0.08) 0%, rgba(5,150,105,0.03) 100%);
+    --gradient-mesh: 
+        radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+        radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
+    
+    /* ============ 阴影层级 ============ */
+    --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.03);
+    --shadow-glow-success: 0 4px 14px rgba(5,150,105,0.15);
+    --shadow-glow-info: 0 4px 14px rgba(37,99,235,0.15);
+    --shadow-glow-purple: 0 4px 14px rgba(124,58,237,0.15);
+    --shadow-hover: 0 6px 16px rgba(5,150,105,0.15), 0 2px 6px rgba(5,150,105,0.1);
+    
+    /* ============ 间距系统（8px基准） ============ */
+    --spacing-xs: 4px;      /* 最小间距 */
+    --spacing-sm: 8px;      /* 小间距 */
+    --spacing-md: 16px;     /* 中等间距 */
+    --spacing-lg: 24px;     /* 大间距 */
+    --spacing-xl: 32px;     /* 特大间距 */
+    --spacing-2xl: 40px;    /* 章节间距 */
+    --spacing-3xl: 48px;    /* 页脚间距 */
+    
+    /* ============ 圆角系统 ============ */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+    
+    /* ============ 字体系统 ============ */
+    --font-family: -apple-system, "SF Pro Display", "system-ui", "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+    --font-mono: "SF Mono", "Fira Code", "Cascadia Code", "JetBrains Mono", monospace;
+    
+    /* ============ 字体层级体系（核心！） ============ */
+    /* 标题类 - 4级递减 */
+    --heading-1: 28px;      /* H1: 报告主标题 */
+    --heading-2: 18px;      /* H2: 章节标题 */
+    --heading-3: 15px;      /* H3: 子章节/卡片标题 */
+    --heading-4: 13px;      /* H4: 小节标题/表头/洞察框标题 */
+    
+    /* 正文类 */
+    --body-text: 14px;      /* 正文: 段落、描述、列表 */
+    --body-small: 13px;     /* 表格内容 */
+    --caption: 12px;        /* 辅助文字: 来源、标签、备注 */
+    
+    /* 兼容旧变量 */
+    --font-size-xs: var(--caption);
+    --font-size-sm: var(--body-small);
+    --font-size-base: var(--body-text);
+    --font-size-md: var(--heading-3);
+    --font-size-lg: var(--heading-2);
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: var(--heading-1);
+    
+    /* ============ 动画系统 ============ */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==================== 基础重置 ==================== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--body-text);
+    line-height: 1.65;
+    color: var(--color-text-primary);
+    background: var(--color-bg);
+    background-image: var(--gradient-mesh);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* ==================== 容器布局 ==================== */
+.container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: var(--spacing-lg) var(--spacing-md) 48px;
+}
+
+/* ==================== 头部区域 ==================== */
+.header {
+    text-align: center;
+    padding: var(--spacing-2xl) 0;
+    margin-bottom: var(--spacing-2xl);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 顶部3px渐变指示条 */
+.header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-hero);
+}
+
+.badge, .header-badge {
+    display: inline-flex;
+    align-items: center;
+    background: var(--gradient-badge);
+    color: var(--color-info);
+    padding: var(--spacing-xs) 12px;
+    border-radius: var(--radius-full);
+    font-size: var(--caption);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-bottom: 20px;
+    border: 1px solid rgba(9, 105, 218, 0.15);
+}
+
+.main-title, .header-title {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle, .header-subtitle {
+    font-size: var(--body-text);
+    color: var(--color-text-secondary);
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ==================== 核心发现区域 ==================== */
+.summary-box {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+    position: relative;
+    overflow: hidden;
+    border-left: 4px solid var(--color-danger);
+}
+
+.summary-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--caption);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-danger);
+    margin-bottom: 12px;
+}
+
+.summary-label::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--color-danger);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(207, 34, 46, 0.15);
+}
+
+.summary-title {
+    font-size: var(--heading-2);
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    color: var(--color-text-primary);
+}
+
+.summary-title em {
+    color: var(--color-danger);
+    font-style: normal;
+    font-weight: 600;
+}
+
+.summary-text {
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+/* ==================== Tab导航 ==================== */
+.tab-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 6px;
+    margin-bottom: var(--spacing-lg);
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: var(--shadow-card);
+}
+
+.tab-btn {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 12px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--body-small);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    background: var(--color-bg-table-header);
+    color: var(--color-text-secondary);
+}
+
+.tab-btn.active {
+    background: var(--gradient-success);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+}
+
+.tab-btn-num {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.06);
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.tab-btn.active .tab-btn-num {
+    background: rgba(255,255,255,0.2);
+}
+
+.tab-btn-text {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .tab-btn-text {
+        display: inline;
+    }
+}
+
+.tab-panel {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== 二级导航 ==================== */
+.sub-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px;
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-lg);
+    margin-bottom: 24px;
+    border: 1px solid var(--color-border-light);
+}
+
+.sub-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--caption);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.sub-nav-btn:hover {
+    background: var(--color-info);
+    color: #fff;
+    border-color: var(--color-info);
+    transform: translateY(-1px);
+}
+
+.sub-nav-btn .sub-nav-num {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0969da 0%, #1a7f37 100%);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.sub-nav-btn:hover .sub-nav-num {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .sub-nav {
+        gap: 6px;
+        padding: 12px;
+    }
+    
+    .sub-nav-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+    
+    .sub-nav-btn .sub-nav-num {
+        width: 16px;
+        height: 16px;
+        font-size: 9px;
+    }
+}
+
+/* ==================== 章节卡片 ==================== */
+.section, .section-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.section-number {
+    background: var(--gradient-success);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.25);
+}
+
+.section-number-small {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 14px;
+}
+
+.section-title {
+    font-size: var(--heading-2);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    letter-spacing: -0.01em;
+}
+
+.section-content {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+
+.section-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+/* ==================== 统计卡片 ==================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-2xl);
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.stat-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    cursor: help;
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.stat-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+
+.stat-card:hover .stat-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.stat-value {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.02em;
+}
+
+.stat-value.success, .stat-value.green {
+    color: var(--color-success);
+}
+
+.stat-value.danger, .stat-value.red {
+    color: var(--color-danger);
+}
+
+.stat-value.warning, .stat-value.orange {
+    color: var(--color-warning);
+}
+
+.stat-value.info, .stat-value.blue {
+    color: var(--color-info);
+}
+
+.stat-label {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+/* ==================== Tooltip ==================== */
+.stat-tooltip {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: var(--color-text-primary);
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;
+    width: 280px;
+    max-width: 90vw;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.stat-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: var(--color-text-primary);
+}
+
+.stat-tooltip-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.stat-tooltip-desc {
+    color: rgba(255,255,255,0.85);
+    font-size: var(--caption);
+    line-height: 1.5;
+}
+
+/* 内容Tooltip */
+.has-tip {
+    position: relative;
+    cursor: help;
+    border-bottom: 1px dashed var(--color-info);
+}
+
+.tip-box {
+    position: fixed;
+    width: 320px;
+    max-width: 90vw;
+    max-height: 340px;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+    z-index: 9999;
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+.has-tip:hover .tip-box {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.tip-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border-light);
+    color: var(--color-text-primary);
+}
+
+.tip-section { margin-bottom: var(--spacing-md); }
+.tip-section:last-child { margin-bottom: 0; }
+
+.tip-label {
+    font-size: var(--caption);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-info);
+    margin-bottom: 4px;
+}
+
+.tip-text { 
+    color: var(--color-text-secondary); 
+    line-height: 1.7;
+}
+
+.tip-list {
+    list-style: none;
+    color: var(--color-text-secondary);
+}
+
+.tip-list li {
+    padding: 3px 0;
+    padding-left: var(--spacing-md);
+    position: relative;
+}
+
+.tip-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-info);
+    font-size: var(--caption);
+}
+
+.tip-box::-webkit-scrollbar { width: 4px; }
+.tip-box::-webkit-scrollbar-thumb { 
+    background: var(--color-border); 
+    border-radius: 2px; 
+}
+
+/* ==================== 状态标签 ==================== */
+.tag, .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: var(--caption);
+    font-weight: 500;
+    white-space: nowrap;
+    line-height: 1.5;
+}
+
+.tag-green, .status-success {
+    background: rgba(5, 150, 105, 0.12);
+    color: var(--color-success);
+}
+
+.tag-orange, .status-warning {
+    background: rgba(191, 135, 0, 0.12);
+    color: var(--color-warning-dark);
+}
+
+.tag-red, .status-danger {
+    background: rgba(207, 34, 46, 0.12);
+    color: var(--color-danger);
+}
+
+.tag-blue, .status-info {
+    background: rgba(9, 105, 218, 0.12);
+    color: var(--color-info);
+}
+
+/* ==================== 引用框 ==================== */
+.quote, .quote-box {
+    background: var(--color-bg-table-header);
+    border-left: 3px solid var(--color-info);
+    padding: var(--spacing-md) 20px;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: 20px 0;
+    transition: all var(--transition-fast);
+}
+
+.quote:hover, .quote-box:hover {
+    border-left-width: 4px;
+    background: rgba(9, 105, 218, 0.04);
+}
+
+.quote-text {
+    font-size: var(--body-text);
+    font-style: italic;
+    color: var(--color-text-primary);
+    line-height: 1.7;
+}
+
+.quote-author {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-sm);
+    font-weight: 500;
+}
+
+/* ==================== 洞察框 ==================== */
+.insight-box {
+    border-left: 3px solid var(--color-warning);
+    background: rgba(191, 135, 0, 0.06);
+    padding: var(--spacing-md) 20px;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: 20px 0;
+    transition: all var(--transition-fast);
+}
+
+.insight-box:hover {
+    border-left-width: 4px;
+    background: rgba(191, 135, 0, 0.08);
+}
+
+.insight-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-warning-dark);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.insight-title::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--color-warning);
+    border-radius: 50%;
+}
+
+.insight-content {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.insight-content-title {
+    font-size: var(--heading-3);
+    color: var(--color-warning);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.insight-content-text {
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+.insight-content-text strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.insight-content-text ul {
+    margin: 12px 0;
+    padding-left: 20px;
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+.insight-content-text ul li {
+    margin-bottom: 6px;
+}
+
+/* ==================== 双列对比 ==================== */
+.two-col, .comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .two-col, .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.col-box {
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-table-header);
+}
+
+.col-box-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.col-box-title.red { color: var(--color-danger); }
+.col-box-title.green { color: var(--color-success); }
+
+.col-list {
+    list-style: none;
+}
+
+.col-list li {
+    padding: var(--spacing-sm) 0;
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    line-height: 1.7;
+}
+
+.col-list li::before {
+    content: '•';
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+.correct-path {
+    border-left: 3px solid rgba(5, 150, 105, 0.5);
+    background: rgba(5, 150, 105, 0.04);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.wrong-path {
+    border-left: 3px solid rgba(207, 34, 46, 0.5);
+    background: rgba(207, 34, 46, 0.04);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+/* ==================== 路径对比框 ==================== */
+.pathway-section {
+    border-left: 3px solid rgba(5, 150, 105, 0.5);
+    background: rgba(5, 150, 105, 0.04);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.pathway-section.wrong {
+    border-left: 3px solid rgba(207, 34, 46, 0.5);
+    background: rgba(207, 34, 46, 0.04);
+}
+
+.pathway-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-bottom: 20px;
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid rgba(5, 150, 105, 0.15);
+}
+
+.pathway-section.wrong .pathway-header {
+    border-bottom-color: rgba(207, 34, 46, 0.15);
+}
+
+.pathway-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    font-size: 18px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.pathway-icon.correct {
+    background: var(--gradient-success);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+}
+
+.pathway-icon.wrong {
+    background: linear-gradient(135deg, var(--color-danger) 0%, #ff6b6b 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(207, 34, 46, 0.3);
+}
+
+.pathway-title-wrap {
+    flex: 1;
+}
+
+.pathway-title {
+    font-size: var(--heading-2);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+}
+
+.pathway-subtitle {
+    font-size: var(--body-text);
+    color: var(--color-text-secondary);
+}
+
+/* ==================== 步骤流程 ==================== */
+.pathway-steps {
+    display: flex;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.pathway-step {
+    flex: 1;
+    min-width: 140px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.step-number {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-success);
+    color: #fff;
+    border-radius: 50%;
+    font-size: var(--caption);
+    font-weight: 600;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.step-desc {
+    font-size: var(--caption);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+.pathway-arrow {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+@media (max-width: 960px) {
+    .pathway-steps {
+        flex-direction: column;
+    }
+    .pathway-arrow {
+        transform: rotate(90deg);
+        justify-content: center;
+    }
+}
+
+/* ==================== 偏差网格 ==================== */
+.deviation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+@media (max-width: 768px) {
+    .deviation-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.deviation-item {
+    background: var(--color-bg-card);
+    border: 1px solid rgba(207, 34, 46, 0.2);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+}
+
+.deviation-wrong {
+    font-size: var(--body-text);
+    font-weight: 600;
+    color: var(--color-danger);
+    margin-bottom: 4px;
+}
+
+.deviation-result {
+    font-size: var(--caption);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+/* ==================== 未来路径对比 ==================== */
+.future-paths {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+@media (max-width: 768px) {
+    .future-paths {
+        grid-template-columns: 1fr;
+    }
+}
+
+.future-path {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.future-path.continue {
+    border-left: 4px solid var(--color-danger);
+}
+
+.future-path.pivot {
+    border-left: 4px solid var(--color-success);
+}
+
+.path-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.path-icon {
+    font-size: 20px;
+}
+
+.path-label {
+    font-size: var(--heading-3);
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.path-list {
+    list-style: none;
+    margin-bottom: var(--spacing-md);
+}
+
+.path-list li {
+    padding: var(--spacing-sm) 0;
+    font-size: var(--body-text);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.path-list li:last-child {
+    border-bottom: none;
+}
+
+.path-list li strong {
+    color: var(--color-text-primary);
+}
+
+.path-verdict {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 12px;
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-sm);
+}
+
+.verdict-label {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+.verdict-value {
+    font-size: var(--body-text);
+    font-weight: 600;
+}
+
+.verdict-value.red {
+    color: var(--color-danger);
+}
+
+.verdict-value.green {
+    color: var(--color-success);
+}
+
+/* ==================== 表格样式 ==================== */
+.table-wrap, .table-wrapper {
+    overflow-x: auto;
+    margin: var(--spacing-md) 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: var(--body-small);
+}
+
+th {
+    background: var(--color-bg-table-header);
+    color: var(--color-text-secondary);
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: var(--heading-4);
+    text-align: left;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--color-border);
+}
+
+td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-border-light);
+    vertical-align: middle;
+}
+
+td:first-child {
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+tbody tr {
+    transition: background var(--transition-fast);
+}
+
+tbody tr:hover td {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.highlight-col {
+    background: rgba(5, 150, 105, 0.08) !important;
+}
+
+/* ==================== 图例样式 ==================== */
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    justify-content: center;
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+    font-size: var(--caption);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--color-text-secondary);
+}
+
+/* ==================== 内联统计 ==================== */
+.inline-stats {
+    display: flex;
+    gap: var(--spacing-xl);
+    justify-content: center;
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.inline-stat { text-align: center; }
+
+.inline-stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.inline-stat-label {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+/* ==================== 结论区域 ==================== */
+.conclusion {
+    background: rgba(5, 150, 105, 0.04);
+    border-left: 3px solid rgba(5, 150, 105, 0.5);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.conclusion-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-success);
+    margin-bottom: var(--spacing-md);
+}
+
+.conclusion-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .conclusion-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .conclusion-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.conclusion-item {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+}
+
+.conclusion-item-label {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.conclusion-item-value {
+    font-size: var(--body-text);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.4;
+}
+
+/* ==================== 全局控制按钮 ==================== */
+.global-controls {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1000;
+}
+
+.global-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-bg-card);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    color: var(--color-text-secondary);
+}
+
+.global-btn:hover {
+    background: var(--color-info);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(9, 105, 218, 0.3);
+}
+
+.global-btn.active {
+    background: var(--color-success);
+    color: #fff;
+}
+
+.global-btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+.global-btn-tooltip {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--color-text-primary);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: var(--caption);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-fast);
+    pointer-events: none;
+}
+
+.global-btn:hover .global-btn-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ==================== 移动端预览模式 ==================== */
+body.mobile-preview-mode {
+    background: #2d2d2d;
+}
+
+body.mobile-preview-mode .container {
+    max-width: 375px;
+    margin: 0 auto;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+    min-height: 100vh;
+    background: var(--color-bg);
+    border-left: 1px solid #444;
+    border-right: 1px solid #444;
+}
+
+body.mobile-preview-mode .container {
+    padding: var(--spacing-lg) var(--spacing-md) 80px;
+}
+
+body.mobile-preview-mode .header-title {
+    font-size: var(--font-size-2xl);
+}
+
+body.mobile-preview-mode .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+body.mobile-preview-mode .two-col {
+    grid-template-columns: 1fr;
+}
+
+body.mobile-preview-mode .conclusion-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+body.mobile-preview-mode .section {
+    padding: var(--spacing-md);
+}
+
+body.mobile-preview-mode .tab-nav {
+    overflow-x: auto;
+}
+
+body.mobile-preview-mode .tab-btn-text {
+    display: none;
+}
+
+body.mobile-preview-mode .sub-nav {
+    flex-wrap: wrap;
+}
+
+body.mobile-preview-mode .sub-nav-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+}
+
+body.mobile-preview-mode .global-controls {
+    bottom: 12px;
+    right: calc(50% - 187px + 60px);
+}
+
+/* ==================== 页脚样式 ==================== */
+.footer {
+    text-align: center;
+    padding-top: 32px;
+    margin-top: 48px;
+    border-top: 1px solid var(--color-border-light);
+}
+
+.footer-quote {
+    font-size: var(--body-text);
+    font-style: italic;
+    color: var(--color-text-secondary);
+    max-width: 500px;
+    margin: 0 auto var(--spacing-md);
+    line-height: 1.6;
+}
+
+.footer-date {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+/* ==================== 免责声明 ==================== */
+.disclaimer {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-top: 40px;
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+}
+
+.disclaimer-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-muted);
+}
+
+.disclaimer-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.disclaimer-text {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
+
+/* ==================== 文字样式类 ==================== */
+.text-success { color: var(--color-success); }
+.text-danger { color: var(--color-danger); }
+.text-warning { color: var(--color-warning); }
+.text-info { color: var(--color-info); }
+
+.text-bold {
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.text-highlight {
+    border-bottom: 2px solid var(--color-danger);
+    padding-bottom: 1px;
+}
+
+/* ==================== 参考资料区域 ==================== */
+.references {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.references-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: 20px;
+}
+
+.references-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--color-info);
+}
+
+.references-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.references-title {
+    font-size: var(--heading-3);
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.references-list {
+    list-style: none;
+    display: grid;
+    gap: var(--spacing-md);
+}
+
+.reference-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.reference-item:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.reference-num {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: var(--caption);
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.reference-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.reference-link {
+    display: block;
+    font-size: var(--body-text);
+    color: var(--color-info);
+    text-decoration: none;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 2px;
+}
+
+.reference-link:hover {
+    text-decoration: underline;
+}
+
+.reference-meta {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.reference-source {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.reference-tag {
+    display: inline-flex;
+    padding: 1px 6px;
+    background: rgba(9, 105, 218, 0.08);
+    color: var(--color-info);
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.references-note {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+    font-size: var(--body-text);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+
+.references-note strong {
+    color: var(--color-text-primary);
+}
+
+/* ==================== 响应式布局 ==================== */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-lg) var(--spacing-md) 80px;
+    }
+    
+    .header-title {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .two-col {
+        grid-template-columns: 1fr;
+    }
+    
+    .conclusion-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .legend {
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+    }
+    
+    .inline-stats {
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+    }
+    
+    .section {
+        padding: var(--spacing-md);
+    }
+    
+    .stat-tooltip {
+        display: none !important;
+    }
+    
+    .tip-box {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 12px 10px 80px;
+    }
+    
+    .header-title {
+        font-size: 20px;
+    }
+    
+    .stats-grid {
+        gap: 8px;
+    }
+    
+    .stat-card {
+        padding: 12px 8px;
+    }
+    
+    .stat-value {
+        font-size: 18px;
+    }
+    
+    .stat-label {
+        font-size: 10px;
+        letter-spacing: 0;
+    }
+    
+    .section {
+        padding: 12px;
+    }
+    
+    .conclusion-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ===== 日报组件层 ===== */
+/* ===== CSS VARIABLES (清爽调研风格 v5.0 × 日报) ===== */
+        :root {
+            --color-success: #059669; --color-success-light: #10B981; --color-success-dark: #047857;
+            --color-success-50: #ECFDF5; --color-success-100: #D1FAE5;
+            --color-danger: #E11D48; --color-danger-light: #F43F5E; --color-danger-50: #FFF1F2;
+            --color-warning: #D97706; --color-warning-light: #F59E0B; --color-warning-50: #FFFBEB;
+            --color-info: #2563EB; --color-info-light: #3B82F6; --color-info-50: #EFF6FF; --color-info-100: #DBEAFE;
+            --color-purple: #7C3AED; --color-purple-light: #8B5CF6; --color-purple-50: #F5F3FF; --color-purple-100: #EDE9FE;
+            --color-orange: #EA580C;
+            --color-text-primary: #1C1917; --color-text-secondary: #57534E; --color-text-muted: #78716C;
+            --color-border: #E7E5E4; --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB; --color-bg-card: #FFFFFF; --color-bg-table-header: #FAFAF9;
+            --color-bg-hover: rgba(0,0,0,0.025);
+            --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+            --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            --gradient-orange: linear-gradient(135deg, #EA580C 0%, #F97316 100%);
+            --gradient-purple: linear-gradient(135deg, #7C3AED 0%, #6D28D9 50%, #5B21B6 100%);
+            --gradient-china: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+            --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+            --gradient-mesh:
+                radial-gradient(at 20% 20%, rgba(5,150,105,0.06) 0%, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(37,99,235,0.05) 0%, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(124,58,237,0.03) 0%, transparent 50%);
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-hover: 0 8px 24px rgba(5,150,105,0.18), 0 2px 8px rgba(5,150,105,0.10);
+            --shadow-float: 0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
+            --shadow-glow-info: 0 4px 14px rgba(37,99,235,0.15);
+            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-full: 9999px;
+            --font-family: "DM Sans", -apple-system, "Noto Sans SC", "PingFang SC", sans-serif;
+            --font-family-heading: "DM Sans", -apple-system, "Noto Sans SC", sans-serif;
+            --font-family-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --sidebar-width: 228px;
+            --content-max: 960px;
+            --content-pad: 48px;
+        }
+
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-family); font-size: 15px; line-height: 1.65;
+            letter-spacing: -0.01em; color: var(--color-text-secondary);
+            background: var(--color-bg); background-image: var(--gradient-mesh);
+            background-attachment: fixed; -webkit-font-smoothing: antialiased;
+        }
+        ::selection { background: rgba(5,150,105,0.18); }
+        a { color: var(--color-info); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ===== SKIP TO CONTENT ===== */
+        .skip-to-content {
+            position: absolute; top: -40px; left: 0; background: var(--color-info);
+            color: #fff; padding: 8px 16px; border-radius: 0 0 8px 0; z-index: 9999;
+            transition: top var(--transition-fast);
+        }
+        .skip-to-content:focus { top: 0; }
+
+        /* ===== LAYOUT ===== */
+        .layout-wrapper { display: flex; width: 100%; min-height: 100vh; align-items: stretch; }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar-nav {
+            width: var(--sidebar-width); flex-shrink: 0;
+            position: sticky; top: 0; height: 100vh;
+            overflow-y: auto; background: #fff;
+            border-right: 1px solid var(--color-border);
+            padding: 20px 0; z-index: 100;
+            display: flex; flex-direction: column;
+        }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 2px; }
+        .sidebar-doc-title {
+            font-size: 13px; font-weight: 700; color: var(--color-text-primary);
+            padding: 0 20px 16px; line-height: 1.4;
+        }
+        .toc-group-label {
+            font-size: 11px; font-weight: 700; color: var(--color-text-muted);
+            letter-spacing: 0.08em; text-transform: uppercase;
+            padding: 4px 20px 6px; margin-top: 8px;
+        }
+        .toc-link {
+            display: block; padding: 7px 20px; font-size: 13px; font-weight: 500;
+            color: var(--color-text-secondary); border-left: 3px solid transparent;
+            transition: all var(--transition-fast); line-height: 1.4; text-decoration: none;
+        }
+        .toc-link:hover { background: rgba(0,0,0,0.03); color: var(--color-text-primary); text-decoration: none; }
+        .toc-link.toc-active { color: var(--color-success); background: rgba(5,150,105,0.04); border-left-color: var(--color-success); font-weight: 600; }
+        .toc-link.toc-sub { padding-left: 32px; font-size: 12px; font-weight: 400; color: var(--color-text-muted); }
+        .toc-link.toc-sub.toc-active { color: var(--color-success); font-weight: 500; }
+        .toc-link:focus-visible { outline: 2px solid var(--color-success); outline-offset: -2px; }
+
+        .reading-progress-wrap { margin-top: auto; padding: 16px 20px 8px; }
+        .reading-progress-label { font-size: 11px; color: var(--color-text-muted); margin-bottom: 6px; }
+        .reading-progress-track { height: 4px; background: var(--color-border); border-radius: 2px; overflow: hidden; }
+        .reading-progress-fill { height: 100%; width: 0%; background: var(--gradient-success); border-radius: 2px; transition: width 0.2s ease; }
+
+        .sidebar-collapse-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px; background: #fff;
+            border: 1px solid var(--color-border); border-radius: 6px;
+            cursor: pointer; color: var(--color-text-muted); font-size: 13px;
+            position: fixed; top: 20px; left: calc(var(--sidebar-width) - 14px);
+            z-index: 101; transition: all var(--transition-fast);
+        }
+        .sidebar-collapse-btn:hover { background: var(--color-bg); }
+        .sidebar-collapse-btn.collapsed-pos { left: 8px; }
+        .sidebar-nav.sidebar-collapsed { width: 0; padding: 0; overflow: hidden; border: none; }
+        .sidebar-nav.sidebar-collapsed ~ .sidebar-collapse-btn { left: 8px; }
+
+        /* ===== CONTENT AREA ===== */
+        .content-area { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; }
+        .content-inner { width: 100%; max-width: var(--content-max); padding: 40px var(--content-pad) 100px; }
+
+        /* ===== HEADER ===== */
+        .doc-header { padding: 32px 0 28px; position: relative; margin-bottom: 28px; }
+        .doc-header::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+            height: 3px; background: var(--gradient-hero); border-radius: 2px;
+        }
+        .header-badge {
+            display: inline-block; background: var(--gradient-badge); color: var(--color-success);
+            padding: 4px 14px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600;
+            margin-bottom: 12px; border: 1px solid rgba(5,150,105,0.12); box-shadow: var(--shadow-xs);
+            letter-spacing: 0.04em;
+        }
+        .header-title {
+            font-size: 30px; font-weight: 800; letter-spacing: -0.025em;
+            background: var(--gradient-hero); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+            line-height: 1.2; margin-bottom: 10px;
+        }
+        .header-meta { font-size: 13px; color: var(--color-text-muted); display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+        .header-meta span { display: flex; align-items: center; gap: 4px; }
+        .version-badge {
+            display: inline-flex; align-items: center; background: rgba(5,150,105,0.1);
+            color: var(--color-success); padding: 2px 8px; border-radius: var(--radius-full);
+            font-size: 11px; font-weight: 700; margin-left: 6px;
+        }
+
+        /* ===== CHAPTER LABEL ===== */
+        .doc-chapter-label {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+            text-transform: uppercase; color: #A8A29E; padding: 36px 0 12px;
+        }
+        .doc-chapter-label::after { content: ''; flex: 1; height: 1px; background: #F0EFEE; }
+
+        /* ===== SECTION ===== */
+        .report-section { margin-bottom: 48px; }
+        .section-title {
+            font-size: 20px; font-weight: 700; color: var(--color-text-primary);
+            letter-spacing: -0.02em; margin-bottom: 18px; line-height: 1.3;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section-title::before {
+            content: ''; width: 4px; height: 22px; background: var(--gradient-success);
+            border-radius: 2px; flex-shrink: 0;
+        }
+
+        /* ===== COVERAGE BAR ===== */
+        .coverage-bar {
+            background: var(--color-bg-card); border: 1px solid var(--color-border-light);
+            border-radius: var(--radius-md); padding: 12px 18px; margin-bottom: 20px;
+            box-shadow: var(--shadow-card); display: flex; align-items: center; gap: 16px; font-size: 13px;
+        }
+        .coverage-bar .label { font-weight: 700; color: var(--color-text-muted); }
+        .coverage-bar .bar { flex: 1; height: 8px; background: var(--color-border-light); border-radius: 4px; overflow: hidden; display: flex; }
+        .coverage-bar .bar-overseas { background: var(--gradient-success); height: 100%; }
+        .coverage-bar .bar-china { background: var(--gradient-china); height: 100%; }
+        .coverage-bar .stats { display: flex; gap: 12px; font-weight: 600; }
+        .coverage-bar .stat-overseas { color: var(--color-success); }
+        .coverage-bar .stat-china { color: #DC2626; }
+
+        /* ===== OVERVIEW CARDS ===== */
+        .overview { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow-card); }
+        .overview-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); }
+        .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .overview-grid.five-cols { grid-template-columns: repeat(3, 1fr); }
+        .overview-item {
+            padding: 14px 16px; border-radius: var(--radius-md);
+            border: 1px solid var(--color-border-light); background: var(--color-bg);
+            transition: all var(--transition-normal); min-width: 0; overflow: hidden;
+        }
+        .overview-item:hover { border-color: var(--color-success-light); box-shadow: 0 2px 8px rgba(5,150,105,0.08); }
+        .overview-item-header { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+        .overview-item-icon { font-size: 16px; }
+        .overview-item-label { font-size: 12px; font-weight: 700; color: var(--color-success); letter-spacing: 0.03em; }
+        .overview-item-label.orange { color: var(--color-orange); }
+        .overview-headline { font-size: 14px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 5px; line-height: 1.4; }
+        .overview-item-text { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; font-family: var(--font-family-cn); }
+
+        /* ===== HEAT TREND ===== */
+        .heat-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); margin-bottom: 20px; overflow: hidden; box-shadow: var(--shadow-card); }
+        .heat-header { background: linear-gradient(135deg, #EA580C 0%, #DC2626 50%, #B91C1C 100%); color: #fff; padding: 18px 24px; }
+        .heat-header-label { font-size: 13px; font-weight: 600; opacity: .85; letter-spacing: .5px; }
+        .heat-header-title { font-size: 17px; font-weight: 800; margin-top: 4px; }
+        .heat-body { padding: 16px 20px; }
+        .heat-body p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; margin-top: 12px; font-family: var(--font-family-cn); }
+        .heat-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .heat-table th { padding: 8px 10px; text-align: left; background: #FEF2F2; font-weight: 700; color: #991B1B; border-bottom: 2px solid #FECACA; font-size: 12px; }
+        .heat-table td { padding: 10px; border-bottom: 1px solid var(--color-border-light); vertical-align: top; }
+        .heat-table tr:last-child td { border-bottom: none; }
+        .heat-table tr:hover { background: rgba(234,88,12,.02); }
+        .heat-bar { display: flex; gap: 2px; align-items: center; }
+        .heat-bar-fill { width: 10px; height: 14px; border-radius: 2px; background: linear-gradient(135deg, #EA580C, #DC2626); }
+        .heat-bar-empty { width: 10px; height: 14px; border-radius: 2px; background: #F5F5F4; }
+        .heat-trend-tag { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600; }
+        .heat-trend-tag.up { background: #EFFDF5; color: #059669; }
+        .heat-trend-tag.stable { background: #EFF6FF; color: #2563EB; }
+        .heat-trend-tag.down { background: #FEF2F2; color: #DC2626; }
+        .heat-trend-tag.burst { background: #FEF2F2; color: #DC2626; }
+
+        /* ===== SECTION CARDS (for boards) ===== */
+        .board-section { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
+        .board-header { font-size: 17px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--color-border-light); display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); }
+        .board-badge { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--gradient-success); color: #fff; font-size: 12px; font-weight: 700; }
+        .board-badge.orange { background: var(--gradient-orange); }
+        .sub-header { font-size: 13px; font-weight: 700; color: var(--color-text-muted); margin: 14px 0 10px; padding-left: 4px; letter-spacing: .5px; }
+        .sub-header:first-child { margin-top: 0; }
+
+        /* ===== NEWS ITEMS ===== */
+        .news-item { padding: 8px 0; border-bottom: 1px solid var(--color-border-light); transition: background .15s; margin: 0 -8px; padding-left: 8px; padding-right: 8px; border-radius: var(--radius-sm); }
+        .news-item:hover { background: rgba(5,150,105,0.02); }
+        .news-item:last-child { border-bottom: none; }
+        .news-tag { display: inline-block; padding: 1px 6px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; vertical-align: middle; }
+        .tag-hot { background: #FEF2F2; color: var(--color-danger); }
+        .tag-new { background: #EFFDF5; color: var(--color-success); }
+        .tag-funding { background: #E0F2FE; color: #0284C7; }
+        .tag-policy { background: #FFF7ED; color: var(--color-orange); }
+        .tag-practice { background: #ECFDF5; color: #059669; }
+        .tag-cn { background: #FEF2F2; color: #DC2626; }
+        /* v5.1: 标题行 — tag + 标题 + 来源 inline 合并 */
+        .news-title-row { font-size: 14px; font-weight: 600; line-height: 1.5; display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px; margin-bottom: 3px; }
+        .news-title-row a { color: var(--color-text-primary); text-decoration: none; }
+        .news-title-row a:hover { color: var(--color-success); }
+        .news-source-inline { font-size: 11px; color: var(--color-text-muted); font-weight: 400; flex-shrink: 0; white-space: nowrap; }
+        /* 兼容旧的 news-title / news-source（独立行）结构 */
+        .news-title { font-size: 15px; font-weight: 600; margin: 4px 0 3px; }
+        .news-title a { color: var(--color-text-primary); text-decoration: none; }
+        .news-title a:hover { color: var(--color-success); }
+        .news-source { font-size: 12px; color: var(--color-text-muted); }
+        .news-detail { margin-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+        .news-detail-row { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.6; }
+        .news-detail-label { flex-shrink: 0; font-weight: 700; color: var(--color-success); font-size: 12px; padding: 1px 0; min-width: 60px; }
+        .news-detail-label.orange { color: var(--color-orange); }
+        .news-detail-label.china { color: #DC2626; }
+        .news-detail-value { color: var(--color-text-secondary); flex: 1; font-family: var(--font-family-cn); }
+        .news-detail-value strong { color: var(--color-text-primary); font-weight: 600; }
+        .news-data-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+        .news-data-chip { display: inline-flex; align-items: center; padding: 3px 10px; background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; color: #166534; transition: all .15s; }
+        .news-data-chip:hover { background: #DCFCE7; border-color: #86EFAC; }
+        .news-data-chip.orange { background: #FFF7ED; border-color: #FED7AA; color: #9A3412; }
+        .news-data-chip.china { background: #FEF2F2; border-color: #FECACA; color: #991B1B; }
+        .news-summary-compact { font-size: 13px; color: var(--color-text-muted); margin-top: 2px; line-height: 1.55; font-family: var(--font-family-cn); }
+
+        /* ===== DEEP FOCUS ===== */
+        .deep-focus-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 0; margin-bottom: 16px; box-shadow: var(--shadow-card); overflow: hidden; }
+        .deep-focus-header { background: var(--gradient-purple); color: #fff; padding: 18px 24px; display: flex; align-items: center; gap: 10px; }
+        .deep-focus-header.orange-theme { background: linear-gradient(135deg, #EA580C 0%, #DC2626 100%); }
+        .deep-focus-header.china-theme { background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%); }
+        .deep-focus-label { font-size: 13px; font-weight: 600; opacity: .85; letter-spacing: .5px; }
+        .deep-focus-title { font-size: 17px; font-weight: 800; margin-top: 4px; line-height: 1.4; }
+        .deep-focus-body { padding: 20px 24px; }
+        .deep-focus-body p { font-size: 14.5px; color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 18px; font-family: var(--font-family-cn); }
+        .deep-focus-body p:last-child { margin-bottom: 0; }
+        .deep-focus-body p strong { color: var(--color-text-primary); }
+        .deep-focus-takeaway { margin-top: 20px; padding: 16px 18px; background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); border-radius: var(--radius-md); border-left: 4px solid var(--color-purple); }
+        .deep-focus-takeaway.orange-theme { background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%); border-left-color: var(--color-orange); }
+        .deep-focus-takeaway.china-theme { background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%); border-left-color: #DC2626; }
+        .deep-focus-takeaway-label { font-size: 12px; font-weight: 700; color: var(--color-purple); margin-bottom: 6px; letter-spacing: .5px; }
+        .deep-focus-takeaway-label.orange { color: var(--color-orange); }
+        .deep-focus-takeaway-label.china { color: #DC2626; }
+        .deep-focus-takeaway-text { font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.7; font-family: var(--font-family-cn); }
+        .deep-focus-takeaway-text strong { color: var(--color-text-primary); }
+
+        /* ===== PATTERN INSIGHT (pi) ===== */
+        .pi-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow-card); transition: all .25s cubic-bezier(.4,0,.2,1); }
+        .pi-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
+        .pi-header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border-bottom: 1px solid #FDE68A; }
+        .pi-badge { display: inline-flex; align-items: center; justify-content: center; height: 26px; padding: 0 10px; border-radius: 8px; font-size: 11px; font-weight: 700; color: #fff; background: linear-gradient(135deg, #B45309 0%, #D97706 100%); white-space: nowrap; }
+        .pi-title { font-size: 16px; font-weight: 700; color: var(--color-text-primary); flex: 1; letter-spacing: -.01em; line-height: 1.4; }
+        .pi-row { display: flex; padding: 14px 20px; border-bottom: 1px solid var(--color-border-light); gap: 14px; }
+        .pi-row:last-child { border-bottom: none; }
+        .pi-row.highlight { background: linear-gradient(135deg, rgba(217,119,6,.04) 0%, rgba(217,119,6,.01) 100%); }
+        .pi-row-label { width: 56px; flex-shrink: 0; font-size: 12px; font-weight: 700; color: #A8A29E; padding-top: 2px; letter-spacing: .02em; }
+        .pi-row-label.l2 { color: #D97706; }
+        .pi-row-content { flex: 1; font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; font-family: var(--font-family-cn); }
+        .pi-row-content strong { color: var(--color-text-primary); font-weight: 700; }
+        .pi-evo { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        .pi-evo-step { display: flex; align-items: center; gap: 8px; padding: 7px 12px; background: var(--color-bg-table-header); border-radius: 8px; border: 1px solid var(--color-border-light); transition: all .15s; }
+        .pi-evo-step.active { background: rgba(217,119,6,.12); border-color: #D97706; box-shadow: 0 0 0 1px rgba(217,119,6,.15); }
+        .pi-evo-step.future { background: rgba(124,58,237,.06); border-color: #8B5CF6; }
+        .pi-evo-tag { font-size: 10px; font-weight: 800; color: #D97706; padding: 2px 7px; background: rgba(217,119,6,.1); border-radius: 4px; letter-spacing: .02em; }
+        .pi-evo-step.future .pi-evo-tag { color: #7C3AED; background: rgba(124,58,237,.1); }
+        .pi-evo-text { font-size: 12px; color: var(--color-text-secondary); }
+        .pi-evo-arrow { color: #A8A29E; font-weight: 700; font-size: 14px; }
+        .pi-table { padding: 10px 20px 16px; border-top: 1px solid var(--color-border-light); }
+        .pi-t-head { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 10px; padding: 6px 10px; border-bottom: 2px solid var(--color-border-light); margin-bottom: 4px; }
+        .pi-t-head span { font-size: 11px; font-weight: 700; color: #A8A29E; text-transform: uppercase; letter-spacing: .06em; }
+        .pi-t-section { padding: 6px 10px 2px; }
+        .pi-t-section-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 999px; letter-spacing: .03em; }
+        .pi-t-section.verified .pi-t-section-tag { color: #047857; background: rgba(5,150,105,.08); }
+        .pi-t-section.current .pi-t-section-tag { color: #D97706; background: rgba(217,119,6,.08); }
+        .pi-t-section.projected .pi-t-section-tag { color: #7C3AED; background: rgba(124,58,237,.08); }
+        .pi-t-row { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 10px; padding: 6px 10px; border-radius: 6px; font-size: 13px; line-height: 1.6; transition: background .15s; }
+        .pi-t-row:hover { background: rgba(0,0,0,.02); }
+        .pi-t-row.projected { background: rgba(124,58,237,.02); }
+        .pi-t-row.projected:hover { background: rgba(124,58,237,.05); }
+        .pi-t-rule { font-weight: 600; color: #B45309; font-size: 12px; padding-top: 1px; }
+        .pi-t-row.projected .pi-t-rule { color: #7C3AED; }
+        .pi-t-reality { color: var(--color-text-primary); font-weight: 500; }
+        .pi-t-analogy { color: var(--color-text-secondary); padding-left: 10px; border-left: 2px solid var(--color-border-light); }
+        .pi-t-divider { border-top: 2px dashed var(--color-border-light); margin: 8px 10px; }
+        .pi-t-verify { display: flex; align-items: center; gap: 6px; margin-top: 8px; padding: 6px 10px; background: rgba(5,150,105,.06); border-radius: 6px; font-size: 12px; font-weight: 600; color: #047857; }
+        .pi-confidence { display: flex; align-items: center; gap: 6px; margin-top: 8px; padding: 6px 10px; background: rgba(124,58,237,.04); border-radius: 6px; border-left: 3px solid #8B5CF6; font-size: 11px; font-weight: 500; color: #7C3AED; letter-spacing: .02em; }
+
+        /* ===== DATA TABLE ===== */
+        .data-table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius-md); border: 1px solid var(--color-border); }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .data-table th, .data-table td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--color-border-light); }
+        .data-table th { background: var(--color-bg-table-header); font-weight: 600; color: var(--color-text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+        .data-table td { color: var(--color-text-primary); }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tbody tr:hover { background: var(--color-bg-hover); }
+        .section-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
+        .section-header { font-size: 16px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--color-border-light); display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); }
+        .section-header .num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--gradient-success); color: #fff; font-size: 12px; font-weight: 700; }
+        .section-header .num.orange { background: var(--gradient-orange); }
+
+        /* ===== PREVIEW / WATCHLIST ===== */
+        .watch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        /* ===== INSIGHT BLOCK (capability_update) ===== */
+        .insight-block {
+            margin-top: 20px; background: linear-gradient(135deg, #EFF6FF 0%, #EDE9FE 100%);
+            border: 1px solid #DBEAFE; border-radius: var(--radius-lg); padding: 24px;
+            box-shadow: var(--shadow-card);
+        }
+        .insight-block-title { font-size: 16px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #1E40AF; }
+        .insight-block-body { font-size: 14px; color: #374151; line-height: 1.8; font-family: var(--font-family-cn); }
+
+        /* ===== ANIMATE ON SCROLL ===== */
+        .animate-on-scroll {
+            opacity: 0; transform: translateY(14px);
+            transition: opacity 0.42s ease, transform 0.42s ease;
+        }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll { transition: none; opacity: 1; transform: none; }
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-to-top {
+            position: fixed; bottom: 28px; right: 28px;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--color-success); color: #fff; border: none;
+            cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 14px rgba(5,150,105,0.3); opacity: 0; pointer-events: none;
+            transition: opacity var(--transition-normal), transform var(--transition-normal);
+            z-index: 200;
+        }
+        .scroll-to-top.visible { opacity: 1; pointer-events: auto; }
+        .scroll-to-top:hover { transform: translateY(-2px); }
+
+        /* ===== FOOTER ===== */
+        .doc-footer {
+            margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--color-border);
+            font-size: 12px; color: var(--color-text-muted); text-align: center;
+            font-family: var(--font-family-cn); line-height: 1.8;
+        }
+        .doc-footer a { color: var(--color-success); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .layout-wrapper { flex-direction: column; }
+            .sidebar-nav {
+                width: 100%; position: sticky; top: 0; height: auto;
+                overflow-y: visible; border-right: none; border-bottom: 1px solid var(--color-border);
+                display: flex; flex-direction: row; overflow-x: auto; padding: 4px 0;
+                -webkit-overflow-scrolling: touch;
+            }
+            .sidebar-doc-title, .toc-group-label, .reading-progress-wrap { display: none; }
+            .toc-link {
+                flex: 0 0 auto; border-left: none; border-bottom: 2px solid transparent;
+                white-space: nowrap; padding: 8px 14px; font-size: 12px;
+            }
+            .toc-link.toc-active { border-left-color: transparent; border-bottom-color: var(--color-success); }
+            .toc-link.toc-sub { display: none; }
+            .sidebar-collapse-btn { display: none; }
+            .content-inner { padding: 24px 16px 80px; }
+            .overview-grid.five-cols { grid-template-columns: 1fr 1fr; }
+            .watch-grid { grid-template-columns: 1fr; }
+            .header-title { font-size: 24px; }
+            .heat-table { font-size: 12px; }
+            .heat-table th, .heat-table td { padding: 6px 4px; }
+            .coverage-bar { flex-direction: column; gap: 8px; }
+            .pi-evo { flex-direction: column; align-items: flex-start; }
+            .pi-evo-arrow { display: none; }
+            .pi-t-head { display: none; }
+            .pi-t-row { grid-template-columns: 1fr; gap: 2px; padding: 6px 10px; border-left: 3px solid var(--color-border-light); margin-bottom: 4px; }
+            .pi-t-row.projected { border-left-color: rgba(124,58,237,.3); }
+            .pi-t-analogy { border-left: none; padding-left: 0; font-size: 12px; }
+        }
+        @media (max-width: 960px) {
+            .overview-grid.five-cols { grid-template-columns: 1fr 1fr; }
+        }
+
+/* ===== AI洞察定制层 ===== */
+/* ===== AI洞察定制层样式（仅日报/首页特有的组件样式） ===== */
+/* 
+ * ⚠️ 本文件只包含AI洞察项目特有的组件样式和扩展变量。
+ * CSS变量定义和基础样式从 qingshuang-research-style 动态引用。
+ * 
+ * 引用路径: ../../skills/qingshuang-research-style/references/base-styles.css
+ * 引用方式: gen_daily_html.py 和 update_homepage.py 自动合并
+ * 
+ * 改动规则:
+ * - 只改本文件（定制层）
+ * - CSS变量（颜色/间距/阴影等）改 qingshuang skill，不要在这里重复定义
+ * - 新增组件样式在本文件添加
+ */
+
+/* ===== AI洞察扩展CSS变量（公共层未覆盖的） ===== */
+:root {
+    --color-orange: #EA580C;
+    --color-success-dark: #047857;
+    --color-success-50: #ECFDF5;
+    --color-success-100: #D1FAE5;
+    --color-danger-50: #FFF1F2;
+    --color-warning-50: #FFFBEB;
+    --color-info-50: #EFF6FF;
+    --color-info-100: #DBEAFE;
+    --color-purple-50: #F5F3FF;
+    --color-purple-100: #EDE9FE;
+    --gradient-orange: linear-gradient(135deg, #EA580C 0%, #F97316 100%);
+    --gradient-china: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+    --color-bg-hover: rgba(0,0,0,0.025);
+}
+
+/* ===== 日报特有组件 ===== */
+
+/* 最新日报卡片 */
+.latest-report-card {
+    background: linear-gradient(135deg, var(--gradient-success));
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+}
+
+/* 日历视图 */
+.calendar-container {
+    max-width: 280px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.calendar-day.has-report {
+    background: var(--color-success-50);
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+.calendar-day.has-weekly::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 3px;
+    right: 3px;
+    height: 3px;
+    background: var(--gradient-purple);
+    border-radius: 2px;
+}
+
+.calendar-day.today {
+    border: 2px solid var(--color-info);
+    border-radius: var(--radius-sm);
+}
+
+/* 周报入口卡片 */
+.weekly-report-card {
+    background: linear-gradient(135deg, #EFF6FF 0%, #F5F3FF 100%);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+}
+
+/* ===== 首页特有组件 ===== */
+
+/* Tab导航 */
+.tab-nav {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px) saturate(1.8);
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+}
+
+.tab-btn.active {
+    color: var(--color-success);
+    border-bottom: 2px solid var(--color-success);
+}
+
+/* 统计卡片 */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.stat-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+}
+
+/* 知识库维度卡片 */
+.kb-dimension {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.kb-dimension:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.dim-header {
+    cursor: pointer;
+    padding: 12px 16px;
+}
+
+.kb-item-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}
+
+/* 追踪体系表格 */
+.tracking-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tracking-table th {
+    background: var(--color-bg-table-header);
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.tracking-table td {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+/* ===== 响应式 ===== */
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .tab-btn .tab-label {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+</style>
+</head>
+<body>
+<a class="skip-to-content" href="#main-content">跳到主内容</a>
+
+<div class="layout-wrapper">
+    <!-- SIDEBAR TOC -->
+    <nav class="sidebar-nav sidebar-collapsed" id="sidebar" aria-label="目录导航">
+        <div class="sidebar-doc-title">AI 日报 · 2026-05-17</div>
+        <div class="toc-section">
+            <div class="toc-group-label">目录</div>
+            <a href="#overview"   class="toc-link">📋 全文概览</a>
+            <a href="#heat"       class="toc-link">🔥 热度趋势</a>
+            <a href="#llm"        class="toc-link">🧠 大模型</a>
+            <a href="#coding"     class="toc-link">⌨️ AI Coding</a>
+            <a href="#app"        class="toc-link">📱 AI 应用</a>
+            <a href="#industry"   class="toc-link">🏭 AI 行业</a>
+            <a href="#enterprise" class="toc-link">🔄 企业AI转型</a>
+            <a href="#data"       class="toc-link">📊 数据速览</a>
+            <a href="#watch"      class="toc-link">📌 明日关注</a>
+        </div>
+        <div class="reading-progress-wrap">
+            <div class="reading-progress-label">阅读进度</div>
+            <div class="reading-progress-track">
+                <div class="reading-progress-fill" id="readingProgress"></div>
+            </div>
+        </div>
+    </nav>
+    <button class="sidebar-collapse-btn collapsed-pos" id="collapseBtn" title="展开导航" aria-label="展开导航">»</button>
+
+    <!-- MAIN CONTENT -->
+    <main class="content-area" id="main-content">
+        <div class="content-inner">
+
+            <!-- HEADER -->
+            <header class="doc-header">
+                <div class="header-badge">AI INSIGHT · DAILY REPORT</div>
+                <h1 class="header-title">AI 日报 <span class="version-badge">v4.0</span></h1>
+                <div class="header-meta">
+                    <span>📅 2026年5月17日 周日</span>
+                    <span>🌐 海外 8条 · 国内 7条</span>
+                    <span>📊 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</span>
+                </div>
+            </header>
+
+            <!-- COVERAGE BAR -->
+            <div class="coverage-bar animate-on-scroll">
+                <span class="label">📊 覆盖均衡</span>
+                <div class="bar">
+                    <div class="bar-overseas" style="width:53%"></div>
+                    <div class="bar-china" style="width:47%"></div>
+                </div>
+                <div class="stats">
+                    <span class="stat-overseas">🌏 海外 8条</span>
+                    <span class="stat-china">🇨🇳 国内 7条</span>
+                </div>
+            </div>
+
+            <!-- OVERVIEW -->
+            <section id="overview" class="report-section">
+                <div class="overview animate-on-scroll">
+                    <div class="overview-title">📋 全文概览</div>
+                    <div class="overview-grid five-cols">
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">🧠</span><span class="overview-item-label">大模型</span></div>
+                    <div class="overview-item-text">GPT-5.5正式发布+ChatGPT workspace agents上线+Anthropic企业采用率34.4%首超OpenAI；DeepSeek V4开源后引发融资热潮500亿估值+Kimi K2.6登顶综合基准+文心5.1以6%成本登榜</div>
+                </div>
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">⌨️</span><span class="overview-item-label">AI Coding</span></div>
+                    <div class="overview-item-text">字节Trae SOLO模式开放引发全民AI编程浪潮+Cursor/Claude Code/Windsurf三强横评+AI编程从专业工具进化为生产力引擎</div>
+                </div>
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">📱</span><span class="overview-item-label">AI应用</span></div>
+                    <div class="overview-item-text">iOS 27将支持第三方AI模型选择+ChatGPT Images 2.0多语言突破+OpenAI个人理财功能上线+豆包日活破亿成中国最火AI应用</div>
+                </div>
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI行业</span></div>
+                    <div class="overview-item-text">DeepSeek首轮融资500亿创中国纪录18天估值暴涨4.5倍+月之暗面20亿美元+Anthropic承诺2000亿美元Google云+Tessera Labs a16z领投60M做ERP迁移</div>
+                </div>
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔄</span><span class="overview-item-label">企业转型</span></div>
+                    <div class="overview-item-text">Anthropic企业采用率首超OpenAI但面临三大威胁+中国AI Token周调用量7.9万亿反超美国+Apple开放第三方AI模型接入+百度文心5.1以6%成本赋能企业落地</div>
+                </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- HEAT TREND -->
+            <section id="heat" class="report-section animate-on-scroll">
+
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label">🔥 热度趋势</div>
+                <div class="heat-header-title"></div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead><tr><th>排名</th><th>话题</th><th>热度</th><th>天数</th><th>趋势</th><th>核心信号</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇</td>
+                            <td><strong>GPT-5.5发布</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>今日新热点</td>
+                        </tr>
+                        <tr>
+                            <td>🥈</td>
+                            <td><strong>Anthropic超OpenAI企业采用</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>今日新热点</td>
+                        </tr>
+                        <tr>
+                            <td>🥉</td>
+                            <td><strong>DeepSeek首轮融资</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>今日新热点</td>
+                        </tr>
+                        <tr>
+                            <td>4️⃣</td>
+                            <td><strong>Trae SOLO模式</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>今日新热点</td>
+                        </tr>
+                        <tr>
+                            <td>5️⃣</td>
+                            <td><strong>iOS27第三方AI</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>今日新热点</td>
+                        </tr>
+                        <tr>
+                            <td>6️⃣</td>
+                            <td><strong>Claude Mythos网络安全争议</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>5天</td>
+                            <td><span class="heat-trend-tag down">📉 降温</span></td>
+                            <td>热度回落</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p></p>
+            </div>
+        </div>
+            </section>
+
+            <!-- FIVE BOARDS -->
+
+            <!-- ===== 大模型 ===== -->
+            <section id="llm" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label">🧠 大模型</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://openai.com/index/introducing-gpt-5-5/" target="_blank">GPT-5.5正式发布：GDPval测试84.9%，推出cyber安全防护</a> <span class="news-source-inline">OpenAI</span></div>
+                    <div class="news-summary-compact">OpenAI正式发布GPT-5.5，在GDPval（测试Agent跨44个职业的知识工作能力）得分84.9%。同时推出行业领先的网络安全防护体系，扩大Trusted Access for Cyber计划，让验证用户可使用GPT-5.5的高级网络安全能力。GPT-5.5 Instant同步上线，提供更个性化响应和更精准答案。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://venturebeat.com/ai/anthropic-finally-beat-openai-in-business-ai-adoption-but-3-big-threats-could-erase-its-lead" target="_blank">Anthropic企业采用率34.4%首超OpenAI 32.3%，但三大威胁隐现</a> <span class="news-source-inline">VentureBeat/Ramp</span></div>
+                    <div class="news-summary-compact">Ramp AI Index五月数据显示Anthropic企业采用率升至34.4%，首次超越OpenAI的32.3%。Claude Code推动开发者采用是关键驱动力。但同一报告指出三大威胁：成本飙升、算力受限、token计价模式的脆弱性。从2023年中不足1%到如今34.4%，Anthropic两年内完成了惊人逆袭。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://www.reuters.com/business/anthropic-commits-spending-200-billion-googles-cloud-chips-information-reports-2026-05-05/" target="_blank">Anthropic承诺2000亿美元使用Google云与芯片</a> <span class="news-source-inline">Reuters/The Information</span></div>
+                    <div class="news-summary-compact">Anthropic已承诺未来五年向Google Cloud支出2000亿美元，作为近期合作协议的一部分。Amazon此前宣布对Anthropic追加50亿美元投资，后续可能再加200亿。云巨头围绕AI公司的军备竞赛加剧。</div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://m.163.com/dy/article/KT04BQ030556BUO3.html" target="_blank">DeepSeek V4开源引爆行业：1.6T参数+49B激活+省73%算力</a> <span class="news-source-inline">CSDN/163</span></div>
+                    <div class="news-summary-compact">DeepSeek V4正式开源发布：总参数1.6T、激活参数49B（Ultra-MoE架构）、百万token上下文标配。最关键突破——每token算力消耗仅为V3.2的27%，砍掉73%算力需求。Codeforces评测3206分，Agent Coding接近Claude Opus 4.6非思考模式。华为AI超节点服务器一小时后即官宣适配。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://www.szhzxw.cn/118125.html" target="_blank">5月大模型排行：Kimi K2.6登顶94.3分，DeepSeek V4紧随93.8分</a> <span class="news-source-inline">CSDN/稀土掘金</span></div>
+                    <div class="news-summary-compact">CSDN和稀土掘金发布2026年5月AI大模型全景报告，Kimi K2.6以94.3分登顶综合基准榜首，DeepSeek V4 93.8分紧随，GPT-5 93.5分第三，Claude 4 Opus 93.1分第四。前15名差距仅3个百分点，竞争极端激烈。中国AI日均Token调用量突破140万亿，较年初增长超40%。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://m.toutiao.com/a7638060216583455232/" target="_blank">文心5.1重磅发布：预训练成本仅业界6%，搜索能力全球第四</a> <span class="news-source-inline">百度/头条</span></div>
+                    <div class="news-summary-compact">百度5月9日发布文心大模型5.1，以'多维弹性预训练'技术实现关键突破：总参数压缩至1/3、激活参数压缩至1/2、预训练成本暴降94%至业界6%。LMArena搜索榜1223分全球第四、国产第一。Agent能力超越DeepSeek V4-Pro，创意写作持平Gemini 3.1 Pro。标志着大模型从参数军备竞赛转向极致效率竞争。</div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">GPT-5.5发布+Anthropic首超OpenAI：大模型竞争从性能指标转向企业采用率</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>本周大模型赛道出现两个标志性事件：OpenAI发布GPT-5.5，Anthropic企业采用率首次超越OpenAI。表面看两者独立，实则揭示同一趋势——大模型竞争的核心战场正从'谁的benchmark分数更高'转向'谁能在企业场景中被真正使用'。</p><p>GPT-5.5在GDPval测试84.9%的成绩说明OpenAI仍在Agent能力上领先，但Ramp数据显示企业实际付费采用已转向Anthropic。Claude Code推动了开发者端的爆发式增长，Anthropic正将此成功扩展到法律、金融、研究等企业场景。但三大威胁（成本飙升、算力受限、token计价脆弱）可能让领先地位昙花一现。</p><p>国内方面，DeepSeek V4开源+500亿融资+华为算力适配形成软硬件生态闭环信号；Kimi K2.6登顶综合基准证明中国模型不再只是'追赶者'；文心5.1以6%成本实现全球第四，标志着大模型竞争逻辑从'烧钱堆参数'到'花小钱办大事'的范式转移。全球大模型竞争正从单维度的技术指标竞赛，变成多维度的商业落地+成本效率+生态闭环的综合博弈。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">大模型竞争的核心战场从benchmark分数转向企业采用率。Anthropic首超OpenAI是信号而非终局——成本和算力约束可能逆转领先地位。国内DeepSeek+文心5.1的'降本增效'路线正在改写全球竞争逻辑。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card" style="background:linear-gradient(135deg,#F0FDF4,#ECFDF5);border:1px solid #A7F3D0;border-radius:14px;padding:20px;margin:16px 0">
+<div style="display:flex;align-items:center;margin-bottom:12px">
+<span style="font-size:20px;margin-right:8px">&#x1F504;</span>
+<h3 style="color:#059669;margin:0;font-size:16px">本期模式洞察</h3>
+</div>
+<div class="pi-law" style="color:#1F2937;line-height:1.8;font-size:14px">
+<p><strong>采用率悖论：</strong>技术benchmark领先≠企业采用领先。当Agent能力(GDPval 84.9%)和开发者体验(Claude Code)成为企业选择的主要驱动力时，'最好用的模型'胜过'最聪明的模型'。Anthropic首超OpenAI验证了这一悖论。</p>
+<p style="margin-top:8px"><strong>关键判断：</strong>2026年大模型竞争进入'采用率战争'阶段——谁能在企业场景中提供更好的开发者体验+更低的使用成本+更完善的生态闭环，谁就能赢得下一轮。中国DeepSeek+文心5.1的降本路线可能成为新的全球范式。</p>
+</div>
+</div>
+            </section>
+
+            <!-- ===== AI Coding ===== -->
+            <section id="coding" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label">⌨️ AI Coding</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://www.nxcode.io/resources/news/cursor-vs-windsurf-vs-claude-code-2026" target="_blank">Cursor vs Claude Code vs Windsurf：2026年5月AI编程三强横评</a> <span class="news-source-inline">Medium/nxcode</span></div>
+                    <div class="news-summary-compact">5月横评显示三强各有定位：Cursor($20/mo)打磨IDE编辑体验，Windsurf($15/mo)预算友好+慷慨免费层，Claude Code($20-200/mo)终端原生+1M token上下文(Opus 4.6)。多数开发者组合使用：Cursor日常编辑+Claude Code大重构。Cursor ARR超5亿美元成市场领导者。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://openai.com/index/work-with-codex-from-anywhere/" target="_blank">OpenAI Codex从任意位置可用：ChatGPT workspace agents上线</a> <span class="news-source-inline">OpenAI</span></div>
+                    <div class="news-summary-compact">OpenAI宣布Codex可在任意位置使用，同时ChatGPT workspace agents正式上线。企业可在ChatGPT中构建自主Agent，自动触发工作、跨团队工具执行、合规API监控。标志着OpenAI从'聊天助手'向'企业Agent平台'的战略跃迁。</div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://m.sohu.com/a/1022341910_120824542" target="_blank">字节Trae SOLO模式开放：AI全自主编程，600万开发者已接入</a> <span class="news-source-inline">搜狐/头条</span></div>
+                    <div class="news-summary-compact">字节Trae SOLO模式正式开放，实现从'人主导AI辅助'到'AI主导人审核'的范式转变。三种模式(Chat/Builder/SOLO)覆盖从代码问答到全流程自主交付。SOLO模式AI独立完成需求理解→代码生成→测试→预览→部署全流程。国内版完全免费，已有超600万开发者使用。Skills技能包+MCP全生态接入同步上线。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://m.toutiao.com/article/7639836986248872457/" target="_blank">AI编程从专业工具进化为生产力引擎：零代码浪潮席卷全球</a> <span class="news-source-inline">头条</span></div>
+                    <div class="news-summary-compact">2026年4月Trae/Cursor/Claude Code集中升级后，AI编程正式从专业开发者效率工具进化为全民生产力引擎。60岁奥地利父子零编程经验用AI自动搭建啤酒酿造系统成为标志性案例。Trae以中文原生+全链路自主开发+零门槛上手三大优势成为国内首选。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://m.toutiao.com/article/7639993891336307240/" target="_blank">Trae工作流全指南：SOLO独立端+Skills技能包+MCP全生态接入</a> <span class="news-source-inline">头条</span></div>
+                    <div class="news-summary-compact">2026年Trae核心升级：SOLO独立端实现AI自主交付全流程、Skills技能包可复用开发流程模板、MCP全生态接入打通第三方工具。三模式(Chat/Builder/SOLO)分工明确：日常辅助→快速原型→全自动交付。Trae已从'字节版VS Code'进化为'AI工程师军团'。</div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Trae SOLO模式开放：AI编程从'人辅助'到'AI主导'的范式跃迁</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>字节Trae SOLO模式的开放标志着AI编程领域一个关键拐点：从'人主导、AI辅助'到'AI主导、人审核'。这不是简单的功能升级，而是工作方式的根本重构——开发者从'写代码的人'变成'审核AI产出的人'。</p><p>SOLO模式的核心能力是全流程自主交付：需求理解→任务拆解→代码生成→测试修复→部署上线，AI独立完成所有环节。三种模式(Chat/Builder/SOLO)形成清晰分工——日常辅助、快速原型、全自动交付。加上Skills技能包（可复用流程模板）和MCP生态接入（打通第三方工具），Trae已从IDE进化为Agent平台。</p><p>与海外三强(Cursor/Claude Code/Windsurf)对比，Trae的独特优势是中文原生适配+全免费策略+SOLO双智能体架构。Cursor打磨IDE体验，Claude Code以1M上下文取胜终端场景，Windsurf主打性价比——但Trae选择了更激进的全自主交付路线。600万开发者接入的数据说明这条路线在中国市场有真实需求支撑。AI编程的竞争维度正在从'谁的代码补全更准确'转向'谁的Agent能交付更完整的产品'。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">Trae SOLO模式开放标志着AI编程从辅助工具进化为自主Agent。竞争维度从代码补全精度转向全流程交付能力。中文生态+全免费策略可能让Trae在国内市场走出一条不同于Cursor/Claude Code的路径。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card" style="background:linear-gradient(135deg,#F0FDF4,#ECFDF5);border:1px solid #A7F3D0;border-radius:14px;padding:20px;margin:16px 0">
+<div style="display:flex;align-items:center;margin-bottom:12px">
+<span style="font-size:20px;margin-right:8px">&#x1F680;</span>
+<h3 style="color:#059669;margin:0;font-size:16px">本期模式洞察</h3>
+</div>
+<div class="pi-law" style="color:#1F2937;line-height:1.8;font-size:14px">
+<p><strong>自主交付跃迁：</strong>AI编程工具的竞争维度正在从'代码补全精度'转向'全流程自主交付能力'。当SOLO模式让AI独立完成从需求到部署的全流程时，开发者角色从'写代码的人'变成'审核AI产出的人'。</p>
+<p style="margin-top:8px"><strong>关键判断：</strong>2026年是AI编程从工具到Agent的转折年——Trae SOLO、Cursor Composer、Claude Code三者的共同方向是自主交付。Trae的中文原生+全免费策略可能在国内形成差异化护城河。</p>
+</div>
+</div>
+            </section>
+
+            <!-- ===== AI 应用 ===== -->
+            <section id="app" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label">📱 AI 应用</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://9to5mac.com/2026/05/05/ios-27-will-let-you-choose-between-gemini-claude-and-more-for-ai-features-report/" target="_blank">iOS 27将支持第三方AI模型选择：Gemini/Claude/更多可选</a> <span class="news-source-inline">Bloomberg/9to5Mac</span></div>
+                    <div class="news-summary-compact">Bloomberg报道iOS 27将引入'Extensions'机制，允许用户选择第三方AI模型(Gemini/Claude等)替代Apple Intelligence默认功能(Siri/写作工具/图像创作等)。苹果已签约Google使用Gemini驱动Siri和Apple Intelligence，但用户可自由切换其他提供商。Tim Cook即将卸任，新CEO John Ternus将主导AI战略。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://openai.com/index/introducing-chatgpt-images-2-0/" target="_blank">ChatGPT Images 2.0发布：多语言文字渲染突破</a> <span class="news-source-inline">OpenAI</span></div>
+                    <div class="news-summary-compact">OpenAI发布ChatGPT Images 2.0，实现多语言文字渲染的重大突破——南亚语言、中文、法语等文字在AI生成图片中清晰可辨。还推出thinking mode搜索能力，可根据文字查询生成对应产品图。标志着AI图像生成从'好看'到'有用'的进化。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://openai.com/index/personal-finance-chatgpt/" target="_blank">OpenAI在ChatGPT中推出个人理财功能</a> <span class="news-source-inline">OpenAI</span></div>
+                    <div class="news-summary-compact">5月15日OpenAI在ChatGPT中上线个人理财体验，用户可分析支出、制定储蓄计划、评估投资组合。标志着ChatGPT从通用对话助手向垂直场景深度渗透的战略推进。</div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://view.inews.qq.com/wxn/20260511A08ELC00" target="_blank">豆包日活破亿成中国最火AI原生应用：字节全栈技术矩阵的胜出</a> <span class="news-source-inline">QuestMobile/头条</span></div>
+                    <div class="news-summary-compact">QuestMobile数据显示豆包3月日活破亿，成为中国最火AI原生应用。字节在AI上的独特策略：不是给原有入口加AI插件，而是从底层技术(豆包1.5-pro模型)到上层应用(豆包/Trae)全栈自建。千亿级基建投入+全栈技术矩阵+顶尖人才密度是胜出关键。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://m.blog.csdn.net/caizikid/article/details/160954455" target="_blank">小米MiMo-V2.5开源：端侧AI从云端走向本地</a> <span class="news-source-inline">CSDN</span></div>
+                    <div class="news-summary-compact">小米正式开源MiMo-V2.5，支持手机端本地运行百亿参数大模型，降低对云端算力依赖。端侧AI成为明确趋势，手机厂商纷纷布局本地推理能力。</div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">iOS 27开放第三方AI：Apple从'AI壁垒'走向'AI超市'</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>iOS 27的Extensions机制是Apple AI战略的重大转折。从iOS 18开始Apple坚持自建Apple Intelligence，但效果不佳、用户抱怨不断。iOS 26引入ChatGPT作为替代选项，iOS 27则进一步开放为'AI超市'——用户可自由选择Gemini、Claude或任何支持Extensions的AI提供商。</p><p>这标志着Apple承认了一个现实：在AI能力上自建不如开放。Extensions的底层逻辑是让第三方AI模型通过标准接口接入Apple Intelligence功能(Siri/写作工具/图像创作等)，用户甚至可为不同场景设置不同的默认AI模型。Apple的核心价值不再是'最好的AI'，而是'最好的AI分发平台'。</p><p>对行业的启示：Apple开放AI选择意味着AI模型的竞争将从前端入口转向后端能力——谁能在Apple Extensions中获得更多用户选择，取决于模型的场景适配度和开发者接入便利性。Anthropic和Google已有先发优势，但对于中国大模型(Kimi/DeepSeek)来说，能否进入Apple生态将成为全球化战略的关键考验。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">Apple从AI壁垒走向AI超市，核心价值从'最好的AI'转向'最好的AI分发平台'。这对中国大模型的全球化是一个新的入口机遇——谁能率先接入Extensions生态。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card" style="background:linear-gradient(135deg,#F0FDF4,#ECFDF5);border:1px solid #A7F3D0;border-radius:14px;padding:20px;margin:16px 0">
+<div style="display:flex;align-items:center;margin-bottom:12px">
+<span style="font-size:20px;margin-right:8px">&#x1F3EA;</span>
+<h3 style="color:#059669;margin:0;font-size:16px">本期模式洞察</h3>
+</div>
+<div class="pi-law" style="color:#1F2937;line-height:1.8;font-size:14px">
+<p><strong>平台超市定律：</strong>当平台自建能力不足时，开放第三方选择是唯一出路。Apple从Apple Intelligence(自建)到ChatGPT(单一合作)到Extensions(开放超市)，三步走验证了这一定律。</p>
+<p style="margin-top:8px"><strong>关键判断：</strong>AI竞争将从前端入口转向后端能力——在Apple超市中赢得选择取决于场景适配度+开发者接入便利性。对中国大模型来说，这是全球化新入口。</p>
+</div>
+</div>
+            </section>
+
+            <!-- ===== AI 行业 ===== -->
+            <section id="industry" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label">🏭 AI 行业</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://blog.mean.ceo/ai-startup-funding-news-may-2026/" target="_blank">AI Agent基础设施投资升温：资本从模型层转向工具层</a> <span class="news-source-inline">Mean CEO Blog</span></div>
+                    <div class="news-summary-compact">5月AI融资数据显示资本正在从纯模型层转向Agent基础设施、企业工具和垂直场景。Agent基础设施正在成为独立赛道。Project Prometheus接近10亿美元融资轮、Amazon追加Anthropic投资+Tessera Labs 60M做ERP迁移，资本押注AI从写代码到管企业的能力跃迁。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://business20channel.tv/tessera-labs-60m-round-2026-a16z-backs-ai-driven-erp-migrati-9-may-2026" target="_blank">Tessera Labs a16z领投60M：AI驱动的ERP迁移压缩数年到数周</a> <span class="news-source-inline">Business 2.0</span></div>
+                    <div class="news-summary-compact">Tessera Labs完成6000万美元超额认购Series A，a16z领投。该公司用AI原生平台将ERP迁移从数年压缩到数周、成本降低50%以上。用户用自然语言描述需求，AI跨多系统管理变更并保证治理和安全。AI从'写代码'到'管理企业系统'的能力跃迁。</div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://caifuhao.eastmoney.com/news/20260513143458498319850" target="_blank">DeepSeek首轮融资500亿：18天估值暴涨4.5倍创全球纪录</a> <span class="news-source-inline">东方财富/网易</span></div>
+                    <div class="news-summary-compact">DeepSeek首轮外部融资获国家大基金领投，投后估值450亿美元(约3500亿元)。创始人梁文锋个人出资200亿占40%。从4月初100亿美元到5月初450亿美元，18天估值暴涨4.5倍创全球AI初创估值增速纪录。V4.1定于6月发布首次集成图像与音频多模态能力。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://m.163.com/dy/article/KSNNAQDH05118N26.html" target="_blank">月之暗面20亿美元融资：Kimi累计融资超376亿成中国最多</a> <span class="news-source-inline">网易/头条</span></div>
+                    <div class="news-summary-compact">月之暗面完成约20亿美元(140亿元)新一轮融资，美团龙珠领投、中国移动/CPE跟投，投后估值突破200亿美元。半年内完成4轮融资累计超376亿元，成为中国大模型创业公司中累计融资最多的公司。与DeepSeek形成'双雄对决'格局。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://m.toutiao.com/article/7640360539369865763/" target="_blank">中国AI Token周调用量7.9万亿反超美国，环比暴涨81.7%</a> <span class="news-source-inline">头条</span></div>
+                    <div class="news-summary-compact">最新数据显示中国AI大模型周调用量达7.942万亿Token，环比暴涨81.7%，时隔两周再次反超美国。从'跟跑'到'并跑'到'领跑'，中国AI产业规模化落地持续加速。日均Token突破140万亿，较年初增长超40%。</div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">DeepSeek500亿+月暗20亿：中国大模型从'百模大战'到'双雄对决'</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>2026年5月的中国AI融资画面极为壮观：DeepSeek首轮融资500亿元估值450亿美元，月之暗面20亿美元估值200亿美元，加上已上市的智谱和MiniMax股价暴力上涨——中国大模型从2023年的'百模大战'三年内走完了互联网十年的路，进入'双雄对决'阶段。</p><p>DeepSeek和月之暗面代表两种截然不同的路线。DeepSeek：技术驱动、开源路线、极致低成本(V4省73%算力)、三年不融资靠内部资金独立发展——现在融资是为了加速而非生存。月之暗面：产品驱动、用户规模、半年4轮融资累计376亿——融资节奏疯狂但商业化路径清晰(K2.6登顶综合基准+Agent能力)。</p><p>两条路线的背后是两种AI公司哲学：DeepSeek像一个研究所突然拿到巨额经费，月之暗面像一个产品公司疯狂验证商业模型。当技术差距缩小(GPT-5 93.5 vs DeepSeek V4 93.8 vs Kimi K2.6 94.3)，最终能活下来的一定是能把技术转化为真金白银的公司。双雄对决的胜负不是看谁融更多钱，而是看谁先把成本结构做健康。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">中国大模型从百模大战到双雄对决只用三年。DeepSeek(技术+开源+低成本)vs月之暗面(产品+规模+商业化)代表两种路线。当技术差距缩小到3个百分点，胜负取决于商业落地能力和成本结构健康度。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card" style="background:linear-gradient(135deg,#F0FDF4,#ECFDF5);border:1px solid #A7F3D0;border-radius:14px;padding:20px;margin:16px 0">
+<div style="display:flex;align-items:center;margin-bottom:12px">
+<span style="font-size:20px;margin-right:8px">&#x1F91D;</span>
+<h3 style="color:#059669;margin:0;font-size:16px">本期模式洞察</h3>
+</div>
+<div class="pi-law" style="color:#1F2937;line-height:1.8;font-size:14px">
+<p><strong>双雄收敛定律：</strong>当技术差距缩小到3个百分点以内时，百模大战必然收敛为双雄对决。DeepSeek(技术开源低成本)和月之暗面(产品规模商业化)代表两条收敛路径，最终胜出者一定是<strong>成本结构健康+商业落地清晰</strong>的那一方。</p>
+<p style="margin-top:8px"><strong>关键判断：</strong>融资规模不是胜负指标，成本结构健康度才是。DeepSeek的27%算力效率和文心5.1的6%成本正在改写全球AI竞争的成本方程。</p>
+</div>
+</div>
+            </section>
+
+            <!-- ===== 企业AI转型 ===== -->
+            <section id="enterprise" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label">🔄 企业AI转型</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://openai.com/index/introducing-workspace-agents-in-chatgpt/" target="_blank">OpenAI workspace agents上线：企业AI从聊天到自主执行的战略跃迁</a> <span class="news-source-inline">OpenAI</span></div>
+                    <div class="news-summary-compact">OpenAI ChatGPT workspace agents正式上线，企业可在ChatGPT中构建自主Agent自动触发工作、跨团队工具执行、合规API监控。Compliance API让管理员监控每个Agent的配置和运行。标志着OpenAI从聊天助手向企业Agent平台战略跃迁。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://www.reddit.com/r/AI_importants/comments/1t9uvx9/ai_roundup_whats_happening_in_may_2026_that_you/" target="_blank">Google Turbo Quant：KV缓存内存大幅削减，企业推理成本再降</a> <span class="news-source-inline">ICLR 2026/Reddit</span></div>
+                    <div class="news-summary-compact">Google研究团队在ICLR 2026发布Turbo Quant算法，大幅削减KV缓存的内存开销，这是运行大型AI模型的最大瓶颈之一。对企业意味着推理部署的内存需求显著降低，结合DeepSeek V4的73%算力节省，企业AI推理的经济可行性正在加速改善。</div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="http://shizuishan.k-beauty.com.cn/pnews/30197" target="_blank">DeepSeek V4省73%算力：企业推理成本革命</a> <span class="news-source-inline">头条</span></div>
+                    <div class="news-summary-compact">中国AI大模型周调用量达7.942万亿Token环比暴涨81.7%，时隔两周再次反超美国。日均Token突破140万亿较年初增长超40%。从'跟跑'到'并跑'到'领跑'的缩影，企业AI落地规模化持续加速。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://m.toutiao.com/a7638074433835483694/" target="_blank">百度文心5.1以6%成本赋能企业：千帆平台API最快3天上线智能客服</a> <span class="news-source-inline">头条/百度</span></div>
+                    <div class="news-summary-compact">文心5.1预训练成本仅业界6%意味着企业获取同等AI能力门槛大幅降低。通过千帆平台API企业最快3个工作日上线智能客服，人力投入比纯自研减少80%以上。温州实验小学英语课堂AI实时纠音评分是教育场景落地案例。6%成本+国产化标签让企业AI转型ROI显著改善。</div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://m.163.com/dy/article/KSV9OCPV0550B1DU.html" target="_blank">华为AI超节点适配DeepSeek V4：国产算力闭环加速企业落地</a> <span class="news-source-inline">163/华为</span></div>
+                    <div class="news-summary-compact">DeepSeek V4发布一小时后华为即官宣AI超节点服务器全面适配，软硬件协同铺垫已久。国产算力+国产模型闭环方案正在形成，降低对海外算力依赖的同时保障AI服务稳定性和可控性。对企业AI转型意味着有了软硬一体的国产替代路径。</div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">企业AI转型拐点：成本革命正在消除落地门槛</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>本周三个数据共同指向一个结论——企业AI转型的成本门槛正在快速消失。文心5.1预训练成本6%、DeepSeek V4推理算力27%、中国Token周调用量7.9万亿反超美国。当成本不再是瓶颈，规模化落地才成为可能。</p><p>文心5.1的'多维弹性预训练'让一次训练产出整个模型家族——企业不需要为不同场景分别训练，千帆平台API最快3天上线智能客服。DeepSeek V4没有等英伟达B200在国内放量，而是通过Ultra-MoE架构在现有算力上砍掉73%推理成本——这意味着即使算力受限也能规模化部署。中国Token周调用量反超美国说明需求端已经爆发。</p><p>Anthropic首超OpenAI的企业采用率数据也验证了这个趋势——但Ramp报告的三大威胁(成本飙升/算力受限/token计价脆弱)提醒我们：企业AI转型不只是技术问题，更是成本管理问题。当Anthropic的企业客户发现token支出不可预测时，转向DeepSeek这样'27%算力'的替代方案是自然选择。成本革命的另一面是：当成本足够低，企业不需要在AI预算上做艰难取舍，而是可以多模型并行尝试不同场景——这正是中国Token周调用暴涨81.7%的底层逻辑。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">企业AI转型的成本门槛正在消失——文心5.1(6%成本)+DeepSeek V4(27%算力)正在改写ROI方程。当成本不再瓶颈，规模化落地才成为现实。但Anthropic的三大威胁提醒：低成本≠低风险，企业还需要成本可预测性和算力稳定性。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card" style="background:linear-gradient(135deg,#F0FDF4,#ECFDF5);border:1px solid #A7F3D0;border-radius:14px;padding:20px;margin:16px 0">
+<div style="display:flex;align-items:center;margin-bottom:12px">
+<span style="font-size:20px;margin-right:8px">&#x1F4B0;</span>
+<h3 style="color:#059669;margin:0;font-size:16px">本期模式洞察</h3>
+</div>
+<div class="pi-law" style="color:#1F2937;line-height:1.8;font-size:14px">
+<p><strong>成本阈值定律：</strong>当AI的推理成本降至足够低时，企业AI转型从'要不要做'变成'怎么做更多'。文心5.1(6%成本)+DeepSeek V4(27%算力)正在突破这个阈值——中国Token周调用量暴涨81.7%是阈值突破后的需求释放。</p>
+<p style="margin-top:8px"><strong>关键判断：</strong>低成本≠低风险。Anthropic的三大威胁(成本不可预测+算力依赖+token计价脆弱)提醒：企业AI转型需要成本革命+稳定性保障双轮驱动。中国大模型的降本路线正在创造新的全球标准。</p>
+</div>
+</div>
+            </section>
+
+            <!-- DATA SNAPSHOT -->
+            <section id="data" class="report-section animate-on-scroll">
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📊</span> 数据速览</div>
+            <div class="data-table-wrap">
+                <table class="data-table">
+                    <thead><tr><th>指标</th><th>数值</th><th>变化/说明</th></tr></thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            </section>
+
+            <!-- WATCH LIST -->
+            <section id="watch" class="report-section animate-on-scroll">
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📌</span> 明日/下周值得关注</div>
+            <div class="watch-grid">
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 DeepSeek融资最终规模与V4.1六月发布进展</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">DeepSeek融资最终规模与V4.1六月发布进展</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 GPT-5.5对企业实际采用的影响追踪</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">GPT-5.5对企业实际采用的影响追踪</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-info);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-info);display:flex;align-items:center;gap:6px">🔵 Anthropic企业领先地位的可持续性</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">（成本+算力+token定价三大威胁）</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 iOS 27第三方AI Extensions开发者接入速度</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">iOS 27第三方AI Extensions开发者接入速度</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 Trae SOLO模式对国内开发者生态的长期影响</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">Trae SOLO模式对国内开发者生态的长期影响</div>
+                </div>
+            </div>
+        </div>
+            </section>
+
+            <!-- CAPABILITY UPDATE / DEEP INSIGHT -->
+
+        <div class="insight-block animate-on-scroll">
+            <div class="insight-block-title">🤖 深度洞察</div>
+            <div class="insight-block-body">
+                <p style="margin:0">5月17日这天，让我最兴奋的不是GPT-5.5的GDPval分数，而是文心5.1那6%的成本和DeepSeek V4那27%的算力。这两个数字正在改写企业AI转型的ROI方程——从"AI很好但太贵"到"AI很好而且够便宜"。当成本门槛消失，规模化落地才成为可能。但Anthropic的三大威胁提醒我：低成本≠低风险，企业需要的不是最便宜的模型，而是成本可预测的模型。另一个让我在意的是Apple iOS 27开放第三方AI——这意味着AI模型竞争将从前端入口转向后端能力，对中国大模型来说这是全球化新入口。</p>
+            </div>
+        </div>
+
+            <!-- FOOTER -->
+            <footer class="doc-footer animate-on-scroll">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                    <img style="display:none">
+                    <span>我是 <strong>AI洞察</strong>，的AI洞察。
+                    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank">🏠 访问AI洞察首页</a></span>
+                </div>
+                <p style="margin-top:6px">AI洞察 · 系统化追踪AI行业动态 · 五大板块每日更新</p>
+            </footer>
+
+        </div>
+    </main>
+</div>
+
+<button class="scroll-to-top" id="scrollToTop" aria-label="回到顶部">↑</button>
+
+<script>
+    (function() {
+        // ===== TOC SCROLL SPY =====
+        const tocLinks = document.querySelectorAll('.toc-link[href^="#"]');
+        const sections = Array.from(tocLinks)
+            .map(l => document.querySelector(l.getAttribute('href')))
+            .filter(Boolean);
+
+        function updateToc() {
+            let active = null;
+            const scrollY = window.scrollY + 120;
+            for (const sec of sections) {
+                if (sec.getBoundingClientRect().top + window.scrollY <= scrollY) {
+                    active = sec;
+                }
+            }
+            tocLinks.forEach(l => {
+                const target = document.querySelector(l.getAttribute('href'));
+                l.classList.toggle('toc-active', target === active);
+            });
+        }
+
+        // ===== READING PROGRESS =====
+        const progressFill = document.getElementById('readingProgress');
+        function updateProgress() {
+            if (!progressFill) return;
+            const doc = document.documentElement;
+            const scrollTop = window.scrollY;
+            const total = doc.scrollHeight - doc.clientHeight;
+            const pct = total > 0 ? Math.round((scrollTop / total) * 100) : 0;
+            progressFill.style.width = pct + '%';
+        }
+
+        window.addEventListener('scroll', () => {
+            updateToc();
+            updateProgress();
+            // scroll-to-top visibility
+            const btn = document.getElementById('scrollToTop');
+            if (btn) btn.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+
+        updateToc();
+        updateProgress();
+
+        // ===== SCROLL TO TOP =====
+        const scrollBtn = document.getElementById('scrollToTop');
+        if (scrollBtn) {
+            scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+
+        // ===== SIDEBAR COLLAPSE =====
+        const collapseBtn = document.getElementById('collapseBtn');
+        const sidebar = document.getElementById('sidebar');
+        if (collapseBtn && sidebar) {
+            collapseBtn.addEventListener('click', () => {
+                const isCollapsed = sidebar.classList.toggle('sidebar-collapsed');
+                collapseBtn.textContent = isCollapsed ? '»' : '«';
+                collapseBtn.classList.toggle('collapsed-pos', isCollapsed);
+            });
+        }
+
+        // ===== ANIMATE ON SCROLL =====
+        const animEls = document.querySelectorAll('.animate-on-scroll');
+        if (animEls.length) {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+            }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
+            animEls.forEach(el => observer.observe(el));
+        }
+    })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kimi Attention Residuals 深度调研 | AI洞察</title>
+<meta name="description" content="Kimi团队《Attention Residuals》论文深度调研：动了AI圈11年没人碰的残差连接，技术本质、实验结果与决策启示全景解析">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23059669'/><text x='16' y='22' font-size='18' text-anchor='middle' fill='white'>∑</text></svg>">
+<style>
+/* ========== Reset & Variables ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green: #059669;
+  --green-light: #10B981;
+  --green-bg: #ECFDF5;
+  --green-border: #A7F3D0;
+  --blue: #2563EB;
+  --blue-light: #3B82F6;
+  --blue-bg: #EFF6FF;
+  --blue-border: #BFDBFE;
+  --purple: #7C3AED;
+  --purple-light: #8B5CF6;
+  --purple-bg: #F5F3FF;
+  --purple-border: #DDD6FE;
+  --amber: #D97706;
+  --amber-bg: #FFFBEB;
+  --amber-border: #FDE68A;
+  --rose: #E11D48;
+  --rose-bg: #FFF1F2;
+  --text-primary: #1C1917;
+  --text-secondary: #44403C;
+  --text-muted: #78716C;
+  --text-light: #A8A29E;
+  --border: #E7E5E4;
+  --border-light: #F5F5F4;
+  --surface: #FFFFFF;
+  --surface-2: #FAFAF9;
+  --surface-3: #F5F5F4;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow: 0 4px 16px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.10), 0 4px 8px rgba(0,0,0,.05);
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+/* ========== Base ========== */
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: #F8FAFB;
+  background-image:
+    radial-gradient(at 15% 15%, rgba(5,150,105,.09) 0%, transparent 55%),
+    radial-gradient(at 85% 80%, rgba(37,99,235,.07) 0%, transparent 55%),
+    radial-gradient(at 50% 50%, rgba(124,58,237,.04) 0%, transparent 60%);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ========== Hero ========== */
+.hero {
+  text-align: center;
+  padding: 52px 0 36px;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: linear-gradient(135deg, rgba(5,150,105,.1), rgba(37,99,235,.08));
+  border: 1px solid rgba(5,150,105,.2);
+  color: var(--green);
+  font-size: 12.5px; font-weight: 600; letter-spacing: .04em;
+  padding: 5px 14px; border-radius: 999px;
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-size: clamp(26px, 5vw, 40px);
+  font-weight: 900;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #047857 0%, #059669 30%, #2563EB 65%, #7C3AED 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 14px;
+  text-wrap: balance;
+}
+.hero-subtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 580px;
+  margin: 0 auto 28px;
+  line-height: 1.75;
+}
+.hero-meta {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 10px 22px;
+  font-size: 13px; color: var(--text-muted);
+}
+.hero-meta-item {
+  display: flex; align-items: center; gap: 5px;
+}
+.hero-meta-item strong { color: var(--text-secondary); font-weight: 600; }
+
+/* ========== Key Stats ========== */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  margin: 28px 0 32px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 14px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform .15s, box-shadow .15s;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.stat-num {
+  font-size: 24px; font-weight: 800;
+  background: linear-gradient(135deg, var(--green), var(--blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1; margin-bottom: 5px;
+  letter-spacing: -.02em;
+}
+.stat-label { font-size: 11.5px; color: var(--text-muted); line-height: 1.4; }
+
+/* ========== Tab Nav ========== */
+.tab-nav {
+  position: sticky;
+  top: 10px;
+  z-index: 100;
+  display: flex;
+  gap: 4px;
+  padding: 5px;
+  background: rgba(255,255,255,.88);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  margin-bottom: 32px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: 1; min-width: 72px;
+  padding: 9px 14px;
+  border: none; background: transparent;
+  border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer; white-space: nowrap;
+  transition: all .18s;
+}
+.tab-btn:hover { background: var(--surface-3); color: var(--text-secondary); }
+.tab-btn.active {
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  color: #fff; font-weight: 600;
+  box-shadow: 0 2px 8px rgba(5,150,105,.3);
+}
+
+/* ========== Tab Panels ========== */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ========== Section ========== */
+.section { margin-bottom: 28px; }
+.section-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.section-icon {
+  width: 38px; height: 38px; border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; flex-shrink: 0;
+}
+.si-green  { background: var(--green-bg); }
+.si-blue   { background: var(--blue-bg); }
+.si-amber  { background: var(--amber-bg); }
+.si-purple { background: var(--purple-bg); }
+.si-rose   { background: var(--rose-bg); }
+.section-header h2 {
+  font-size: 18px; font-weight: 700; color: var(--text-primary);
+}
+.section-header p {
+  font-size: 13px; color: var(--text-muted); margin-top: 2px;
+}
+
+/* ========== Cards ========== */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+}
+.card + .card, .card + .card-grid { margin-top: 12px; }
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+@media (max-width: 600px) { .card-grid { grid-template-columns: 1fr; } }
+
+/* ========== Overview Panel ========== */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.overview-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.overview-block::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  border-radius: 3px 3px 0 0;
+}
+.ob-green::before  { background: linear-gradient(90deg, var(--green), var(--green-light)); }
+.ob-blue::before   { background: linear-gradient(90deg, var(--blue), var(--blue-light)); }
+.ob-purple::before { background: linear-gradient(90deg, var(--purple), var(--purple-light)); }
+.ob-amber::before  { background: linear-gradient(90deg, var(--amber), #FBBF24); }
+.overview-block h4 {
+  font-size: 12px; font-weight: 700; letter-spacing: .05em;
+  color: var(--text-muted); margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.overview-block p {
+  font-size: 13.5px; color: var(--text-secondary); line-height: 1.7;
+}
+.overview-block strong { color: var(--text-primary); }
+
+/* Overview 摘要卡 */
+.overview-summary {
+  background: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 50%, #F5F3FF 100%);
+  border: 1px solid var(--green-border);
+  border-radius: var(--radius-lg);
+  padding: 24px 26px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.overview-summary::after {
+  content: '∑';
+  position: absolute; right: 20px; top: 14px;
+  font-size: 64px; font-weight: 900;
+  color: rgba(5,150,105,.06);
+  line-height: 1;
+}
+.overview-summary .tag {
+  display: inline-block;
+  font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  background: var(--green-bg); color: #065F46;
+  border: 1px solid var(--green-border);
+  padding: 3px 10px; border-radius: 999px;
+  margin-bottom: 12px;
+}
+.overview-summary h3 {
+  font-size: 17px; font-weight: 700; color: var(--text-primary);
+  margin-bottom: 10px; line-height: 1.4;
+}
+.overview-summary p {
+  font-size: 14px; color: var(--text-secondary); line-height: 1.8;
+}
+.overview-summary strong { color: var(--green); }
+
+/* Overview 章节导图 */
+.chapter-map {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+  margin-top: 16px;
+}
+.chapter-map h4 {
+  font-size: 13px; font-weight: 700; color: var(--text-muted);
+  letter-spacing: .04em; margin-bottom: 14px;
+}
+.chapter-list {
+  display: flex; flex-direction: column; gap: 0;
+}
+.chapter-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer;
+  transition: background .15s;
+}
+.chapter-item:last-child { border-bottom: none; }
+.chapter-item:hover { opacity: .85; }
+.chapter-num {
+  width: 26px; height: 26px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0; margin-top: 1px;
+}
+.cn-green  { background: var(--green-bg); color: var(--green); }
+.cn-blue   { background: var(--blue-bg); color: var(--blue); }
+.cn-amber  { background: var(--amber-bg); color: var(--amber); }
+.cn-purple { background: var(--purple-bg); color: var(--purple); }
+.cn-rose   { background: var(--rose-bg); color: var(--rose); }
+.chapter-info { flex: 1; }
+.chapter-title {
+  font-size: 14px; font-weight: 600; color: var(--text-primary);
+  margin-bottom: 3px;
+}
+.chapter-desc {
+  font-size: 12.5px; color: var(--text-muted); line-height: 1.5;
+}
+
+/* ========== Code Block ========== */
+.code-block {
+  background: #1E1E2E;
+  color: #CDD6F4;
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  font-family: "SF Mono", "Cascadia Code", "Fira Code", "Consolas", monospace;
+  font-size: 12.5px; line-height: 1.75;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+.code-block .c { color: #6C7086; }
+.code-block .h { color: #A6E3A1; font-weight: 600; }
+.code-block .w { color: #FAB387; }
+.code-block .a { color: #89B4FA; }
+.code-block .p { color: #F38BA8; }
+
+/* ========== Highlight Box ========== */
+.hl-box {
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin: 12px 0;
+  font-size: 13.5px; line-height: 1.75;
+}
+.hl-green  { background: var(--green-bg); border: 1px solid var(--green-border); color: #065F46; }
+.hl-blue   { background: var(--blue-bg); border: 1px solid var(--blue-border); color: #1E40AF; }
+.hl-amber  { background: var(--amber-bg); border: 1px solid var(--amber-border); color: #78350F; }
+.hl-purple { background: var(--purple-bg); border: 1px solid var(--purple-border); color: #4C1D95; }
+.hl-box .hl-label {
+  font-size: 12px; font-weight: 700; letter-spacing: .04em;
+  margin-bottom: 6px; display: block;
+}
+
+/* ========== Insight Blocks ========== */
+.insight-card {
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.insight-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
+  border-radius: 4px 0 0 4px;
+}
+.ic-green  { background: linear-gradient(135deg,#ECFDF5,#F0FDF4); border: 1px solid var(--green-border); }
+.ic-green::before  { background: var(--green); }
+.ic-blue   { background: linear-gradient(135deg,#EFF6FF,#F0F4FF); border: 1px solid var(--blue-border); }
+.ic-blue::before   { background: var(--blue); }
+.ic-amber  { background: linear-gradient(135deg,#FFFBEB,#FEF9E7); border: 1px solid var(--amber-border); }
+.ic-amber::before  { background: var(--amber); }
+.ic-purple { background: linear-gradient(135deg,#F5F3FF,#F4F0FF); border: 1px solid var(--purple-border); }
+.ic-purple::before { background: var(--purple); }
+
+.insight-tag {
+  display: inline-block;
+  font-size: 11px; font-weight: 700; letter-spacing: .05em;
+  padding: 3px 10px; border-radius: 999px;
+  margin-bottom: 10px;
+}
+.it-green  { background: #D1FAE5; color: #065F46; }
+.it-blue   { background: #DBEAFE; color: #1E40AF; }
+.it-amber  { background: #FDE68A; color: #92400E; }
+.it-purple { background: #EDE9FE; color: #5B21B6; }
+
+.insight-card h3 {
+  font-size: 15px; font-weight: 700; color: var(--text-primary);
+  margin-bottom: 9px; line-height: 1.4;
+}
+.insight-card p {
+  font-size: 13.5px; color: var(--text-secondary); line-height: 1.75;
+  padding-left: 8px;
+}
+.insight-evidence {
+  margin-top: 12px; padding: 10px 12px;
+  background: rgba(0,0,0,.04); border-radius: var(--radius-sm);
+  font-size: 12.5px; color: var(--text-muted); line-height: 1.65;
+  padding-left: 20px;
+}
+
+/* ========== Quote ========== */
+.quote {
+  border-left: 3px solid var(--green);
+  padding: 11px 16px;
+  margin: 12px 0;
+  background: var(--surface-2);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 14px; color: var(--text-secondary); font-style: italic;
+  line-height: 1.7;
+}
+.quote cite {
+  display: block; margin-top: 6px;
+  font-size: 12px; font-style: normal; font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ========== Result Bars ========== */
+.result-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.result-row:last-child { border-bottom: none; }
+.result-label { font-size: 13px; color: var(--text-secondary); flex: 1; }
+.result-bar-wrap {
+  flex: 2; height: 6px;
+  background: var(--surface-3);
+  border-radius: 99px; overflow: hidden;
+}
+.result-bar { height: 100%; border-radius: 99px; }
+.rb-green { background: linear-gradient(90deg, var(--green), var(--green-light)); }
+.rb-blue  { background: linear-gradient(90deg, var(--blue), var(--blue-light)); }
+.result-val  { font-size: 13px; font-weight: 700; width: 44px; text-align: right; flex-shrink: 0; }
+.result-diff { font-size: 12px; font-weight: 700; color: var(--green); width: 56px; text-align: right; flex-shrink: 0; }
+
+/* ========== Compare Table ========== */
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.compare-table th {
+  background: var(--surface-2);
+  padding: 10px 14px;
+  text-align: left; font-weight: 700;
+  color: var(--text-muted); font-size: 11.5px; letter-spacing: .04em;
+  border-bottom: 2px solid var(--border);
+}
+.compare-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: top; color: var(--text-secondary);
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: var(--surface-2); }
+.compare-table tr.row-hl td { background: #F0FDF4; }
+.compare-table tr.row-hl2 td { background: #EFF6FF; }
+
+/* ========== Voice Cards ========== */
+.voice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.voice-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.voice-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.voice-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
+}
+.voice-name { font-size: 13.5px; font-weight: 700; color: var(--text-primary); }
+.voice-role { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.voice-text { font-size: 13px; color: var(--text-secondary); line-height: 1.65; font-style: italic; }
+.voice-note { font-size: 11.5px; color: var(--text-light); margin-top: 7px; line-height: 1.5; }
+
+/* ========== Decision Cards ========== */
+.decision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+}
+.decision-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+  position: relative; overflow: hidden;
+}
+.decision-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.dc-green::before  { background: linear-gradient(90deg, var(--green), var(--green-light)); }
+.dc-blue::before   { background: linear-gradient(90deg, var(--blue), var(--blue-light)); }
+.dc-amber::before  { background: linear-gradient(90deg, var(--amber), #FBBF24); }
+.dc-purple::before { background: linear-gradient(90deg, var(--purple), var(--purple-light)); }
+.dc-icon { font-size: 22px; margin-bottom: 9px; display: block; }
+.decision-card h4 { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+.decision-card p  { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+
+/* ========== Pill Tags ========== */
+.pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11.5px; font-weight: 600;
+  padding: 3px 10px; border-radius: 999px;
+}
+.pill-green  { background: var(--green-bg); color: #065F46; }
+.pill-blue   { background: var(--blue-bg); color: #1E40AF; }
+.pill-amber  { background: var(--amber-bg); color: #92400E; }
+.pill-purple { background: var(--purple-bg); color: #5B21B6; }
+.pill-red    { background: var(--rose-bg); color: #9F1239; }
+.pill-gray   { background: var(--surface-3); color: var(--text-muted); }
+
+/* ========== Styled List ========== */
+.styled-list { list-style: none; padding: 0; }
+.styled-list li {
+  padding: 9px 0 9px 20px;
+  position: relative;
+  font-size: 13.5px; color: var(--text-secondary); line-height: 1.65;
+  border-bottom: 1px solid var(--border-light);
+}
+.styled-list li:last-child { border-bottom: none; }
+.styled-list li::before {
+  content: '▸'; position: absolute; left: 0;
+  color: var(--green); font-size: 11px; top: 10px;
+}
+
+/* ========== Footer ========== */
+.footer-more {
+  margin-top: 32px;
+  background: linear-gradient(135deg, #F8FAFB, #EEF2F6);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px 26px;
+  box-shadow: var(--shadow-sm);
+}
+.footer-more h3 {
+  font-size: 16px; font-weight: 700; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.footer-more p { font-size: 14px; color: #57534E; line-height: 1.7; margin-bottom: 16px; }
+.footer-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+.footer-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 20px; border-radius: 999px;
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  transition: opacity .15s;
+}
+.footer-btn:hover { opacity: .88; }
+.fb-green { background: linear-gradient(135deg, #059669, #10B981); color: #fff; box-shadow: 0 2px 8px rgba(5,150,105,.3); }
+.fb-blue  { background: linear-gradient(135deg, #2563EB, #3B82F6); color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,.25); }
+.footer-sources { border-top: 1px solid var(--border); padding-top: 14px; }
+.footer-sources h4 { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; }
+.footer-sources ul { list-style: none; font-size: 13px; }
+.footer-sources li { margin-bottom: 7px; }
+.footer-sources a { color: var(--blue); text-decoration: none; }
+.footer-sources a:hover { text-decoration: underline; }
+
+/* ========== Responsive ========== */
+@media (max-width: 640px) {
+  .stats-row { grid-template-columns: repeat(3, 1fr); }
+  .voice-grid, .decision-grid { grid-template-columns: 1fr; }
+  .overview-grid { grid-template-columns: 1fr; }
+  .compare-table { display: block; overflow-x: auto; }
+  .tab-btn { font-size: 12px; padding: 8px 10px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ======= HERO ======= -->
+  <header class="hero">
+    <div class="hero-badge">🔬 深度调研 · 大模型架构 · 2026-03-24</div>
+    <h1 class="hero-title">Attention Residuals<br>Kimi 动了 AI 圈 11 年没人碰的「地基」</h1>
+    <p class="hero-subtitle">
+      2015年ResNet发明残差连接，2017年Transformer直接继承，此后11年几乎无人重新审视。
+      Kimi 团队用一篇论文，把注意力机制「旋转90度」重写了这块地基——
+      马斯克、Karpathy 相继点赞，中国 AI 团队罕见地获得硅谷底层架构层面的实质认可。
+    </p>
+    <div class="hero-meta">
+      <span class="hero-meta-item">📄 <strong>arXiv 2603.15031</strong></span>
+      <span class="hero-meta-item">🏢 <strong>月之暗面 Kimi Team</strong></span>
+      <span class="hero-meta-item">📅 <strong>2026年3月16日</strong></span>
+      <span class="hero-meta-item">⚡ <strong>等效 1.25× 算力</strong></span>
+    </div>
+  </header>
+
+  <!-- ======= 核心数字 ======= -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num">1.25×</div>
+      <div class="stat-label">等效算力优势</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">+7.5%</div>
+      <div class="stat-label">GPQA-Diamond</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">&lt;2%</div>
+      <div class="stat-label">推理延迟增加</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">48B</div>
+      <div class="stat-label">验证模型规模</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">1.4T</div>
+      <div class="stat-label">预训练 Tokens</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">11年</div>
+      <div class="stat-label">残差连接未变</div>
+    </div>
+  </div>
+
+  <!-- ======= Tab Nav ======= -->
+  <nav class="tab-nav" id="tabNav">
+    <button class="tab-btn active" onclick="switchTab('overview',this)">📋 全文概览</button>
+    <button class="tab-btn" onclick="switchTab('background',this)">🏛 背景问题</button>
+    <button class="tab-btn" onclick="switchTab('innovation',this)">🔬 核心创新</button>
+    <button class="tab-btn" onclick="switchTab('results',this)">📊 实验结果</button>
+    <button class="tab-btn" onclick="switchTab('voices',this)">💬 业界反应</button>
+    <button class="tab-btn" onclick="switchTab('compare',this)">🆚 相关工作</button>
+    <button class="tab-btn" onclick="switchTab('essence',this)">🔭 本质洞察</button>
+    <button class="tab-btn" onclick="switchTab('decision',this)">💡 决策启示</button>
+  </nav>
+
+  <!-- ======= Tab: 全文概览 ======= -->
+  <div id="tab-overview" class="tab-panel active">
+
+    <!-- 摘要卡 -->
+    <div class="overview-summary">
+      <span class="tag">EXECUTIVE SUMMARY</span>
+      <h3>一句话读懂：「主动回溯」替代「无脑叠加」，同等算力多出 25%</h3>
+      <p>
+        大模型每一层处理信息时，标准残差连接把所有历史层信息<strong>等权累加</strong>——
+        第1层和第40层的声音一样大，早期的关键信息随着层数增加被逐渐稀释。
+        Kimi 的 <strong>Attention Residuals（AttnRes）</strong> 用一个可学习的 softmax 注意力替代这个固定加法：
+        每一层现在会「主动回头看」，动态决定哪些历史层信息最有用。
+        工程优化版（Block AttnRes）训练成本增加不超过 4%、推理延迟不超过 2%，
+        却等效于基线模型用 <strong>1.25 倍算力</strong> 才能达到的性能。
+        15 项下游基准全面持平或超越，多步推理任务（GPQA-Diamond）提升 +7.5%。
+      </p>
+    </div>
+
+    <!-- 四维快览 -->
+    <div class="overview-grid">
+      <div class="overview-block ob-green">
+        <h4>📌 研究动机</h4>
+        <p>
+          ResNet 2015 年提出残差连接，Transformer 2017 年直接继承，
+          此后 11 年<strong>无人重新审视</strong>。
+          论文发现深度维度存在与时序维度完全对称的固定权重累加问题，
+          而这个问题在时序维度已被注意力机制解决——只是没人把解法「旋转 90 度」。
+        </p>
+      </div>
+      <div class="overview-block ob-blue">
+        <h4>⚙️ 技术方案</h4>
+        <p>
+          Full AttnRes：每层 softmax 注意力访问所有历史层（理论最优，内存 O(Ld)）。<br>
+          <strong>Block AttnRes</strong>：分 N≈8 个块，块内传统残差、块间注意力聚合，
+          内存降至 O(Nd)，含三项工程优化（跨阶段缓存 / 两阶段推理 / 序列分片预填充），
+          代码改动仅约 <strong>100 行</strong>。
+        </p>
+      </div>
+      <div class="overview-block ob-purple">
+        <h4>🔭 核心洞察</h4>
+        <p>
+          这不是「打破 Transformer」，而是<strong>发现了被忽视 11 年的对称性</strong>：
+          时序维度的固定累加问题用注意力解决了（RNN→Transformer），
+          深度维度的同类问题从未被同样方式解决过（AttnRes 是第一个）。
+          「Attention is All You Need」中的 All，终于覆盖了深度方向。
+        </p>
+      </div>
+      <div class="overview-block ob-amber">
+        <h4>⚠️ 待验证项</h4>
+        <p>
+          最大验证规模仅 <strong>48B 参数</strong>，千亿级效果未知；
+          核心代码<strong>未完全开源</strong>（仅伪代码）；
+          后训练（RLHF/SFT）阶段收益未公开；
+          「深度学习 2.0」等评价有炒作成分，
+          需将技术价值与融资时间点的舆论价值分开评估。
+        </p>
+      </div>
+    </div>
+
+    <!-- 章节导图 -->
+    <div class="chapter-map">
+      <h4>📖 本报告结构导图 — 点击任意章节直接跳转</h4>
+      <div class="chapter-list">
+        <div class="chapter-item" onclick="switchTab('background', document.querySelectorAll('.tab-btn')[1])">
+          <div class="chapter-num cn-amber">01</div>
+          <div class="chapter-info">
+            <div class="chapter-title">🏛 背景与问题：沿用 11 年的「地基」有什么缺陷？</div>
+            <div class="chapter-desc">PreNorm 稀释问题 · 隐藏状态 O(L) 增长 · 44% 层近乎闲置 · 时序-深度对称性发现</div>
+          </div>
+        </div>
+        <div class="chapter-item" onclick="switchTab('innovation', document.querySelectorAll('.tab-btn')[2])">
+          <div class="chapter-num cn-green">02</div>
+          <div class="chapter-info">
+            <div class="chapter-title">🔬 核心创新：把注意力机制「旋转 90 度」</div>
+            <div class="chapter-desc">时序-深度对偶性证明 · Full vs Block AttnRes · 三项工程优化 · 100 行代码即插即用</div>
+          </div>
+        </div>
+        <div class="chapter-item" onclick="switchTab('results', document.querySelectorAll('.tab-btn')[3])">
+          <div class="chapter-num cn-blue">03</div>
+          <div class="chapter-info">
+            <div class="chapter-title">📊 实验结果：15 项基准全面持平或超越</div>
+            <div class="chapter-desc">1.25× Scaling Law · 48B 模型 1.4T tokens · GPQA-Diamond +7.5% · 更深更窄架构偏好</div>
+          </div>
+        </div>
+        <div class="chapter-item" onclick="switchTab('voices', document.querySelectorAll('.tab-btn')[4])">
+          <div class="chapter-num cn-purple">04</div>
+          <div class="chapter-info">
+            <div class="chapter-title">💬 业界反应：Musk / Karpathy / Jerry Tworek 相继点赞</div>
+            <div class="chapter-desc">「Impressive work」· 「深度学习 2.0」· 融资时间点加成与技术价值的分离评估</div>
+          </div>
+        </div>
+        <div class="chapter-item" onclick="switchTab('compare', document.querySelectorAll('.tab-btn')[5])">
+          <div class="chapter-num cn-blue">05</div>
+          <div class="chapter-info">
+            <div class="chapter-title">🆚 相关工作：与 MoDA、mHC、DenseFormer 的对比</div>
+            <div class="chapter-desc">六大方法横向对比 · MoDA 同日发布 · 两者互补而非竞争</div>
+          </div>
+        </div>
+        <div class="chapter-item" onclick="switchTab('essence', document.querySelectorAll('.tab-btn')[6])">
+          <div class="chapter-num cn-purple">06</div>
+          <div class="chapter-info">
+            <div class="chapter-title">🔭 本质洞察：四层穿透（L1 现象 → L4 趋势）</div>
+            <div class="chapter-desc">对称性发现 · 盲目叠加 vs 精准回溯 · 信息流质量时代的到来 · 中国 AI 架构创新迁移</div>
+          </div>
+        </div>
+        <div class="chapter-item" onclick="switchTab('decision', document.querySelectorAll('.tab-btn')[7])">
+          <div class="chapter-num cn-amber">07</div>
+          <div class="chapter-info">
+            <div class="chapter-title">💡 决策启示：四个可迁移的思维方法</div>
+            <div class="chapter-desc">审视「理所当然」· 精准回溯 > 全量累积 · 跨维度迁移解法 · 地基比高楼更值钱</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-overview -->
+
+  <!-- ======= Tab: 背景与问题 ======= -->
+  <div id="tab-background" class="tab-panel">
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon si-amber">🏛</div>
+        <div>
+          <h2>沿用 11 年的「地基」，问题藏在哪里</h2>
+          <p>ResNet 2015 → Transformer 2017，残差连接原样继承，此后几乎无人质疑</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <p style="margin-bottom:14px;color:var(--text-secondary)">
+          现代大模型（GPT、Claude、DeepSeek、Kimi……）的底层架构都是 Transformer。
+          Transformer 之所以能训练到几十甚至上百层而不崩溃，靠的是何恺明 2015 年在 ResNet 中提出的
+          <strong>残差连接（Residual Connection）</strong>。
+          2017 年《Attention is All You Need》发表时，直接沿用了这个设计——没有改动，没有审视。
+        </p>
+        <div class="code-block">
+<span class="c">// 标准残差连接（2015 年至今未变）</span>
+<span class="w">h[l] = h[l-1] + f(h[l-1])</span>
+
+<span class="c">// 展开来看：每一层的输入 = 之前所有层的「等权叠加」</span>
+<span class="a">h[L] = h[0] + f₀(h[0]) + f₁(h[1]) + ... + f_{L-1}(h[L-1])</span>
+
+<span class="c">// 问题：第 1 层的输出 和 第 40 层的输出，权重完全相同（都是 1）</span>
+<span class="p">// 没有任何机制判断哪层更重要、哪层可以被忽略</span>
+        </div>
+        <div class="hl-box hl-amber" style="margin-top:14px">
+          <span class="hl-label">⚠️ PreNorm 稀释问题</span>
+          随着层数增加，隐藏状态数值线性增长（O(L) with depth）。浅层信息相对于累积总量越来越小，逐渐被「淹没」。
+          深层如果想要产生影响，就必须输出更大的数值，这反过来加剧训练不稳定性。
+          研究发现，一个 32 层模型中高达 <strong>44% 的层近乎闲置</strong>。
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <div class="quote">
+          「每个人拉个微信群讨论晚上吃什么，每个人发言权重完全一样。群主只能从头到尾读一遍，
+          越往后翻越记不住前面说了啥。」
+          <cite>——中文技术媒体的比喻，准确捕捉了 PreNorm 稀释的本质</cite>
+        </div>
+        <p style="font-size:13.5px;color:var(--text-secondary);margin-top:12px;line-height:1.75">
+          这个问题与 RNN 在序列维度上的困境高度对称：RNN 在时间维度用固定权重累加，导致长程依赖难以捕捉；
+          后来 Transformer 用注意力机制解决了时序维度的问题。
+          <br><br>
+          <strong>Kimi 团队的发现是：深度维度上的同类问题，11 年来从未用同样的思路解决过。</strong>
+          而那个「旋转 90 度」的机会，一直就摆在那里。
+        </p>
+      </div>
+    </div>
+
+  </div><!-- /tab-background -->
+
+  <!-- ======= Tab: 核心创新 ======= -->
+  <div id="tab-innovation" class="tab-panel">
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon si-green">🔬</div>
+        <div>
+          <h2>把注意力机制「旋转 90 度」</h2>
+          <p>时序-深度对偶性理论 + Full / Block AttnRes + 三项工程优化</p>
+        </div>
+      </div>
+
+      <!-- 理论发现 -->
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span class="pill pill-green">理论发现</span>
+          <span style="font-size:14px;font-weight:700">时序-深度对偶性（Time-Depth Duality）</span>
+        </div>
+        <p style="font-size:13.5px;color:var(--text-secondary);margin-bottom:12px">
+          论文用结构化矩阵分析证明：
+          <strong>所有标准残差连接的变体（Highway Networks、DeepNet、Scaled Residuals 等），
+          本质上都是「深度维度上的线性注意力」</strong>。
+          这一发现把过去十年的残差研究统一在同一框架下，同时指出了升级方向——
+          把「深度线性注意力」升级为「深度 softmax 注意力」。
+        </p>
+        <div class="code-block">
+<span class="c">// 过去：深度维度线性注意力（所有残差变体的本质）</span>
+<span class="w">h[l] = Σ(i=0→l-1)  1  · v[i]     ← 权重固定 = 1（等权累加）</span>
+
+<span class="c">// AttnRes：深度维度 softmax 注意力（本文创新）</span>
+<span class="h">h[l] = Σ(i=0→l-1) α[i→l] · v[i]  ← 权重可学习、内容相关</span>
+<span class="a">α[i→l] = softmax( exp( w[l]ᵀ · RMSNorm(k[i]) ) )</span>
+<span class="c">// w[l]：每层仅一个可学习查询向量（d 维），参数量极少</span>
+        </div>
+      </div>
+
+      <!-- Full vs Block -->
+      <div class="card-grid">
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+            <span class="pill pill-blue">方案 A</span>
+            <span style="font-size:14px;font-weight:700">Full AttnRes</span>
+          </div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:12px">
+            每层都用 softmax 注意力访问所有之前层的输出。理论最优，内存开销 O(Ld)，小规模训练无额外开销。
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="pill pill-green" style="font-size:11px">✅ 最优效果</span>
+            <span class="pill pill-red" style="font-size:11px">❌ 大规模不实用</span>
+          </div>
+        </div>
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+            <span class="pill pill-green">方案 B</span>
+            <span style="font-size:14px;font-weight:700">Block AttnRes ⭐</span>
+          </div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:12px">
+            将 L 层分成 N 个块（通常 N≈8），块内传统残差，块间用注意力聚合。内存从 O(Ld) 降至 O(Nd)，
+            训练增加 &lt;4%，推理增加 &lt;2%。
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="pill pill-green" style="font-size:11px">✅ 接近 Full 效果</span>
+            <span class="pill pill-green" style="font-size:11px">✅ 大规模可部署</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 三项工程优化 -->
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:12px;letter-spacing:.04em">
+          📐 BLOCK ATTNRES 三项工程优化
+        </div>
+        <ul class="styled-list">
+          <li>
+            <strong>跨阶段缓存（Cross-stage Caching）</strong>
+            消除流水线并行中的冗余传输，峰值通信成本从 O(C) 降至 O(P)，改善 V 倍
+          </li>
+          <li>
+            <strong>两阶段推理策略</strong>
+            Phase 1 批量计算块间注意力，Phase 2 序列处理块内，通过在线 Softmax 融合合并，
+            内存 I/O 仅 5.5d（远低于对比方法 mHC 的 34d）
+          </li>
+          <li>
+            <strong>序列分片预填充</strong>
+            长上下文预填充时将块表示沿序列维度分片，128K 上下文每设备内存从 15GB 降至 &lt;0.3GB
+          </li>
+        </ul>
+        <div class="hl-box hl-green" style="margin-top:14px">
+          <strong>代码改动量：</strong>约 100 行 Python 代码，可作为标准残差连接的即插即用替换（drop-in replacement）。
+          每层仅增加一个 RMSNorm 和一个 d 维的伪查询向量（pseudo-query），参数量极少。
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-innovation -->
+
+  <!-- ======= Tab: 实验结果 ======= -->
+  <div id="tab-results" class="tab-panel">
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon si-blue">📊</div>
+        <div>
+          <h2>15 项基准全面持平或超越</h2>
+          <p>Scaling Law 验证 + 48B 模型下游任务 + 架构偏好分析</p>
+        </div>
+      </div>
+
+      <!-- Scaling Law -->
+      <div class="card">
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px">Scaling Law：1.25× 算力等效优势</div>
+        <p style="font-size:13.5px;color:var(--text-secondary);margin-bottom:14px;line-height:1.75">
+          在 5 个模型规模（194M~528M 激活参数）上验证 Scaling Law 曲线：<br>
+          Block AttnRes：<code style="background:var(--green-bg);color:#065F46;padding:1px 6px;border-radius:4px;font-size:12px">L = 1.870 × C⁻⁰·⁰⁵⁸</code>
+          &nbsp; 基线：<code style="background:var(--surface-3);padding:1px 6px;border-radius:4px;font-size:12px">L = 1.891 × C⁻⁰·⁰⁵⁷</code>
+          <br>相同计算预算下，Block AttnRes 相当于基线用 <strong>1.25 倍算力</strong> 才能达到的效果。
+        </p>
+        <div class="hl-box hl-green">
+          Full AttnRes ≈ Block AttnRes（差距随规模收缩，最大尺寸下仅 0.001）；
+          Block AttnRes 内存 I/O 5.5d，远低于对比方法 mHC 的 34d（m=4）
+        </div>
+      </div>
+
+      <!-- 下游任务 -->
+      <div class="card">
+        <div style="font-size:14px;font-weight:700;margin-bottom:16px">下游任务基准（48B 模型，1.4T tokens）</div>
+        <div class="result-row">
+          <div class="result-label">GPQA-Diamond（科学推理）</div>
+          <div class="result-bar-wrap"><div class="result-bar rb-green" style="width:88%"></div></div>
+          <div class="result-val">44.4</div>
+          <div class="result-diff">+7.5%</div>
+        </div>
+        <div class="result-row">
+          <div class="result-label">Math（数学推理）</div>
+          <div class="result-bar-wrap"><div class="result-bar rb-green" style="width:71%"></div></div>
+          <div class="result-val">57.1</div>
+          <div class="result-diff">+3.6%</div>
+        </div>
+        <div class="result-row">
+          <div class="result-label">HumanEval（代码生成）</div>
+          <div class="result-bar-wrap"><div class="result-bar rb-green" style="width:78%"></div></div>
+          <div class="result-val">62.2</div>
+          <div class="result-diff">+3.1%</div>
+        </div>
+        <div class="result-row">
+          <div class="result-label">C-Eval（中文理解）</div>
+          <div class="result-bar-wrap"><div class="result-bar rb-blue" style="width:82%"></div></div>
+          <div class="result-val">82.5</div>
+          <div class="result-diff">+2.9%</div>
+        </div>
+        <div class="result-row">
+          <div class="result-label">BBH（综合推理）</div>
+          <div class="result-bar-wrap"><div class="result-bar rb-blue" style="width:78%"></div></div>
+          <div class="result-val">78.0</div>
+          <div class="result-diff">+1.7%</div>
+        </div>
+        <div class="result-row">
+          <div class="result-label">MMLU（综合知识）</div>
+          <div class="result-bar-wrap"><div class="result-bar rb-blue" style="width:75%"></div></div>
+          <div class="result-val">74.6</div>
+          <div class="result-diff">+1.1%</div>
+        </div>
+        <div class="result-row">
+          <div class="result-label">TriviaQA（知识记忆）</div>
+          <div class="result-bar-wrap"><div class="result-bar rb-blue" style="width:88%"></div></div>
+          <div class="result-val">88.3</div>
+          <div class="result-diff">+1.9%</div>
+        </div>
+        <div style="margin-top:12px;font-size:12.5px;color:var(--text-muted)">
+          ✅ 全部 15 项基准均持平或优于基线。<strong>多步推理任务提升最显著</strong>（符合深度信息流改善的假设），
+          纯记忆类任务（TriviaQA）提升相对较小——与「精准回溯」机制的预期一致。
+        </div>
+      </div>
+
+      <!-- 架构偏好 -->
+      <div class="card">
+        <div style="font-size:14px;font-weight:700;margin-bottom:10px">架构偏好：AttnRes 更喜欢「更窄更深」的模型</div>
+        <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.75">
+          在固定计算量的 25 个架构配置网格搜索中：
+        </p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0">
+          <div class="hl-box hl-amber" style="margin:0;text-align:center">
+            <div style="font-size:12px;font-weight:700;margin-bottom:4px">标准基线最优</div>
+            <div style="font-size:20px;font-weight:800;color:var(--amber)">d/L ≈ 60</div>
+            <div style="font-size:12px;color:var(--text-muted)">较宽，层数相对少</div>
+          </div>
+          <div class="hl-box hl-green" style="margin:0;text-align:center">
+            <div style="font-size:12px;font-weight:700;margin-bottom:4px">AttnRes 最优</div>
+            <div style="font-size:20px;font-weight:800;color:var(--green)">d/L ≈ 45</div>
+            <div style="font-size:12px;color:var(--text-muted)">更深更窄，突破深度上限</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted)">
+          AttnRes 能更有效地利用额外的深度，说明它从根本上改变了「深度增益」的天花板。
+        </p>
+      </div>
+    </div>
+
+  </div><!-- /tab-results -->
+
+  <!-- ======= Tab: 业界反应 ======= -->
+  <div id="tab-voices" class="tab-panel">
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon si-purple">💬</div>
+        <div>
+          <h2>罕见的硅谷底层架构认可</h2>
+          <p>Musk 主动点赞 · Karpathy 深度评论 · 中国 AI 团队少见地获得底层架构层面实质认可</p>
+        </div>
+      </div>
+
+      <div class="voice-grid">
+        <div class="voice-card">
+          <div class="voice-head">
+            <div class="voice-avatar" style="background:#FEF3C7">😤</div>
+            <div>
+              <div class="voice-name">Elon Musk</div>
+              <div class="voice-role">xAI / X 创始人</div>
+            </div>
+          </div>
+          <div class="voice-text">「月之暗面做出了令人印象深刻的结果（Impressive work from Kimi）」</div>
+          <div class="voice-note">📌 马斯克在 AI 领域向来挑剔，此前频繁批评 Anthropic 和 OpenAI，对中国 AI 公司主动认可属罕见情况</div>
+        </div>
+        <div class="voice-card">
+          <div class="voice-head">
+            <div class="voice-avatar" style="background:#EFF6FF">🧠</div>
+            <div>
+              <div class="voice-name">Andrej Karpathy</div>
+              <div class="voice-role">前 OpenAI / Tesla AI 负责人</div>
+            </div>
+          </div>
+          <div class="voice-text">「我们其实没有认真对待『Attention is All You Need』这个标题。注意力应该不只是在序列维度上的机制。」</div>
+        </div>
+        <div class="voice-card">
+          <div class="voice-head">
+            <div class="voice-avatar" style="background:#F0FDF4">⚡</div>
+            <div>
+              <div class="voice-name">Jerry Tworek</div>
+              <div class="voice-role">OpenAI o1 联合发明人</div>
+            </div>
+          </div>
+          <div class="voice-text">「深度学习 2.0」</div>
+          <div class="voice-note">⚠️ 也有研究者认为此评价有夸大成分，需独立判断技术贡献的实际量级</div>
+        </div>
+        <div class="voice-card">
+          <div class="voice-head">
+            <div class="voice-avatar" style="background:#F5F3FF">🔗</div>
+            <div>
+              <div class="voice-name">Shubham Saboo</div>
+              <div class="voice-role">Google AI 研究员</div>
+            </div>
+          </div>
+          <div class="voice-text">公开转发并高度评价，认为该工作展示了中国 AI 团队在基础架构研究上的深厚实力</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div style="font-size:13px;font-weight:700;color:var(--text-secondary);margin-bottom:10px">🔍 客观评估：技术价值 vs 舆论价值</div>
+        <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.75">
+          月之暗面同期宣布新一轮 <strong>10 亿美元融资</strong>推进中（投前估值 180 亿美元），3 个月内估值 4 倍增长。
+          马斯克的这条回复出现在极为敏感的时间点，对资本市场叙事有不容忽视的正面影响。
+        </p>
+        <div class="hl-box hl-amber" style="margin-top:10px">
+          应将两者分开评估：<strong>技术价值</strong>（1.25× 算力等效、15 项基准提升）是实质性改进，有数据支撑；
+          <strong>舆论价值</strong>（Musk 点赞、融资时间点）有加成但不应混同于技术实力本身。
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-voices -->
+
+  <!-- ======= Tab: 相关工作 ======= -->
+  <div id="tab-compare" class="tab-panel">
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon si-green">🆚</div>
+        <div>
+          <h2>同期 MoDA 与历史方法横向对比</h2>
+          <p>六大方法同一框架下的系统性比较</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="overflow-x:auto">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>方法</th>
+                <th>核心思路</th>
+                <th>权重类型</th>
+                <th>跨层访问</th>
+                <th>内存开销</th>
+                <th>实用性</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Standard Residuals</strong><br><span style="font-size:11px;color:var(--text-light)">2015 ResNet</span></td>
+                <td>固定等权加法</td>
+                <td><span class="pill pill-gray" style="font-size:11px">固定</span></td>
+                <td>仅相邻层</td>
+                <td>基准</td>
+                <td><span class="pill pill-green" style="font-size:11px">✅ 大规模可用</span></td>
+              </tr>
+              <tr>
+                <td><strong>Highway Networks</strong><br><span style="font-size:11px;color:var(--text-light)">2015</span></td>
+                <td>可学习门控插值</td>
+                <td><span class="pill pill-blue" style="font-size:11px">动态</span></td>
+                <td>仅相邻层</td>
+                <td>+小</td>
+                <td><span class="pill pill-green" style="font-size:11px">✅ 可用</span></td>
+              </tr>
+              <tr>
+                <td><strong>DenseFormer</strong><br><span style="font-size:11px;color:var(--text-light)">跨层访问</span></td>
+                <td>固定标量权重访问所有层</td>
+                <td><span class="pill pill-gray" style="font-size:11px">静态</span></td>
+                <td>所有历史层</td>
+                <td>O(L²)</td>
+                <td><span class="pill pill-amber" style="font-size:11px">⚠️ 受限</span></td>
+              </tr>
+              <tr>
+                <td><strong>mHC</strong><br><span style="font-size:11px;color:var(--text-light)">多流残差</span></td>
+                <td>m 个并行流，可学习混合矩阵</td>
+                <td><span class="pill pill-blue" style="font-size:11px">动态</span></td>
+                <td>m 流</td>
+                <td>34d I/O</td>
+                <td><span class="pill pill-amber" style="font-size:11px">⚠️ 较高内存</span></td>
+              </tr>
+              <tr class="row-hl">
+                <td><strong>Block AttnRes</strong><br><span style="font-size:11px;color:#065F46">本文（Kimi）⭐</span></td>
+                <td>块间 softmax 注意力，块内传统残差</td>
+                <td><span class="pill pill-green" style="font-size:11px">动态</span></td>
+                <td>N 个块表示</td>
+                <td>5.5d I/O</td>
+                <td><span class="pill pill-green" style="font-size:11px">✅ 大规模可用</span></td>
+              </tr>
+              <tr class="row-hl2">
+                <td><strong>MoDA</strong><br><span style="font-size:11px;color:#1E40AF">同期 ByteDance+华科大</span></td>
+                <td>为注意力增加「深度维度」，访问历史 KV 对</td>
+                <td><span class="pill pill-blue" style="font-size:11px">动态</span></td>
+                <td>历史层 KV 对</td>
+                <td>验证中</td>
+                <td><span class="pill pill-amber" style="font-size:11px">⚠️ 验证中</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:var(--text-secondary);margin-bottom:10px">📌 AttnRes vs MoDA：互补而非竞争</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px" class="card-grid-inner">
+          <div class="hl-box hl-green" style="margin:0">
+            <span class="hl-label">AttnRes（本文）</span>
+            改造<strong>残差连接</strong>（改路径权重）。
+            在深度维度上用 softmax 注意力替代固定加法。
+          </div>
+          <div class="hl-box hl-blue" style="margin:0">
+            <span class="hl-label">MoDA（同期）</span>
+            在<strong>注意力机制内部</strong>增加深度访问维度（建新路径），访问历史层 KV 对。
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:12px">
+          MoDA + Post-Norm 组合下验证损失降低是 Pre-Norm 的 10 倍，可能逆转过去为稳定性而做的 Pre-Norm 妥协。
+          两项工作方向不同，可以叠加使用。
+        </p>
+      </div>
+    </div>
+
+  </div><!-- /tab-compare -->
+
+  <!-- ======= Tab: 本质洞察 ======= -->
+  <div id="tab-essence" class="tab-panel">
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon si-purple">🔭</div>
+        <div>
+          <h2>本质洞察：四层穿透</h2>
+          <p>从表面现象 → 规律本质 → 规律映射 → 趋势推演</p>
+        </div>
+      </div>
+
+      <div class="insight-card ic-green">
+        <span class="insight-tag it-green">L1 · 表面现象</span>
+        <h3>一篇架构论文，引发硅谷顶级 AI 人物集体点赞</h3>
+        <p>
+          Kimi 团队发表《Attention Residuals》，马斯克、Karpathy、Jerry Tworek 等相继认可，
+          被称为「深度学习 2.0」的开端。这在中国 AI 团队的底层架构研究中极为罕见——
+          此前的认可更多集中在模型能力排行榜上，鲜少在架构层面获得硅谷的主动认可。
+        </p>
+      </div>
+
+      <div class="insight-card ic-blue">
+        <span class="insight-tag it-blue">L2 · 规律本质</span>
+        <h3>对称性发现：时序难题的解法，可以旋转应用到深度维度</h3>
+        <p>
+          这篇论文的本质不是「发明了新东西」，而是<strong>发现了一个被忽视 11 年的对称性</strong>：<br><br>
+          RNN 在时序维度用固定权重累加 → Transformer 用注意力机制解决了<br>
+          残差连接在深度维度同样固定权重累加 → AttnRes 用注意力机制解决了<br><br>
+          这不是「打破 Transformer」，而是<strong>完成了 Transformer 的最后一块拼图</strong>——
+          「Attention is All You Need」中的 All，终于也覆盖了深度方向。
+        </p>
+        <div class="insight-evidence">
+          📐 论文用结构化矩阵分析（深度混合矩阵 M）统一证明：所有残差变体本质上都是深度线性注意力的特例。
+          AttnRes 是第一个把它升级为 softmax 注意力并工程可用的工作。
+        </div>
+      </div>
+
+      <div class="insight-card ic-amber">
+        <span class="insight-tag it-amber">L3 · 规律映射</span>
+        <h3>类比：盲目叠加 vs. 精准回溯——不只是技术问题</h3>
+        <p>
+          模型每一层都在做决策：下一层的输入应该包含哪些信息？<br>
+          标准残差让它「全部照单全收」；AttnRes 让它「主动筛选，回头找最有用的」。<br><br>
+          这个机制改变，对应着现实中一个更普遍的困境：
+          <strong>信息堆积不等于认知深度，精准回溯比无脑积累更有价值</strong>。
+          任何面临信息过载的系统（人、组织、模型）都面临同样的选择：
+          被最近的、最响亮的信息淹没，还是学会回到「地基」找关键信号？
+        </p>
+        <div class="insight-evidence">
+          📊 实验印证：改善最显著的是多步推理任务（GPQA-Diamond +7.5%）——
+          正是那些需要跨步骤「回溯」关键前提的场景；
+          而单纯记忆类任务（TriviaQA +1.9%）提升相对有限。
+          机制和数据高度一致。
+        </div>
+      </div>
+
+      <div class="insight-card ic-purple">
+        <span class="insight-tag it-purple">L4 · 趋势推演</span>
+        <h3>方向：架构创新从「规模卷积」转向「信息流质量优化」</h3>
+        <p>
+          AttnRes 指向一个未来趋势：当算力扩展的边际效益递减，
+          <strong>下一波大模型竞争的关键不在于参数量，而在于「同等参数下信息流的质量」</strong>。<br><br>
+          AttnRes、MoDA、MuonClip 优化器、Kimi Linear 上下文加速……这些工作汇聚成一个信号：
+          回到架构本身，重新审视每一个「理所当然」的设计选择，仍有巨大空间。
+          中国 AI 团队正在从「快速跟进」向「原创架构创新」阶段迁移。
+        </p>
+        <div class="insight-evidence">
+          🔭 当前局限：大规模验证仅至 48B 参数，千亿/万亿参数级别效果待验证；
+          核心代码仍未完全开源（仅伪代码）；
+          仅展示预训练阶段收益，后训练（RLHF/SFT）阶段效果未知。
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-essence -->
+
+  <!-- ======= Tab: 决策启示 ======= -->
+  <div id="tab-decision" class="tab-panel">
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon si-amber">💡</div>
+        <div>
+          <h2>决策启示：四个可迁移的思维方法</h2>
+          <p>从这篇论文提炼的通用认知框架，适用于技术决策和日常思考</p>
+        </div>
+      </div>
+
+      <div class="decision-grid">
+        <div class="decision-card dc-green">
+          <span class="dc-icon">🔍</span>
+          <h4>审视「理所当然」</h4>
+          <p>残差连接被沿用 11 年，因为「它有效」。但「有效」不代表「最优」。
+          最有价值的洞察，往往藏在大家都默认没问题的地方——
+          没人质疑的约束，往往是最大的机会所在。</p>
+        </div>
+        <div class="decision-card dc-blue">
+          <span class="dc-icon">↩️</span>
+          <h4>精准回溯 > 全量累积</h4>
+          <p>处理复杂问题时，不要被最近的、最吵的信息淹没。
+          建立「主动筛选」机制，能回到最关键的初始信号。
+          这不只是模型的问题——人在做决策时同样面临「信息稀释」的风险。</p>
+        </div>
+        <div class="decision-card dc-amber">
+          <span class="dc-icon">🔄</span>
+          <h4>跨维度迁移解法</h4>
+          <p>时序问题的解法（注意力机制）可以「旋转 90 度」解决深度问题。
+          强悍的解法往往是从另一个领域/维度「借来」的。
+          当你卡住时，问一句：「这个问题有没有已经被别的维度解决过的同构版本？」</p>
+        </div>
+        <div class="decision-card dc-purple">
+          <span class="dc-icon">⚡</span>
+          <h4>地基比高楼更值钱</h4>
+          <p>越基础的问题，解决它的影响力越大、时效越长。
+          真正的杠杆点在底层，而不是表层功能的堆砌。
+          Kimi 动的是 1.4 万亿个 token 都要经过的「地基」——改一次，全体受益。</p>
+        </div>
+      </div>
+
+      <!-- 局限性 -->
+      <div class="section" style="margin-top:28px">
+        <div class="section-header">
+          <div class="section-icon si-rose">⚠️</div>
+          <div>
+            <h2>局限性与待验证事项</h2>
+            <p>客观评估这项工作的边界，避免过度解读</p>
+          </div>
+        </div>
+        <div class="card">
+          <ul class="styled-list">
+            <li><strong>规模上限待验证</strong>：当前最大验证规模 48B（MoE 总参数），千亿/万亿参数全密集模型是否同样有效尚未证明</li>
+            <li><strong>代码未完全开源</strong>：论文仅提供 PyTorch 伪代码，完整生产级实现未开源，第三方复现有一定难度</li>
+            <li><strong>后训练阶段未知</strong>：论文仅展示预训练阶段的收益，RLHF、SFT 等后训练对结果的影响尚未公开</li>
+            <li><strong>架构相关性</strong>：Kimi 基于自身的 MoE + KDA/MLA 混合架构验证，在纯 Dense 架构或其他设计上的收益可能有差异</li>
+            <li><strong>评价夸张风险</strong>：「深度学习 2.0」等评价存在炒作成分，应将技术价值（实质性改进）与舆论价值（融资时间点加成）分开评估</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-decision -->
+
+  <!-- ======= 了解更多 ======= -->
+  <div class="footer-more">
+    <h3>💡 了解更多</h3>
+    <p>
+      我是 <strong>AI洞察</strong>，的 AI 分身。AI洞察是的一个项目，
+      目标是系统化追踪 AI 行业动态，每日/每周输出调研洞察，帮助你保持对 AI 行业的全局视野。
+      覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+    </p>
+    <div class="footer-btns">
+      <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" class="footer-btn fb-green">🏠 访问 AI 洞察首页</a>
+      <a href="https://arxiv.org/abs/2603.15031" target="_blank" class="footer-btn fb-blue">📄 查看原始论文</a>
+    </div>
+    <div class="footer-sources">
+      <h4>📚 参考资源</h4>
+      <ul>
+        <li><a href="https://arxiv.org/abs/2603.15031" target="_blank">📄 Attention Residuals — arXiv:2603.15031（Kimi Team, 2026）</a></li>
+        <li><a href="https://github.com/MoonshotAI/Attention-Residuals" target="_blank">💻 GitHub: MoonshotAI/Attention-Residuals（伪代码）</a></li>
+        <li><a href="https://www.ifanr.com/1658668" target="_blank">📰 爱范儿：Kimi 把注意力机制旋转了90度</a></li>
+        <li><a href="https://www.tmtpost.com/7916944.html" target="_blank">📰 钛媒体：马斯克亲自点赞，Kimi 动了十一年没人敢碰的东西</a></li>
+        <li><a href="https://eu.36kr.com/en/p/3729098195893897" target="_blank">🌐 36kr English: The Truth Behind Kimi "Breaking Transformer"</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;text-align:center;font-size:11.5px;color:var(--text-light)">
+    深度调研报告 · 2026-03-24 · AI洞察（AI洞察）
+  </div>
+
+</div><!-- /container -->
+
+<script>
+function switchTab(id, btn) {
+  // 隐藏所有 Panel
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  // 移除所有 Tab active
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  // 激活目标
+  var panel = document.getElementById('tab-' + id);
+  if (panel) panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+  // 滚动 Tab 到可见
+  if (btn) btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  // 滚动页面到 Tab 导航下方
+  var nav = document.getElementById('tabNav');
+  if (nav) {
+    var y = nav.getBoundingClientRect().bottom + window.scrollY - 16;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,3357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 · 2026-06-19 | AI洞察</title>
+    <meta name="description" content="AI洞察日报 2026-06-19：大模型、AI Coding、AI应用、AI行业、企业AI转型五大板块动态">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23059669'/><text x='6' y='23' font-size='18' fill='white'>📡</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+    <style>
+/**
+ * 清爽调研报告风格 - 基础样式表
+ * 版本: 3.0.0
+ * 更新: 2026-03-06
+ * 
+ * 专业调研报告设计系统
+ * 包含完整的CSS变量、组件样式、响应式布局
+ * 默认包含：多色调色板、Mesh Gradient背景、毛玻璃导航、色彩发光阴影
+ */
+
+/* ==================== CSS 变量定义 ==================== */
+:root {
+    /* ============ 主色调（语义化） ============ */
+    --color-success: #059669;           /* Emerald：核心/正向/成功 */
+    --color-success-light: #10B981;     /* Emerald 亮色 */
+    --color-danger: #E11D48;            /* Rose：警告/风险/关键 */
+    --color-danger-light: #F43F5E;      /* Rose 亮色 */
+    --color-warning: #D97706;           /* Amber：类比/提示/辅助 */
+    --color-warning-light: #F59E0B;     /* Amber 亮色 */
+    --color-info: #2563EB;              /* Blue：信息/技术/链接 */
+    --color-info-light: #3B82F6;        /* Blue 亮色 */
+    --color-purple: #7C3AED;            /* Violet：洞察/元认知/高级 */
+    --color-purple-light: #8B5CF6;      /* Violet 亮色 */
+    
+    /* ============ 中性色（高对比度）============ */
+    --color-text-primary: #1C1917;
+    --color-text-secondary: #57534E;
+    --color-text-muted: #78716C;
+    --color-border: #E7E5E4;
+    --color-border-light: #F5F5F4;
+    --color-bg: #F8FAFB;
+    --color-bg-card: #FFFFFF;
+    --color-bg-table-header: #FAFAF9;
+    
+    /* ============ 渐变色 ============ */
+    --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+    --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+    --gradient-highlight: linear-gradient(135deg, rgba(5,150,105,0.08) 0%, rgba(5,150,105,0.03) 100%);
+    --gradient-mesh: 
+        radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+        radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
+    
+    /* ============ 阴影层级 ============ */
+    --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.03);
+    --shadow-glow-success: 0 4px 14px rgba(5,150,105,0.15);
+    --shadow-glow-info: 0 4px 14px rgba(37,99,235,0.15);
+    --shadow-glow-purple: 0 4px 14px rgba(124,58,237,0.15);
+    --shadow-hover: 0 6px 16px rgba(5,150,105,0.15), 0 2px 6px rgba(5,150,105,0.1);
+    
+    /* ============ 间距系统（8px基准） ============ */
+    --spacing-xs: 4px;      /* 最小间距 */
+    --spacing-sm: 8px;      /* 小间距 */
+    --spacing-md: 16px;     /* 中等间距 */
+    --spacing-lg: 24px;     /* 大间距 */
+    --spacing-xl: 32px;     /* 特大间距 */
+    --spacing-2xl: 40px;    /* 章节间距 */
+    --spacing-3xl: 48px;    /* 页脚间距 */
+    
+    /* ============ 圆角系统 ============ */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+    
+    /* ============ 字体系统 ============ */
+    --font-family: -apple-system, "SF Pro Display", "system-ui", "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+    --font-mono: "SF Mono", "Fira Code", "Cascadia Code", "JetBrains Mono", monospace;
+    
+    /* ============ 字体层级体系（核心！） ============ */
+    /* 标题类 - 4级递减 */
+    --heading-1: 28px;      /* H1: 报告主标题 */
+    --heading-2: 18px;      /* H2: 章节标题 */
+    --heading-3: 15px;      /* H3: 子章节/卡片标题 */
+    --heading-4: 13px;      /* H4: 小节标题/表头/洞察框标题 */
+    
+    /* 正文类 */
+    --body-text: 14px;      /* 正文: 段落、描述、列表 */
+    --body-small: 13px;     /* 表格内容 */
+    --caption: 12px;        /* 辅助文字: 来源、标签、备注 */
+    
+    /* 兼容旧变量 */
+    --font-size-xs: var(--caption);
+    --font-size-sm: var(--body-small);
+    --font-size-base: var(--body-text);
+    --font-size-md: var(--heading-3);
+    --font-size-lg: var(--heading-2);
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: var(--heading-1);
+    
+    /* ============ 动画系统 ============ */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==================== 基础重置 ==================== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--body-text);
+    line-height: 1.65;
+    color: var(--color-text-primary);
+    background: var(--color-bg);
+    background-image: var(--gradient-mesh);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* ==================== 容器布局 ==================== */
+.container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: var(--spacing-lg) var(--spacing-md) 48px;
+}
+
+/* ==================== 头部区域 ==================== */
+.header {
+    text-align: center;
+    padding: var(--spacing-2xl) 0;
+    margin-bottom: var(--spacing-2xl);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 顶部3px渐变指示条 */
+.header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-hero);
+}
+
+.badge, .header-badge {
+    display: inline-flex;
+    align-items: center;
+    background: var(--gradient-badge);
+    color: var(--color-info);
+    padding: var(--spacing-xs) 12px;
+    border-radius: var(--radius-full);
+    font-size: var(--caption);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-bottom: 20px;
+    border: 1px solid rgba(9, 105, 218, 0.15);
+}
+
+.main-title, .header-title {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle, .header-subtitle {
+    font-size: var(--body-text);
+    color: var(--color-text-secondary);
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ==================== 核心发现区域 ==================== */
+.summary-box {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+    position: relative;
+    overflow: hidden;
+    border-left: 4px solid var(--color-danger);
+}
+
+.summary-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--caption);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-danger);
+    margin-bottom: 12px;
+}
+
+.summary-label::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--color-danger);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(207, 34, 46, 0.15);
+}
+
+.summary-title {
+    font-size: var(--heading-2);
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    color: var(--color-text-primary);
+}
+
+.summary-title em {
+    color: var(--color-danger);
+    font-style: normal;
+    font-weight: 600;
+}
+
+.summary-text {
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+/* ==================== Tab导航 ==================== */
+.tab-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 6px;
+    margin-bottom: var(--spacing-lg);
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: var(--shadow-card);
+}
+
+.tab-btn {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 12px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--body-small);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    background: var(--color-bg-table-header);
+    color: var(--color-text-secondary);
+}
+
+.tab-btn.active {
+    background: var(--gradient-success);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+}
+
+.tab-btn-num {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.06);
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.tab-btn.active .tab-btn-num {
+    background: rgba(255,255,255,0.2);
+}
+
+.tab-btn-text {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .tab-btn-text {
+        display: inline;
+    }
+}
+
+.tab-panel {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== 二级导航 ==================== */
+.sub-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px;
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-lg);
+    margin-bottom: 24px;
+    border: 1px solid var(--color-border-light);
+}
+
+.sub-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--caption);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.sub-nav-btn:hover {
+    background: var(--color-info);
+    color: #fff;
+    border-color: var(--color-info);
+    transform: translateY(-1px);
+}
+
+.sub-nav-btn .sub-nav-num {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0969da 0%, #1a7f37 100%);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.sub-nav-btn:hover .sub-nav-num {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .sub-nav {
+        gap: 6px;
+        padding: 12px;
+    }
+    
+    .sub-nav-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+    
+    .sub-nav-btn .sub-nav-num {
+        width: 16px;
+        height: 16px;
+        font-size: 9px;
+    }
+}
+
+/* ==================== 章节卡片 ==================== */
+.section, .section-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.section-number {
+    background: var(--gradient-success);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.25);
+}
+
+.section-number-small {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 14px;
+}
+
+.section-title {
+    font-size: var(--heading-2);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    letter-spacing: -0.01em;
+}
+
+.section-content {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+
+.section-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+/* ==================== 统计卡片 ==================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-2xl);
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.stat-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    cursor: help;
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.stat-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+
+.stat-card:hover .stat-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.stat-value {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.02em;
+}
+
+.stat-value.success, .stat-value.green {
+    color: var(--color-success);
+}
+
+.stat-value.danger, .stat-value.red {
+    color: var(--color-danger);
+}
+
+.stat-value.warning, .stat-value.orange {
+    color: var(--color-warning);
+}
+
+.stat-value.info, .stat-value.blue {
+    color: var(--color-info);
+}
+
+.stat-label {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+/* ==================== Tooltip ==================== */
+.stat-tooltip {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: var(--color-text-primary);
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;
+    width: 280px;
+    max-width: 90vw;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.stat-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: var(--color-text-primary);
+}
+
+.stat-tooltip-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.stat-tooltip-desc {
+    color: rgba(255,255,255,0.85);
+    font-size: var(--caption);
+    line-height: 1.5;
+}
+
+/* 内容Tooltip */
+.has-tip {
+    position: relative;
+    cursor: help;
+    border-bottom: 1px dashed var(--color-info);
+}
+
+.tip-box {
+    position: fixed;
+    width: 320px;
+    max-width: 90vw;
+    max-height: 340px;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+    z-index: 9999;
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+.has-tip:hover .tip-box {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.tip-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border-light);
+    color: var(--color-text-primary);
+}
+
+.tip-section { margin-bottom: var(--spacing-md); }
+.tip-section:last-child { margin-bottom: 0; }
+
+.tip-label {
+    font-size: var(--caption);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-info);
+    margin-bottom: 4px;
+}
+
+.tip-text { 
+    color: var(--color-text-secondary); 
+    line-height: 1.7;
+}
+
+.tip-list {
+    list-style: none;
+    color: var(--color-text-secondary);
+}
+
+.tip-list li {
+    padding: 3px 0;
+    padding-left: var(--spacing-md);
+    position: relative;
+}
+
+.tip-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-info);
+    font-size: var(--caption);
+}
+
+.tip-box::-webkit-scrollbar { width: 4px; }
+.tip-box::-webkit-scrollbar-thumb { 
+    background: var(--color-border); 
+    border-radius: 2px; 
+}
+
+/* ==================== 状态标签 ==================== */
+.tag, .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: var(--caption);
+    font-weight: 500;
+    white-space: nowrap;
+    line-height: 1.5;
+}
+
+.tag-green, .status-success {
+    background: rgba(5, 150, 105, 0.12);
+    color: var(--color-success);
+}
+
+.tag-orange, .status-warning {
+    background: rgba(191, 135, 0, 0.12);
+    color: var(--color-warning-dark);
+}
+
+.tag-red, .status-danger {
+    background: rgba(207, 34, 46, 0.12);
+    color: var(--color-danger);
+}
+
+.tag-blue, .status-info {
+    background: rgba(9, 105, 218, 0.12);
+    color: var(--color-info);
+}
+
+/* ==================== 引用框 ==================== */
+.quote, .quote-box {
+    background: var(--color-bg-table-header);
+    border-left: 3px solid var(--color-info);
+    padding: var(--spacing-md) 20px;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: 20px 0;
+    transition: all var(--transition-fast);
+}
+
+.quote:hover, .quote-box:hover {
+    border-left-width: 4px;
+    background: rgba(9, 105, 218, 0.04);
+}
+
+.quote-text {
+    font-size: var(--body-text);
+    font-style: italic;
+    color: var(--color-text-primary);
+    line-height: 1.7;
+}
+
+.quote-author {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-sm);
+    font-weight: 500;
+}
+
+/* ==================== 洞察框 ==================== */
+.insight-box {
+    border-left: 3px solid var(--color-warning);
+    background: rgba(191, 135, 0, 0.06);
+    padding: var(--spacing-md) 20px;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: 20px 0;
+    transition: all var(--transition-fast);
+}
+
+.insight-box:hover {
+    border-left-width: 4px;
+    background: rgba(191, 135, 0, 0.08);
+}
+
+.insight-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-warning-dark);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.insight-title::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--color-warning);
+    border-radius: 50%;
+}
+
+.insight-content {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.insight-content-title {
+    font-size: var(--heading-3);
+    color: var(--color-warning);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.insight-content-text {
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+.insight-content-text strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.insight-content-text ul {
+    margin: 12px 0;
+    padding-left: 20px;
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+.insight-content-text ul li {
+    margin-bottom: 6px;
+}
+
+/* ==================== 双列对比 ==================== */
+.two-col, .comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .two-col, .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.col-box {
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-table-header);
+}
+
+.col-box-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.col-box-title.red { color: var(--color-danger); }
+.col-box-title.green { color: var(--color-success); }
+
+.col-list {
+    list-style: none;
+}
+
+.col-list li {
+    padding: var(--spacing-sm) 0;
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    line-height: 1.7;
+}
+
+.col-list li::before {
+    content: '•';
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+.correct-path {
+    border-left: 3px solid rgba(5, 150, 105, 0.5);
+    background: rgba(5, 150, 105, 0.04);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.wrong-path {
+    border-left: 3px solid rgba(207, 34, 46, 0.5);
+    background: rgba(207, 34, 46, 0.04);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+/* ==================== 路径对比框 ==================== */
+.pathway-section {
+    border-left: 3px solid rgba(5, 150, 105, 0.5);
+    background: rgba(5, 150, 105, 0.04);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.pathway-section.wrong {
+    border-left: 3px solid rgba(207, 34, 46, 0.5);
+    background: rgba(207, 34, 46, 0.04);
+}
+
+.pathway-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-bottom: 20px;
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid rgba(5, 150, 105, 0.15);
+}
+
+.pathway-section.wrong .pathway-header {
+    border-bottom-color: rgba(207, 34, 46, 0.15);
+}
+
+.pathway-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    font-size: 18px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.pathway-icon.correct {
+    background: var(--gradient-success);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+}
+
+.pathway-icon.wrong {
+    background: linear-gradient(135deg, var(--color-danger) 0%, #ff6b6b 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(207, 34, 46, 0.3);
+}
+
+.pathway-title-wrap {
+    flex: 1;
+}
+
+.pathway-title {
+    font-size: var(--heading-2);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+}
+
+.pathway-subtitle {
+    font-size: var(--body-text);
+    color: var(--color-text-secondary);
+}
+
+/* ==================== 步骤流程 ==================== */
+.pathway-steps {
+    display: flex;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.pathway-step {
+    flex: 1;
+    min-width: 140px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.step-number {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-success);
+    color: #fff;
+    border-radius: 50%;
+    font-size: var(--caption);
+    font-weight: 600;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.step-desc {
+    font-size: var(--caption);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+.pathway-arrow {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+@media (max-width: 960px) {
+    .pathway-steps {
+        flex-direction: column;
+    }
+    .pathway-arrow {
+        transform: rotate(90deg);
+        justify-content: center;
+    }
+}
+
+/* ==================== 偏差网格 ==================== */
+.deviation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+@media (max-width: 768px) {
+    .deviation-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.deviation-item {
+    background: var(--color-bg-card);
+    border: 1px solid rgba(207, 34, 46, 0.2);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+}
+
+.deviation-wrong {
+    font-size: var(--body-text);
+    font-weight: 600;
+    color: var(--color-danger);
+    margin-bottom: 4px;
+}
+
+.deviation-result {
+    font-size: var(--caption);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+/* ==================== 未来路径对比 ==================== */
+.future-paths {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+@media (max-width: 768px) {
+    .future-paths {
+        grid-template-columns: 1fr;
+    }
+}
+
+.future-path {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.future-path.continue {
+    border-left: 4px solid var(--color-danger);
+}
+
+.future-path.pivot {
+    border-left: 4px solid var(--color-success);
+}
+
+.path-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.path-icon {
+    font-size: 20px;
+}
+
+.path-label {
+    font-size: var(--heading-3);
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.path-list {
+    list-style: none;
+    margin-bottom: var(--spacing-md);
+}
+
+.path-list li {
+    padding: var(--spacing-sm) 0;
+    font-size: var(--body-text);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.path-list li:last-child {
+    border-bottom: none;
+}
+
+.path-list li strong {
+    color: var(--color-text-primary);
+}
+
+.path-verdict {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 12px;
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-sm);
+}
+
+.verdict-label {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+.verdict-value {
+    font-size: var(--body-text);
+    font-weight: 600;
+}
+
+.verdict-value.red {
+    color: var(--color-danger);
+}
+
+.verdict-value.green {
+    color: var(--color-success);
+}
+
+/* ==================== 表格样式 ==================== */
+.table-wrap, .table-wrapper {
+    overflow-x: auto;
+    margin: var(--spacing-md) 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: var(--body-small);
+}
+
+th {
+    background: var(--color-bg-table-header);
+    color: var(--color-text-secondary);
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: var(--heading-4);
+    text-align: left;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--color-border);
+}
+
+td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-border-light);
+    vertical-align: middle;
+}
+
+td:first-child {
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+tbody tr {
+    transition: background var(--transition-fast);
+}
+
+tbody tr:hover td {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.highlight-col {
+    background: rgba(5, 150, 105, 0.08) !important;
+}
+
+/* ==================== 图例样式 ==================== */
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    justify-content: center;
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+    font-size: var(--caption);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--color-text-secondary);
+}
+
+/* ==================== 内联统计 ==================== */
+.inline-stats {
+    display: flex;
+    gap: var(--spacing-xl);
+    justify-content: center;
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.inline-stat { text-align: center; }
+
+.inline-stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.inline-stat-label {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+/* ==================== 结论区域 ==================== */
+.conclusion {
+    background: rgba(5, 150, 105, 0.04);
+    border-left: 3px solid rgba(5, 150, 105, 0.5);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.conclusion-title {
+    font-size: var(--heading-4);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-success);
+    margin-bottom: var(--spacing-md);
+}
+
+.conclusion-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .conclusion-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .conclusion-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.conclusion-item {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+}
+
+.conclusion-item-label {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.conclusion-item-value {
+    font-size: var(--body-text);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.4;
+}
+
+/* ==================== 全局控制按钮 ==================== */
+.global-controls {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1000;
+}
+
+.global-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-bg-card);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    color: var(--color-text-secondary);
+}
+
+.global-btn:hover {
+    background: var(--color-info);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(9, 105, 218, 0.3);
+}
+
+.global-btn.active {
+    background: var(--color-success);
+    color: #fff;
+}
+
+.global-btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+.global-btn-tooltip {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--color-text-primary);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: var(--caption);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-fast);
+    pointer-events: none;
+}
+
+.global-btn:hover .global-btn-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ==================== 移动端预览模式 ==================== */
+body.mobile-preview-mode {
+    background: #2d2d2d;
+}
+
+body.mobile-preview-mode .container {
+    max-width: 375px;
+    margin: 0 auto;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+    min-height: 100vh;
+    background: var(--color-bg);
+    border-left: 1px solid #444;
+    border-right: 1px solid #444;
+}
+
+body.mobile-preview-mode .container {
+    padding: var(--spacing-lg) var(--spacing-md) 80px;
+}
+
+body.mobile-preview-mode .header-title {
+    font-size: var(--font-size-2xl);
+}
+
+body.mobile-preview-mode .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+body.mobile-preview-mode .two-col {
+    grid-template-columns: 1fr;
+}
+
+body.mobile-preview-mode .conclusion-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+body.mobile-preview-mode .section {
+    padding: var(--spacing-md);
+}
+
+body.mobile-preview-mode .tab-nav {
+    overflow-x: auto;
+}
+
+body.mobile-preview-mode .tab-btn-text {
+    display: none;
+}
+
+body.mobile-preview-mode .sub-nav {
+    flex-wrap: wrap;
+}
+
+body.mobile-preview-mode .sub-nav-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+}
+
+body.mobile-preview-mode .global-controls {
+    bottom: 12px;
+    right: calc(50% - 187px + 60px);
+}
+
+/* ==================== 页脚样式 ==================== */
+.footer {
+    text-align: center;
+    padding-top: 32px;
+    margin-top: 48px;
+    border-top: 1px solid var(--color-border-light);
+}
+
+.footer-quote {
+    font-size: var(--body-text);
+    font-style: italic;
+    color: var(--color-text-secondary);
+    max-width: 500px;
+    margin: 0 auto var(--spacing-md);
+    line-height: 1.6;
+}
+
+.footer-date {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+/* ==================== 免责声明 ==================== */
+.disclaimer {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-top: 40px;
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+}
+
+.disclaimer-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-muted);
+}
+
+.disclaimer-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.disclaimer-text {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
+
+/* ==================== 文字样式类 ==================== */
+.text-success { color: var(--color-success); }
+.text-danger { color: var(--color-danger); }
+.text-warning { color: var(--color-warning); }
+.text-info { color: var(--color-info); }
+
+.text-bold {
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.text-highlight {
+    border-bottom: 2px solid var(--color-danger);
+    padding-bottom: 1px;
+}
+
+/* ==================== 参考资料区域 ==================== */
+.references {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.references-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: 20px;
+}
+
+.references-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--color-info);
+}
+
+.references-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.references-title {
+    font-size: var(--heading-3);
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.references-list {
+    list-style: none;
+    display: grid;
+    gap: var(--spacing-md);
+}
+
+.reference-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.reference-item:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.reference-num {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: var(--caption);
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.reference-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.reference-link {
+    display: block;
+    font-size: var(--body-text);
+    color: var(--color-info);
+    text-decoration: none;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 2px;
+}
+
+.reference-link:hover {
+    text-decoration: underline;
+}
+
+.reference-meta {
+    font-size: var(--caption);
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.reference-source {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.reference-tag {
+    display: inline-flex;
+    padding: 1px 6px;
+    background: rgba(9, 105, 218, 0.08);
+    color: var(--color-info);
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.references-note {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-bg-table-header);
+    border-radius: var(--radius-md);
+    font-size: var(--body-text);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+
+.references-note strong {
+    color: var(--color-text-primary);
+}
+
+/* ==================== 响应式布局 ==================== */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-lg) var(--spacing-md) 80px;
+    }
+    
+    .header-title {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .two-col {
+        grid-template-columns: 1fr;
+    }
+    
+    .conclusion-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .legend {
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+    }
+    
+    .inline-stats {
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+    }
+    
+    .section {
+        padding: var(--spacing-md);
+    }
+    
+    .stat-tooltip {
+        display: none !important;
+    }
+    
+    .tip-box {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 12px 10px 80px;
+    }
+    
+    .header-title {
+        font-size: 20px;
+    }
+    
+    .stats-grid {
+        gap: 8px;
+    }
+    
+    .stat-card {
+        padding: 12px 8px;
+    }
+    
+    .stat-value {
+        font-size: 18px;
+    }
+    
+    .stat-label {
+        font-size: 10px;
+        letter-spacing: 0;
+    }
+    
+    .section {
+        padding: 12px;
+    }
+    
+    .conclusion-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ===== 日报组件层 ===== */
+/* ===== CSS VARIABLES (清爽调研风格 v5.0 × 日报) ===== */
+        :root {
+            --color-success: #059669; --color-success-light: #10B981; --color-success-dark: #047857;
+            --color-success-50: #ECFDF5; --color-success-100: #D1FAE5;
+            --color-danger: #E11D48; --color-danger-light: #F43F5E; --color-danger-50: #FFF1F2;
+            --color-warning: #D97706; --color-warning-light: #F59E0B; --color-warning-50: #FFFBEB;
+            --color-info: #2563EB; --color-info-light: #3B82F6; --color-info-50: #EFF6FF; --color-info-100: #DBEAFE;
+            --color-purple: #7C3AED; --color-purple-light: #8B5CF6; --color-purple-50: #F5F3FF; --color-purple-100: #EDE9FE;
+            --color-orange: #EA580C;
+            --color-text-primary: #1C1917; --color-text-secondary: #57534E; --color-text-muted: #78716C;
+            --color-border: #E7E5E4; --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB; --color-bg-card: #FFFFFF; --color-bg-table-header: #FAFAF9;
+            --color-bg-hover: rgba(0,0,0,0.025);
+            --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+            --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            --gradient-orange: linear-gradient(135deg, #EA580C 0%, #F97316 100%);
+            --gradient-purple: linear-gradient(135deg, #7C3AED 0%, #6D28D9 50%, #5B21B6 100%);
+            --gradient-china: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+            --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+            --gradient-mesh:
+                radial-gradient(at 20% 20%, rgba(5,150,105,0.06) 0%, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(37,99,235,0.05) 0%, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(124,58,237,0.03) 0%, transparent 50%);
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-hover: 0 8px 24px rgba(5,150,105,0.18), 0 2px 8px rgba(5,150,105,0.10);
+            --shadow-float: 0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
+            --shadow-glow-info: 0 4px 14px rgba(37,99,235,0.15);
+            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-full: 9999px;
+            --font-family: "DM Sans", -apple-system, "Noto Sans SC", "PingFang SC", sans-serif;
+            --font-family-heading: "DM Sans", -apple-system, "Noto Sans SC", sans-serif;
+            --font-family-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --sidebar-width: 228px;
+            --content-max: 960px;
+            --content-pad: 48px;
+        }
+
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-family); font-size: 15px; line-height: 1.65;
+            letter-spacing: -0.01em; color: var(--color-text-secondary);
+            background: var(--color-bg); background-image: var(--gradient-mesh);
+            background-attachment: fixed; -webkit-font-smoothing: antialiased;
+        }
+        ::selection { background: rgba(5,150,105,0.18); }
+        a { color: var(--color-info); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ===== SKIP TO CONTENT ===== */
+        .skip-to-content {
+            position: absolute; top: -40px; left: 0; background: var(--color-info);
+            color: #fff; padding: 8px 16px; border-radius: 0 0 8px 0; z-index: 9999;
+            transition: top var(--transition-fast);
+        }
+        .skip-to-content:focus { top: 0; }
+
+        /* ===== LAYOUT ===== */
+        .layout-wrapper { display: flex; width: 100%; min-height: 100vh; align-items: stretch; }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar-nav {
+            width: var(--sidebar-width); flex-shrink: 0;
+            position: sticky; top: 0; height: 100vh;
+            overflow-y: auto; background: #fff;
+            border-right: 1px solid var(--color-border);
+            padding: 20px 0; z-index: 100;
+            display: flex; flex-direction: column;
+        }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 2px; }
+        .sidebar-doc-title {
+            font-size: 13px; font-weight: 700; color: var(--color-text-primary);
+            padding: 0 20px 16px; line-height: 1.4;
+        }
+        .toc-group-label {
+            font-size: 11px; font-weight: 700; color: var(--color-text-muted);
+            letter-spacing: 0.08em; text-transform: uppercase;
+            padding: 4px 20px 6px; margin-top: 8px;
+        }
+        .toc-link {
+            display: block; padding: 7px 20px; font-size: 13px; font-weight: 500;
+            color: var(--color-text-secondary); border-left: 3px solid transparent;
+            transition: all var(--transition-fast); line-height: 1.4; text-decoration: none;
+        }
+        .toc-link:hover { background: rgba(0,0,0,0.03); color: var(--color-text-primary); text-decoration: none; }
+        .toc-link.toc-active { color: var(--color-success); background: rgba(5,150,105,0.04); border-left-color: var(--color-success); font-weight: 600; }
+        .toc-link.toc-sub { padding-left: 32px; font-size: 12px; font-weight: 400; color: var(--color-text-muted); }
+        .toc-link.toc-sub.toc-active { color: var(--color-success); font-weight: 500; }
+        .toc-link:focus-visible { outline: 2px solid var(--color-success); outline-offset: -2px; }
+
+        .reading-progress-wrap { margin-top: auto; padding: 16px 20px 8px; }
+        .reading-progress-label { font-size: 11px; color: var(--color-text-muted); margin-bottom: 6px; }
+        .reading-progress-track { height: 4px; background: var(--color-border); border-radius: 2px; overflow: hidden; }
+        .reading-progress-fill { height: 100%; width: 0%; background: var(--gradient-success); border-radius: 2px; transition: width 0.2s ease; }
+
+        .sidebar-collapse-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px; background: #fff;
+            border: 1px solid var(--color-border); border-radius: 6px;
+            cursor: pointer; color: var(--color-text-muted); font-size: 13px;
+            position: fixed; top: 20px; left: calc(var(--sidebar-width) - 14px);
+            z-index: 101; transition: all var(--transition-fast);
+        }
+        .sidebar-collapse-btn:hover { background: var(--color-bg); }
+        .sidebar-collapse-btn.collapsed-pos { left: 8px; }
+        .sidebar-nav.sidebar-collapsed { width: 0; padding: 0; overflow: hidden; border: none; }
+        .sidebar-nav.sidebar-collapsed ~ .sidebar-collapse-btn { left: 8px; }
+
+        /* ===== CONTENT AREA ===== */
+        .content-area { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; }
+        .content-inner { width: 100%; max-width: var(--content-max); padding: 40px var(--content-pad) 100px; }
+
+        /* ===== HEADER ===== */
+        .doc-header { padding: 32px 0 28px; position: relative; margin-bottom: 28px; }
+        .doc-header::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+            height: 3px; background: var(--gradient-hero); border-radius: 2px;
+        }
+        .header-badge {
+            display: inline-block; background: var(--gradient-badge); color: var(--color-success);
+            padding: 4px 14px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600;
+            margin-bottom: 12px; border: 1px solid rgba(5,150,105,0.12); box-shadow: var(--shadow-xs);
+            letter-spacing: 0.04em;
+        }
+        .header-title {
+            font-size: 30px; font-weight: 800; letter-spacing: -0.025em;
+            background: var(--gradient-hero); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+            line-height: 1.2; margin-bottom: 10px;
+        }
+        .header-meta { font-size: 13px; color: var(--color-text-muted); display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+        .header-meta span { display: flex; align-items: center; gap: 4px; }
+        .version-badge {
+            display: inline-flex; align-items: center; background: rgba(5,150,105,0.1);
+            color: var(--color-success); padding: 2px 8px; border-radius: var(--radius-full);
+            font-size: 11px; font-weight: 700; margin-left: 6px;
+        }
+
+        /* ===== CHAPTER LABEL ===== */
+        .doc-chapter-label {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+            text-transform: uppercase; color: #A8A29E; padding: 36px 0 12px;
+        }
+        .doc-chapter-label::after { content: ''; flex: 1; height: 1px; background: #F0EFEE; }
+
+        /* ===== SECTION ===== */
+        .report-section { margin-bottom: 48px; }
+        .section-title {
+            font-size: 20px; font-weight: 700; color: var(--color-text-primary);
+            letter-spacing: -0.02em; margin-bottom: 18px; line-height: 1.3;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section-title::before {
+            content: ''; width: 4px; height: 22px; background: var(--gradient-success);
+            border-radius: 2px; flex-shrink: 0;
+        }
+
+        /* ===== COVERAGE BAR ===== */
+        .coverage-bar {
+            background: var(--color-bg-card); border: 1px solid var(--color-border-light);
+            border-radius: var(--radius-md); padding: 12px 18px; margin-bottom: 20px;
+            box-shadow: var(--shadow-card); display: flex; align-items: center; gap: 16px; font-size: 13px;
+        }
+        .coverage-bar .label { font-weight: 700; color: var(--color-text-muted); }
+        .coverage-bar .bar { flex: 1; height: 8px; background: var(--color-border-light); border-radius: 4px; overflow: hidden; display: flex; }
+        .coverage-bar .bar-overseas { background: var(--gradient-success); height: 100%; }
+        .coverage-bar .bar-china { background: var(--gradient-china); height: 100%; }
+        .coverage-bar .stats { display: flex; gap: 12px; font-weight: 600; }
+        .coverage-bar .stat-overseas { color: var(--color-success); }
+        .coverage-bar .stat-china { color: #DC2626; }
+
+        /* ===== OVERVIEW CARDS ===== */
+        .overview { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow-card); }
+        .overview-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); }
+        .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .overview-grid.five-cols { grid-template-columns: repeat(3, 1fr); }
+        .overview-item {
+            padding: 14px 16px; border-radius: var(--radius-md);
+            border: 1px solid var(--color-border-light); background: var(--color-bg);
+            transition: all var(--transition-normal); min-width: 0; overflow: hidden;
+        }
+        .overview-item:hover { border-color: var(--color-success-light); box-shadow: 0 2px 8px rgba(5,150,105,0.08); }
+        .overview-item-header { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+        .overview-item-icon { font-size: 16px; }
+        .overview-item-label { font-size: 12px; font-weight: 700; color: var(--color-success); letter-spacing: 0.03em; }
+        .overview-item-label.orange { color: var(--color-orange); }
+        .overview-headline { font-size: 14px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 5px; line-height: 1.4; }
+        .overview-item-text { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; font-family: var(--font-family-cn); }
+
+        /* ===== HEAT TREND ===== */
+        .heat-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); margin-bottom: 20px; overflow: hidden; box-shadow: var(--shadow-card); }
+        .heat-header { background: linear-gradient(135deg, #EA580C 0%, #DC2626 50%, #B91C1C 100%); color: #fff; padding: 18px 24px; }
+        .heat-header-label { font-size: 13px; font-weight: 600; opacity: .85; letter-spacing: .5px; }
+        .heat-header-title { font-size: 17px; font-weight: 800; margin-top: 4px; }
+        .heat-body { padding: 16px 20px; }
+        .heat-body p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; margin-top: 12px; font-family: var(--font-family-cn); }
+        .heat-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .heat-table th { padding: 8px 10px; text-align: left; background: #FEF2F2; font-weight: 700; color: #991B1B; border-bottom: 2px solid #FECACA; font-size: 12px; }
+        .heat-table td { padding: 10px; border-bottom: 1px solid var(--color-border-light); vertical-align: top; }
+        .heat-table tr:last-child td { border-bottom: none; }
+        .heat-table tr:hover { background: rgba(234,88,12,.02); }
+        .heat-bar { display: flex; gap: 2px; align-items: center; }
+        .heat-bar-fill { width: 10px; height: 14px; border-radius: 2px; background: linear-gradient(135deg, #EA580C, #DC2626); }
+        .heat-bar-empty { width: 10px; height: 14px; border-radius: 2px; background: #F5F5F4; }
+        .heat-trend-tag { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600; }
+        .heat-trend-tag.up { background: #EFFDF5; color: #059669; }
+        .heat-trend-tag.stable { background: #EFF6FF; color: #2563EB; }
+        .heat-trend-tag.down { background: #FEF2F2; color: #DC2626; }
+        .heat-trend-tag.burst { background: #FEF2F2; color: #DC2626; }
+
+        /* ===== SECTION CARDS (for boards) ===== */
+        .board-section { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
+        .board-header { font-size: 17px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--color-border-light); display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); }
+        .board-badge { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--gradient-success); color: #fff; font-size: 12px; font-weight: 700; }
+        .board-badge.orange { background: var(--gradient-orange); }
+        .sub-header { font-size: 13px; font-weight: 700; color: var(--color-text-muted); margin: 14px 0 10px; padding-left: 4px; letter-spacing: .5px; }
+        .sub-header:first-child { margin-top: 0; }
+
+        /* ===== NEWS ITEMS ===== */
+        .news-item { padding: 8px 0; border-bottom: 1px solid var(--color-border-light); transition: background .15s; margin: 0 -8px; padding-left: 8px; padding-right: 8px; border-radius: var(--radius-sm); }
+        .news-item:hover { background: rgba(5,150,105,0.02); }
+        .news-item:last-child { border-bottom: none; }
+        .news-tag { display: inline-block; padding: 1px 6px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; vertical-align: middle; }
+        .tag-hot { background: #FEF2F2; color: var(--color-danger); }
+        .tag-new { background: #EFFDF5; color: var(--color-success); }
+        .tag-funding { background: #E0F2FE; color: #0284C7; }
+        .tag-policy { background: #FFF7ED; color: var(--color-orange); }
+        .tag-practice { background: #ECFDF5; color: #059669; }
+        .tag-cn { background: #FEF2F2; color: #DC2626; }
+        /* v5.1: 标题行 — tag + 标题 + 来源 inline 合并 */
+        .news-title-row { font-size: 14px; font-weight: 600; line-height: 1.5; display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px; margin-bottom: 3px; }
+        .news-title-row a { color: var(--color-text-primary); text-decoration: none; }
+        .news-title-row a:hover { color: var(--color-success); }
+        .news-source-inline { font-size: 11px; color: var(--color-text-muted); font-weight: 400; flex-shrink: 0; white-space: nowrap; }
+        /* 兼容旧的 news-title / news-source（独立行）结构 */
+        .news-title { font-size: 15px; font-weight: 600; margin: 4px 0 3px; }
+        .news-title a { color: var(--color-text-primary); text-decoration: none; }
+        .news-title a:hover { color: var(--color-success); }
+        .news-source { font-size: 12px; color: var(--color-text-muted); }
+        .news-detail { margin-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+        .news-detail-row { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.6; }
+        .news-detail-label { flex-shrink: 0; font-weight: 700; color: var(--color-success); font-size: 12px; padding: 1px 0; min-width: 60px; }
+        .news-detail-label.orange { color: var(--color-orange); }
+        .news-detail-label.china { color: #DC2626; }
+        .news-detail-value { color: var(--color-text-secondary); flex: 1; font-family: var(--font-family-cn); }
+        .news-detail-value strong { color: var(--color-text-primary); font-weight: 600; }
+        .news-data-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+        .news-data-chip { display: inline-flex; align-items: center; padding: 3px 10px; background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; color: #166534; transition: all .15s; }
+        .news-data-chip:hover { background: #DCFCE7; border-color: #86EFAC; }
+        .news-data-chip.orange { background: #FFF7ED; border-color: #FED7AA; color: #9A3412; }
+        .news-data-chip.china { background: #FEF2F2; border-color: #FECACA; color: #991B1B; }
+        .news-summary-compact { font-size: 13px; color: var(--color-text-muted); margin-top: 2px; line-height: 1.55; font-family: var(--font-family-cn); }
+
+        /* ===== DEEP FOCUS ===== */
+        .deep-focus-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 0; margin-bottom: 16px; box-shadow: var(--shadow-card); overflow: hidden; }
+        .deep-focus-header { background: var(--gradient-purple); color: #fff; padding: 18px 24px; display: flex; align-items: center; gap: 10px; }
+        .deep-focus-header.orange-theme { background: linear-gradient(135deg, #EA580C 0%, #DC2626 100%); }
+        .deep-focus-header.china-theme { background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%); }
+        .deep-focus-label { font-size: 13px; font-weight: 600; opacity: .85; letter-spacing: .5px; }
+        .deep-focus-title { font-size: 17px; font-weight: 800; margin-top: 4px; line-height: 1.4; }
+        .deep-focus-body { padding: 20px 24px; }
+        .deep-focus-body p { font-size: 14.5px; color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 18px; font-family: var(--font-family-cn); }
+        .deep-focus-body p:last-child { margin-bottom: 0; }
+        .deep-focus-body p strong { color: var(--color-text-primary); }
+        .deep-focus-takeaway { margin-top: 20px; padding: 16px 18px; background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); border-radius: var(--radius-md); border-left: 4px solid var(--color-purple); }
+        .deep-focus-takeaway.orange-theme { background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%); border-left-color: var(--color-orange); }
+        .deep-focus-takeaway.china-theme { background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%); border-left-color: #DC2626; }
+        .deep-focus-takeaway-label { font-size: 12px; font-weight: 700; color: var(--color-purple); margin-bottom: 6px; letter-spacing: .5px; }
+        .deep-focus-takeaway-label.orange { color: var(--color-orange); }
+        .deep-focus-takeaway-label.china { color: #DC2626; }
+        .deep-focus-takeaway-text { font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.7; font-family: var(--font-family-cn); }
+        .deep-focus-takeaway-text strong { color: var(--color-text-primary); }
+
+        /* ===== PATTERN INSIGHT (pi) ===== */
+        .pi-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow-card); transition: all .25s cubic-bezier(.4,0,.2,1); }
+        .pi-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
+        .pi-header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border-bottom: 1px solid #FDE68A; }
+        .pi-badge { display: inline-flex; align-items: center; justify-content: center; height: 26px; padding: 0 10px; border-radius: 8px; font-size: 11px; font-weight: 700; color: #fff; background: linear-gradient(135deg, #B45309 0%, #D97706 100%); white-space: nowrap; }
+        .pi-title { font-size: 16px; font-weight: 700; color: var(--color-text-primary); flex: 1; letter-spacing: -.01em; line-height: 1.4; }
+        .pi-row { display: flex; padding: 14px 20px; border-bottom: 1px solid var(--color-border-light); gap: 14px; }
+        .pi-row:last-child { border-bottom: none; }
+        .pi-row.highlight { background: linear-gradient(135deg, rgba(217,119,6,.04) 0%, rgba(217,119,6,.01) 100%); }
+        .pi-row-label { width: 56px; flex-shrink: 0; font-size: 12px; font-weight: 700; color: #A8A29E; padding-top: 2px; letter-spacing: .02em; }
+        .pi-row-label.l2 { color: #D97706; }
+        .pi-row-content { flex: 1; font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; font-family: var(--font-family-cn); }
+        .pi-row-content strong { color: var(--color-text-primary); font-weight: 700; }
+        .pi-evo { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        .pi-evo-step { display: flex; align-items: center; gap: 8px; padding: 7px 12px; background: var(--color-bg-table-header); border-radius: 8px; border: 1px solid var(--color-border-light); transition: all .15s; }
+        .pi-evo-step.active { background: rgba(217,119,6,.12); border-color: #D97706; box-shadow: 0 0 0 1px rgba(217,119,6,.15); }
+        .pi-evo-step.future { background: rgba(124,58,237,.06); border-color: #8B5CF6; }
+        .pi-evo-tag { font-size: 10px; font-weight: 800; color: #D97706; padding: 2px 7px; background: rgba(217,119,6,.1); border-radius: 4px; letter-spacing: .02em; }
+        .pi-evo-step.future .pi-evo-tag { color: #7C3AED; background: rgba(124,58,237,.1); }
+        .pi-evo-text { font-size: 12px; color: var(--color-text-secondary); }
+        .pi-evo-arrow { color: #A8A29E; font-weight: 700; font-size: 14px; }
+        .pi-table { padding: 10px 20px 16px; border-top: 1px solid var(--color-border-light); }
+        .pi-t-head { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 10px; padding: 6px 10px; border-bottom: 2px solid var(--color-border-light); margin-bottom: 4px; }
+        .pi-t-head span { font-size: 11px; font-weight: 700; color: #A8A29E; text-transform: uppercase; letter-spacing: .06em; }
+        .pi-t-section { padding: 6px 10px 2px; }
+        .pi-t-section-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 999px; letter-spacing: .03em; }
+        .pi-t-section.verified .pi-t-section-tag { color: #047857; background: rgba(5,150,105,.08); }
+        .pi-t-section.current .pi-t-section-tag { color: #D97706; background: rgba(217,119,6,.08); }
+        .pi-t-section.projected .pi-t-section-tag { color: #7C3AED; background: rgba(124,58,237,.08); }
+        .pi-t-row { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 10px; padding: 6px 10px; border-radius: 6px; font-size: 13px; line-height: 1.6; transition: background .15s; }
+        .pi-t-row:hover { background: rgba(0,0,0,.02); }
+        .pi-t-row.projected { background: rgba(124,58,237,.02); }
+        .pi-t-row.projected:hover { background: rgba(124,58,237,.05); }
+        .pi-t-rule { font-weight: 600; color: #B45309; font-size: 12px; padding-top: 1px; }
+        .pi-t-row.projected .pi-t-rule { color: #7C3AED; }
+        .pi-t-reality { color: var(--color-text-primary); font-weight: 500; }
+        .pi-t-analogy { color: var(--color-text-secondary); padding-left: 10px; border-left: 2px solid var(--color-border-light); }
+        .pi-t-divider { border-top: 2px dashed var(--color-border-light); margin: 8px 10px; }
+        .pi-t-verify { display: flex; align-items: center; gap: 6px; margin-top: 8px; padding: 6px 10px; background: rgba(5,150,105,.06); border-radius: 6px; font-size: 12px; font-weight: 600; color: #047857; }
+        .pi-confidence { display: flex; align-items: center; gap: 6px; margin-top: 8px; padding: 6px 10px; background: rgba(124,58,237,.04); border-radius: 6px; border-left: 3px solid #8B5CF6; font-size: 11px; font-weight: 500; color: #7C3AED; letter-spacing: .02em; }
+
+        /* ===== DATA TABLE ===== */
+        .data-table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius-md); border: 1px solid var(--color-border); }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .data-table th, .data-table td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--color-border-light); }
+        .data-table th { background: var(--color-bg-table-header); font-weight: 600; color: var(--color-text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+        .data-table td { color: var(--color-text-primary); }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tbody tr:hover { background: var(--color-bg-hover); }
+        .section-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
+        .section-header { font-size: 16px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--color-border-light); display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); }
+        .section-header .num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--gradient-success); color: #fff; font-size: 12px; font-weight: 700; }
+        .section-header .num.orange { background: var(--gradient-orange); }
+
+        /* ===== PREVIEW / WATCHLIST ===== */
+        .watch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        /* ===== INSIGHT BLOCK (capability_update) ===== */
+        .insight-block {
+            margin-top: 20px; background: linear-gradient(135deg, #EFF6FF 0%, #EDE9FE 100%);
+            border: 1px solid #DBEAFE; border-radius: var(--radius-lg); padding: 24px;
+            box-shadow: var(--shadow-card);
+        }
+        .insight-block-title { font-size: 16px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #1E40AF; }
+        .insight-block-body { font-size: 14px; color: #374151; line-height: 1.8; font-family: var(--font-family-cn); }
+
+        /* ===== ANIMATE ON SCROLL ===== */
+        .animate-on-scroll {
+            opacity: 0; transform: translateY(14px);
+            transition: opacity 0.42s ease, transform 0.42s ease;
+        }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll { transition: none; opacity: 1; transform: none; }
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-to-top {
+            position: fixed; bottom: 28px; right: 28px;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--color-success); color: #fff; border: none;
+            cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 14px rgba(5,150,105,0.3); opacity: 0; pointer-events: none;
+            transition: opacity var(--transition-normal), transform var(--transition-normal);
+            z-index: 200;
+        }
+        .scroll-to-top.visible { opacity: 1; pointer-events: auto; }
+        .scroll-to-top:hover { transform: translateY(-2px); }
+
+        /* ===== FOOTER ===== */
+        .doc-footer {
+            margin-top: 56px; padding: 24px 0 0 0; border-top: 1px solid var(--color-border);
+            font-size: 12px; color: var(--color-text-muted); text-align: center;
+            font-family: var(--font-family-cn); line-height: 1.8;
+            max-width: 100%;
+        }
+        .doc-footer a { color: var(--color-success); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .layout-wrapper { flex-direction: column; }
+            .sidebar-nav {
+                width: 100%; position: sticky; top: 0; height: auto;
+                overflow-y: visible; border-right: none; border-bottom: 1px solid var(--color-border);
+                display: flex; flex-direction: row; overflow-x: auto; padding: 4px 0;
+                -webkit-overflow-scrolling: touch;
+            }
+            .sidebar-doc-title, .toc-group-label, .reading-progress-wrap { display: none; }
+            .toc-link {
+                flex: 0 0 auto; border-left: none; border-bottom: 2px solid transparent;
+                white-space: nowrap; padding: 8px 14px; font-size: 12px;
+            }
+            .toc-link.toc-active { border-left-color: transparent; border-bottom-color: var(--color-success); }
+            .toc-link.toc-sub { display: none; }
+            .sidebar-collapse-btn { display: none; }
+            .content-inner { padding: 24px 16px 80px; }
+            .overview-grid.five-cols { grid-template-columns: 1fr 1fr; }
+            .watch-grid { grid-template-columns: 1fr; }
+            .header-title { font-size: 24px; }
+            .heat-table { font-size: 12px; }
+            .heat-table th, .heat-table td { padding: 6px 4px; }
+            .coverage-bar { flex-direction: column; gap: 8px; }
+            .pi-evo { flex-direction: column; align-items: flex-start; }
+            .pi-evo-arrow { display: none; }
+            .pi-t-head { display: none; }
+            .pi-t-row { grid-template-columns: 1fr; gap: 2px; padding: 6px 10px; border-left: 3px solid var(--color-border-light); margin-bottom: 4px; }
+            .pi-t-row.projected { border-left-color: rgba(124,58,237,.3); }
+            .pi-t-analogy { border-left: none; padding-left: 0; font-size: 12px; }
+        }
+        @media (max-width: 960px) {
+            .overview-grid.five-cols { grid-template-columns: 1fr 1fr; }
+        }
+
+/* ===== AI洞察定制层 ===== */
+/* ===== AI洞察定制层样式（仅日报/首页特有的组件样式） ===== */
+/* 
+ * ⚠️ 本文件只包含AI洞察项目特有的组件样式和扩展变量。
+ * CSS变量定义和基础样式从 qingshuang-research-style 动态引用。
+ * 
+ * 引用路径: ../../skills/qingshuang-research-style/references/base-styles.css
+ * 引用方式: gen_daily_html.py 和 update_homepage.py 自动合并
+ * 
+ * 改动规则:
+ * - 只改本文件（定制层）
+ * - CSS变量（颜色/间距/阴影等）改 qingshuang skill，不要在这里重复定义
+ * - 新增组件样式在本文件添加
+ */
+
+/* ===== AI洞察扩展CSS变量（公共层未覆盖的） ===== */
+:root {
+    --color-orange: #EA580C;
+    --color-success-dark: #047857;
+    --color-success-50: #ECFDF5;
+    --color-success-100: #D1FAE5;
+    --color-danger-50: #FFF1F2;
+    --color-warning-50: #FFFBEB;
+    --color-info-50: #EFF6FF;
+    --color-info-100: #DBEAFE;
+    --color-purple-50: #F5F3FF;
+    --color-purple-100: #EDE9FE;
+    --gradient-orange: linear-gradient(135deg, #EA580C 0%, #F97316 100%);
+    --gradient-china: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+    --color-bg-hover: rgba(0,0,0,0.025);
+}
+
+/* ===== 日报特有组件 ===== */
+
+/* 最新日报卡片 */
+.latest-report-card {
+    background: linear-gradient(135deg, var(--gradient-success));
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+}
+
+/* 日历视图 */
+.calendar-container {
+    max-width: 280px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.calendar-day.has-report {
+    background: var(--color-success-50);
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+.calendar-day.has-weekly::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 3px;
+    right: 3px;
+    height: 3px;
+    background: var(--gradient-purple);
+    border-radius: 2px;
+}
+
+.calendar-day.today {
+    border: 2px solid var(--color-info);
+    border-radius: var(--radius-sm);
+}
+
+/* 周报入口卡片 */
+.weekly-report-card {
+    background: linear-gradient(135deg, #EFF6FF 0%, #F5F3FF 100%);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+}
+
+/* ===== 首页特有组件 ===== */
+
+/* Tab导航 */
+.tab-nav {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px) saturate(1.8);
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+}
+
+.tab-btn.active {
+    color: var(--color-success);
+    border-bottom: 2px solid var(--color-success);
+}
+
+/* 统计卡片 */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.stat-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+}
+
+/* 知识库维度卡片 */
+.kb-dimension {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.kb-dimension:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.dim-header {
+    cursor: pointer;
+    padding: 12px 16px;
+}
+
+.kb-item-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}
+
+/* 追踪体系表格 */
+.tracking-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tracking-table th {
+    background: var(--color-bg-table-header);
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.tracking-table td {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+/* ===== 响应式 ===== */
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .tab-btn .tab-label {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+/* ===== 周报Top5/洞察卡片样式（v2.0格式升级，从W22提取）===== */
+/* 
+ * 来源：W22手动升级版HTML (2026-06-01)
+ * 缺失根因：W23改脚本化生成后，CSS模板(daily-report-v3.css)不含这些定义
+ * 修复：补入 ai-insight-custom.css，脚本合并时自动注入
+ */
+
+/* 卡片强调色变量（按板块区分）*/
+.llm .news-card { --card-accent: var(--color-purple); }
+.coding .news-card { --card-accent: var(--color-orange); }
+.app .news-card { --card-accent: var(--color-info); }
+.industry .news-card { --card-accent: var(--color-warning); }
+.enterprise .news-card { --card-accent: var(--color-success); }
+
+
+
+.insight-content {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.insight-content-title {
+    font-size: var(--heading-3);
+    color: var(--color-warning);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.insight-content-text {
+    color: var(--color-text-secondary);
+    font-size: var(--body-text);
+    line-height: 1.7;
+}
+
+.news-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-left: 4px solid var(--card-accent, var(--color-success));
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.2s;
+}
+
+.news-card-rank {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--card-accent, var(--color-success));
+    background: color-mix(in srgb, var(--card-accent, var(--color-success)) 10%, white);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    margin-bottom: 12px;
+}
+
+.news-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.4;
+    margin-bottom: 8px;
+    text-wrap: balance;
+}
+
+.news-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: var(--color-text-muted);
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.meta-item { display: inline-flex; align-items: center; gap: 4px; }
+
+
+
+.meta-divider { color: var(--color-border); font-size: 10px; margin: 0 2px; }
+
+.meta-link {
+    color: var(--color-info);
+    text-decoration: none;
+    transition: color 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.news-card-desc {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    max-width: 68ch;
+    margin-bottom: 16px;
+}
+
+.news-card-why {
+    border-left: 3px solid var(--card-accent, var(--color-success));
+    background: color-mix(in srgb, var(--card-accent, var(--color-success)) 5%, white);
+    padding: 12px 16px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.judgment-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--card-accent, var(--color-success));
+    margin-bottom: 6px;
+}
+
+.judgment-text {
+    font-size: 13px;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+}
+
+.insight-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-purple);
+    background: color-mix(in srgb, var(--color-purple) 10%, white);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    margin-bottom: 8px;
+}
+
+.insight-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.insight-trend {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    padding-top: 8px;
+    border-top: 1px solid var(--color-border-light);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+
+
+
+
+
+
+
+.meta-icon {
+    opacity: 0.6;
+}
+
+
+</style>
+</head>
+<body>
+<a class="skip-to-content" href="#main-content">跳到主内容</a>
+
+<div class="layout-wrapper">
+    <!-- SIDEBAR TOC -->
+    <nav class="sidebar-nav sidebar-collapsed" id="sidebar" aria-label="目录导航">
+        <div class="sidebar-doc-title">AI 日报 · 2026-06-19</div>
+        <div class="toc-section">
+            <div class="toc-group-label">目录</div>
+            <a href="#overview"   class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> 全文概览</a>
+            <a href="#heat"       class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y1="12" x2="12" y2="18"/></svg> 热度趋势</a>
+            <a href="#llm"        class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y1="12" x2="12" y2="18"/></svg> 大模型</a>
+            <a href="#coding"     class="toc-link">⌨️ AI Coding</a>
+            <a href="#app"        class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> AI 应用</a>
+            <a href="#industry"   class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20V8l-6 4V4l-6 4V2L2 10v10z"/></svg> AI 行业</a>
+            <a href="#enterprise" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg> 企业AI转型</a>
+            <a href="#data"       class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg> 数据速览</a>
+            <a href="#watch"      class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 明日关注</a>
+        </div>
+        <div class="reading-progress-wrap">
+            <div class="reading-progress-label">阅读进度</div>
+            <div class="reading-progress-track">
+                <div class="reading-progress-fill" id="readingProgress"></div>
+            </div>
+        </div>
+    </nav>
+    <button class="sidebar-collapse-btn collapsed-pos" id="collapseBtn" title="展开导航" aria-label="展开导航">»</button>
+
+    <!-- MAIN CONTENT -->
+    <main class="content-area" id="main-content">
+        <div class="content-inner">
+
+            <!-- HEADER -->
+            <header class="doc-header">
+                <div class="header-badge">AI INSIGHT · DAILY REPORT</div>
+                <h1 class="header-title">AI 日报 <span class="version-badge">v4.0</span></h1>
+                <div class="header-meta">
+                    <span><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="4"/><line x1="8" y1="2" x2="8" y2="4"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 2026年6月19日 周五</span>
+                    <span><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> 海外 8条 · 国内 7条</span>
+                    <span><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg> 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</span>
+                </div>
+            </header>
+
+            <!-- COVERAGE BAR -->
+            <div class="coverage-bar animate-on-scroll">
+                <span class="label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg> 覆盖均衡</span>
+                <div class="bar">
+                    <div class="bar-overseas" style="width:53%"></div>
+                    <div class="bar-china" style="width:47%"></div>
+                </div>
+                <div class="stats">
+                    <span class="stat-overseas"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> 海外 8条</span>
+                    <span class="stat-china">🇨🇳 国内 7条</span>
+                </div>
+            </div>
+
+            <!-- OVERVIEW -->
+            <section id="overview" class="report-section">
+                <div class="overview animate-on-scroll">
+                    <div class="overview-title"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> 全文概览</div>
+                    <div class="overview-grid five-cols">
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">🧠</span><span class="overview-item-label">大模型</span></div>
+                    <div class="overview-item-text">Anthropic新旗舰Fable 5限时含在订阅中至6/22；MLCommons MLPerf Training v6.0发布，NVIDIA Blackwell Ultra全项称王；Nemotron 3 Ultra 550B参数开源</div>
+                </div>
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">⌨️</span><span class="overview-item-label">AI Coding</span></div>
+                    <div class="overview-item-text">6/18起Gemini CLI停止服务免费用户，全面迁移至Antigravity CLI；Copilot转credits制；Codex+GPT-5.5领跑Terminal-Bench 83.4%；OpenCode 17万星免费开源</div>
+                </div>
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">📱</span><span class="overview-item-label">AI 应用</span></div>
+                    <div class="overview-item-text">Google搜索Agent化+智能搜索框；Apple WWDC 2026发布Siri重大AI更新(用Gemini)；Gemini 3.5 Live Translate实时语音翻译</div>
+                </div>
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI 行业</span></div>
+                    <div class="overview-item-text">Anthropic Series H $650亿估值$9650亿超OpenAI $8520亿；Q1全球VC $3300亿80%流向AI；OpenAI瞄准Q4万亿IPO</div>
+                </div>
+                <div class="overview-item animate-on-scroll">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔄</span><span class="overview-item-label" class="orange">企业转型</span></div>
+                    <div class="overview-item-text">Claude Fable 5被美国出口管制；Anthropic Mythos通过Project Glasswing受控开放；Bain调查60%大公司缺AI数据基建</div>
+                </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- HEAT TREND -->
+            <section id="heat" class="report-section animate-on-scroll">
+
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y1="12" x2="12" y2="18"/></svg> 热度趋势</div>
+                <div class="heat-header-title">近7期日报交叉分析</div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead><tr><th>排名</th><th>话题</th><th>热度</th><th>天数</th><th>趋势</th><th>核心信号</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇</td>
+                            <td><strong>AI Coding Agent迁移</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>Gemini CLI→Antigravity CLI+Copilot转credits+开源IDE崛起</td>
+                        </tr>
+                        <tr>
+                            <td>🥈</td>
+                            <td><strong>AI安全/出口管制</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>5天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>Fable 5出口管制+Mythos受控开放+Florida诉OpenAI</td>
+                        </tr>
+                        <tr>
+                            <td>🥉</td>
+                            <td><strong>AI融资/估值</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>4天</td>
+                            <td><span class="heat-trend-tag stable">➡️ 高位</span></td>
+                            <td>Anthropic $9650亿+OpenAI万亿IPO+xAI-SpaceX $1.75万亿</td>
+                        </tr>
+                        <tr>
+                            <td>4️⃣</td>
+                            <td><strong>MLPerf/算力竞赛</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>2天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>MLPerf v6.0+Blackwell Ultra+NVFP4+AMD Instinct</td>
+                        </tr>
+                        <tr>
+                            <td>5️⃣</td>
+                            <td><strong>中国大模型成本战</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>7天</td>
+                            <td><span class="heat-trend-tag stable">➡️ 持续</span></td>
+                            <td>DeepSeek V4 API再降价+国产算力全链适配+开源阵营全球市占15%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>本周AI行业三大信号叠加：①Coding Agent进入平台迁移期（Gemini CLI→Antigravity），②AI安全从讨论走向制度（出口管制+受控开放），③融资规模继续刷新纪录但企业落地仍受数据基建瓶颈制约。</p>
+            </div>
+        </div>
+            </section>
+
+            <!-- FIVE BOARDS -->
+
+            <!-- ===== 大模型 ===== -->
+            <section id="llm" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y1="12" x2="12" y2="18"/></svg> 大模型</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">{SVG_ICONS["globe"]} 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank">Anthropic发布Claude Fable 5和Mythos 5双旗舰</a> <span class="news-source-inline">Anthropic</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Fable 5限时含在Pro/Max/Team/Enterprise订阅中至6/22，之后需使用credits；Mythos 5为受控网络安全模型，仅通过Project Glasswing向审核合作伙伴开放。Fable 5在SWE-bench Verified达88.6%，ExploitBench达78%</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">双旗舰策略</span><span class="news-data-chip">限时开放</span><span class="news-data-chip">出口管制</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Anthropic首次同时发布公开旗舰和受限模型，标志AI公司开始主动管理模型双用风险。Fable 5限时策略暗示算力供给仍紧张</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://mlcommons.org/2026/06/mlperf-training-v6-0-results" target="_blank">MLCommons发布MLPerf Training v6.0结果</a> <span class="news-source-inline">MLCommons</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">95个系统、24家机构参赛，13种硬件加速器+19种处理器创纪录。新增MoE和稀疏计算两个基准。NVIDIA Blackwell Ultra全项领先，GB300 NVL72比GB200快1.6倍</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">95系统创纪录</span><span class="news-data-chip">MoE基准</span><span class="news-data-chip">Blackwell Ultra</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">MLPerf v6.0正式确认AI训练进入稀疏计算/MoE时代。NVFP4低精度训练在550B参数Nemotron 3 Ultra上验证通过</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://blogs.nvidia.com/blog/blackwell-mlperf-training-6-0" target="_blank">NVIDIA发布Nemotron 3 Ultra 550B参数开源模型</a> <span class="news-source-inline">NVIDIA Blog</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">550B参数(55B active) MoE架构，Jensen Huang在Computex发布。定位美国最智能开源权重模型。NVFP4训练方法首次在大规模预训练中验证</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">550B参数</span><span class="news-data-chip">开源权重</span><span class="news-data-chip">NVFP4训练</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">NVIDIA从卖芯片到卖模型，Nemotron系列正在构建芯片-模型-软件全栈生态</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://lushbinary.com/blog/claude-fable-5-vs-gpt-5-5-vs-gemini-3-1-pro-comparison" target="_blank">Claude Fable 5 vs GPT-5.5 vs Gemini 3.1 Pro全面对比</a> <span class="news-source-inline">LushBinary</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Fable 5 SWE-bench Pro 58.6%，GPT-5.5 Terminal-Bench 83.4%。定价：Fable 5 $15/$75，GPT-5.5 $5/$25</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">三巨头对比</span><span class="news-data-chip">定价分化</span><span class="news-data-chip">Agentic差距</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Frontier模型定价首次出现3-5倍差异，Agentic Coding成为新的差异化战场</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-cn">🇨🇳</span> <a href="https://www.deepseek.com" target="_blank">DeepSeek V4全系API再降价，Pro版限时2.5折</a> <span class="news-source-inline">DeepSeek</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">V4-Flash输入缓存命中0.2元/百万Token；V4-Pro限时2.5折，百万Token输入缓存命中0.025元创全球新低。百万Token上下文全系标配</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip china">全球最低价</span><span class="news-data-chip china">百万上下文</span><span class="news-data-chip china">国产算力适配</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">DeepSeek V4定价为GPT-5.5的1/8-1/50，正在把API成本锚定到地板价。国产算力全链适配摆脱CUDA依赖</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-cn">🇨🇳</span> <a href="https://news.cnyes.com/news/id/6322370" target="_blank">中国大模型全球API调用量占比超60%</a> <span class="news-source-inline">鉅亨網</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">OpenRouter统计Q1全球API调用中国模型周Token消耗占比超60%。Artificial Analysis开源模型榜单全球前五全为中国模型</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip china">60%调用占比</span><span class="news-data-chip china">开源前五全中国</span><span class="news-data-chip china">市占15%</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">中国AI从'跟跑'到'领跑'拐点信号。DeepSeek+Kimi+MiniMax+智谱+阿里形成开源生态</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header 大模型">
+                    <div>
+                        <div class="deep-focus-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> 深度聚焦</div>
+                        <div class="deep-focus-title">Anthropic双旗舰策略：公开+受控，AI安全的制度实验</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Anthropic同时发布Fable 5（公开旗舰）和Mythos 5（受控网络安全模型），这是AI行业首次由公司主动将最强能力分层管控。Fable 5限时含在订阅中（6/9-6/22），之后需用credits——这不是饥饿营销，而是算力供给紧张下的真实约束。</p><p>更值得关注的是监管层面的连锁反应：美国政府对Claude Fable 5实施出口管制，Florida州起诉OpenAI未警告ChatGPT风险，Trump签署AI行政令要求建立网络安全审查机制。这三件事同时发生，意味着AI安全从'自觉'走向'制度化'。</p><p>从竞争格局看，Fable 5 SWE-bench 88.6%与Opus 4.8并列，但Agentic Coding被GPT-5.5(Codex)的83.4%领先。模型能力不再是单一维度竞赛——在什么harness里跑、用什么安全约束、向谁开放，都成了竞争变量。</p>
+                    <div class="deep-focus-takeaway 大模型">
+                        <div class="deep-focus-takeaway-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI安全的制度化窗口已打开。Anthropic用双旗舰策略抢占了'受控开放'的叙事高地，但能否将安全约束转化为竞争壁垒，取决于Mythos的实战效果和合规效率。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-title">规律洞察</div><div class="pi-content">本板块暂无规律洞察，关注后续更新。</div></div>
+            </section>
+
+            <!-- ===== AI Coding ===== -->
+            <section id="coding" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label">⌨️ AI Coding</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">{SVG_ICONS["globe"]} 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli" target="_blank">Gemini CLI停止服务，全面迁移至Antigravity CLI</a> <span class="news-source-inline">Google Developers Blog</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">6/18起Gemini CLI停止服务免费用户。Antigravity CLI用Go重写，支持异步多agent工作流，与Antigravity 2.0桌面应用共享agent harness。企业Code Assist许可用户保留访问</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">6/18迁移日</span><span class="news-data-chip">Go重写</span><span class="news-data-chip">异步agent</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Google在做Coding Agent平台迁移，从CLI工具到Agent操作系统。免费用户被切断引发社区不满</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://www.morphllm.com/best-ai-coding-agents-2026" target="_blank">2026年AI Coding Agent排行榜：Codex+GPT-5.5领先</a> <span class="news-source-inline">MorphLLM</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Terminal-Bench 2.1：Codex+GPT-5.5(83.4%)>Gemini 3.5 Flash(76.2%)>Claude Opus 4.8(74.6%)。SWE-bench：Claude Opus 4.8(88.6%)领先。OpenCode 17万星开源免费</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">Terminal-Bench 2.1</span><span class="news-data-chip">12款对比</span><span class="news-data-chip">Copilot转credits</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">wrapper和harness正在成为比model更重要的变量。同一模型在不同harness里得分差异巨大</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://www.firecrawl.dev/blog/best-ai-coding-agents" target="_blank">GitHub Copilot转用credits制替代premium请求</a> <span class="news-source-inline">Firecrawl</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">6/1起Copilot 1 credit=$0.01，退役premium requests，暂停新付费注册。Claude Code+Codex+Cline+Goose均支持MCP协议</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">credits制</span><span class="news-data-chip">MCP统一</span><span class="news-data-chip">暂停注册</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Copilot转credits=承认按量计费更灵活。MCP协议成为Agent互联的事实标准</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-cn">🇨🇳</span> <a href="https://finance.sina.com.cn/stock/t/2025-11-05/doc-infwifvu9239821.shtml" target="_blank">字节Trae月活超100万，内部80%工程师使用</a> <span class="news-source-inline">新浪财经</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">字节技术VP洪定坤6月透露Trae整体月活超100万，内部80%+工程师使用。已移除Claude，国际版用GPT-5/Gemini/Kimi-K2/DeepSeek</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip china">100万月活</span><span class="news-data-chip china">移除Claude</span><span class="news-data-chip china">多模型策略</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">Trae月活破百万=中国AI Coding IDE首次达到规模。移除Claude后多模型适配=验证中国模型编程可替代性</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-cn">🇨🇳</span> <a href="https://www.cnblogs.com/wzxNote/p/19648084" target="_blank">国内6家AI Coding Plan全对比</a> <span class="news-source-inline">博客园</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">6家平台月费7.9-49元，计费单位混杂。Kimi 49元多模态Vibe Coding但工具限制严；MiniMax 29元入门最低；智谱高峰期3倍扣费</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip china">6家对比</span><span class="news-data-chip china">计费陷阱</span><span class="news-data-chip china">Kimi多模态</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">国内AI Coding进入订阅制混战，计费透明度是核心痛点</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header AI Coding">
+                    <div>
+                        <div class="deep-focus-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> 深度聚焦</div>
+                        <div class="deep-focus-title">AI Coding Agent大迁移：从工具到操作系统</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>6/18是AI Coding Agent的分水岭：Google正式关闭Gemini CLI免费通道，迁移至Antigravity CLI；GitHub Copilot转credits制；OpenCode积累17万星。三个事件同时发生，揭示结构性趋势——AI Coding从'工具'进化为'Agent操作系统'。</p><p>Antigravity CLI用Go重写、支持异步多agent工作流、与桌面应用共享harness，这不是迭代而是架构升级。Copilot转credits实则是为Agent经济按量计费铺路。OpenCode的17万星说明：开发者对模型无关的开源Agent框架需求巨大。MCP协议成为事实标准=Agent互联底层管道已打通。</p><p>对开发者而言：你不只在选一个编码助手，你在选一个Agent运行时。Claude Code是'steering agent'（你控方向），Codex是'dispatching agent'（你下任务它自己跑），Antigravity是'orchestrating agent'（多agent并行协同）。三种范式并存，选错harness比选错模型代价更大。</p>
+                    <div class="deep-focus-takeaway AI Coding">
+                        <div class="deep-focus-takeaway-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI Coding的核心变量已从'谁的模型更强'转向'谁的harness更灵活'。harness决定模型的发挥上限，MCP决定Agent的互联边界。选harness比选model更关键。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-title">规律洞察</div><div class="pi-content">本板块暂无规律洞察，关注后续更新。</div></div>
+            </section>
+
+            <!-- ===== AI 应用 ===== -->
+            <section id="app" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> AI 应用</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">{SVG_ICONS["globe"]} 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://blog.google/products-and-platforms/products/search/search-io-2026" target="_blank">Google搜索进入Agent时代：智能搜索框+Agent代订</a> <span class="news-source-inline">Google Blog</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Google I/O 2026发布全新AI搜索框，25年来最大升级。用户可用自然语言请求agent执行任务（代订KTV/餐厅），Google代打电话给商家。夏季向全美开放</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">25年最大升级</span><span class="news-data-chip">Agent代订</span><span class="news-data-chip">代打电话</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Google搜索从信息检索到任务执行的质变。对Yelp/美团等本地服务平台构成结构性威胁</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://www.npr.org/2026/06/08/nx-s1-5847937/apple-wwdc-2026-siri-ai-tim-cook" target="_blank">Apple WWDC 2026：Siri迎来重大AI更新</a> <span class="news-source-inline">NPR</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Apple发布Siri重大AI更新，基于Google Gemini而非自研。Apple年付Google $10亿+使用Gemini</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">Siri大更新</span><span class="news-data-chip">用Google Gemini</span><span class="news-data-chip">年付$10亿+</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Apple承认AI落后，$10亿/年授权费=AI底层能力外包成本。设备商正在降级为分发渠道</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5" target="_blank">Gemini 3.5 Live Translate实时语音翻译</a> <span class="news-source-inline">Google Blog</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Gemini 3.5新增Live Translate，支持实时语音翻译。3.5 Flash已在生产环境可用，$1.50/$9.00/百万Token</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">实时翻译</span><span class="news-data-chip">3.5 Flash</span><span class="news-data-chip">$1.50/$9.00</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">实时语音翻译=AI原生应用，传统翻译App差异化被消解</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-cn">🇨🇳</span> <a href="https://www.moonshot.cn" target="_blank">Kimi K2.6发布：原生多模态+Agent Swarm架构</a> <span class="news-source-inline">月之暗面</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">Kimi K2.6发布，支持原生多模态+Agent性能。Agent Swarm架构允许多agent协同。K2.5长上下文基准领先，262K上下文</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip china">K2.6</span><span class="news-data-chip china">Agent Swarm</span><span class="news-data-chip china">原生多模态</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">Kimi从单模型到Agent Swarm=构建Agent基础设施。K2.5调用量持续领先=技术驱动的API变现路径验证</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-cn">🇨🇳</span> <a href="https://m.36kr.com/p/3838454229027072" target="_blank">豆包DAU达2亿，6月下旬上线付费</a> <span class="news-source-inline">36氪</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">2026春节后豆包DAU达2亿。6月下旬上线付费内容，计划与抖音电商打通。月订阅免费到500元</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip china">DAU 2亿</span><span class="news-data-chip china">付费上线</span><span class="news-data-chip china">抖音电商打通</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">豆包DAU 2亿=中国AI应用用户规模天花板。与抖音电商打通=AI首次从工具到交易闭环</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header AI 应用">
+                    <div>
+                        <div class="deep-focus-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> 深度聚焦</div>
+                        <div class="deep-focus-title">Google搜索Agent化：从信息检索到任务执行的质变</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Google I/O 2026最被低估的发布不是Gemini 3.5，而是搜索的Agent化。当用户可以说'帮我找一个周五晚上6人KTV包间要能送餐'，Google直接调用agent查询实时价格并提供预订链接——这不是搜索升级，这是本地服务平台的颠覆。</p><p>Google正在用搜索的流量入口+Gemini的agent能力，构建一个'AI中间层'。用户不再需要打开Yelp找餐厅、打开OpenTable订位——Google搜索agent把所有步骤压缩成一个对话。对现有本地服务平台而言，这不是竞争，是管道截流。</p><p>Apple选择用Gemini而非自研模型驱动Siri，进一步确认了AI应用的'底层能力外包'趋势。$10亿+/年授权费，本质是Apple承认：掌握底层模型能力的公司才是平台，掌握设备的公司正在降级为分发渠道。</p>
+                    <div class="deep-focus-takeaway AI 应用">
+                        <div class="deep-focus-takeaway-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI应用竞争的本质从'谁有更好功能'转向'谁控制任务执行入口'。Google搜索Agent化=AI应用层的'管道截流'，把分散服务平台压缩成一个对话。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-title">规律洞察</div><div class="pi-content">本板块暂无规律洞察，关注后续更新。</div></div>
+            </section>
+
+            <!-- ===== AI 行业 ===== -->
+            <section id="industry" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20V8l-6 4V4l-6 4V2L2 10v10z"/></svg> AI 行业</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">{SVG_ICONS["globe"]} 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://aifundingtracker.com/top-50-ai-startups" target="_blank">Anthropic Series H $650亿估值$9650亿超OpenAI</a> <span class="news-source-inline">AI Funding Tracker</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Anthropic $65B Series H，post-money $965B，超越OpenAI $852B。年化收入~$47B(从$14B跃升)。Q2首次预计经营利润$559M。IPO在讨论中，潜在10月上市</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">$965B估值</span><span class="news-data-chip">$47B年收入</span><span class="news-data-chip">Q2首盈利</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Anthropic从'追赶者'到'最值钱AI公司'只用一个季度。$47B收入+首次盈利=AI公司商业模式从烧钱到盈利的拐点</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://www.linkedin.com/posts/hugo-carreira-31b18a29" target="_blank">Q1全球VC $3300亿，80%流向AI</a> <span class="news-source-inline">LinkedIn/Hugo Carreira</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Q1 2026全球VC $3300亿，$2420亿(80%)流向AI公司。Cerebras IPO $950亿。三大资金流向：基础设施、垂直Agent、安全合规</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">$3300亿Q1</span><span class="news-data-chip">80%流向AI</span><span class="news-data-chip">三大方向</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">80% VC流向AI=非AI创业几乎无法融资。但Bain调查60%大公司缺AI数据基建=钱涌入但落地仍卡在基础层</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://aifundingtracker.com/top-50-ai-startups" target="_blank">OpenAI瞄准Q4万亿IPO</a> <span class="news-source-inline">AI Funding Tracker</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI last private round $852B，瞄准Q4 2026万亿IPO。GPT-5.5-Cyber扩展到欧盟审核团队。S-1已提交</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">万亿IPO</span><span class="news-data-chip">S-1已提交</span><span class="news-data-chip">GPT-5.5-Cyber EU</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">如果成功=人类史上最大IPO。Anthropic $965B vs OpenAI $852B的估值逆转，本质是API收入增长vs订阅天花板的叙事竞争</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-cn">🇨🇳</span> <a href="https://tidenews.com.cn/news.html?id=3438419" target="_blank">DeepSeek首轮融资估值$450亿</a> <span class="news-source-inline">潮新闻</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">DeepSeek首轮融资估值约$450亿。此前从未融资。英伟达黄仁勋CES基准测试用DeepSeek和Kimi K2</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip china">首融$450亿</span><span class="news-data-chip china">零融资到首融</span><span class="news-data-chip china">黄仁勋背书</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">从'不融资的理想主义者'到首融$450亿=资本在给中国AI重新定价。极致低价策略能否持续是关键验证点</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-cn">🇨🇳</span> <a href="https://m.36kr.com/p/3838454229027072" target="_blank">字节2026年AI四大命题</a> <span class="news-source-inline">36氪</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">字节2026 AI四大命题：①世界模型(追Genie3) ②Seedance动态生成 ③Coding飞轮 ④豆包商业化。豆包DAU 2亿，字节资本支出1600亿</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip china">四大命题</span><span class="news-data-chip china">世界模型</span><span class="news-data-chip china">Coding飞轮</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">字节AI'无明显短板'但缺世界模型=大模型下一阶段入场券。强制使用Seed=内部数据闭环的强制建设</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header AI 行业">
+                    <div>
+                        <div class="deep-focus-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> 深度聚焦</div>
+                        <div class="deep-focus-title">AI融资的拐点：钱在涌入，但落地仍卡在基础层</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Q1 2026全球VC $3300亿80%流向AI，Anthropic $965B超OpenAI，OpenAI瞄准万亿IPO——数字令人眩晕。但Bain同期调查揭示了一个刺眼的反差：60%的大公司缺乏支撑AI规模化的数据基础设施，AI自动化成本节省普遍低于预期。</p><p>这个矛盾的本质是：资本在为AI的'可能性'定价，但企业还在为AI的'可用性'挣扎。Unframe拿到$5000万帮企业评估AI应用ROI，本身就是一个信号——市场需要'AI ROI审计'中间层，说明从投入到产出之间还有巨大不确定性。</p><p>Anthropic的$47B年化收入+首次盈利是唯一的例外。但这个收入主要来自Claude订阅和API，而非企业级AI转型项目。AI公司的收入增长目前靠的还是'工具替代'，而非'流程重构'。真正的企业AI转型市场，可能还需要12-18个月的数据基建建设期。</p>
+                    <div class="deep-focus-takeaway AI 行业">
+                        <div class="deep-focus-takeaway-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI融资规模和AI落地进度之间存在'可信度鸿沟'。钱在为可能性定价，但落地卡在数据基建。2026年下半年是验证期——如果企业AI项目ROI仍不达标，资本热情可能迅速冷却。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-title">规律洞察</div><div class="pi-content">本板块暂无规律洞察，关注后续更新。</div></div>
+            </section>
+
+            <!-- ===== 企业AI转型 ===== -->
+            <section id="enterprise" class="report-section animate-on-scroll">
+                <div class="doc-chapter-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg> 企业AI转型</div>
+                <div class="board-section">
+                    <div class="board-header">
+                        <span class="board-badge">1</span> 最近动态
+                    </div>
+                <div class="sub-header">{SVG_ICONS["globe"]} 海外</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://www.whitehouse.gov/presidential-actions/2026/06/promoting-advanced-artificial-intelligence-innovation-and-security" target="_blank">Trump签署AI行政令：自愿审查+网络安全clearinghouse</a> <span class="news-source-inline">White House</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">6/2签署行政令：要求联邦机构开发AI网络能力基准，建立AI网络安全Clearinghouse，强化政府安全防线。同时强调减少监管负担</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">AI行政令</span><span class="news-data-chip">自愿审查</span><span class="news-data-chip">安全Clearinghouse</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">美国AI政策在'安全'和'创新'间走钢丝。Clearinghouse=信息共享但无强制力=与EU AI Act监管路径分化</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-hot">HOT</span> <a href="https://www.mindstudio.ai/blog/ai-cybersecurity-claude-mythos-gpt-5-5-zero-day-exploits" target="_blank">Claude Fable 5遭美国出口管制</a> <span class="news-source-inline">MindStudio</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Fable 5被美国政府实施出口管制。Mythos ExploitBench 78%+GPT-5.5-Cyber EU审核=AI模型首次成地缘工具。五角大楼签8家AI合同，Anthropic缺席</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">出口管制</span><span class="news-data-chip">地缘政治</span><span class="news-data-chip">五角大楼合同</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI出口管制=模型能力被视为战略资源。地缘AI格局形成：OpenAI走政府路线，Anthropic走合规路线</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-new">NEW</span> <a href="https://www.linkedin.com/pulse/ai-news-highlights-from-2nd-june-2026-ai-insiders-news-7kade" target="_blank">Bain调查：60%大公司缺AI数据基建，ROI低于预期</a> <span class="news-source-inline">LinkedIn/AI Insiders</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Bain全球调查：AI自动化成本节省普遍低于预期，60%大公司缺乏规模化AI所需数据基础设施。但91%企业仍预测2026年更高增长</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">60%缺基建</span><span class="news-data-chip">ROI低于预期</span><span class="news-data-chip">91%仍乐观</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">91%乐观vs 60%缺基建=企业AI转型的'乐观偏见'。ROI低于预期的根因不是模型能力不足而是数据/流程/组织准备度不够</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-cn">🇨🇳</span> <a href="https://www.news.cn/finance/20260429/e54437bbf02243e48252e8d7a71c26e5/c.html" target="_blank">DeepSeek V4全链路国产算力适配</a> <span class="news-source-inline">新华网</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">DeepSeek V4完成与华为昇腾、寒武纪的Day 0极速适配。寒武纪2025年首年盈利(营收64.97亿+453%)，摩尔线程Q1首季盈利</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip china">Day 0适配</span><span class="news-data-chip china">国产算力</span><span class="news-data-chip china">寒武纪首盈利</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">DeepSeek V4+国产算力=中国AI'芯模联动'路线验证。国产AI芯片商业化拐点。下半年昇腾超节点批量上市后Pro版价格有望大降</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-title-row"><span class="news-tag tag-cn">🇨🇳</span> <a href="https://tidenews.com.cn/news.html?id=3438419" target="_blank">智谱AI逆势涨价83%后调用量不降反升</a> <span class="news-source-inline">潮新闻</span></div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">智谱涨价83%后调用量不降反升=罕见定价权。MaaS平台ARR 17亿。但亏损近50亿，收入不足研发1/4</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip china">涨价83%</span><span class="news-data-chip china">定价权</span><span class="news-data-chip china">亏损50亿</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">涨价不降量=B端AI服务出现定价权。但收入/研发比1/4=规模化亏损也在加速。定价权≠盈利能力</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header 企业转型">
+                    <div>
+                        <div class="deep-focus-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> 深度聚焦</div>
+                        <div class="deep-focus-title">AI企业转型的'可信度鸿沟'：91%乐观vs 60%缺基建</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Bain调查揭示了一个令人不安的剪刀差：91%企业预测2026年AI驱动更高增长，但60%缺乏规模化AI所需数据基础设施，且自动化成本节省普遍低于预期。这不是常规差距——这是投入与产出的结构性错位。</p><p>错位的根因：企业在为AI的'可能性'投资，但没有为AI的'可用性'改造。大多数AI项目还在做'工具替代'而非'流程重构'——后者需要重写业务流程、重组数据架构、重新定义岗位职责。</p><p>中国的'芯模联动'路线提供不同视角：DeepSeek V4+国产算力Day 0适配，把AI底层成本压到地板（V4-Pro限时2.5折=百万Token 0.025元）。如果AI计算成本足够低，企业转型ROI门槛就会降低——不是靠更好的模型，而是靠更低成本让更多场景变得可行。</p>
+                    <div class="deep-focus-takeaway 企业转型">
+                        <div class="deep-focus-takeaway-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">企业AI转型瓶颈不在模型能力，在数据基建和组织准备度。中国路线（极致降本扩大可行场景）vs美国路线（更强模型驱动更高价值）——2026H2将验证哪条路径更快到达ROI拐点。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-title">规律洞察</div><div class="pi-content">本板块暂无规律洞察，关注后续更新。</div></div>
+            </section>
+
+            <!-- DATA SNAPSHOT -->
+            <section id="data" class="report-section animate-on-scroll">
+
+        <div class="section-card">
+            <div class="section-header"><span class="num"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></span> 数据速览</div>
+            <div class="data-table-wrap">
+                <table class="data-table">
+                    <thead><tr><th>指标</th><th>数值</th><th>变化/说明</th></tr></thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            </section>
+
+            <!-- WATCH LIST -->
+            <section id="watch" class="report-section animate-on-scroll">
+
+        <div class="section-card">
+            <div class="section-header"><span class="num"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> 明日/下周值得关注</div>
+            <div class="watch-grid">
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 </div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"></div>
+                </div>
+            </div>
+        </div>
+            </section>
+
+            <!-- CAPABILITY UPDATE / DEEP INSIGHT -->
+
+        <div class="insight-block animate-on-scroll">
+            <div class="insight-block-title"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> 深度洞察</div>
+            <div class="insight-block-body">
+                <p style="margin:0">AI日报第98期。本期新增MLPerf v6.0详细解读、Antigravity CLI迁移深度分析、DeepSeek V4国产算力适配追踪。</p>
+            </div>
+        </div>
+
+            <!-- FOOTER -->
+            <footer class="doc-footer animate-on-scroll">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                    <img style="display:none">
+                    <span>我是 <strong>AI洞察</strong>，的AI洞察。
+                    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10l9-7 9 7v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg> 访问AI洞察首页</a></span>
+                </div>
+                <p style="margin-top:6px">AI洞察 · 系统化追踪AI行业动态 · 五大板块每日更新</p>
+            </footer>
+
+        </div>
+    </main>
+</div>
+
+<button class="scroll-to-top" id="scrollToTop" aria-label="回到顶部">↑</button>
+
+<script>
+    (function() {
+        // ===== TOC SCROLL SPY =====
+        const tocLinks = document.querySelectorAll('.toc-link[href^="#"]');
+        const sections = Array.from(tocLinks)
+            .map(l => document.querySelector(l.getAttribute('href')))
+            .filter(Boolean);
+
+        function updateToc() {
+            let active = null;
+            const scrollY = window.scrollY + 120;
+            for (const sec of sections) {
+                if (sec.getBoundingClientRect().top + window.scrollY <= scrollY) {
+                    active = sec;
+                }
+            }
+            tocLinks.forEach(l => {
+                const target = document.querySelector(l.getAttribute('href'));
+                l.classList.toggle('toc-active', target === active);
+            });
+        }
+
+        // ===== READING PROGRESS =====
+        const progressFill = document.getElementById('readingProgress');
+        function updateProgress() {
+            if (!progressFill) return;
+            const doc = document.documentElement;
+            const scrollTop = window.scrollY;
+            const total = doc.scrollHeight - doc.clientHeight;
+            const pct = total > 0 ? Math.round((scrollTop / total) * 100) : 0;
+            progressFill.style.width = pct + '%';
+        }
+
+        window.addEventListener('scroll', () => {
+            updateToc();
+            updateProgress();
+            // scroll-to-top visibility
+            const btn = document.getElementById('scrollToTop');
+            if (btn) btn.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+
+        updateToc();
+        updateProgress();
+
+        // ===== SCROLL TO TOP =====
+        const scrollBtn = document.getElementById('scrollToTop');
+        if (scrollBtn) {
+            scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+
+        // ===== SIDEBAR COLLAPSE =====
+        const collapseBtn = document.getElementById('collapseBtn');
+        const sidebar = document.getElementById('sidebar');
+        if (collapseBtn && sidebar) {
+            collapseBtn.addEventListener('click', () => {
+                const isCollapsed = sidebar.classList.toggle('sidebar-collapsed');
+                collapseBtn.textContent = isCollapsed ? '»' : '«';
+                collapseBtn.classList.toggle('collapsed-pos', isCollapsed);
+            });
+        }
+
+        // ===== ANIMATE ON SCROLL =====
+        const animEls = document.querySelectorAll('.animate-on-scroll');
+        if (animEls.length) {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+            }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
+            animEls.forEach(el => observer.observe(el));
+        }
+    })();
+</script>
+
+</body>
+</html>

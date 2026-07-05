@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第二章：能力架构 - AI Agent 团队落地指南</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/><circle cx='10' cy='8' r='1.5' fill='white'/><circle cx='22' cy='8' r='1.5' fill='white'/><line x1='11' y1='9' x2='13' y2='11' stroke='white' stroke-width='1.5'/><line x1='21' y1='9' x2='19' y2='11' stroke='white' stroke-width='1.5'/></svg>">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="header">
+            <span class="header-badge">AI行业洞察 · 第二章</span>
+            <h1 class="header-title">AI Agent 的能力从何而来？</h1>
+            <p class="header-subtitle">用类比的方式，通俗讲解 Agent 的技术架构</p>
+        </header>
+
+        <!-- Tab导航 -->
+        <nav class="tab-nav" role="navigation" aria-label="章节导航">
+            <a href="index.html" class="tab-btn">
+                <span class="tab-btn-num">📋</span>
+                <span>目录</span>
+            </a>
+            <a href="chapter1-scenarios.html" class="tab-btn">
+                <span class="tab-btn-num">1</span>
+                <span>场景与价值</span>
+            </a>
+            <a href="chapter2-architecture.html" class="tab-btn active">
+                <span class="tab-btn-num">2</span>
+                <span>能力架构</span>
+            </a>
+            <a href="chapter3-implementation.html" class="tab-btn">
+                <span class="tab-btn-num">3</span>
+                <span>落地实践</span>
+            </a>
+            <a href="chapter4-future.html" class="tab-btn">
+                <span class="tab-btn-num">4</span>
+                <span>未来演进</span>
+            </a>
+            <a href="appendix-industry-research.html" class="tab-btn">
+                <span class="tab-btn-num">📊</span>
+                <span>行业调研</span>
+            </a>
+        </nav>
+
+        <!-- 核心洞察 -->
+        <div class="summary-box">
+            <div class="summary-label">本章核心观点</div>
+            <h2 class="summary-title">AI Agent = <em>大脑 + 工具 + 记忆 + 技能</em></h2>
+            <p class="summary-text">
+                把 Agent 想象成一个新员工：大脑（LLM）负责理解和思考，工具让它能"动手"，记忆让它"了解你"，技能让它"专业"。这四个系统相互配合，才能完成复杂任务。
+            </p>
+        </div>
+
+        <!-- 2.1 整体架构 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">2.1</span>
+                <h2 class="section-title">整体架构：四大核心系统</h2>
+            </div>
+
+            <!-- 章节概览图 - 层级架构 -->
+            <div class="section-overview">
+                <span class="section-overview-label">架构全景图</span>
+                <div class="section-overview-content">
+                    <svg viewBox="0 0 600 200" style="max-width: 600px;">
+                        <defs>
+                            <linearGradient id="brainGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#7C3AED"/>
+                                <stop offset="100%" stop-color="#6D28D9"/>
+                            </linearGradient>
+                            <linearGradient id="toolGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#059669"/>
+                                <stop offset="100%" stop-color="#10B981"/>
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- 顶层：大脑 -->
+                        <g transform="translate(200, 10)">
+                            <rect width="200" height="50" rx="10" fill="url(#brainGrad)"/>
+                            <text x="100" y="25" text-anchor="middle" font-size="20">🧠</text>
+                            <text x="100" y="42" text-anchor="middle" font-size="13" font-weight="600" fill="white">大脑（LLM）</text>
+                        </g>
+                        
+                        <!-- 连接线 -->
+                        <path d="M300 60 L300 75 L150 90 M300 75 L300 90 M300 75 L450 90" stroke="#E7E5E4" stroke-width="2" fill="none"/>
+                        
+                        <!-- 中间层：三大系统 -->
+                        <g transform="translate(50, 90)">
+                            <rect width="150" height="55" rx="8" fill="#E6F7ED" stroke="#059669"/>
+                            <text x="75" y="22" text-anchor="middle" font-size="18">🔧</text>
+                            <text x="75" y="42" text-anchor="middle" font-size="12" font-weight="600" fill="#059669">工具系统</text>
+                        </g>
+                        <g transform="translate(225, 90)">
+                            <rect width="150" height="55" rx="8" fill="#EFF6FF" stroke="#2563EB"/>
+                            <text x="75" y="22" text-anchor="middle" font-size="18">💾</text>
+                            <text x="75" y="42" text-anchor="middle" font-size="12" font-weight="600" fill="#2563EB">记忆系统</text>
+                        </g>
+                        <g transform="translate(400, 90)">
+                            <rect width="150" height="55" rx="8" fill="#FEF3C7" stroke="#D97706"/>
+                            <text x="75" y="22" text-anchor="middle" font-size="18">🎯</text>
+                            <text x="75" y="42" text-anchor="middle" font-size="12" font-weight="600" fill="#D97706">技能系统</text>
+                        </g>
+                        
+                        <!-- 底层连接线 -->
+                        <path d="M125 145 L125 160 L300 175 M300 145 L300 175 M475 145 L475 160 L300 175" stroke="#E7E5E4" stroke-width="1.5" fill="none"/>
+                        
+                        <!-- 底层：用户任务 -->
+                        <g transform="translate(175, 175)">
+                            <rect width="250" height="35" rx="6" fill="#F8FAFB" stroke="#E7E5E4"/>
+                            <text x="125" y="23" text-anchor="middle" font-size="12" font-weight="500" fill="#57534E">👤 用户任务输入 → 🎁 交付成果</text>
+                        </g>
+                    </svg>
+                </div>
+                <p class="section-overview-caption">四大系统协同工作，完成用户任务</p>
+            </div>
+
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-lg);">
+                用一个通俗的类比来理解：<strong>把 AI Agent 想象成一个新入职的员工</strong>
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>系统</th>
+                            <th>类比</th>
+                            <th>作用</th>
+                            <th>没有它会怎样？</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag tag-purple">🧠 大脑（LLM）</span></td>
+                            <td>员工的智力和理解力</td>
+                            <td>理解需求、思考方案、做出判断</td>
+                            <td>完全不知道该做什么</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-green">🔧 工具系统</span></td>
+                            <td>员工的双手和工具</td>
+                            <td>执行具体操作（写文件、运行命令）</td>
+                            <td>只能说不能做，光说不练</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-blue">💾 记忆系统</span></td>
+                            <td>员工对公司和你的了解</td>
+                            <td>记住偏好、规范、历史经验</td>
+                            <td>每次都是"新人"，不懂规矩</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-orange">🎯 技能系统</span></td>
+                            <td>员工的专业培训</td>
+                            <td>掌握特定领域的专业知识</td>
+                            <td>什么都会一点，都不精通</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 2.2 工具系统 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">2.2</span>
+                <h2 class="section-title">工具系统：让 Agent 能"动手"</h2>
+            </div>
+
+            <div class="section-overview">
+                <span class="section-overview-label">工具分类</span>
+                <div class="section-overview-content">
+                    <svg viewBox="0 0 600 120" style="max-width: 600px;">
+                        <!-- 中心 -->
+                        <g transform="translate(250, 35)">
+                            <rect width="100" height="50" rx="25" fill="#059669"/>
+                            <text x="50" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="white">工具系统</text>
+                        </g>
+                        
+                        <!-- 左侧分支 -->
+                        <path d="M250 60 Q200 60 180 30" stroke="#E7E5E4" stroke-width="2" fill="none"/>
+                        <path d="M250 60 Q200 60 180 90" stroke="#E7E5E4" stroke-width="2" fill="none"/>
+                        
+                        <g transform="translate(70, 10)">
+                            <rect width="110" height="36" rx="6" fill="#F0FDF4" stroke="#059669"/>
+                            <text x="55" y="15" text-anchor="middle" font-size="10" fill="#059669">📁</text>
+                            <text x="55" y="28" text-anchor="middle" font-size="11" font-weight="500" fill="#059669">文件操作</text>
+                        </g>
+                        <g transform="translate(70, 70)">
+                            <rect width="110" height="36" rx="6" fill="#F0FDF4" stroke="#059669"/>
+                            <text x="55" y="15" text-anchor="middle" font-size="10" fill="#059669">💻</text>
+                            <text x="55" y="28" text-anchor="middle" font-size="11" font-weight="500" fill="#059669">命令执行</text>
+                        </g>
+                        
+                        <!-- 右侧分支 -->
+                        <path d="M350 60 Q400 60 420 30" stroke="#E7E5E4" stroke-width="2" fill="none"/>
+                        <path d="M350 60 Q400 60 420 90" stroke="#E7E5E4" stroke-width="2" fill="none"/>
+                        
+                        <g transform="translate(420, 10)">
+                            <rect width="110" height="36" rx="6" fill="#EFF6FF" stroke="#2563EB"/>
+                            <text x="55" y="15" text-anchor="middle" font-size="10" fill="#2563EB">🌐</text>
+                            <text x="55" y="28" text-anchor="middle" font-size="11" font-weight="500" fill="#2563EB">网络访问</text>
+                        </g>
+                        <g transform="translate(420, 70)">
+                            <rect width="110" height="36" rx="6" fill="#EFF6FF" stroke="#2563EB"/>
+                            <text x="55" y="15" text-anchor="middle" font-size="10" fill="#2563EB">🔍</text>
+                            <text x="55" y="28" text-anchor="middle" font-size="11" font-weight="500" fill="#2563EB">代码搜索</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                <strong>类比：工具就像员工的双手和工具箱。</strong>没有工具，员工再聪明也只能"纸上谈兵"。
+            </p>
+
+            <h3 class="subsection-title">主要工具类型</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">📁</div>
+                    <h3 class="card-title">文件操作</h3>
+                    <p class="card-desc">
+                        读取文件内容、创建新文件、修改现有文件、搜索文件。就像员工能打开电脑上的文件夹，查看和编辑文档。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💻</div>
+                    <h3 class="card-title">命令执行</h3>
+                    <p class="card-desc">
+                        运行程序、启动服务、执行脚本。就像员工能在命令行敲命令，让程序跑起来。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌐</div>
+                    <h3 class="card-title">网络访问</h3>
+                    <p class="card-desc">
+                        搜索网页、抓取内容、调用 API。就像员工能上网查资料，获取最新信息。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔍</div>
+                    <h3 class="card-title">代码搜索</h3>
+                    <p class="card-desc">
+                        在代码库中查找相关代码、理解项目结构。就像员工能在项目里找到需要修改的地方。
+                    </p>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">通俗理解</div>
+                <p class="insight-text">
+                    传统 ChatGPT 只有"嘴"（说话），Agent 有"嘴"+"手"+"眼睛"。它能看到你的项目（文件操作），能动手修改（命令执行），能上网查资料（网络访问）。这就是 Agent 能"做事"的根本原因。
+                </p>
+            </div>
+        </section>
+
+        <!-- 2.3 记忆系统 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">2.3</span>
+                <h2 class="section-title">记忆系统：让 Agent "了解你"</h2>
+            </div>
+
+            <div class="section-overview">
+                <span class="section-overview-label">记忆分类</span>
+                <div class="section-overview-content">
+                    <svg viewBox="0 0 600 100" style="max-width: 600px;">
+                        <!-- 卡片1 -->
+                        <g transform="translate(20, 10)">
+                            <rect width="130" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="130" height="3" rx="1.5" fill="#7C3AED"/>
+                            <text x="65" y="32" text-anchor="middle" font-size="20">👤</text>
+                            <text x="65" y="52" text-anchor="middle" font-size="12" font-weight="600" fill="#1C1917">用户偏好</text>
+                            <text x="65" y="68" text-anchor="middle" font-size="10" fill="#78716C">习惯·风格·喜好</text>
+                        </g>
+                        
+                        <!-- 卡片2 -->
+                        <g transform="translate(165, 10)">
+                            <rect width="130" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="130" height="3" rx="1.5" fill="#059669"/>
+                            <text x="65" y="32" text-anchor="middle" font-size="20">📋</text>
+                            <text x="65" y="52" text-anchor="middle" font-size="12" font-weight="600" fill="#1C1917">项目规范</text>
+                            <text x="65" y="68" text-anchor="middle" font-size="10" fill="#78716C">代码规范·流程</text>
+                        </g>
+                        
+                        <!-- 卡片3 -->
+                        <g transform="translate(310, 10)">
+                            <rect width="130" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="130" height="3" rx="1.5" fill="#2563EB"/>
+                            <text x="65" y="32" text-anchor="middle" font-size="20">💡</text>
+                            <text x="65" y="52" text-anchor="middle" font-size="12" font-weight="600" fill="#1C1917">经验教训</text>
+                            <text x="65" y="68" text-anchor="middle" font-size="10" fill="#78716C">踩过的坑·解法</text>
+                        </g>
+                        
+                        <!-- 卡片4 -->
+                        <g transform="translate(455, 10)">
+                            <rect width="130" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="130" height="3" rx="1.5" fill="#E11D48"/>
+                            <text x="65" y="32" text-anchor="middle" font-size="20">⛔</text>
+                            <text x="65" y="52" text-anchor="middle" font-size="12" font-weight="600" fill="#1C1917">约束规则</text>
+                            <text x="65" y="68" text-anchor="middle" font-size="10" fill="#78716C">禁止事项·红线</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                <strong>类比：记忆就像老员工对公司和你的了解。</strong>新员工第一天什么都要问，老员工知道你的习惯，知道公司的规矩。
+            </p>
+
+            <h3 class="subsection-title">记忆类型</h3>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>记忆类型</th>
+                            <th>记什么</th>
+                            <th>效果</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag tag-purple">用户偏好</span></td>
+                            <td>你喜欢的报告格式、代码风格、沟通方式</td>
+                            <td>输出符合你的习惯，不用每次重复说明</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-green">项目规范</span></td>
+                            <td>代码规范、命名规则、技术栈选择</td>
+                            <td>自动遵守团队规范，输出一致性高</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-blue">经验教训</span></td>
+                            <td>之前踩过的坑、解决方案、最佳实践</td>
+                            <td>避免重复犯错，自动应用历史经验</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-red">约束规则</span></td>
+                            <td>保密要求、敏感词、禁止操作</td>
+                            <td>自动遵守红线，不会犯低级错误</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="compare-grid">
+                <div class="compare-box negative">
+                    <div class="compare-header">
+                        <span class="compare-icon">✕</span>
+                        <h3 class="compare-title">没有记忆的 Agent</h3>
+                    </div>
+                    <ul class="compare-list">
+                        <li>每次对话都是"陌生人"</li>
+                        <li>不知道你喜欢什么格式</li>
+                        <li>不了解项目规范</li>
+                        <li>会重复犯同样的错误</li>
+                        <li>需要你反复解释背景</li>
+                    </ul>
+                </div>
+                <div class="compare-box positive">
+                    <div class="compare-header">
+                        <span class="compare-icon">✓</span>
+                        <h3 class="compare-title">有记忆的 Agent</h3>
+                    </div>
+                    <ul class="compare-list">
+                        <li>了解你的工作习惯</li>
+                        <li>自动按你偏好的格式输出</li>
+                        <li>自觉遵守项目规范</li>
+                        <li>从历史经验中学习</li>
+                        <li>越用越懂你</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.4 技能系统 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">2.4</span>
+                <h2 class="section-title">技能系统：让 Agent "专业"</h2>
+            </div>
+
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                <strong>类比：技能就像给员工的专业培训。</strong>通用员工什么都会一点，但专业培训后能做得更好更快。
+            </p>
+
+            <h3 class="subsection-title">技能示例</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">行业调研技能</h3>
+                    <p class="card-desc">
+                        知道如何搜索行业报告、如何对比竞品、如何组织调研报告结构、如何呈现数据。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <h3 class="card-title">文档写作技能</h3>
+                    <p class="card-desc">
+                        知道不同类型文档的格式要求、如何组织内容层次、如何配图和排版。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🚀</div>
+                    <h3 class="card-title">项目部署技能</h3>
+                    <p class="card-desc">
+                        知道部署流程、常见问题处理、如何验证部署成功、如何回滚。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3 class="card-title">PPT制作技能</h3>
+                    <p class="card-desc">
+                        知道演示文稿的结构设计、视觉风格选择、内容精简技巧。
+                    </p>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">技能的价值</div>
+                <p class="insight-text">
+                    技能是<strong>可复用的专业知识包</strong>。一旦某个团队成员"教会" Agent 一项技能，整个团队都能受益。技能可以不断积累，Agent 会越来越专业。
+                </p>
+            </div>
+        </section>
+
+        <!-- 2.5 协同工作 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">2.5</span>
+                <h2 class="section-title">四大系统如何协同工作</h2>
+            </div>
+
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                当你给 Agent 一个任务时，四大系统是这样配合的：
+            </p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3 class="timeline-title">① 大脑理解任务</h3>
+                    <p class="timeline-time">第一步</p>
+                    <p class="timeline-desc">LLM 接收你的需求，理解你想要什么，判断需要做哪些事情。</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="timeline-title">② 记忆提供背景</h3>
+                    <p class="timeline-time">第二步</p>
+                    <p class="timeline-desc">记忆系统提供你的偏好、项目规范、历史经验，让 Agent 了解"背景信息"。</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="timeline-title">③ 技能指导方法</h3>
+                    <p class="timeline-time">第三步</p>
+                    <p class="timeline-desc">如果任务涉及特定领域，技能系统提供专业的方法论和最佳实践。</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="timeline-title">④ 工具执行操作</h3>
+                    <p class="timeline-time">第四步</p>
+                    <p class="timeline-desc">Agent 调用各种工具，执行具体操作——读文件、写代码、搜索网页、运行命令。</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="timeline-title">⑤ 交付成果</h3>
+                    <p class="timeline-time">最后</p>
+                    <p class="timeline-desc">任务完成，Agent 交付你需要的成果物（文档、代码、报告等）。</p>
+                </div>
+            </div>
+
+            <div class="quote">
+                <p class="quote-text">"一个优秀的 Agent，就像一个经验丰富、了解你习惯、具备专业技能、又能动手干活的全能助手。"</p>
+            </div>
+        </section>
+
+        <!-- 本章小结 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">📝</span>
+                <h2 class="section-title">本章小结</h2>
+            </div>
+
+            <ul class="content-list">
+                <li><strong>大脑（LLM）：</strong>理解和思考，是 Agent 的"智力"</li>
+                <li><strong>工具系统：</strong>执行操作，是 Agent 的"手"</li>
+                <li><strong>记忆系统：</strong>了解背景，让 Agent "懂你"</li>
+                <li><strong>技能系统：</strong>专业能力，让 Agent "专业"</li>
+                <li><strong>协同工作：</strong>四大系统配合，完成复杂任务</li>
+            </ul>
+
+            <div class="insight-box">
+                <div class="insight-title">下一步</div>
+                <p class="insight-text">
+                    理解了 Agent 的能力架构后，下一章我们将进入实操环节——<strong>如何在团队中落地 AI Agent</strong>，包括分阶段路径、资源估算、风险提示。
+                </p>
+            </div>
+        </section>
+
+        <!-- 页脚导航 -->
+        <!-- 章节导航 -->
+        <div style="margin-top:24px;padding-top:16px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <a href="chapter1-scenarios.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">← 上一章：场景与价值</a>
+            <a href="chapter3-implementation.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">下一章：落地实践 →</a>
+        </div>
+
+        <!-- 了解更多 -->
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+        <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+        我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+        </p>
+        <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+        🏠 访问AI洞察首页
+        </a>
+        </div>
+    </div>
+</body>
+</html>

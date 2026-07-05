@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1060px;
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #f0f9ff 100%);
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    padding: 44px 52px;
+  }
+  .label { font-size: 13px; font-weight: 600; color: #6366f1; letter-spacing: 2px; margin-bottom: 10px; }
+  h1 { font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 6px; }
+  .subtitle { font-size: 14px; color: #64748b; margin-bottom: 28px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .card {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 14px;
+    padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  }
+  .card-title {
+    font-size: 13px; font-weight: 700; color: #6366f1; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title .num {
+    width: 24px; height: 24px; background: #6366f1; color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+  }
+  .row { display: flex; justify-content: space-between; padding: 7px 0;
+    border-bottom: 1px solid #f1f5f9; font-size: 13px; }
+  .row:last-child { border-bottom: none; }
+  .row .k { color: #475569; font-weight: 500; }
+  .row .v { color: #334155; text-align: right; max-width: 60%; }
+  .full-card {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 14px;
+    padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.05); margin-bottom: 20px;
+  }
+  .flow {
+    display: flex; align-items: center; gap: 0; flex-wrap: nowrap;
+  }
+  .flow-item {
+    flex: 1; text-align: center; background: #eff6ff;
+    border-radius: 10px; padding: 12px 8px;
+    font-size: 12px; color: #1e40af; font-weight: 600;
+  }
+  .arrow { font-size: 18px; color: #6366f1; padding: 0 6px; flex-shrink: 0; }
+  .conclusion {
+    background: #fffbeb; border-left: 4px solid #f59e0b;
+    border-radius: 0 12px 12px 0; padding: 13px 16px;
+    font-size: 13.5px; color: #78350f; line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+  <div class="label">第 02 章</div>
+  <h1>架构解剖：五层 + 守护进程</h1>
+  <p class="subtitle">Claude Code 不是"聊天框+代码生成"，是一个五层架构的自主代理系统</p>
+
+  <!-- 五层架构流程 -->
+  <div class="full-card">
+    <div class="card-title" style="margin-bottom:14px;">五层认知架构（持续反馈闭环）</div>
+    <div class="flow">
+      <div class="flow-item">L1<br>感知层<br><span style="font-weight:400;color:#64748b;font-size:11px">读懂仓库&终端</span></div>
+      <div class="arrow">→</div>
+      <div class="flow-item">L2<br>规划层<br><span style="font-weight:400;color:#64748b;font-size:11px">任务拆解</span></div>
+      <div class="arrow">→</div>
+      <div class="flow-item">L3<br>记忆层<br><span style="font-weight:400;color:#64748b;font-size:11px">三层记忆</span></div>
+      <div class="arrow">→</div>
+      <div class="flow-item">L4<br>执行层<br><span style="font-weight:400;color:#64748b;font-size:11px">工具调用</span></div>
+      <div class="arrow">→</div>
+      <div class="flow-item">L5<br>学习层<br><span style="font-weight:400;color:#64748b;font-size:11px">反馈优化</span></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-title"><div class="num">K</div>KAIROS 守护进程（黑科技）</div>
+      <div class="row"><span class="k">文件变化追踪</span><span class="v">实时感知，无需同步</span></div>
+      <div class="row"><span class="k">依赖关系感知</span><span class="v">改这里影响哪里</span></div>
+      <div class="row"><span class="k">跨会话上下文</span><span class="v">一直在盯，不靠你描述</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="num" style="background:#0ea5e9">工</div>工具原子化设计</div>
+      <div class="row"><span class="k">文件系统</span><span class="v">精确行级操作</span></div>
+      <div class="row"><span class="k">Shell执行</span><span class="v">沙盒隔离，最小权限</span></div>
+      <div class="row"><span class="k">代码分析</span><span class="v">语义级检索</span></div>
+      <div class="row"><span class="k">版本控制</span><span class="v">完整 Git 集成</span></div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    📌 <strong>核心结论</strong>：五层 + KAIROS + 工具原子化，组合出其他工具没有的<strong>「持续存在感」</strong>——它不是每次唤起从零开始，而是一直在场。
+  </div>
+</body>
+</html>

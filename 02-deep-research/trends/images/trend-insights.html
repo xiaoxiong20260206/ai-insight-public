@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>趋势洞察</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 1200px;
+            height: 900px;
+            overflow: hidden;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            padding: 40px;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 40px;
+        }
+        .trends {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        .trend-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 28px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .trend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        .trend-card.agent::before { background: linear-gradient(90deg, #4ecdc4, #2ecc71); }
+        .trend-card.coding::before { background: linear-gradient(90deg, #ff6b6b, #ffd93d); }
+        .trend-card.capability::before { background: linear-gradient(90deg, #a29bfe, #6c5ce7); }
+        .trend-card.physical::before { background: linear-gradient(90deg, #fd79a8, #e84393); }
+        
+        .trend-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .trend-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .trend-card.agent .trend-icon { background: rgba(78,205,196,0.2); }
+        .trend-card.coding .trend-icon { background: rgba(255,107,107,0.2); }
+        .trend-card.capability .trend-icon { background: rgba(162,155,254,0.2); }
+        .trend-card.physical .trend-icon { background: rgba(253,121,168,0.2); }
+        
+        .trend-title {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .trend-subtitle {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            margin-top: 2px;
+        }
+        
+        .insight {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .insight:last-child { margin-bottom: 0; }
+        .insight-title {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .insight-title .fire { color: #ff6b6b; }
+        .insight-desc {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .sources {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .source {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .center-insight {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(108,92,231,0.3), rgba(162,155,254,0.1));
+            border: 2px solid rgba(162,155,254,0.3);
+            text-align: center;
+            padding: 32px;
+        }
+        .center-insight .big-text {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .center-insight .sub-text {
+            color: rgba(255,255,255,0.7);
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 六大核心趋势洞察</h1>
+        
+        <div class="trends">
+            <div class="trend-card agent">
+                <div class="trend-header">
+                    <div class="trend-icon">🤖</div>
+                    <div>
+                        <div class="trend-title">Agent架构趋势</div>
+                        <div class="trend-subtitle">3个核心共识</div>
+                    </div>
+                </div>
+                <div class="insight">
+                    <div class="insight-title"><span class="fire">🔥</span> 简单优先，复杂度是毒药</div>
+                    <div class="insight-desc">"如果你能轻松画出整个决策树，那就直接构建它"</div>
+                    <div class="sources">
+                        <span class="source">Barry Zhang</span>
+                        <span class="source">Simon Willison</span>
+                        <span class="source">Addy Osmani</span>
+                    </div>
+                </div>
+                <div class="insight">
+                    <div class="insight-title"><span class="fire">🔥</span> Skills范式 > 多Agent</div>
+                    <div class="insight-desc">单一通用Agent + 可扩展Skills库成为主流</div>
+                    <div class="sources">
+                        <span class="source">Barry Zhang</span>
+                        <span class="source">Harrison Chase</span>
+                    </div>
+                </div>
+                <div class="insight">
+                    <div class="insight-title"><span class="fire">🔥</span> 环境Agent崛起</div>
+                    <div class="insight-desc">从对话式触发转向事件驱动后台运行</div>
+                    <div class="sources">
+                        <span class="source">Harrison Chase</span>
+                        <span class="source">姚顺雨</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="trend-card coding">
+                <div class="trend-header">
+                    <div class="trend-icon">💻</div>
+                    <div>
+                        <div class="trend-title">AI编程趋势</div>
+                        <div class="trend-subtitle">3个核心共识</div>
+                    </div>
+                </div>
+                <div class="insight">
+                    <div class="insight-title"><span class="fire">🔥</span> Vibe → Agentic Engineering</div>
+                    <div class="insight-desc">从松散原型转向严谨、负责的生产级实践</div>
+                    <div class="sources">
+                        <span class="source">Karpathy</span>
+                        <span class="source">Willison</span>
+                        <span class="source">Osmani</span>
+                    </div>
+                </div>
+                <div class="insight">
+                    <div class="insight-title"><span class="fire">🔥</span> 上下文为王</div>
+                    <div class="insight-desc">Context管理能力决定AI编程效率</div>
+                    <div class="sources">
+                        <span class="source">Willison</span>
+                        <span class="source">Osmani</span>
+                        <span class="source">Chase</span>
+                    </div>
+                </div>
+                <div class="insight">
+                    <div class="insight-title"><span class="fire">🔥</span> TDD文艺复兴</div>
+                    <div class="insight-desc">测试套件成为AI协作的核心基础设施</div>
+                    <div class="sources">
+                        <span class="source">Willison</span>
+                        <span class="source">Osmani</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="trend-card center-insight">
+                <div class="big-text">🎯 "AI的下半场"核心洞察</div>
+                <div class="sub-text">瓶颈从"模型训练"转移到"任务定义 + 环境构建 + 反馈循环"</div>
+            </div>
+            
+            <div class="trend-card capability">
+                <div class="trend-header">
+                    <div class="trend-icon">🧠</div>
+                    <div>
+                        <div class="trend-title">AI能力边界</div>
+                        <div class="trend-subtitle">下半场的关键</div>
+                    </div>
+                </div>
+                <div class="insight">
+                    <div class="insight-title"><span class="fire">🔥</span> 代码是AI的"手"</div>
+                    <div class="insight-desc">编码能力是AI操作数字世界的主要方式</div>
+                    <div class="sources">
+                        <span class="source">姚顺雨</span>
+                        <span class="source">Karpathy</span>
+                        <span class="source">Barry Zhang</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="trend-card physical">
+                <div class="trend-header">
+                    <div class="trend-icon">🦾</div>
+                    <div>
+                        <div class="trend-title">物理AI突破</div>
+                        <div class="trend-subtitle">具身智能新方向</div>
+                    </div>
+                </div>
+                <div class="insight">
+                    <div class="insight-title"><span class="fire">🔥</span> 物理图灵测试</div>
+                    <div class="insight-desc">Simulation 2.0 + Physical API + 万倍速模拟</div>
+                    <div class="sources">
+                        <span class="source">Jim Fan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

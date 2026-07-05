@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent类型详解 - 企业AI工程师分析</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="agent-details.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="back-link">← 返回首页</a>
+            <h1>Agent类型详解</h1>
+            <p class="subtitle">深入了解每种Agent的技术实现、应用场景与典型产品</p>
+        </div>
+    </header>
+
+    <!-- Agent Details Container -->
+    <main class="agent-details-container">
+        <!-- Coding Agent -->
+        <section class="agent-detail-card" id="coding">
+            <div class="agent-detail-header agent-coding">
+                <span class="agent-detail-icon">💻</span>
+                <div class="agent-detail-title">
+                    <h2>Coding Agent</h2>
+                    <span class="coverage-badge">覆盖约47%工作时长</span>
+                </div>
+            </div>
+            
+            <div class="agent-detail-content">
+                <div class="detail-section">
+                    <h3>📖 概述</h3>
+                    <p>Coding Agent是一种IDE集成的AI编程助手，能够提供代码补全、代码生成、重构、调试、Bug修复等功能。它通过理解代码上下文和开发者意图，提供智能的编程辅助。</p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🔧 技术实现</h3>
+                    
+                    <div class="tech-block">
+                        <h4>核心架构</h4>
+                        <div class="architecture-diagram">
+                            <pre>
+┌─────────────────────────────────────────────────────────────────┐
+│                         IDE 客户端                               │
+│  ┌─────────────┐  ┌──────────────┐  ┌─────────────────────┐      │
+│  │ 编辑器事件  │  │  上下文收集   │  │  Language Server   │      │
+│  │  监听器     │─▶│    模块      │─▶│   Protocol (LSP)   │      │
+│  └─────────────┘  └──────────────┘  └─────────────────────┘      │
+└─────────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                       Prompt 构建层                              │
+│  ┌─────────────┐  ┌──────────────┐  ┌─────────────────────┐      │
+│  │ AST 解析    │  │  代码分块    │  │   Prompt 工程       │      │
+│  │ (Tree-sitter)│  │  (Chunking)  │  │   (Prompt Library)  │      │
+│  └─────────────┘  └──────────────┘  └─────────────────────┘      │
+└─────────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                       上下文检索层                               │
+│  ┌─────────────┐  ┌──────────────┐  ┌─────────────────────┐      │
+│  │ 向量嵌入    │  │  向量数据库   │  │   语义搜索          │      │
+│  │ Embeddings  │  │ (Milvus等)   │  │   (RAG)            │      │
+│  └─────────────┘  └──────────────┘  └─────────────────────┘      │
+└─────────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                        LLM 推理层                                │
+│  ┌─────────────────────────────────────────────────────────┐     │
+│  │  代码生成模型 (Codex / GPT-4 / Claude / 通义千问-Code)   │     │
+│  │  支持 Fill-In-the-Middle (FIM) 范式                     │     │
+│  └─────────────────────────────────────────────────────────┘     │
+└─────────────────────────────────────────────────────────────────┘
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>关键技术点</h4>
+                        <div class="tech-list">
+                            <div class="tech-item">
+                                <span class="tech-name">Fill-In-the-Middle (FIM)</span>
+                                <p>同时考虑光标前（prefix）和光标后（suffix）的代码，相比传统方式带来10%的相对性能提升。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">AST解析（Tree-sitter）</span>
+                                <p>基于抽象语法树的代码分块，保持函数/类的语义完整性，避免在代码中间断开。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">Merkle树增量索引</span>
+                                <p>只重新索引变更的文件，通过哈希比较快速检测变化，显著提升大型代码库的索引效率。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">语义代码搜索</span>
+                                <p>将代码块转换为向量嵌入，支持基于语义的代码检索，结合grep精确匹配和向量语义匹配。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">Language Server Protocol (LSP)</span>
+                                <p>Microsoft定义的标准协议，实现M种语言 × N种编辑器 → M + N的工作量，语言服务器在独立进程中运行。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>核心技术栈</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag">LLM (GPT-4/Claude/Codex)</span>
+                            <span class="tech-tag">Tree-sitter AST</span>
+                            <span class="tech-tag">向量数据库</span>
+                            <span class="tech-tag">LSP协议</span>
+                            <span class="tech-tag">代码嵌入模型</span>
+                            <span class="tech-tag">FIM范式</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🎯 应用场景</h3>
+                    <ul class="scenario-list">
+                        <li><strong>代码补全</strong>：实时代码续写，行级/函数级补全建议</li>
+                        <li><strong>代码生成</strong>：根据注释或自然语言描述生成完整代码</li>
+                        <li><strong>代码重构</strong>：优化代码结构，提升可读性和性能</li>
+                        <li><strong>Bug修复</strong>：自动定位并修复代码缺陷</li>
+                        <li><strong>调试辅助</strong>：帮助定位问题根因，提供调试建议</li>
+                        <li><strong>单元测试生成</strong>：自动生成测试用例和Mock数据</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🏢 典型产品</h3>
+                    <div class="product-grid">
+                        <div class="product-card product-international">
+                            <div class="product-region">海外</div>
+                            <div class="product-name">GitHub Copilot</div>
+                            <div class="product-company">Microsoft / GitHub</div>
+                            <p class="product-desc">基于OpenAI Codex模型，约6,000字符上下文窗口，支持Neighboring Tabs邻近文件上下文、FIM范式，与GitHub生态深度集成。</p>
+                            <a href="https://github.com/features/copilot" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                        <div class="product-card product-domestic">
+                            <div class="product-region">国内</div>
+                            <div class="product-name">通义灵码</div>
+                            <div class="product-company">阿里巴巴</div>
+                            <p class="product-desc">支持代码补全、智能问答(Ask Mode)、文件编辑(Edit Mode)、智能体(Agent Mode)四大模式，具备工程自动感知、跨文件感知、记忆感知能力，支持MCP协议。</p>
+                            <a href="https://tongyi.aliyun.com/lingma" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chatbot Agent -->
+        <section class="agent-detail-card" id="chatbot">
+            <div class="agent-detail-header agent-chatbot">
+                <span class="agent-detail-icon">💬</span>
+                <div class="agent-detail-title">
+                    <h2>Chatbot Agent</h2>
+                    <span class="coverage-badge">覆盖约15%工作时长</span>
+                </div>
+            </div>
+            
+            <div class="agent-detail-content">
+                <div class="detail-section">
+                    <h3>📖 概述</h3>
+                    <p>Chatbot Agent是一种对话式AI系统，能够与用户进行自然语言交互。现代Chatbot通常结合大型语言模型(LLM)和检索增强生成(RAG)技术，提供准确、有上下文的回答，支持知识问答、文档写作、翻译等多种任务。</p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🔧 技术实现</h3>
+                    
+                    <div class="tech-block">
+                        <h4>RAG架构流程</h4>
+                        <div class="architecture-diagram">
+                            <pre>
+┌─────────────────────────────────────────────────────────────────┐
+│                     Chatbot Agent 架构                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
+│  │   用户输入   │ →  │   会话管理   │ →  │  查询处理   │        │
+│  └─────────────┘    └─────────────┘    └─────────────┘        │
+│                                               │                 │
+│                                               ▼                 │
+│  ┌─────────────────────────────────────────────────────┐       │
+│  │                    RAG Pipeline                       │       │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────────────┐   │       │
+│  │  │ Embedding │→│向量数据库 │→│ 相似性检索 (Top-K)│   │       │
+│  │  └──────────┘  └──────────┘  └──────────────────┘   │       │
+│  └─────────────────────────────────────────────────────┘       │
+│                                               │                 │
+│                                               ▼                 │
+│  ┌─────────────────────────────────────────────────────┐       │
+│  │              Prompt Engineering                       │       │
+│  │  System Prompt + Retrieved Context + User Query      │       │
+│  └─────────────────────────────────────────────────────┘       │
+│                                               │                 │
+│                                               ▼                 │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
+│  │     LLM     │ →  │  流式输出   │ →  │   用户响应   │        │
+│  └─────────────┘    └─────────────┘    └─────────────┘        │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>关键技术点</h4>
+                        <div class="tech-list">
+                            <div class="tech-item">
+                                <span class="tech-name">RAG (检索增强生成)</span>
+                                <p>将信息检索与生成模型结合，使LLM能够引用训练数据之外的权威知识库，显著减少幻觉。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">文档分块 (Chunking)</span>
+                                <p>将长文档分割成有意义的文本片段。推荐Chunk Size 1000-2000字符，Overlap 100-200字符，使用递归字符分割器。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">向量数据库</span>
+                                <p>存储和检索嵌入向量，支持高效相似性搜索。常用方案：Pinecone（云端）、Chroma（轻量）、Milvus（高性能）、FAISS（本地）。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">上下文窗口管理</span>
+                                <p>管理多轮对话历史，支持上下文压缩(Compaction)保留潜在理解。GPT-4o支持128K tokens，Claude 3.5支持200K tokens。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">流式响应 (SSE)</span>
+                                <p>使用Server-Sent Events实现流式传输，即时反馈，创造动态响应式用户体验。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>核心技术栈</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag">LLM (GPT-4/Claude)</span>
+                            <span class="tech-tag">RAG Pipeline</span>
+                            <span class="tech-tag">向量数据库</span>
+                            <span class="tech-tag">Embedding模型</span>
+                            <span class="tech-tag">SSE流式响应</span>
+                            <span class="tech-tag">LangChain/LlamaIndex</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🎯 应用场景</h3>
+                    <ul class="scenario-list">
+                        <li><strong>技术问答</strong>：回答各类技术问题，提供解决方案</li>
+                        <li><strong>内部知识问答</strong>：基于企业知识库的智能问答</li>
+                        <li><strong>文档写作</strong>：撰写博客、周报、邮件等</li>
+                        <li><strong>文档润色翻译</strong>：优化文档表达、技术文档翻译</li>
+                        <li><strong>技术学习</strong>：AI辅助学习新技术</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🏢 典型产品</h3>
+                    <div class="product-grid">
+                        <div class="product-card product-international">
+                            <div class="product-region">海外</div>
+                            <div class="product-name">ChatGPT</div>
+                            <div class="product-company">OpenAI</div>
+                            <p class="product-desc">基于GPT-4系列模型，128K上下文窗口，支持Function Calling、Structured Outputs、Vision多模态，内置Memory功能用于长期记忆。</p>
+                            <a href="https://chat.openai.com" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                        <div class="product-card product-domestic">
+                            <div class="product-region">国内</div>
+                            <div class="product-name">Kimi</div>
+                            <div class="product-company">月之暗面 (Moonshot AI)</div>
+                            <p class="product-desc">基于Kimi K2 MoE架构，200K+ tokens超长上下文，擅长文档解析和总结、网页内容理解，支持多模态交互。</p>
+                            <a href="https://kimi.moonshot.cn" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workflow Agent -->
+        <section class="agent-detail-card" id="workflow">
+            <div class="agent-detail-header agent-workflow">
+                <span class="agent-detail-icon">⚙️</span>
+                <div class="agent-detail-title">
+                    <h2>Workflow Agent</h2>
+                    <span class="coverage-badge">覆盖约15%工作时长</span>
+                </div>
+            </div>
+            
+            <div class="agent-detail-content">
+                <div class="detail-section">
+                    <h3>📖 概述</h3>
+                    <p>Workflow Agent是一类自动化AI系统，通过预定义的工作流程或动态决策来完成复杂任务。与普通Agent不同，Workflow Agent更注重任务编排、流程控制和系统集成，适用于代码审查、文档处理、会议纪要等场景。</p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🔧 技术实现</h3>
+                    
+                    <div class="tech-block">
+                        <h4>工作流模式</h4>
+                        <div class="workflow-patterns">
+                            <div class="pattern-item">
+                                <span class="pattern-name">Prompt Chaining（提示链）</span>
+                                <p>每个LLM调用处理上一个调用的输出，适用于可分解为小步骤的任务。</p>
+                            </div>
+                            <div class="pattern-item">
+                                <span class="pattern-name">Parallelization（并行处理）</span>
+                                <p>多个LLM同时处理不同子任务，最后聚合结果，显著提升处理效率。</p>
+                            </div>
+                            <div class="pattern-item">
+                                <span class="pattern-name">Routing（语义路由）</span>
+                                <p>根据用户意图将查询路由到专门的处理Agent，实现任务分流。</p>
+                            </div>
+                            <div class="pattern-item">
+                                <span class="pattern-name">Orchestrator-Worker（编排器-工作者）</span>
+                                <p>编排器分解任务，工作者并行执行，最后综合结果。</p>
+                            </div>
+                            <div class="pattern-item">
+                                <span class="pattern-name">Evaluator-Optimizer（评估器-优化器）</span>
+                                <p>一个LLM生成响应，另一个评估并提供反馈，循环改进直到满足条件。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>关键技术点</h4>
+                        <div class="tech-list">
+                            <div class="tech-item">
+                                <span class="tech-name">DAG（有向无环图）编排</span>
+                                <p>定义任务之间的依赖关系和执行顺序，支持并行和顺序执行，动态创建任务节点。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">状态机</span>
+                                <p>工作流由事件驱动的步骤组成，每个步骤是一个状态，支持Choice、Parallel、Map等状态类型。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">Webhook集成</span>
+                                <p>支持PR开启、Issue创建、CI完成等事件触发，使用HMAC签名验证请求来源安全性。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">结构化输出</span>
+                                <p>强制LLM输出符合JSON Schema的响应，支持Markdown、Pydantic模型等多种格式。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>核心技术栈</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag">LLM</span>
+                            <span class="tech-tag">DAG编排</span>
+                            <span class="tech-tag">状态机</span>
+                            <span class="tech-tag">Webhook</span>
+                            <span class="tech-tag">LangGraph</span>
+                            <span class="tech-tag">Structured Output</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🎯 应用场景</h3>
+                    <ul class="scenario-list">
+                        <li><strong>Code Review</strong>：自动审查代码质量，检测安全漏洞</li>
+                        <li><strong>文档处理</strong>：PRD解析、API文档生成、用例设计</li>
+                        <li><strong>会议纪要</strong>：自动生成会议记录和行动项</li>
+                        <li><strong>PPT生成</strong>：根据内容自动生成演示文稿</li>
+                        <li><strong>CI/CD配置</strong>：配置流水线和部署脚本</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🏢 典型产品</h3>
+                    <div class="product-grid">
+                        <div class="product-card product-international">
+                            <div class="product-region">海外</div>
+                            <div class="product-name">CodeRabbit</div>
+                            <div class="product-company">CodeRabbit Inc.</div>
+                            <p class="product-desc">AI代码审查工具，采用非线性管道多步骤验证，拉取数十个上下文数据点，多遍处理识别代码问题，IDE模式降低90%首次评论时间。</p>
+                            <a href="https://coderabbit.ai" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                        <div class="product-card product-domestic">
+                            <div class="product-region">国内</div>
+                            <div class="product-name">飞书妙记</div>
+                            <div class="product-company">字节跳动</div>
+                            <p class="product-desc">自动录音/录像转文字，AI会议摘要生成，集成企业知识库，支持多语言，与飞书协作工具深度集成。</p>
+                            <a href="https://www.feishu.cn/product/minutes" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Agent -->
+        <section class="agent-detail-card" id="research">
+            <div class="agent-detail-header agent-research">
+                <span class="agent-detail-icon">🔬</span>
+                <div class="agent-detail-title">
+                    <h2>Research Agent</h2>
+                    <span class="coverage-badge">覆盖约8%工作时长</span>
+                </div>
+            </div>
+            
+            <div class="agent-detail-content">
+                <div class="detail-section">
+                    <h3>📖 概述</h3>
+                    <p>Research Agent是一种先进的AI系统，能够自主执行深度研究任务，包括网络搜索、多源信息综合、引用管理和报告生成。采用多智能体协作架构，能够进行迭代式、多维度的信息探索和分析。</p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🔧 技术实现</h3>
+                    
+                    <div class="tech-block">
+                        <h4>多智能体架构</h4>
+                        <div class="architecture-diagram">
+                            <pre>
+[用户查询]
+     ↓
+[Lead Researcher Agent] ← 主协调者
+     ↓
+[创建多个专门化子智能体]
+     ↓
+[并行执行搜索和分析]
+     ↓
+[综合结果 + 引用处理]
+     ↓
+[最终报告]
+
+关键组件：
+• Lead Researcher：分析查询、制定策略、分配任务、综合结果
+• Sub-Researchers：独立执行搜索、使用不同工具探索不同方向
+• Citation Agent：处理文档引用，确保所有声明都有来源支撑
+• Credibility Critic：评估信息源的可靠性和覆盖范围
+• Report Writer：基于收集的信息撰写初稿
+• Reflection Critic：审查报告并提供改进反馈
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>关键技术点</h4>
+                        <div class="tech-list">
+                            <div class="tech-item">
+                                <span class="tech-name">动态路由</span>
+                                <p>仅预定义任务类型，AI在运行时动态决定执行哪个任务，比工作流模式更灵活和可扩展。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">混合检索引擎</span>
+                                <p>向量检索（~30个结果）+ 关键词检索（~20个结果）→ 去重合并 → 神经重排序（Cross-Encoder）。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">多模型编排</span>
+                                <p>使用PPO强化学习路由器，根据查询复杂度、延迟目标、任务类型动态选择最佳模型。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">Map-Reduce处理</span>
+                                <p>将问题分解为更小组件，用更便宜的模型处理子任务，拼接结果，避免大上下文导致的准确性退化。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">迭代优化循环</span>
+                                <p>根据中间发现动态调整研究计划，可将研究时间减少90%。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>核心技术栈</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag">多智能体协作</span>
+                            <span class="tech-tag">Web Search API</span>
+                            <span class="tech-tag">神经重排序</span>
+                            <span class="tech-tag">Citation管理</span>
+                            <span class="tech-tag">Tavily/Serper</span>
+                            <span class="tech-tag">强化学习路由</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🎯 应用场景</h3>
+                    <ul class="scenario-list">
+                        <li><strong>技术调研</strong>：调研新技术方案，生成技术选型报告</li>
+                        <li><strong>竞品分析</strong>：分析竞争产品，生成对比报告</li>
+                        <li><strong>技术方案</strong>：生成技术方案文档</li>
+                        <li><strong>文献综述</strong>：收集和综合多源信息</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🏢 典型产品</h3>
+                    <div class="product-grid">
+                        <div class="product-card product-international">
+                            <div class="product-region">海外</div>
+                            <div class="product-name">Perplexity AI</div>
+                            <div class="product-company">Perplexity</div>
+                            <p class="product-desc">混合检索引擎 + 多模型编排，三阶段RAG精炼流程，Deep Research模式支持迭代搜索推理，在SimpleQA达93.9%准确率。</p>
+                            <a href="https://www.perplexity.ai" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                        <div class="product-card product-domestic">
+                            <div class="product-region">国内</div>
+                            <div class="product-name">秘塔搜索</div>
+                            <div class="product-company">秘塔科技</div>
+                            <p class="product-desc">Agentic Search模式，一次搜索执行5-15步工具调用，内置20+常见工具，从「问什么答什么」进化到「边想边搜边做」。</p>
+                            <a href="https://metaso.cn" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Design Agent -->
+        <section class="agent-detail-card" id="design">
+            <div class="agent-detail-header agent-design">
+                <span class="agent-detail-icon">🎨</span>
+                <div class="agent-detail-title">
+                    <h2>Design Agent</h2>
+                    <span class="coverage-badge">覆盖约4%工作时长</span>
+                </div>
+            </div>
+            
+            <div class="agent-detail-content">
+                <div class="detail-section">
+                    <h3>📖 概述</h3>
+                    <p>Design Agent专注于图表绘制、配图生成、图表美化等设计任务。通过自然语言理解用户意图，调用图表生成引擎或AI图像生成模型，快速产出可视化内容。</p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🔧 技术实现</h3>
+                    
+                    <div class="tech-block">
+                        <h4>架构流程</h4>
+                        <div class="architecture-diagram">
+                            <pre>
+用户输入 → LLM理解意图 → 生成结构化描述 → 调用渲染引擎 → 输出可视化结果
+
+┌─────────────────────────────────────────────────────────────┐
+│                    Design Agent Architecture                 │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │
+│  │ User Input  │→ │  LLM Core   │→ │  Generator  │         │
+│  │  (Natural   │  │ (GPT-4o/   │  │  (Mermaid/  │         │
+│  │  Language)  │  │  Claude)    │  │   SD/DALL-E)│         │
+│  └─────────────┘  └─────────────┘  └──────┬──────┘         │
+│                                           ↓                  │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │
+│  │   Output    │← │   Render    │← │   Assets    │         │
+│  │ (SVG/PNG/   │  │   Engine    │  │   Library   │         │
+│  │   PDF)      │  │             │  │             │         │
+│  └─────────────┘  └─────────────┘  └─────────────┘         │
+└─────────────────────────────────────────────────────────────┘
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>关键技术点</h4>
+                        <div class="tech-list">
+                            <div class="tech-item">
+                                <span class="tech-name">Mermaid.js</span>
+                                <p>基于文本的图表生成语言，LLM可直接输出Mermaid语法代码，支持流程图、时序图、类图、ER图等。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">Stable Diffusion</span>
+                                <p>基于扩散模型的图像生成，使用ControlNet进行精确控制，通过LoRA进行风格微调。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">PlantUML</span>
+                                <p>另一种流行的文本到图表转换工具，适合UML图、架构图等技术图表。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">SVG/Canvas渲染</span>
+                                <p>最终可视化呈现层，支持矢量图形和位图渲染。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>核心技术栈</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Mermaid.js</span>
+                            <span class="tech-tag">PlantUML</span>
+                            <span class="tech-tag">Stable Diffusion</span>
+                            <span class="tech-tag">DALL-E</span>
+                            <span class="tech-tag">SVG/Canvas</span>
+                            <span class="tech-tag">ControlNet</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🎯 应用场景</h3>
+                    <ul class="scenario-list">
+                        <li><strong>架构图</strong>：绘制系统架构图</li>
+                        <li><strong>流程图</strong>：绘制业务流程图</li>
+                        <li><strong>ER图</strong>：绘制数据库ER图</li>
+                        <li><strong>配图生成</strong>：生成文章配图</li>
+                        <li><strong>图表美化</strong>：美化数据图表</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🏢 典型产品</h3>
+                    <div class="product-grid">
+                        <div class="product-card product-international">
+                            <div class="product-region">海外</div>
+                            <div class="product-name">Canva AI</div>
+                            <div class="product-company">Canva</div>
+                            <p class="product-desc">Magic Studio提供秒级设计生成，集成AI驱动的自动设计功能，支持品牌套件自动应用，智能布局建议。</p>
+                            <a href="https://www.canva.com/ai-image-generator" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                        <div class="product-card product-domestic">
+                            <div class="product-region">国内</div>
+                            <div class="product-name">稿定设计AI</div>
+                            <div class="product-company">稿定科技</div>
+                            <p class="product-desc">无限画布创意空间，AI设计Agent自动化设计流程，基于华为云Token服务，支持智能抠图、一键换背景等功能。</p>
+                            <a href="https://www.gaoding.com/ai" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Analysis Agent -->
+        <section class="agent-detail-card" id="data">
+            <div class="agent-detail-header agent-data">
+                <span class="agent-detail-icon">📊</span>
+                <div class="agent-detail-title">
+                    <h2>Data Analysis Agent</h2>
+                    <span class="coverage-badge">覆盖约3%工作时长</span>
+                </div>
+            </div>
+            
+            <div class="agent-detail-content">
+                <div class="detail-section">
+                    <h3>📖 概述</h3>
+                    <p>Data Analysis Agent专注于数据分析任务，能够将自然语言查询转换为SQL语句执行，进行日志分析、性能分析，并生成数据可视化报告和洞察。</p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🔧 技术实现</h3>
+                    
+                    <div class="tech-block">
+                        <h4>Text-to-SQL流程</h4>
+                        <div class="architecture-diagram">
+                            <pre>
+┌─────────────────────────────────────────────────────────────┐
+│              Data Analysis Agent Architecture                │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  ┌──────────────┐     ┌──────────────┐     ┌─────────────┐ │
+│  │ Natural Lang │────→│   NL2SQL     │────→│  Database   │ │
+│  │   Query      │     │   Engine     │     │  (SQL/NoSQL)│ │
+│  └──────────────┘     └──────────────┘     └──────┬──────┘ │
+│                                                    ↓        │
+│  ┌──────────────┐     ┌──────────────┐     ┌─────────────┐ │
+│  │ Visualization│←────│   Pandas/    │←────│   Query     │ │
+│  │   Output     │     │   NumPy      │     │   Result    │ │
+│  └──────────────┘     └──────────────┘     └─────────────┘ │
+│         ↓                                                   │
+│  ┌──────────────┐                                           │
+│  │  LLM Insight │ ←── 自动生成数据洞察与解读               │
+│  │   Generation │                                           │
+│  └──────────────┘                                           │
+└─────────────────────────────────────────────────────────────┘
+
+处理步骤：
+1. 用户输入自然语言问题
+2. LLM分析问题意图
+3. 获取数据库Schema信息
+4. 生成对应SQL查询
+5. 执行查询并获取结果
+6. 结果可视化呈现 + 洞察生成
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>关键技术点</h4>
+                        <div class="tech-list">
+                            <div class="tech-item">
+                                <span class="tech-name">NL2SQL (Text-to-SQL)</span>
+                                <p>自然语言解析为SQL查询，Schema感知的查询生成，多轮对话上下文维护，使用LangChain SQL Agent实现。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">Pandas/NumPy集成</span>
+                                <p>数据清洗、转换和分析，支持大规模数据处理，与Python数据科学生态深度集成。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">数据可视化</span>
+                                <p>Matplotlib、Seaborn、ECharts等图表库，自动选择最佳图表类型呈现数据。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">洞察生成</span>
+                                <p>LLM分析数据结果，自动生成趋势分析、异常检测、关键发现等洞察报告。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>核心技术栈</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag">NL2SQL</span>
+                            <span class="tech-tag">Pandas/NumPy</span>
+                            <span class="tech-tag">SQLAlchemy</span>
+                            <span class="tech-tag">Matplotlib/ECharts</span>
+                            <span class="tech-tag">LangChain SQL Agent</span>
+                            <span class="tech-tag">代码解释器</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🎯 应用场景</h3>
+                    <ul class="scenario-list">
+                        <li><strong>日志分析</strong>：分析系统日志，定位问题</li>
+                        <li><strong>性能分析</strong>：分析性能指标，识别瓶颈</li>
+                        <li><strong>SQL查询</strong>：自然语言生成SQL语句</li>
+                        <li><strong>数据报表</strong>：自动生成数据报表和可视化</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🏢 典型产品</h3>
+                    <div class="product-grid">
+                        <div class="product-card product-international">
+                            <div class="product-region">海外</div>
+                            <div class="product-name">Julius AI</div>
+                            <div class="product-company">Julius</div>
+                            <p class="product-desc">AI数据分析助手，支持自然语言查询数据，自动生成可视化图表，集成代码解释器进行复杂数据处理。</p>
+                            <a href="https://julius.ai" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                        <div class="product-card product-domestic">
+                            <div class="product-region">国内</div>
+                            <div class="product-name">Quick BI 智能小Q</div>
+                            <div class="product-company">阿里云</div>
+                            <p class="product-desc">中国唯一入选Gartner ABI魔力象限，提供问数Agent、解读Agent、报告Agent、搭建Agent四大能力，集成DeepSeek等大模型。</p>
+                            <a href="https://www.aliyun.com/product/bigdata/bi" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Background Agent -->
+        <section class="agent-detail-card" id="background">
+            <div class="agent-detail-header agent-background">
+                <span class="agent-detail-icon">⏰</span>
+                <div class="agent-detail-title">
+                    <h2>Background Agent</h2>
+                    <span class="coverage-badge">覆盖约4%工作时长</span>
+                </div>
+            </div>
+            
+            <div class="agent-detail-content">
+                <div class="detail-section">
+                    <h3>📖 概述</h3>
+                    <p>Background Agent是后台持续运行的AI系统，用于日程管理、邮件处理、定时任务等场景。通过任务调度、事件驱动和通知推送，实现工作流自动化。</p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🔧 技术实现</h3>
+                    
+                    <div class="tech-block">
+                        <h4>架构设计</h4>
+                        <div class="architecture-diagram">
+                            <pre>
+┌─────────────────────────────────────────────────────────────┐
+│              Background Agent Architecture                   │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  ┌──────────┐   ┌──────────┐   ┌──────────┐                │
+│  │  Cron    │   │  Event   │   │  Manual  │                │
+│  │ Trigger  │   │ Trigger  │   │ Trigger  │                │
+│  └────┬─────┘   └────┬─────┘   └────┬─────┘                │
+│       │              │              │                        │
+│       └──────────────┼──────────────┘                        │
+│                      ↓                                       │
+│            ┌─────────────────┐                               │
+│            │  Task Scheduler │                               │
+│            │  (Celery/APSch) │                               │
+│            └────────┬────────┘                               │
+│                     ↓                                        │
+│  ┌──────────────────────────────────────┐                   │
+│  │          Workflow Engine             │                   │
+│  │  (State Machine / DAG Executor)      │                   │
+│  └────────────────┬─────────────────────┘                   │
+│                   ↓                                          │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐        │
+│  │ Email   │  │  SMS    │  │ Webhook │  │  Slack  │        │
+│  │ Notify  │  │ Notify  │  │ Callback│  │  Bot    │        │
+│  └─────────┘  └─────────┘  └─────────┘  └─────────┘        │
+└─────────────────────────────────────────────────────────────┘
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>关键技术点</h4>
+                        <div class="tech-list">
+                            <div class="tech-item">
+                                <span class="tech-name">Cron调度</span>
+                                <p>定时任务调度，支持Cron表达式，可精确到分钟级别的任务执行。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">事件驱动</span>
+                                <p>Webhook、消息队列触发，支持Redis Pub/Sub、Kafka等事件订阅与发布机制。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">工作流引擎</span>
+                                <p>Temporal、Airflow等复杂流程编排工具，状态机管理任务生命周期。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">通知系统</span>
+                                <p>多渠道消息推送，支持Email、SMS、Slack、企业微信等通知方式。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>核心技术栈</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Celery/APScheduler</span>
+                            <span class="tech-tag">Redis Pub/Sub</span>
+                            <span class="tech-tag">Temporal/Airflow</span>
+                            <span class="tech-tag">Webhook</span>
+                            <span class="tech-tag">消息队列</span>
+                            <span class="tech-tag">通知服务</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🎯 应用场景</h3>
+                    <ul class="scenario-list">
+                        <li><strong>日程管理</strong>：智能日程安排与提醒</li>
+                        <li><strong>邮件处理</strong>：自动分类、回复邮件</li>
+                        <li><strong>信息推送</strong>：定时推送重要信息</li>
+                        <li><strong>定时任务</strong>：自动化例行任务执行</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🏢 典型产品</h3>
+                    <div class="product-grid">
+                        <div class="product-card product-international">
+                            <div class="product-region">海外</div>
+                            <div class="product-name">n8n</div>
+                            <div class="product-company">n8n GmbH</div>
+                            <p class="product-desc">开源工作流自动化平台，500+预置集成，AI Agent节点支持，可视化工作流编辑器，支持自托管部署。</p>
+                            <a href="https://n8n.io" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                        <div class="product-card product-domestic">
+                            <div class="product-region">国内</div>
+                            <div class="product-name">飞书多维表格自动化</div>
+                            <div class="product-company">字节跳动</div>
+                            <p class="product-desc">事件触发机制，定时任务执行，与飞书生态深度集成，支持复杂业务流程自动化。</p>
+                            <a href="https://www.feishu.cn/product/base" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browser Use Agent -->
+        <section class="agent-detail-card" id="browser">
+            <div class="agent-detail-header agent-browser">
+                <span class="agent-detail-icon">🌐</span>
+                <div class="agent-detail-title">
+                    <h2>Browser Use Agent</h2>
+                    <span class="coverage-badge">覆盖约2%工作时长</span>
+                </div>
+            </div>
+            
+            <div class="agent-detail-content">
+                <div class="detail-section">
+                    <h3>📖 概述</h3>
+                    <p>Browser Use Agent是网页自动化AI，能够像人类一样操作浏览器，执行数据采集、表单填写等任务。结合视觉模型和DOM解析，实现智能网页交互。</p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🔧 技术实现</h3>
+                    
+                    <div class="tech-block">
+                        <h4>执行循环</h4>
+                        <div class="architecture-diagram">
+                            <pre>
+┌─────────────────────────────────────────────────────────────┐
+│              Browser Use Agent Architecture                  │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  ┌──────────────┐                                           │
+│  │ User Task    │ ←── "Fill out the job application"       │
+│  └──────┬───────┘                                           │
+│         ↓                                                    │
+│  ┌──────────────┐     ┌──────────────┐                      │
+│  │  Screenshot  │────→│ Vision Model │                      │
+│  │   Capture    │     │   Analysis   │                      │
+│  └──────────────┘     └──────┬───────┘                      │
+│                              ↓                               │
+│  ┌──────────────┐     ┌──────────────┐                      │
+│  │   LLM Core   │────→│   Action     │                      │
+│  │  (Planning)  │     │   Executor   │                      │
+│  └──────────────┘     └──────┬───────┘                      │
+│                              ↓                               │
+│  ┌──────────────────────────────────────┐                   │
+│  │      Playwright / Puppeteer          │                   │
+│  │  ┌────────┐  ┌────────┐  ┌────────┐ │                   │
+│  │  │ Click  │  │  Type  │  │ Scroll │ │                   │
+│  │  └────────┘  └────────┘  └────────┘ │                   │
+│  └──────────────────────────────────────┘                   │
+└─────────────────────────────────────────────────────────────┘
+
+执行流程：
+任务请求 → 截图分析 → 元素识别 → 动作规划 → Playwright执行 → 结果验证 → 循环
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>关键技术点</h4>
+                        <div class="tech-list">
+                            <div class="tech-item">
+                                <span class="tech-name">Playwright/Puppeteer</span>
+                                <p>微软/Google开发的浏览器自动化框架，支持多浏览器，提供丰富的DOM操作API。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">视觉模型分析</span>
+                                <p>截图 + Vision Model识别页面元素，理解页面布局和交互区域。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">DOM结构解析</span>
+                                <p>解析DOM树，定位可交互元素，支持CSS选择器和XPath。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">抗变化能力</span>
+                                <p>可操作从未见过的网站，抗网站布局变化，单一工作流适用多网站。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>核心技术栈</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Playwright</span>
+                            <span class="tech-tag">Puppeteer</span>
+                            <span class="tech-tag">Vision Model</span>
+                            <span class="tech-tag">CDP协议</span>
+                            <span class="tech-tag">DOM解析</span>
+                            <span class="tech-tag">截图分析</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🎯 应用场景</h3>
+                    <ul class="scenario-list">
+                        <li><strong>数据采集</strong>：采集网页数据，爬取公开信息</li>
+                        <li><strong>表单填写</strong>：自动填写各类在线表单</li>
+                        <li><strong>网页测试</strong>：自动化端到端测试</li>
+                        <li><strong>流程自动化</strong>：跨网站的业务流程自动化</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🏢 典型产品</h3>
+                    <div class="product-grid">
+                        <div class="product-card product-international">
+                            <div class="product-region">海外</div>
+                            <div class="product-name">Browser Use</div>
+                            <div class="product-company">Browser Use</div>
+                            <p class="product-desc">开源Python库，支持多LLM后端（OpenAI, Anthropic, 本地模型），CLI命令行支持，云端沙箱部署。在WebBench达64.4%准确率（SOTA）。</p>
+                            <a href="https://browser-use.com" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                        <div class="product-card product-domestic">
+                            <div class="product-region">国内</div>
+                            <div class="product-name">Coze浏览器插件</div>
+                            <div class="product-company">字节跳动</div>
+                            <p class="product-desc">浏览器自动化能力，与Coze Bot集成，支持网页内容理解和自动化操作。</p>
+                            <a href="https://www.coze.cn" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Computer Use Agent -->
+        <section class="agent-detail-card" id="computer">
+            <div class="agent-detail-header agent-computer">
+                <span class="agent-detail-icon">🖥️</span>
+                <div class="agent-detail-title">
+                    <h2>Computer Use Agent</h2>
+                    <span class="coverage-badge">覆盖约2%工作时长</span>
+                </div>
+            </div>
+            
+            <div class="agent-detail-content">
+                <div class="detail-section">
+                    <h3>📖 概述</h3>
+                    <p>Computer Use Agent是桌面GUI自动化AI，能够控制鼠标、键盘，操作任意桌面应用程序。通过屏幕截图分析和精确的像素级定位，实现跨应用的复杂任务自动化。</p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🔧 技术实现</h3>
+                    
+                    <div class="tech-block">
+                        <h4>执行循环</h4>
+                        <div class="architecture-diagram">
+                            <pre>
+感知(Perception) → 推理(Reasoning) → 行动(Action) → 循环
+
+┌─────────────────────────────────────────────────────────────┐
+│            Computer Use Agent Architecture                   │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │                  Execution Loop                       │   │
+│  │                                                       │   │
+│  │   ┌────────────┐                                     │   │
+│  │   │ Screenshot │ ←─────────────────────────┐         │   │
+│  │   │  Capture   │                           │         │   │
+│  │   └─────┬──────┘                           │         │   │
+│  │         ↓                                  │         │   │
+│  │   ┌────────────┐     ┌────────────┐       │         │   │
+│  │   │  Vision    │────→│   LLM      │       │         │   │
+│  │   │  Analysis  │     │  Reasoning │       │         │   │
+│  │   └────────────┘     └─────┬──────┘       │         │   │
+│  │                            ↓               │         │   │
+│  │                     ┌────────────┐        │         │   │
+│  │                     │  Action    │        │         │   │
+│  │                     │  Executor  │────────┘         │   │
+│  │                     └─────┬──────┘                  │   │
+│  └───────────────────────────┼──────────────────────────┘   │
+│                              ↓                               │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │              OS Control Layer                         │   │
+│  │  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐     │   │
+│  │  │ Mouse  │  │Keyboard│  │ Screen │  │  Bash  │     │   │
+│  │  │ Click  │  │  Type  │  │ Scroll │  │  Cmd   │     │   │
+│  │  └────────┘  └────────┘  └────────┘  └────────┘     │   │
+│  └──────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+
+执行步骤：
+1. 感知：截图添加到模型上下文
+2. 推理：链式思维决定下一步
+3. 行动：点击、滚动、输入直到完成
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>关键技术点</h4>
+                        <div class="tech-list">
+                            <div class="tech-item">
+                                <span class="tech-name">屏幕截图捕获与分析</span>
+                                <p>实时捕获屏幕内容，使用Vision Model理解界面元素和状态。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">像素级精确定位</span>
+                                <p>通过像素计数精确定位目标元素，无需特定API集成即可操作任意应用。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">鼠标/键盘控制</span>
+                                <p>模拟人类的鼠标移动、点击、拖拽和键盘输入操作。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">跨应用工作能力</span>
+                                <p>无需针对特定应用集成，可操作任意GUI应用程序。</p>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-name">错误恢复与适应</span>
+                                <p>支持多步骤工作流执行，能够识别错误并进行恢复。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-block">
+                        <h4>核心技术栈</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Vision Model</span>
+                            <span class="tech-tag">屏幕捕获</span>
+                            <span class="tech-tag">鼠标/键盘自动化</span>
+                            <span class="tech-tag">Claude Computer Use API</span>
+                            <span class="tech-tag">PyAutoGUI</span>
+                            <span class="tech-tag">强化学习</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🎯 应用场景</h3>
+                    <ul class="scenario-list">
+                        <li><strong>桌面自动化</strong>：自动化桌面操作任务</li>
+                        <li><strong>文件管理</strong>：自动化文件整理和处理</li>
+                        <li><strong>跨应用工作流</strong>：多个桌面应用之间的协作</li>
+                        <li><strong>测试自动化</strong>：GUI应用的自动化测试</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🏢 典型产品</h3>
+                    <div class="product-grid">
+                        <div class="product-card product-international">
+                            <div class="product-region">海外</div>
+                            <div class="product-name">Claude Computer Use</div>
+                            <div class="product-company">Anthropic</div>
+                            <p class="product-desc">2024年10月公测，Claude成为首个提供自主桌面控制的前沿AI模型。支持像素级精确定位，无需API集成，Docker环境快速部署。OSWorld基准测试38.1%（超越前SOTA 22%）。</p>
+                            <a href="https://claude.ai" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                        <div class="product-card product-domestic">
+                            <div class="product-region">国内</div>
+                            <div class="product-name">讯飞星火助手</div>
+                            <div class="product-company">科大讯飞</div>
+                            <p class="product-desc">多模态交互能力，智能助手场景，支持语音、视觉等多种交互方式，探索桌面AI助手能力。</p>
+                            <a href="https://xinghuo.xfyun.cn" target="_blank" class="product-link">访问官网 →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>⚠️ 安全考虑</h3>
+                    <div class="security-notes">
+                        <ul>
+                            <li><strong>隔离环境运行</strong>：建议在VM/容器中运行，避免影响主系统</li>
+                            <li><strong>最小权限原则</strong>：仅授予必要的系统权限</li>
+                            <li><strong>敏感操作确认</strong>：重要操作前需人工确认</li>
+                            <li><strong>操作日志审计</strong>：记录所有操作用于审计</li>
+                            <li><strong>步骤限制与超时</strong>：防止无限循环执行</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 了解更多 -->
+    <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+    <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+    <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+    我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+    </p>
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+    🏠 访问AI洞察首页
+    </a>
+    </div>
+    <script>
+        // 平滑滚动到锚点
+        document.addEventListener('DOMContentLoaded', function() {
+            // 处理URL hash
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                }
+            }
+            
+            // 入场动画
+            const cards = document.querySelectorAll('.agent-detail-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

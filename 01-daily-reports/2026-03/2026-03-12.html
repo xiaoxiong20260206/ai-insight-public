@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 - 2026-03-12 (v3.2)</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root {
+            --color-success:#059669;--color-success-light:#10B981;--color-danger:#E11D48;--color-danger-light:#FF7B72;--color-warning:#D97706;--color-info:#2563EB;--color-info-light:#54AEFF;--color-purple:#7C3AED;--color-orange:#EA580C;--color-text-primary:#1C1917;--color-text-secondary:#57534E;--color-text-muted:#78716C;--color-border:#E7E5E4;--color-border-light:#F5F5F4;--color-bg:#F8FAFB;--color-bg-card:#FFFFFF;--color-bg-table-header:#FAFAF9;--gradient-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--gradient-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--gradient-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--gradient-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow-card:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-full:999px;--font-family:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--transition-normal:200ms cubic-bezier(.4,0,.2,1);--content-max-width:980px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font-family);background:var(--color-bg);color:var(--color-text-primary);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--content-max-width);margin:0 auto;padding:24px 20px}
+        .header{background:var(--gradient-success);color:#fff;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-date{font-size:14px;opacity:.85}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:700;margin-left:8px}
+        .overview{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-card)}
+        .overview-title{font-size:18px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .overview-grid.five-cols{grid-template-columns:1fr 1fr 1fr}
+        .overview-item{padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--color-border-light);background:var(--color-bg)}
+        .overview-item-header{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+        .overview-item-icon{font-size:16px}
+        .overview-item-label{font-size:13px;font-weight:700;color:var(--color-success-light);letter-spacing:.3px}
+        .overview-item-label.orange{color:var(--color-orange)}
+        .overview-headline{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:6px;line-height:1.4}
+        .overview-item-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+        .heat-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow-card)}
+        .heat-header{background:linear-gradient(135deg,#EA580C 0%,#DC2626 50%,#B91C1C 100%);color:#fff;padding:18px 24px}
+        .heat-header-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .heat-header-title{font-size:17px;font-weight:800;margin-top:4px}
+        .heat-body{padding:16px 20px}
+        .heat-body p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-top:12px}
+        .heat-body p strong{color:var(--color-text-primary)}
+        .heat-table{width:100%;border-collapse:collapse;font-size:13px}
+        .heat-table th{padding:8px 10px;text-align:left;background:#FEF2F2;font-weight:700;color:#991B1B;border-bottom:2px solid #FECACA;font-size:12px}
+        .heat-table td{padding:10px;border-bottom:1px solid var(--color-border-light);vertical-align:top}
+        .heat-table tr:last-child td{border-bottom:none}
+        .heat-table tr:hover{background:rgba(234,88,12,.02)}
+        .heat-bar{display:flex;gap:2px;align-items:center}
+        .heat-bar-fill{width:10px;height:14px;border-radius:2px;background:linear-gradient(135deg,#EA580C,#DC2626)}
+        .heat-bar-empty{width:10px;height:14px;border-radius:2px;background:#F5F5F4}
+        .heat-trend-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .heat-trend-tag.up{background:#EFFDF5;color:#059669}
+        .heat-trend-tag.stable{background:#EFF6FF;color:#2563EB}
+        .heat-trend-tag.burst{background:#FEF2F2;color:#DC2626}
+        .heat-trend-tag.new{background:#FEF2F2;color:#DC2626}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:4px;box-shadow:var(--shadow-card);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-muted);border-radius:var(--radius-sm);transition:var(--transition-normal);font-family:var(--font-family);min-width:80px}
+        .tab-btn:hover{color:var(--color-text-primary);background:var(--color-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--gradient-success);color:#fff}
+        .tab-btn.orange[aria-selected="true"]{background:var(--gradient-orange)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow-card)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--color-border-light);display:flex;align-items:center;gap:8px}
+        .section-header .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gradient-success);color:#fff;font-size:12px;font-weight:700}
+        .section-header .num.orange{background:var(--gradient-orange)}
+        .sub-header{font-size:14px;font-weight:700;color:var(--color-text-muted);margin:14px 0 10px;padding-left:4px;letter-spacing:.5px}
+        .sub-header:first-child{margin-top:0}
+        .news-item{padding:12px 0;border-bottom:1px solid var(--color-border-light)}
+        .news-item:last-child{border-bottom:none}
+        .news-tag{display:inline-block;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:var(--color-danger)}
+        .tag-new{background:#EFFDF5;color:var(--color-success)}
+        .tag-policy{background:#FFF7ED;color:var(--color-orange)}
+        .news-title{font-size:15px;font-weight:600;margin:4px 0 3px}
+        .news-title a{color:var(--color-text-primary);text-decoration:none}
+        .news-title a:hover{color:var(--color-success)}
+        .news-source{font-size:12px;color:var(--color-text-muted)}
+        .news-detail{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+        .news-detail-row{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.6}
+        .news-detail-label{flex-shrink:0;font-weight:700;color:var(--color-success);font-size:12px;padding:1px 0;min-width:60px}
+        .news-detail-value{color:var(--color-text-secondary);flex:1}
+        .news-detail-value strong{color:var(--color-text-primary);font-weight:600}
+        .deep-focus-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:0;margin-bottom:16px;box-shadow:var(--shadow-card);overflow:hidden}
+        .deep-focus-header{background:var(--gradient-purple);color:#fff;padding:18px 24px}
+        .deep-focus-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .deep-focus-title{font-size:17px;font-weight:800;margin-top:4px;line-height:1.4}
+        .deep-focus-body{padding:20px 24px}
+        .deep-focus-body p{font-size:14.5px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:14px}
+        .deep-focus-body p:last-child{margin-bottom:0}
+        .deep-focus-body p strong{color:var(--color-text-primary)}
+        .deep-focus-takeaway{margin-top:16px;padding:14px 16px;background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%);border-radius:var(--radius-md);border-left:4px solid var(--color-purple)}
+        .deep-focus-takeaway-label{font-size:12px;font-weight:700;color:var(--color-purple);margin-bottom:6px;letter-spacing:.5px}
+        .deep-focus-takeaway-text{font-size:13.5px;color:var(--color-text-secondary);line-height:1.7}
+        .deep-focus-takeaway-text strong{color:var(--color-text-primary)}
+        .data-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--color-border-light)}
+        .data-table th{background:var(--color-bg-table-header);font-weight:600;color:var(--color-text-secondary)}
+        .data-table td{color:var(--color-text-primary)}
+        .data-table tr:last-child td{border-bottom:none}
+        .coverage-bar{margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:16px;font-size:13px}
+        .coverage-bar .label{font-weight:700;color:var(--color-text-muted)}
+        .coverage-bar .bar{flex:1;height:8px;background:#E7E5E4;border-radius:4px;overflow:hidden;display:flex}
+        .coverage-bar .bar-overseas{background:var(--gradient-success);height:100%}
+        .coverage-bar .bar-china{background:var(--gradient-china);height:100%}
+        .coverage-bar .stats{display:flex;gap:12px;font-weight:600}
+        .coverage-bar .stat-overseas{color:var(--color-success)}
+        .coverage-bar .stat-china{color:#DC2626}
+        .footer{text-align:center;padding:24px;font-size:12px;color:var(--color-text-muted);border-top:1px solid var(--color-border-light);margin-top:24px}
+        @media(max-width:768px){
+            .overview-grid,.overview-grid.five-cols{grid-template-columns:1fr}
+            .tab-btn{font-size:11px;padding:8px 4px;min-width:60px}
+            .news-detail-row{flex-direction:column;gap:2px}
+            .news-detail-label{min-width:auto}
+            .deep-focus-header{padding:14px 18px}
+            .deep-focus-body{padding:16px 18px}
+            .coverage-bar{flex-direction:column;gap:8px}
+            .heat-table{font-size:12px}
+            .heat-table th,.heat-table td{padding:6px 4px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-badge">📡 AI行业洞察项目 - AI日报</div>
+            <div class="header-title">AI 日报 <span class="version-badge">v3.2</span></div>
+            <div class="header-date">2026年3月12日 周四 | 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</div>
+        </div>
+
+        <div class="coverage-bar">
+            <span class="label">📊 覆盖均衡</span>
+            <div class="bar">
+                <div class="bar-overseas" style="width:54%"></div>
+                <div class="bar-china" style="width:46%"></div>
+            </div>
+            <div class="stats">
+                <span class="stat-overseas">🌏 海外 7条</span>
+                <span class="stat-china">🇨🇳 国内 6条</span>
+            </div>
+        </div>
+
+        <div class="overview">
+            <div class="overview-title">📋 全文概览</div>
+            <div class="overview-grid five-cols">
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🧠</span><span class="overview-item-label">大模型</span></div>
+                    <div class="overview-headline">MLEvolve 12小时登顶+ThinkMorph超GPT-4o</div>
+                    <div class="overview-item-text">上海AI Lab开源AI自主设计算法框架；ThinkMorph原生多模态推理超越GPT-4o达24.67pp</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">⌨️</span><span class="overview-item-label">AI Coding</span></div>
+                    <div class="overview-headline">Claude Code Review成本低2000倍</div>
+                    <div class="overview-item-text">代码问题发现率54%成本仅15-25美元，传统500亿美元审计行业面临颠覆</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">📱</span><span class="overview-item-label">AI 应用</span></div>
+                    <div class="overview-headline">Gemini杀入Workspace+NVIDIA Build-a-Claw</div>
+                    <div class="overview-item-text">Google Gemini全面融入四大办公套件挑战Office；NVIDIA发布OpenClaw Playbook本地运行</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI 行业</span></div>
+                    <div class="overview-headline">灵初智能20亿+黄仁勋×穆拉蒂1GW+GTC开放模型圆桌</div>
+                    <div class="overview-item-text">00后领衔具身智能获国家级资本；前OpenAI CTO联手NVIDIA部署1GW超算；GTC开放模型圆桌邀Cursor/A16Z</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔄</span><span class="overview-item-label orange">企业转型</span></div>
+                    <div class="overview-headline">OpenAI向北约推销+CNCERT安全警示</div>
+                    <div class="overview-item-text">AI军事化路线分歧加剧；国家互联网应急中心发布OpenClaw安全风险提示</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 热度趋势 -->
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label">🔥 近7期热度趋势 (3/6-3/12)</div>
+                <div class="heat-header-title">加权多因子复合评分 · Z-Score突发检测</div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead><tr><th>排名</th><th>话题</th><th>热度</th><th>天数</th><th>趋势</th><th>核心信号</th></tr></thead>
+                    <tbody>
+                        <tr><td>🥇</td><td><strong>NVIDIA GTC 2026倒计时</strong></td><td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td><td>2</td><td><span class="heat-trend-tag burst">⚡ 爆发上升</span></td><td>Build-a-Claw+OpenClaw Playbook+30国3万人</td></tr>
+                        <tr><td>🥈</td><td><strong>AI军事化与政策博弈</strong></td><td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td><td>8</td><td><span class="heat-trend-tag up">📈 持续升级</span></td><td>OpenAI向北约推销+CNCERT安全警示</td></tr>
+                        <tr><td>🥉</td><td><strong>Google Gemini Workspace</strong></td><td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td><td>1</td><td><span class="heat-trend-tag burst">⚡ 突发事件</span></td><td>Gemini全面融入四大办公套件</td></tr>
+                        <tr><td>4️⃣</td><td><strong>AI龙虾生态大战</strong></td><td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td><td>5</td><td><span class="heat-trend-tag up">📈 持续热度</span></td><td>CNCERT安全风险+Meta收购Moltbook</td></tr>
+                        <tr><td>5️⃣</td><td><strong>具身智能资本潮</strong></td><td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td><td>2</td><td><span class="heat-trend-tag up">📈 快速上升</span></td><td>灵初智能20亿+黄仁勋×穆拉蒂1GW</td></tr>
+                        <tr><td>6️⃣</td><td><strong>AI编程商业化</strong></td><td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td><td>4</td><td><span class="heat-trend-tag stable">📊 持续关注</span></td><td>Claude Review量化数据+战时状态后续</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>热度解读</strong>: 本期最强信号是<strong>NVIDIA GTC 2026</strong>——距离Jensen Huang主题演讲仅剩4天，NVIDIA提前发布Build-a-Claw活动和OpenClaw Playbook，将AI Agent从云端拉到本地设备。<strong>AI军事化博弈</strong>进一步升级——OpenAI拿下五角大楼后又向北约32国推销。<strong>Google Gemini全面杀入办公领域</strong>是今日最大突发事件——AI原生办公时代正式到来。</p>
+            </div>
+        </div>
+
+        <!-- Tab导航 -->
+        <nav class="tab-nav">
+            <button class="tab-btn" data-tab="tab-models" aria-selected="true">🧠 大模型</button>
+            <button class="tab-btn" data-tab="tab-coding">⌨️ AI Coding</button>
+            <button class="tab-btn" data-tab="tab-apps">📱 AI 应用</button>
+            <button class="tab-btn" data-tab="tab-industry">🏭 AI 行业</button>
+            <button class="tab-btn orange" data-tab="tab-enterprise">🔄 企业转型</button>
+        </nav>
+
+        <!-- Tab 1: 大模型 -->
+        <article id="tab-models" class="tab-panel active">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">🟡 关注</span>
+                    <div class="news-title"><a href="https://zhuanlan.zhihu.com/p/2014733226174875153" target="_blank">ThinkMorph原生多模态推理新范式：7B参数超越GPT-4o达24.67个百分点</a></div>
+                    <div class="news-source">新加坡国立大学等 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">ThinkMorph让文字与图像在统一架构中"边看边想、交替推进"，仅用<strong>2.4万条数据</strong>微调7B模型，在9个视觉推理基准上<strong>平均提升20.74%</strong></span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">关键数据</span><span class="news-detail-value"><strong>SAT空间推理超GPT-4o达24.67pp</strong> | BLINK-J超Qwen2.5-VL-72B超10分 | 仅2.4万条训练数据</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">影响判断</span><span class="news-detail-value">多模态AI从"工具辅助"迈向"原生智能"——让"看"与"想"融为一体</span></div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">🟡 关注</span>
+                    <div class="news-title"><a href="https://blogs.nvidia.com/blog/gtc-2026-news/" target="_blank">NVIDIA GTC 2026将举办开放模型圆桌：Jensen Huang邀请Cursor/LangChain/A16Z/AI2参与</a></div>
+                    <div class="news-source">NVIDIA · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">3月18日圆桌将讨论开放模型vs闭源前沿模型，Cursor CEO首次与行业顶级投资机构和研究机构同台</span></div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">🔴 重要</span>
+                    <div class="news-title"><a href="https://aitntnews.com/newDetail.html?newId=22987" target="_blank">上海AI Lab开源MLEvolve：12小时登顶MLE-bench，首个AI自主设计算法框架</a></div>
+                    <div class="news-source">上海AI实验室 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">MLEvolve是首个实现"AI自主设计算法"的开源系统，12小时在MLE-bench（75道Kaggle真题）<strong>登顶榜首</strong>，效率提升一倍</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">关键数据</span><span class="news-detail-value"><strong>奖牌率61.33%</strong> | 高难度题42.22% | 远超所有24小时基线方法 | 8个专业AI智能体协作</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">影响判断</span><span class="news-detail-value">从"AI写代码"到"AI设计算法"，标志着AI自主科研能力进入新阶段</span></div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">🟡 关注</span>
+                    <div class="news-title"><a href="https://aitntnews.com/newDetail.html?newId=22981" target="_blank">扩散模型终于学会"看题下菜碟"：CoTj框架动态分配算力</a></div>
+                    <div class="news-source">中国联通研究院等 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">首创"Diffusion DNA"低维难度特征，5毫秒预判去噪难度，极端5步压缩画质反超传统方法+高阶求解器</span></div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">🟡 关注</span>
+                    <div class="news-title"><a href="https://zhuanlan.zhihu.com/p/2015010183710003247" target="_blank">CVPR 2026 | 清华联合美团推出3DThinker：首个无需3D标注的三维思维大模型</a></div>
+                    <div class="news-source">清华大学×美团 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">首个让AI仅凭RGB照片在"脑中构建"三维空间布局的模型，性能提升<strong>51.8%-108.8%</strong></span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 深度聚焦 -->
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div class="deep-focus-label">💡 深度聚焦</div>
+                    <div class="deep-focus-title">MLEvolve：当AI开始自己设计算法，人类科研者该做什么？</div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>上海AI实验室的MLEvolve不是普通的AI写代码工具，而是首个能"像人类顶尖选手一样持续探索、试错、总结、进化"的自主算法设计系统：</p>
+                    <p>1. <strong>方法论创新</strong>：用渐进式蒙特卡洛图搜索替代传统树搜索，让不同路径互通经验。2. <strong>全局记忆层</strong>：记录每次成败支持语义检索复用。3. <strong>效率碾压</strong>：12小时超越所有24小时基线方法。4. <strong>协作架构</strong>：8个专业AI智能体分工协作。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">MLEvolve证明AI不只是工具，正在成为科研的"共同研究者"。未来人类科研者的核心价值将从"动手做实验"转向<strong>"提出好问题"和"做判断"</strong>。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Tab 2: AI Coding -->
+        <article id="tab-coding" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">🔴 重要</span>
+                    <div class="news-title"><a href="https://aitntnews.com/newDetail.html?newId=22991" target="_blank">Claude Code Review量化数据：问题发现率54%，成本低2000倍</a></div>
+                    <div class="news-source">Anthropic · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">多Agent协同审查代码，实质性问题发现率从<strong>16%提升至54%</strong>，每千行代码平均7.5个Bug</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">关键数据</span><span class="news-detail-value"><strong>误报率&lt;1%</strong> | 传统审计年费5万美元 vs Claude单次15-25美元 | 成本低2000倍</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">影响判断</span><span class="news-detail-value">AI代码审查从"辅助"变成"主力"，传统500亿美元代码审计行业面临颠覆</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div class="deep-focus-label">💡 深度聚焦</div>
+                    <div class="deep-focus-title">Claude Code Review的隐含信号：AI审查AI代码，500亿市场要变天</div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>详细量化数据揭示了Claude Code Review的真正威力：</p>
+                    <p>1. <strong>效果碾压</strong>：问题发现率从16%提升到54%，3倍提升意味着传统人工审查漏掉大量问题。2. <strong>成本颠覆</strong>：传统审计年费5万美元，Claude单次仅15-25美元——2000倍成本差距。3. <strong>精度保障</strong>：误报率低于1%。4. <strong>深层逻辑</strong>：AI Coding工具让生成速度暴增，质量保障成为新瓶颈。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI编程已进入<strong>"生成+审查"双轮时代</strong>。代码质量保障市场才刚开始，传统代码审计公司需立即转型。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Tab 3: AI 应用 -->
+        <article id="tab-apps" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">🔴 重要</span>
+                    <div class="news-title"><a href="https://www.wired.com/story/google-gemini-workspace-ai-tools-hands-on/" target="_blank">Google Gemini全面融入Workspace：AI原生办公正面挑战微软Office</a></div>
+                    <div class="news-source">Google · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">Gemini深度融入Docs/Sheets/Slides/Drive，"Help me create"可调用邮件、文件和互联网生成完整初稿</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">关键数据</span><span class="news-detail-value"><strong>Sheets 70.48%成功率</strong> | 建表速度提升9倍 | 面向全球30亿用户 | 先向AI Pro/Ultra开放</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">影响判断</span><span class="news-detail-value">AI原生办公时代正式到来，Google借Gemini正面挑战微软Office</span></div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">🔴 重要</span>
+                    <div class="news-title"><a href="https://blogs.nvidia.com/blog/gtc-2026-news/" target="_blank">NVIDIA GTC发布Build-a-Claw：OpenClaw Playbook支持DGX Spark本地运行</a></div>
+                    <div class="news-source">NVIDIA · 3月12日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">GTC参会者可现场用OpenClaw自定义部署永远在线的AI助手，Playbook支持本地运行无需云端</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">关键数据</span><span class="news-detail-value"><strong>190国3万人参会</strong> | 700+场次 | 本地优先 | March 16-19 San Jose</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">影响判断</span><span class="news-detail-value">NVIDIA将OpenClaw升级为官方支持的Agent平台，AI Agent从云端走向本地</span></div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">🟡 关注</span>
+                    <div class="news-title"><a href="https://view.inews.qq.com/k/20260311A03Q1300" target="_blank">Meta收购AI社交网络Moltbook：看中"智能体身份注册表"底层能力</a></div>
+                    <div class="news-source">多来源 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">上线仅一个月拥有19.4万AI智能体和1300万条评论，Meta看中其AI身份锚定机制</span></div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">🟡 关注</span>
+                    <div class="news-title"><a href="https://view.inews.qq.com/k/20260310A05LGM00" target="_blank">O-DataMap全球科学家社区上线：被誉为"科研界的谷歌地图"</a></div>
+                    <div class="news-source">OALL · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">全球首个可导航科技知识地图，覆盖超千万实验数据点，7大知识大陆实时更新</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div class="deep-focus-label">💡 深度聚焦</div>
+                    <div class="deep-focus-title">Google Gemini杀入Workspace：AI办公大战的"iPhone时刻"</div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Google Gemini全面融入Workspace四大套件，几个关键维度：</p>
+                    <p>1. <strong>规模效应</strong>：面向30亿用户，不需装新软件，AI直接"长"在已有工具里。2. <strong>深度整合</strong>：Gemini能读取邮件、文件、日历生成个性化内容——WIRED记者测试时发现它能查到航班预订。3. <strong>竞争格局</strong>：微软Copilot运行超一年，Google反击来得不算早但足够猛。4. <strong>局限性</strong>：WIRED评测发现"企业体"味浓，创意性和个人风格仍是弱项。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI原生办公已是必然趋势，但真正竞争不在"AI能不能写"——而在<strong>"AI能不能写出你要的味道"</strong>。AI最大短板是缺乏个人风格，这是人类创意工作者的护城河。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Tab 4: AI 行业 -->
+        <article id="tab-industry" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">🔴 重要</span>
+                    <div class="news-title"><a href="https://www.163.com/dy/article/KNOAUAIG0511ABV6.html" target="_blank">黄仁勋联手前OpenAI CTO穆拉蒂：1吉瓦NVIDIA Vera Rubin超级算力2027年开闸</a></div>
+                    <div class="news-source">多来源 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">穆拉蒂创办的Thinking Machines Lab与NVIDIA联合部署<strong>至少1吉瓦</strong>下一代AI算力系统</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">关键数据</span><span class="news-detail-value"><strong>1GW Vera Rubin平台</strong> | 建设成本500-600亿美元 | NVIDIA芯片350亿 | 2027年初启用</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">影响判断</span><span class="news-detail-value">"投钱→买算力→建生态"闭环再现，AI算力军备竞赛进入GW量级</span></div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">🟡 关注</span>
+                    <div class="news-title"><a href="https://blogs.nvidia.com/blog/gtc-2026-news/" target="_blank">NVIDIA GTC 2026将举办开放模型圆桌：Jensen Huang邀请Cursor/LangChain/A16Z/AI2参与</a></div>
+                    <div class="news-source">NVIDIA · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">3月18日圆桌将讨论开放模型vs闭源前沿模型，Cursor CEO首次与行业顶级投资机构和研究机构同台</span></div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">🔴 重要</span>
+                    <div class="news-title"><a href="https://www.qbitai.com/2026/03/385824.html" target="_blank">灵初智能获约20亿元融资：00后领衔具身智能，估值一年暴涨7倍</a></div>
+                    <div class="news-source">量子位 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">00后创办的具身智能公司，国开金融、央视融媒体基金等<strong>国家级资本</strong>重仓入场</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">关键数据</span><span class="news-detail-value"><strong>约20亿元</strong> | 估值暴涨6-7倍 | 触觉手套成本仅传统1/10 | 800 UPH抓取节拍</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">影响判断</span><span class="news-detail-value">具身智能获国家级资本背书，00后创业者在硬科技领域崭露头角</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div class="deep-focus-label">💡 深度聚焦</div>
+                    <div class="deep-focus-title">灵初智能20亿融资：具身智能为什么突然值钱了？</div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>一家成立仅数月的00后创业公司拿到约20亿元融资，背后是具身智能赛道的三个关键变量：</p>
+                    <p>1. <strong>数据范式创新</strong>：自研触觉手套（成本仅传统1/10）采集人手21个自由度+全触觉数据——解决了最大瓶颈。2. <strong>国家级资本入场</strong>：具身智能已上升到国家战略层面。3. <strong>场景验证闭环</strong>：物流场景实现上千件衣物泛化抓取、800 UPH节拍。4. <strong>全球共振</strong>：同期黄仁勋×穆拉蒂部署1GW算力。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">具身智能的关键不是造更好的机器人，而是<strong>获取更好的数据</strong>。灵初智能的"触觉手套"思路值得关注——谁掌握了真实世界的操作数据，谁就掌握了具身AI的入口。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Tab 5: 企业AI转型 -->
+        <article id="tab-enterprise" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num orange">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">🔴 重要</span>
+                    <div class="news-title"><a href="https://aitntnews.com/newDetail.html?newId=22993" target="_blank">OpenAI拿下五角大楼后向北约32国推销军事化AI：与Anthropic路线分道扬镳</a></div>
+                    <div class="news-source">多来源 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">OpenAI获五角大楼机密级合同后，积极接触<strong>北约32国</strong>意图部署大模型至军事信息系统</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">关键数据</span><span class="news-detail-value"><strong>32个成员国</strong> | CEO口述"覆盖所有机密网络" | 与Anthropic伦理红线形成鲜明对比</span></div>
+                        <div class="news-detail-row"><span class="news-detail-label">影响判断</span><span class="news-detail-value">AI军事化路线出现根本分歧——OpenAI全面拥抱军方，Anthropic坚守红线被惩罚</span></div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-policy">⚠️ 政策</span>
+                    <div class="news-title"><a href="https://www.1ai.net/50782.html" target="_blank">CNCERT发布OpenClaw安全风险提示：超70%下载来自非官方渠道</a></div>
+                    <div class="news-source">国家互联网应急中心 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">超2300起投诉涉及28省份，<strong>15%安装包含恶意代码</strong>，部分版本持续监听麦克风权限</span></div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">🟡 关注</span>
+                    <div class="news-title"><a href="https://www.163.com/dy/article/KNO0A6BR0511ABV6.html" target="_blank">恩和科技发布SAION AI：全球首个生物制造物理AI平台</a></div>
+                    <div class="news-source">恩和科技 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row"><span class="news-detail-label">核心发现</span><span class="news-detail-value">首次让AI"走进实验室动手做实验"，文献理解准确率70.7%<strong>超GPT约20pp</strong>，真实质粒组装正确率超90%</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div class="deep-focus-label">💡 深度聚焦</div>
+                    <div class="deep-focus-title">OpenAI vs Anthropic：AI军事化的"两条路线之争"</div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>今天的新闻把AI行业最深层分歧推到台前——OpenAI和Anthropic在军事化问题上走向完全相反的方向：</p>
+                    <p>1. <strong>OpenAI路线</strong>：五角大楼机密合同→北约32国推销→CEO口述"覆盖所有机密网络"。2. <strong>Anthropic路线</strong>：划定武器和监控红线→被国防部列入风险名单→起诉政府。3. <strong>行业选边</strong>：员工立场和公司立场可能相反——内部"军事化vs伦理"张力加剧。4. <strong>中国视角</strong>：CNCERT对OpenClaw发布安全警示，东西方AI治理都在"促进发展"和"控制风险"间寻找平衡。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI军事化已不是"要不要"的问题，而是<strong>"谁来定规则"</strong>的问题。OpenAI和Anthropic的分歧将定义未来十年AI军事应用的边界。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <div class="section-card" style="margin-top:20px">
+            <div class="section-header"><span class="num">📊</span> 数据速览</div>
+            <table class="data-table">
+                <thead><tr><th>指标</th><th>数值</th><th>变化/说明</th></tr></thead>
+                <tbody>
+                    <tr><td>MLEvolve奖牌率</td><td>61.33%</td><td>12小时登顶MLE-bench</td></tr>
+                    <tr><td>Claude代码问题发现率</td><td>54%</td><td>vs传统16%，3倍提升</td></tr>
+                    <tr><td>Claude审计成本</td><td>15-25美元/次</td><td>vs传统5万美元/年</td></tr>
+                    <tr><td>Gemini Sheets成功率</td><td>70.48%</td><td>建表速度提升9倍</td></tr>
+                    <tr><td>Google Workspace用户</td><td>30亿</td><td>Gemini全面融入</td></tr>
+                    <tr><td>NVIDIA GTC参会</td><td>3万人/190国</td><td>史上最大AI会议</td></tr>
+                    <tr><td>灵初智能融资额</td><td>约20亿元</td><td>天使轮+Pre-A轮</td></tr>
+                    <tr><td>Thinking Machines算力</td><td>1吉瓦</td><td>Vera Rubin 2027启用</td></tr>
+                    <tr><td>OpenClaw投诉</td><td>2300+起/28省</td><td>CNCERT安全警示</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📌</span> 明日/下周值得关注</div>
+            <ul style="padding-left:20px;color:var(--color-text-secondary);line-height:2">
+                <li><strong>AWE 2026</strong> (3月12-15日) - AI科技·慧享未来，上海</li>
+                <li><strong>NVIDIA GTC 2026</strong> (3月16-19日) - Jensen Huang主题演讲，Build-a-Claw活动，开放模型圆桌</li>
+                <li><strong>华为中国合作伙伴大会2026</strong> (3月19-20日) - 深圳</li>
+                <li><strong>Anthropic vs 国防部诉讼</strong> - 持续关注法律进展</li>
+                <li><strong>Google Gemini Workspace</strong> - 全球用户反馈和实际使用数据</li>
+            </ul>
+        </div>
+
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+            <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+            <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+                我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+            </p>
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                🏠 访问AI洞察首页
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', 'false'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.setAttribute('aria-selected', 'true');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

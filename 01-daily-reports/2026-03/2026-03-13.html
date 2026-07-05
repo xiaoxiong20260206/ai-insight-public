@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 - 2026-03-13 (v3.2)</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root {
+            --color-success:#059669;--color-success-light:#10B981;--color-danger:#E11D48;--color-danger-light:#FF7B72;--color-warning:#D97706;--color-info:#2563EB;--color-info-light:#54AEFF;--color-purple:#7C3AED;--color-orange:#EA580C;--color-text-primary:#1C1917;--color-text-secondary:#57534E;--color-text-muted:#78716C;--color-border:#E7E5E4;--color-border-light:#F5F5F4;--color-bg:#F8FAFB;--color-bg-card:#FFFFFF;--color-bg-table-header:#FAFAF9;--gradient-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--gradient-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--gradient-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--gradient-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow-card:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-full:999px;--font-family:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--transition-normal:200ms cubic-bezier(.4,0,.2,1);--content-max-width:980px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font-family);background:var(--color-bg);color:var(--color-text-primary);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--content-max-width);margin:0 auto;padding:24px 20px}
+        .header{background:var(--gradient-success);color:#fff;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-date{font-size:14px;opacity:.85}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:700;margin-left:8px}
+        .overview{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-card)}
+        .overview-title{font-size:18px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .overview-grid.five-cols{grid-template-columns:repeat(5,1fr)}
+        .overview-item{padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--color-border-light);background:var(--color-bg);transition:all .2s}
+        .overview-item:hover{border-color:var(--color-success-light);box-shadow:0 2px 8px rgba(5,150,105,.08)}
+        .overview-item-header{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+        .overview-item-icon{font-size:16px}
+        .overview-item-label{font-size:13px;font-weight:700;color:var(--color-success-light);letter-spacing:.3px}
+        .overview-item-label.orange{color:var(--color-orange)}
+        .overview-headline{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:6px;line-height:1.4}
+        .overview-item-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+        /* Heat Trend Table */
+        .heat-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow-card)}
+        .heat-header{background:linear-gradient(135deg,#EA580C 0%,#DC2626 50%,#B91C1C 100%);color:#fff;padding:18px 24px}
+        .heat-header-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .heat-header-title{font-size:17px;font-weight:800;margin-top:4px}
+        .heat-body{padding:16px 20px}
+        .heat-body p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-top:12px}
+        .heat-body p strong{color:var(--color-text-primary)}
+        .heat-table{width:100%;border-collapse:collapse;font-size:13px}
+        .heat-table th{padding:8px 10px;text-align:left;background:#FEF2F2;font-weight:700;color:#991B1B;border-bottom:2px solid #FECACA;font-size:12px}
+        .heat-table td{padding:10px;border-bottom:1px solid var(--color-border-light);vertical-align:top}
+        .heat-table tr:last-child td{border-bottom:none}
+        .heat-table tr:hover{background:rgba(234,88,12,.02)}
+        .heat-bar{display:flex;gap:2px;align-items:center}
+        .heat-bar-fill{width:10px;height:14px;border-radius:2px;background:linear-gradient(135deg,#EA580C,#DC2626)}
+        .heat-bar-empty{width:10px;height:14px;border-radius:2px;background:#F5F5F4}
+        .heat-trend-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .heat-trend-tag.up{background:#EFFDF5;color:#059669}
+        .heat-trend-tag.stable{background:#EFF6FF;color:#2563EB}
+        .heat-trend-tag.burst{background:#FEF2F2;color:#DC2626}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:4px;box-shadow:var(--shadow-card);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-muted);border-radius:var(--radius-sm);transition:var(--transition-normal);font-family:var(--font-family);min-width:80px}
+        .tab-btn:hover{color:var(--color-text-primary);background:var(--color-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--gradient-success);color:#fff}
+        .tab-btn.orange[aria-selected="true"]{background:var(--gradient-orange)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow-card)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--color-border-light);display:flex;align-items:center;gap:8px}
+        .section-header .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gradient-success);color:#fff;font-size:12px;font-weight:700}
+        .section-header .num.orange{background:var(--gradient-orange)}
+        .sub-header{font-size:14px;font-weight:700;color:var(--color-text-muted);margin:14px 0 10px;padding-left:4px;letter-spacing:.5px}
+        .sub-header:first-child{margin-top:0}
+        .news-item{padding:14px 0;border-bottom:1px solid var(--color-border-light);transition:background .15s;margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:var(--radius-sm)}
+        .news-item:hover{background:rgba(5,150,105,.02)}
+        .news-item:last-child{border-bottom:none}
+        .news-tag{display:inline-block;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:var(--color-danger)}
+        .tag-new{background:#EFFDF5;color:var(--color-success)}
+        .tag-funding{background:#E0F2FE;color:#0284C7}
+        .tag-policy{background:#FFF7ED;color:var(--color-orange)}
+        .tag-practice{background:#ECFDF5;color:#059669}
+        .tag-cn{background:#FEF2F2;color:#DC2626}
+        .news-title{font-size:15px;font-weight:600;margin:4px 0 3px}
+        .news-title a{color:var(--color-text-primary);text-decoration:none}
+        .news-title a:hover{color:var(--color-success)}
+        .news-source{font-size:12px;color:var(--color-text-muted)}
+        .news-detail{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+        .news-detail-row{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.6}
+        .news-detail-label{flex-shrink:0;font-weight:700;color:var(--color-success);font-size:12px;padding:1px 0;min-width:60px}
+        .news-detail-label.orange{color:var(--color-orange)}
+        .news-detail-label.china{color:#DC2626}
+        .news-detail-value{color:var(--color-text-secondary);flex:1}
+        .news-detail-value strong{color:var(--color-text-primary);font-weight:600}
+        .news-data-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+        .news-data-chip{display:inline-flex;align-items:center;padding:3px 10px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--radius-full);font-size:12px;font-weight:600;color:#166534;transition:all .15s}
+        .news-data-chip:hover{background:#DCFCE7;border-color:#86EFAC}
+        .news-data-chip.orange{background:#FFF7ED;border-color:#FED7AA;color:#9A3412}
+        .news-data-chip.china{background:#FEF2F2;border-color:#FECACA;color:#991B1B}
+        .news-summary-compact{font-size:13.5px;color:var(--color-text-secondary);margin-top:6px;line-height:1.6}
+        .deep-focus-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:0;margin-bottom:16px;box-shadow:var(--shadow-card);overflow:hidden}
+        .deep-focus-header{background:var(--gradient-purple);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:10px}
+        .deep-focus-header.orange-theme{background:linear-gradient(135deg,#EA580C 0%,#DC2626 100%)}
+        .deep-focus-header.china-theme{background:linear-gradient(135deg,#DC2626 0%,#B91C1C 50%,#991B1B 100%)}
+        .deep-focus-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .deep-focus-title{font-size:17px;font-weight:800;margin-top:4px;line-height:1.4}
+        .deep-focus-body{padding:20px 24px}
+        .deep-focus-body p{font-size:14.5px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:18px}
+        .deep-focus-body p:last-child{margin-bottom:0}
+        .deep-focus-body p strong{color:var(--color-text-primary)}
+        .deep-focus-takeaway{margin-top:20px;padding:16px 18px;background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%);border-radius:var(--radius-md);border-left:4px solid var(--color-purple)}
+        .deep-focus-takeaway.orange-theme{background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border-left-color:var(--color-orange)}
+        .deep-focus-takeaway.china-theme{background:linear-gradient(135deg,#FEF2F2 0%,#FEE2E2 100%);border-left-color:#DC2626}
+        .deep-focus-takeaway-label{font-size:12px;font-weight:700;color:var(--color-purple);margin-bottom:6px;letter-spacing:.5px}
+        .deep-focus-takeaway-label.orange{color:var(--color-orange)}
+        .deep-focus-takeaway-label.china{color:#DC2626}
+        .deep-focus-takeaway-text{font-size:13.5px;color:var(--color-text-secondary);line-height:1.7}
+        .deep-focus-takeaway-text strong{color:var(--color-text-primary)}
+        /* Pattern Insight Card */
+        .pi-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow-card);transition:all .25s cubic-bezier(.4,0,.2,1)}
+        .pi-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+        .pi-header{display:flex;align-items:center;gap:12px;padding:14px 20px;background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%);border-bottom:1px solid #FDE68A}
+        .pi-badge{display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 10px;border-radius:8px;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,#B45309 0%,#D97706 100%);white-space:nowrap}
+        .pi-title{font-size:16px;font-weight:700;color:var(--color-text-primary);flex:1;letter-spacing:-.01em;line-height:1.4}
+        .pi-row{display:flex;padding:14px 20px;border-bottom:1px solid var(--color-border-light);gap:14px}
+        .pi-row:last-child{border-bottom:none}
+        .pi-row.highlight{background:linear-gradient(135deg,rgba(217,119,6,.04) 0%,rgba(217,119,6,.01) 100%)}
+        .pi-row-label{width:56px;flex-shrink:0;font-size:12px;font-weight:700;color:#A8A29E;padding-top:2px;letter-spacing:.02em}
+        .pi-row-label.l2{color:#D97706}
+        .pi-row-content{flex:1;font-size:14px;color:var(--color-text-secondary);line-height:1.7}
+        .pi-row-content strong{color:var(--color-text-primary);font-weight:700}
+        .pi-evo{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+        .pi-evo-step{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--color-bg-table-header);border-radius:8px;border:1px solid var(--color-border-light);transition:all .15s}
+        .pi-evo-step.active{background:rgba(217,119,6,.12);border-color:#D97706;box-shadow:0 0 0 1px rgba(217,119,6,.15)}
+        .pi-evo-step.future{background:rgba(124,58,237,.06);border-color:#8B5CF6}
+        .pi-evo-tag{font-size:10px;font-weight:800;color:#D97706;padding:2px 7px;background:rgba(217,119,6,.1);border-radius:4px;letter-spacing:.02em}
+        .pi-evo-step.future .pi-evo-tag{color:#7C3AED;background:rgba(124,58,237,.1)}
+        .pi-evo-text{font-size:12px;color:var(--color-text-secondary)}
+        .pi-evo-arrow{color:#A8A29E;font-weight:700;font-size:14px}
+        .pi-table{padding:10px 20px 16px;border-top:1px solid var(--color-border-light)}
+        .pi-t-head{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-bottom:2px solid var(--color-border-light);margin-bottom:4px}
+        .pi-t-head span{font-size:11px;font-weight:700;color:#A8A29E;text-transform:uppercase;letter-spacing:.06em}
+        .pi-t-section{padding:6px 10px 2px}
+        .pi-t-section-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;letter-spacing:.03em}
+        .pi-t-section.verified .pi-t-section-tag{color:#047857;background:rgba(5,150,105,.08)}
+        .pi-t-section.current .pi-t-section-tag{color:#D97706;background:rgba(217,119,6,.08)}
+        .pi-t-section.projected .pi-t-section-tag{color:#7C3AED;background:rgba(124,58,237,.08)}
+        .pi-t-row{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-radius:6px;font-size:13px;line-height:1.6;transition:background .15s}
+        .pi-t-row:hover{background:rgba(0,0,0,.02)}
+        .pi-t-row.projected{background:rgba(124,58,237,.02)}
+        .pi-t-row.projected:hover{background:rgba(124,58,237,.05)}
+        .pi-t-rule{font-weight:600;color:#B45309;font-size:12px;padding-top:1px}
+        .pi-t-row.projected .pi-t-rule{color:#7C3AED}
+        .pi-t-reality{color:var(--color-text-primary);font-weight:500}
+        .pi-t-analogy{color:var(--color-text-secondary);padding-left:10px;border-left:2px solid var(--color-border-light)}
+        .pi-t-divider{border-top:2px dashed var(--color-border-light);margin:8px 10px}
+        .pi-t-verify{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(5,150,105,.06);border-radius:6px;font-size:12px;font-weight:600;color:#047857}
+        .pi-confidence{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(124,58,237,.04);border-radius:6px;border-left:3px solid #8B5CF6;font-size:11px;font-weight:500;color:#7C3AED;letter-spacing:.02em}
+        .data-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--color-border-light)}
+        .data-table th{background:var(--color-bg-table-header);font-weight:600;color:var(--color-text-secondary)}
+        .data-table td{color:var(--color-text-primary)}
+        .data-table tr:last-child td{border-bottom:none}
+        .coverage-bar{margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:16px;font-size:13px}
+        .coverage-bar .label{font-weight:700;color:var(--color-text-muted)}
+        .coverage-bar .bar{flex:1;height:8px;background:#E7E5E4;border-radius:4px;overflow:hidden;display:flex}
+        .coverage-bar .bar-overseas{background:var(--gradient-success);height:100%}
+        .coverage-bar .bar-china{background:var(--gradient-china);height:100%}
+        .coverage-bar .stats{display:flex;gap:12px;font-weight:600}
+        .coverage-bar .stat-overseas{color:var(--color-success)}
+        .coverage-bar .stat-china{color:#DC2626}
+        .footer{text-align:center;padding:24px;font-size:12px;color:var(--color-text-muted);border-top:1px solid var(--color-border-light);margin-top:24px}
+        @media(max-width:960px){
+            .overview-grid.five-cols{grid-template-columns:1fr 1fr 1fr}
+        }
+        @media(max-width:768px){
+            .overview-grid,.overview-grid.five-cols{grid-template-columns:1fr}
+            .tab-btn{font-size:11px;padding:8px 4px;min-width:60px}
+            .news-detail-row{flex-direction:column;gap:2px}
+            .news-detail-label{min-width:auto}
+            .deep-focus-header{padding:14px 18px}
+            .deep-focus-body{padding:16px 18px}
+            .coverage-bar{flex-direction:column;gap:8px}
+            .heat-table{font-size:12px}
+            .heat-table th,.heat-table td{padding:6px 4px}
+            .pi-evo{flex-direction:column;align-items:flex-start}
+            .pi-evo-arrow{display:none}
+            .pi-t-head{display:none}
+            .pi-t-row{grid-template-columns:1fr;gap:2px;padding:6px 10px;border-left:3px solid var(--color-border-light);margin-bottom:4px}
+            .pi-t-row.projected{border-left-color:rgba(124,58,237,.3)}
+            .pi-t-analogy{border-left:none;padding-left:0;font-size:12px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-badge">📡 AI行业洞察项目 - AI日报</div>
+            <div class="header-title">AI 日报 <span class="version-badge">v3.2</span></div>
+            <div class="header-date">2026年3月13日 周五 | 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</div>
+        </div>
+
+        <div class="coverage-bar">
+            <span class="label">📊 覆盖均衡</span>
+            <div class="bar">
+                <div class="bar-overseas" style="width:64%"></div>
+                <div class="bar-china" style="width:36%"></div>
+            </div>
+            <div class="stats">
+                <span class="stat-overseas">🌏 海外 7条</span>
+                <span class="stat-china">🇨🇳 国内 4条</span>
+            </div>
+        </div>
+
+        <div class="overview">
+            <div class="overview-title">📋 全文概览</div>
+            <div class="overview-grid five-cols">
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🧠</span><span class="overview-item-label">大模型</span></div>
+                    <div class="overview-headline">Nemotron 3 Super 1200亿参数+METR发布Opus 4.6安全报告</div>
+                    <div class="overview-item-text">英伟达最强开源模型登场吞吐量飙升5倍；METR发布Claude Opus 4.6破坏风险评估报告0/16测试通过</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">⌨️</span><span class="overview-item-label">AI Coding</span></div>
+                    <div class="overview-headline">Simon Willison: 后程序员时代的编程</div>
+                    <div class="overview-item-text">知名开发者发文探讨AI编程的未来：当代码质量不再是瓶颈，程序员的角色将如何转变</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">📱</span><span class="overview-item-label">AI 应用</span></div>
+                    <div class="overview-headline">Manus推出聊天中引入个人Agent+NVIDIA GeForce NOW亮GDC</div>
+                    <div class="overview-item-text">Manus将AI Agent能力带给更多用户；NVIDIA云游戏平台亮相GDC 2026</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI 行业</span></div>
+                    <div class="overview-headline">GTC倒计时3天+FDA弃Claude换Gemini+AWE开幕</div>
+                    <div class="overview-item-text">GTC 2026将揭晓Feynman芯片；FDA因政治因素弃用Anthropic；AWE2026主题AI科技</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔄</span><span class="overview-item-label" class="orange">企业转型</span></div>
+                    <div class="overview-headline">美团星眸大模型全面升级+海尔AWE展示AI智慧家庭</div>
+                    <div class="overview-item-text">美团AI视觉模型覆盖百万外卖商家日巡检千万次；海尔智家从替人家务到无人家务</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label">🔥 热度趋势</div>
+                <div class="heat-header-title">近7期日报交叉分析（3/7-3/13）</div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead><tr><th>排名</th><th>话题</th><th>热度</th><th>天数</th><th>趋势</th><th>核心信号</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇</td>
+                            <td><strong>NVIDIA GTC 2026倒计时</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag burst">⚡ 即将爆发</span></td>
+                            <td>Feynman芯片+Nemotron 3 Super+190国3万人参会，距Jensen Huang主题演讲仅3天</td>
+                        </tr>
+                        <tr>
+                            <td>🥈</td>
+                            <td><strong>AI安全与政策博弈</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span></div></td>
+                            <td>9天</td>
+                            <td><span class="heat-trend-tag up">📈 持续升级</span></td>
+                            <td>METR发布Opus 4.6破坏风险报告+FDA弃Claude换Gemini+军事化路线分歧继续</td>
+                        </tr>
+                        <tr>
+                            <td>🥉</td>
+                            <td><strong>开源大模型参数竞赛</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>2天</td>
+                            <td><span class="heat-trend-tag burst">⚡ 突发事件</span></td>
+                            <td>英伟达Nemotron 3 Super 1200亿参数刷新开源纪录</td>
+                        </tr>
+                        <tr>
+                            <td>4️⃣</td>
+                            <td><strong>AI龙虾生态大战</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>6天</td>
+                            <td><span class="heat-trend-tag up">📈 持续热度</span></td>
+                            <td>CNCERT安全风险+闲鱼搜索量暴1850%+金融机构冷思考</td>
+                        </tr>
+                        <tr>
+                            <td>5️⃣</td>
+                            <td><strong>企业AI落地加速</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>2天</td>
+                            <td><span class="heat-trend-tag up">📈 快速上升</span></td>
+                            <td>美团星眸升级+AWE2026开幕+海尔AI智慧家庭</td>
+                        </tr>
+                        <tr>
+                            <td>6️⃣</td>
+                            <td><strong>AI编程商业化</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>5天</td>
+                            <td><span class="heat-trend-tag stable">📊 持续关注</span></td>
+                            <td>Simon Willison发文探讨后程序员时代+AI编程三国杀</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>本期最强信号是<strong>NVIDIA GTC 2026倒计时</strong>——距Jensen Huang主题演讲仅3天，Nemotron 3 Super已提前发布。<strong>AI安全与政策</strong>持续升温——METR发布Opus 4.6破坏风险报告，FDA因政治因素弃用Claude换Gemini。<strong>企业AI落地</strong>加速——美团星眸大模型升级+AWE2026开幕展示家电AI化。</p>
+            </div>
+        </div>
+
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn" role="tab" aria-selected="true" data-tab="foundation">🧠 大模型</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="coding">⌨️ AI Coding</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="application">📱 AI 应用</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="industry">🏭 AI 行业</button>
+            <button class="tab-btn orange" role="tab" aria-selected="false" data-tab="enterprise">🔄 企业转型</button>
+        </nav>
+
+
+        <article id="foundation" class="tab-panel active">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://tech.sina.cn/2026-03-12/detail-inhqsnwz5045987.d.html" target="_blank">英伟达推出Nemotron 3 Super开源大模型：1200亿参数，吞吐量飙升5倍</a></div>
+                    <div class="news-source">IT之家 · 3月12日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">英伟达发布其迄今最强开源权重大模型Nemotron 3 Super，1200亿参数，在代码生成、长文本推理等任务上表现出色</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">1200亿参数</span><span class="news-data-chip">吞吐量提升5倍</span><span class="news-data-chip">开源权重</span><span class="news-data-chip">Agent优化</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">刷新开源模型参数规模纪录，英伟达从AI基础设施向大模型层全面延伸</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://metr.org/blog/2026-03-12-sabotage-risk-report-opus-4-6-review/" target="_blank">METR发布Claude Opus 4.6破坏风险评估报告：0/16测试通过</a></div>
+                    <div class="news-source">METR · 3月12日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">METR对Anthropic发布的Claude Opus 4.6破坏风险报告进行独立评审，确认0/16项破坏测试通过</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">0/16破坏测试通过</span><span class="news-data-chip">独立第三方评审</span><span class="news-data-chip">Anthropic最前沿安全评估</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI安全评估进入第三方独立审计时代，为行业安全标准奠定基础</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Nemotron 3 Super：英伟达为什么要自己做大模型？</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>英伟达作为AI芯片的单一最大受益者，为何还要下场做大模型？答案是"卖铲子的也得自己挖金"——Nemotron 3 Super定位为Agent优化的开源基座，配合即将发布的Feynman芯片，英伟达正在构建从芯片到模型到Agent的全栈闭环。</p><p>1200亿参数和5倍吞吐量提升的意义不在于技术炫耀，而在于通过模型层绑定开发者生态。开源并非慈善——一旦开发者习惯了免费的Nemotron，自然会倾向于购买英伟达芯片来运行它。这和AWS从计算资源延伸到数据库再到AI服务的路径如出一辙。</p><p>更根本的变化是：英伟达正从单纯的芯片供应商，升级为提供芯片+模型+Agent的完整闭环方案商。对从业者的启示：当基础设施公司开始向应用层扩张时，纯应用层玩家的护城河会受到挤压。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">英伟达正从"卖铲子"升级为"卖整套挖矿方案"——基础设施公司向上游扩张是不可逆趋势。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">基础设施公司的垂直整合定律：从卖零件到卖方案</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>基础设施公司一旦建立规模优势，必然向应用层扩张</strong>——因为控制上层应用才能最大化底层硬件的价值。</div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">卖零件</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">卖平台+生态</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">卖完整方案</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">1.0 卖零件</span><span class="pi-t-reality">Intel只卖CPU，生态由微软/OEM控制</span><span class="pi-t-analogy">像卖面粉的，不管你做面包还是蛋糕</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">2.0 卖平台</span><span class="pi-t-reality">AWS从EC2扩展到数据库+AI服务+应用市场</span><span class="pi-t-analogy">从卖地皮到建商场再到自营店铺</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">2.0→3.0</span><span class="pi-t-reality"><strong>英伟达</strong>：芯片→CUDA生态→Nemotron开源模型→Agent优化</span><span class="pi-t-analogy">从卖铲子到卖整套挖矿方案</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">6-12个月内，英伟达将推出端到端AI开发平台（芯片+模型+部署+监控）</span><span class="pi-t-analogy">像苹果从芯片到操作系统到应用商店的全栈闭环</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 中高 · 验证窗口: 6-12个月 · 信号: GTC 2026是否发布AI开发平台/Agent市场</div>
+            </div>
+        </article>
+
+        <article id="coding" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://simonwillison.net/" target="_blank">Simon Willison：后程序员时代的编程——“Coding After Coders”</a></div>
+                    <div class="news-source">Simon Willison · 3月12日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">知名开发者Simon Willison发文探讨AI编程的终局问题：当代码生成不再是瓶颈时，程序员的角色将如何转变</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">引发行业对程序员角色转型的深度思考：从写代码到定义问题</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Coding After Coders：程序员将变成什么？</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Simon Willison的文章触及了AI编程的深层问题：当代码生成质量足够好时，程序员的核心价值从"写代码"转向"定义问题+审核方案+架构设计"。编程正从手艺活变成指挥活。</p><p>看当前AI Coding工具的三强竞争——OpenClaw赌Agent生态、Cursor赌IDE集成、Windsurf赌全流程自动化——它们其实在押注程序员的不同转型路径。更根本的变化是：当代码不再是瓶颈时，理解需求和评估方案的能力会成为稀缺资源。</p><p>对从业者的启示：与其焦虑"AI会不会替代程序员"，不如主动向审核者和架构师的角色转型——这正是AI最难取代的能力区间。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">与其担心被替代，不如主动向"审核者+架构师"转型——理解需求比生成代码更稀缺。</div>
+                    </div>
+                </div>
+            </div>
+
+        </article>
+
+        <article id="application" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://manus.im/zh-cn/blog" target="_blank">Manus推出聊天中引入个人Agent：“您的个人Agent，随时随地”</a></div>
+                    <div class="news-source">Manus · 3月12日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Manus宣布将AI Agent能力直接嵌入聊天场景，用户可在对话中随时调用个人Agent执行任务</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI Agent从独立App走向嵌入式，降低用户使用门槛</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://nvidianews.nvidia.com/news/latest" target="_blank">NVIDIA GeForce NOW亮相GDC 2026：云游戏+AI融合新体验</a></div>
+                    <div class="news-source">NVIDIA · 3月12日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">NVIDIA在游戏开发者大会GDC 2026上展示GeForce NOW最新升级，融合AI增强的云游戏体验</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI+云游戏融合加速，NVIDIA在消费端持续扩大影响力</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://finance.eastmoney.com/a/202603123669268547.html" target="_blank">闲鱼上“小龙虾”搜索量大涨1850%：OpenClaw持续风靡全网</a></div>
+                    <div class="news-source">东方财富 · 3月12日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">随着OpenClaw持续走红，闲鱼平台“小龙虾”搜索量暴1850%，金融机构保持“冷思考”调性提示风险</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">搜索量暴1850%</span><span class="news-data-chip">金融机构冷思考</span><span class="news-data-chip">官方连续风险提示</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI Agent从技术圈走向大众消费市场，但安全风险同步放大</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header china-theme">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">"养龙虾"热背后的冷思考：AI Agent大众化的机会和陷阱</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>闲鱼搜索量暴涨1850%表明，OpenClaw已经突破技术圈层进入大众市场。这是AI Agent领域第一个真正意义上的"出圈"事件。</p><p>但金融机构的"冷思考"揭示了另一面：超七成下载来自非官方渠道、15%含恶意代码、28省累计2300+投诉。每一次技术产品的大众化都伴随安全危机——从PC时代的病毒泛滥，到移动时代的隐私危机，再到加密货币的诈骗浪潮。AI Agent正在重演同样的剧本。</p><p>对从业者的启示：AI Agent的iPhone时刻不仅需要好产品，更需要安全基础设施。当产品从极客用户扩展到大众时，安全投入必须从附加功能变成核心底线。</p>
+                    <div class="deep-focus-takeaway china-theme">
+                        <div class="deep-focus-takeaway-label china">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">当AI产品进入大众市场时，安全问题会指数级放大——安全基础设施是大众化的前提，不是附加项。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">技术大众化的安全真空定律：用户爆发→安全危机→基础设施跟进</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>每次技术产品从极客走向大众，都会经历一个"安全真空期"</strong>——用户增长速度远超安全基础设施建设速度，直到重大安全事件倒逼治理跟上。</div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">极客尝鲜</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">大众涌入+安全真空</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">审核机制+应用商店化</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">PC时代</span><span class="pi-t-reality">互联网普及→病毒泛滥→杀毒软件+防火墙成标配</span><span class="pi-t-analogy">先建房子再装门锁</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">移动时代</span><span class="pi-t-reality">智能手机爆发→隐私泄露频发→App Store审核+权限管理</span><span class="pi-t-analogy">先开集市再设管理处</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">加密时代</span><span class="pi-t-reality">比特币出圈→诈骗横行→交易所KYC+监管框架</span><span class="pi-t-analogy">先淘金热再建法院</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">AI Agent</span><span class="pi-t-reality"><strong>OpenClaw搜索量+1850%</strong>，15%非官方版含恶意代码，28省2300+投诉</span><span class="pi-t-analogy">像早期安卓应用市场：自由但混乱</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">3-6个月内，主流平台将推出AI Agent审核/认证机制，形成类App Store模式</span><span class="pi-t-analogy">像苹果App Store从自由安装到严格审核的演化</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: 3-6个月 · 信号: 主流平台是否推出Agent认证/审核机制</div>
+            </div>
+        </article>
+
+        <article id="industry" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="http://www.eeo.com.cn/2026/0313/810191.shtml" target="_blank">英伟达GTC 2026倒计时3天：Feynman芯片将揭晓，向Nebius投资20亿美元</a></div>
+                    <div class="news-source">经济观察报 · 3月13日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">GTC 2026将于3月16-19日举办，预计揭晓新一代AI芯片平台Feynman，英伟达同时向AI云服务公司Nebius投资20亿美元</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">190国3万人参会</span><span class="news-data-chip">700+场次</span><span class="news-data-chip">20亿美元投资Nebius</span><span class="news-data-chip">GTC期间股价上涨概率80%</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">GTC将成为AI行业年度最重要的产品发布窗口</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.clinicalleader.com/doc/fda-s-elsa-ai-switches-from-claude-to-gemini-what-sponsors-need-to-know-0001" target="_blank">FDA的AI助手Elsa从Claude切换到Gemini：政治因素影响AI采购</a></div>
+                    <div class="news-source">Clinical Leader · 3月12日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">FDA的AI平台Elsa从Claude切换到Gemini，缘于特朗普政府与Anthopic的军事化分歧，HHS已要求员工停止使用Claude</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">FDA Elsa平台</span><span class="news-data-chip">Claude→Gemini</span><span class="news-data-chip">HHS禁令</span><span class="news-data-chip">政治因素影响AI采购</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI供应商的政治立场直接影响政府合同，企业选型AI时需考虑地缘政治风险</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="http://www.news.cn/tech/20260312/3c0b1182d1bc455db6e2c42536f2927a/c.html" target="_blank">AWE 2026开幕：以“AI科技、慧享未来”为主题，展示AI家电新生态</a></div>
+                    <div class="news-source">新华网 · 3月12日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">2026中国家电及消费电子博览会在上海开幕，以AI科技为核心主题，展示智能家电、消费电子进化</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI科技成为消费电子展会核心主题，家电行业全面拥抱AI</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">FDA弃Claude换Gemini：当AI采购变成政治站队</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>FDA的Elsa平台从Claude切换到Gemini，表面是技术迁移，实质是政治博弈的产物——特朗普政府因Anthropic拒绝军事化应用而进行报复性封杀，HHS甚至要求员工停止使用Claude。</p><p>这暴露了一个新现实：AI供应商的伦理立场会直接转化为商业风险。Anthropic坚守"负责任AI"的价值观，反而失去了政府关键合同——"做正确的事"与"做赚钱的事"出现了尖锐冲突。</p><p>对企业的启示：多模型策略不仅是技术冗余，更是地缘政治对冲。同时接入多个AI供应商，能规避单一依赖带来的系统性风险。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">企业AI采购需将政治风险纳入决策框架——多模型策略是地缘政治对冲，不只是技术备份。</div>
+                    </div>
+                </div>
+            </div>
+
+        </article>
+
+        <article id="enterprise" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="http://www.news.cn/tech/20260312/c64b82e776b7479a87a2dbbc6e8641cf/c.html" target="_blank">海尔AWE展示AI智慧家庭新成果：从“替人家务”到“无人家务”</a></div>
+                    <div class="news-source">新华网 · 3月12日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">海尔智家在AWE2026上展示AI之眼技术升级，从AI替人家务迈向AI无人家务新阶段</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">家电AI从辅助工具向自主决策进化，智慧家庭进入新阶段</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.sznews.com/news/content/2026-03/12/content_31974068.htm" target="_blank">美团升级“星眸”大模型：覆盖百万商家，日巡检后厨千万次</a></div>
+                    <div class="news-source">深圳新闻网 · 3月12日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">美团全面升级星眸垂域多模态大模型，应用范围从后厨识别扩展到食品安全全流程，覆盖百万外卖商家日巡检千万次</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">百万商家覆盖</span><span class="news-data-chip">日巡检千万次</span><span class="news-data-chip">食品安全全流程</span><span class="news-data-chip">软硬一体化</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">本地生活服务巨头用AI重塑食品安全基础设施，树立企业AI落地标杆</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header orange-theme">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">美团星眸升级："看得见的AI"比"能聊天的AI"更有价值</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>美团星眸的升级展示了AI企业落地的正确方向：不是开发通用聊天机器人，而是让AI"看"实体世界并解决具体问题。百万商家覆盖+日巡检千万次的规模，证明AI视觉模型在线下场景的落地速度远超预期。</p><p>一个值得注意的现象：在企业AI落地实战中，视觉类AI（巡检、质检、安防）比对话类AI（客服、知识问答）更容易证明ROI。原因很简单——视觉任务有明确的判断标准和可量化的效率提升，而聊天类AI的价值往往难以衡量。</p><p>企业AI转型的核心不在于"用了什么模型"，而在于"解决了什么问题"。美团选择食品安全这个刚需场景，是典型的"从痛点切入"策略。</p>
+                    <div class="deep-focus-takeaway orange-theme">
+                        <div class="deep-focus-takeaway-label orange">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">线下场景的AI视觉巡检是被低估的巨大市场——"看得见的AI"比"能聊天的AI"更容易证明价值。</div>
+                    </div>
+                </div>
+            </div>
+
+        </article>
+
+
+        <div class="section-card" style="margin-top:20px">
+            <div class="section-header"><span class="num">📊</span> 数据速览</div>
+            <table class="data-table">
+                <thead><tr><th>指标</th><th>数值</th><th>变化/说明</th></tr></thead>
+                <tbody>
+                    <tr><td>Nemotron 3 Super参数</td><td><strong>1200亿</strong></td><td>英伟达最强开源模型</td></tr>
+                    <tr><td>Opus 4.6破坏测试</td><td><strong>0/16通过</strong></td><td>METR独立审计</td></tr>
+                    <tr><td>闲鱼OpenClaw搜索量</td><td><strong>涨1850%</strong></td><td>AI Agent大众化信号</td></tr>
+                    <tr><td>GTC参会规模</td><td><strong>3万人/190国</strong></td><td>史上最大AI会议</td></tr>
+                    <tr><td>NVIDIA投资Nebius</td><td><strong>20亿美元</strong></td><td>AI云服务布局</td></tr>
+                    <tr><td>美团星眸巡检</td><td><strong>日千万次</strong></td><td>覆盖百万外卖商家</td></tr>
+                    <tr><td>GTC期间股价上涨率</td><td><strong>80%</strong></td><td>历史数据</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📌</span> 明日/下周值得关注</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 NVIDIA GTC 2026 (3月16-19日)</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">Jensen Huang主题演讲+Feynman芯片揭晓</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 AWE 2026 (3月12-15日)</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">上海，AI科技主题</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-danger);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-danger);display:flex;align-items:center;gap:6px">🔴 海尔AI科技全场景发布会 (3月13日)</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">海尔AI科技全场景发布会 (3月13日)</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-info);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-info);display:flex;align-items:center;gap:6px">🔵 Anthropic vs 美国政府 AI军事化博弈</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">持续关注</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-info);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-info);display:flex;align-items:center;gap:6px">🔵 OpenClaw安全风险后续</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">CNCERT持续监测</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+            <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+            <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+                我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+            </p>
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                🏠 访问AI洞察首页
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', 'false'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.setAttribute('aria-selected', 'true');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI应用能力演进路线：从工具到社会组织 · AI洞察AI洞察</title>
+<meta name="description" content="通过3条已验证规律理解AI应用演进的7个阶段，从工具时代到自主经济，帮你准确定位当前位置并做出正确的架构决策。">
+<meta property="og:title" content="AI应用能力演进路线：从工具到社会组织">
+<meta property="og:description" content="通过3条已验证规律理解AI应用演进的7个阶段">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232563EB'/><text x='6' y='23' font-size='18' fill='white'>⚡</text></svg>">
+<!-- v5.0 精简字体加载 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+<style>
+  /* ===== CSS 变量 (v5.0) ===== */
+  :root {
+    /* 五色调色板 */
+    --blue:#2563EB; --violet:#7C3AED; --emerald:#059669; --amber:#D97706; --rose:#E11D48;
+    /* 中性色 */
+    --stone-950:#1C1917; --stone-700:#44403C; --stone-500:#78716C; --stone-300:#D6D3D1; --stone-200:#E7E5E4; --stone-100:#F5F5F4; --stone-50:#FAFAF9;
+    /* 语义色 */
+    --text-primary:var(--stone-950); --text-secondary:var(--stone-700); --text-muted:var(--stone-500);
+    --bg:#FAFAF9; --surface:#fff; --border:var(--stone-200);
+    /* 布局 */
+    --sidebar-width:240px; --content-max:920px; --content-pad:32px;
+    /* 阴影 */
+    --shadow-card:0 2px 8px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-hover:0 8px 24px rgba(5,150,105,.12),0 2px 8px rgba(5,150,105,.08);
+    /* 动画 */
+    --ease-fast:150ms ease; --ease-normal:200ms ease;
+    /* 字体 */
+    --font:"DM Sans",-apple-system,"Noto Sans SC",sans-serif;
+    --font-mono:"JetBrains Mono",monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+  body{font-family:var(--font);font-size:14px;line-height:1.7;color:var(--text-secondary);background:var(--bg);
+    background-image:radial-gradient(at 20% 20%,rgba(5,150,105,.08) 0%,transparent 50%),radial-gradient(at 80% 80%,rgba(37,99,235,.06) 0%,transparent 50%);
+    background-attachment:fixed}
+  ::selection{background:rgba(5,150,105,.18)}
+  
+  /* Skip to content */
+  .skip-to-content{position:absolute;left:-9999px;top:16px;padding:8px 16px;background:var(--blue);color:#fff;border-radius:8px;font-size:14px;z-index:9999;text-decoration:none}
+  .skip-to-content:focus{left:16px}
+  
+  /* ===== 布局 (v5.0) ===== */
+  .layout-wrapper{display:flex;width:100%;min-height:100vh}
+  
+  /* 侧边栏 */
+  .sidebar-nav{width:var(--sidebar-width);flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--surface);border-right:1px solid var(--border);padding:24px 0;display:flex;flex-direction:column;transition:width .28s ease}
+  .sidebar-nav::-webkit-scrollbar{width:4px}
+  .sidebar-nav::-webkit-scrollbar-thumb{background:rgba(0,0,0,.08);border-radius:2px}
+  .sidebar-nav::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.15)}
+  
+  .sidebar-doc-title{font-size:14px;font-weight:700;color:var(--text-primary);padding:0 20px 16px;line-height:1.4}
+  .toc-section{flex:1;min-height:0}
+  .toc-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 20px 8px;padding-top:4px}
+  .toc-link{display:block;padding:7px 20px;font-size:13px;color:var(--text-secondary);text-decoration:none;border-left:3px solid transparent;transition:all var(--ease-fast);line-height:1.5}
+  .toc-link:hover{background:rgba(37,99,235,.04);color:var(--blue)}
+  .toc-link.toc-active{color:var(--blue);background:rgba(37,99,235,.06);border-left-color:var(--blue);font-weight:600}
+  .toc-link:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+  .toc-sub{padding-left:36px;font-size:12px}
+  
+  /* 阅读进度条（底部固定） */
+  .reading-progress-wrap{padding:16px 20px;margin-top:auto}
+  .reading-progress-label{font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;letter-spacing:.04em}
+  .reading-progress-track{height:6px;background:var(--stone-100);border-radius:999px;overflow:hidden}
+  .reading-progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),#3B82F6);border-radius:999px;width:0;transition:width .2s ease}
+  
+  /* 折叠按钮 */
+  .sidebar-collapse-btn{position:fixed;left:var(--sidebar-width);top:50%;transform:translate(-50%,-50%);width:28px;height:28px;background:var(--surface);border:1px solid var(--border);border-radius:6px;cursor:pointer;color:var(--text-muted);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all var(--ease-normal);z-index:100;box-shadow:var(--shadow-card)}
+  .sidebar-collapse-btn:hover{background:var(--stone-50);color:var(--text-secondary)}
+  
+  /* 侧边栏折叠状态 */
+  .sidebar-collapsed .sidebar-nav{width:0;padding:0;overflow:hidden;opacity:0}
+  .sidebar-collapsed .sidebar-collapse-btn{left:14px;transform:translateY(-50%)}
+  
+  /* 内容区 */
+  .content-area{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center}
+  .content-inner{width:100%;max-width:var(--content-max);padding:48px var(--content-pad) 120px}
+  
+  /* 回到顶部按钮 */
+  .scroll-to-top{position:fixed;right:32px;bottom:32px;width:48px;height:48px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(37,99,235,.3);opacity:0;visibility:hidden;transform:translateY(10px);transition:all var(--ease-normal);z-index:99}
+  .scroll-to-top.visible{opacity:1;visibility:visible;transform:translateY(0)}
+  .scroll-to-top:hover{background:#1D4ED8;transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.4)}
+  
+  /* ===== 文档头部 ===== */
+  .doc-header{margin-bottom:48px}
+  .doc-category{display:inline-flex;align-items:center;gap:6px;background:rgba(37,99,235,.08);color:var(--blue);border:1px solid rgba(37,99,235,.15);border-radius:999px;padding:6px 14px;font-size:12px;font-weight:600;margin-bottom:16px}
+  .doc-title{font-size:34px;font-weight:800;color:var(--text-primary);line-height:1.2;letter-spacing:-.02em;margin-bottom:12px;text-wrap:balance}
+  .doc-subtitle{font-size:16px;color:var(--text-muted);line-height:1.6;margin-bottom:24px;max-width:720px}
+  .doc-meta{display:flex;flex-wrap:wrap;gap:16px;padding:16px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .doc-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted)}
+  .doc-meta-item strong{color:var(--text-primary);font-weight:600}
+  
+  /* ===== 章节 ===== */
+  .doc-chapter-label{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);padding:36px 0 10px}
+  .doc-chapter-label::after{content:'';flex:1;height:1px;background:var(--stone-100)}
+  h2.section-title{font-size:21px;font-weight:700;color:var(--text-primary);margin:20px 0 16px;display:flex;align-items:center;gap:10px}
+  .section-badge{font-size:11px;font-weight:700;padding:4px 11px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+  .bd-rose{background:rgba(225,29,72,.1);color:#9F1239}
+  .bd-slate{background:rgba(120,113,108,.1);color:#57534E}
+  .bd-violet{background:rgba(124,58,237,.1);color:#6D28D9}
+  .bd-emerald{background:rgba(5,150,105,.1);color:#065F46}
+  .bd-amber{background:rgba(217,119,6,.1);color:#92400E}
+  
+  p{margin:12px 0;line-height:1.75}
+  strong{color:var(--text-primary);font-weight:600}
+  em{font-style:italic;color:var(--blue)}
+  
+  /* ===== Hero ===== */
+  .hero{background:linear-gradient(135deg,#1E3A5F 0%,#1a237e 50%,#0D1B40 100%);border-radius:20px;padding:40px;color:#fff;margin-bottom:32px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(at 80% 20%,rgba(99,179,237,.15),transparent 60%),radial-gradient(at 10% 80%,rgba(167,139,250,.12),transparent 50%);pointer-events:none}
+  .hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:5px 14px;font-size:12px;font-weight:600;color:rgba(255,255,255,.9);margin-bottom:20px;position:relative}
+  .hero h1{font-size:28px;font-weight:800;line-height:1.3;margin-bottom:16px;letter-spacing:-.02em;position:relative}
+  .hero-gains{list-style:none;margin-bottom:16px;position:relative}
+  .hero-gains-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.45);margin-bottom:10px}
+  .hero-gains li{font-size:14px;color:rgba(255,255,255,.85);line-height:1.7;display:flex;align-items:flex-start;gap:10px;margin-bottom:6px}
+  .hero-gains li::before{content:'✓';background:rgba(16,185,129,.3);color:#6EE7B7;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:2px}
+  .hero-method{font-size:12px;color:rgba(255,255,255,.5);border-top:1px solid rgba(255,255,255,.12);padding-top:14px;margin-top:8px;position:relative}
+  
+  /* ===== Stat Card (v5.0 颜色顶边) ===== */
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s}
+  .stat-card::before{content:'';position:absolute;left:0;top:0;right:0;height:3px;background:var(--stat-accent,var(--border))}
+  .stat-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.09);transform:translateY(-2px)}
+  .stat-info{--stat-accent:var(--blue)}
+  .stat-success{--stat-accent:var(--emerald)}
+  .stat-warning{--stat-accent:var(--amber)}
+  .stat-purple{--stat-accent:var(--violet)}
+  .stat-rose{--stat-accent:var(--rose)}
+  .stat-eyebrow{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);margin-bottom:6px}
+  .stat-title{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:6px;line-height:1.4}
+  .stat-body{font-size:13px;color:var(--text-secondary);line-height:1.65}
+  
+  /* ===== Three Eras Box ===== */
+  .eras-box{background:linear-gradient(135deg,var(--stone-50) 0%,#EEF2F6 100%);border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin:24px 0}
+  .eras-title{font-size:18px;font-weight:800;color:var(--text-primary);margin-bottom:20px;text-align:center}
+  .eras-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .era-card{background:var(--surface);border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .2s}
+  .era-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-2px)}
+  .era-highlight{border:2px solid var(--amber);box-shadow:0 0 20px rgba(217,119,6,.15)}
+  .era-icon{font-size:24px;margin-bottom:10px}
+  .era-label{font-size:11px;font-weight:700;background:rgba(37,99,235,.1);color:var(--blue);padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:8px}
+  .era-label.amber{background:rgba(217,119,6,.1);color:var(--amber)}
+  .era-label.violet{background:rgba(124,58,237,.1);color:var(--violet)}
+  .era-name{font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:8px}
+  .era-desc{font-size:13px;color:var(--text-secondary);line-height:1.65;margin-bottom:10px}
+  .era-stages{font-size:12px;color:var(--text-muted)}
+  .era-stages strong{color:var(--text-primary)}
+  .turning-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,var(--amber),#F59E0B);color:#fff;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;margin-left:8px}
+  
+  /* ===== Rule Cards ===== */
+  .rule-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:22px;position:relative;overflow:hidden;transition:all .2s}
+  .rule-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07)}
+  .rule-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:4px 0 0 4px}
+  .rc-blue::before{background:var(--blue)}
+  .rc-violet::before{background:var(--violet)}
+  .rc-emerald::before{background:var(--emerald)}
+  .rule-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+  .rule-tag{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}
+  .rt-blue{background:rgba(37,99,235,.1);color:#1D4ED8}
+  .rt-violet{background:rgba(124,58,237,.1);color:#6D28D9}
+  .rt-emerald{background:rgba(5,150,105,.1);color:#065F46}
+  .rule-name{font-size:17px;font-weight:800;color:var(--text-primary);line-height:1.3;margin-bottom:3px}
+  .rule-aka{font-size:12px;color:var(--text-muted)}
+  .rule-memo{display:inline-flex;align-items:center;gap:6px;background:var(--stone-50);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;color:var(--text-secondary);font-style:italic;margin:10px 0 14px}
+  .rule-body{font-size:14px;color:var(--text-secondary);line-height:1.75}
+  .ev-list{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+  .ev-item{display:flex;align-items:flex-start;gap:10px;background:var(--stone-50);border:1px solid var(--stone-200);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--text-secondary);line-height:1.6}
+  .ev-ico{font-size:15px;flex-shrink:0;margin-top:1px}
+  .ev-src{font-weight:700;color:var(--blue);margin-right:4px}
+  
+  /* ===== Timeline ===== */
+  .timeline{display:flex;flex-direction:column;position:relative;margin:20px 0}
+  .timeline::before{content:'';position:absolute;left:28px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--blue),var(--violet),var(--emerald),var(--amber),var(--rose),#94A3B8)}
+  .tl-item{display:flex;gap:20px;position:relative;padding-bottom:24px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-dot{width:58px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;z-index:1}
+  .tl-circle{width:18px;height:18px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+  .tl-num{font-size:10px;font-weight:700;color:var(--text-muted);text-align:center;line-height:1.2;margin-top:2px}
+  .tl-body{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-top:-2px;transition:all .2s}
+  .tl-body:hover{box-shadow:0 4px 16px rgba(0,0,0,.07);transform:translateX(2px)}
+  .tl-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+  .tl-title{font-size:16px;font-weight:700;color:var(--text-primary)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600}
+  .ch-blue{background:rgba(37,99,235,.1);color:#1D4ED8}
+  .ch-violet{background:rgba(124,58,237,.1);color:#6D28D9}
+  .ch-emerald{background:rgba(5,150,105,.1);color:#065F46}
+  .ch-amber{background:rgba(217,119,6,.1);color:#92400E}
+  .ch-rose{background:rgba(225,29,72,.1);color:#9F1239}
+  .ch-slate{background:rgba(120,113,108,.1);color:#57534E}
+  .tl-desc{font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:10px}
+  .tl-matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+  .mc{background:var(--stone-50);border-radius:8px;padding:8px 10px}
+  .mc-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);margin-bottom:3px}
+  .mc-val{font-size:12px;color:var(--text-primary);font-weight:500;line-height:1.4}
+  .products{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .ptag{display:inline-flex;align-items:center;gap:4px;background:var(--stone-100);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--text-secondary);font-weight:500}
+  .trigger-rule{display:flex;align-items:center;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--stone-100);font-size:12px;color:var(--text-muted)}
+  .trigger-rule strong{color:var(--blue)}
+  
+  /* ===== Callout ===== */
+  .callout{display:flex;gap:12px;align-items:flex-start;padding:14px 18px;border-radius:10px;margin:14px 0;font-size:13px;line-height:1.7;background:rgba(37,99,235,.06);border-left:3px solid var(--blue);color:#1E40AF}
+  .callout strong{color:#1D4ED8}
+  .warn-box{background:rgba(217,119,6,.06);border:1px solid rgba(217,119,6,.15);border-radius:10px;padding:14px 16px;font-size:13px;color:#92400E;line-height:1.65;margin:14px 0}
+  
+  /* ===== Insight Box ===== */
+  .insight-box{background:linear-gradient(135deg,#1E3A5F 0%,#1a237e 100%);border-radius:16px;padding:28px 32px;color:#fff;margin:24px 0}
+  .insight-box h3{font-size:18px;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+  .ins-row{margin-bottom:18px}
+  .ins-row:last-child{margin-bottom:0}
+  .ins-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.45);margin-bottom:6px}
+  .ins-text{font-size:14px;color:rgba(255,255,255,.88);line-height:1.75}
+  .ins-hl{background:rgba(99,179,237,.18);border-left:3px solid #63B3ED;border-radius:0 8px 8px 0;padding:10px 14px;margin-top:8px;font-size:14px;color:rgba(255,255,255,.9);line-height:1.7;font-style:italic}
+  .three-conds{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+  .cond-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:14px}
+  .cond-num{font-size:20px;font-weight:800;color:rgba(255,255,255,.3);margin-bottom:4px}
+  .cond-text{font-size:13px;color:rgba(255,255,255,.85);line-height:1.5}
+  .cond-rule{font-size:11px;color:rgba(255,255,255,.45);margin-top:6px}
+  
+  /* ===== Counterpoint Box ===== */
+  .cp-box{background:rgba(217,119,6,.06);border:1px solid rgba(217,119,6,.15);border-radius:14px;padding:22px 24px;margin:16px 0}
+  .cp-header{font-size:14px;font-weight:700;color:#92400E;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .cp-body{font-size:14px;color:#78350F;line-height:1.75}
+  .quote-block{background:rgba(180,83,9,.06);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 14px;margin:12px 0;font-size:13px;color:#78350F;font-style:italic;line-height:1.6}
+  
+  /* ===== Tables ===== */
+  .cmp-table{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+  .cmp-table th{background:var(--stone-50);padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);text-align:left;border-bottom:2px solid var(--border)}
+  .cmp-table td{padding:10px 14px;border-bottom:1px solid var(--stone-100);color:var(--text-secondary);vertical-align:top;line-height:1.5}
+  .cmp-table tr:last-child td{border-bottom:none}
+  .cmp-table tr:hover td{background:rgba(0,0,0,.015)}
+  
+  .matrix-table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .matrix-table th{background:#1E3A5F;color:rgba(255,255,255,.85);padding:11px 14px;text-align:left;font-size:12px;font-weight:700}
+  .matrix-table th:first-child{background:#0D1B40}
+  .matrix-table td{padding:12px 14px;border:1px solid var(--border);vertical-align:top;line-height:1.6;font-size:13px;color:var(--text-secondary)}
+  .matrix-table td:first-child{background:var(--stone-50);font-weight:600;font-size:12px;color:var(--text-muted)}
+  .cell-red{background:rgba(225,29,72,.06)}
+  .cell-yellow{background:rgba(217,119,6,.06)}
+  .cell-green{background:rgba(5,150,105,.06)}
+  .cell-dgreen{background:rgba(5,150,105,.12)}
+  
+  /* ===== Prediction Grid ===== */
+  .pred-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:16px 0}
+  .pred-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative;overflow:hidden;transition:all .2s}
+  .pred-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07);transform:translateY(-2px)}
+  .pred-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+  .pc-blue::before{background:var(--blue)}
+  .pc-violet::before{background:var(--violet)}
+  .pc-emerald::before{background:var(--emerald)}
+  .pc-amber::before{background:var(--amber)}
+  .pred-yr{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:6px}
+  .pred-title{font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:8px}
+  .pred-desc{font-size:13px;color:var(--text-secondary);line-height:1.65}
+  .pred-signal{margin-top:10px;font-size:12px;color:var(--text-muted);display:flex;align-items:flex-start;gap:5px}
+  
+  /* ===== Q List ===== */
+  .q-list{display:flex;flex-direction:column;gap:12px;margin:16px 0}
+  .q-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:flex;align-items:flex-start;gap:14px;transition:all .2s}
+  .q-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.06);transform:translateX(2px)}
+  .q-num{width:28px;height:28px;border-radius:7px;background:rgba(37,99,235,.1);color:#1D4ED8;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+  .q-q{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:4px}
+  .q-hint{font-size:13px;color:var(--text-muted);line-height:1.6}
+  .q-hint em{color:var(--text-secondary);font-style:normal}
+  
+  /* ===== 滚动入场动画 (v5.0) ===== */
+  .animate-on-scroll{opacity:0;transform:translateY(14px);transition:opacity .42s ease,transform .42s ease}
+  .animate-on-scroll.visible{opacity:1;transform:translateY(0)}
+  @media (prefers-reduced-motion:reduce){.animate-on-scroll{transition:none;opacity:1;transform:none}}
+  
+  /* Stagger 链式延迟 */
+  .stat-card:nth-child(2){transition-delay:.06s}
+  .stat-card:nth-child(3){transition-delay:.12s}
+  .pred-card:nth-child(2){transition-delay:.06s}
+  .pred-card:nth-child(3){transition-delay:.12s}
+  .pred-card:nth-child(4){transition-delay:.18s}
+  .q-item:nth-child(2){transition-delay:.06s}
+  .q-item:nth-child(3){transition-delay:.12s}
+  
+  /* ===== 响应式 ===== */
+  @media(max-width:1024px){
+    .sidebar-nav{width:200px}
+    .content-inner{max-width:none}
+    .stats-grid,.eras-grid,.pred-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:768px){
+    .layout-wrapper{flex-direction:column}
+    .sidebar-nav{width:100%;height:auto;max-height:none;position:relative;top:0;border-right:none;border-bottom:1px solid var(--border);padding:12px 16px;display:flex;flex-direction:row;overflow-x:auto;gap:8px}
+    .sidebar-doc-title,.reading-progress-wrap,.sidebar-collapse-btn{display:none}
+    .toc-group-label{display:none}
+    .toc-section{flex:1;display:flex;gap:8px;overflow-x:auto}
+    .toc-link{flex:0 0 auto;padding:8px 12px;border-left:none;border-bottom:2px solid transparent;white-space:nowrap;font-size:13px}
+    .toc-link.toc-active{border-left-color:transparent;border-bottom-color:var(--blue)}
+    .toc-sub{padding-left:12px}
+    .content-inner{padding:32px 16px 80px}
+    .doc-title{font-size:26px}
+    .hero{padding:28px 22px;border-radius:14px}
+    .hero h1{font-size:22px}
+    .stats-grid,.eras-grid,.three-conds,.pred-grid{grid-template-columns:1fr}
+    .tl-matrix{grid-template-columns:1fr 1fr}
+    body{background-attachment:scroll}
+  }
+  @media(max-width:480px){
+    .tl-matrix,.three-conds{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body class="no-js">
+<script>document.body.classList.remove('no-js')</script>
+<a class="skip-to-content" href="#main-content">跳到主内容</a>
+
+<div class="layout-wrapper">
+
+<!-- ===== 侧边栏导航 ===== -->
+<nav class="sidebar-nav" id="sidebar" aria-label="目录导航">
+    <div class="sidebar-doc-title">AI应用能力演进路线</div>
+    <div class="toc-section">
+        <div class="toc-group-label">目录</div>
+        <a href="#findings" class="toc-link">核心结论</a>
+        <a href="#eras" class="toc-link">三大时代</a>
+        <a href="#laws" class="toc-link">三大演进规律</a>
+        <a href="#r1" class="toc-link toc-sub">R1 · 能打分的先走</a>
+        <a href="#r2" class="toc-link toc-sub">R2 · 协议出现即跃迁</a>
+        <a href="#r3" class="toc-link toc-sub">R3 · Review速度是上限</a>
+        <a href="#stages" class="toc-link">七阶段演进图谱</a>
+        <a href="#s1" class="toc-link toc-sub">1.0 · 工具时代</a>
+        <a href="#s2" class="toc-link toc-sub">2.0 · 副驾驶时代</a>
+        <a href="#s3" class="toc-link toc-sub">3.0 · 单一智体</a>
+        <a href="#s4" class="toc-link toc-sub">4.0 · Agentic能力</a>
+        <a href="#s5" class="toc-link toc-sub">5.0 · Agentic Team</a>
+        <a href="#s6" class="toc-link toc-sub">6.0 · Agent生态</a>
+        <a href="#s7" class="toc-link toc-sub">7.0 · 自主经济</a>
+        <a href="#products" class="toc-link">产品全景图谱</a>
+        <a href="#insight" class="toc-link">本质洞察</a>
+        <a href="#contradiction" class="toc-link">反直觉发现</a>
+        <a href="#prediction" class="toc-link">趋势推演</a>
+        <a href="#decision" class="toc-link">你该怎么选</a>
+    </div>
+    
+    <!-- 阅读进度条 -->
+    <div class="reading-progress-wrap">
+        <div class="reading-progress-label">阅读进度</div>
+        <div class="reading-progress-track">
+            <div class="reading-progress-fill" id="readingProgress"></div>
+        </div>
+    </div>
+</nav>
+
+<!-- 折叠按钮 -->
+<button class="sidebar-collapse-btn" id="collapseBtn" title="折叠导航" aria-label="折叠导航">«</button>
+
+<!-- ===== 主内容区 ===== -->
+<main class="content-area" id="main-content">
+<div class="content-inner">
+
+<!-- ===== Hero ===== -->
+<div class="hero animate-on-scroll">
+  <div class="hero-tag">🔬 深度调研 · 趋势洞察</div>
+  <h1>AI 应用能力演进路线<br>从"工具"到"社会组织"，你现在在哪里？</h1>
+  <div class="hero-gains-title">读完本文，你能做到：</div>
+  <ul class="hero-gains">
+    <li>准确定位你当前的 AI 应用处于哪个演进阶段</li>
+    <li>理解每个阶段跃迁的真实触发条件——不是"模型更聪明了"</li>
+    <li>避开多 Agent 的反直觉陷阱，做出更稳的架构决策</li>
+  </ul>
+  <div class="hero-method">方法：先提炼3条规律假设 → 用 Anthropic / OpenAI / Google / Simon Willison 一手资料交叉验证 → 基于规律推演未来</div>
+</div>
+
+<!-- ===== 00 OVERVIEW IMAGE ===== -->
+<div class="animate-on-scroll" style="margin-bottom:32px">
+  <div style="border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.1);border:1px solid var(--border)">
+    <img src="https://placehold.co/800x400/1a1a2e/eee?text=AI+Evolution+2026"
+         alt="AI应用能力演进路线 · 全文概览"
+         style="width:100%;display:block;border-radius:16px" loading="lazy">
+  </div>
+  <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:8px">▲ 全文概览：AI 应用能力演进路线 · 三大时代 · 七阶段框架</p>
+</div>
+
+<!-- ===== KEY FINDINGS ===== -->
+<section id="findings">
+  <div class="doc-chapter-label">01 · 核心结论</div>
+  <h2 class="section-title">⚡ 核心结论 <span class="section-badge bd-rose">先看这里</span></h2>
+  <p style="color:var(--text-muted);margin-bottom:16px">读正文前先看这三张卡——如果你只有5分钟，这里就是全部。</p>
+  <div class="stats-grid">
+    <div class="stat-card stat-rose animate-on-scroll">
+      <div class="stat-eyebrow">⚠️ 最反直觉</div>
+      <div class="stat-title">多 Agent 不是越多越好，OpenAI 选择了反向操作</div>
+      <div class="stat-body">Codex 团队真实选择：把"脆弱的多 Agent 系统"合并成<strong>单个 Mega-Agent + 20 个工具</strong>。多 Agent 的价值是<em>并行吞吐</em>，不是角色分工。模型能力是核心变量，架构复杂度是次要变量。</div>
+    </div>
+    <div class="stat-card stat-warning animate-on-scroll">
+      <div class="stat-eyebrow">📍 当前位置</div>
+      <div class="stat-title">2025 年业界正在跨越"Agentic能力"门槛</div>
+      <div class="stat-body">AI 产品从"工具"跨向"像人"。Gartner 预测：Agentic 应用渗透率从 &lt;5%（2025）→ 40%（2026）。A2A 协议（2025/04）是这个阶段到来的信号——AI 开始有跨系统自主协调能力。</div>
+    </div>
+    <div class="stat-card stat-success animate-on-scroll">
+      <div class="stat-eyebrow">🔮 下一个爆发点</div>
+      <div class="stat-title">跨系统、有明确 KPI 的企业业务流程</div>
+      <div class="stat-body">自动化的三个前提正同时成熟：<strong>量化指标</strong>（企业数字化）× <strong>协调协议</strong>（A2A）× <strong>信任机制</strong>（AI 信誉体系）。三者交汇处，就是下一波 Agent 应用的爆发区。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== THREE ERAS ===== -->
+<section id="eras">
+  <div class="doc-chapter-label">02 · 宏观视角</div>
+  <h2 class="section-title">🗺️ 三大时代 <span class="section-badge bd-slate">高层划分</span></h2>
+  <p style="color:var(--text-muted);margin-bottom:8px">七阶段背后有一个更高层次的划分——理解了这个，你就明白为什么 4.0 是转折点。</p>
+
+  <div class="eras-box animate-on-scroll">
+    <div class="eras-title">AI 产品的三次身份跃迁</div>
+    <div class="eras-grid">
+      <div class="era-card">
+        <div class="era-icon">🔧</div>
+        <div class="era-label">1.0 – 3.0</div>
+        <div class="era-name">工具时代</div>
+        <div class="era-desc">AI 是"能力增强器"——帮人做得更快、更好，但人仍然是决策核心。每次进步都是"工具更强了"，不是"工具更像人了"。</div>
+        <div class="era-stages"><strong>阶段：</strong>工具 → 副驾驶 → 单一智体</div>
+      </div>
+      <div class="era-card era-highlight">
+        <div class="era-icon">⚡</div>
+        <div class="era-label amber">4.0</div>
+        <div class="era-name">转折点 <span class="turning-badge">🎯 关键</span></div>
+        <div class="era-desc">AI 产品开始<strong>更像人</strong>——能跨系统自主协调，人只设目标不介入过程。这是从"工具"到"智能体"的质变。</div>
+        <div class="era-stages"><strong>阶段：</strong>Agentic 能力</div>
+      </div>
+      <div class="era-card">
+        <div class="era-icon">🌐</div>
+        <div class="era-label violet">5.0 – 7.0</div>
+        <div class="era-name">社会组织时代</div>
+        <div class="era-desc">AI 开始<strong>更像社会组织</strong>——多 Agent 协作形成"小团队"，跨组织互联形成"市场"，最终成为经济参与者。人只做战略层决策。</div>
+        <div class="era-stages"><strong>阶段：</strong>Agentic Team → Agent 生态 → 自主经济</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout"><strong>核心洞察：</strong>1.0-3.0 是"让工具更强"，4.0 是"让 AI 像人"，5.0-7.0 是"让 AI 像社会组织"。三个时代的本质差异，不是技术更先进，而是<strong>AI 的身份属性发生了根本变化</strong>。</div>
+</section>
+
+<!-- ===== THREE LAWS ===== -->
+<section id="laws">
+  <div class="doc-chapter-label">03 · 演进规律</div>
+  <h2 class="section-title">⚖️ 三大演进规律 <span class="section-badge bd-violet">已验证</span></h2>
+  <p style="color:var(--text-muted);margin-bottom:8px">理解这三条规律，你就能自己推导后面所有阶段的边界条件——而不是死记硬背一张图。</p>
+  <div class="callout"><strong>验证方式：</strong>先提出可证伪的规律假设，再用多个独立一手来源交叉验证，全部通过后才纳入框架。</div>
+
+  <!-- R1 -->
+  <div id="r1" class="rule-card rc-blue animate-on-scroll">
+    <div class="rule-header">
+      <div class="rule-tag rt-blue">R1</div>
+      <div>
+        <div class="rule-name">越能打分的任务，越先被 AI 接管</div>
+        <div class="rule-aka">学术叫法：结构化认知先于情境化认知被自动化</div>
+      </div>
+    </div>
+    <div class="rule-memo">💬 &nbsp;一句话记忆：能打分的先走，得靠感觉的最后走。</div>
+    <div class="rule-body">
+      如果一项工作能写出明确的成功标准（跑一遍测试、对一下数字），AI 就能衡量自己做得对不对，从而自我迭代。反过来，需要"拍脑袋"、"感受氛围"的工作，AI 到今天还很难接管。<br><br>
+      人类认知任务按"可量化程度"分层：<strong>感知</strong>（识别/转写）→ <strong>记忆</strong>（检索/RAG）→ <strong>推理</strong>（分析/判断）→ <strong>执行</strong>（规划/行动）→ <strong>情境化判断</strong>（价值观/隐性约束）。越结构化的层次越先被攻克。
+    </div>
+    <div class="ev-list">
+      <div class="ev-item">
+        <span class="ev-ico">✅</span>
+        <span><span class="ev-src">数据验证：</span>GPT-5.2 代码任务 SWE-bench 80%，知识工作 GDPval 70.9%。差距不是因为代码更重要——而是代码<strong>有可执行的客观评分标准</strong>，知识工作含更多情境化判断。</span>
+      </div>
+      <div class="ev-item">
+        <span class="ev-ico">✅</span>
+        <span><span class="ev-src">Anthropic：</span>"Agent"只在"无法预测步骤数"时才用，其他情况用 Workflow——即任务结构化程度直接决定用哪层工具。</span>
+      </div>
+      <div class="ev-item">
+        <span class="ev-ico">✅</span>
+        <span><span class="ev-src">历史类比：</span>工业革命中，纺织/铸造（重复性、可量化）先于设计/管理（情境性）被自动化。AI 时代以快 100 倍的速度重演同一规律。</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- R2 -->
+  <div id="r2" class="rule-card rc-violet animate-on-scroll">
+    <div class="rule-header">
+      <div class="rule-tag rt-violet">R2</div>
+      <div>
+        <div class="rule-name">每次 AI 大跃进，背后都有一个新协议诞生</div>
+        <div class="rule-aka">学术叫法：协调成本决定阶段边界</div>
+      </div>
+    </div>
+    <div class="rule-memo">💬 &nbsp;一句话记忆：协议出来的那天，就是下一个阶段开始的那天。</div>
+    <div class="rule-body">
+      AI 能力不是平滑增长的，而是<strong>台阶式跳升</strong>。每次台阶跳升，都是因为某个新的"连接协议"出现，让不同系统之间的沟通成本骤降。当协调成本降低的那一刻，边际效益突然跃升——新阶段就此开始。
+    </div>
+    <div class="ev-list">
+      <div class="ev-item">
+        <span class="ev-ico">✅</span>
+        <span><span class="ev-src">时间线精确验证：</span>
+          MCP 出现（2024，工具层）→ 单 Agent 阶段加速；
+          A2A 出现（2025/04，Agent 互认层）→ Agentic 能力阶段到来；
+          AP2 出现（2025/09，商业交换层）→ Agent 生态系统雏形。
+          三层协议按规律预测的顺序依次出现，误差不超过半年。
+        </span>
+      </div>
+      <div class="ev-item">
+        <span class="ev-ico">✅</span>
+        <span><span class="ev-src">Google A2A 设计印证：</span>50+ 合作伙伴选择复用 HTTP/SSE/JSON-RPC 而非全新协议——正是"降低接入协调成本"的战略选择。Agent Card 就是"降低能力发现成本"的具体机制。</span>
+      </div>
+      <div class="ev-item">
+        <span class="ev-ico">✅</span>
+        <span class="ev-src">历史类比：</span>TCP/IP → HTTP → REST API，每次协议标准化都引爆一轮互联网应用爆发。AI 时代逻辑一致，速度更快。
+      </div>
+    </div>
+  </div>
+
+  <!-- R3 -->
+  <div id="r3" class="rule-card rc-emerald animate-on-scroll">
+    <div class="rule-header">
+      <div class="rule-tag rt-emerald">R3</div>
+      <div>
+        <div class="rule-name">AI 跑多快，取决于人类审查有多快</div>
+        <div class="rule-aka">学术叫法：人类审查带宽决定多 Agent 并行上限</div>
+      </div>
+    </div>
+    <div class="rule-memo">💬 &nbsp;一句话记忆：不是 Agent 越多越好，是你能 Review 多少就能用多少。</div>
+    <div class="rule-body">
+      多 Agent 并行执行是好事，但产出需要人来审查。人的审查速度是固定上限。如果 5 个 Agent 同时跑，你需要同时 Review 5 份结果——跟不上，并行就变成了堆积风险而不是提升效率。<strong>并行规模受限于人类审查带宽，而非 AI 执行能力。</strong>
+    </div>
+    <div class="ev-list">
+      <div class="ev-item">
+        <span class="ev-ico">✅</span>
+        <span><span class="ev-src">Simon Willison 第一手表述（2025/10）：</span>"AI-generated code needs to be reviewed, which means the <strong>natural bottleneck</strong> on all of this is how fast I can review the results." — 实战结论：只有低审查成本的任务（维护性小任务/研究探索）才适合真正并行。</span>
+      </div>
+      <div class="ev-item">
+        <span class="ev-ico">✅</span>
+        <span><span class="ev-src">Anthropic：</span>"Agents are ideal for scaling tasks in <strong>trusted environments</strong>"——"信任"是"降低审查带宽消耗"的代理变量。越可信的环境，审查成本越低，可承载的并行规模才越大。</span>
+      </div>
+      <div class="ev-item">
+        <span class="ev-ico">💡</span>
+        <span><span class="ev-src">突破路径：</span>① 提高 AI 产出的可验证性（让 Review 更快）；② 建立 AI 信誉体系（让信任可累积，减少必须 Review 的频率）。这两条路业界都在走。</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEVEN STAGES ===== -->
+<section id="stages">
+  <div class="doc-chapter-label">04 · 完整图谱</div>
+  <h2 class="section-title">🗺️ 七阶段演进图谱 <span class="section-badge bd-emerald">完整版</span></h2>
+  <p style="color:var(--text-muted);margin-bottom:8px">每个阶段不是凭空出现的——是 R1/R2/R3 中某个条件成熟后的必然结果。</p>
+  <div class="callout"><strong>看法：</strong>阶段不代表产品迭代路线图，而是描述<em>当前业界整体处在哪个位置</em>。同一时期可以有不同阶段的产品共存。</div>
+
+  <div class="timeline">
+
+    <!-- S1 -->
+    <div class="tl-item animate-on-scroll" id="s1">
+      <div class="tl-dot">
+        <div class="tl-circle" style="background:var(--blue)"></div>
+        <div class="tl-num">1.0</div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-head">
+          <div class="tl-title">🔧 工具时代（Tool Era）</div>
+          <div class="chips"><span class="chip ch-blue">2010–2022</span><span class="chip ch-slate">已过</span></div>
+        </div>
+        <div class="tl-desc">AI 作为独立工具嵌入特定场景。人做所有决策，AI 只执行单一指令。没有"对话"，只有"调用"。</div>
+        <div class="tl-matrix">
+          <div class="mc"><div class="mc-lbl">认知外包层</div><div class="mc-val">感知 + 记忆</div></div>
+          <div class="mc"><div class="mc-lbl">人类角色</div><div class="mc-val">决策者 + 执行者</div></div>
+          <div class="mc"><div class="mc-lbl">连接协议</div><div class="mc-val">API 调用</div></div>
+        </div>
+        <div class="products"><span class="ptag">📷 图像识别</span><span class="ptag">🎤 语音转文字</span><span class="ptag">💡 推荐算法</span></div>
+        <div class="trigger-rule">⚡ 触发规律：<strong>R1</strong> — 感知/记忆层任务结构化，开始有可量化的评分标准</div>
+      </div>
+    </div>
+
+    <!-- S2 -->
+    <div class="tl-item animate-on-scroll" id="s2">
+      <div class="tl-dot">
+        <div class="tl-circle" style="background:var(--violet)"></div>
+        <div class="tl-num">2.0</div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-head">
+          <div class="tl-title">🤝 副驾驶时代（Copilot）</div>
+          <div class="chips"><span class="chip ch-violet">2022–2024</span><span class="chip ch-violet">主流期</span></div>
+        </div>
+        <div class="tl-desc">LLM 出现，AI 开始承接推理和生成任务。人类仍需逐步确认，但交互方式从"命令行"变成了"对话"——这是质的转变，不只是界面升级。</div>
+        <div class="tl-matrix">
+          <div class="mc"><div class="mc-lbl">认知外包层</div><div class="mc-val">感知 + 记忆 + 推理</div></div>
+          <div class="mc"><div class="mc-lbl">人类角色</div><div class="mc-val">决策者 / 确认者</div></div>
+          <div class="mc"><div class="mc-lbl">连接协议</div><div class="mc-val">Prompt（自然语言）</div></div>
+        </div>
+        <div class="products"><span class="ptag">💻 GitHub Copilot</span><span class="ptag">🔍 ChatGPT</span><span class="ptag">📝 Claude</span><span class="ptag">✍️ Notion AI</span></div>
+        <div class="trigger-rule">⚡ 触发规律：<strong>R1</strong> — 推理层开始可评测（RLHF/基准）；<strong>R2</strong> — Prompt 成为标准化交互协议，降低使用门槛</div>
+      </div>
+    </div>
+
+    <!-- S3 -->
+    <div class="tl-item animate-on-scroll" id="s3">
+      <div class="tl-dot">
+        <div class="tl-circle" style="background:var(--emerald)"></div>
+        <div class="tl-num">3.0</div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-head">
+          <div class="tl-title">🤖 单一智体（Single Agent）</div>
+          <div class="chips"><span class="chip ch-emerald">2024–2025</span><span class="chip ch-emerald">当前前沿</span></div>
+        </div>
+        <div class="tl-desc">AI 获得工具调用能力（MCP），可以自主规划多步骤任务，跨会话维持状态，<strong>开始有"自己干完一件事"的能力</strong>。Anthropic 定义的"Workflow + Agent 双轨"正是此阶段的系统化总结。</div>
+        <div class="tl-matrix">
+          <div class="mc"><div class="mc-lbl">认知外包层</div><div class="mc-val">推理 + 执行</div></div>
+          <div class="mc"><div class="mc-lbl">人类角色</div><div class="mc-val">监督者</div></div>
+          <div class="mc"><div class="mc-lbl">连接协议</div><div class="mc-val">MCP（工具层）</div></div>
+        </div>
+        <div class="products"><span class="ptag">🖥️ Cursor</span><span class="ptag">⚙️ Computer Use</span><span class="ptag">🧑‍💼 SWE-agent</span></div>
+        <div class="trigger-rule">⚡ 触发规律：<strong>R2</strong> — MCP 出现（2024），工具连接协调成本骤降，单 Agent 快速普及</div>
+      </div>
+    </div>
+
+    <!-- S4 -->
+    <div class="tl-item animate-on-scroll" id="s4">
+      <div class="tl-dot">
+        <div class="tl-circle" style="background:var(--amber)"></div>
+        <div class="tl-num">4.0</div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-head">
+          <div class="tl-title">⚡ Agentic 能力 <span class="turning-badge">🎯 转折点</span></div>
+          <div class="chips"><span class="chip ch-amber">2025</span><span class="chip ch-amber">跨越门槛 · 当前</span></div>
+        </div>
+        <div class="tl-desc">
+          <strong>这是 AI 产品开始更像人的转折点。</strong>单一 Agent 获得跨系统自主协调能力——能调用外部系统的其他 Agent，能跨会话维持状态，能在异常时自己调整策略。人类从"监督者"退化为"目标定义者"，只设目标不介入过程。
+        </div>
+        <div class="callout">
+          <strong>核心差异：Agent vs Agentic</strong><br>
+          <strong>Agent（3.0）：</strong>能完成一件事，人监督每一步<br>
+          <strong>Agentic（4.0）：</strong>能跨系统协调完成一件事，人只看结果
+        </div>
+        <div class="tl-matrix">
+          <div class="mc"><div class="mc-lbl">认知外包层</div><div class="mc-val">执行 + 跨系统协调</div></div>
+          <div class="mc"><div class="mc-lbl">人类角色</div><div class="mc-val">目标定义者</div></div>
+          <div class="mc"><div class="mc-lbl">连接协议</div><div class="mc-val">A2A（Agent 互认）</div></div>
+        </div>
+        <div class="products"><span class="ptag">☁️ Codex Cloud 并行沙箱</span><span class="ptag">🔗 Google A2A</span><span class="ptag">🤝 SAP Joule 跨系统</span></div>
+        <div class="products" style="margin-top:6px">
+          <span style="font-size:11px;color:var(--text-muted);font-weight:600;margin-right:4px;align-self:center">S3→S4 过渡期：</span>
+          <span class="ptag" style="border-color:rgba(217,119,6,.3);background:rgba(217,119,6,.05)">🔄 OpenAI Codex</span>
+          <span class="ptag" style="border-color:rgba(217,119,6,.3);background:rgba(217,119,6,.05)">🤖 Claude</span>
+          <span class="ptag" style="border-color:rgba(217,119,6,.3);background:rgba(217,119,6,.05)">🇨🇳 Trae</span>
+          <span class="ptag" style="border-color:rgba(217,119,6,.3);background:rgba(217,119,6,.05)">🇨🇳 Qoder</span>
+          <span class="ptag" style="border-color:rgba(217,119,6,.3);background:rgba(217,119,6,.05)">🇨🇳 Buddy</span>
+          <span class="ptag" style="border-color:rgba(217,119,6,.3);background:rgba(217,119,6,.05)">🇨🇳 AI洞察</span>
+        </div>
+        <div class="trigger-rule">⚡ 触发规律：<strong>R2</strong> — A2A 协议（2025/04）让 Agent 能发现并调用其他 Agent；<strong>R3</strong> — 审查对象从"每一步"变成"最终结果"</div>
+      </div>
+    </div>
+
+    <!-- S5 -->
+    <div class="tl-item animate-on-scroll" id="s5">
+      <div class="tl-dot">
+        <div class="tl-circle" style="background:var(--rose)"></div>
+        <div class="tl-num">5.0</div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-head">
+          <div class="tl-title">👥 Agentic Team（结构化多智体）</div>
+          <div class="chips"><span class="chip ch-rose">2025–2026</span><span class="chip ch-rose">爬坡期</span></div>
+        </div>
+        <div class="tl-desc">
+          多个 Agent 在明确角色分工下协同。核心模式是 <strong>Orchestrator-Workers</strong>：一个调度者把任务分配给若干执行者，结果可审计可追溯。
+        </div>
+        <div class="warn-box">
+          <strong>⚠️ Team vs Swarm 必须搞清楚：</strong><br>
+          <strong>Team（当前爆发的）：</strong>有结构，有 Orchestrator 统一调度，可控可审计。<br>
+          <strong>Swarm（研究阶段）：</strong>去中心化自组织，协调成本高，错误级联放大，<em>生产环境慎用</em>。<br>
+          2025 年爆发的是 Team，不是 Swarm。
+        </div>
+        <div class="tl-matrix">
+          <div class="mc"><div class="mc-lbl">认知外包层</div><div class="mc-val">执行 + 跨域协调</div></div>
+          <div class="mc"><div class="mc-lbl">人类角色</div><div class="mc-val">意图提供者</div></div>
+          <div class="mc"><div class="mc-lbl">连接协议</div><div class="mc-val">A2A + 任务编排</div></div>
+        </div>
+        <div class="products"><span class="ptag">🔀 LangGraph</span><span class="ptag">🌀 CrewAI</span><span class="ptag">🏢 Salesforce Agentforce</span></div>
+        <div class="trigger-rule">⚡ 触发规律：<strong>R2</strong> — A2A 协议成熟，多 Agent 协作成本降低；<strong>R3</strong> — 团队级审查机制建立</div>
+      </div>
+    </div>
+
+    <!-- S6 -->
+    <div class="tl-item animate-on-scroll" id="s6">
+      <div class="tl-dot">
+        <div class="tl-circle" style="background:var(--violet)"></div>
+        <div class="tl-num">6.0</div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-head">
+          <div class="tl-title">🌐 Agent 生态系统（Ecosystem）</div>
+          <div class="chips"><span class="chip ch-violet">2026–2028</span><span class="chip ch-violet">协议建设期</span></div>
+        </div>
+        <div class="tl-desc">不同厂商的 Agent 通过开放协议<strong>跨组织互联</strong>。Agent 通过 Agent Card 自动发现彼此能力，长任务跨系统持续执行，形成"智体市场"。关键基础设施正在 2025 年快速成型。</div>
+        <div class="tl-matrix">
+          <div class="mc"><div class="mc-lbl">认知外包层</div><div class="mc-val">情境化协商</div></div>
+          <div class="mc"><div class="mc-lbl">人类角色</div><div class="mc-val">意图提供者</div></div>
+          <div class="mc"><div class="mc-lbl">连接协议</div><div class="mc-val">A2A + AP2 + 信誉系统</div></div>
+        </div>
+        <div class="products"><span class="ptag">💳 AP2 支付协议</span><span class="ptag">🏦 Agent 市场</span></div>
+        <div class="trigger-rule">⚡ 触发规律：<strong>R2</strong> — AP2 商业交换协议（2025/09）出现；<strong>R3</strong> — AI 信誉体系初步建立，减少逐次审查必要性</div>
+      </div>
+    </div>
+
+    <!-- S7 -->
+    <div class="tl-item animate-on-scroll" id="s7">
+      <div class="tl-dot">
+        <div class="tl-circle" style="background:#94A3B8"></div>
+        <div class="tl-num">7.0</div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-head">
+          <div class="tl-title">♾️ 自主经济（Autonomous Economy）</div>
+          <div class="chips"><span class="chip ch-slate">2028+</span><span class="chip ch-slate">远期推演</span></div>
+        </div>
+        <div class="tl-desc">Agent 作为经济参与者，自主签约、买卖服务、谈判合同。人类退化为战略目标制定者，不再参与执行层。</div>
+        <div class="tl-matrix">
+          <div class="mc"><div class="mc-lbl">认知外包层</div><div class="mc-val">全栈（含价值判断）</div></div>
+          <div class="mc"><div class="mc-lbl">人类角色</div><div class="mc-val">战略制定者</div></div>
+          <div class="mc"><div class="mc-lbl">连接协议</div><div class="mc-val">智能合约 + AI 信誉</div></div>
+        </div>
+        <div class="trigger-rule">⚡ 触发规律：<strong>R3</strong> 被彻底突破（信誉体系让"无需逐次审查"成为可能）+ <strong>R1</strong> 情境化认知达到专家水平</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== PRODUCTS LANDSCAPE ===== -->
+<section id="products">
+  <div class="doc-chapter-label">3.5 · 产品全景</div>
+  <h2 class="section-title">🗺️ 各阶段代表产品全景 <span class="section-badge bd-blue">完整版</span></h2>
+  <p style="color:var(--text-muted);margin-bottom:16px">从"能识别"到"能自主经济"，每个阶段都有一批代表产品定义了那个时代的上限。</p>
+
+  <!-- 产品全景图 -->
+  <div class="animate-on-scroll" style="margin-bottom:28px">
+    <div style="border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.1);border:1px solid var(--border)">
+      <img src="https://placehold.co/800x400/1a1a2e/eee?text=AI+Evolution+Roadmap"
+           alt="AI应用能力演进：各阶段代表产品全景"
+           style="width:100%;display:block;border-radius:14px" loading="lazy">
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:8px">▲ 各阶段代表产品全景：三层结构 · S1-S7 产品分布</p>
+  </div>
+
+  <!-- ===== 第一层：工具时代 S1-S3 ===== -->
+  <div class="animate-on-scroll" style="margin-bottom:24px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <span style="background:rgba(37,99,235,.1);color:var(--blue);padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700">第一层 · S1–S3</span>
+      <span style="font-size:16px;font-weight:700;color:var(--text-primary)">🔧 工具时代（2010–2025）</span>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">AI 是"帮人做得更快"的增强器，人类始终是决策核心。从识别（S1）→ 对话建议（S2）→ 自主完成多步骤（S3）。</p>
+
+    <div class="callout" style="margin-bottom:14px"><strong>S1 工具时代（2010–2022）：</strong>单点能力工具化</div>
+    <table class="cmp-table animate-on-scroll">
+      <tr><th>地域</th><th>产品</th><th>公司</th><th>核心能力</th><th>典型场景</th></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>Google Vision API</strong></td><td>Google</td><td>图像识别（物体/场景/OCR）</td><td>照片分类、文档扫描</td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>Whisper</strong></td><td>OpenAI</td><td>语音转文字</td><td>会议记录、字幕生成</td></tr>
+      <tr><td><span class="chip ch-slate">国内</span></td><td><strong>推荐算法</strong></td><td>字节跳动</td><td>内容推荐</td><td>短视频 Feed、电商推荐</td></tr>
+    </table>
+
+    <div class="callout" style="margin-top:16px;margin-bottom:14px"><strong>S2 副驾驶时代（2022–2024）：</strong>对话式协作</div>
+    <table class="cmp-table animate-on-scroll">
+      <tr><th>地域</th><th>产品</th><th>公司</th><th>核心能力</th><th>典型场景</th></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>ChatGPT</strong></td><td>OpenAI</td><td>对话式推理，逐轮确认</td><td>知识问答、内容起草</td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>Claude</strong></td><td>Anthropic</td><td>长文理解 + 对话</td><td>文档分析、写作助手</td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>GitHub Copilot</strong></td><td>GitHub/Microsoft</td><td>代码补全，逐行建议</td><td>代码编写、API 查询</td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>Notion AI</strong></td><td>Notion</td><td>文档智能辅助</td><td>会议纪要、内容润色</td></tr>
+    </table>
+
+    <div class="callout" style="margin-top:16px;margin-bottom:14px"><strong>S3 单一智体（2024–2025）：</strong>自主执行多步骤任务</div>
+    <table class="cmp-table animate-on-scroll">
+      <tr><th>地域</th><th>产品</th><th>公司</th><th>核心能力</th><th>典型场景</th></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>Cursor</strong></td><td>Cursor</td><td>IDE 内上下文理解 + 自主编辑</td><td>文件级修改、debug</td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>Computer Use</strong></td><td>Anthropic</td><td>操作电脑 GUI 完成任务</td><td>浏览器自动化、桌面操作</td></tr>
+    </table>
+    <div class="callout" style="background:rgba(5,150,105,.06);border-left-color:var(--emerald);color:#064E3B;margin-top:10px"><strong>📌 工具时代特征：</strong>AI 是增强器，人类始终是决策核心。</div>
+  </div>
+
+  <!-- ===== 第二层：转折点 S4 ===== -->
+  <div class="animate-on-scroll" style="margin-bottom:24px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <span style="background:rgba(217,119,6,.1);color:var(--amber);padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700">第二层 · S4 <span class="turning-badge" style="font-size:10px;padding:2px 8px">🎯 转折点</span></span>
+      <span style="font-size:16px;font-weight:700;color:var(--text-primary)">⚡ Agentic 能力（2025）</span>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">AI 开始更像人——能跨系统自主协调，人类从"监督每一步"退化为"只看结果"。</p>
+
+    <table class="cmp-table animate-on-scroll">
+      <tr><th>地域</th><th>产品</th><th>公司</th><th>Agentic 能力体现</th><th>阶段标注</th></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>Google A2A</strong></td><td>Google</td><td>Agent 发现彼此能力并协商协作</td><td><span class="chip ch-emerald">已成型</span></td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>SAP Joule</strong></td><td>SAP</td><td>跨 ERP/CRM/HR 系统协调</td><td><span class="chip ch-emerald">已成型</span></td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>Codex Cloud</strong></td><td>OpenAI</td><td>并行沙箱，多任务自主分配</td><td><span class="chip ch-emerald">已成型</span></td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>OpenAI Codex</strong></td><td>OpenAI</td><td>跨文件代码生成 + 测试</td><td><span class="chip ch-amber">S3→S4 过渡期</span></td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>Claude</strong></td><td>Anthropic</td><td>Ask + Work + Code 三合一</td><td><span class="chip ch-amber">S3→S4 过渡期</span></td></tr>
+      <tr><td><span class="chip ch-slate">国内</span></td><td><strong>Trae</strong></td><td>字节跳动</td><td>Code + Solo（独立开发者助手）</td><td><span class="chip ch-amber">S3→S4 过渡期</span></td></tr>
+      <tr><td><span class="chip ch-slate">国内</span></td><td><strong>Qoder</strong></td><td>阿里巴巴</td><td>Work + Code（工作流 + 编码）</td><td><span class="chip ch-amber">S3→S4 过渡期</span></td></tr>
+      <tr><td><span class="chip ch-slate">国内</span></td><td><strong>Buddy</strong></td><td>腾讯</td><td>Code + Work（编码 + 工作流）</td><td><span class="chip ch-amber">S3→S4 过渡期</span></td></tr>
+      <tr><td><span class="chip ch-slate">国内</span></td><td><strong>AI洞察</strong></td><td>某公司</td><td>Code + Work（编码 + 工作流）</td><td><span class="chip ch-amber">S3→S4 过渡期</span></td></tr>
+      <tr><td><span class="chip ch-slate">国内</span></td><td><strong>OpenClaw / 爱马仕 Agent</strong></td><td>某公司</td><td>个人 AI 助手，多技能编排</td><td><span class="chip ch-amber">S4 早期</span></td></tr>
+    </table>
+    <div class="callout" style="background:rgba(217,119,6,.06);border-left-color:var(--amber);color:#92400E;margin-top:10px"><strong>📌 转折点特征：</strong>海外和国内产品都处于 S3→S4 过渡期，正在从工具向智体演进。</div>
+  </div>
+
+  <!-- ===== 第三层：社会组织时代 S5-S7 ===== -->
+  <div class="animate-on-scroll" style="margin-bottom:24px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <span style="background:rgba(124,58,237,.1);color:var(--violet);padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700">第三层 · S5–S7</span>
+      <span style="font-size:16px;font-weight:700;color:var(--text-primary)">🌐 社会组织时代（2025–2028+）</span>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">AI 从"像人"进化为"像社会组织"——有分工（S5）、有市场（S6）、有经济活动（S7）。</p>
+
+    <div class="callout" style="margin-bottom:14px"><strong>S5 Agentic Team（2025–2026）：</strong>多 Agent 结构化协作</div>
+    <table class="cmp-table animate-on-scroll">
+      <tr><th>地域</th><th>产品</th><th>公司</th><th>核心能力</th><th>组织类比</th><th>标注</th></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>LangGraph</strong></td><td>LangChain</td><td>编程式 Agent 编排，状态机协作</td><td>结构化小团队</td><td><span class="chip ch-slate">🔬 探索</span></td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>CrewAI</strong></td><td>CrewAI</td><td>声明式 Agent 角色协作</td><td>内容生产流水线</td><td><span class="chip ch-slate">🔬 探索</span></td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>Salesforce Agentforce</strong></td><td>Salesforce</td><td>CRM 内多 Agent 协同</td><td>企业内部团队协作</td><td><span class="chip ch-slate">🔬 探索</span></td></tr>
+    </table>
+
+    <div class="callout" style="margin-top:16px;margin-bottom:14px"><strong>S6 Agent 生态（2026–2028）：</strong>标准化市场</div>
+    <table class="cmp-table animate-on-scroll">
+      <tr><th>地域</th><th>产品</th><th>公司</th><th>核心能力</th><th>组织类比</th><th>标注</th></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>MCP 协议生态</strong></td><td>Anthropic</td><td>10 种语言 SDK，标准化工具连接</td><td>开放市场</td><td><span class="chip ch-emerald">已成型</span></td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td><strong>AP2 商业协议</strong></td><td>Google</td><td>Agent 买卖服务，自动发现</td><td>智体市场</td><td><span class="chip ch-amber">早期</span></td></tr>
+    </table>
+
+    <div class="callout" style="margin-top:16px;margin-bottom:14px"><strong>S7 自主经济（2028+）：</strong>理论阶段</div>
+    <table class="cmp-table animate-on-scroll">
+      <tr><th>能力</th><th>描述</th><th>组织类比</th><th>标注</th></tr>
+      <tr><td><strong>自主签约</strong></td><td>Agent 独立签订合同</td><td>经济体</td><td><span class="chip ch-slate">🔬 理论</span></td></tr>
+      <tr><td><strong>谈判合同</strong></td><td>Agent 之间自主议价</td><td>市场交易</td><td><span class="chip ch-slate">🔬 理论</span></td></tr>
+      <tr><td><strong>买卖服务</strong></td><td>Agent 作为服务提供方</td><td>商业生态</td><td><span class="chip ch-slate">🔬 理论</span></td></tr>
+    </table>
+    <div class="callout" style="background:rgba(120,113,108,.06);border-left-color:var(--stone-500);color:var(--text-secondary);margin-top:10px"><strong>📌 社会组织时代特征：</strong>人类从"指挥者"退化为"规则制定者"。S5 和 S7 目前都处于探索阶段，尚未有成熟好用的产品。</div>
+  </div>
+
+  <!-- ===== 垂直领域 Agent ===== -->
+  <div class="animate-on-scroll">
+    <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:8px">🏭 垂直领域 Agent：各行业专业化探索</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">框架和基础设施成熟后，商业价值在垂直应用里。每个领域都会跑出自己的头部 Agent。</p>
+    <table class="cmp-table animate-on-scroll">
+      <tr><th>地域</th><th>领域</th><th>代表产品</th><th>公司</th><th>核心能力</th><th>所处阶段</th></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td>安全渗透</td><td><strong>Shannon</strong></td><td>KeygraphHQ</td><td>96.15% 漏洞发现率，构造攻击路径</td><td><span class="chip ch-amber">S4 早期</span></td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td>金融研究</td><td><strong>Dexter</strong></td><td>—</td><td>深度金融研究 + 数据分析</td><td><span class="chip ch-violet">S3 后期</span></td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td>研发自动化</td><td><strong>RD-Agent</strong></td><td>Microsoft</td><td>研发流程自动化，数据/模型迭代</td><td><span class="chip ch-amber">S4 早期</span></td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td>法律文书</td><td><strong>Harvey AI</strong></td><td>Harvey</td><td>法律文件起草 + 案例研究</td><td><span class="chip ch-violet">S3 后期</span></td></tr>
+      <tr><td><span class="chip ch-blue">海外</span></td><td>医疗诊断</td><td><strong>Med-PaLM</strong></td><td>Google</td><td>医疗问答 + 诊断辅助</td><td><span class="chip ch-violet">S2-S3 过渡</span></td></tr>
+      <tr><td><span class="chip ch-slate">国内</span></td><td>桌面操作</td><td><strong>UI-TARS</strong></td><td>字节跳动</td><td>多模态桌面操作，看懂 GUI</td><td><span class="chip ch-violet">S3 后期</span></td></tr>
+      <tr><td><span class="chip ch-slate">国内</span></td><td>金融交易</td><td><strong>TradingAgents-CN</strong></td><td>—</td><td>中文金融交易多 Agent 框架</td><td><span class="chip ch-slate">🔬 S5 早期</span></td></tr>
+    </table>
+  </div>
+
+  <div class="callout" style="margin-top:20px"><strong>一句话总结：</strong>从工具到社会组织的演进不是概念，而是正在发生的产品分层——S1-S3 的工具（ChatGPT、Copilot）你每天在用，S4 的 Agentic 能力（Claude、Codex、Trae、Qoder）正在爆发，S5-S7 的社会组织形态（LangGraph、MCP 生态）刚露头。看清你的产品处于哪个阶段，就知道该往哪个方向发力。</div>
+</section>
+
+<!-- ===== INSIGHT ===== -->
+<section id="insight">
+  <div class="doc-chapter-label">05 · 深度洞察</div>
+  <h2 class="section-title">🧠 本质洞察 <span class="section-badge bd-violet">规律统一解释</span></h2>
+  <div class="insight-box animate-on-scroll">
+    <h3>🔭 三条规律背后的同一件事</h3>
+    <div class="ins-row">
+      <div class="ins-lbl">表面现象</div>
+      <div class="ins-text">AI 从工具 → 助手 → Agent → Agentic → 团队 → 生态 → 经济，能力在"越来越自主"地演进</div>
+    </div>
+    <div class="ins-row">
+      <div class="ins-lbl">本质规律</div>
+      <div class="ins-text">这本质上是<strong>认知分工的重新配置</strong>：哪些认知任务可以外包（R1）、哪些协调成本可以降低（R2）、哪些审查带宽可以节省（R3）——三个变量共同决定每一个阶段的边界。</div>
+      <div class="ins-hl">类比生产组织演化：农业社会（人做所有事）→ 工业革命（机器接管可量化劳动）→ 流水线（协调机制降低分工成本）→ 全球供应链（跨组织协议互联）→ AI 时代在以快 100 倍的速度重演同一规律，只是"劳动"从体力变成了认知。</div>
+    </div>
+    <div class="ins-row">
+      <div class="ins-lbl">核心推论：自动化临界点的三个条件</div>
+      <div class="three-conds">
+        <div class="cond-card">
+          <div class="cond-num">①</div>
+          <div class="cond-text">有量化的成功标准（能打分）</div>
+          <div class="cond-rule">对应 R1</div>
+        </div>
+        <div class="cond-card">
+          <div class="cond-num">②</div>
+          <div class="cond-text">有标准化的执行协议（能互联）</div>
+          <div class="cond-rule">对应 R2</div>
+        </div>
+        <div class="cond-card">
+          <div class="cond-num">③</div>
+          <div class="cond-text">人类审查成本可接受（能验收）</div>
+          <div class="cond-rule">对应 R3</div>
+        </div>
+      </div>
+      <div class="ins-text" style="margin-top:14px">三个条件任何一个不满足，该任务就会停留在"人类监督"阶段而非"自动化"阶段。</div>
+    </div>
+    <div class="ins-row">
+      <div class="ins-lbl">对未来的预测</div>
+      <div class="ins-text">下一个被攻克的大领域：<strong>跨系统的、有明确 KPI 的企业业务流程</strong>——三个条件正同时成熟（A2A 提供协议基础，AI 信誉体系降低审查成本，企业数字化提供量化指标）。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTRADICTION ===== -->
+<section id="contradiction">
+  <div class="doc-chapter-label">06 · 反直觉</div>
+  <h2 class="section-title">⚡ 反直觉发现 <span class="section-badge bd-rose">重要</span></h2>
+
+  <div class="cp-box animate-on-scroll">
+    <div class="cp-header">⚠️ 多 Agent ≠ 一定优于单 Mega-Agent：OpenAI Codex 的反向操作</div>
+    <div class="cp-body">
+      <div class="quote-block">"We collapsed a fragile, multi-agent system into a single <strong>mega-agent</strong> with 20+ tools."<br><span style="font-size:12px;opacity:.7">— OpenAI Codex 团队，DevDay 2025</span></div>
+      <strong>为什么反转？</strong> 多 Agent 的理论优势（并行 + 专业化）在实践中被两个问题抵消：<br>
+      ① <strong>协调成本：</strong>Agent 之间通信和状态同步的隐性开销<br>
+      ② <strong>错误级联：</strong>多 Agent 链路中，一个节点的错误会放大传递，debug 成本极高<br><br>
+      <strong>多 Agent 真正有优势的场景是什么？</strong><br>
+      → <strong>并行沙箱执行</strong>（Codex Cloud：在独立沙箱中并行跑多个任务实例）——这是"物理层面的并行实例"，不是"逻辑上的多角色协作"。两者完全不同。<br><br>
+      <strong>核心结论：多 Agent 的价值是<em>并行吞吐</em>，不是角色分工。当模型能力足够强时，单 Mega-Agent + 多工具比多个弱 Agent 协作更稳定、更易 debug。</strong>
+    </div>
+  </div>
+
+  <table class="cmp-table animate-on-scroll">
+    <tr>
+      <th>架构选型</th>
+      <th>结构化 Team（Orchestrator-Workers）</th>
+      <th>单 Mega-Agent + 多工具</th>
+      <th>去中心化 Swarm</th>
+    </tr>
+    <tr>
+      <td>适用场景</td>
+      <td>任务边界清晰，专业化分工</td>
+      <td>模型能力强，任务可在单上下文完成</td>
+      <td>探索性任务（实验阶段）</td>
+    </tr>
+    <tr>
+      <td>协调成本</td>
+      <td>中（Orchestrator 统一调度）</td>
+      <td>低（单上下文内，无通信开销）</td>
+      <td>高（无中心协调，自发涌现）</td>
+    </tr>
+    <tr>
+      <td>错误传播</td>
+      <td>中（链路可控，可追溯）</td>
+      <td>低（单点，易 debug）</td>
+      <td>高（涌现行为难以预测）</td>
+    </tr>
+    <tr>
+      <td>业界现状</td>
+      <td>✅ 当前主流（LangGraph/CrewAI）</td>
+      <td>✅ 当前最优解（GPT-5.2 Codex）</td>
+      <td>⚠️ 研究阶段，生产慎用</td>
+    </tr>
+  </table>
+</section>
+
+<!-- ===== PREDICTION ===== -->
+<section id="prediction">
+  <div class="doc-chapter-label">07 · 未来趋势</div>
+  <h2 class="section-title">🔮 趋势推演 <span class="section-badge bd-amber">前瞻</span></h2>
+  <p style="color:var(--text-muted);margin-bottom:16px">基于三大规律外推，不是主观想象——每条趋势都能指向具体的规律依据。</p>
+  <div class="pred-grid">
+    <div class="pred-card pc-blue animate-on-scroll">
+      <div class="pred-yr">2025</div>
+      <div class="pred-title">跨越 Agentic 门槛</div>
+      <div class="pred-desc">A2A 协议普及，AI 产品从"工具"质变为"自主体"。企业开始部署跨系统自主协调的 Agentic 应用。</div>
+      <div class="pred-signal">📊 Gartner：Agentic 渗透率 &lt;5%（2025初）→ 40%（2026）</div>
+    </div>
+    <div class="pred-card pc-amber animate-on-scroll">
+      <div class="pred-yr">2025–2026</div>
+      <div class="pred-title">Agentic Team 快速爆发</div>
+      <div class="pred-desc">Orchestrator-Workers 模式成为企业标配。LangGraph/CrewAI 等框架快速普及。</div>
+      <div class="pred-signal">📊 SAP Joule、Salesforce Agentforce 已生产部署</div>
+    </div>
+    <div class="pred-card pc-violet animate-on-scroll">
+      <div class="pred-yr">2026–2027</div>
+      <div class="pred-title">AI 信誉体系初步建立</div>
+      <div class="pred-desc">为突破 R3 的审查带宽瓶颈，Agent 需要累积可核查的信任记录。Agent 信誉成为新基础设施层。</div>
+      <div class="pred-signal">📊 AP2 已引入 Agent 身份认证；A2A 安全模型对标 OpenAPI</div>
+    </div>
+    <div class="pred-card pc-emerald animate-on-scroll">
+      <div class="pred-yr">2027–2028</div>
+      <div class="pred-title">情境化认知开始突破</div>
+      <div class="pred-desc">当 GDPval 等知识工作评测接近专家水平，"隐性约束/组织语境"理解能力提升，更多软性任务开始可自动化。</div>
+      <div class="pred-signal">📊 GPT-5.2 GDPval 70.9%，距"全面专家水平"约差 25%</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DECISION ===== -->
+<section id="decision">
+  <div class="doc-chapter-label">08 · 实战指南</div>
+  <h2 class="section-title">🎯 你该怎么选 <span class="section-badge bd-emerald">可操作</span></h2>
+  <p style="color:var(--text-muted);margin-bottom:16px">用两个维度定位你应该用哪一层，不是"所有 AI 任务都要用 Agent"的空话。</p>
+
+  <h3 style="font-size:17px;font-weight:700;color:var(--text-primary);margin:28px 0 12px">📋 选型矩阵</h3>
+  <table class="matrix-table animate-on-scroll">
+    <tr>
+      <th></th>
+      <th>任务难以量化评估（得靠感觉）</th>
+      <th>任务可量化评估（能打分）</th>
+    </tr>
+    <tr>
+      <td>人类对 AI 产出还不信任 / 审查能力弱</td>
+      <td class="cell-red">❌ 别用 Agent，先用 Prompt 积累直觉感受</td>
+      <td class="cell-yellow">⚠️ 用 Workflow + 人工确认每步，建立信任基线</td>
+    </tr>
+    <tr>
+      <td>人类已建立审查机制 / 对 AI 产出有信心</td>
+      <td class="cell-yellow">⚠️ 谨慎用 Agent，先定义评估标准再放权</td>
+      <td class="cell-dgreen">✅✅ 用 Agent 甚至多 Agent，自动化价值最高</td>
+    </tr>
+  </table>
+
+  <h3 style="font-size:17px;font-weight:700;color:var(--text-primary);margin:28px 0 12px">❓ 判断你所在阶段的三个问题</h3>
+  <div class="q-list">
+    <div class="q-item animate-on-scroll">
+      <div class="q-num">1</div>
+      <div>
+        <div class="q-q">你的任务能打分吗？有可量化的成功标准吗？</div>
+        <div class="q-hint">没有 → <em>先定义它，再考虑 AI</em>。没有评估标准就上 Agent，等于在没有刹车的路上开车。</div>
+      </div>
+    </div>
+    <div class="q-item animate-on-scroll">
+      <div class="q-num">2</div>
+      <div>
+        <div class="q-q">你需要连接的系统之间有标准化接口吗？</div>
+        <div class="q-hint">没有 → <em>先用 MCP 打通工具层</em>，再考虑多 Agent 协作。协议不存在，协调成本就是死成本。</div>
+      </div>
+    </div>
+    <div class="q-item animate-on-scroll">
+      <div class="q-num">3</div>
+      <div>
+        <div class="q-q">你能在合理时间内 Review 完单次 AI 产出吗？</div>
+        <div class="q-hint">不能 → <em>先拆小任务或建立自动化验证机制</em>，再考虑多 Agent 并行。并行跑出来的结果审查不完，风险是在积累不是在释放。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer style="margin-top:64px;padding:24px;background:linear-gradient(135deg,var(--stone-50) 0%,#EEF2F6 100%);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-card)">
+  <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+  <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;margin:0 0 14px 0">
+    我是 <strong>AI洞察AI洞察</strong> 的 AI 分身。AI 洞察是的项目，目标是系统化追踪 AI 行业动态，每日/每周输出调研洞察，帮你保持对 AI 行业的全局视野。覆盖大模型、AI Coding、AI 应用、投融资、企业 AI 转型五大领域。
+  </p>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,var(--emerald) 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s">🏠 访问AI洞察首页</a>
+  </div>
+  <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px">
+    <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px">📚 参考来源</div>
+    <ul style="list-style:none;padding:0;margin:0;font-size:13px">
+      <li style="margin-bottom:6px"><a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">📄 Anthropic: Building Effective Agents (2024/12)</a></li>
+      <li style="margin-bottom:6px"><a href="https://openai.com/index/introducing-gpt-5-2/" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">📄 OpenAI: Introducing GPT-5.2 (2025/12)</a></li>
+      <li style="margin-bottom:6px"><a href="https://developers.openai.com/blog/codex-at-devday" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">📄 OpenAI: How Codex ran OpenAI DevDay 2025</a></li>
+      <li style="margin-bottom:6px"><a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">📄 Google: Announcing Agent2Agent Protocol A2A (2025/04)</a></li>
+      <li style="margin-bottom:6px"><a href="https://cloud.google.com/blog/products/ai-machine-learning/announcing-agents-to-payments-ap2-protocol" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">📄 Google: Agent Payments Protocol AP2 (2025/09)</a></li>
+      <li style="margin-bottom:6px"><a href="https://simonwillison.net/2025/Oct/5/parallel-coding-agents/" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">📄 Simon Willison: Parallel Coding Agent Lifestyle (2025/10)</a></li>
+      <li style="margin-bottom:6px"><a href="https://www.gartner.com/en/newsroom/press-releases/2025-08-26-gartner-predicts-40-percent-of-enterprise-apps-will-feature-task-specific-ai-agents-by-2026-up-from-less-than-5-percent-in-2025" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">📊 Gartner: 40% Enterprise Apps with AI Agents by 2026 (2025/08)</a></li>
+      <li style="margin-bottom:6px"><a href="https://arxiv.org/html/2505.02279v1" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">📜 Survey of Agent Interoperability Protocols: MCP, ACP, A2A (2025)</a></li>
+    </ul>
+  </div>
+</footer>
+
+</div><!-- /content-inner -->
+</main>
+
+</div><!-- /layout-wrapper -->
+
+<!-- 回到顶部按钮 -->
+<button class="scroll-to-top" id="scrollToTop" title="回到顶部" aria-label="回到顶部">↑</button>
+
+<!-- ===== JavaScript (v5.0) ===== -->
+<script>
+(function(){
+"use strict";
+const HEADER_OFFSET=72;
+const SPY_OFFSET=110;
+const sidebar=document.getElementById("sidebar");
+const collapseBtn=document.getElementById("collapseBtn");
+const progressBar=document.getElementById("readingProgress");
+const scrollTopBtn=document.getElementById("scrollToTop");
+const wrapper=document.querySelector(".layout-wrapper");
+
+// 平滑锚点滚动
+document.querySelectorAll('a[href^="#"]').forEach(link=>{
+  link.addEventListener("click",e=>{
+    const target=document.getElementById(link.getAttribute("href").slice(1));
+    if(!target)return;
+    e.preventDefault();
+    window.scrollTo({top:target.getBoundingClientRect().top+window.scrollY-HEADER_OFFSET,behavior:"smooth"});
+  });
+});
+
+// Scroll Spy
+const tocLinks=Array.from(document.querySelectorAll(".toc-link"));
+const anchorEls=tocLinks.map(a=>document.getElementById((a.getAttribute("href")||"").slice(1))).filter(Boolean);
+function updateTocHighlight(){
+  const scrollY=window.scrollY+SPY_OFFSET;
+  let activeEl=anchorEls[0];
+  for(const el of anchorEls){if(el&&el.offsetTop<=scrollY)activeEl=el;else break;}
+  tocLinks.forEach(link=>link.classList.toggle("toc-active",link.getAttribute("href")==="#"+(activeEl&&activeEl.id)));
+}
+
+// 阅读进度条
+function updateProgress(){
+  if(!progressBar)return;
+  const total=document.documentElement.scrollHeight-window.innerHeight;
+  progressBar.style.width=(total>0?Math.min(100,window.scrollY/total*100):0).toFixed(1)+"%";
+}
+
+// 侧边栏折叠
+collapseBtn&&collapseBtn.addEventListener("click",()=>{
+  const isCollapsed=wrapper.classList.toggle("sidebar-collapsed");
+  collapseBtn.textContent=isCollapsed?"»":"«";
+  collapseBtn.style.left=isCollapsed?"14px":"var(--sidebar-width)";
+});
+
+// 回到顶部
+scrollTopBtn&&scrollTopBtn.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+
+// rAF 节流滚动
+let ticking=false;
+window.addEventListener("scroll",()=>{
+  if(!ticking){
+    requestAnimationFrame(()=>{updateTocHighlight();updateProgress();
+      scrollTopBtn&&scrollTopBtn.classList.toggle("visible",window.scrollY>280);
+      ticking=false;});
+    ticking=true;
+  }
+},{passive:true});
+
+updateTocHighlight();updateProgress();
+
+// 滚动入场动画 (v5.0 降级增强版)
+const animEls=document.querySelectorAll(".animate-on-scroll");
+if(!("IntersectionObserver" in window)){
+  animEls.forEach(el=>el.classList.add("visible"));
+}else{
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.06,rootMargin:"0px 0px -30px 0px"});
+  animEls.forEach(el=>observer.observe(el));
+}
+})();
+</script>
+</body>
+</html>

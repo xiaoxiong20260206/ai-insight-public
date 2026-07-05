@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="企业AI工程师工作场景与任务分析 - 48个任务场景、9种Agent类型覆盖">
+    <title>企业AI工程师 - 工作场景与任务分析</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="dns-prefetch" href="//fonts.loli.net">
+    <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+    <!-- 关键首屏CSS内联 -->
+    <style>
+        :root{--primary-color:#667eea;--bg-color:#F8FAFC;--bg-dark:#0f172a;--text-primary:#111827;--text-secondary:#64748B;--shadow-md:0 4px 12px rgba(0,0,0,.08);--radius-lg:14px}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background-color:var(--bg-color);color:var(--text-primary);line-height:1.7}
+        .top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 20px;position:sticky;top:0;z-index:100}
+        .nav-container{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+        .nav-back{color:var(--primary-color);text-decoration:none;font-weight:500;font-size:.9rem}
+        .nav-title{font-weight:600;color:var(--text-primary);font-size:.95rem}
+        .header{background:linear-gradient(135deg,#0f172a 0,#1e293b 50%,#334155 100%);color:#fff;padding:32px 20px;text-align:center;position:relative;overflow:hidden}
+        .header h1{font-size:1.8rem;font-weight:800;margin-bottom:8px;background:linear-gradient(135deg,#fff,#e0e7ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .subtitle{font-size:.9rem;color:rgba(255,255,255,.85);max-width:600px;margin:0 auto}
+        .stats-section{background:linear-gradient(180deg,#fff 0,var(--bg-color) 100%);padding:28px 20px}
+        .stats-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+        .stat-card{background:#fff;border-radius:var(--radius-lg);padding:18px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow-md)}
+        .stat-icon{font-size:2rem}.stat-number{font-size:2rem;font-weight:800}.stat-label{font-size:.88rem;font-weight:600;margin-top:4px}
+        @media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+    </style>
+    <!-- 异步加载完整CSS -->
+    <link rel="preload" href="styles.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.min.css"></noscript>
+    <link href="https://fonts.loli.net/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.loli.net/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+</head>
+<body>
+    <!-- 统一导航栏 -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-back">← 返回首页</a>
+            <span class="nav-title">场景分析</span>
+        </div>
+    </nav>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>企业AI工程师 - 工作场景与任务分析</h1>
+            <p class="subtitle">深入研究工程师日常工作场景，识别48个核心任务，抽象9种Agent类型</p>
+        </div>
+    </header>
+
+    <!-- 统计卡片区域 -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card stat-total">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <div class="stat-number">48</div>
+                    <div class="stat-label">总工作任务数</div>
+                    <div class="stat-desc">覆盖工程师日常全场景</div>
+                </div>
+            </div>
+            <div class="stat-card stat-dev">
+                <div class="stat-icon">💻</div>
+                <div class="stat-info">
+                    <div class="stat-number">25</div>
+                    <div class="stat-label">研发场景任务</div>
+                    <div class="stat-desc">AI编程、代码审查等</div>
+                </div>
+            </div>
+            <div class="stat-card stat-nondev">
+                <div class="stat-icon">📝</div>
+                <div class="stat-info">
+                    <div class="stat-number">23</div>
+                    <div class="stat-label">非研发场景任务</div>
+                    <div class="stat-desc">文档写作、配图生成等</div>
+                </div>
+            </div>
+            <div class="stat-card stat-agent">
+                <div class="stat-icon">🤖</div>
+                <div class="stat-info">
+                    <div class="stat-number">9</div>
+                    <div class="stat-label">Agent类型</div>
+                    <div class="stat-desc">Coding、Chatbot、Workflow等</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 优先级分析结论 -->
+    <section class="priority-section">
+        <h2 class="section-title">开发优先级分析</h2>
+        <div class="priority-grid">
+            <div class="priority-card priority-p0">
+                <div class="priority-header">
+                    <span class="priority-badge badge-p0">P0</span>
+                    <span class="priority-title">最高优先级（立即开发）</span>
+                </div>
+                <div class="priority-content">
+                    <div class="priority-item">
+                        <span class="agent-badge badge-coding">💻 Coding Agent</span>
+                        <span class="coverage">覆盖约47%工作时长</span>
+                    </div>
+                    <div class="priority-item">
+                        <span class="agent-badge badge-chatbot">💬 Chatbot Agent</span>
+                        <span class="coverage">覆盖约15%工作时长</span>
+                    </div>
+                </div>
+            </div>
+            <div class="priority-card priority-p1">
+                <div class="priority-header">
+                    <span class="priority-badge badge-p1">P1</span>
+                    <span class="priority-title">高优先级（近期开发）</span>
+                </div>
+                <div class="priority-content">
+                    <div class="priority-item">
+                        <span class="agent-badge badge-workflow">⚙️ Workflow Agent</span>
+                        <span class="coverage">覆盖约15%，代码审查、文档、会议</span>
+                    </div>
+                    <div class="priority-item">
+                        <span class="agent-badge badge-design">🎨 Design Agent</span>
+                        <span class="coverage">覆盖约4%，图表绘制、配图生成</span>
+                    </div>
+                </div>
+            </div>
+            <div class="priority-card priority-p2">
+                <div class="priority-header">
+                    <span class="priority-badge badge-p2">P2</span>
+                    <span class="priority-title">中优先级（规划开发）</span>
+                </div>
+                <div class="priority-content">
+                    <div class="priority-item">
+                        <span class="agent-badge badge-research">🔬 Research Agent</span>
+                        <span class="coverage">覆盖约8%，技术调研、竞品分析</span>
+                    </div>
+                    <div class="priority-item">
+                        <span class="agent-badge badge-data">📊 Data Analysis Agent</span>
+                        <span class="coverage">覆盖约3%，日志分析、SQL查询</span>
+                    </div>
+                </div>
+            </div>
+            <div class="priority-card priority-p3">
+                <div class="priority-header">
+                    <span class="priority-badge badge-p3">P3</span>
+                    <span class="priority-title">低优先级</span>
+                </div>
+                <div class="priority-content">
+                    <div class="priority-item">
+                        <span class="agent-badge badge-background">⏰ Background Agent</span>
+                        <span class="coverage">覆盖约4%，后台自动化任务</span>
+                    </div>
+                </div>
+            </div>
+            <div class="priority-card priority-p4">
+                <div class="priority-header">
+                    <span class="priority-badge badge-p4">P4</span>
+                    <span class="priority-title">探索性（技术储备）</span>
+                </div>
+                <div class="priority-content">
+                    <div class="priority-item">
+                        <span class="agent-badge badge-computer">🖥️ Computer Use Agent</span>
+                    </div>
+                    <div class="priority-item">
+                        <span class="agent-badge badge-browser">🌐 Browser Use Agent</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关系图可视化 -->
+    <section class="network-section">
+        <h2 class="section-title">场景-任务-Agent关系图</h2>
+        <p class="section-desc">点击任意节点高亮相关联的节点和连线，点击空白区域取消高亮</p>
+        <div id="network-container" class="network-container">
+            <!-- SVG关系图将在这里渲染 -->
+        </div>
+        <div id="tooltip" class="tooltip"></div>
+    </section>
+
+    <!-- 开发路线图 -->
+    <section class="roadmap-section">
+        <h2 class="section-title">开发路线图</h2>
+        <div class="roadmap-timeline">
+            <div class="roadmap-item phase-1">
+                <div class="roadmap-phase">第一阶段</div>
+                <div class="roadmap-time">1-2月</div>
+                <div class="roadmap-content">
+                    <strong>Coding Agent + Chatbot Agent</strong>
+                    <span class="roadmap-coverage">覆盖62%工作时长</span>
+                </div>
+            </div>
+            <div class="roadmap-item phase-2">
+                <div class="roadmap-phase">第二阶段</div>
+                <div class="roadmap-time">3-4月</div>
+                <div class="roadmap-content">
+                    <strong>Workflow Agent + Design Agent</strong>
+                    <span class="roadmap-coverage">覆盖19%工作时长</span>
+                </div>
+            </div>
+            <div class="roadmap-item phase-3">
+                <div class="roadmap-phase">第三阶段</div>
+                <div class="roadmap-time">5-6月</div>
+                <div class="roadmap-content">
+                    <strong>Research Agent + Data Agent</strong>
+                    <span class="roadmap-coverage">覆盖11%工作时长</span>
+                </div>
+            </div>
+            <div class="roadmap-item phase-4">
+                <div class="roadmap-phase">第四阶段</div>
+                <div class="roadmap-time">后续</div>
+                <div class="roadmap-content">
+                    <strong>Background/Browser/Computer Agent</strong>
+                    <span class="roadmap-coverage">探索性技术储备</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 研发场景表格 -->
+    <section class="table-section">
+        <h2 class="section-title">
+            <span class="title-icon title-dev">💻</span>
+            研发场景任务详情（25个）
+        </h2>
+        <div class="table-wrapper">
+            <table class="data-table table-dev">
+                <thead>
+                    <tr>
+                        <th>场景大类</th>
+                        <th>场景子类</th>
+                        <th>工作任务</th>
+                        <th>每周时长占比</th>
+                        <th>任务示例</th>
+                        <th>Agent类型</th>
+                        <th>业界产品参考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="25">研发场景</td>
+                        <td rowspan="6">AI编程</td>
+                        <td>代码补全</td>
+                        <td class="time-high">18%</td>
+                        <td>实时代码补全建议</td>
+                        <td><span class="agent-badge badge-coding">Coding</span></td>
+                        <td>Copilot, Cursor, 通义灵码, MarsCode</td>
+                    </tr>
+                    <tr>
+                        <td>代码生成</td>
+                        <td class="time-high">12%</td>
+                        <td>根据注释生成代码</td>
+                        <td><span class="agent-badge badge-coding">Coding</span></td>
+                        <td>Cursor, Claude Code, 文心快码</td>
+                    </tr>
+                    <tr>
+                        <td>代码重构</td>
+                        <td class="time-medium">3%</td>
+                        <td>优化代码结构</td>
+                        <td><span class="agent-badge badge-coding">Coding</span></td>
+                        <td>Cursor, 通义灵码</td>
+                    </tr>
+                    <tr>
+                        <td>Bug修复</td>
+                        <td class="time-medium">4%</td>
+                        <td>自动定位并修复Bug</td>
+                        <td><span class="agent-badge badge-coding">Coding</span></td>
+                        <td>Cursor, Devin</td>
+                    </tr>
+                    <tr>
+                        <td>调试定位</td>
+                        <td class="time-medium">3%</td>
+                        <td>辅助定位问题根因</td>
+                        <td><span class="agent-badge badge-coding">Coding</span></td>
+                        <td>Cursor, MarsCode</td>
+                    </tr>
+                    <tr>
+                        <td>小工具开发</td>
+                        <td class="time-low">2%</td>
+                        <td>快速开发实用小工具</td>
+                        <td><span class="agent-badge badge-coding">Coding</span></td>
+                        <td>Replit, v0.dev</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">代码审查</td>
+                        <td>Code Review</td>
+                        <td class="time-medium">3%</td>
+                        <td>自动审查代码质量</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>CodeRabbit, Codacy</td>
+                    </tr>
+                    <tr>
+                        <td>安全检测</td>
+                        <td class="time-low">1%</td>
+                        <td>检测安全漏洞</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>Snyk, SonarQube</td>
+                    </tr>
+                    <tr>
+                        <td>代码规范</td>
+                        <td class="time-low">1%</td>
+                        <td>代码格式化和规范检查</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>Cursor, 通义灵码</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">需求与设计</td>
+                        <td>PRD解析</td>
+                        <td class="time-low">1%</td>
+                        <td>解析产品需求文档</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>Notion AI, 飞书文档</td>
+                    </tr>
+                    <tr>
+                        <td>技术方案</td>
+                        <td class="time-low">2%</td>
+                        <td>生成技术方案文档</td>
+                        <td><span class="agent-badge badge-research">Research</span></td>
+                        <td>Claude, Kimi, 秘塔搜索</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">测试</td>
+                        <td>单测生成</td>
+                        <td class="time-medium">3%</td>
+                        <td>自动生成单元测试</td>
+                        <td><span class="agent-badge badge-coding">Coding</span></td>
+                        <td>Copilot, 通义灵码</td>
+                    </tr>
+                    <tr>
+                        <td>用例设计</td>
+                        <td class="time-low">1%</td>
+                        <td>设计测试用例</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>ChatGPT, Kimi</td>
+                    </tr>
+                    <tr>
+                        <td>Mock数据</td>
+                        <td class="time-low">1%</td>
+                        <td>生成测试Mock数据</td>
+                        <td><span class="agent-badge badge-coding">Coding</span></td>
+                        <td>ChatGPT, 通义千问</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">技术文档</td>
+                        <td>API文档</td>
+                        <td class="time-low">2%</td>
+                        <td>自动生成API文档</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>Mintlify, Readme</td>
+                    </tr>
+                    <tr>
+                        <td>代码注释</td>
+                        <td class="time-low">2%</td>
+                        <td>自动添加代码注释</td>
+                        <td><span class="agent-badge badge-coding">Coding</span></td>
+                        <td>Copilot, 通义灵码</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">图表绘制</td>
+                        <td>架构图</td>
+                        <td class="time-low">1%</td>
+                        <td>绘制系统架构图</td>
+                        <td><span class="agent-badge badge-design">Design</span></td>
+                        <td>Eraser, 稿定AI</td>
+                    </tr>
+                    <tr>
+                        <td>流程图</td>
+                        <td class="time-low">1%</td>
+                        <td>绘制业务流程图</td>
+                        <td><span class="agent-badge badge-design">Design</span></td>
+                        <td>Mermaid</td>
+                    </tr>
+                    <tr>
+                        <td>ER图</td>
+                        <td class="time-verylow">0.5%</td>
+                        <td>绘制数据库ER图</td>
+                        <td><span class="agent-badge badge-design">Design</span></td>
+                        <td>dbdiagram</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">数据分析</td>
+                        <td>日志分析</td>
+                        <td class="time-low">1.5%</td>
+                        <td>分析系统日志</td>
+                        <td><span class="agent-badge badge-data">Data</span></td>
+                        <td>ChatGPT, 通义千问</td>
+                    </tr>
+                    <tr>
+                        <td>性能分析</td>
+                        <td class="time-low">1%</td>
+                        <td>分析性能指标</td>
+                        <td><span class="agent-badge badge-data">Data</span></td>
+                        <td>Julius</td>
+                    </tr>
+                    <tr>
+                        <td>SQL查询</td>
+                        <td class="time-verylow">0.5%</td>
+                        <td>自动生成SQL</td>
+                        <td><span class="agent-badge badge-data">Data</span></td>
+                        <td>Hex, ChatGPT</td>
+                    </tr>
+                    <tr>
+                        <td>DevOps</td>
+                        <td>CI/CD配置</td>
+                        <td class="time-verylow">0.5%</td>
+                        <td>配置流水线和部署脚本</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>GitHub Actions</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 非研发场景表格 -->
+    <section class="table-section">
+        <h2 class="section-title">
+            <span class="title-icon title-nondev">📝</span>
+            非研发场景任务详情（23个）
+        </h2>
+        <div class="table-wrapper">
+            <table class="data-table table-nondev">
+                <thead>
+                    <tr>
+                        <th>场景大类</th>
+                        <th>场景子类</th>
+                        <th>工作任务</th>
+                        <th>每周时长占比</th>
+                        <th>任务示例</th>
+                        <th>Agent类型</th>
+                        <th>业界产品参考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="23">非研发场景</td>
+                        <td rowspan="3">文档写作</td>
+                        <td>博客/周报</td>
+                        <td class="time-low">2%</td>
+                        <td>撰写技术博客和周报</td>
+                        <td><span class="agent-badge badge-chatbot">Chatbot</span></td>
+                        <td>Notion AI, 飞书文档, WPS AI</td>
+                    </tr>
+                    <tr>
+                        <td>邮件撰写</td>
+                        <td class="time-low">2%</td>
+                        <td>撰写工作邮件</td>
+                        <td><span class="agent-badge badge-chatbot">Chatbot</span></td>
+                        <td>Gmail AI, Kimi</td>
+                    </tr>
+                    <tr>
+                        <td>PPT生成</td>
+                        <td class="time-low">2%</td>
+                        <td>生成演示文稿</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>Gamma, WPS AI</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">文档审查</td>
+                        <td>文档Review</td>
+                        <td class="time-low">1%</td>
+                        <td>审查文档质量</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>Claude, Kimi</td>
+                    </tr>
+                    <tr>
+                        <td>文档润色</td>
+                        <td class="time-low">1%</td>
+                        <td>润色文档表达</td>
+                        <td><span class="agent-badge badge-chatbot">Chatbot</span></td>
+                        <td>Grammarly, WPS AI</td>
+                    </tr>
+                    <tr>
+                        <td>文档翻译</td>
+                        <td class="time-low">1%</td>
+                        <td>技术文档翻译</td>
+                        <td><span class="agent-badge badge-chatbot">Chatbot</span></td>
+                        <td>DeepL, 有道翻译</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">调研分析</td>
+                        <td>技术调研</td>
+                        <td class="time-medium">4%</td>
+                        <td>调研新技术方案</td>
+                        <td><span class="agent-badge badge-research">Research</span></td>
+                        <td>Perplexity, 秘塔搜索</td>
+                    </tr>
+                    <tr>
+                        <td>竞品分析</td>
+                        <td class="time-low">2%</td>
+                        <td>分析竞争产品</td>
+                        <td><span class="agent-badge badge-research">Research</span></td>
+                        <td>Perplexity, Kimi</td>
+                    </tr>
+                    <tr>
+                        <td>数据采集</td>
+                        <td class="time-low">1%</td>
+                        <td>采集网页数据</td>
+                        <td><span class="agent-badge badge-browser">Browser</span></td>
+                        <td>Browser Use</td>
+                    </tr>
+                    <tr>
+                        <td>会议效率</td>
+                        <td>会议纪要</td>
+                        <td class="time-medium">3%</td>
+                        <td>自动生成会议纪要</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>Otter, 飞书妙记</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">知识问答</td>
+                        <td>技术问答</td>
+                        <td class="time-medium">5%</td>
+                        <td>回答技术问题</td>
+                        <td><span class="agent-badge badge-chatbot">Chatbot</span></td>
+                        <td>ChatGPT, Kimi, 讯飞星火</td>
+                    </tr>
+                    <tr>
+                        <td>内部知识</td>
+                        <td class="time-medium">3%</td>
+                        <td>查询内部知识库</td>
+                        <td><span class="agent-badge badge-chatbot">Chatbot</span></td>
+                        <td>Glean, 腾讯混元</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">图片生成</td>
+                        <td>配图生成</td>
+                        <td class="time-verylow">0.5%</td>
+                        <td>生成文章配图</td>
+                        <td><span class="agent-badge badge-design">Design</span></td>
+                        <td>Midjourney, 稿定AI</td>
+                    </tr>
+                    <tr>
+                        <td>图表美化</td>
+                        <td class="time-verylow">0.5%</td>
+                        <td>美化数据图表</td>
+                        <td><span class="agent-badge badge-design">Design</span></td>
+                        <td>Canva AI, 稿定AI</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">视频生成</td>
+                        <td>演示视频</td>
+                        <td class="time-verylow">0.3%</td>
+                        <td>生成产品演示视频</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>Sora, 可灵AI</td>
+                    </tr>
+                    <tr>
+                        <td>数字人</td>
+                        <td class="time-verylow">0.3%</td>
+                        <td>生成数字人视频</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>HeyGen, 即梦AI</td>
+                    </tr>
+                    <tr>
+                        <td>配音</td>
+                        <td class="time-verylow">0.4%</td>
+                        <td>AI语音合成配音</td>
+                        <td><span class="agent-badge badge-workflow">Workflow</span></td>
+                        <td>ElevenLabs, 讯飞星火</td>
+                    </tr>
+                    <tr>
+                        <td>学习成长</td>
+                        <td>技术学习</td>
+                        <td class="time-low">2%</td>
+                        <td>AI辅助学习新技术</td>
+                        <td><span class="agent-badge badge-chatbot">Chatbot</span></td>
+                        <td>ChatGPT, Kimi, 豆包</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="5">个人助理</td>
+                        <td>日程管理</td>
+                        <td class="time-low">1%</td>
+                        <td>管理日程安排</td>
+                        <td><span class="agent-badge badge-background">Background</span></td>
+                        <td>Motion, 飞书文档</td>
+                    </tr>
+                    <tr>
+                        <td>邮件处理</td>
+                        <td class="time-low">1.5%</td>
+                        <td>自动处理邮件</td>
+                        <td><span class="agent-badge badge-background">Background</span></td>
+                        <td>Superhuman</td>
+                    </tr>
+                    <tr>
+                        <td>桌面自动化</td>
+                        <td class="time-verylow">0.5%</td>
+                        <td>自动化桌面操作</td>
+                        <td><span class="agent-badge badge-computer">Computer</span></td>
+                        <td>Claude Computer</td>
+                    </tr>
+                    <tr>
+                        <td>表单填写</td>
+                        <td class="time-verylow">0.5%</td>
+                        <td>自动填写表单</td>
+                        <td><span class="agent-badge badge-browser">Browser</span></td>
+                        <td>Browser Use</td>
+                    </tr>
+                    <tr>
+                        <td>信息推送</td>
+                        <td class="time-verylow">0.5%</td>
+                        <td>推送重要信息</td>
+                        <td><span class="agent-badge badge-background">Background</span></td>
+                        <td>Feedly, 豆包</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Agent类型卡片 -->
+    <section class="agent-section">
+        <h2 class="section-title">Agent类型定义</h2>
+        <div class="agent-grid">
+            <div class="agent-card agent-coding">
+                <div class="agent-header">
+                    <span class="agent-icon">💻</span>
+                    <span class="agent-name">Coding Agent</span>
+                </div>
+                <div class="agent-desc">代码开发全流程AI助手，支持代码补全、生成、重构、调试、Bug修复等功能</div>
+                <div class="agent-coverage">覆盖约47%工作时长</div>
+                <a href="agent-details.html#coding" class="agent-detail-link">查看详情 →</a>
+            </div>
+            <div class="agent-card agent-chatbot">
+                <div class="agent-header">
+                    <span class="agent-icon">💬</span>
+                    <span class="agent-name">Chatbot Agent</span>
+                </div>
+                <div class="agent-desc">通用对话AI，支持RAG增强，用于知识问答、文档写作、翻译等</div>
+                <div class="agent-coverage">覆盖约15%工作时长</div>
+                <a href="agent-details.html#chatbot" class="agent-detail-link">查看详情 →</a>
+            </div>
+            <div class="agent-card agent-workflow">
+                <div class="agent-header">
+                    <span class="agent-icon">⚙️</span>
+                    <span class="agent-name">Workflow Agent</span>
+                </div>
+                <div class="agent-desc">预定义流程自动化，用于代码审查、文档处理、会议纪要等</div>
+                <div class="agent-coverage">覆盖约15%工作时长</div>
+                <a href="agent-details.html#workflow" class="agent-detail-link">查看详情 →</a>
+            </div>
+            <div class="agent-card agent-research">
+                <div class="agent-header">
+                    <span class="agent-icon">🔬</span>
+                    <span class="agent-name">Research Agent</span>
+                </div>
+                <div class="agent-desc">Web搜索、深度调研AI，用于技术调研、竞品分析等</div>
+                <div class="agent-coverage">覆盖约8%工作时长</div>
+                <a href="agent-details.html#research" class="agent-detail-link">查看详情 →</a>
+            </div>
+            <div class="agent-card agent-design">
+                <div class="agent-header">
+                    <span class="agent-icon">🎨</span>
+                    <span class="agent-name">Design Agent</span>
+                </div>
+                <div class="agent-desc">图表绘制、配图生成、图表美化等设计任务</div>
+                <div class="agent-coverage">覆盖约4%工作时长</div>
+                <a href="agent-details.html#design" class="agent-detail-link">查看详情 →</a>
+            </div>
+            <div class="agent-card agent-background">
+                <div class="agent-header">
+                    <span class="agent-icon">⏰</span>
+                    <span class="agent-name">Background Agent</span>
+                </div>
+                <div class="agent-desc">后台持续运行AI，用于日程管理、邮件处理、定时任务等</div>
+                <div class="agent-coverage">覆盖约4%工作时长</div>
+                <a href="agent-details.html#background" class="agent-detail-link">查看详情 →</a>
+            </div>
+            <div class="agent-card agent-data">
+                <div class="agent-header">
+                    <span class="agent-icon">📊</span>
+                    <span class="agent-name">Data Analysis Agent</span>
+                </div>
+                <div class="agent-desc">专注SQL生成、日志分析、性能分析等数据任务</div>
+                <div class="agent-coverage">覆盖约3%工作时长</div>
+                <a href="agent-details.html#data" class="agent-detail-link">查看详情 →</a>
+            </div>
+            <div class="agent-card agent-browser">
+                <div class="agent-header">
+                    <span class="agent-icon">🌐</span>
+                    <span class="agent-name">Browser Use Agent</span>
+                </div>
+                <div class="agent-desc">网页自动化AI，用于数据采集、表单填写等浏览器操作</div>
+                <div class="agent-coverage">覆盖约2%工作时长</div>
+                <a href="agent-details.html#browser" class="agent-detail-link">查看详情 →</a>
+            </div>
+            <div class="agent-card agent-computer">
+                <div class="agent-header">
+                    <span class="agent-icon">🖥️</span>
+                    <span class="agent-name">Computer Use Agent</span>
+                </div>
+                <div class="agent-desc">桌面GUI自动化AI，用于文件管理、桌面操作等</div>
+                <div class="agent-coverage">覆盖约2%工作时长</div>
+                <a href="agent-details.html#computer" class="agent-detail-link">查看详情 →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 章节导航 -->
+    <div style="margin-top:24px;padding-top:16px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <a href="../index.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">首页</a>
+        <a href="../2-ai-workbench/index.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">产品方案</a>
+        <a href="../3-agent-infra/index.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">技术架构</a>
+    </div>
+
+    <!-- 了解更多 -->
+    <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+    <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+    <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+    我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+    </p>
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+    🏠 访问AI洞察首页
+    </a>
+    </div>
+    <script src="network-graph.min.js" defer></script>
+    <script src="main.min.js" defer></script>
+</body>
+</html>

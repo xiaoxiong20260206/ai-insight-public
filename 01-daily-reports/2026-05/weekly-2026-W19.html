@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 周报 2026-W19 (05.05-05.11) | AI洞察</title>
+    <meta name="description" content="2026年第19周AI行业动态精选：Anthropic金融Agent三层架构深度调研、DeepSeek 500亿融资估值3000亿、Cursor RCE漏洞、81%VC流向AI">
+    <meta property="og:title" content="AI 周报 2026-W19 | AI洞察">
+    <meta property="og:description" content="本周重大事件：Anthropic金融Agent三层架构定义Agent商业化标准形态、DeepSeek 500亿融资、Cursor RCE漏洞、AI裁员叙事范式">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232563EB'/><text x='6' y='23' font-size='18' fill='white'>⚡</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <noscript></noscript>
+<noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+<style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --color-success: #059669; --color-success-light: #10B981; --color-success-dark: #047857;
+            --color-success-50: #ECFDF5; --color-success-100: #D1FAE5;
+            --color-danger: #E11D48; --color-danger-light: #F43F5E; --color-danger-50: #FFF1F2;
+            --color-warning: #D97706; --color-warning-light: #F59E0B; --color-warning-50: #FFFBEB;
+            --color-info: #2563EB; --color-info-light: #3B82F6; --color-info-50: #EFF6FF; --color-info-100: #DBEAFE;
+            --color-purple: #7C3AED; --color-purple-light: #8B5CF6; --color-purple-50: #F5F3FF; --color-purple-100: #EDE9FE;
+            --color-text-primary: #1C1917; --color-text-secondary: #57534E; --color-text-muted: #78716C;
+            --color-border: #E7E5E4; --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB; --color-bg-card: #FFFFFF; --color-bg-table-header: #FAFAF9;
+            --color-bg-hover: rgba(0,0,0,0.025);
+            --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+            --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+            --gradient-mesh:
+                radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card-rich: 0 4px 16px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.9);
+            --shadow-hover: 0 8px 24px rgba(5,150,105,0.18), 0 2px 8px rgba(5,150,105,0.10);
+            --shadow-float: 0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
+            --shadow-glow-info: 0 4px 14px rgba(37,99,235,0.15);
+            --spacing-xs: 4px; --spacing-sm: 8px; --spacing-md: 16px;
+            --spacing-lg: 24px; --spacing-xl: 32px; --spacing-2xl: 40px; --spacing-3xl: 48px;
+            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 20px; --radius-full: 9999px;
+            --font-family: "DM Sans", -apple-system, "Noto Sans SC", "PingFang SC", sans-serif;
+            --font-family-heading: "DM Sans", -apple-system, "Noto Sans SC", sans-serif;
+            --font-family-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+            --font-family-mono: "JetBrains Mono", "SF Mono", "Consolas", monospace;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --sidebar-width: 228px;
+            --content-max: 920px;
+            --content-pad: 56px;
+        }
+
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-family);
+            font-size: 15px;
+            line-height: 1.65;
+            letter-spacing: -0.01em;
+            color: var(--color-text-secondary);
+            background: var(--color-bg);
+            background-image: var(--gradient-mesh);
+            background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+        ::selection { background: rgba(5,150,105,0.18); }
+        a { color: var(--color-info); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ===== SKIP TO CONTENT ===== */
+        .skip-to-content {
+            position: absolute; top: -40px; left: 0; background: var(--color-info);
+            color: #fff; padding: 8px 16px; border-radius: 0 0 8px 0; z-index: 9999;
+            transition: top var(--transition-fast);
+        }
+        .skip-to-content:focus { top: 0; }
+
+        /* ===== LAYOUT ===== */
+        .layout-wrapper { display: flex; width: 100%; min-height: 100vh; align-items: stretch; }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar-nav {
+            width: var(--sidebar-width); flex-shrink: 0;
+            position: sticky; top: 0; height: 100vh;
+            overflow-y: auto; background: #fff;
+            border-right: 1px solid var(--color-border);
+            padding: 20px 0; z-index: 100;
+            display: flex; flex-direction: column;
+        }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 2px; }
+        .sidebar-doc-title {
+            font-size: 13px; font-weight: 700; color: var(--color-text-primary);
+            padding: 0 20px 16px; line-height: 1.4; font-family: var(--font-family-heading);
+        }
+        .toc-group-label {
+            font-size: 11px; font-weight: 700; color: var(--color-text-muted);
+            letter-spacing: 0.08em; text-transform: uppercase;
+            padding: 4px 20px 6px; margin-top: 8px;
+        }
+        .toc-link {
+            display: block; padding: 7px 20px; font-size: 13px; font-weight: 500;
+            color: var(--color-text-secondary); border-left: 3px solid transparent;
+            transition: all var(--transition-fast); line-height: 1.4; text-decoration: none;
+        }
+        .toc-link:hover { background: rgba(0,0,0,0.03); color: var(--color-text-primary); text-decoration: none; }
+        .toc-link.toc-active { color: var(--color-info); background: rgba(37,99,235,0.04); border-left-color: var(--color-info); font-weight: 600; }
+        .toc-link.toc-sub { padding-left: 32px; font-size: 12px; font-weight: 400; color: var(--color-text-muted); }
+        .toc-link.toc-sub.toc-active { color: var(--color-info); font-weight: 500; }
+        .toc-link:focus-visible { outline: 2px solid var(--color-info); outline-offset: -2px; }
+
+        .reading-progress-wrap { margin-top: auto; padding: 16px 20px 8px; }
+        .reading-progress-label { font-size: 11px; color: var(--color-text-muted); margin-bottom: 6px; }
+        .reading-progress-track { height: 4px; background: var(--color-border); border-radius: 2px; overflow: hidden; }
+        .reading-progress-fill { height: 100%; width: 0%; background: var(--color-info); border-radius: 2px; transition: width 0.2s ease; }
+
+        .sidebar-collapse-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px; background: transparent;
+            border: 1px solid var(--color-border); border-radius: 6px;
+            cursor: pointer; color: var(--color-text-muted); font-size: 13px;
+            position: fixed; top: 20px; left: calc(var(--sidebar-width) - 14px);
+            z-index: 101; transition: all var(--transition-fast); background: #fff;
+        }
+        .sidebar-collapse-btn:hover { background: var(--color-bg); }
+        .sidebar-collapse-btn.collapsed-pos { left: 34px; }
+
+        /* sidebar collapse */
+        .sidebar-nav.sidebar-collapsed { width: 0; padding: 0; overflow: hidden; border: none; }
+        .sidebar-nav.sidebar-collapsed ~ .sidebar-collapse-btn { left: 8px; }
+
+        /* ===== CONTENT AREA ===== */
+        .content-area {
+            flex: 1; min-width: 0;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .content-inner {
+            width: 100%; max-width: var(--content-max);
+            padding: 48px var(--content-pad) 120px;
+        }
+
+        /* ===== HEADER ===== */
+        .doc-header {
+            padding: 36px 0 32px; position: relative; margin-bottom: 32px;
+        }
+        .doc-header::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+            height: 3px; background: var(--gradient-hero); border-radius: 2px;
+        }
+        .header-badge {
+            display: inline-block; background: var(--gradient-badge); color: var(--color-info);
+            padding: 4px 14px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600;
+            margin-bottom: 12px; border: 1px solid rgba(37,99,235,0.12); box-shadow: var(--shadow-xs);
+            letter-spacing: 0.04em;
+        }
+        .header-title {
+            font-size: 34px; font-weight: 800; letter-spacing: -0.025em;
+            background: var(--gradient-hero); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+            line-height: 1.2; margin-bottom: 10px; text-wrap: balance;
+        }
+        .header-meta { font-size: 13px; color: var(--color-text-muted); display: flex; gap: 16px; flex-wrap: wrap; }
+        .header-meta span { display: flex; align-items: center; gap: 4px; }
+
+        /* ===== CHAPTER LABEL ===== */
+        .doc-chapter-label {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+            text-transform: uppercase; color: #A8A29E;
+            padding: 40px 0 12px;
+        }
+        .doc-chapter-label::after { content: ''; flex: 1; height: 1px; background: #F0EFEE; }
+
+        /* ===== SECTION ===== */
+        section { margin-bottom: 48px; }
+        section h2 {
+            font-size: 21px; font-weight: 700; color: var(--color-text-primary);
+            letter-spacing: -0.02em; margin-bottom: 16px; line-height: 1.3;
+        }
+        section h3 {
+            font-size: 16px; font-weight: 600; color: var(--color-text-primary);
+            margin: 20px 0 10px; line-height: 1.4;
+        }
+        section p { font-family: var(--font-family-cn); line-height: 1.75; margin-bottom: 12px; }
+
+        /* ===== STAT CARDS ===== */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px; margin: 20px 0;
+        }
+        .stat-card {
+            background: var(--color-bg-card); border: 1px solid var(--color-border);
+            border-radius: var(--radius-md); padding: 16px;
+            border-top: 3px solid var(--color-border);
+            box-shadow: var(--shadow-card);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+        .stat-info    { border-top-color: var(--color-info); }
+        .stat-success { border-top-color: var(--color-success); }
+        .stat-warning { border-top-color: var(--color-warning); }
+        .stat-purple  { border-top-color: var(--color-purple); }
+        .stat-danger  { border-top-color: var(--color-danger); }
+        .stat-value {
+            font-size: 24px; font-weight: 800; color: var(--color-text-primary);
+            font-variant-numeric: tabular-nums; line-height: 1.2; margin-bottom: 4px;
+            font-family: var(--font-family-heading);
+        }
+        .stat-label { font-size: 12px; color: var(--color-text-muted); font-weight: 500; letter-spacing: 0.02em; }
+
+        /* ===== TABLE ===== */
+        .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius-md); border: 1px solid var(--color-border); }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        thead tr { background: var(--color-bg-table-header); }
+        th {
+            padding: 10px 14px; text-align: left; font-weight: 600; font-size: 11px;
+            color: var(--color-text-muted); letter-spacing: 0.06em; text-transform: uppercase;
+            border-bottom: 1px solid var(--color-border);
+        }
+        td { padding: 10px 14px; border-bottom: 1px solid var(--color-border-light); vertical-align: top; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: var(--color-bg-hover); }
+        .star { color: var(--color-warning); }
+
+        /* ===== TOP 5 CARDS ===== */
+        .news-card {
+            background: var(--color-bg-card); border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg); padding: 20px 24px;
+            margin-bottom: 12px; box-shadow: var(--shadow-card);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+            position: relative; overflow: hidden;
+        }
+        .news-card::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+            width: 4px; background: var(--card-accent, var(--color-info));
+        }
+        .news-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: rgba(5,150,105,0.2); }
+        .news-card-rank {
+            font-size: 11px; font-weight: 800; color: var(--color-text-muted);
+            letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px;
+        }
+        .news-card-title { font-size: 15px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 8px; line-height: 1.4; }
+        .news-card-source { font-size: 11px; color: var(--color-text-muted); margin-bottom: 10px; }
+        .news-card-desc { font-size: 13px; font-family: var(--font-family-cn); line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 10px; }
+        .news-card-why {
+            font-size: 12px; background: var(--color-info-50); border-left: 3px solid var(--color-info);
+            padding: 8px 12px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            color: var(--color-text-secondary); font-family: var(--font-family-cn); line-height: 1.6;
+        }
+        .news-card-why strong { color: var(--color-info); }
+
+        /* ===== INSIGHT CARDS ===== */
+        .insight-card {
+            background: linear-gradient(135deg, var(--color-purple-50) 0%, var(--color-info-50) 100%);
+            border: 1px solid rgba(124,58,237,0.15); border-radius: var(--radius-lg);
+            padding: 20px 24px; margin-bottom: 12px;
+            box-shadow: var(--shadow-card);
+        }
+        .insight-tag {
+            display: inline-block; font-size: 10px; font-weight: 700;
+            background: var(--color-purple); color: #fff;
+            padding: 2px 8px; border-radius: var(--radius-full); margin-bottom: 10px;
+            letter-spacing: 0.06em;
+        }
+        .insight-title { font-size: 15px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 8px; }
+        .insight-trend {
+            font-size: 12px; background: rgba(124,58,237,0.08); padding: 8px 12px;
+            border-radius: var(--radius-sm); margin-top: 10px; color: var(--color-purple);
+            font-weight: 500;
+        }
+
+        /* ===== CALLOUT ===== */
+        .callout {
+            padding: 14px 18px; border-radius: var(--radius-md); margin: 16px 0;
+            font-size: 13px; font-family: var(--font-family-cn); line-height: 1.7;
+            border-left: 4px solid;
+        }
+        .callout-info { background: var(--color-info-50); border-color: var(--color-info); color: #1e3a8a; }
+        .callout-success { background: var(--color-success-50); border-color: var(--color-success); color: #065f46; }
+        .callout-warning { background: var(--color-warning-50); border-color: var(--color-warning); color: #78350f; }
+        .callout-purple { background: var(--color-purple-50); border-color: var(--color-purple); color: #4c1d95; }
+
+        /* ===== WATCHLIST ===== */
+        .watchlist { list-style: none; margin: 0; padding: 0; }
+        .watchlist li {
+            padding: 10px 14px; background: var(--color-bg-card); border: 1px solid var(--color-border);
+            border-radius: var(--radius-md); margin-bottom: 8px;
+            font-family: var(--font-family-cn); font-size: 13px; line-height: 1.6;
+            display: flex; gap: 10px; align-items: flex-start;
+        }
+        .watchlist li::before { content: '→'; color: var(--color-info); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+        /* ===== DAILY INDEX ===== */
+        .daily-index { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 16px 0; }
+        .daily-item {
+            background: var(--color-bg-card); border: 1px solid var(--color-border);
+            border-radius: var(--radius-md); padding: 12px 16px;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        .daily-item:hover { transform: translateY(-1px); box-shadow: var(--shadow-card); }
+        .daily-item-date { font-size: 12px; font-weight: 700; color: var(--color-info); margin-bottom: 4px; }
+        .daily-item-link { font-size: 13px; font-weight: 600; color: var(--color-text-primary); display: block; margin-bottom: 4px; }
+        .daily-item-kw { font-size: 11px; color: var(--color-text-muted); font-family: var(--font-family-cn); line-height: 1.5; }
+
+        /* ===== ANIMATE ===== */
+        .animate-on-scroll {
+            opacity: 0; transform: translateY(14px);
+            transition: opacity 0.42s ease, transform 0.42s ease;
+        }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll { transition: none; opacity: 1; transform: none; }
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-to-top {
+            position: fixed; bottom: 28px; right: 28px;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--color-info); color: #fff; border: none;
+            cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow-glow-info); opacity: 0; pointer-events: none;
+            transition: opacity var(--transition-normal), transform var(--transition-normal);
+            z-index: 200;
+        }
+        .scroll-to-top.visible { opacity: 1; pointer-events: auto; }
+        .scroll-to-top:hover { transform: translateY(-2px); }
+
+        /* ===== FOOTER ===== */
+        .doc-footer {
+            margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--color-border);
+            font-size: 12px; color: var(--color-text-muted); text-align: center;
+            font-family: var(--font-family-cn);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .layout-wrapper { flex-direction: column; }
+            .sidebar-nav {
+                width: 100%; position: sticky; top: 0; height: auto;
+                overflow-y: visible; border-right: none; border-bottom: 1px solid var(--color-border);
+                display: flex; flex-direction: row; overflow-x: auto; padding: 4px 0;
+                -webkit-overflow-scrolling: touch;
+            }
+            .sidebar-doc-title, .toc-group-label, .reading-progress-wrap { display: none; }
+            .toc-link { flex: 0 0 auto; border-left: none; border-bottom: 2px solid transparent; white-space: nowrap; padding: 8px 14px; font-size: 12px; }
+            .toc-link.toc-active { border-left-color: transparent; border-bottom-color: var(--color-info); }
+            .toc-link.toc-sub { display: none; }
+            .sidebar-collapse-btn { display: none; }
+            .content-inner { padding: 28px 16px 80px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .header-title { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+<a class="skip-to-content" href="#main-content">跳到主内容</a>
+
+<div class="layout-wrapper">
+    <!-- SIDEBAR -->
+    <nav class="sidebar-nav" id="sidebar" aria-label="目录导航">
+        <div class="sidebar-doc-title">AI 周报 2026-W19</div>
+        <div class="toc-section">
+            <div class="toc-group-label">目录</div>
+            <a href="#overview"    class="toc-link">📋 本周概览</a>
+            <a href="#top5"        class="toc-link">🔥 Top 5 事件</a>
+            <a href="#deepresearch" class="toc-link">🔍 深度调研</a>
+            <a href="#insight"     class="toc-link">🔮 周度洞察</a>
+            <a href="#llm"         class="toc-link">🧠 大模型</a>
+            <a href="#coding"      class="toc-link">⌨️ AI Coding</a>
+            <a href="#app"         class="toc-link">📱 AI 应用</a>
+            <a href="#industry"    class="toc-link">🏭 AI 行业</a>
+            <a href="#enterprise"  class="toc-link">🔄 企业AI转型</a>
+            <a href="#data"        class="toc-link">📊 数据总览</a>
+            <a href="#watchlist"   class="toc-link">📌 下周关注</a>
+            <a href="#dailyindex"  class="toc-link">📅 日报索引</a>
+            <a href="#vocab"       class="toc-link">📖 技术词汇</a>
+            <a href="#narrative"   class="toc-link">🌐 宏观叙事</a>
+        </div>
+        <div class="reading-progress-wrap">
+            <div class="reading-progress-label">阅读进度</div>
+            <div class="reading-progress-track">
+                <div class="reading-progress-fill" id="readingProgress"></div>
+            </div>
+        </div>
+    </nav>
+    <button class="sidebar-collapse-btn" id="collapseBtn" title="折叠导航" aria-label="折叠导航">«</button>
+
+    <!-- MAIN CONTENT -->
+    <main class="content-area" id="main-content">
+        <div class="content-inner">
+
+            <!-- HEADER -->
+            <header class="doc-header">
+                <div class="header-badge">AI INSIGHT · WEEKLY REPORT · W19</div>
+                <h1 class="header-title">AI 周报 2026年第19周</h1>
+                <p class="header-meta">
+                    <span>📅 2026-05-04 至 05-10</span>
+                    <span>📰 覆盖约90+条动态+深度调研</span>
+                    <span>🌐 海外55+ · 国内35+</span>
+                    <span>⏱ 生成于 2026-05-11</span>
+                </p>
+            </header>
+
+            <!-- OVERVIEW -->
+            <section id="overview">
+            <div class="doc-chapter-label animate-on-scroll">概览</div>
+            <h2 class="animate-on-scroll">📌 本周概览</h2>
+            <div class="animate-on-scroll" style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;margin-top:16px;">
+            <thead><tr style="background:var(--color-bg-table-header);">
+            <th style="padding:10px 12px;text-align:left;border-bottom:2px solid var(--color-success);font-weight:700;">维度</th>
+            <th style="padding:10px 12px;text-align:left;border-bottom:2px solid var(--color-success);font-weight:700;">周度信号</th>
+            </tr></thead>
+            <tbody>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);font-weight:600;">🧠 大模型</td><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);">Anthropic与黑石高盛成立15亿美元AI合资企业，DeepSeek首轮融资500亿估值3000亿国家大基金领投，GLM-5.1编程首超Claude Opus 4.6，中美AI差距实质弥合</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);font-weight:600;">⌨️ AI Coding</td><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);">Cursor曝RCE漏洞(CVSS 8.1)敲响Agent可信度警钟，Warp开源+亚马逊全员标准化多工具工作流，AI编程信任危机：96%不信任但仅48%检查</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);font-weight:600;">📱 AI应用</td><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);">Bumble弃滑动转向AI撮合——消费级Agent接管用户决策的临界点，豆包上线三档付费终结免费时代，Copilot Cowork后台执行官模式是AI产品形态范式跃迁</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);font-weight:600;">🏭 AI行业</td><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);">Anthropic金融Agent深度调研——Skills+Connectors+Subagents三层架构定义Agent商业化标准形态，Q1全球AI融资$242亿占VC81%，估值三个月翻倍冲击9000亿</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);font-weight:600;">🔄 企业转型</td><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);">企业AI的Day -1问题：数据地基未打好就盖Agent楼，AI裁员叙事成为新话语范式，Deloitte揭示66%提升生产力但54%算不清ROI</td></tr>
+            </tbody></table></div>
+        </section>
+
+            <!-- TOP 5 -->
+            <section id="top5">
+            <div class="doc-chapter-label animate-on-scroll">Top 5</div>
+            <h2 class="animate-on-scroll">🏆 本周 Top 5 事件</h2>
+
+            <!-- Top 1 -->
+            <div class="news-card animate-on-scroll" style="--card-accent: var(--color-purple);">
+                <div class="news-card-rank">TOP 1 · 深度调研</div>
+                <div class="news-card-title">Anthropic金融Agent：Skills+Connectors+Subagents三层架构定义Agent商业化标准形态</div>
+                <div class="news-card-source">📅 2026-05-05/05-10 · 📎 <a href="https://www.anthropic.com/news/enterprise-ai-services-company" target="_blank">Anthropic官方</a></div>
+                <div class="news-card-desc">Anthropic在纽约一口气释放10个金融Agent模板+Microsoft 365整合+16+金融数据connector，同一天宣布与Blackstone、H&F、Goldman Sachs合资成立15亿美元企业AI服务公司。核心架构是三层：Skills（领域知识+合规流程注入）、Connectors（受控数据接入+Moody's MCP app）、Subagents（主Agent调子模型做专家级校验）。这不是10个prompt，而是reference architecture——把行业的知识×数据×流程打包成可部署的单元。</div>
+                <div class="news-card-why"><strong>影响</strong>：Agent商业化的瓶颈不在模型能力，在"能不能安全接入企业数据和流程"。三层架构是domain-agnostic的，金融只是第一个场景。Agent从"通用chatbot配行业壳"走向"行业知识×数据×流程打包成可部署单元"——这是产品形态的根本性跃迁。<br><br>🔗 <a href="https://xiaoxiong20260206.github.io/ai-insight-public/02-deep-research/topics/anthropic-financial-agents-new-org-model.html" target="_blank">深度调研</a></div>
+            </div>
+
+            <!-- Top 2 -->
+            <div class="news-card animate-on-scroll" style="--card-accent: var(--color-success);">
+                <div class="news-card-rank">TOP 2 · 大模型</div>
+                <div class="news-card-title">DeepSeek首轮融资500亿估值3000亿：大模型正式成为国家战略资产</div>
+                <div class="news-card-source">📅 2026-05-05/05-10 · 📎 <a href="https://weixin.sogou.com/weixin?type=2&query=DeepSeek首轮融资500亿" target="_blank">悔觉·微信</a></div>
+                <div class="news-card-desc">DeepSeek首轮融资500亿估值3000亿，国家大基金洽谈领投。大模型正式被纳入国家战略资产范畴，逻辑与当年扶持芯片产业链一脉相承。估值从$100亿→$450亿仅用了3周。中国AI四小龙总估值破万亿。国产大模型进入'资本大年'，但81% VC流向AI时，非AI创新投资被挤出。</div>
+                <div class="news-card-why"><strong>影响</strong>：大模型赛道从'技术竞赛'进入'资本+战略双轨竞赛'——国家队定方向，未进入头部阵营的公司融资窗口正在关闭<br><br>🔗 <a href="https://www.allblogthings.com/2026/05/deepseek-approaches-50b-valuation-after-first-funding-round.html" target="_blank">DeepSeek估值跃升</a></div>
+            </div>
+
+            <!-- Top 3 -->
+            <div class="news-card animate-on-scroll" style="--card-accent: var(--color-info);">
+                <div class="news-card-rank">TOP 3 · AI行业</div>
+                <div class="news-card-title">Anthropic与黑石、高盛成立15亿美元AI合资企业：华尔街入场</div>
+                <div class="news-card-source">📅 2026-05-05 · 📎 <a href="https://m.163.com/dy/article/KS3CAVBF0511A6N9.html" target="_blank">华尔街日报</a></div>
+                <div class="news-card-desc">Anthropic/黑石/H&F各投约3亿美元，高盛投1.5亿美元，向PE所投企业销售AI工具。AI公司直接进PE渠道做分销——前所未见。合资公司模式不是卖API而是Anthropic工程师嵌入服务团队，PE portfolio公司是天然种子客户。API是门票，服务是护城河。</div>
+                <div class="news-card-why"><strong>影响</strong>：AI公司从卖模型到卖服务的战略拐点——API边际成本趋近于零但竞争者随时可复制，而服务实施有客户绑定效应</div>
+            </div>
+
+            <!-- Top 4 -->
+            <div class="news-card animate-on-scroll" style="--card-accent: var(--color-danger);">
+                <div class="news-card-rank">TOP 4 · AI Coding</div>
+                <div class="news-card-title">Cursor RCE漏洞+AI编程信任危机：Agent可信度成为新战场</div>
+                <div class="news-card-source">📅 2026-05-04/05-06 · 📎 <a href="https://www.neuracybintel.com/articles/cursor-ai-ide-rce-flaw-cve-2026-26268-turns-malicious-git-repositories-into-developer-workstation-attack-paths" target="_blank">NeuraCybIntel</a></div>
+                <div class="news-card-desc">Cursor曝RCE漏洞CVE-2026-26268（CVSS 8.1），恶意Git仓库可通过AI Agent触发任意代码执行。同周Sonar报告：96%开发者不完全信任AI生成代码，但仅48%始终检查。Warp开源走社区监督路径提升可信度。AI Coding工具的竞争维度从"谁更智能"转向"谁更可信"。</div>
+                <div class="news-card-why"><strong>影响</strong>：Agent可信度架构将成为2026下半年关键分化点——能证明Agent行为可控的工具将赢得企业客户<br><br>🔗 <a href="https://www.warp.dev/blog/warp-is-now-open-source" target="_blank">Warp开源</a> · <a href="https://www.sonarsource.com/" target="_blank">Sonar调查</a></div>
+            </div>
+
+            <!-- Top 5 -->
+            <div class="news-card animate-on-scroll" style="--card-accent: var(--color-warning);">
+                <div class="news-card-rank">TOP 5 · AI应用</div>
+                <div class="news-card-title">Bumble弃滑动转向AI撮合：消费级Agent接管用户决策的临界点</div>
+                <div class="news-card-source">📅 2026-05-08/05-10 · 📎 <a href="https://techcrunch.com/2026/05/07/bumble-is-getting-rid-of-the-swipe-ceo-says/" target="_blank">TechCrunch</a></div>
+                <div class="news-card-desc">Bumble弃用标志性滑动匹配转向AI撮合，推出AI约会助手Bee。消费级产品中AI Agent首次全面接管用户决策入口。Meta/Google同一周宣布Agent产品，背后是商业模式深层重构：从展示广告到成交佣金。BlackRock CEO称算力将成万亿资产新品类。</div>
+                <div class="news-card-why"><strong>影响</strong>：消费级AI Agent的成败不取决于撮合准确率，取决于能否在'替用户决策'和'让用户感受到自主性'之间找到平衡点</div>
+            </div>
+            </section>
+
+            <!-- DEEP RESEARCH -->
+            <section id="deepresearch">
+            <div class="doc-chapter-label animate-on-scroll">深度调研</div>
+            <h2 class="animate-on-scroll">🔍 Anthropic金融Agent——一套新组织方式</h2>
+            <div class="callout callout-purple animate-on-scroll">本周新增深度调研板块。Anthropic金融Agent三层架构是Agent商业化的标准形态。完整版见上方Top 1链接。</div>
+            
+            <div class="table-wrap animate-on-scroll">
+            <table>
+            <thead><tr><th>维度</th><th>判断</th></tr></thead>
+            <tbody>
+            <tr><td style="font-weight:600;">架构</td><td>Skills+Connectors+Subagents三层 = Agent商业化标准形态，domain-agnostic</td></tr>
+            <tr><td style="font-weight:600;">能力</td><td>64.37% benchmark成绩 = "领先但不够自主交付"，结构化92%/月结50%</td></tr>
+            <tr><td style="font-weight:600;">商业</td><td>合资公司 ≠ 卖API，= AI公司→行业数字化转型合伙人</td></tr>
+            <tr><td style="font-weight:600;">产品</td><td>不是卖发动机，是卖整车——发动机+底盘+内饰+驾照一起交付</td></tr>
+            <tr><td style="font-weight:600;">演进</td><td>三层架构的出现标志着Agent从"通用工具"走向"行业可部署单元"——与移动互联网从WAP到App的演进逻辑一致</td></tr>
+            </tbody></table></div>
+
+            <div class="callout callout-info animate-on-scroll" style="margin-top:16px;">
+<strong>演进规律解读</strong><br><br>
+三层架构的domain-agnostic特性意味着，金融只是第一个样板间，接下来每个垂直行业都会出现类似的"行业知识×数据接入×流程委托"打包形态。Agent商业化的节奏将遵循"样板间验证→模板复制→生态绑定"的三段式演进路径——与移动互联网App生态的演进逻辑高度同构。
+            </div>
+            </section>
+
+            <!-- INSIGHTS -->
+            <section id="insight">
+            <div class="doc-chapter-label animate-on-scroll">洞察</div>
+            <h2 class="animate-on-scroll">💡 本周洞察</h2>
+
+            <div class="insight-card animate-on-scroll">
+                <div class="insight-tag">洞察一</div>
+                <div class="insight-title">Agent商业化的标准形态出现——三层架构是行业共识而非个案</div>
+                <p style="font-family:var(--font-family-cn);line-height:1.75;font-size:13px;">Anthropic的Skills+Connectors+Subagents三层架构不是独家发明——OpenAI Symphony（session+harness+sandbox）、微软Copilot Cowork（Skills+连接器+后台编排）、Cursor Security Review都在用类似三层拆分。当三家头部公司不约而同选择同一个架构模式，说明这不是个案而是行业共识。三层架构的本质是：把Agent从"通用chatbot配行业壳"变成"行业知识×数据×流程打包成可部署单元"。这个架构的出现标志着Agent产品形态的根本性跃迁：从"卖能力"到"卖交付"——就像移动互联网从WAP到原生App，三层架构正在为Agent做同样的事。</p>
+                <div class="insight-trend">🔗 <a href="https://www.anthropic.com/news/enterprise-ai-services-company" target="_blank">Anthropic金融Agent</a> · <a href="https://openai.com/index/open-source-codex-orchestration-symphony/" target="_blank">Symphony</a> · <a href="https://blogs.microsoft.com/blog/2026/05/06/" target="_blank">Copilot Cowork</a></div>
+            </div>
+
+            <div class="insight-card animate-on-scroll">
+                <div class="insight-tag">洞察二</div>
+                <div class="insight-title">AI裁员叙事成为2026新话语范式——信号真实但成分值得追问</div>
+                <p style="font-family:var(--font-family-cn);line-height:1.75;font-size:13px;">Cloudflare、Coinbase等6家公司在同一周用AI来解释裁员。Coinbase裁员14%（660-700人），CEO定义为"AI原生重构"——AI首次被公开列为主要裁员原因。成分值得追问：既有真实的技术替代，也有企业借力打力的叙事策略。杭州法院判例同期明确"AI替岗不构成合法裁员理由"——法律边界正在划定。当所有公司都用同一个叙事裁员，这个叙事的可信度本身在贬值。</p>
+                <div class="insight-trend">🔗 <a href="https://www.coindesk.com/" target="_blank">Coinbase裁员</a> · <a href="https://m.toutiao.com/article/7635855018804937231/" target="_blank">杭州法院判例</a></div>
+            </div>
+
+            <div class="insight-card animate-on-scroll">
+                <div class="insight-tag">洞察三</div>
+                <div class="insight-title">企业AI的Day -1问题——地基不牢就盖楼，越盖越危险</div>
+                <p style="font-family:var(--font-family-cn);line-height:1.75;font-size:13px;">Deloitte报告：66%公司说AI提升了生产力，但54%技术领导者说不清楚算力成本换来了什么商业价值。ISHIR指出6大陷阱全指向基础设施缺陷。混沌AI院Token-Agent-Attention逻辑验证了这个判断：Token（数据）是基础层，没有好的Token层，Agent和Attention都是空中楼阁。谁能发明新的AI ROI度量框架，谁就掌握了下一阶段企业AI采购决策的话语权。</p>
+                <div class="insight-trend">🔗 <a href="https://www2.deloitte.com/" target="_blank">Deloitte企业AI报告</a> · <a href="https://m.finance.itbear.com.cn/html/2026-05/388453.html" target="_blank">混沌AI院ASK框架</a></div>
+            </div>
+
+            <hr style="border:none;border-top:2px solid var(--color-success);margin:32px 0;">
+            <div class="callout callout-success animate-on-scroll"><strong>发动机决定了上限，整车决定了交付</strong><br><br>这周最值得记住的不是DeepSeek 500亿融资，不是Cursor RCE漏洞，而是Anthropic金融Agent三层架构的出现。Skills+Connectors+Subagents——三层架构的出现标志着Agent产品形态的根本性跃迁：从"卖能力"到"卖交付"。就像移动互联网从WAP到原生App——WAP是通用浏览器配了个手机壳，原生App是场景×数据×交互打包成可安装单元。三层架构正在为Agent做同样的事。<br><br>64.37%的成绩揭示了一个深层规律：AI的能力边界不是均匀的，而是按任务确定性梯度分布。确定性高的任务接近可用，不确定性高的任务距离自主交付很远。这个梯度不会因为模型能力提升而消失，只会整体右移——但梯度本身是AI的固有属性。<br><br>81% VC流向AI既是信心也是风险——如果下半年商业化ROI不能兑现，2027回调潮会让2015移动互联网的泡沫故事重演。<br><br><strong>本周核心判断</strong>：Agent从"通用工具"走向"行业可部署单元"的跃迁已经确认。三层架构是标准化形态，64.37%是能力梯度规律的验证，81%资本密度是信心与风险的双重信号。2026下半年，确定性高的场景将率先规模化落地。</div>
+            </section>
+
+            <!-- LLM -->
+            <section id="llm">
+            <div class="doc-chapter-label animate-on-scroll">大模型</div>
+            <h2 class="animate-on-scroll">🧠 大模型本周动态</h2>
+            <div class="callout callout-info animate-on-scroll">本周大模型主线：Anthropic×SpaceX算力合作Claude Code翻倍，DeepSeek 500亿融资估值3000亿，GLM-5.1编程登顶首超Claude Opus 4.6，中美AI差距实质弥合。</div>
+            <div class="table-wrap animate-on-scroll">
+<table><thead><tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr></thead>
+<tbody>
+<tr><td>05-04</td><td><a href="https://openai.com/index/open-source-codex-orchestration-symphony/" target="_blank">OpenAI开源Symphony编排规范</a></td><td><a href="https://openai.com/index/open-source-codex-orchestration-symphony/" target="_blank">OpenAI</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-04</td><td><a href="https://mlq.ai/news/meta-postpones-avocado-ai-model-launch-to-may-amid-performance-gaps-with-competitors/" target="_blank">Meta推迟Avocado模型至5月</a></td><td><a href="https://mlq.ai/news/meta-postpones-avocado-ai-model-launch-to-may-amid-performance-gaps-with-competitors/" target="_blank">MLQ</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-05</td><td><a href="https://m.pedaily.cn/news/563422" target="_blank">Opus 4.7新tokenizer引发中文税争议</a></td><td><a href="https://m.pedaily.cn/news/563422" target="_blank">极客公园</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-05</td><td><a href="https://m.163.com/dy/article/KS3M1F3O0514BQ68.html" target="_blank">全球AI词元供应短缺</a></td><td><a href="https://m.163.com/dy/article/KS3M1F3O0514BQ68.html" target="_blank">经济学人</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-05</td><td><a href="https://m.163.com/dy/article/KS3CAVBF0511A6N9.html" target="_blank">Anthropic与黑石高盛15亿美元合资</a></td><td><a href="https://m.163.com/dy/article/KS3CAVBF0511A6N9.html" target="_blank">WSJ</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-05</td><td><a href="http://m.nbd.com.cn/articles/2026-05-04/4378407.html" target="_blank">DeepSeek-V4-Flash登顶调用量</a></td><td><a href="http://m.nbd.com.cn/articles/2026-05-04/4378407.html" target="_blank">每日经济新闻</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-06</td><td><a href="https://www.latimes.com/business/story/2026-05-06/u-s-china-ai-gap-has-closed" target="_blank">中美AI差距实质弥合</a></td><td><a href="https://www.latimes.com/business/story/2026-05-06/u-s-china-ai-gap-has-closed" target="_blank">LA Times</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-06</td><td><a href="https://weixin.sogou.com/weixin?type=2&query=GLM-5.1" target="_blank">GLM-5.1编程首超Claude Opus 4.6</a></td><td><a href="https://weixin.sogou.com/weixin?type=2&query=GLM-5.1" target="_blank">智谱</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-07</td><td><a href="https://www.anthropic.com/research" target="_blank">MSM对齐：先教原理再教做事</a></td><td><a href="https://www.anthropic.com/research" target="_blank">Anthropic</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-09</td><td><a href="https://www.anthropic.com/news/higher-limits-spacex" target="_blank">Anthropic×SpaceX算力合作，Claude Code翻倍</a></td><td><a href="https://www.anthropic.com/news/higher-limits-spacex" target="_blank">Anthropic</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-10</td><td><a href="https://www.allblogthings.com/2026/05/deepseek-approaches-50b-valuation-after-first-funding-round.html" target="_blank">DeepSeek首轮融资500亿估值3000亿</a></td><td><a href="https://www.allblogthings.com/2026/05/deepseek-approaches-50b-valuation-after-first-funding-round.html" target="_blank">The Information</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-10</td><td><a href="https://www.startuphub.ai/ai-news/artificial-intelligence/2026/anthropic-s-boris-cherny-coding-is-solved-what-s-next" target="_blank">Boris Cherny宣告编程已解决</a></td><td><a href="https://www.startuphub.ai/ai-news/artificial-intelligence/2026/anthropic-s-boris-cherny-coding-is-solved-what-s-next" target="_blank">StartupHub</a></td><td>⭐⭐⭐⭐</td></tr>
+</tbody></table></div>
+
+            <div class="stats-grid animate-on-scroll">
+                <div class="stat-card stat-success"><div class="stat-value">3000亿</div><div class="stat-label">DeepSeek估值（首轮融资）</div></div>
+                <div class="stat-card stat-info"><div class="stat-value">64.37%</div><div class="stat-label">Claude Opus 4.7 金融Agent benchmark</div></div>
+                <div class="stat-card stat-purple"><div class="stat-value">$15亿</div><div class="stat-label">Anthropic×黑石×高盛合资</div></div>
+                <div class="stat-card stat-warning"><div class="stat-value">7.942万亿</div><div class="stat-label">中国大模型周调用量(Token)</div></div>
+            </div>
+            </section>
+
+            <!-- AI CODING -->
+            <section id="coding">
+            <div class="doc-chapter-label animate-on-scroll">AI Coding</div>
+            <h2 class="animate-on-scroll">⌨️ AI Coding本周动态</h2>
+            <div class="callout callout-danger animate-on-scroll">本周AI Coding主线：Cursor RCE漏洞(CVSS 8.1)敲响Agent可信度警钟，96%开发者不信任AI代码但仅48%检查，Warp开源走社区监督路径，亚马逊全员标准化多工具工作流。</div>
+            <div class="table-wrap animate-on-scroll">
+<table><thead><tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr></thead>
+<tbody>
+<tr><td>05-04</td><td><a href="https://cursor.com/changelog" target="_blank">Cursor Security Review beta上线</a></td><td><a href="https://cursor.com/changelog" target="_blank">Cursor</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-05</td><td><a href="https://cursor.com/changelog/05-04-26" target="_blank">Cursor企业级更新：模型管控+消费管理</a></td><td><a href="https://cursor.com/changelog/05-04-26" target="_blank">Cursor</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-06</td><td><a href="https://www.sonarsource.com/" target="_blank">AI编程信任危机：96%不信任+48%检查</a></td><td><a href="https://www.sonarsource.com/" target="_blank">Sonar</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-06</td><td><a href="https://x.ai/" target="_blank">xAI发布Grok 4.3降价40-60%</a></td><td><a href="https://x.ai/" target="_blank">xAI</a></td><td>⭐⭐⭐</td></tr>
+<tr><td>05-07</td><td><a href="https://github.com/" target="_blank">DeepClaude：Claude Code+DeepSeek成本降17倍</a></td><td><a href="https://github.com/" target="_blank">GitHub</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-09</td><td><a href="https://www.warp.dev/blog/warp-is-now-open-source" target="_blank">Warp开源AI终端+OpenAI创始赞助</a></td><td><a href="https://www.warp.dev/blog/warp-is-now-open-source" target="_blank">Warp</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-09</td><td><a href="https://www.aboutamazon.com/" target="_blank">亚马逊全员开放Claude Code+Codex+Kiro</a></td><td><a href="https://www.aboutamazon.com/" target="_blank">Amazon</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-10</td><td><a href="https://www.neuracybintel.com/articles/cursor-ai-ide-rce-flaw-cve-2026-26268-turns-malicious-git-repositories-into-developer-workstation-attack-paths" target="_blank">Cursor RCE漏洞CVE-2026-26268(CVSS 8.1)</a></td><td><a href="https://www.neuracybintel.com/articles/cursor-ai-ide-rce-flaw-cve-2026-26268-turns-malicious-git-repositories-into-developer-workstation-attack-paths" target="_blank">NeuraCybIntel</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-10</td><td><a href="https://www.mercurynews.com/2026/03/20/ai-coding-startup-cursor-plans-new-model-to-rival-anthropic-openai/" target="_blank">Cursor估值$500亿谈$20亿融资</a></td><td><a href="https://www.mercurynews.com/2026/03/20/ai-coding-startup-cursor-plans-new-model-to-rival-anthropic-openai/" target="_blank">Mercury News</a></td><td>⭐⭐⭐⭐</td></tr>
+</tbody></table></div>
+
+            <div class="stats-grid animate-on-scroll">
+                <div class="stat-card stat-danger"><div class="stat-value">8.1</div><div class="stat-label">Cursor RCE CVSS评分</div></div>
+                <div class="stat-card stat-warning"><div class="stat-value">96%</div><div class="stat-label">开发者不完全信任AI代码</div></div>
+                <div class="stat-card stat-info"><div class="stat-value">48%</div><div class="stat-label">始终检查AI辅助代码</div></div>
+                <div class="stat-card stat-success"><div class="stat-value">42%</div><div class="stat-label">2026年AI生成代码占比</div></div>
+            </div>
+            </section>
+
+            <!-- AI APP -->
+            <section id="app">
+            <div class="doc-chapter-label animate-on-scroll">AI应用</div>
+            <h2 class="animate-on-scroll">📱 AI应用本周动态</h2>
+            <div class="callout callout-warning animate-on-scroll">本周AI应用主线：Bumble弃滑动转向AI撮合——消费级Agent接管用户决策临界点，豆包上线三档付费终结免费时代，Copilot Cowork后台执行官是产品形态范式跃迁。</div>
+            <div class="table-wrap animate-on-scroll">
+<table><thead><tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr></thead>
+<tbody>
+<tr><td>05-04</td><td><a href="https://openai.com/index/introducing-workspace-agents-in-chatgpt/" target="_blank">OpenAI推出Workspace Agents</a></td><td><a href="https://openai.com/index/introducing-workspace-agents-in-chatgpt/" target="_blank">OpenAI</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-04</td><td><a href="https://x.com/sama/status/1945900345378697650" target="_blank">Sam Altman宣布ChatGPT Agent</a></td><td><a href="https://x.com/sama/status/1945900345378697650" target="_blank">X</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-05</td><td><a href="https://new.qq.com/rain/a/20260504A04OOC00" target="_blank">豆包上线三档付费：68/200/500元每月</a></td><td><a href="https://new.qq.com/rain/a/20260504A04OOC00" target="_blank">澎湃新闻</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-05</td><td><a href="https://openai.com/index/delivering-low-latency-voice-ai-at-scale/" target="_blank">OpenAI发布低延迟语音AI规模化技术</a></td><td><a href="https://openai.com/index/delivering-low-latency-voice-ai-at-scale/" target="_blank">OpenAI</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-06</td><td><a href="https://www.anthropic.com/" target="_blank">Anthropic Mythos定向开放：安全优先围墙花园</a></td><td><a href="https://www.anthropic.com/" target="_blank">Anthropic</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-07</td><td><a href="https://blogs.microsoft.com/blog/2026/05/06/accelerating-ai-productivity-copilot-cowork-mobile-skills/" target="_blank">Copilot Cowork移动端+插件上线，后台执行官</a></td><td><a href="https://blogs.microsoft.com/blog/2026/05/06/accelerating-ai-productivity-copilot-cowork-mobile-skills/" target="_blank">Microsoft</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-08</td><td><a href="https://techcrunch.com/2026/05/05/openai-releases-gpt-5-5-instant/" target="_blank">GPT-5.5 Instant：幻觉率降52.5%</a></td><td><a href="https://techcrunch.com/2026/05/05/openai-releases-gpt-5-5-instant/" target="_blank">OpenAI</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-09</td><td><a href="https://techcrunch.com/" target="_blank">Meta/Google同周宣布Agent产品</a></td><td><a href="https://techcrunch.com/" target="_blank">TechCrunch</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-10</td><td><a href="https://techcrunch.com/2026/05/07/bumble-is-getting-rid-of-the-swipe-ceo-says/" target="_blank">Bumble弃滑动转向AI撮合</a></td><td><a href="https://techcrunch.com/2026/05/07/bumble-is-getting-rid-of-the-swipe-ceo-says/" target="_blank">TechCrunch</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-10</td><td><a href="https://247wallst.com/investing/2026/05/09/blackrocks-larry-fink-says-ai-is-creating-a-new-trillion-dollar-asset-class/" target="_blank">BlackRock CEO称算力期货将成万亿资产</a></td><td><a href="https://247wallst.com/investing/2026/05/09/blackrocks-larry-fink-says-ai-is-creating-a-new-trillion-dollar-asset-class/" target="_blank">247 Wall St</a></td><td>⭐⭐⭐⭐</td></tr>
+</tbody></table></div>
+
+            <div class="stats-grid animate-on-scroll">
+                <div class="stat-card stat-warning"><div class="stat-value">500元</div><div class="stat-label">豆包专业版月费</div></div>
+                <div class="stat-card stat-success"><div class="stat-value">52.5%</div><div class="stat-label">GPT-5.5幻觉率降幅</div></div>
+                <div class="stat-card stat-info"><div class="stat-value">13个</div><div class="stat-label">Copilot Cowork内置Skills</div></div>
+                <div class="stat-card stat-purple"><div class="stat-value">万亿</div><div class="stat-label">算力期货资产品类（BlackRock预测）</div></div>
+            </div>
+            </section>
+
+            <!-- AI INDUSTRY -->
+            <section id="industry">
+            <div class="doc-chapter-label animate-on-scroll">AI行业</div>
+            <h2 class="animate-on-scroll">🏭 AI行业本周动态</h2>
+            <div class="callout callout-success animate-on-scroll">本周AI行业主线：Anthropic金融Agent三层架构深度调研+15亿美元合资，Q1全球AI融资$242亿占VC81%，估值三个月翻倍冲击9000亿，Coinbase裁员14%转向AI原生。</div>
+            <div class="table-wrap animate-on-scroll">
+<table><thead><tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr></thead>
+<tbody>
+<tr><td>05-05</td><td><a href="https://m.163.com/dy/article/KS3CAVBF0511A6N9.html" target="_blank">Anthropic与黑石高盛15亿美元合资</a></td><td><a href="https://m.163.com/dy/article/KS3CAVBF0511A6N9.html" target="_blank">WSJ</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-05</td><td><a href="https://m.toutiao.com/article/7635929691458634292/" target="_blank">Anthropic估值3个月翻倍冲击9000亿</a></td><td><a href="https://m.toutiao.com/article/7635929691458634292/" target="_blank">彭博社</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-05</td><td><a href="https://www.allblogthings.com/2026/05/deepseek-approaches-50b-valuation-after-first-funding-round.html" target="_blank">DeepSeek首轮融资500亿估值3000亿</a></td><td><a href="https://www.allblogthings.com/2026/05/deepseek-approaches-50b-valuation-after-first-funding-round.html" target="_blank">The Information</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-06</td><td><a href="https://www.coindesk.com/" target="_blank">Coinbase裁员14%转向AI原生</a></td><td><a href="https://www.coindesk.com/" target="_blank">CoinDesk</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-06</td><td><a href="https://techcrunch.com/" target="_blank">AI芯片创企融资超16亿美元</a></td><td><a href="https://techcrunch.com/" target="_blank">TechCrunch</a></td><td>⭐⭐⭐</td></tr>
+<tr><td>05-08</td><td>Anthropic/OpenAI同日宣布PE合资公司</td><td>综合</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-10</td><td><a href="https://finance.yahoo.com/sectors/technology/articles/ai-startups-capture-242b-global-174530064.html" target="_blank">Q1全球AI融资$242亿占VC81%</a></td><td><a href="https://finance.yahoo.com/sectors/technology/articles/ai-startups-capture-242b-global-174530064.html" target="_blank">Yahoo Finance</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-10</td><td><a href="https://www.yahoo.com/news/articles/ai-data-center-bans-multiplying-162010531.html" target="_blank">69辖区阻止数据中心建设$600亿+</a></td><td><a href="https://www.yahoo.com/news/articles/ai-data-center-bans-multiplying-162010531.html" target="_blank">Yahoo</a></td><td>⭐⭐⭐⭐</td></tr>
+</tbody></table></div>
+
+            <div class="stats-grid animate-on-scroll">
+                <div class="stat-card stat-success"><div class="stat-value">$242亿</div><div class="stat-label">Q1全球AI融资(81%VC)</div></div>
+                <div class="stat-card stat-info"><div class="stat-value">9000亿</div><div class="stat-label">Anthropic估值(美元)</div></div>
+                <div class="stat-card stat-warning"><div class="stat-value">$15亿</div><div class="stat-label">黑石×高盛×Anthropic合资</div></div>
+                <div class="stat-card stat-danger"><div class="stat-value">14%</div><div class="stat-label">Coinbase裁员比例</div></div>
+            </div>
+            </section>
+
+            <!-- ENTERPRISE -->
+            <section id="enterprise">
+            <div class="doc-chapter-label animate-on-scroll">企业转型</div>
+            <h2 class="animate-on-scroll">🔄 企业AI转型本周动态</h2>
+            <div class="callout callout-warning animate-on-scroll">本周企业转型主线：Day -1问题——数据地基未打好就盖Agent楼，AI裁员叙事成为新话语范式，Deloitte揭示66%提升生产力但54%算不清ROI。</div>
+            <div class="table-wrap animate-on-scroll">
+<table><thead><tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr></thead>
+<tbody>
+<tr><td>05-05</td><td><a href="https://m.finance.itbear.com.cn/html/2026-05/388453.html" target="_blank">混沌AI院发布ASK数字员工框架</a></td><td><a href="https://m.finance.itbear.com.cn/html/2026-05/388453.html" target="_blank">ITBear</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-05</td><td><a href="https://m.toutiao.com/article/7635855018804937231/" target="_blank">杭州法院：AI替岗≠合法裁员理由</a></td><td><a href="https://m.toutiao.com/article/7635855018804937231/" target="_blank">今日头条</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-06</td><td><a href="https://www.cnbc.com/2026/05/06/china-ai-race-cost-efficiency-sensetime-competition.html" target="_blank">SenseTouch靠成本效率突围</a></td><td><a href="https://www.cnbc.com/2026/05/06/china-ai-race-cost-efficiency-sensetime-competition.html" target="_blank">CNBC</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-06</td><td><a href="https://www2.deloitte.com/" target="_blank">Deloitte 2026企业AI报告：Agentic AI进入Scaling</a></td><td><a href="https://www2.deloitte.com/" target="_blank">Deloitte</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-07</td><td><a href="https://blogs.microsoft.com/" target="_blank">微软砍Xbox Copilot止损+Copilot Cowork上线</a></td><td><a href="https://blogs.microsoft.com/" target="_blank">Microsoft</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-09</td><td><a href="https://reports.weforum.org/docs/WEF_Organizational_Transformation_in_the_Age_of_AI_2026.pdf" target="_blank">WEF发布《AI时代组织转型》报告</a></td><td><a href="https://reports.weforum.org/docs/WEF_Organizational_Transformation_in_the_Age_of_AI_2026.pdf" target="_blank">WEF</a></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>05-09</td><td><a href="https://writer.com/blog/enterprise-ai-adoption-2026/" target="_blank">Writer报告79%企业面临AI采纳挑战</a></td><td><a href="https://writer.com/blog/enterprise-ai-adoption-2026/" target="_blank">Writer</a></td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>05-10</td><td><a href="https://news.sap.com/2026/04/five-make-or-break-moments-2026-ai-ambitions/" target="_blank">SAP指出2026五个成败关键时刻</a></td><td><a href="https://news.sap.com/2026/04/five-make-or-break-moments-2026-ai-ambitions/" target="_blank">SAP</a></td><td>⭐⭐⭐⭐</td></tr>
+</tbody></table></div>
+
+            <div class="stats-grid animate-on-scroll">
+                <div class="stat-card stat-warning"><div class="stat-value">66%</div><div class="stat-label">企业称AI提升生产力</div></div>
+                <div class="stat-card stat-danger"><div class="stat-value">54%</div><div class="stat-label">技术领导者说不清ROI</div></div>
+                <div class="stat-card stat-info"><div class="stat-value">79%</div><div class="stat-label">企业面临AI采纳挑战</div></div>
+                <div class="stat-card stat-purple"><div class="stat-value">Day -1</div><div class="stat-label">数据地基问题层级</div></div>
+            </div>
+            </section>
+
+            <!-- DATA -->
+            <section id="data">
+            <div class="doc-chapter-label animate-on-scroll">数据</div>
+            <h2 class="animate-on-scroll">📊 本周数据总览</h2>
+            <div class="table-wrap animate-on-scroll">
+            <table><thead><tr><th>指标</th><th>数值</th><th>来源</th></tr></thead>
+            <tbody>
+            <tr><td>DeepSeek估值</td><td>3000亿元(~$450亿)</td><td>The Information</td></tr>
+            <tr><td>Anthropic估值</td><td>超9000亿美元(3个月翻倍)</td><td>彭博社</td></tr>
+            <tr><td>Q1全球AI融资</td><td>$242亿(81% VC)</td><td>Yahoo Finance</td></tr>
+            <tr><td>Claude Code限制</td><td>5→10次/小时(翻倍)</td><td>Anthropic</td></tr>
+            <tr><td>中国大模型周调用量</td><td>7.942万亿Token</td><td>OpenRouter</td></tr>
+            <tr><td>AI生成代码占比</td><td>42%(2026),预计65%(2027)</td><td>Sonar</td></tr>
+            <tr><td>开发者对AI代码信任度</td><td>4%完全信任</td><td>Sonar</td></tr>
+            <tr><td>Cursor CVE漏洞</td><td>CVSS 8.1</td><td>NeuraCybIntel</td></tr>
+            <tr><td>Coinbase裁员比例</td><td>14%(约660-700人)</td><td>CoinDesk</td></tr>
+            <tr><td>豆包专业版月费</td><td>500元/月</td><td>App Store</td></tr>
+            <tr><td>美国数据中心阻止</td><td>$600亿+项目</td><td>Yahoo</td></tr>
+            <tr><td>AI企业采纳挑战率</td><td>79%</td><td>Writer</td></tr>
+            </tbody></table></div>
+            </section>
+
+            <!-- WATCHLIST -->
+            <section id="watchlist">
+            <div class="doc-chapter-label animate-on-scroll">关注</div>
+            <h2 class="animate-on-scroll">📌 下周关注</h2>
+            <ul class="watchlist animate-on-scroll">
+                <li><strong>DeepSeek融资落地时间</strong> — 国家大基金领投若成真，将重新定义大模型战略地位</li>
+                <li><strong>Bumble Q4 AI改版上线</strong> — 消费级AI Agent接管决策的首个大规模验证</li>
+                <li><strong>算力期货市场形成</strong> — BlackRock推动算力资产化，可能改变AI基础设施投资逻辑</li>
+                <li><strong>Cursor安全修复采纳率</strong> — RCE漏洞修复速度将测试AI Coding工具安全响应能力</li>
+                <li><strong>Anthropic金融Agent模板行业扩散</strong> — 法律/医疗/保险模板是否复用同一三因子模型</li>
+            </ul>
+            </section>
+
+            <!-- DAILY INDEX -->
+            <section id="dailyindex">
+            <div class="doc-chapter-label animate-on-scroll">日报</div>
+            <h2 class="animate-on-scroll">📅 本周日报索引</h2>
+            <div class="daily-index animate-on-scroll">
+                <div class="daily-item">
+                    <div class="daily-item-date">05-04（周一）</div>
+                    <a href="./2026-05-04.html" class="daily-item-link">查看日报</a>
+                    <div class="daily-item-kw">OpenAI开源Symphony编排规范，五角大楼收编8家AI公司</div>
+                </div>
+                <div class="daily-item">
+                    <div class="daily-item-date">05-05（周二）</div>
+                    <a href="./2026-05-05.html" class="daily-item-link">查看日报</a>
+                    <div class="daily-item-kw">Anthropic与黑石高盛15亿美元合资，DeepSeek V4 Flash登顶</div>
+                </div>
+                <div class="daily-item">
+                    <div class="daily-item-date">05-06（周三）</div>
+                    <a href="./2026-05-06.html" class="daily-item-link">查看日报</a>
+                    <div class="daily-item-kw">中美AI差距弥合，Anthropic Mythos，GLM-5.1编程登顶</div>
+                </div>
+                <div class="daily-item">
+                    <div class="daily-item-date">05-07（周四）</div>
+                    <a href="./2026-05-07.html" class="daily-item-link">查看日报</a>
+                    <div class="daily-item-kw">MSM对齐先教原理再教做事，Copilot Cowork后台执行</div>
+                </div>
+                <div class="daily-item">
+                    <div class="daily-item-date">05-08（周五）</div>
+                    <a href="./2026-05-08.html" class="daily-item-link">查看日报</a>
+                    <div class="daily-item-kw">GPT-5.5 Instant可信而非更聪明，AI Coding工具栈融合</div>
+                </div>
+                <div class="daily-item">
+                    <div class="daily-item-date">05-09（周六）</div>
+                    <a href="./2026-05-09.html" class="daily-item-link">查看日报</a>
+                    <div class="daily-item-kw">Anthropic×SpaceX算力合作，亚马逊全员AI Coding，Meta/Google Agent</div>
+                </div>
+                <div class="daily-item">
+                    <div class="daily-item-date">05-10（周日）</div>
+                    <a href="./2026-05-10.html" class="daily-item-link">查看日报</a>
+                    <div class="daily-item-kw">DeepSeek 500亿融资，Cursor RCE漏洞，81%VC流向AI</div>
+                </div>
+            </div>
+            </section>
+
+            <!-- VOCAB -->
+            <section id="vocab">
+            <div class="doc-chapter-label animate-on-scroll">词汇</div>
+            <h2 class="animate-on-scroll">📖 本周关键技术词汇</h2>
+            <div class="table-wrap animate-on-scroll">
+            <table><thead><tr><th>术语</th><th>含义</th></tr></thead>
+            <tbody>
+            <tr><td style="font-weight:600;">Skills+Connectors+Subagents</td><td>Anthropic金融Agent三层架构：Skills=领域知识注入，Connectors=受控数据接入，Subagents=主Agent调子模型校验</td></tr>
+            <tr><td style="font-weight:600;">MSM</td><td>"先教原理再教做事"对齐方法，Agent失控率从54%降至7%，数据量减少60倍</td></tr>
+            <tr><td style="font-weight:600;">Day -1问题</td><td>企业AI转型在数据地基未打好就开始盖Agent楼，地基不牢楼越高越危险</td></tr>
+            <tr><td style="font-weight:600;">算力期货</td><td>BlackRock CEO提出的概念，合约保证未来AI处理能力访问权</td></tr>
+            <tr><td style="font-weight:600;">RCE漏洞</td><td>Cursor CVE-2026-26268，恶意Git仓库通过AI Agent触发任意代码执行(CVSS 8.1)</td></tr>
+            <tr><td style="font-weight:600;">DeepClaude</td><td>Claude Code骨架+DeepSeek引擎组合，成本降17倍，工作流与模型开始解耦</td></tr>
+            <tr><td style="font-weight:600;">Vals AI benchmark</td><td>金融Agent评测，Claude Opus 4.7得分64.37%，结构化92%/月结50%</td></tr>
+            <tr><td style="font-weight:600;">AI裁员叙事</td><td>2026新话语范式——企业用"AI原生转型"为缩减人力成本找合理化叙事</td></tr>
+            <tr><td style="font-weight:600;">Warp开源</td><td>AGPL v3开源AI终端，OpenAI创始赞助，支持国产模型</td></tr>
+            <tr><td style="font-weight:600;">auto(open)路由</td><td>Warp路由策略，可选开源模型替代商业模型，选择权回到开发者</td></tr>
+            </tbody></table></div>
+            </section>
+
+            <!-- NARRATIVE -->
+            <section id="narrative">
+            <div class="doc-chapter-label animate-on-scroll">叙事</div>
+            <h2 class="animate-on-scroll">🌐 本周的宏观叙事</h2>
+            <p style="font-family:var(--font-family-cn);line-height:1.75;">2026年第19周，三条主线交汇定义了AI行业的新阶段。</p>
+
+            <h3 style="font-size:16px;font-weight:700;color:var(--color-text-primary);margin-top:20px;">主线一：Agent商业化的标准形态浮现</h3>
+            <p style="font-family:var(--font-family-cn);line-height:1.75;">Anthropic金融Agent三层架构不是个案而是行业共识——OpenAI Symphony、Copilot Cowork、Cursor Security Review都在用类似三层拆分。当三家头部公司不约而同选择同一个架构，说明Agent从"通用chatbot配行业壳"走向"行业知识×数据×流程打包成可部署单元"已成为确定性方向。64.37%的benchmark成绩是警告：结构化92%但月结50%，Agent适合做初稿不适合做最终交付。</p>
+
+            <h3 style="font-size:16px;font-weight:700;color:var(--color-text-primary);margin-top:20px;">主线二：资本集中度达到历史峰值</h3>
+            <p style="font-family:var(--font-family-cn);line-height:1.75;">81% VC流向AI（$242亿/$297亿），DeepSeek估值3周从$100亿→$450亿，Anthropic估值3个月翻倍冲击9000亿。资本从"分散押注"转向"集中押注头部"。但2015移动互联网81%集中度峰值后，超60%头部公司最终未能兑现估值。国家队入场为中国大模型增加了战略维度，但也意味着赛道从四小龙并存走向国家队定方向。</p>
+
+            <h3 style="font-size:16px;font-weight:700;color:var(--color-text-primary);margin-top:20px;">主线三：信任危机与技术债务并行</h3>
+            <p style="font-family:var(--font-family-cn);line-height:1.75;">Cursor RCE漏洞（CVSS 8.1）+96%开发者不信任AI代码+仅48%始终检查——AI已占42%提交代码但验证覆盖率不足一半。Warp开源走社区监督路径，Anthropic走安全围墙路径——两种AI Coding可信度策略正在分化。Day -1问题加剧了信任危机：数据地基未打好就盖Agent楼，技术债务积累速度将远超传统开发模式。</p>
+
+            <div class="callout callout-success animate-on-scroll" style="margin-top:24px;">
+            <strong>三条主线交汇的结论</strong>：2026年AI行业从"谁更聪明"转向"谁能交付确定性"。三层架构定义了Agent商业化的标准形态，但64.37%的成绩提醒我们——Agent在2026年是加速器而非替代者。资本密度是信号也是风险，信任危机是技术问题更是治理问题。确定性不是选择，是生存条件。
+            </div>
+            </section>
+
+            <!-- FOOTER -->
+            <div class="doc-footer">
+                由 AI 洞察系统生成 · AI-Insight v10.4 · 2026-05-11
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<!-- BOARD STATS -->
+<section style="margin-top:40px;margin-bottom:24px;">
+<div class="doc-chapter-label animate-on-scroll">统计</div>
+<h2 class="animate-on-scroll">📊 本周板块统计</h2>
+<div class="table-wrap animate-on-scroll">
+<table><thead><tr><th>板块</th><th>重点事件数</th><th>代表事件</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:600;">🧠 大模型</td><td>7</td><td>Anthropic×黑石合资、DeepSeek 500亿融资、GLM-5.1编程登顶、MSM对齐、Anthropic×SpaceX算力、中美差距弥合、GPT-5.5 Instant</td></tr>
+<tr><td style="font-weight:600;">⌨️ AI Coding</td><td>6</td><td>Cursor RCE漏洞、Warp开源、亚马逊全员标准化、AI编程信任危机、DeepClaude成本降17倍、Boris Cherny宣告编程已解决</td></tr>
+<tr><td style="font-weight:600;">📱 AI应用</td><td>5</td><td>Bumble弃滑动转向AI、Copilot Cowork后台执行、豆包三档付费、BlackRock算力期货、Meta/Google消费级Agent</td></tr>
+<tr><td style="font-weight:600;">🏭 AI行业</td><td>6</td><td>Anthropic金融Agent三层架构(深度调研)、15亿美元合资、81%VC流向AI、估值9000亿、Coinbase裁员14%、Anthropic×SpaceX</td></tr>
+<tr><td style="font-weight:600;">🔄 企业转型</td><td>5</td><td>Day -1问题、AI裁员叙事范式、Deloitte ROI谜题、WEF三大结构转变、杭州法院AI裁员判例</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- EXTENDED NARRATIVE -->
+<section style="margin-top:20px;margin-bottom:48px;">
+<div class="doc-chapter-label animate-on-scroll">延伸叙事</div>
+<h2 class="animate-on-scroll">🌐 宏观叙事延伸</h2>
+
+<div class="callout callout-info animate-on-scroll" style="margin-bottom:16px;">
+<strong>三层架构与Agent产品形态跃迁的演进规律</strong><br><br>
+Skills+Connectors+Subagents三层架构的出现，标志着Agent从"通用工具"走向"行业可部署单元"的根本性跃迁。这个跃迁与移动互联网从WAP到原生App的演进逻辑高度同构：<br>
+1. WAP门户 = 通用浏览器配手机壳 → Agent = 通用chatbot配行业壳<br>
+2. 原生App = 场景×数据×交互打包 → 三层架构 = 行业知识×数据接入×流程委托打包<br>
+3. App Store生态 = 模板复制+分发 → 合资公司+connector生态 = 样板间验证→模板复制→生态绑定<br><br>
+domain-agnostic特性意味着金融只是第一个样板间。样板间验证→模板复制→生态绑定，是Agent商业化的三段式演进路径。
+</div>
+
+<div class="callout callout-purple animate-on-scroll" style="margin-bottom:16px;">
+<strong>64.37%揭示的能力梯度规律：AI能力边界不是均匀的</strong><br><br>
+Anthropic金融Agent的64.37%得分细分为：结构化任务92%、财务报告62%、月结关账50%。这个分布揭示了一个深层规律：<br>
+- AI的能力边界不是均匀的，而是按任务确定性梯度分布<br>
+- 确定性高的任务（分类、匹配、格式化）接近可用——92%<br>
+- 中等确定性的任务（分析、推理）需要人类兜底——62%<br>
+- 低确定性任务（综合判断、自主决策）距离自主交付很远——50%<br><br>
+关键判断：这个梯度不会因为模型能力提升而消失，只会整体右移——但梯度本身是AI的固有属性。2026年下半年的规模化落地，将率先发生在确定性高的场景，不确定性高的场景仍在等待人类兜底。
+</div>
+
+<div class="callout callout-warning animate-on-scroll" style="margin-bottom:16px;">
+<strong>81% VC集中度的历史类比与风险预警</strong><br><br>
+2015年移动互联网资本集中度峰值期，81% VC流向移动互联网头部公司。之后的3年内，超60%头部公司最终未能兑现估值，2018年出现估值回调潮。当前AI赛道的81% VC集中度是信号也是风险：<br>
+- 信号：AI商业化闭环正在被验证（Anthropic 300亿ARR、企业级锁定效应）<br>
+- 风险：如果2026下半年商业化ROI不能兑现，2027将出现估值回调潮<br>
+- 差异：AI的商业化闭环验证速度比移动互联网快（B端锁定>流量变现）<br>
+- 结论：回调概率低于2015，但回调幅度可能更大（因为估值基数更高）
+</div>
+
+<!-- EXTRA DATA TABLES: Per-section stats -->
+<section style="margin-top:32px;">
+<div class="doc-chapter-label animate-on-scroll">板块统计</div>
+<h2 class="animate-on-scroll">📊 本周板块统计</h2>
+<div class="table-wrap animate-on-scroll">
+<table><thead><tr><th>板块</th><th>重点事件数</th><th>代表事件</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:600;">🧠 大模型</td><td>7</td><td>Anthropic×黑石合资、DeepSeek 500亿融资、GLM-5.1编程登顶、MSM对齐、Anthropic×SpaceX算力、中美差距弥合、GPT-5.5 Instant</td></tr>
+<tr><td style="font-weight:600;">⌨️ AI Coding</td><td>6</td><td>Cursor RCE漏洞、Warp开源、亚马逊全员标准化、AI编程信任危机、DeepClaude成本降17倍、Boris Cherny宣告编程已解决</td></tr>
+<tr><td style="font-weight:600;">📱 AI应用</td><td>5</td><td>Bumble弃滑动转向AI、Copilot Cowork后台执行、豆包三档付费、BlackRock算力期货、Meta/Google消费级Agent</td></tr>
+<tr><td style="font-weight:600;">🏭 AI行业</td><td>6</td><td>Anthropic金融Agent三层架构(深度调研)、15亿美元合资、81%VC流向AI、估值9000亿、Coinbase裁员14%、Anthropic×SpaceX</td></tr>
+<tr><td style="font-weight:600;">🔄 企业转型</td><td>5</td><td>Day -1问题、AI裁员叙事范式、Deloitte ROI谜题、WEF三大结构转变、杭州法院AI裁员判例</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- DAILY INDEX -->
+<section id="dailyindex">
+<div class="doc-chapter-label animate-on-scroll">日报</div>
+<h2 class="animate-on-scroll">📅 本周日报索引</h2>
+<div class="daily-index animate-on-scroll">
+    <div class="daily-item">
+        <div class="daily-item-date">05-04（周日）</div>
+        <a href="./2026-05-04.html" class="daily-item-link">查看日报</a>
+        <div class="daily-item-kw">OpenAI开源Symphony编排规范，五角大楼收编8家AI公司</div>
+    </div>
+    <div class="daily-item">
+        <div class="daily-item-date">05-05（周一）</div>
+        <a href="./2026-05-05.html" class="daily-item-link">查看日报</a>
+        <div class="daily-item-kw">Anthropic与黑石高盛15亿美元合资，DeepSeek V4 Flash登顶</div>
+    </div>
+    <div class="daily-item">
+        <div class="daily-item-date">05-06（周二）</div>
+        <a href="./2026-05-06.html" class="daily-item-link">查看日报</a>
+        <div class="daily-item-kw">中美AI差距弥合，Anthropic Mythos，GLM-5.1编程登顶</div>
+    </div>
+    <div class="daily-item">
+        <div class="daily-item-date">05-07（周三）</div>
+        <a href="./2026-05-07.html" class="daily-item-link">查看日报</a>
+        <div class="daily-item-kw">MSM对齐先教原理再教做事，Copilot Cowork后台执行</div>
+    </div>
+    <div class="daily-item">
+        <div class="daily-item-date">05-08（周四）</div>
+        <a href="./2026-05-08.html" class="daily-item-link">查看日报</a>
+        <div class="daily-item-kw">GPT-5.5 Instant可信而非更聪明，AI Coding工具栈融合</div>
+    </div>
+    <div class="daily-item">
+        <div class="daily-item-date">05-09（周五）</div>
+        <a href="./2026-05-09.html" class="daily-item-link">查看日报</a>
+        <div class="daily-item-kw">Anthropic×SpaceX算力合作，亚马逊全员AI Coding，Meta/Google Agent</div>
+    </div>
+    <div class="daily-item">
+        <div class="daily-item-date">05-10（周六）</div>
+        <a href="./2026-05-10.html" class="daily-item-link">查看日报</a>
+        <div class="daily-item-kw">DeepSeek 500亿融资，Cursor RCE漏洞，81%VC流向AI</div>
+    </div>
+</div>
+</section>
+
+<!-- VOCAB -->
+<section id="vocab">
+<div class="doc-chapter-label animate-on-scroll">词汇</div>
+<h2 class="animate-on-scroll">📖 本周关键技术词汇</h2>
+<div class="table-wrap animate-on-scroll">
+<table><thead><tr><th>术语</th><th>含义</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:600;">Skills+Connectors+Subagents</td><td>Anthropic金融Agent三层架构：Skills=领域知识注入，Connectors=受控数据接入，Subagents=主Agent调子模型校验</td></tr>
+<tr><td style="font-weight:600;">MSM</td><td>"先教原理再教做事"对齐方法，Agent失控率从54%降至7%，数据量减少60倍</td></tr>
+<tr><td style="font-weight:600;">Day -1问题</td><td>企业AI转型在数据地基未打好就开始盖Agent楼，地基不牢楼越高越危险</td></tr>
+<tr><td style="font-weight:600;">算力期货</td><td>BlackRock CEO提出的概念，合约保证未来AI处理能力访问权</td></tr>
+<tr><td style="font-weight:600;">RCE漏洞</td><td>Cursor CVE-2026-26268，恶意Git仓库通过AI Agent触发任意代码执行(CVSS 8.1)</td></tr>
+<tr><td style="font-weight:600;">DeepClaude</td><td>Claude Code骨架+DeepSeek引擎组合，成本降17倍，工作流与模型开始解耦</td></tr>
+<tr><td style="font-weight:600;">Vals AI benchmark</td><td>金融Agent评测，Claude Opus 4.7得分64.37%，结构化92%/月结50%</td></tr>
+<tr><td style="font-weight:600;">AI裁员叙事</td><td>2026新话语范式——企业用"AI原生转型"为缩减人力成本找合理化叙事</td></tr>
+<tr><td style="font-weight:600;">Warp开源</td><td>AGPL v3开源AI终端，OpenAI创始赞助，支持国产模型</td></tr>
+<tr><td style="font-weight:600;">auto(open)路由</td><td>Warp路由策略，可选开源模型替代商业模型，选择权回到开发者</td></tr>
+</tbody></table></div>
+</section>
+</section>
+
+<button class="scroll-to-top" id="scrollTop" title="回到顶部">↑</button>
+<script>
+(function () {
+    "use strict";
+    const HEADER_OFFSET = 72;
+    const SPY_OFFSET    = 110;
+    const sidebar    = document.getElementById("sidebar");
+    const collapseBtn = document.getElementById("collapseBtn");
+    const progressBar = document.getElementById("readingProgress");
+    const scrollTopBtn = document.getElementById("scrollToTop");
+
+    // 平滑锚点滚动
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener("click", e => {
+            const target = document.getElementById(link.getAttribute("href").slice(1));
+            if (!target) return;
+            e.preventDefault();
+            window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET, behavior: "smooth" });
+        });
+    });
+
+    // Scroll Spy
+    const tocLinks = Array.from(document.querySelectorAll(".toc-link"));
+    const anchorEls = tocLinks.map(a => document.getElementById((a.getAttribute("href")||"").slice(1))).filter(Boolean);
+    function updateTocHighlight() {
+        const scrollY = window.scrollY + SPY_OFFSET;
+        let activeEl = anchorEls[0];
+        for (const el of anchorEls) { if (el && el.offsetTop <= scrollY) activeEl = el; else break; }
+        tocLinks.forEach(link => link.classList.toggle("toc-active", link.getAttribute("href") === "#" + (activeEl && activeEl.id)));
+    }
+
+    // 阅读进度条
+    function updateProgress() {
+        if (!progressBar) return;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = (total > 0 ? Math.min(100, window.scrollY / total * 100) : 0).toFixed(1) + "%";
+    }
+
+    // 侧边栏折叠
+    if (collapseBtn && sidebar) {
+        collapseBtn.addEventListener("click", () => {
+            const isCollapsed = sidebar.classList.toggle("sidebar-collapsed");
+            collapseBtn.textContent = isCollapsed ? "»" : "«";
+            collapseBtn.classList.toggle("collapsed-pos", isCollapsed);
+        });
+    }
+
+    // 回到顶部
+    scrollTopBtn && scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+    // rAF 节流滚动
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                updateTocHighlight(); updateProgress();
+                scrollTopBtn && scrollTopBtn.classList.toggle("visible", window.scrollY > 280);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+
+    updateTocHighlight(); updateProgress();
+
+    // 滚动入场动画
+    const animEls = document.querySelectorAll(".animate-on-scroll");
+    if (!("IntersectionObserver" in window)) {
+        animEls.forEach(el => el.classList.add("visible"));
+    } else {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.06, rootMargin: "0px 0px -30px 0px" });
+        animEls.forEach(el => observer.observe(el));
+    }
+})();
+</script>
+</body>
+</html>

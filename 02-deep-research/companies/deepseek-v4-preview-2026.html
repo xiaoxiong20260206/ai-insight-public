@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSeek V4 Preview 深度调研：开源AI的新里程碑 | AI洞察</title>
+    <meta name="description" content="DeepSeek V4 Preview 深度调研报告——万亿参数开源模型、DSA稀疏注意力、原生多模态与Agent优先设计，全面解析AI格局新变局。">
+    <meta property="og:title" content="DeepSeek V4 Preview 深度调研 | AI洞察">
+    <meta property="og:description" content="万亿参数开源模型，27倍成本优势，开源AI的新里程碑">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23059669'/><path d='M8 22V12l4 6 4-8 4 5 4-7v14H8z' fill='none' stroke='white' stroke-width='2'/></svg>">
+    <!-- Google Fonts v5.0 精简版 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <!-- noscript 降级：JS 未加载时动画元素直接可见 -->
+    <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+    <style>
+/* ============================================================
+   清爽调研报告风格 v5.0 — DeepSeek V4 深度调研
+   布局：文档站两栏 (sidebar-nav + content-area → content-inner)
+   ============================================================ */
+:root {
+    /* 五色语义调色板 */
+    --color-success:      #059669;
+    --color-success-light:#10B981;
+    --color-success-dark: #047857;
+    --color-success-50:   #ECFDF5;
+    --color-success-100:  #D1FAE5;
+    --color-danger:       #E11D48;
+    --color-danger-light: #F43F5E;
+    --color-danger-50:    #FFF1F2;
+    --color-warning:      #D97706;
+    --color-warning-light:#F59E0B;
+    --color-warning-50:   #FFFBEB;
+    --color-info:         #2563EB;
+    --color-info-light:   #3B82F6;
+    --color-info-50:      #EFF6FF;
+    --color-info-100:     #DBEAFE;
+    --color-purple:       #7C3AED;
+    --color-purple-light: #8B5CF6;
+    --color-purple-50:    #F5F3FF;
+    --color-purple-100:   #EDE9FE;
+
+    /* 中性色 */
+    --color-text-primary:   #1C1917;
+    --color-text-secondary: #57534E;
+    --color-text-muted:     #78716C;
+    --color-text-placeholder:#A8A29E;
+    --color-border:         #E7E5E4;
+    --color-border-light:   #F5F5F4;
+    --color-bg:             #F8FAFB;
+    --color-bg-card:        #FFFFFF;
+    --color-bg-table-header:#FAFAF9;
+
+    /* 渐变 */
+    --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    --gradient-hero:    linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+    --gradient-badge:   linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+    --gradient-mesh:
+        radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+        radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
+
+    /* 阴影 */
+    --shadow-xs:           0 1px 2px rgba(0,0,0,0.04);
+    --shadow-sm:           0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-card:         0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md:           0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
+    --shadow-lg:           0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+    --shadow-glow-success: 0 4px 14px rgba(5,150,105,0.15);
+    --shadow-hover:        0 8px 24px rgba(5,150,105,0.18), 0 2px 8px rgba(5,150,105,0.10);
+    --shadow-float:        0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
+
+    /* 间距 */
+    --spacing-xs: 4px; --spacing-sm: 8px; --spacing-md: 16px;
+    --spacing-lg: 24px; --spacing-xl: 32px; --spacing-2xl: 40px; --spacing-3xl: 48px;
+
+    /* 圆角 */
+    --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px;
+    --radius-xl: 20px; --radius-full: 9999px;
+
+    /* 字体 */
+    --font-family:         "DM Sans", -apple-system, "Noto Sans SC", "PingFang SC", sans-serif;
+    --font-family-heading: "DM Sans", -apple-system, "Noto Sans SC", sans-serif;
+    --font-family-mono:    "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+
+    /* 字号 */
+    --heading-1: 34px; --heading-2: 22px; --heading-3: 17px;
+    --body-text: 15px; --body-small: 14px; --caption: 12px;
+    --data-large: 32px; --data-medium: 24px;
+
+    /* 动画 */
+    --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* 布局 v5.0 */
+    --sidebar-width: 228px;
+    --content-max:   920px;
+    --content-pad:   56px;
+}
+
+/* ===== 基础重置 ===== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: var(--font-family);
+    font-size: var(--body-text);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    background: var(--color-bg);
+    background-image: var(--gradient-mesh);
+    background-attachment: fixed;
+}
+a { color: var(--color-info); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ===== Skip to content（无障碍）===== */
+.skip-to-content {
+    position: fixed; top: -100%; left: 16px; z-index: 9999;
+    background: var(--color-info); color: #fff;
+    padding: 8px 16px; border-radius: var(--radius-sm);
+    font-size: 13px; font-weight: 600;
+    transition: top 0.2s;
+}
+.skip-to-content:focus { top: 16px; }
+
+/* ===== 两栏布局 v5.0 ===== */
+.layout-wrapper {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ===== 侧边栏（TOC 锚点导航）===== */
+.sidebar-nav {
+    width: var(--sidebar-width);
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #fff;
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0 24px;
+    scrollbar-width: thin;
+    scrollbar-color: #E7E5E4 transparent;
+    z-index: 50;
+    transition: width 280ms ease, transform 280ms ease;
+}
+.sidebar-nav::-webkit-scrollbar { width: 4px; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: #E7E5E4; border-radius: 4px; }
+
+.sidebar-doc-title {
+    font-size: 12px; font-weight: 700; color: var(--color-text-primary);
+    letter-spacing: 0.04em; padding: 0 16px 16px;
+    border-bottom: 1px solid var(--color-border-light);
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+.sidebar-doc-title .doc-tag {
+    display: inline-block; margin-bottom: 6px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--color-success); background: var(--color-success-50);
+    padding: 2px 7px; border-radius: 4px;
+}
+
+.toc-section { padding: 0 8px; }
+.toc-group-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--color-text-placeholder); padding: 8px 8px 4px; margin-bottom: 2px;
+}
+.toc-link {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px; border-radius: 6px;
+    font-size: 13px; font-weight: 500; color: var(--color-text-muted);
+    text-decoration: none; cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast),
+                border-color var(--transition-fast);
+    border-left: 3px solid transparent;
+    margin-bottom: 1px; line-height: 1.4;
+    position: relative;
+}
+.toc-link:hover {
+    background: var(--color-info-50); color: var(--color-text-primary);
+    text-decoration: none;
+}
+.toc-link.toc-active {
+    background: var(--color-success-50); color: var(--color-success-dark);
+    border-left-color: var(--color-success); font-weight: 600;
+}
+.toc-link:focus-visible {
+    outline: 2px solid var(--color-info); outline-offset: 1px;
+}
+.toc-link.toc-sub {
+    font-size: 12px; padding-left: 22px; color: var(--color-text-placeholder);
+}
+.toc-link.toc-sub.toc-active { color: var(--color-success); }
+
+/* 阅读进度条（在 sidebar 底部）*/
+.reading-progress-wrap {
+    margin-top: auto; padding: 16px 16px 0;
+    border-top: 1px solid var(--color-border-light);
+}
+.reading-progress-label {
+    font-size: 10px; font-weight: 600; color: var(--color-text-placeholder);
+    letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px;
+}
+.reading-progress-track {
+    height: 4px; background: var(--color-border-light); border-radius: 2px; overflow: hidden;
+}
+.reading-progress-fill {
+    height: 100%; width: 0%; background: var(--gradient-success); border-radius: 2px;
+    transition: width 0.15s linear;
+}
+
+/* ===== 折叠按钮（fixed，不跟着侧边栏 overflow）===== */
+.sidebar-collapse-btn {
+    position: fixed;
+    top: 50%; left: var(--sidebar-width);
+    transform: translate(-50%, -50%);
+    width: 20px; height: 36px;
+    background: #fff; border: 1px solid var(--color-border);
+    border-radius: 10px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--color-text-muted);
+    box-shadow: var(--shadow-sm);
+    transition: left 280ms ease, background var(--transition-fast), color var(--transition-fast);
+    z-index: 60;
+}
+.sidebar-collapse-btn:hover { background: var(--color-info-50); color: var(--color-info); }
+.sidebar-collapse-btn.collapsed-pos { left: 12px; }
+
+/* 折叠状态 */
+.layout-wrapper.sidebar-collapsed .sidebar-nav {
+    width: 0; overflow: hidden;
+}
+
+/* ===== 内容区 ===== */
+.content-area {
+    flex: 1; min-width: 0;
+    display: flex; flex-direction: column; align-items: center;
+}
+.content-inner {
+    width: 100%; max-width: var(--content-max);
+    padding: 48px var(--content-pad) 120px;
+}
+
+/* ===== Hero 头部 ===== */
+.doc-header {
+    margin-bottom: var(--spacing-3xl);
+    padding-bottom: var(--spacing-2xl);
+    border-bottom: 1px solid var(--color-border-light);
+}
+.header-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px;
+    background: var(--gradient-badge);
+    border: 1px solid rgba(5,150,105,0.2);
+    border-radius: var(--radius-full);
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--color-success); margin-bottom: var(--spacing-md);
+}
+.header-title {
+    font-family: var(--font-family-heading);
+    font-size: var(--heading-1); font-weight: 800;
+    line-height: 1.15; letter-spacing: -0.025em;
+    background: var(--gradient-hero);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--spacing-md);
+    text-wrap: balance;
+}
+.header-meta {
+    font-size: 13px; color: var(--color-text-muted);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    margin-bottom: var(--spacing-md);
+}
+.header-meta-item { display: flex; align-items: center; gap: 4px; }
+.header-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+}
+.tag {
+    padding: 3px 10px;
+    background: var(--color-bg); border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: 11px; color: var(--color-text-muted);
+}
+
+/* ===== 章节标签（v5.0 延伸线版）===== */
+.doc-chapter-label {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-text-placeholder);
+    padding: 36px 0 10px;
+}
+.doc-chapter-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--color-border-light);
+}
+
+/* ===== 数据格（Stat Card — v5.0 颜色顶边）===== */
+.stats-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md); margin-bottom: var(--spacing-xl);
+}
+.stat-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--stat-accent, var(--color-border));
+    border-radius: var(--radius-md);
+    padding: 20px; text-align: center;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    will-change: transform;
+}
+.stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+.stat-info    { --stat-accent: #2563EB; }
+.stat-success { --stat-accent: #059669; }
+.stat-warning { --stat-accent: #D97706; }
+.stat-purple  { --stat-accent: #7C3AED; }
+.stat-value {
+    font-size: var(--data-medium); font-weight: 800;
+    font-family: var(--font-family-heading);
+    font-variant-numeric: tabular-nums;
+    background: var(--gradient-hero);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.stat-label { font-size: var(--caption); color: var(--color-text-muted); margin-top: 4px; }
+
+/* ===== 章节块 ===== */
+.section-block {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-card);
+}
+.section-block h2 {
+    font-family: var(--font-family-heading);
+    font-size: var(--heading-2); font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.3;
+}
+.section-block h3 {
+    font-size: var(--heading-3); font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 20px 0 12px;
+}
+.section-block p { margin-bottom: 12px; font-size: var(--body-small); }
+
+/* ===== 章节概览图 ===== */
+.section-overview {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md); margin-bottom: var(--spacing-lg);
+    text-align: center; overflow-x: auto;
+}
+.section-overview svg { max-width: 100%; height: auto; }
+
+/* ===== 发现框 ===== */
+.finding {
+    background: linear-gradient(135deg, #F0FDF4 0%, #ECFDF5 100%);
+    border-left: 3px solid var(--color-success);
+    padding: 16px 20px; margin-bottom: 16px;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+.finding-title { font-weight: 700; color: var(--color-success); margin-bottom: 8px; font-size: 14px; }
+
+/* ===== Callout / 洞察框 ===== */
+.callout {
+    border-left: 3px solid;
+    padding: 14px 18px; margin: 16px 0;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    font-size: var(--body-small);
+}
+.callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; }
+.callout-warning { border-color: var(--color-warning); background: linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%); }
+.callout-warning .callout-title { color: var(--color-warning); }
+.callout-info    { border-color: var(--color-info);    background: linear-gradient(135deg,#EFF6FF 0%,#DBEAFE 100%); }
+.callout-info    .callout-title { color: var(--color-info); }
+.callout-success { border-color: var(--color-success); background: linear-gradient(135deg,#F0FDF4 0%,#D1FAE5 100%); }
+.callout-success .callout-title { color: var(--color-success-dark); }
+.callout-purple  { border-color: var(--color-purple);  background: linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%); }
+.callout-purple  .callout-title { color: var(--color-purple); }
+
+/* ===== 表格 ===== */
+.table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius-sm); }
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th, .data-table td {
+    padding: 11px 14px; text-align: left;
+    border-bottom: 1px solid var(--color-border-light);
+}
+.data-table th {
+    background: var(--color-bg-table-header);
+    font-weight: 600; color: var(--color-text-primary);
+    font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
+}
+.data-table td { color: var(--color-text-secondary); }
+.data-table tr:hover td { background: rgba(5,150,105,0.03); }
+.highlight-col { background: rgba(5,150,105,0.06) !important; }
+
+/* ===== 状态标签 ===== */
+.status-tag {
+    display: inline-flex; padding: 2px 8px; border-radius: var(--radius-full);
+    font-size: var(--caption); font-weight: 600;
+}
+.tag-green  { background: rgba(5,150,105,0.1);  color: #059669; }
+.tag-blue   { background: rgba(37,99,235,0.1);  color: #2563EB; }
+.tag-purple { background: rgba(124,58,237,0.1); color: #7C3AED; }
+.tag-red    { background: rgba(225,29,72,0.1);  color: #E11D48; }
+.tag-amber  { background: rgba(217,119,6,0.1);  color: #D97706; }
+
+/* ===== 代码块 ===== */
+.code-block {
+    background: #1E293B; border-radius: var(--radius-sm);
+    padding: 16px 20px; overflow-x: auto; margin: 16px 0;
+}
+.code-block code {
+    color: #E2E8F0; font-family: var(--font-family-mono);
+    font-size: 12.5px; line-height: 1.7;
+}
+
+/* ===== 进度条（视口触发动画）===== */
+.bar-wrap { margin: 10px 0; }
+.bar-label-row { display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; }
+.bar-track { height: 8px; background: var(--color-border-light); border-radius: 4px; overflow: hidden; }
+.bar-fill {
+    height: 100%; border-radius: 4px;
+    transition: width 1.2s cubic-bezier(.25,.46,.45,.94);
+}
+
+/* ===== 滚动入场动画 ===== */
+.animate-on-scroll {
+    opacity: 0; transform: translateY(14px);
+    transition: opacity .42s ease, transform .42s ease;
+}
+.animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+    .animate-on-scroll { transition: none; opacity: 1; transform: none; }
+}
+/* Stagger 时序 */
+.animate-on-scroll:nth-child(2) { transition-delay: .06s; }
+.animate-on-scroll:nth-child(3) { transition-delay: .12s; }
+.animate-on-scroll:nth-child(4) { transition-delay: .18s; }
+.stat-card:nth-child(2) { transition-delay: .06s; }
+.stat-card:nth-child(3) { transition-delay: .12s; }
+.stat-card:nth-child(4) { transition-delay: .18s; }
+
+/* ===== Footer ===== */
+.footer-block {
+    background: linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);
+    border: 1px solid var(--color-border); border-radius: var(--radius-lg);
+    padding: var(--spacing-xl); box-shadow: var(--shadow-card);
+    margin-top: var(--spacing-3xl);
+}
+.footer-block h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--color-text-primary); }
+.footer-block p  { font-size: var(--body-small); color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 12px; }
+.btn-primary {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 18px; background: var(--gradient-success);
+    color: #fff; border-radius: var(--radius-full);
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(5,150,105,0.3); text-decoration: none; }
+
+/* ===== 回到顶部 ===== */
+.scroll-to-top {
+    position: fixed; right: 28px; bottom: 28px;
+    width: 40px; height: 40px;
+    background: #fff; border: 1px solid var(--color-border);
+    border-radius: var(--radius-full); cursor: pointer;
+    font-size: 16px; color: var(--color-text-muted);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-md); opacity: 0; pointer-events: none;
+    transition: opacity var(--transition-normal), transform var(--transition-normal);
+    z-index: 50;
+}
+.scroll-to-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-to-top:hover { transform: translateY(-2px); color: var(--color-info); }
+
+/* ===== 响应式 ===== */
+@media (max-width: 1024px) {
+    :root { --content-pad: 32px; }
+}
+@media (max-width: 768px) {
+    .sidebar-nav {
+        position: fixed; top: 0; left: 0; bottom: 0;
+        transform: translateX(-100%); width: var(--sidebar-width) !important;
+        z-index: 200; box-shadow: var(--shadow-float);
+    }
+    .sidebar-nav.mobile-open { transform: translateX(0); }
+    .sidebar-collapse-btn { left: 12px; top: 16px; transform: none; }
+    .sidebar-collapse-btn.collapsed-pos { left: calc(var(--sidebar-width) - 10px); top: 50%; transform: translateY(-50%); }
+    .content-area { padding-top: 60px; }
+    :root { --content-pad: 16px; }
+    .content-inner { padding: 52px 16px 80px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .header-title { font-size: 26px; }
+    .section-block { padding: var(--spacing-lg); }
+}
+@media (max-width: 480px) {
+    .stats-grid { gap: 10px; }
+    .stat-card { padding: 14px; }
+    .header-title { font-size: 22px; }
+}
+    </style>
+</head>
+<body>
+
+
+<a class="skip-to-content" href="#main-content">跳到主内容</a>
+
+<div class="layout-wrapper" id="layoutWrapper">
+
+    <!-- ===== 侧边栏 TOC ===== -->
+    <nav class="sidebar-nav" id="sidebar" aria-label="目录导航">
+        <div class="sidebar-doc-title">
+            <span class="doc-tag">深度调研</span><br>
+            DeepSeek V4 Preview<br>开源AI的新里程碑
+        </div>
+        <div class="toc-section">
+            <div class="toc-group-label">目录</div>
+            <a href="#overview"   class="toc-link toc-active" id="toc-overview">01 &nbsp;核心数据</a>
+            <a href="#background" class="toc-link" id="toc-background">02 &nbsp;研究背景</a>
+            <a href="#findings"   class="toc-link" id="toc-findings">03 &nbsp;核心发现</a>
+            <a href="#findings"   class="toc-link toc-sub" id="toc-f1">规模与效率</a>
+            <a href="#finding-dsa" class="toc-link toc-sub" id="toc-f2">DSA稀疏注意力</a>
+            <a href="#finding-mm"  class="toc-link toc-sub" id="toc-f3">原生多模态</a>
+            <a href="#finding-agent" class="toc-link toc-sub" id="toc-f4">Agent优先</a>
+            <a href="#finding-price" class="toc-link toc-sub" id="toc-f5">API定价颠覆</a>
+            <a href="#analysis"   class="toc-link" id="toc-analysis">04 &nbsp;详细分析</a>
+            <a href="#trends"     class="toc-link" id="toc-trends">05 &nbsp;趋势判断</a>
+            <a href="#insight"    class="toc-link" id="toc-insight">06 &nbsp;本质洞察</a>
+            <a href="#appendix"   class="toc-link" id="toc-appendix">07 &nbsp;附录</a>
+        </div>
+        <!-- 阅读进度条 -->
+        <div class="reading-progress-wrap">
+            <div class="reading-progress-label">阅读进度</div>
+            <div class="reading-progress-track">
+                <div class="reading-progress-fill" id="readingProgress"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 折叠按钮 -->
+    <button class="sidebar-collapse-btn" id="collapseBtn"
+            title="折叠导航" aria-label="折叠/展开导航">«</button>
+
+    <!-- ===== 内容区 ===== -->
+    <main class="content-area" id="main-content">
+        <div class="content-inner">
+
+            <!-- ===== Hero Header ===== -->
+            <header class="doc-header animate-on-scroll">
+                <span class="header-badge">深度调研 · AI洞察</span>
+                <h1 class="header-title">DeepSeek V4 Preview：开源AI的新里程碑</h1>
+                <div class="header-meta">
+                    <span class="header-meta-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        2026年4月24日
+                    </span>
+                    <span class="header-meta-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        阅读时间约12分钟
+                    </span>
+                    <span class="header-meta-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        AI洞察 · AI洞察
+                    </span>
+                </div>
+                <div class="header-tags">
+                    <span class="tag">DeepSeek V4</span>
+                    <span class="tag">开源大模型</span>
+                    <span class="tag">万亿参数</span>
+                    <span class="tag">MoE架构</span>
+                    <span class="tag">AI Agent</span>
+                    <span class="tag">原生多模态</span>
+                </div>
+            </header>
+
+            <!-- ===== 核心结论 ===== -->
+            <section class="core-conclusion animate-on-scroll" style="margin-bottom: var(--spacing-2xl);">
+                <div class="section-block" style="border-left: 4px solid var(--color-success); background: linear-gradient(135deg, var(--color-success-50) 0%, var(--color-info-50) 100%); padding: var(--spacing-xl) var(--spacing-2xl);">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                        <span style="font-size:20px;">💡</span>
+                        <span style="font-size:13px; font-weight:700; letter-spacing:0.08em; color:var(--color-success); text-transform:uppercase;">核心结论</span>
+                    </div>
+                    <p style="font-size:16px; line-height:1.85; color:var(--color-text-primary); font-weight:500; margin:0;">
+                        DeepSeek V4以1.6万亿参数成为史上最大开源模型，首次在通用推理与数学上媲美顶级闭源竞品，标志着开源AI进入"能力拐点"。其API定价仅为GPT-5.4的<strong>1/27</strong>，将倒逼闭源供应商重新定价。原生Agent优先、多模态、1M上下文三大设计，让开源不再是妥协选项，而是企业的主动选择。短期内闭源厂商将承压降价；中期开源模型企业份额有望于2027年超越50%；长期差异化将从"谁更强"转向"谁的生态更好"。
+                    </p>
+                </div>
+            </section>
+
+            <!-- ===== 核心数据概览 ===== -->
+            <section id="overview">
+                <div class="doc-chapter-label">核心数据</div>
+                <div class="stats-grid">
+                    <div class="stat-card stat-success animate-on-scroll">
+                        <div class="stat-value">1.6T</div>
+                        <div class="stat-label">总参数量（V4-Pro）</div>
+                    </div>
+                    <div class="stat-card stat-info animate-on-scroll">
+                        <div class="stat-value">49B</div>
+                        <div class="stat-label">活跃参数</div>
+                    </div>
+                    <div class="stat-card stat-purple animate-on-scroll">
+                        <div class="stat-value">1M</div>
+                        <div class="stat-label">上下文窗口（标配）</div>
+                    </div>
+                    <div class="stat-card stat-warning animate-on-scroll">
+                        <div class="stat-value">27x</div>
+                        <div class="stat-label">API成本优势</div>
+                    </div>
+                </div>
+            </section>
+
+
+<!-- ===== 研究背景 ===== -->
+            <section id="background">
+                <div class="doc-chapter-label">研究背景</div>
+                <div class="section-block animate-on-scroll">
+                    <h2>研究背景</h2>
+
+                    <div class="section-overview">
+                        <svg viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#059669"/>
+                                    <stop offset="50%" style="stop-color:#2563EB"/>
+                                    <stop offset="100%" style="stop-color:#7C3AED"/>
+                                </linearGradient>
+                            </defs>
+                            <text x="300" y="22" text-anchor="middle" fill="#1C1917" font-size="13" font-weight="600">2026年AI模型大战时间线</text>
+                            <line x1="50" y1="60" x2="550" y2="60" stroke="url(#grad1)" stroke-width="3"/>
+                            <circle cx="100" cy="60" r="7" fill="#78716C"/>
+                            <circle cx="200" cy="60" r="7" fill="#78716C"/>
+                            <circle cx="300" cy="60" r="7" fill="#78716C"/>
+                            <circle cx="400" cy="60" r="7" fill="#78716C"/>
+                            <circle cx="500" cy="60" r="12" fill="#059669" stroke="#fff" stroke-width="2"/>
+                            <text x="100" y="82" text-anchor="middle" fill="#57534E" font-size="10">GPT-5.4</text>
+                            <text x="200" y="82" text-anchor="middle" fill="#57534E" font-size="10">Claude 4.6</text>
+                            <text x="300" y="82" text-anchor="middle" fill="#57534E" font-size="10">Gemini 3.1</text>
+                            <text x="400" y="82" text-anchor="middle" fill="#57534E" font-size="10">Llama 4</text>
+                            <text x="500" y="82" text-anchor="middle" fill="#059669" font-size="11" font-weight="700">DeepSeek V4</text>
+                            <text x="100" y="100" text-anchor="middle" fill="#A8A29E" font-size="9">3月初</text>
+                            <text x="500" y="100" text-anchor="middle" fill="#059669" font-size="9" font-weight="600">4月24日</text>
+                        </svg>
+                    </div>
+
+                    <p>2026年4月24日，DeepSeek正式发布V4 Preview版本。这是继V3（2025年12月）之后，DeepSeek的又一次重大发布。V4 Preview的发布时机极具战略意义——恰逢GPT-5.4、Claude Opus 4.6、Gemini 3.1等竞品密集发布的"March 2026 AI Model War"之后。</p>
+
+                    <div class="callout callout-warning">
+                        <div class="callout-title">为什么这个发布值得关注？</div>
+                        <ul style="margin:0;padding-left:18px;color:#57534E;font-size:13px;line-height:1.8;">
+                            <li><strong>首个万亿参数开源模型</strong>：V4-Pro以1.6万亿总参数、49亿活跃参数，成为史上最大规模的开源权重模型</li>
+                            <li><strong>1M上下文成为标配</strong>：DeepSeek将100万token上下文窗口设为所有官方服务的默认配置</li>
+                            <li><strong>完全开源</strong>：模型权重、技术报告全部公开，与闭源模型形成鲜明对比</li>
+                            <li><strong>Agent优先设计</strong>：专为AI Agent场景优化，已在DeepSeek内部驱动生产级编码Agent</li>
+                        </ul>
+                    </div>
+
+                    <h3>研究问题定义</h3>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <tr><th style="width:110px;">维度</th><th>内容</th></tr>
+                            <tr><td><strong>核心问题</strong></td><td>DeepSeek V4是什么？有哪些重大突破？对AI行业格局有何影响？</td></tr>
+                            <tr><td><strong>范围边界</strong></td><td>聚焦技术创新、性能表现、行业影响，不包括商业模式深度分析</td></tr>
+                            <tr><td><strong>目标受众</strong></td><td>AI从业者、技术开发者、行业观察者</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== 核心发现 ===== -->
+            <section id="findings">
+                <div class="doc-chapter-label">核心发现</div>
+                <div class="section-block animate-on-scroll">
+                    <h2>核心发现</h2>
+
+                    <div class="section-overview">
+                        <svg viewBox="0 0 600 140" xmlns="http://www.w3.org/2000/svg">
+                            <text x="300" y="18" text-anchor="middle" fill="#1C1917" font-size="13" font-weight="600">DeepSeek V4 五大核心突破</text>
+                            <g transform="translate(20,35)">
+                                <rect width="98" height="80" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+                                <text x="49" y="34" text-anchor="middle" fill="#059669" font-size="20" font-weight="800">1.6T</text>
+                                <text x="49" y="53" text-anchor="middle" fill="#047857" font-size="10" font-weight="600">参数规模</text>
+                                <text x="49" y="68" text-anchor="middle" fill="#57534E" font-size="9">MoE高效架构</text>
+                            </g>
+                            <g transform="translate(128,35)">
+                                <rect width="98" height="80" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+                                <text x="49" y="34" text-anchor="middle" fill="#2563EB" font-size="20" font-weight="800">DSA</text>
+                                <text x="49" y="53" text-anchor="middle" fill="#1D4ED8" font-size="10" font-weight="600">稀疏注意力</text>
+                                <text x="49" y="68" text-anchor="middle" fill="#57534E" font-size="9">内存降40%</text>
+                            </g>
+                            <g transform="translate(236,35)">
+                                <rect width="98" height="80" rx="10" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.5"/>
+                                <text x="49" y="34" text-anchor="middle" fill="#7C3AED" font-size="16" font-weight="800">多模态</text>
+                                <text x="49" y="53" text-anchor="middle" fill="#6D28D9" font-size="10" font-weight="600">原生支持</text>
+                                <text x="49" y="68" text-anchor="middle" fill="#57534E" font-size="9">文图音三合一</text>
+                            </g>
+                            <g transform="translate(344,35)">
+                                <rect width="98" height="80" rx="10" fill="#FEF2F2" stroke="#E11D48" stroke-width="1.5"/>
+                                <text x="49" y="34" text-anchor="middle" fill="#E11D48" font-size="16" font-weight="800">Agent</text>
+                                <text x="49" y="53" text-anchor="middle" fill="#BE123C" font-size="10" font-weight="600">一等公民</text>
+                                <text x="49" y="68" text-anchor="middle" fill="#57534E" font-size="9">生产级验证</text>
+                            </g>
+                            <g transform="translate(452,35)">
+                                <rect width="98" height="80" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+                                <text x="49" y="34" text-anchor="middle" fill="#D97706" font-size="20" font-weight="800">27x</text>
+                                <text x="49" y="53" text-anchor="middle" fill="#B45309" font-size="10" font-weight="600">成本优势</text>
+                                <text x="49" y="68" text-anchor="middle" fill="#57534E" font-size="9">颠覆API定价</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- 发现1 -->
+                    <div class="finding animate-on-scroll" id="finding-scale">
+                        <div class="finding-title">发现1：规模与效率的完美平衡</div>
+                        <p>DeepSeek V4采用MoE（Mixture of Experts）架构，通过稀疏激活实现了规模与效率的平衡：</p>
+                        <div class="table-wrap">
+                            <table class="data-table">
+                                <tr><th>规格</th><th>V4-Pro</th><th>V4-Flash</th></tr>
+                                <tr><td>总参数</td><td class="highlight-col"><strong>1.6 Trillion</strong></td><td>284 Billion</td></tr>
+                                <tr><td>活跃参数</td><td class="highlight-col"><strong>49 Billion</strong></td><td>13 Billion</td></tr>
+                                <tr><td>定位</td><td>旗舰版，媲美顶级闭源模型</td><td>轻量版，接近V4-Pro性能</td></tr>
+                            </table>
+                        </div>
+                        <p style="font-style:italic;color:#78716C;font-size:13px;margin:0;">活跃参数从V3的37B增至V4的49B，配合更高效的路由机制，带来显著的性能提升。</p>
+                    </div>
+
+                    <!-- 发现2 -->
+                    <div class="finding animate-on-scroll" id="finding-dsa">
+                        <div class="finding-title">发现2：架构创新——DSA稀疏注意力</div>
+                        <p>V4引入了两项关键架构创新：</p>
+                        <ul style="margin:8px 0 12px;padding-left:18px;font-size:13px;color:#57534E;line-height:1.8;">
+                            <li><strong>Token-wise压缩</strong>：针对每个token进行动态压缩</li>
+                            <li><strong>DeepSeek Sparse Attention (DSA)</strong>：稀疏注意力机制，压缩至低秩隐空间</li>
+                        </ul>
+                        <div class="bar-wrap">
+                            <div class="bar-label-row"><span style="color:#1C1917;font-weight:600;">内存减少</span><span style="color:#059669;font-weight:700;">40%</span></div>
+                            <div class="bar-track"><div class="bar-fill" style="width:40%;background:var(--gradient-success);"></div></div>
+                        </div>
+                        <div class="bar-wrap">
+                            <div class="bar-label-row"><span style="color:#1C1917;font-weight:600;">推理速度提升</span><span style="color:#2563EB;font-weight:700;">1.8x</span></div>
+                            <div class="bar-track"><div class="bar-fill" style="width:55%;background:linear-gradient(90deg,#2563EB,#3B82F6);"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- 发现3 -->
+                    <div class="finding animate-on-scroll" id="finding-mm">
+                        <div class="finding-title">发现3：原生多模态设计</div>
+                        <p>与V3的纯文本架构不同，V4原生支持三种模态，无需Pipeline式的多模型串联：</p>
+                        <div class="table-wrap">
+                            <table class="data-table">
+                                <tr><th>模态</th><th>能力</th></tr>
+                                <tr><td><span class="status-tag tag-blue">文本</span></td><td>全面的语言理解和生成</td></tr>
+                                <tr><td><span class="status-tag tag-purple">视觉</span></td><td>图像理解、OCR、图表分析（最高4096×4096分辨率）</td></tr>
+                                <tr><td><span class="status-tag tag-green">音频</span></td><td>语音识别、跨模态推理</td></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 发现4 -->
+                    <div class="finding animate-on-scroll" id="finding-agent">
+                        <div class="finding-title">发现4：Agent能力成为一等公民</div>
+                        <p>V4的设计明确将Agent能力作为核心目标：</p>
+                        <ul style="margin:8px 0;padding-left:18px;font-size:13px;color:#57534E;line-height:1.8;">
+                            <li><strong>开源SOTA的Agentic Coding基准</strong>：超越所有开源模型</li>
+                            <li><strong>无缝集成主流Agent框架</strong>：Claude Code、OpenClaw、OpenCode</li>
+                            <li><strong>已在DeepSeek内部生产使用</strong>：驱动内部agentic编码工作流</li>
+                        </ul>
+                        <p style="margin:0;"><strong style="color:var(--color-success);">2026年是Agent之年</strong>，V4的设计取向印证了这一判断。</p>
+                    </div>
+
+                    <!-- 发现5 -->
+                    <div class="finding animate-on-scroll" id="finding-price">
+                        <div class="finding-title">发现5：API定价颠覆市场</div>
+                        <div class="table-wrap">
+                            <table class="data-table">
+                                <tr><th>模型</th><th>输入（$/百万token）</th><th>输出（$/百万token）</th></tr>
+                                <tr><td><strong>DeepSeek V4-Pro</strong></td><td style="color:var(--color-success);font-weight:700;">~$2.00</td><td style="color:var(--color-success);font-weight:700;">~$8.00</td></tr>
+                                <tr><td><strong>DeepSeek V4-Flash</strong></td><td style="color:var(--color-success);font-weight:700;">~$0.28</td><td style="color:var(--color-success);font-weight:700;">~$1.10</td></tr>
+                                <tr><td>GPT-5.4 Thinking</td><td>$15.00</td><td>$60.00</td></tr>
+                                <tr><td>Claude Opus 4.6</td><td>$15.00</td><td>$75.00</td></tr>
+                            </table>
+                        </div>
+                        <p style="margin:12px 0 0;"><strong>定价差距达到27倍</strong>——这不仅仅是价格战，而是开源模式对闭源API模式的根本性挑战。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== 详细分析 ===== -->
+            <section id="analysis">
+                <div class="doc-chapter-label">详细分析</div>
+                <div class="section-block animate-on-scroll">
+                    <h2>详细分析</h2>
+
+                    <div class="section-overview">
+                        <svg viewBox="0 0 600 150" xmlns="http://www.w3.org/2000/svg">
+                            <text x="300" y="18" text-anchor="middle" fill="#1C1917" font-size="13" font-weight="600">MoE架构演进：从V2到V4</text>
+                            <g transform="translate(30, 40)">
+                                <rect x="0" y="0" width="140" height="72" rx="8" fill="#F8FAFB" stroke="#E7E5E4"/>
+                                <text x="70" y="28" text-anchor="middle" fill="#78716C" font-size="18" font-weight="700">V2</text>
+                                <text x="70" y="48" text-anchor="middle" fill="#57534E" font-size="11">236B总/21B活跃</text>
+                                <text x="70" y="64" text-anchor="middle" fill="#A8A29E" font-size="9">2024年5月</text>
+                            </g>
+                            <path d="M178 76 L218 76" stroke="#059669" stroke-width="2" marker-end="url(#arrowGreen)"/>
+                            <defs><marker id="arrowGreen" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#059669"/></marker></defs>
+                            <g transform="translate(226, 40)">
+                                <rect x="0" y="0" width="140" height="72" rx="8" fill="#EFF6FF" stroke="#2563EB"/>
+                                <text x="70" y="28" text-anchor="middle" fill="#2563EB" font-size="18" font-weight="700">V3</text>
+                                <text x="70" y="48" text-anchor="middle" fill="#57534E" font-size="11">671B总/37B活跃</text>
+                                <text x="70" y="64" text-anchor="middle" fill="#A8A29E" font-size="9">2025年12月</text>
+                            </g>
+                            <path d="M374 76 L414 76" stroke="#7C3AED" stroke-width="2"/>
+                            <g transform="translate(422, 35)">
+                                <rect x="0" y="0" width="138" height="82" rx="8" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2"/>
+                                <text x="69" y="30" text-anchor="middle" fill="#7C3AED" font-size="20" font-weight="800">V4</text>
+                                <text x="69" y="52" text-anchor="middle" fill="#57534E" font-size="11" font-weight="500">1.6T总/49B活跃</text>
+                                <text x="69" y="70" text-anchor="middle" fill="#059669" font-size="9" font-weight="700">DSA · 多模态 · Agent</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <h3>一、MoE架构演进</h3>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <tr><th>版本</th><th>发布时间</th><th>总参数</th><th>活跃参数</th><th>核心创新</th></tr>
+                            <tr><td><strong>V2</strong></td><td>2024年5月</td><td>236B</td><td>21B</td><td>引入DeepSeekMoE和MLA</td></tr>
+                            <tr><td><strong>V3</strong></td><td>2025年12月</td><td>671B</td><td>37B</td><td>FP8训练，辅助损失自由负载均衡</td></tr>
+                            <tr class="highlight-col"><td><strong>V4</strong></td><td>2026年4月</td><td>1.6T</td><td>49B</td><td>DSA稀疏注意力，原生多模态</td></tr>
+                        </table>
+                    </div>
+                    <p><strong>演进逻辑</strong>：参数规模从236B到1.6T，增长6.8倍；活跃参数从21B到49B，增长2.3倍。每个活跃参数能激活更多的专家知识。</p>
+
+                    <h3>二、性能基准对比</h3>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <tr><th>基准</th><th>V4-Pro</th><th>GPT-5.4</th><th>Claude 4.6</th><th>Gemini 3.1</th></tr>
+                            <tr><td><strong>MMLU-Pro</strong></td><td>92.1%</td><td>92.1%</td><td>91.4%</td><td>91.7%</td></tr>
+                            <tr><td><strong>HumanEval+</strong></td><td>95.3%</td><td>95.3%</td><td style="color:var(--color-success);font-weight:600;">96.8%</td><td>93.5%</td></tr>
+                            <tr><td><strong>SWE-Bench</strong></td><td>68.4%</td><td>68.4%</td><td style="color:var(--color-success);font-weight:600;">72.1%</td><td>62.3%</td></tr>
+                            <tr><td><strong>MATH-500</strong></td><td style="color:var(--color-success);font-weight:600;">92–96%</td><td>84.2%</td><td>81.6%</td><td>90.0%</td></tr>
+                        </table>
+                    </div>
+                    <p><strong>关键观察</strong>：V4-Pro在数学和通用推理上表现突出，Claude 4.6在编码领域仍保持优势，V4-Pro是整体最均衡的开源选择。</p>
+
+                    <h3>三、开源 vs 闭源战略对比</h3>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <tr><th>维度</th><th>开源（DeepSeek V4）</th><th>闭源（GPT/Claude）</th></tr>
+                            <tr><td><strong>能力差距</strong></td><td><span class="status-tag tag-green">月级滞后</span></td><td>领先</td></tr>
+                            <tr><td><strong>成本结构</strong></td><td><span class="status-tag tag-green">自托管≈$1-3/M</span></td><td>API=$15-75/M</td></tr>
+                            <tr><td><strong>数据控制</strong></td><td><span class="status-tag tag-green">完全本地化</span></td><td>依赖供应商</td></tr>
+                            <tr><td><strong>定制能力</strong></td><td><span class="status-tag tag-green">完全可微调</span></td><td>有限微调</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== 趋势判断 ===== -->
+            <section id="trends">
+                <div class="doc-chapter-label">趋势判断与建议</div>
+                <div class="section-block animate-on-scroll">
+                    <h2>趋势判断与建议</h2>
+
+                    <div class="section-overview">
+                        <svg viewBox="0 0 600 100" xmlns="http://www.w3.org/2000/svg">
+                            <text x="300" y="18" text-anchor="middle" fill="#1C1917" font-size="12" font-weight="600">开源模型演进趋势预测</text>
+                            <line x1="50" y1="50" x2="550" y2="50" stroke="#E7E5E4" stroke-width="2"/>
+                            <circle cx="130" cy="50" r="6" fill="#059669"/>
+                            <circle cx="300" cy="50" r="6" fill="#059669"/>
+                            <circle cx="450" cy="50" r="6" fill="#059669"/>
+                            <text x="130" y="73" text-anchor="middle" fill="#57534E" font-size="9">2026年内</text>
+                            <text x="130" y="84" text-anchor="middle" fill="#78716C" font-size="8">闭源被迫降价</text>
+                            <text x="300" y="73" text-anchor="middle" fill="#57534E" font-size="9">2027年</text>
+                            <text x="300" y="84" text-anchor="middle" fill="#78716C" font-size="8">开源份额超50%</text>
+                            <text x="450" y="73" text-anchor="middle" fill="#57534E" font-size="9">2028年+</text>
+                            <text x="450" y="84" text-anchor="middle" fill="#78716C" font-size="8">差异化在生态</text>
+                            <circle cx="550" cy="50" r="8" fill="#7C3AED"/>
+                            <text x="550" y="73" text-anchor="middle" fill="#7C3AED" font-size="9">未来</text>
+                        </svg>
+                    </div>
+
+                    <div class="callout callout-success animate-on-scroll">
+                        <div class="callout-title">趋势1：开源模型的"能力拐点"</div>
+                        <p>DeepSeek V4标志着开源模型进入"能力拐点"——在某些场景下，开源模型已不再是"妥协选择"，而是"主动选择"。</p>
+                        <ul style="margin:6px 0;padding-left:18px;font-size:13px;color:#57534E;line-height:1.8;">
+                            <li>V4-Pro在多个基准上超越或持平闭源竞品</li>
+                            <li>开源生态的响应速度和定制能力无法被闭源复制</li>
+                            <li>成本优势使大规模部署成为可能</li>
+                        </ul>
+                    </div>
+
+                    <div class="callout callout-info animate-on-scroll">
+                        <div class="callout-title">趋势2：Agent优先的模型设计</div>
+                        <p>2026年将是"Agent之年"，V4的设计取向印证了这一判断。企业在模型选型时，应将Agent能力作为核心评估维度。</p>
+                    </div>
+
+                    <div class="callout callout-purple animate-on-scroll">
+                        <div class="callout-title">趋势3：多模态成为标配</div>
+                        <p>V4的原生多模态设计意味着：多模态不再是高端特性，而是基础能力；Pipeline式的多模型串联将被淘汰。</p>
+                    </div>
+
+                    <h3>行动建议</h3>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <tr><th style="width:130px;">企业类型</th><th>建议</th></tr>
+                            <tr><td><span class="status-tag tag-purple">数据敏感型</span></td><td>评估V4本地化部署可行性，结合数据合规要求</td></tr>
+                            <tr><td><span class="status-tag tag-blue">成本敏感型</span></td><td>对比V4自托管成本与闭源API成本，制定混合策略</td></tr>
+                            <tr><td><span class="status-tag tag-green">定制需求型</span></td><td>探索V4微调在垂直领域的应用，建立定制化能力</td></tr>
+                            <tr><td><span class="status-tag tag-red">合规约束型</span></td><td>利用开源模型实现数据完全不出境，满足合规要求</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== 本质洞察 ===== -->
+            <section id="insight">
+                <div class="doc-chapter-label">本质洞察</div>
+                <div class="section-block animate-on-scroll">
+                    <h2>AI洞察的本质洞察</h2>
+
+                    <div class="section-overview">
+                        <svg viewBox="0 0 600 140" xmlns="http://www.w3.org/2000/svg">
+                            <text x="300" y="20" text-anchor="middle" fill="#1C1917" font-size="13" font-weight="600">本质洞察：时间差红利的消失</text>
+                            <g transform="translate(40, 45)">
+                                <rect x="0" y="0" width="150" height="60" rx="10" fill="#FEF2F2" stroke="#E11D48"/>
+                                <text x="75" y="25" text-anchor="middle" fill="#E11D48" font-size="11" font-weight="600">表面现象</text>
+                                <text x="75" y="45" text-anchor="middle" fill="#57534E" font-size="10">更大、更快、更便宜</text>
+                            </g>
+                            <text x="215" y="80" text-anchor="middle" fill="#7C3AED" font-size="11">→ 本质 →</text>
+                            <g transform="translate(240, 45)">
+                                <rect x="0" y="0" width="150" height="60" rx="10" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2"/>
+                                <text x="75" y="25" text-anchor="middle" fill="#7C3AED" font-size="11" font-weight="600">底层规律</text>
+                                <text x="75" y="45" text-anchor="middle" fill="#57534E" font-size="10">时间差红利消失</text>
+                            </g>
+                            <text x="415" y="80" text-anchor="middle" fill="#059669" font-size="11">→ 推演 →</text>
+                            <g transform="translate(440, 40)">
+                                <rect x="0" y="0" width="118" height="70" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="2"/>
+                                <text x="59" y="26" text-anchor="middle" fill="#059669" font-size="11" font-weight="600">趋势判断</text>
+                                <text x="59" y="46" text-anchor="middle" fill="#57534E" font-size="9">能力优先 →</text>
+                                <text x="59" y="60" text-anchor="middle" fill="#57534E" font-size="9">场景优先</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="callout callout-warning animate-on-scroll">
+                        <div class="callout-title">类比：Linux vs Windows</div>
+                        <p>DeepSeek V4之于AI，如同Linux之于操作系统：</p>
+                        <ul style="margin:6px 0;padding-left:18px;font-size:13px;color:#57534E;line-height:1.8;">
+                            <li><strong>Linux</strong>：起初落后Windows，但开源优势使其在服务器市场最终占据主导</li>
+                            <li><strong>DeepSeek</strong>：能力差距缩短到月级，开源优势使其在企业市场成为可信选择</li>
+                        </ul>
+                        <p style="margin:0;"><strong>关键差异</strong>：AI的开源优势比Linux更显著，因为模型可微调、可定制，而操作系统定制成本更高。</p>
+                    </div>
+
+                    <div class="callout callout-success animate-on-scroll">
+                        <div class="callout-title">趋势推演</div>
+                        <p>基于"能力拐点"规律，预测：</p>
+                        <ul style="margin:6px 0;padding-left:18px;font-size:13px;color:#57534E;line-height:1.8;">
+                            <li><strong>短期（2026年内）</strong>：闭源供应商将被迫降价或证明溢价价值</li>
+                            <li><strong>中期（2027年）</strong>：开源模型在企业部署中的份额将超过50%</li>
+                            <li><strong>长期（2028年及以后）</strong>：模型能力将趋于同质化，差异化将体现在生态和服务上</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== 附录 ===== -->
+            <section id="appendix">
+                <div class="doc-chapter-label">附录</div>
+                <div class="section-block animate-on-scroll">
+                    <h2>附录</h2>
+
+                    <h3>快速接入示例（OpenAI SDK 兼容）</h3>
+                    <div class="code-block">
+                        <code>from openai import OpenAI
+
+client = OpenAI(
+    api_key="your-deepseek-key",
+    base_url="https://api.deepseek.com/v1"
+)
+
+response = client.chat.completions.create(
+    model="deepseek-v4-pro",  # 或 deepseek-v4-flash
+    messages=[{"role": "user", "content": "Hello, DeepSeek V4!"}],
+    max_tokens=4096
+)
+
+print(response.choices[0].message.content)</code>
+                    </div>
+
+                    <h3>关键数据速查</h3>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <tr><th>项目</th><th>V4-Pro</th><th>V4-Flash</th></tr>
+                            <tr><td>总参数</td><td>1.6 Trillion</td><td>284 Billion</td></tr>
+                            <tr><td>活跃参数</td><td>49 Billion</td><td>13 Billion</td></tr>
+                            <tr><td>专家数量</td><td>256+</td><td>256+</td></tr>
+                            <tr><td>上下文窗口</td><td>1M tokens</td><td>1M tokens</td></tr>
+                            <tr><td>输入价格</td><td style="color:var(--color-success);font-weight:600;">~$2.00/M</td><td style="color:var(--color-success);font-weight:600;">~$0.28/M</td></tr>
+                            <tr><td>输出价格</td><td style="color:var(--color-success);font-weight:600;">~$8.00/M</td><td style="color:var(--color-success);font-weight:600;">~$1.10/M</td></tr>
+                        </table>
+                    </div>
+
+                    <h3>参考来源</h3>
+                    <ul style="padding-left:18px;font-size:13px;color:var(--color-text-secondary);line-height:2;">
+                        <li><a href="https://api-docs.deepseek.com/news/news260424" target="_blank" rel="noopener">DeepSeek 官方公告</a></li>
+                        <li><a href="https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf" target="_blank" rel="noopener">DeepSeek V4 技术报告（PDF）</a></li>
+                        <li><a href="https://huggingface.co/collections/deepseek-ai/deepseek-v4" target="_blank" rel="noopener">HuggingFace 开源权重</a></li>
+                        <li><a href="https://tech-insider.org/chatgpt-vs-claude-vs-deepseek-vs-gemini-2026/" target="_blank" rel="noopener">Tech Insider AI 模型对比</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ===== Footer ===== -->
+            <!-- 了解更多 - 统一模块（完整版） -->
+            <div style="margin-top:32px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+                <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+                <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+                    我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+                </p>
+                <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+                    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                        🏠 访问AI洞察首页
+                    </a>
+                </div>
+                <!-- 相关资源 -->
+                <div style="border-top:1px solid #E7E5E4;padding-top:12px;margin-top:12px;">
+                    <div style="font-size:13px;font-weight:600;color:#1C1917;margin-bottom:8px;">📚 相关资源</div>
+                    <ul style="list-style:none;padding:0;margin:0;font-size:13px;">
+                        <li style="margin-bottom:6px;"><a href="https://api-docs.deepseek.com/news/news260424" target="_blank" rel="noopener" style="color:#2563EB;text-decoration:none;">📄 DeepSeek V4 官方公告</a></li>
+                        <li style="margin-bottom:6px;"><a href="https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf" target="_blank" rel="noopener" style="color:#2563EB;text-decoration:none;">📑 DeepSeek V4 技术报告（PDF）</a></li>
+                        <li style="margin-bottom:6px;"><a href="https://huggingface.co/collections/deepseek-ai/deepseek-v4" target="_blank" rel="noopener" style="color:#2563EB;text-decoration:none;">🤗 HuggingFace 开源权重</a></li>
+                        <li style="margin-bottom:6px;"><a href="https://tech-insider.org/chatgpt-vs-claude-vs-deepseek-vs-gemini-2026/" target="_blank" rel="noopener" style="color:#2563EB;text-decoration:none;">🔍 Tech Insider AI 模型对比</a></li>
+                        <li><a href="https://chat.deepseek.com/" target="_blank" rel="noopener" style="color:#2563EB;text-decoration:none;">💬 在线体验 chat.deepseek.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <p style="text-align:center;color:#A8A29E;font-size:11px;margin-top:24px;">
+                🤖 AI洞察 · 2026年4月24日
+            </p>
+
+
+        </div><!-- /.content-inner -->
+    </main><!-- /#main-content -->
+</div><!-- /.layout-wrapper -->
+
+<button class="scroll-to-top" id="scrollToTop" title="回到顶部" aria-label="回到顶部">↑</button>
+
+<script>
+(function () {
+    'use strict';
+
+    /* ====== 1. Scroll Spy — TOC 高亮当前章节 ====== */
+    var sections = [
+        { id: 'overview',      tocId: 'toc-overview' },
+        { id: 'background',    tocId: 'toc-background' },
+        { id: 'findings',      tocId: 'toc-findings' },
+        { id: 'finding-dsa',   tocId: 'toc-f2' },
+        { id: 'finding-mm',    tocId: 'toc-f3' },
+        { id: 'finding-agent', tocId: 'toc-f4' },
+        { id: 'finding-price', tocId: 'toc-f5' },
+        { id: 'analysis',      tocId: 'toc-analysis' },
+        { id: 'trends',        tocId: 'toc-trends' },
+        { id: 'insight',       tocId: 'toc-insight' },
+        { id: 'appendix',      tocId: 'toc-appendix' }
+    ];
+
+    function updateActiveToc() {
+        var activated = null;
+        for (var i = sections.length - 1; i >= 0; i--) {
+            var el = document.getElementById(sections[i].id);
+            if (!el) continue;
+            if (el.getBoundingClientRect().top <= window.innerHeight * 0.25) {
+                activated = sections[i].tocId; break;
+            }
+        }
+        if (!activated && sections.length) activated = sections[0].tocId;
+        sections.forEach(function (s) {
+            var link = document.getElementById(s.tocId);
+            if (!link) return;
+            link.classList.toggle('toc-active', s.tocId === activated);
+        });
+    }
+
+    /* ====== 2. 阅读进度条 ====== */
+    var progressFill = document.getElementById('readingProgress');
+    function updateReadingProgress() {
+        var docH = document.documentElement.scrollHeight - window.innerHeight;
+        var pct  = docH > 0 ? Math.round(window.scrollY / docH * 100) : 0;
+        if (progressFill) progressFill.style.width = pct + '%';
+    }
+
+    /* ====== 3. 回到顶部按钮 ====== */
+    var scrollTopBtn = document.getElementById('scrollToTop');
+    function updateScrollTopBtn() {
+        if (!scrollTopBtn) return;
+        scrollTopBtn.classList.toggle('visible', window.scrollY > 500);
+    }
+    if (scrollTopBtn) {
+        scrollTopBtn.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    /* ====== 4. 统一滚动事件 ====== */
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+        if (!ticking) {
+            window.requestAnimationFrame(function () {
+                updateActiveToc(); updateReadingProgress(); updateScrollTopBtn();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+    updateActiveToc(); updateReadingProgress();
+
+    /* ====== 5. TOC 锚点平滑跳转 ====== */
+    document.querySelectorAll('.toc-link').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            var href = link.getAttribute('href');
+            if (!href || href[0] !== '#') return;
+            var target = document.getElementById(href.slice(1));
+            if (!target) return;
+            e.preventDefault();
+            window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 24, behavior: 'smooth' });
+            if (window.innerWidth <= 768) {
+                var sb = document.getElementById('sidebar');
+                if (sb) sb.classList.remove('mobile-open');
+            }
+        });
+    });
+
+    /* ====== 6. 侧边栏折叠/展开 ====== */
+    var collapseBtn   = document.getElementById('collapseBtn');
+    var layoutWrapper = document.getElementById('layoutWrapper');
+    var sidebar       = document.getElementById('sidebar');
+    function isMobile() { return window.innerWidth <= 768; }
+
+    if (collapseBtn) {
+        collapseBtn.addEventListener('click', function () {
+            if (isMobile()) {
+                var open = sidebar.classList.toggle('mobile-open');
+                collapseBtn.textContent = open ? '\u00d7' : '\u2261';
+                collapseBtn.classList.toggle('collapsed-pos', open);
+            } else {
+                var collapsed = layoutWrapper.classList.toggle('sidebar-collapsed');
+                collapseBtn.textContent = collapsed ? '\u00bb' : '\u00ab';
+                collapseBtn.classList.toggle('collapsed-pos', collapsed);
+            }
+        });
+    }
+
+    /* ====== 7. 滚动入场动画（IntersectionObserver）====== */
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+            });
+        }, { rootMargin: '0px 0px -60px 0px', threshold: 0.06 });
+        document.querySelectorAll('.animate-on-scroll').forEach(function (el) { io.observe(el); });
+    } else {
+        document.querySelectorAll('.animate-on-scroll').forEach(function (el) { el.classList.add('visible'); });
+    }
+
+    /* ====== 8. 进度条动画（进入视口时触发）====== */
+    if ('IntersectionObserver' in window) {
+        var barIO = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (!e.isIntersecting) return;
+                var fill = e.target.querySelector('.bar-fill');
+                if (!fill) return;
+                var w = fill.style.width;
+                fill.style.width = '0%';
+                requestAnimationFrame(function () { fill.style.width = w; });
+                barIO.unobserve(e.target);
+            });
+        }, { threshold: 0.3 });
+        document.querySelectorAll('.bar-wrap').forEach(function (el) { barIO.observe(el); });
+    }
+
+}());
+</script>
+
+</body>
+</html>
+

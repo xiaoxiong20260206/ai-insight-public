@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>私募量化数字员工产品架构 | AI Digital Worker Architecture</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><path d='M16 6L6 12v8l10 6 10-6v-8L16 6z' fill='none' stroke='white' stroke-width='2' stroke-linejoin='round'/><path d='M16 12v10M6 12l10 6 10-6' fill='none' stroke='white' stroke-width='2' stroke-linejoin='round'/></svg>">
+    
+    <style>
+        /* ==================== CSS 变量定义 ==================== */
+        :root {
+            --color-success: #059669;
+            --color-success-light: #10B981;
+            --color-danger: #E11D48;
+            --color-danger-light: #FF7B72;
+            --color-warning: #D97706;
+            --color-warning-dark: #B45309;
+            --color-info: #2563EB;
+            --color-info-light: #54AEFF;
+            
+            --color-text-primary: #24292F;
+            --color-text-secondary: #57606A;
+            --color-text-muted: #8B949E;
+            --color-border: #E7E5E4;
+            --color-border-light: #F5F5F4;
+            --color-bg: #FAFBFC;
+            --color-bg-card: #FFFFFF;
+            --color-bg-table-header: #F8FAFB;
+            
+            --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            --gradient-badge: linear-gradient(135deg, #DDF4FF 0%, #D4F8E8 100%);
+            
+            --shadow-card: rgba(31, 35, 40, 0.04) 0px 1px 3px 0px, rgba(31, 35, 40, 0.04) 0px 3px 8px 0px;
+            --shadow-card-light: rgba(31, 35, 40, 0.04) 0px 1px 0px 0px;
+            
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-full: 20px;
+            
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --font-family: -apple-system, "system-ui", "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-family);
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--color-text-secondary);
+            background-color: var(--color-bg);
+        }
+        
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: var(--spacing-lg) var(--spacing-md) 48px;
+        }
+        
+        /* ==================== 头部区域 ==================== */
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .badge {
+            display: inline-block;
+            background: var(--gradient-badge);
+            color: var(--color-info);
+            padding: var(--spacing-xs) 12px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .main-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            line-height: 1.25;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .subtitle {
+            font-size: 15px;
+            color: var(--color-text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* ==================== Tab导航 ==================== */
+        .tab-nav {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 4px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 6px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-card);
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .tab-btn {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 12px;
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+        }
+        
+        .tab-btn:hover {
+            background: var(--color-bg-table-header);
+            color: var(--color-text-secondary);
+        }
+        
+        .tab-btn.active {
+            background: var(--gradient-success);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+        }
+        
+        .tab-btn-num {
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.06);
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .tab-btn.active .tab-btn-num {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .tab-btn-text { display: none; }
+        @media (min-width: 768px) { .tab-btn-text { display: inline; } }
+        
+        /* ==================== Tab面板 ==================== */
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .tab-panel.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ==================== 统计卡片 ==================== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        .stat-card {
+            background: var(--color-bg-card);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-card-light);
+            border: 1px solid var(--color-border);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+        .stat-value.success { color: var(--color-success); }
+        .stat-value.danger { color: var(--color-danger); }
+        .stat-value.warning { color: var(--color-warning); }
+        .stat-value.info { color: var(--color-info); }
+        
+        .stat-label {
+            font-size: 11px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* ==================== 章节卡片 ==================== */
+        .section-card {
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .section-number {
+            background: var(--gradient-success);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .section-number-yellow { background: var(--color-warning); }
+        .section-number-blue { background: var(--color-info); }
+        .section-number-purple { background: #8B5CF6; }
+        
+        .section-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+        
+        .section-content {
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+        }
+        .section-content p { margin-bottom: var(--spacing-md); }
+        
+        /* ==================== 架构图容器 ==================== */
+        .architecture-container {
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin-bottom: var(--spacing-lg);
+        }
+        .architecture-container svg {
+            display: block;
+            margin: 0 auto;
+        }
+        
+        /* ==================== 状态标签 ==================== */
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .status-success { background: rgba(5, 150, 105, 0.12); color: var(--color-success); }
+        .status-warning { background: rgba(217, 119, 6, 0.12); color: var(--color-warning-dark); }
+        .status-danger { background: rgba(225, 29, 72, 0.2); color: var(--color-danger); }
+        .status-info { background: rgba(37, 99, 235, 0.12); color: var(--color-info); }
+        
+        /* ==================== 表格样式 ==================== */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: var(--spacing-md) 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 500px;
+        }
+        th {
+            background: var(--color-bg-table-header);
+            color: var(--color-text-secondary);
+            padding: 12px 16px;
+            font-weight: 600;
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 13px;
+        }
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--color-border-light);
+            vertical-align: middle;
+            font-size: 14px;
+        }
+        tbody tr:hover { background: rgba(0, 0, 0, 0.02); }
+        
+        /* ==================== 引用框/洞察框 ==================== */
+        .quote-box {
+            background: var(--color-bg-table-header);
+            border-left: 3px solid var(--color-info);
+            padding: var(--spacing-md) 20px;
+            color: var(--color-text-primary);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: var(--spacing-md) 0;
+        }
+        
+        .insight-box {
+            border-left: 3px solid var(--color-warning);
+            background: rgba(217, 119, 6, 0.06);
+            padding: var(--spacing-md) 20px;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: var(--spacing-md) 0;
+        }
+        .insight-box .insight-title {
+            font-weight: 600;
+            color: var(--color-warning-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* ==================== 特性网格 ==================== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+        .feature-item::before {
+            content: "✓";
+            color: var(--color-success);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        /* ==================== Roadmap卡片 ==================== */
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-md);
+        }
+        @media (max-width: 1024px) { .roadmap-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .roadmap-grid { grid-template-columns: 1fr; } }
+        
+        .phase-card {
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            padding: var(--spacing-md);
+            position: relative;
+            overflow: hidden;
+        }
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+        }
+        .phase-card.p1::before { background: var(--color-success); }
+        .phase-card.p2::before { background: var(--color-info); }
+        .phase-card.p3::before { background: #8B5CF6; }
+        .phase-card.p4::before { background: var(--color-warning); }
+        
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        .phase-number {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+        }
+        .phase-card.p1 .phase-number { background: var(--color-success); }
+        .phase-card.p2 .phase-number { background: var(--color-info); }
+        .phase-card.p3 .phase-number { background: #8B5CF6; }
+        .phase-card.p4 .phase-number { background: var(--color-warning); }
+        
+        .phase-title { font-size: 15px; font-weight: 600; color: var(--color-text-primary); }
+        .phase-time { font-size: 11px; color: var(--color-text-muted); margin-bottom: var(--spacing-sm); }
+        .phase-content h4 { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: var(--spacing-xs); margin-top: var(--spacing-sm); }
+        .phase-content ul { list-style: none; padding: 0; margin: 0; }
+        .phase-content li { font-size: 13px; color: var(--color-text-muted); padding: 2px 0; padding-left: 16px; position: relative; }
+        .phase-content li::before { content: '→'; position: absolute; left: 0; color: var(--color-success); font-size: 11px; }
+        .phase-metrics { margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid var(--color-border-light); font-size: 11px; color: var(--color-text-muted); }
+        .phase-metrics strong { color: var(--color-success); }
+        
+        /* ==================== 页脚 ==================== */
+        .footer {
+            text-align: center;
+            padding: var(--spacing-lg) 0;
+            border-top: 1px solid var(--color-border-light);
+            margin-top: var(--spacing-lg);
+        }
+        .footer p { font-size: 13px; color: var(--color-text-muted); margin-bottom: var(--spacing-xs); }
+        .footer a { color: var(--color-info); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        
+        @media (max-width: 768px) {
+            .tab-nav { top: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部区域 -->
+        <header class="header">
+            <span class="badge">🏗️ 产品规划</span>
+            <h1 class="main-title">私募量化数字员工产品架构与Roadmap</h1>
+            <p class="subtitle">基于私募量化公司工作场景分析，设计覆盖投研、交易、风控、运营全链路的AI数字员工产品体系</p>
+        </header>
+        
+        <!-- Tab导航 -->
+        <nav class="tab-nav" role="navigation" aria-label="章节导航">
+            <button class="tab-btn active" data-tab="architecture" aria-selected="true">
+                <span class="tab-btn-num">1</span>
+                <span class="tab-btn-text">产品架构图</span>
+            </button>
+            <button class="tab-btn" data-tab="layers" aria-selected="false">
+                <span class="tab-btn-num">2</span>
+                <span class="tab-btn-text">五层架构详解</span>
+            </button>
+            <button class="tab-btn" data-tab="agents" aria-selected="false">
+                <span class="tab-btn-num">3</span>
+                <span class="tab-btn-text">Agent能力矩阵</span>
+            </button>
+            <button class="tab-btn" data-tab="coverage" aria-selected="false">
+                <span class="tab-btn-num">4</span>
+                <span class="tab-btn-text">覆盖率计算</span>
+            </button>
+            <button class="tab-btn" data-tab="roi" aria-selected="false">
+                <span class="tab-btn-num">5</span>
+                <span class="tab-btn-text">ROI分析</span>
+            </button>
+            <button class="tab-btn" data-tab="roadmap" aria-selected="false">
+                <span class="tab-btn-num">6</span>
+                <span class="tab-btn-text">Roadmap</span>
+            </button>
+        </nav>
+        
+        <!-- 统计卡片 -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value success">8</div>
+                <div class="stat-label">核心Agent</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value info">5</div>
+                <div class="stat-label">架构层级</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value warning">6</div>
+                <div class="stat-label">用户角色</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value success">18月</div>
+                <div class="stat-label">Roadmap周期</div>
+            </div>
+        </div>
+        
+        <!-- Tab Panel 1: 架构图 -->
+        <article id="architecture" class="tab-panel active">
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">1</span>
+                    <h2>产品架构图</h2>
+                </div>
+                <div class="architecture-container">
+                    <svg viewBox="0 0 900 780" style="width: 100%; max-width: 900px; height: auto;">
+                        <defs>
+                            <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#059669"/>
+                                <stop offset="100%" style="stop-color:#10B981"/>
+                            </linearGradient>
+                            <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#2563EB"/>
+                                <stop offset="100%" style="stop-color:#54AEFF"/>
+                            </linearGradient>
+                            <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#8B5CF6"/>
+                                <stop offset="100%" style="stop-color:#A78BFA"/>
+                            </linearGradient>
+                            <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#D97706"/>
+                                <stop offset="100%" style="stop-color:#D9A50B"/>
+                            </linearGradient>
+                        </defs>
+                        
+                        <text x="450" y="25" text-anchor="middle" fill="#24292F" font-size="14" font-weight="600" font-family="system-ui, sans-serif">私募量化数字员工产品架构 (Quant AI Digital Worker)</text>
+                        
+                        <!-- L1: 用户交互层 -->
+                        <rect x="30" y="45" width="840" height="95" rx="8" fill="#F8FAFB" stroke="#D97706" stroke-width="2"/>
+                        <text x="60" y="67" fill="#B45309" font-size="12" font-weight="600">L1 用户交互层 (User Interaction)</text>
+                        <text x="50" y="88" fill="#57606A" font-size="9" font-weight="500">用户角色</text>
+                        <rect x="50" y="95" width="70" height="32" rx="5" fill="url(#orangeGrad)"/>
+                        <text x="85" y="115" text-anchor="middle" fill="white" font-size="9">👨‍💼 量化</text>
+                        <rect x="125" y="95" width="70" height="32" rx="5" fill="url(#orangeGrad)"/>
+                        <text x="160" y="115" text-anchor="middle" fill="white" font-size="9">📊 基金PM</text>
+                        <rect x="200" y="95" width="70" height="32" rx="5" fill="url(#orangeGrad)"/>
+                        <text x="235" y="115" text-anchor="middle" fill="white" font-size="9">⚠️ 风控</text>
+                        <rect x="275" y="95" width="70" height="32" rx="5" fill="url(#orangeGrad)"/>
+                        <text x="310" y="115" text-anchor="middle" fill="white" font-size="9">💹 交易</text>
+                        <rect x="350" y="95" width="70" height="32" rx="5" fill="url(#orangeGrad)"/>
+                        <text x="385" y="115" text-anchor="middle" fill="white" font-size="9">🤝 市场</text>
+                        <rect x="425" y="95" width="70" height="32" rx="5" fill="url(#orangeGrad)"/>
+                        <text x="460" y="115" text-anchor="middle" fill="white" font-size="9">⚙️ 运营</text>
+                        
+                        <!-- L2: 工作流编排层 -->
+                        <rect x="30" y="150" width="840" height="110" rx="8" fill="#F8FAFB" stroke="#8B5CF6" stroke-width="2"/>
+                        <text x="60" y="172" fill="#7C3AED" font-size="12" font-weight="600">L2 工作流编排层 (Workflow Orchestration)</text>
+                        <rect x="50" y="185" width="165" height="60" rx="6" fill="url(#purpleGrad)"/>
+                        <text x="132" y="207" text-anchor="middle" fill="white" font-size="10" font-weight="600">🧠 智能编排中心</text>
+                        <text x="132" y="223" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="8">意图识别 → 任务分解 → Agent调度</text>
+                        
+                        <!-- L3: Agent能力层 -->
+                        <rect x="30" y="270" width="840" height="130" rx="8" fill="#F8FAFB" stroke="#2563EB" stroke-width="2"/>
+                        <text x="60" y="292" fill="#2563EB" font-size="12" font-weight="600">L3 Agent能力层 (Extensible Agents)</text>
+                        <rect x="50" y="305" width="100" height="42" rx="5" fill="url(#blueGrad)"/>
+                        <text x="100" y="323" text-anchor="middle" fill="white" font-size="9" font-weight="600">📈 Quant</text>
+                        <text x="100" y="337" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="7">策略 | 因子 | 回测</text>
+                        <rect x="155" y="305" width="100" height="42" rx="5" fill="url(#blueGrad)"/>
+                        <text x="205" y="323" text-anchor="middle" fill="white" font-size="9" font-weight="600">🔬 Research</text>
+                        <text x="205" y="337" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="7">研究 | 分析 | 研报</text>
+                        <rect x="260" y="305" width="100" height="42" rx="5" fill="url(#blueGrad)"/>
+                        <text x="310" y="323" text-anchor="middle" fill="white" font-size="9" font-weight="600">📊 Data</text>
+                        <text x="310" y="337" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="7">获取 | 清洗 | 可视化</text>
+                        <rect x="365" y="305" width="100" height="42" rx="5" fill="url(#blueGrad)"/>
+                        <text x="415" y="323" text-anchor="middle" fill="white" font-size="9" font-weight="600">⚠️ Risk</text>
+                        <text x="415" y="337" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="7">风控 | 压测 | 合规</text>
+                        
+                        <!-- L4: 基础设施层 -->
+                        <rect x="30" y="410" width="840" height="130" rx="8" fill="#F8FAFB" stroke="#059669" stroke-width="2"/>
+                        <text x="60" y="432" fill="#059669" font-size="12" font-weight="600">L4 基础设施层 (Foundation Infrastructure)</text>
+                        <rect x="50" y="462" width="115" height="35" rx="5" fill="url(#greenGrad)"/>
+                        <text x="107" y="480" text-anchor="middle" fill="white" font-size="9" font-weight="600">🧠 LLM基座</text>
+                        <text x="107" y="492" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="7">GPT | Claude | DeepSeek</text>
+                        
+                        <!-- L5: 数据层 -->
+                        <rect x="30" y="550" width="840" height="85" rx="8" fill="#F8FAFB" stroke="#E11D48" stroke-width="2"/>
+                        <text x="60" y="572" fill="#E11D48" font-size="12" font-weight="600">L5 数据层 (Data Layer)</text>
+                        <rect x="50" y="585" width="130" height="38" rx="5" fill="white" stroke="#E11D48"/>
+                        <text x="115" y="602" text-anchor="middle" fill="#E11D48" font-size="9" font-weight="500">📈 行情数据</text>
+                        <text x="115" y="616" text-anchor="middle" fill="#8B949E" font-size="7">实时行情 | 历史K线</text>
+                        
+                        <!-- 核心特性 -->
+                        <rect x="30" y="650" width="840" height="115" rx="8" fill="rgba(5,150,105,0.06)" stroke="rgba(5,150,105,0.3)" stroke-width="1"/>
+                        <text x="60" y="675" fill="#059669" font-size="11" font-weight="600">🎯 架构核心特性</text>
+                        <text x="50" y="700" fill="#24292F" font-size="10" font-weight="500">用户交互层</text>
+                        <text x="50" y="715" fill="#57606A" font-size="9">• 6类用户角色全覆盖</text>
+                        <text x="220" y="700" fill="#24292F" font-size="10" font-weight="500">工作流编排层</text>
+                        <text x="220" y="715" fill="#57606A" font-size="9">• 智能意图识别与分解</text>
+                        <text x="400" y="700" fill="#24292F" font-size="10" font-weight="500">Agent能力层</text>
+                        <text x="400" y="715" fill="#57606A" font-size="9">• 8+垂直Agent可扩展</text>
+                    </svg>
+                </div>
+            </section>
+        </article>
+        
+        <!-- Tab Panel 2: 五层架构详解 -->
+        <article id="layers" class="tab-panel">
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">2</span>
+                    <h2>五层架构详解</h2>
+                </div>
+                <div class="section-content">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>层级</th>
+                                    <th>核心组件</th>
+                                    <th>功能说明</th>
+                                    <th>技术选型</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="status status-warning">L1</span> 用户交互层</td>
+                                    <td>用户角色、工作场景、终端、交互形式</td>
+                                    <td>6类用户角色、移动端/PC端、对话/表单/API</td>
+                                    <td>React/Vue、WebSocket</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="status status-info">L2</span> 工作流编排层</td>
+                                    <td>智能编排中心、上下文记忆、工作流引擎</td>
+                                    <td>意图识别→任务分解→Agent调度</td>
+                                    <td>LangChain、LlamaIndex</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="status status-success">L3</span> Agent能力层</td>
+                                    <td>8个垂直Agent + 可扩展框架</td>
+                                    <td>Quant/Research/Data/Risk/Trading等</td>
+                                    <td>LLM + 领域工具</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="status status-success">L4</span> 基础设施层</td>
+                                    <td>共享能力、自进化调优、安全合规</td>
+                                    <td>LLM基座/RAG/代码沙箱/外部网关</td>
+                                    <td>GPT-4/Claude/DeepSeek</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="status status-danger">L5</span> 数据层</td>
+                                    <td>行情、财务、研报、另类数据</td>
+                                    <td>多源数据统一接入、私有化部署</td>
+                                    <td>Wind/Tushare、向量数据库</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="insight-box" style="margin-top: var(--spacing-lg); border-left-color: var(--color-success); background: rgba(5, 150, 105, 0.06);">
+                        <p class="insight-title" style="color: var(--color-success);">🎯 架构设计亮点</p>
+                        <div class="features-grid">
+                            <div class="feature-item">工作流编排层独立，支持复杂场景的多Agent协作</div>
+                            <div class="feature-item">上下文记忆模块，实现用户偏好学习和个性化服务</div>
+                            <div class="feature-item">Agent可扩展框架，支持插件化快速扩展新Agent</div>
+                            <div class="feature-item">数据层独立，强调金融数据的核心地位</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </article>
+        
+        <!-- Tab Panel 3: Agent能力矩阵 -->
+        <article id="agents" class="tab-panel">
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">3</span>
+                    <h2>Agent能力矩阵</h2>
+                </div>
+                <div class="section-content">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Agent</th>
+                                    <th>覆盖率</th>
+                                    <th>核心能力</th>
+                                    <th>技术栈</th>
+                                    <th>优先级</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>📈 Quant Agent</strong></td>
+                                    <td><span class="status status-success">28%</span></td>
+                                    <td>策略开发、因子计算、回测分析</td>
+                                    <td>LLM + 量化框架</td>
+                                    <td><span class="status status-danger">P0</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>🔬 Research Agent</strong></td>
+                                    <td><span class="status status-success">18%</span></td>
+                                    <td>行业研究、公司分析、研报撰写</td>
+                                    <td>LLM + RAG + 搜索</td>
+                                    <td><span class="status status-danger">P0</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>📊 Data Agent</strong></td>
+                                    <td><span class="status status-info">14%</span></td>
+                                    <td>数据获取、清洗、可视化</td>
+                                    <td>API + ETL + BI工具</td>
+                                    <td><span class="status status-warning">P1</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>⚠️ Risk Agent</strong></td>
+                                    <td><span class="status status-info">12%</span></td>
+                                    <td>风险监控、压力测试、合规检查</td>
+                                    <td>风控模型 + 规则引擎</td>
+                                    <td><span class="status status-warning">P1</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>💬 Chatbot Agent</strong></td>
+                                    <td><span class="status status-info">11%</span></td>
+                                    <td>知识问答、文档写作、客户服务</td>
+                                    <td>LLM + RAG</td>
+                                    <td><span class="status status-info">P2</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>💹 Trading Agent</strong></td>
+                                    <td><span class="status status-warning">5%</span></td>
+                                    <td>订单执行、算法交易</td>
+                                    <td>交易系统 + 算法</td>
+                                    <td><span class="status status-info">P2</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </article>
+        
+        <!-- Tab Panel 4: 覆盖率计算 -->
+        <article id="coverage" class="tab-panel">
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number section-number-blue">4</span>
+                    <h2>覆盖率计算方式</h2>
+                </div>
+                <div class="section-content">
+                    <p><strong>覆盖率 = 该Agent可处理的任务时间占比总和</strong></p>
+                    
+                    <div class="quote-box">
+                        <strong>计算逻辑</strong>：金融从业者的日常工作被划分为若干任务，每个任务有明确的时间占比估算。某Agent的覆盖率 = 所有关联该Agent的任务时间占比之和。
+                    </div>
+                    
+                    <h3 style="font-size: 14px; font-weight: 600; color: var(--color-text-primary); margin: 20px 0 12px;">工作场景时间分布</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>场景类型</th>
+                                    <th>时间占比</th>
+                                    <th>典型任务</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>投研场景</strong></td>
+                                    <td><span class="status status-danger">60%</span></td>
+                                    <td>策略研发、投资研究、数据分析、市场分析、风险管理</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>运营合规场景</strong></td>
+                                    <td><span class="status status-warning">40%</span></td>
+                                    <td>合规审核、报告生成、客户服务、会议管理</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <div class="insight-title">💡 验证规则</div>
+                        <p>28% + 18% + 14% + 12% + 11% + 9% + 5% + 3% = <strong>100%</strong></p>
+                        <p style="margin-top: 8px; font-size: 13px; color: var(--color-text-muted);">覆盖率决定了开发优先级：覆盖率越高的Agent，ROI越高，应优先开发。</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+        
+        <!-- Tab Panel 5: ROI分析 -->
+        <article id="roi" class="tab-panel">
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number section-number-purple">5</span>
+                    <h2>Agent ROI分析</h2>
+                </div>
+                <div class="section-content">
+                    <div class="quote-box">
+                        <strong>ROI计算公式</strong>：ROI = (效率提升带来的人力成本节省 + 更好决策带来的收益增量) / Agent开发与运营成本
+                    </div>
+                    
+                    <h3 style="font-size: 14px; font-weight: 600; color: var(--color-text-primary); margin: 20px 0 12px;">各Agent效率提升与预期收益</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Agent</th>
+                                    <th>核心效率提升</th>
+                                    <th>预期收益</th>
+                                    <th>ROI评估</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>📈 Quant Agent</strong></td>
+                                    <td><span class="status status-success">+30%~50%</span></td>
+                                    <td>缩短策略开发周期，加速Alpha发现</td>
+                                    <td><span class="status status-success">极高</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>🔬 Research Agent</strong></td>
+                                    <td><span class="status status-success">+80%</span></td>
+                                    <td>研报产出时间从数天缩短到数小时</td>
+                                    <td><span class="status status-success">极高</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>📊 Data Agent</strong></td>
+                                    <td><span class="status status-success">+70%</span></td>
+                                    <td>自助查询占比提升，减少IT成本</td>
+                                    <td><span class="status status-info">高</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>⚠️ Risk Agent</strong></td>
+                                    <td><span class="status status-info">95%覆盖</span></td>
+                                    <td>自动化合规检查，降低审核成本</td>
+                                    <td><span class="status status-info">高</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <div class="insight-title">💡 开发优先级建议</div>
+                        <div class="features-grid">
+                            <div class="feature-item"><strong>P0</strong>：Quant + Research Agent，覆盖率46%</div>
+                            <div class="feature-item"><strong>P1</strong>：Data + Risk Agent，覆盖率26%</div>
+                            <div class="feature-item"><strong>P2</strong>：Chatbot/Workflow/Trading，覆盖率25%</div>
+                            <div class="feature-item"><strong>P3</strong>：Browser Agent，覆盖率3%</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </article>
+        
+        <!-- Tab Panel 6: Roadmap -->
+        <article id="roadmap" class="tab-panel">
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number section-number-yellow">6</span>
+                    <h2>产品Roadmap</h2>
+                </div>
+                <div class="section-content">
+                    <div class="roadmap-grid">
+                        <div class="phase-card p1">
+                            <div class="phase-header">
+                                <div class="phase-number">1</div>
+                                <div class="phase-title">MVP验证</div>
+                            </div>
+                            <div class="phase-time">📅 Q1 2026 (3个月)</div>
+                            <div class="phase-content">
+                                <h4>核心目标</h4>
+                                <ul>
+                                    <li>搭建Agent编排框架</li>
+                                    <li>实现Quant Agent原型</li>
+                                    <li>对接Wind/Tushare数据</li>
+                                </ul>
+                            </div>
+                            <div class="phase-metrics">目标：<strong>5名量化研究员</strong></div>
+                        </div>
+                        
+                        <div class="phase-card p2">
+                            <div class="phase-header">
+                                <div class="phase-number">2</div>
+                                <div class="phase-title">核心能力</div>
+                            </div>
+                            <div class="phase-time">📅 Q2-Q3 2026 (6个月)</div>
+                            <div class="phase-content">
+                                <h4>核心目标</h4>
+                                <ul>
+                                    <li>Research Agent上线</li>
+                                    <li>Data Agent上线</li>
+                                    <li>RAG知识库搭建</li>
+                                </ul>
+                            </div>
+                            <div class="phase-metrics">目标：<strong>50人内测</strong></div>
+                        </div>
+                        
+                        <div class="phase-card p3">
+                            <div class="phase-header">
+                                <div class="phase-number">3</div>
+                                <div class="phase-title">场景扩展</div>
+                            </div>
+                            <div class="phase-time">📅 Q4'26 - Q1'27 (6个月)</div>
+                            <div class="phase-content">
+                                <h4>核心目标</h4>
+                                <ul>
+                                    <li>Risk Agent上线</li>
+                                    <li>Trading Agent上线</li>
+                                    <li>恒生/Bloomberg对接</li>
+                                </ul>
+                            </div>
+                            <div class="phase-metrics">目标：<strong>200人规模化</strong></div>
+                        </div>
+                        
+                        <div class="phase-card p4">
+                            <div class="phase-header">
+                                <div class="phase-number">4</div>
+                                <div class="phase-title">智能升级</div>
+                            </div>
+                            <div class="phase-time">📅 Q2-Q4 2027 (9个月)</div>
+                            <div class="phase-content">
+                                <h4>核心目标</h4>
+                                <ul>
+                                    <li>多模态能力</li>
+                                    <li>主动式Agent</li>
+                                    <li>端到端任务自主完成</li>
+                                </ul>
+                            </div>
+                            <div class="phase-metrics">目标：<strong>全公司覆盖</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </article>
+        
+        <!-- 章节导航 -->
+        <div style="margin-top:24px;padding-top:16px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <a href="index.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">← 场景分析</a>
+            <a href="幻方量化调研报告.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">AI转型标杆案例</a>
+        </div>
+
+        <!-- 了解更多 -->
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+        <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+        我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+        </p>
+        <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+        🏠 访问AI洞察首页
+        </a>
+        </div>
+    </div>
+    
+    <!-- Tab切换脚本 -->
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
+                });
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                
+                btn.classList.add('active');
+                btn.setAttribute('aria-selected', 'true');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        function checkHashAndActivateTab() {
+            const hash = window.location.hash.replace('#', '');
+            if (hash) {
+                const targetBtn = document.querySelector(`.tab-btn[data-tab="${hash}"]`);
+                if (targetBtn) targetBtn.click();
+            }
+        }
+        document.addEventListener('DOMContentLoaded', checkHashAndActivateTab);
+        window.addEventListener('hashchange', checkHashAndActivateTab);
+    </script>
+</body>
+</html>

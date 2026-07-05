@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>私募量化公司工作场景分析与可视化 | AI-Powered Quant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-pattern"></div>
+    <div class="grid-lines"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="hero-badge">
+                <span>工作场景分析</span>
+                <span style="color: var(--text-muted);">|</span>
+                <span>Agent类型梳理</span>
+            </div>
+            <h1 class="title">
+                <span class="title-icon">📊</span>
+                私募量化公司<span>工作场景</span>分析与可视化
+            </h1>
+            <p class="subtitle">
+                基于私募量化公司量化研究员、基金经理、风控专员等核心岗位的日常工作场景，系统性梳理任务分类、时间占比、Agent类型和业界产品
+            </p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 统计卡片区域 -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-value" id="total-tasks">0</div>
+                    <div class="stat-label">总任务数</div>
+                </div>
+                <div class="stat-card research">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-value" id="research-tasks">0</div>
+                    <div class="stat-label">投研任务<br><span style="color: var(--accent-blue);">60%时间占比</span></div>
+                </div>
+                <div class="stat-card operation">
+                    <div class="stat-icon">⚙️</div>
+                    <div class="stat-value" id="operation-tasks">0</div>
+                    <div class="stat-label">运营合规任务<br><span style="color: var(--accent-purple);">40%时间占比</span></div>
+                </div>
+                <div class="stat-card agents">
+                    <div class="stat-icon">🤖</div>
+                    <div class="stat-value" id="agent-types">9</div>
+                    <div class="stat-label">Agent类型<br><span style="color: var(--accent-green);">全场景覆盖</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 开发优先级分析 -->
+        <section class="priority-section">
+            <h2 class="section-title">🎯 开发优先级分析</h2>
+            <div class="priority-grid" id="priority-cards">
+                <!-- 动态生成 -->
+            </div>
+        </section>
+
+        <!-- 典型用户角色 (私募量化公司) -->
+        <section class="users-section">
+            <h2 class="section-title">👤 私募量化公司核心岗位</h2>
+            <div class="users-grid">
+                <div class="user-card">
+                    <div class="user-icon">📈</div>
+                    <div class="user-title">量化研究员</div>
+                    <div class="user-focus">重点场景：量化策略研发、因子挖掘、回测分析</div>
+                    <div class="user-agents">
+                        <span class="agent-badge quant mini">Quant Agent</span>
+                        <span class="agent-badge data mini">Data Agent</span>
+                    </div>
+                </div>
+                <div class="user-card">
+                    <div class="user-icon">💼</div>
+                    <div class="user-title">基金经理</div>
+                    <div class="user-focus">重点场景：策略组合管理、风险控制、交易执行</div>
+                    <div class="user-agents">
+                        <span class="agent-badge research mini">Research Agent</span>
+                        <span class="agent-badge trading mini">Trading Agent</span>
+                    </div>
+                </div>
+                <div class="user-card">
+                    <div class="user-icon">⚠️</div>
+                    <div class="user-title">风控合规</div>
+                    <div class="user-focus">重点场景：风险监控、压力测试、合规检查</div>
+                    <div class="user-agents">
+                        <span class="agent-badge risk mini">Risk Agent</span>
+                        <span class="agent-badge workflow mini">Workflow Agent</span>
+                    </div>
+                </div>
+                <div class="user-card">
+                    <div class="user-icon">🖥️</div>
+                    <div class="user-title">策略开发</div>
+                    <div class="user-focus">重点场景：策略编写、模型开发、算法优化</div>
+                    <div class="user-agents">
+                        <span class="agent-badge quant mini">Quant Agent</span>
+                        <span class="agent-badge data mini">Data Agent</span>
+                    </div>
+                </div>
+                <div class="user-card">
+                    <div class="user-icon">💹</div>
+                    <div class="user-title">交易员</div>
+                    <div class="user-focus">重点场景：算法交易、订单执行、执行分析</div>
+                    <div class="user-agents">
+                        <span class="agent-badge trading mini">Trading Agent</span>
+                        <span class="agent-badge quant mini">Quant Agent</span>
+                    </div>
+                </div>
+                <div class="user-card">
+                    <div class="user-icon">📊</div>
+                    <div class="user-title">数据工程</div>
+                    <div class="user-focus">重点场景：数据采集、数据清洗、因子库维护</div>
+                    <div class="user-agents">
+                        <span class="agent-badge data mini">Data Agent</span>
+                        <span class="agent-badge workflow mini">Workflow Agent</span>
+                    </div>
+                </div>
+                <div class="user-card">
+                    <div class="user-icon">🤝</div>
+                    <div class="user-title">市场人员</div>
+                    <div class="user-focus">重点场景：投资者关系、渠道对接、产品路演</div>
+                    <div class="user-agents">
+                        <span class="agent-badge chatbot mini">Chatbot Agent</span>
+                        <span class="agent-badge workflow mini">Workflow Agent</span>
+                        <span class="agent-badge research mini">Research Agent</span>
+                    </div>
+                </div>
+                <div class="user-card">
+                    <div class="user-icon">⚙️</div>
+                    <div class="user-title">运营支持</div>
+                    <div class="user-focus">重点场景：报告生成、流程管理、数据报表</div>
+                    <div class="user-agents">
+                        <span class="agent-badge workflow mini">Workflow Agent</span>
+                        <span class="agent-badge chatbot mini">Chatbot Agent</span>
+                        <span class="agent-badge background mini">Background Agent</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关系图区域 -->
+        <section class="network-section">
+            <h2 class="section-title">🔗 用户-场景-任务-Agent-产品关系图</h2>
+            <p class="section-desc">点击节点高亮关联关系，点击产品文字跳转官网</p>
+            <div class="network-container">
+                <div class="network-legend">
+                    <span class="legend-item"><span class="legend-dot user"></span>用户角色</span>
+                    <span class="legend-item"><span class="legend-dot scene"></span>场景大类</span>
+                    <span class="legend-item"><span class="legend-dot subcat"></span>场景子类</span>
+                    <span class="legend-item"><span class="legend-dot task"></span>工作任务</span>
+                    <span class="legend-item"><span class="legend-dot agent"></span>Agent类型</span>
+                    <span class="legend-item"><span class="legend-dot product"></span>业界产品</span>
+                </div>
+                <div id="network-graph"></div>
+            </div>
+        </section>
+
+        <!-- 开发路线图 -->
+        <section class="roadmap-section">
+            <h2 class="section-title">🗺️ Agent开发路线图</h2>
+            <div class="roadmap-container">
+                <div class="roadmap-phase">
+                    <div class="phase-header">
+                        <span class="phase-number">1</span>
+                        <span class="phase-title">核心能力建设</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-agents">
+                            <span class="agent-badge quant">📈 Quant Agent</span>
+                            <span class="agent-badge research">🔬 Research Agent</span>
+                        </div>
+                        <p class="phase-desc">覆盖46%任务，聚焦量化策略和投资研究</p>
+                    </div>
+                </div>
+                <div class="roadmap-arrow">→</div>
+                <div class="roadmap-phase">
+                    <div class="phase-header">
+                        <span class="phase-number">2</span>
+                        <span class="phase-title">数据与风控</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-agents">
+                            <span class="agent-badge data">📊 Data Agent</span>
+                            <span class="agent-badge risk">⚠️ Risk Agent</span>
+                        </div>
+                        <p class="phase-desc">覆盖26%任务，数据处理和风险管理</p>
+                    </div>
+                </div>
+                <div class="roadmap-arrow">→</div>
+                <div class="roadmap-phase">
+                    <div class="phase-header">
+                        <span class="phase-number">3</span>
+                        <span class="phase-title">效率提升</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-agents">
+                            <span class="agent-badge chatbot">💬 Chatbot Agent</span>
+                            <span class="agent-badge workflow">⚙️ Workflow Agent</span>
+                        </div>
+                        <p class="phase-desc">覆盖20%任务，日常沟通和流程自动化</p>
+                    </div>
+                </div>
+                <div class="roadmap-arrow">→</div>
+                <div class="roadmap-phase">
+                    <div class="phase-header">
+                        <span class="phase-number">4</span>
+                        <span class="phase-title">辅助能力</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-agents">
+                            <span class="agent-badge trading">💹 Trading Agent</span>
+                            <span class="agent-badge browser">🌐 Browser Agent</span>
+                        </div>
+                        <p class="phase-desc">覆盖8%任务，交易和信息采集</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 投研场景表格 -->
+        <section class="table-section">
+            <h2 class="section-title">📈 投研场景任务明细 <span class="section-badge research">60%</span></h2>
+            <div class="table-wrapper">
+                <table class="data-table" id="research-table">
+                    <thead>
+                        <tr>
+                            <th>场景子类</th>
+                            <th>工作任务</th>
+                            <th>时间占比</th>
+                            <th>Agent类型</th>
+                            <th>技术实现</th>
+                            <th>业界产品</th>
+                            <th>任务示例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 动态生成 -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 运营合规场景表格 -->
+        <section class="table-section">
+            <h2 class="section-title">⚙️ 运营合规场景任务明细 <span class="section-badge operation">40%</span></h2>
+            <div class="table-wrapper">
+                <table class="data-table" id="operation-table">
+                    <thead>
+                        <tr>
+                            <th>场景子类</th>
+                            <th>工作任务</th>
+                            <th>时间占比</th>
+                            <th>Agent类型</th>
+                            <th>技术实现</th>
+                            <th>业界产品</th>
+                            <th>任务示例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 动态生成 -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Agent类型卡片 -->
+        <section class="agents-section">
+            <h2 class="section-title">🤖 Agent类型概览</h2>
+            <div class="agents-grid" id="agents-cards">
+                <!-- 动态生成 -->
+            </div>
+        </section>
+    </main>
+
+    <!-- 了解更多 -->
+    <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+    <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+    <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+    我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+    </p>
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+    🏠 访问AI洞察首页
+    </a>
+    </div>
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+    <script src="network-graph.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Back to top button visibility
+        window.addEventListener('scroll', () => {
+            const btn = document.querySelector('.back-to-top');
+            if (window.scrollY > 500) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>元技能体系 — 让你越练越强的系统，是如何运作的</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%237C3AED'/><text x='16' y='23' text-anchor='middle' font-size='20'>⚡</text></svg>">
+    <style>
+        :root {
+            --c-blue:#2563EB; --c-blue-l:#3B82F6; --c-blue-50:#EFF6FF; --c-blue-100:#DBEAFE;
+            --c-purple:#7C3AED; --c-purple-l:#8B5CF6; --c-purple-50:#F5F3FF; --c-purple-100:#EDE9FE;
+            --c-green:#059669; --c-green-l:#10B981; --c-green-50:#ECFDF5; --c-green-100:#D1FAE5;
+            --c-amber:#D97706; --c-amber-l:#F59E0B; --c-amber-50:#FFFBEB; --c-amber-100:#FEF3C7;
+            --c-rose:#E11D48; --c-rose-l:#F43F5E; --c-rose-50:#FFF1F2; --c-rose-100:#FFE4E6;
+            --c-slate:#475569;
+            --c-text:#1C1917; --c-text-2:#57534E; --c-text-3:#78716C;
+            --c-border:#E7E5E4; --c-border-l:#F5F5F4;
+            --c-bg:#F8FAFB; --c-card:#FFFFFF;
+            --grad-hero:linear-gradient(135deg,#1e1b4b 0%,#312e81 30%,#4C1D95 65%,#5B21B6 100%);
+            --grad-badge:linear-gradient(135deg,#EFF6FF,#F5F3FF);
+            --grad-mesh:radial-gradient(at 15% 15%,rgba(124,58,237,0.07) 0%,transparent 55%),
+                        radial-gradient(at 85% 85%,rgba(37,99,235,0.05) 0%,transparent 55%),
+                        radial-gradient(at 50% 10%,rgba(5,150,105,0.04) 0%,transparent 40%);
+            --sh-sm:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+            --sh-md:0 4px 6px -1px rgba(0,0,0,0.07),0 2px 4px -2px rgba(0,0,0,0.04);
+            --sh-lg:0 10px 15px -3px rgba(0,0,0,0.08),0 4px 6px -4px rgba(0,0,0,0.04);
+            --sh-glow:0 4px 20px rgba(124,58,237,0.22);
+            --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:20px; --r-full:9999px;
+            --ff:-apple-system,"SF Pro Display","system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;
+            --tr:200ms cubic-bezier(0.4,0,0.2,1);
+        }
+
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:var(--ff);font-size:15px;line-height:1.7;color:var(--c-text-2);
+             background:var(--c-bg);background-image:var(--grad-mesh);
+             background-attachment:fixed;-webkit-font-smoothing:antialiased;}
+        ::selection{background:rgba(124,58,237,0.18);}
+
+        /* ─── Layout ─── */
+        .container{max-width:960px;margin:0 auto;padding:24px 16px 72px;}
+
+        /* ─── Tab Nav ─── */
+        .tab-nav{background:rgba(255,255,255,0.9);backdrop-filter:blur(20px) saturate(1.8);
+                 border-radius:var(--r-lg);padding:6px;display:flex;gap:4px;margin-bottom:24px;
+                 position:sticky;top:12px;z-index:100;box-shadow:var(--sh-md);
+                 border:1px solid rgba(0,0,0,0.06);overflow-x:auto;scrollbar-width:none;}
+        .tab-nav::-webkit-scrollbar{display:none;}
+        .tab-btn{padding:8px 18px;border:none;background:transparent;border-radius:var(--r-md);
+                 cursor:pointer;font-size:13px;font-weight:500;color:var(--c-text-3);
+                 white-space:nowrap;transition:all var(--tr);}
+        .tab-btn:hover{background:rgba(124,58,237,0.07);color:var(--c-purple);}
+        .tab-btn.active{background:linear-gradient(135deg,var(--c-purple),var(--c-blue));
+                        color:white;box-shadow:var(--sh-glow);}
+        .tab-panel{display:none;animation:fadeIn 0.2s ease;}
+        .tab-panel.active{display:block;}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+        /* ─── Hero ─── */
+        .hero{background:var(--grad-hero);border-radius:var(--r-xl);padding:52px 44px;
+              margin-bottom:20px;position:relative;overflow:hidden;color:white;}
+        .hero::before{content:'';position:absolute;top:-25%;right:-6%;width:500px;height:500px;
+                      background:radial-gradient(circle,rgba(255,255,255,0.06) 0%,transparent 65%);border-radius:50%;}
+        .hero::after{content:'';position:absolute;bottom:-30%;left:-4%;width:380px;height:380px;
+                     background:radial-gradient(circle,rgba(255,255,255,0.04) 0%,transparent 65%);border-radius:50%;}
+        .hero-eyebrow{display:inline-flex;align-items:center;gap:7px;padding:5px 15px;
+                      background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.22);
+                      border-radius:var(--r-full);font-size:12px;font-weight:600;
+                      margin-bottom:22px;backdrop-filter:blur(8px);letter-spacing:0.3px;}
+        .hero h1{font-size:clamp(26px,4vw,38px);font-weight:800;line-height:1.18;
+                 margin-bottom:18px;letter-spacing:-0.6px;position:relative;z-index:1;}
+        .hero h1 em{font-style:normal;
+                    background:linear-gradient(135deg,#FCD34D 0%,#FDE68A 60%,#FCD34D 100%);
+                    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+        .hero-lead{font-size:16px;color:rgba(255,255,255,0.8);line-height:1.75;
+                   max-width:680px;margin-bottom:32px;position:relative;z-index:1;}
+        .hero-meta{display:flex;flex-wrap:wrap;gap:22px;font-size:13px;
+                   color:rgba(255,255,255,0.62);position:relative;z-index:1;}
+        .hero-meta span{display:flex;align-items:center;gap:6px;}
+
+        /* ─── Stat Cards ─── */
+        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+        @media(max-width:600px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
+        .stat{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);
+              padding:16px 18px;display:flex;align-items:center;gap:12px;
+              box-shadow:var(--sh-sm);transition:all var(--tr);}
+        .stat:hover{box-shadow:var(--sh-md);transform:translateY(-1px);}
+        .stat-ico{width:44px;height:44px;border-radius:var(--r-md);display:flex;
+                  align-items:center;justify-content:center;font-size:21px;flex-shrink:0;}
+        .ico-p{background:linear-gradient(135deg,#F5F3FF,#EDE9FE);}
+        .ico-b{background:linear-gradient(135deg,#EFF6FF,#DBEAFE);}
+        .ico-g{background:linear-gradient(135deg,#ECFDF5,#D1FAE5);}
+        .ico-a{background:linear-gradient(135deg,#FFFBEB,#FEF3C7);}
+        .stat-val{font-size:22px;font-weight:800;color:var(--c-text);line-height:1;}
+        .stat-lbl{font-size:11px;color:var(--c-text-3);margin-top:3px;}
+
+        /* ─── Section Card ─── */
+        .sec{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);
+             padding:26px 30px;margin-bottom:14px;box-shadow:var(--sh-sm);}
+        .sec + .sec{margin-top:14px;}
+        .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:20px;
+                  padding-bottom:14px;border-bottom:1px solid var(--c-border-l);}
+        .sec-ico{width:34px;height:34px;background:var(--grad-badge);border-radius:var(--r-sm);
+                 display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+        .sec-title{font-size:17px;font-weight:700;color:var(--c-text);}
+        .sec-sub{font-size:12px;color:var(--c-text-3);margin-top:2px;}
+
+        /* ─── Tags ─── */
+        .tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:var(--r-full);
+             font-size:11px;font-weight:600;letter-spacing:0.2px;}
+        .t-blue{background:var(--c-blue-50);color:#1D4ED8;border:1px solid var(--c-blue-100);}
+        .t-purple{background:var(--c-purple-50);color:#5B21B6;border:1px solid var(--c-purple-100);}
+        .t-green{background:var(--c-green-50);color:#047857;border:1px solid var(--c-green-100);}
+        .t-amber{background:var(--c-amber-50);color:#B45309;border:1px solid var(--c-amber-100);}
+        .t-rose{background:var(--c-rose-50);color:#BE123C;border:1px solid var(--c-rose-100);}
+        .t-slate{background:#F1F5F9;color:#334155;border:1px solid #E2E8F0;}
+
+        /* ─── Callout / Insight Box ─── */
+        .callout{border-radius:var(--r-lg);padding:18px 22px;margin:18px 0;}
+        .callout-rule{background:linear-gradient(135deg,#F5F3FF,#EFF6FF);
+                      border:1px solid var(--c-purple-100);}
+        .callout-map{background:linear-gradient(135deg,#ECFDF5,#F0FDF4);
+                     border:1px solid var(--c-green-100);}
+        .callout-warn{background:linear-gradient(135deg,#FFFBEB,#FFF7ED);
+                      border:1px solid var(--c-amber-100);}
+        .callout-label{font-size:11px;font-weight:700;letter-spacing:1.2px;
+                       text-transform:uppercase;margin-bottom:7px;}
+        .cl-purple{color:var(--c-purple);}
+        .cl-green{color:var(--c-green);}
+        .cl-amber{color:var(--c-amber);}
+        .callout-text{font-size:14px;color:var(--c-text);line-height:1.75;}
+        .callout-text strong{color:var(--c-purple);}
+        .callout-text .g{color:var(--c-green);}
+        .callout-text .a{color:var(--c-amber);}
+
+        /* ─── Quote ─── */
+        .quote{border-left:3px solid var(--c-purple);padding:12px 20px;
+               background:var(--c-purple-50);border-radius:0 var(--r-md) var(--r-md) 0;margin:16px 0;}
+        .quote p{font-size:14px;font-style:italic;color:var(--c-text-2);line-height:1.75;}
+
+        /* ─── Comparison Grid ─── */
+        .cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+        @media(max-width:600px){.cmp-grid{grid-template-columns:1fr;}}
+        .cmp-card{border:1px solid var(--c-border);border-radius:var(--r-lg);padding:20px 22px;
+                  transition:all var(--tr);}
+        .cmp-card:hover{box-shadow:var(--sh-md);transform:translateY(-1px);}
+        .cmp-card.accent-blue{border-left:3px solid var(--c-blue);}
+        .cmp-card.accent-purple{border-left:3px solid var(--c-purple);}
+        .cmp-card.accent-green{border-left:3px solid var(--c-green);}
+        .cmp-card.accent-amber{border-left:3px solid var(--c-amber);}
+        .cmp-card.accent-rose{border-left:3px solid var(--c-rose);}
+        .cmp-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.8px;
+                     text-transform:uppercase;margin-bottom:7px;}
+        .cmp-title{font-size:15px;font-weight:700;color:var(--c-text);margin-bottom:8px;}
+        .cmp-body{font-size:13px;color:var(--c-text-2);line-height:1.68;}
+        .cmp-formula{margin-top:10px;background:#F8FAFB;border-radius:var(--r-sm);
+                     padding:8px 12px;font-size:12px;font-family:'SF Mono','Fira Code',monospace;
+                     color:var(--c-text);border:1px solid var(--c-border-l);}
+
+        /* ─── Three-Layer Architecture ─── */
+        .layer-stack{display:flex;flex-direction:column;gap:5px;}
+        .layer{border-radius:var(--r-lg);padding:20px 24px;}
+        .layer.l3{background:linear-gradient(135deg,#1e1b4b,#312e81);}
+        .layer.l2{background:linear-gradient(135deg,#1D4ED8,#2563EB);}
+        .layer.l1{background:linear-gradient(135deg,#047857,#059669);}
+        .layer-eyebrow{display:inline-block;padding:3px 10px;border-radius:var(--r-full);
+                       font-size:11px;font-weight:700;background:rgba(255,255,255,0.18);
+                       color:white;margin-bottom:10px;}
+        .layer-name{font-size:17px;font-weight:800;color:white;margin-bottom:5px;}
+        .layer-desc{font-size:13px;color:rgba(255,255,255,0.78);margin-bottom:14px;}
+        .layer-chips{display:flex;flex-wrap:wrap;gap:6px;}
+        .lchip{padding:4px 12px;background:rgba(255,255,255,0.16);
+               border:1px solid rgba(255,255,255,0.22);border-radius:var(--r-full);
+               font-size:12px;color:white;}
+        .lchip.star{background:rgba(255,255,255,0.32);font-weight:700;}
+        .layer-arrow{text-align:center;color:var(--c-text-3);font-size:16px;padding:3px 0;
+                     letter-spacing:2px;}
+
+        /* ─── Engine Diagram ─── */
+        .engine{background:#F8FAFB;border:1px solid var(--c-border);
+                border-radius:var(--r-lg);padding:18px;overflow-x:auto;}
+        .eng-row{display:flex;align-items:stretch;gap:8px;margin-bottom:8px;}
+        .eng-row:last-child{margin-bottom:0;}
+        .eng-lbl{width:86px;flex-shrink:0;display:flex;align-items:center;
+                 justify-content:center;font-size:10px;font-weight:700;color:white;
+                 border-radius:var(--r-sm);padding:6px 4px;text-align:center;line-height:1.4;}
+        .el-g{background:var(--c-green);}
+        .el-b{background:var(--c-blue);}
+        .el-a{background:var(--c-amber);}
+        .el-p{background:var(--c-purple);}
+        .el-s{background:var(--c-slate);}
+        .el-r{background:var(--c-rose);}
+        .eng-cells{display:flex;flex:1;gap:6px;flex-wrap:wrap;}
+        .ecell{background:var(--c-card);border:1px solid var(--c-border);
+               border-radius:var(--r-sm);padding:8px 12px;flex:1;min-width:130px;}
+        .ecell.core{border-color:var(--c-amber);background:var(--c-amber-50);}
+        .ecell .cn{font-weight:700;font-size:12px;color:var(--c-text);margin-bottom:2px;}
+        .ecell .cd{font-size:11px;color:var(--c-text-3);}
+        .ecell.core .cn{color:var(--c-amber);}
+
+        /* ─── Flywheel Steps ─── */
+        .fw-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+        @media(max-width:600px){.fw-grid{grid-template-columns:1fr;}}
+        .fw-card{border:1px solid var(--c-border);border-radius:var(--r-lg);
+                 padding:20px 22px;position:relative;transition:all var(--tr);}
+        .fw-card:hover{box-shadow:var(--sh-md);transform:translateY(-1px);}
+        .fw-step{position:absolute;top:-1px;right:14px;padding:2px 10px;
+                 border-radius:0 0 var(--r-sm) var(--r-sm);
+                 font-size:11px;font-weight:700;color:white;}
+        .fw-title{font-size:14px;font-weight:700;color:var(--c-text);
+                  margin-bottom:8px;margin-top:10px;}
+        .fw-body{font-size:13px;color:var(--c-text-2);line-height:1.68;}
+
+        /* ─── Dimension Rows ─── */
+        .dim-row{border:1px solid var(--c-border);border-radius:var(--r-lg);
+                 overflow:hidden;margin-bottom:10px;}
+        .dim-head{padding:13px 18px;display:flex;align-items:center;
+                  gap:10px;border-bottom:1px solid var(--c-border-l);}
+        .dim-title{font-size:14px;font-weight:700;color:var(--c-text);}
+        .dim-sub{font-size:11px;color:var(--c-text-3);margin-top:1px;}
+        .dim-body{padding:12px 18px;display:flex;flex-wrap:wrap;gap:8px;}
+
+        /* ─── Table ─── */
+        .tbl{width:100%;border-collapse:collapse;font-size:13px;}
+        .tbl th{padding:10px 12px;text-align:left;font-weight:600;color:var(--c-text-3);
+                border-bottom:1px solid var(--c-border);background:#FAFAF9;}
+        .tbl td{padding:10px 12px;border-bottom:1px solid var(--c-border-l);color:var(--c-text-2);}
+        .tbl tr:last-child td{border-bottom:none;}
+
+        /* ─── Source Cards ─── */
+        .src-card{border:1px solid var(--c-border);border-radius:var(--r-lg);
+                  padding:18px 22px;margin-bottom:10px;transition:all var(--tr);}
+        .src-card:hover{box-shadow:var(--sh-md);}
+        .src-card.special{background:linear-gradient(135deg,#FFFBEB,#FFF);}
+        .src-row{display:flex;align-items:center;gap:12px;margin-bottom:9px;flex-wrap:wrap;}
+        .src-year{font-size:12px;font-weight:700;color:var(--c-text-3);min-width:38px;}
+        .src-name{font-size:15px;font-weight:700;color:var(--c-text);}
+        .src-body{font-size:13px;color:var(--c-text-2);line-height:1.68;margin-bottom:8px;}
+        .src-link{font-size:12px;font-weight:600;color:var(--c-purple);}
+
+        /* ─── Footer ─── */
+        .pg-footer{text-align:center;padding:36px 0 16px;color:var(--c-text-3);
+                   font-size:12px;line-height:2;}
+        .pg-footer strong{color:var(--c-text-2);}
+
+        /* ─── Mapping Table (rule → impl) ─── */
+        .map-table{display:flex;flex-direction:column;gap:10px;}
+        .map-row{display:grid;grid-template-columns:1fr auto 1fr;
+                 align-items:center;gap:10px;}
+        @media(max-width:600px){.map-row{grid-template-columns:1fr;}}
+        .map-cell{border-radius:var(--r-md);padding:14px 16px;}
+        .map-left{background:linear-gradient(135deg,#F5F3FF,#EFF6FF);
+                  border:1px solid var(--c-purple-100);}
+        .map-right{background:linear-gradient(135deg,#ECFDF5,#F0FDF4);
+                   border:1px solid var(--c-green-100);}
+        .map-arrow{font-size:18px;color:var(--c-text-3);text-align:center;flex-shrink:0;}
+        @media(max-width:600px){.map-arrow{transform:rotate(90deg);}}
+        .map-label{font-size:10px;font-weight:700;letter-spacing:1px;
+                   text-transform:uppercase;margin-bottom:5px;}
+        .ml-rule{color:var(--c-purple);}
+        .ml-impl{color:var(--c-green);}
+        .map-text{font-size:13px;color:var(--c-text);line-height:1.6;font-weight:500;}
+        .map-detail{font-size:12px;color:var(--c-text-3);margin-top:4px;line-height:1.5;}
+
+        /* ─── Mobile Patches ─── */
+        @media(max-width:600px){
+            .hero{padding:32px 22px;}
+            .hero h1{font-size:24px;}
+            .hero-lead{font-size:14px;}
+            .hero-meta{gap:12px;font-size:12px;}
+            .map-row{display:flex;flex-direction:column;gap:8px;}
+            .map-arrow{transform:rotate(90deg);text-align:center;}
+            .layer{padding:16px 16px;}
+            .layer-name{font-size:15px;}
+            .layer-desc{font-size:12px;}
+            .eng-lbl{width:60px;font-size:9px;}
+            .ecell{min-width:100px;}
+            .fw-grid{grid-template-columns:1fr;}
+            .cmp-grid{grid-template-columns:1fr;}
+            .stats-grid{grid-template-columns:repeat(2,1fr);}
+            .sec{padding:18px 16px;}
+            .tab-btn{padding:7px 12px;font-size:12px;}
+        }
+        @media(max-width:400px){
+            .container{padding:16px 10px 60px;}
+            .stats-grid{grid-template-columns:1fr 1fr;}
+            .stat-val{font-size:18px;}
+            .eng-cells{flex-direction:column;}
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ═══════════════════════════════════════════
+         Hero（固定在最上方，不随 Tab 切换）
+    ═══════════════════════════════════════════ -->
+    <div class="hero">
+        <div class="hero-eyebrow">⚡ 元技能体系 v5.0 &nbsp;·&nbsp; 2026-04-07 更新</div>
+        <h1>让你<em>越练越强</em>的系统，<br>背后遵循的是同一条自然规律</h1>
+        <p class="hero-lead">
+            顶级运动员和普通人的差距，不在天赋，在有没有一套让自己越练越强的系统。<br>
+            这套系统，从人类的训练与成长规律中提炼，再工程化地实现在了 AI 能力领域。<br>
+            这不是某种发明，而是一次<strong style="color:rgba(255,255,255,0.95)">对已存在规律的发现与执行</strong>。
+        </p>
+        <div class="hero-meta">
+            <span>📖 先看规律，再看实现</span>
+            <span>🧠 17 个元技能 + 22 个绑定</span>
+            <span>🔄 每日自动运转</span>
+            <span>📋 90+ 次真实踩坑沉淀</span>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat">
+            <div class="stat-ico ico-p">⚡</div>
+            <div><div class="stat-val">×k<sup style="font-size:13px">t</sup></div><div class="stat-lbl">能力增长模式</div></div>
+        </div>
+        <div class="stat">
+            <div class="stat-ico ico-b">🧠</div>
+            <div><div class="stat-val">17</div><div class="stat-lbl">元技能组件</div></div>
+        </div>
+        <div class="stat">
+            <div class="stat-ico ico-g">🔄</div>
+            <div><div class="stat-val">6</div><div class="stat-lbl">功能层架构</div></div>
+        </div>
+        <div class="stat">
+            <div class="stat-ico ico-a">📋</div>
+            <div><div class="stat-val">90+</div><div class="stat-lbl">踩坑规律沉淀</div></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         Tab Nav（在 Hero+Stats 下方）
+    ═══════════════════════════════════════════ -->
+    <nav class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('overview')">概览</button>
+        <button class="tab-btn" onclick="switchTab('law')">自然规律</button>
+        <button class="tab-btn" onclick="switchTab('mapping')">规律映射</button>
+        <button class="tab-btn" onclick="switchTab('engine')">引擎架构</button>
+        <button class="tab-btn" onclick="switchTab('completeness')">完备性验证</button>
+        <button class="tab-btn" onclick="switchTab('hidden')">隐藏设计</button>
+        <button class="tab-btn" onclick="switchTab('sources')">思想来源</button>
+    </nav>
+
+
+    <!-- ═══════════════════════════════════════════
+         TAB 0: 概览（快速导读）
+    ═══════════════════════════════════════════ -->
+    <div id="tab-overview" class="tab-panel active">
+
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">🗂</div>
+                <div>
+                    <div class="sec-title">30 秒读完，知道这是什么</div>
+                    <div class="sec-sub">一份关于「如何让自己越来越厉害」的完整工程化答案</div>
+                </div>
+            </div>
+
+            <div class="callout callout-rule">
+                <div class="callout-label cl-purple">这篇文章在说什么？</div>
+                <div class="callout-text">
+                    顶级运动员和普通人的差距，不在天赋，在有没有一套<strong>让自己越练越强的系统</strong>。<br>
+                    这套系统，从人类的训练与成长规律中提炼，被工程化地实现在了 AI 能力领域。<br><br>
+                    本文先讲<strong>自然规律</strong>（所有成长系统背后的共同底层逻辑），<br>
+                    再讲<strong>工程实现</strong>（AI洞察 AI 助手是如何把这些规律变成可运转的代码和机制的）。
+                </div>
+            </div>
+        </div>
+
+        <!-- 5个Tab导读 -->
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">📋</div>
+                <div>
+                    <div class="sec-title">5个章节，各有侧重</div>
+                    <div class="sec-sub">可以按顺序读，也可以按感兴趣跳读</div>
+                </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:10px;">
+                <div onclick="switchTab('law')" style="cursor:pointer;border:1px solid var(--c-border);border-radius:var(--r-lg);padding:16px 20px;display:flex;align-items:center;gap:14px;transition:all var(--tr);" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+                    <div style="width:40px;height:40px;background:linear-gradient(135deg,#EDE9FE,#DDD6FE);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🌱</div>
+                    <div>
+                        <div style="font-weight:700;color:var(--c-text);font-size:14px;margin-bottom:3px;">① 自然规律 &nbsp;<span style="font-weight:400;color:var(--c-text-3);font-size:12px;">建议所有人从这里开始</span></div>
+                        <div style="font-size:13px;color:var(--c-text-2);">顶级运动员 vs 普通人、「越练越强」三条件、为什么大多数人做不到</div>
+                    </div>
+                    <div style="margin-left:auto;color:var(--c-text-3);font-size:18px;">›</div>
+                </div>
+
+                <div onclick="switchTab('mapping')" style="cursor:pointer;border:1px solid var(--c-border);border-radius:var(--r-lg);padding:16px 20px;display:flex;align-items:center;gap:14px;transition:all var(--tr);" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+                    <div style="width:40px;height:40px;background:linear-gradient(135deg,#D1FAE5,#A7F3D0);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🗺</div>
+                    <div>
+                        <div style="font-weight:700;color:var(--c-text);font-size:14px;margin-bottom:3px;">② 规律映射 &nbsp;<span style="font-weight:400;color:var(--c-text-3);font-size:12px;">理解「为什么这样设计」</span></div>
+                        <div style="font-size:13px;color:var(--c-text-2);">7条自然规律 → 7个工程实现，一一对应，包括「进化不依赖意志力」的核心设计</div>
+                    </div>
+                    <div style="margin-left:auto;color:var(--c-text-3);font-size:18px;">›</div>
+                </div>
+
+                <div onclick="switchTab('engine')" style="cursor:pointer;border:1px solid var(--c-border);border-radius:var(--r-lg);padding:16px 20px;display:flex;align-items:center;gap:14px;transition:all var(--tr);" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+                    <div style="width:40px;height:40px;background:linear-gradient(135deg,#DBEAFE,#BFDBFE);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">⚙️</div>
+                    <div>
+                        <div style="font-weight:700;color:var(--c-text);font-size:14px;margin-bottom:3px;">③ 引擎架构 &nbsp;<span style="font-weight:400;color:var(--c-text-3);font-size:12px;">适合工程师细读</span></div>
+                        <div style="font-size:13px;color:var(--c-text-2);">三层能力架构 + 六层功能模块图，每个组件的位置和职责</div>
+                    </div>
+                    <div style="margin-left:auto;color:var(--c-text-3);font-size:18px;">›</div>
+                </div>
+
+                <div onclick="switchTab('completeness')" style="cursor:pointer;border:1px solid var(--c-border);border-radius:var(--r-lg);padding:16px 20px;display:flex;align-items:center;gap:14px;transition:all var(--tr);" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+                    <div style="width:40px;height:40px;background:linear-gradient(135deg,#FEF3C7,#FDE68A);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">✅</div>
+                    <div>
+                        <div style="font-weight:700;color:var(--c-text);font-size:14px;margin-bottom:3px;">④ 完备性验证 &nbsp;<span style="font-weight:400;color:var(--c-text-3);font-size:12px;">看哪里还有缺口</span></div>
+                        <div style="font-size:13px;color:var(--c-text-2);">五维度 MECE 检验，已覆盖 / 弱 / 待补 三色分类</div>
+                    </div>
+                    <div style="margin-left:auto;color:var(--c-text-3);font-size:18px;">›</div>
+                </div>
+
+                <div onclick="switchTab('hidden')" style="cursor:pointer;border:1px solid var(--c-border);border-radius:var(--r-lg);padding:16px 20px;display:flex;align-items:center;gap:14px;transition:all var(--tr);" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+                    <div style="width:40px;height:40px;background:linear-gradient(135deg,#FFE4E6,#FECDD3);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">💡</div>
+                    <div>
+                        <div style="font-weight:700;color:var(--c-text);font-size:14px;margin-bottom:3px;">⑤ 隐藏设计 &nbsp;<span style="font-weight:400;color:var(--c-text-3);font-size:12px;">最有意思的部分</span></div>
+                        <div style="font-size:13px;color:var(--c-text-2);">7个反直觉设计决策，理解为什么这样设计而不是那样设计</div>
+                    </div>
+                    <div style="margin-left:auto;color:var(--c-text-3);font-size:18px;">›</div>
+                </div>
+
+                <div onclick="switchTab('sources')" style="cursor:pointer;border:1px solid var(--c-border);border-radius:var(--r-lg);padding:16px 20px;display:flex;align-items:center;gap:14px;transition:all var(--tr);" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+                    <div style="width:40px;height:40px;background:linear-gradient(135deg,#F1F5F9,#E2E8F0);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">📚</div>
+                    <div>
+                        <div style="font-weight:700;color:var(--c-text);font-size:14px;margin-bottom:3px;">⑥ 思想来源 &nbsp;<span style="font-weight:400;color:var(--c-text-3);font-size:12px;">知识溯源</span></div>
+                        <div style="font-size:13px;color:var(--c-text-2);">6大理论支撑（控制论/双环学习/系统思维…）+ 90次踩坑的独特价值</div>
+                    </div>
+                    <div style="margin-left:auto;color:var(--c-text-3);font-size:18px;">›</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 关键数字一览 -->
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">📊</div>
+                <div><div class="sec-title">一眼看懂体系规模</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+                <div style="text-align:center;padding:20px 12px;border:1px solid var(--c-border-l);border-radius:var(--r-lg);background:linear-gradient(135deg,#F5F3FF,#fff);">
+                    <div style="font-size:32px;font-weight:800;color:var(--c-purple);line-height:1;">17</div>
+                    <div style="font-size:12px;color:var(--c-text-3);margin-top:6px;">元技能组件</div>
+                    <div style="font-size:11px;color:var(--c-text-3);margin-top:3px;">全部完备4字段 frontmatter</div>
+                </div>
+                <div style="text-align:center;padding:20px 12px;border:1px solid var(--c-border-l);border-radius:var(--r-lg);background:linear-gradient(135deg,#ECFDF5,#fff);">
+                    <div style="font-size:32px;font-weight:800;color:var(--c-green);line-height:1;">90+</div>
+                    <div style="font-size:12px;color:var(--c-text-3);margin-top:6px;">真实踩坑沉淀</div>
+                </div>
+                <div style="text-align:center;padding:20px 12px;border:1px solid var(--c-border-l);border-radius:var(--r-lg);background:linear-gradient(135deg,#EFF6FF,#fff);">
+                    <div style="font-size:32px;font-weight:800;color:var(--c-blue);line-height:1;">5:00</div>
+                    <div style="font-size:12px;color:var(--c-text-3);margin-top:6px;">每天自动运转</div>
+                    <div style="font-size:11px;color:var(--c-text-3);margin-top:3px;">launchd 定时 + 20 个 plist</div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /tab-overview -->
+
+    <!-- ═══════════════════════════════════════════
+         TAB 1: 自然规律
+    ═══════════════════════════════════════════ -->
+    <div id="tab-law" class="tab-panel">
+
+        <!-- Section 1.1: 核心观察 -->
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">👁</div>
+                <div>
+                    <div class="sec-title">一个关于成长的核心观察</div>
+                    <div class="sec-sub">从运动员、科学家、工程师身上发现的共同规律</div>
+                </div>
+            </div>
+
+            <p style="font-size:14px;color:var(--c-text-2);line-height:1.8;margin-bottom:20px;">
+                仔细观察那些能持续进步的人，会发现他们和「忙碌但原地踏步」的人之间，
+                有一个本质差异：<strong style="color:var(--c-text)">他们不只在做事，他们在同时改进「做事的方式」。</strong>
+            </p>
+
+            <div class="cmp-grid">
+                <div class="cmp-card accent-blue">
+                    <div class="cmp-eyebrow" style="color:var(--c-blue)">普通训练</div>
+                    <div class="cmp-title">重复做，靠量堆积</div>
+                    <div class="cmp-body">
+                        跑 1000 公里，就是跑了 1000 公里。每次训练结束，经验留在了身体里，
+                        但没有被显性化、被分析、被转化成下次更精准的训练计划。
+                        时间长了，遇到「天花板」——做得越来越多，进步越来越慢。
+                    </div>
+                    <div class="cmp-formula">进步 = 时间投入 × 基础效率（固定）</div>
+                </div>
+                <div class="cmp-card accent-purple">
+                    <div class="cmp-eyebrow" style="color:var(--c-purple)">系统训练</div>
+                    <div class="cmp-title">每次都让下次更好</div>
+                    <div class="cmp-body">
+                        跑 1000 公里，同时也在积累「什么节奏配速最高效」「哪种地形最该补强」。
+                        下一个 1000 公里，站在前一个的肩膀上。效率本身在增长，
+                        进步曲线是指数型而非线性。
+                    </div>
+                    <div class="cmp-formula">进步 = 时间投入 × 效率（持续提升）→ 复利</div>
+                </div>
+            </div>
+
+            <div class="callout callout-rule" style="margin-top:20px;">
+                <div class="callout-label cl-purple">规律 1 — 复利的本质</div>
+                <div class="callout-text">
+                    复利不是「努力的积累」，而是「<strong>改进机制本身</strong>」的结果。
+                    每次复盘后，下次执行的基础效率都更高一点，长期来看就是指数增长。
+                    数学表达：<code style="font-family:monospace;background:#fff;padding:2px 6px;border-radius:4px;font-size:12px;">能力 = (A+B+C) × k^t</code>，
+                    其中 k 就是「改进机制本身」的速率。
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1.2: 三个条件 -->
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">🔑</div>
+                <div>
+                    <div class="sec-title">让自己越练越强，需要三个条件同时成立</div>
+                    <div class="sec-sub">缺少任何一个，进化飞轮就转不起来</div>
+                </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:14px;">
+
+                <div style="display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;padding:18px 20px;border:1px solid var(--c-border);border-radius:var(--r-lg);">
+                    <div style="text-align:center;">
+                        <div style="font-size:28px;">👁</div>
+                        <div style="font-size:11px;font-weight:700;color:var(--c-green);margin-top:4px;">条件一</div>
+                    </div>
+                    <div>
+                        <div style="font-size:15px;font-weight:700;color:var(--c-text);margin-bottom:6px;">感知要准 — 知道自己真正在做什么</div>
+                        <div style="font-size:13px;color:var(--c-text-2);line-height:1.7;">
+                            顶级运动员训练时会录像、监测心率、记录每组数据。
+                            不是为了收集数据而收集，而是为了<strong style="color:var(--c-text)">感知到那些肉眼看不见的规律</strong>——
+                            什么时候状态最好、哪个动作在消耗而非积累、信号与噪声怎么区分。
+                            <br><br>
+                            感知不准的人，努力的方向可能一开始就错了，
+                            后续所有的复利，都是在错误方向上的复利。
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;padding:18px 20px;border:1px solid var(--c-border);border-radius:var(--r-lg);">
+                    <div style="text-align:center;">
+                        <div style="font-size:28px;">🧠</div>
+                        <div style="font-size:11px;font-weight:700;color:var(--c-blue);margin-top:4px;">条件二</div>
+                    </div>
+                    <div>
+                        <div style="font-size:15px;font-weight:700;color:var(--c-text);margin-bottom:6px;">复盘要深 — 不只看表面，要找规律</div>
+                        <div style="font-size:13px;color:var(--c-text-2);line-height:1.7;">
+                            训练结束后，好的教练不说「你今天跑得不错」，
+                            而是说「你第三圈配速掉了，原因是什么？是体能还是心理？下次该怎么调整？」
+                            <br><br>
+                            这就是<strong style="color:var(--c-text)">双环学习</strong>：
+                            不只修复这次的错误（单环），还要质疑产生错误的假设本身（双环）。
+                            只做单环复盘的人，会把同样的坑踩第二次、第三次。
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;padding:18px 20px;border:1px solid var(--c-border);border-radius:var(--r-lg);">
+                    <div style="text-align:center;">
+                        <div style="font-size:28px;">⚙️</div>
+                        <div style="font-size:11px;font-weight:700;color:var(--c-amber);margin-top:4px;">条件三</div>
+                    </div>
+                    <div>
+                        <div style="font-size:15px;font-weight:700;color:var(--c-text);margin-bottom:6px;">沉淀要快 — 把经验转化成下次可用的方法</div>
+                        <div style="font-size:13px;color:var(--c-text-2);line-height:1.7;">
+                            复盘想明白了，但如果没有沉淀，下次遇到同类情境还是会忘。
+                            最好的运动员有训练日志、有战术手册、有专属的动作库。
+                            <br><br>
+                            <strong style="color:var(--c-text)">经验 → 显性化 → 可复用的方法</strong>，
+                            这个转化速度越快，复利的速率 k 就越大。
+                            只在脑子里"记着"是不够的——脑子会忘，而且无法被验证和传递。
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="callout callout-rule" style="margin-top:20px;">
+                <div class="callout-label cl-purple">规律 2 — 「越练越强」的底层结构</div>
+                <div class="callout-text">
+                    任何能持续进化的系统，都有同样的底层结构：<br>
+                    <strong>感知（输入准确）→ 推理（复盘找规律）→ 执行（有质量保障）→ 沉淀（快速转化）→ 循环加速</strong><br>
+                    这不是某个领域特有的，运动、科研、工程都是如此。
+                    唯一的变量是：每个环节的效率有多高。
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1.3: 为什么大多数人做不到 -->
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">❓</div>
+                <div>
+                    <div class="sec-title">既然规律这么清楚，为什么大多数人还是原地踏步？</div>
+                    <div class="sec-sub">障碍不在理解，在执行成本</div>
+                </div>
+            </div>
+
+            <div class="cmp-grid">
+                <div class="cmp-card accent-rose">
+                    <div class="cmp-eyebrow" style="color:var(--c-rose)">障碍一</div>
+                    <div class="cmp-title">复盘需要时间，而时间是稀缺的</div>
+                    <div class="cmp-body">
+                        大多数人训练完就累了，下一件事已经在等。
+                        复盘变成了「有空再说」，而「有空」永远不来。
+                        <br><br>
+                        更根本的问题：复盘是一种高认知负荷的行为，
+                        需要主动跳出执行状态，切换到反思状态。这个切换本身就有成本。
+                    </div>
+                </div>
+                <div class="cmp-card accent-amber">
+                    <div class="cmp-eyebrow" style="color:var(--c-amber)">障碍二</div>
+                    <div class="cmp-title">沉淀的摩擦力太大</div>
+                    <div class="cmp-body">
+                        就算复盘了，要把经验写成文档、整理成方法、下次还要记得用——
+                        每个环节都有摩擦力。
+                        <br><br>
+                        结果是：复盘变成口头讨论，经验留在了空气里，
+                        下次还是从零开始。「沉淀」成了一个永远在说、永远没完成的事。
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout callout-warn" style="margin-top:18px;">
+                <div class="callout-label cl-amber">关键推论</div>
+                <div class="callout-text">
+                    如果<strong class="a">降低感知、复盘、沉淀三个环节的执行成本</strong>，
+                    就能让「越练越强」这个规律在更多人身上生效。
+                    最理想的情形是：<strong class="a">这三个环节能自动运转，不依赖意志力。</strong>
+                    <br><br>
+                    这正是元技能体系要解决的问题。
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /tab-law -->
+
+
+    <!-- ═══════════════════════════════════════════
+         TAB 2: 规律映射
+    ═══════════════════════════════════════════ -->
+    <div id="tab-mapping" class="tab-panel">
+
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">🗺</div>
+                <div>
+                    <div class="sec-title">规律到实现：每一条自然规律，都有对应的工程实现</div>
+                    <div class="sec-sub">AI洞察的元技能体系，是「越练越强」规律在 AI 能力领域的一次具体落地</div>
+                </div>
+            </div>
+
+            <p style="font-size:14px;color:var(--c-text-2);line-height:1.8;margin-bottom:22px;">
+                上一节我们看到了规律：感知准 → 复盘深 → 沉淀快 → 循环加速。
+                这一节，我们把规律中的每个要素，一一对应到这套体系的具体实现上。
+                你会发现：<strong style="color:var(--c-text)">体系里的每个设计决策，都能在规律里找到直接的动机。</strong>
+            </p>
+
+            <div class="map-table">
+
+                <div class="map-row">
+                    <div class="map-cell map-left">
+                        <div class="map-label ml-rule">自然规律</div>
+                        <div class="map-text">感知要准——要知道自己真正在做什么，区分信号和噪声</div>
+                        <div class="map-detail">不准的感知会让所有后续努力方向偏移</div>
+                    </div>
+                    <div class="map-arrow">→</div>
+                    <div class="map-cell map-right">
+                        <div class="map-label ml-impl">工程实现</div>
+                        <div class="map-text">signal-extractor：四维信号评分（强度×时效×可操作性×新鲜度）</div>
+                        <div class="map-detail">从信息噪声中识别真正值得关注的核心信号，趋势萌芽识别</div>
+                    </div>
+                </div>
+
+                <div class="map-row">
+                    <div class="map-cell map-left">
+                        <div class="map-label ml-rule">自然规律</div>
+                        <div class="map-text">从外部持续吸收新的优质输入，避免在信息茧房里内卷</div>
+                        <div class="map-detail">顶级运动员不只复盘自己，还研究竞争对手和最新训练方法</div>
+                    </div>
+                    <div class="map-arrow">→</div>
+                    <div class="map-cell map-right">
+                        <div class="map-label ml-impl">工程实现</div>
+                        <div class="map-text">吸星大法（xixingdafa）：从外部技能生态搜索、评估、提取精华融入体系</div>
+                        <div class="map-detail">多源搜索 86K+ 技能库，主动巡检外部更新，只吸收元能力层精华</div>
+                    </div>
+                </div>
+
+                <div class="map-row">
+                    <div class="map-cell map-left">
+                        <div class="map-label ml-rule">自然规律</div>
+                        <div class="map-text">复盘要深——找规律，不只看表面（双环学习 vs 单环修复）</div>
+                        <div class="map-detail">问「为什么产生这个错误」而不只是「怎么修这个错误」</div>
+                    </div>
+                    <div class="map-arrow">→</div>
+                    <div class="map-cell map-right">
+                        <div class="map-label ml-impl">工程实现</div>
+                        <div class="map-text">learn-from-mistakes：即时复盘，从成功和失败中提取可复用模式</div>
+                        <div class="map-detail">Mode B 在 meta-execution P2 阶段自动触发，静默输出，零打扰</div>
+                    </div>
+                </div>
+
+                <div class="map-row">
+                    <div class="map-cell map-left">
+                        <div class="map-label ml-rule">自然规律</div>
+                        <div class="map-text">执行要有质量保障——不能每次都靠蛮力，要有稳定的执行标准</div>
+                        <div class="map-detail">顶级教练有检查表，不靠感觉，靠系统</div>
+                    </div>
+                    <div class="map-arrow">→</div>
+                    <div class="map-cell map-right">
+                        <div class="map-label ml-impl">工程实现</div>
+                        <div class="map-text">meta-execution：P-1 续接→P1 启动→执行中监控→P0 交付→P2 学习</div>
+                        <div class="map-detail">强制绑定所有重要技能（第零步），是整套体系的「质量心脏」</div>
+                    </div>
+                </div>
+
+                <div class="map-row">
+                    <div class="map-cell map-left">
+                        <div class="map-label ml-rule">自然规律</div>
+                        <div class="map-text">沉淀要快——经验必须显性化，不能只留在脑子里</div>
+                        <div class="map-detail">口头说的经验会忘，写下来的经验可以被验证和传递</div>
+                    </div>
+                    <div class="map-arrow">→</div>
+                    <div class="map-cell map-right">
+                        <div class="map-label ml-impl">工程实现</div>
+                        <div class="map-text">四棵树存储体系：记忆树、技能树、知识树、思维树</div>
+                        <div class="map-detail">路由规则：多步骤流程→升级为 Skill；单条规律→沉淀为 Memory</div>
+                    </div>
+                </div>
+
+                <div class="map-row">
+                    <div class="map-cell map-left">
+                        <div class="map-label ml-rule">自然规律</div>
+                        <div class="map-text">进化要定期维护——系统会过时、会膨胀，需要主动修剪</div>
+                        <div class="map-detail">好的训练体系定期淘汰无效训练动作，保持精简高效</div>
+                    </div>
+                    <div class="map-arrow">→</div>
+                    <div class="map-cell map-right">
+                        <div class="map-label ml-impl">工程实现</div>
+                        <div class="map-text">daily-reflection-evolution：每日自动（launchd 5:00）+ 每周深度</div>
+                        <div class="map-detail">三维度 subagent 并行：记忆优化 + 技能管理 + 知识整理</div>
+                    </div>
+                </div>
+
+                <div class="map-row">
+                    <div class="map-cell map-left">
+                        <div class="map-label ml-rule">自然规律</div>
+                        <div class="map-text">能力要能导出——积累的经验可以迁移到新场景，甚至传递给他人</div>
+                        <div class="map-detail">顶级教练的价值在于能把方法体系传授给下一代</div>
+                    </div>
+                    <div class="map-arrow">→</div>
+                    <div class="map-cell map-right">
+                        <div class="map-label ml-impl">工程实现</div>
+                        <div class="map-text">北冥神功（beiming）：能力打包导出，在新环境快速安装，自动过滤个人信息</div>
+                        <div class="map-detail">身份信息自动脱敏，只导出能力本身</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="callout callout-map" style="margin-top:22px;">
+                <div class="callout-label cl-green">映射结论</div>
+                <div class="callout-text">
+                    体系里的每个组件，都不是凭空发明的。
+                    它们是「越练越强」这条自然规律在 AI 能力领域的<strong class="g">工程化翻译</strong>。<br>
+                    规律早就在那里，只是过去没有足够低成本的工具来实现它。
+                    现在有了。
+                </div>
+            </div>
+        </div>
+
+        <!-- 最关键的设计决策：自动化 -->
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">⚡</div>
+                <div>
+                    <div class="sec-title">最关键的映射：进化不依赖意志力</div>
+                    <div class="sec-sub">这是这套体系与「知道规律但做不到」之间最大的工程差距</div>
+                </div>
+            </div>
+
+            <p style="font-size:14px;color:var(--c-text-2);line-height:1.8;margin-bottom:20px;">
+                前面说到，大多数人做不到「越练越强」，障碍不在理解，在执行成本——
+                复盘需要切换状态，沉淀需要克服惰性。
+                这套体系对这个障碍的回答是：<strong style="color:var(--c-text)">把高执行成本的环节自动化掉。</strong>
+            </p>
+
+            <div class="cmp-grid">
+                <div style="border:1px solid var(--c-border);border-radius:var(--r-lg);padding:18px 20px;">
+                    <div style="font-size:12px;font-weight:700;color:var(--c-purple);margin-bottom:8px;letter-spacing:0.5px;">LEARN-FROM-MISTAKES MODE B</div>
+                    <div style="font-size:14px;font-weight:700;color:var(--c-text);margin-bottom:8px;">执行结束，自动复盘</div>
+                    <div style="font-size:13px;color:var(--c-text-2);line-height:1.7;">
+                        每次任务执行完毕，meta-execution 的 P2 阶段自动调用 learn-from-mistakes Mode B。
+                        静默执行，最多 2 行输出，零打扰——用户甚至感知不到这个复盘在发生。
+                    </div>
+                    <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+                        <span class="tag t-purple">自动触发</span>
+                        <span class="tag t-slate">静默执行</span>
+                        <span class="tag t-green">零意志力消耗</span>
+                    </div>
+                </div>
+                <div style="border:1px solid var(--c-border);border-radius:var(--r-lg);padding:18px 20px;">
+                    <div style="font-size:12px;font-weight:700;color:var(--c-blue);margin-bottom:8px;letter-spacing:0.5px;">DAILY-REFLECTION-EVOLUTION</div>
+                    <div style="font-size:14px;font-weight:700;color:var(--c-text);margin-bottom:8px;">每天 5:00，自动运转进化循环</div>
+                    <div style="font-size:13px;color:var(--c-text-2);line-height:1.7;">
+                        通过 launchd 注册系统定时任务，每天凌晨 5:00 自动触发完整进化流水线，
+                        无需用户主动启动。系统在用户睡眠时已完成一轮自我更新。
+                    </div>
+                    <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+                        <span class="tag t-blue">launchd 定时</span>
+                        <span class="tag t-slate">无需用户操作</span>
+                        <span class="tag t-green">复利自转</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote" style="margin-top:18px;">
+                <p>「普通 Agent 每次从零开始；这套体系，每次从上一次的肩膀上出发。
+                区别不在智能，在有没有一套自动运转的进化机制。」</p>
+            </div>
+        </div>
+
+    </div><!-- /tab-mapping -->
+
+
+    <!-- ═══════════════════════════════════════════
+         TAB 3: 引擎架构
+    ═══════════════════════════════════════════ -->
+    <div id="tab-engine" class="tab-panel">
+
+        <!-- 三层架构 -->
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">🏗</div>
+                <div>
+                    <div class="sec-title">三层能力架构 — 越高的层，投资回报越高</div>
+                    <div class="sec-sub">层次越高，影响面越广，复利倍率越大</div>
+                </div>
+            </div>
+
+            <div class="layer-stack">
+                <div class="layer l3">
+                    <div class="layer-eyebrow">Layer 3 · 元技能层 &nbsp;·&nbsp; 乘数效应（×∞）</div>
+                    <div class="layer-name">让「做所有事的效率」持续提升的能力</div>
+                    <div class="layer-desc">负责感知、推理、进化和体系健康维护。是整个系统的「操作系统内核」——不直接执行业务，但影响所有业务的执行质量。</div>
+                    <div class="layer-chips">
+                        <span class="lchip star">吸星大法</span>
+                        <span class="lchip star">自进化体系</span>
+                        <span class="lchip star">北冥神功</span>
+                        <span class="lchip">闭关修炼</span>
+                        <span class="lchip">举一反三</span>
+                        <span class="lchip">本质洞察</span>
+                        <span class="lchip">类比迁移</span>
+                        <span class="lchip">信号提取</span>
+                        <span class="lchip">知识习得</span>
+                        <span class="lchip">记忆优化</span>
+                        <span class="lchip">技能管理</span>
+                        <span class="lchip">知识优化</span>
+                        <span class="lchip">技能道场</span>
+                        <span class="lchip star">边界感知</span>
+                        <span class="lchip star">不确定性量化</span>
+                        <span class="lchip star">上下文感知</span>
+                        <span class="lchip star">信任建立</span>
+                    </div>
+                </div>
+
+                <div class="layer-arrow">▼ &nbsp; 质量保障框架强制贯穿所有层</div>
+
+                <div class="layer l2">
+                    <div class="layer-eyebrow">Layer 2 · 工程质量层 &nbsp;·&nbsp; 稳定器（×稳）</div>
+                    <div class="layer-name">确保每次执行都能「一次做对」</div>
+                    <div class="layer-desc">贯穿所有任务的质量保障，是体系的「心脏」。几乎所有重要技能都强制绑定它，不做业务，只做质量。</div>
+                    <div class="layer-chips">
+                        <span class="lchip star">meta-execution（核心心脏）</span>
+                        <span class="lchip">产品思维（内置）</span>
+                        <span class="lchip">主动自驱</span>
+                        <span class="lchip">Debug专业版</span>
+                        <span class="lchip">长任务执行</span>
+                    </div>
+                </div>
+
+                <div class="layer-arrow">▼ &nbsp; 工具层调用执行技能</div>
+
+                <div class="layer l1">
+                    <div class="layer-eyebrow">Layer 1 · 执行技能层 &nbsp;·&nbsp; 工具箱（+1/次）</div>
+                    <div class="layer-name">完成具体任务的专业工具</div>
+                    <div class="layer-desc">130+ 个专业技能，覆盖 AI 洞察、设计生成、代码开发、数据查询、文档同步、消息推送等全场景。</div>
+                    <div class="layer-chips">
+                        <span class="lchip">AI洞察日报</span>
+                        <span class="lchip">信息图生成</span>
+                        <span class="lchip">前端开发</span>
+                        <span class="lchip">PPT制作</span>
+                        <span class="lchip">数据查询</span>
+                        <span class="lchip">KIM消息推送</span>
+                        <span class="lchip">文档双向同步</span>
+                        <span class="lchip">晋升辅导</span>
+                        <span class="lchip">代码评审</span>
+                        <span class="lchip">... 130+ 个</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout callout-rule" style="margin-top:20px;">
+                <div class="callout-label cl-purple">为什么要分层？</div>
+                <div class="callout-text">
+                    不分层的系统会陷入「规则膨胀」陷阱——所有能力平铺堆叠，越来越重，越来越难维护。
+                    分层后，每层有清晰的职责边界：<br>
+                    <strong>Layer 3 负责「怎么变得更好」，Layer 2 负责「怎么保持稳定」，Layer 1 负责「怎么把事做完」。</strong><br>
+                    这是软件工程「关注点分离」原则在能力体系中的直接应用。
+                </div>
+            </div>
+        </div>
+
+        <!-- 六层功能架构 -->
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">⚙️</div>
+                <div>
+                    <div class="sec-title">六层功能架构 — 每个组件都有明确的位置和职责</div>
+                    <div class="sec-sub">从功能视角看这台机器的内部结构</div>
+                </div>
+            </div>
+
+            <div class="engine">
+                <div>
+                    <div class="eng-row">
+                        <div class="eng-lbl el-g">感知层<br>摄入</div>
+                        <div class="eng-cells">
+                            <div class="ecell">
+                                <div class="cn">signal-extractor</div>
+                                <div class="cd">四维信号评分，从噪声识别核心信号</div>
+                            </div>
+                            <div class="ecell">
+                                <div class="cn">find-skills</div>
+                                <div class="cd">多源搜索外部技能，主动巡检更新</div>
+                            </div>
+                            <div class="ecell">
+                                <div class="cn">knowledge-acquisition-meta</div>
+                                <div class="cd">五阶框架快速习得新领域</div>
+                            </div>
+                            <div class="ecell" style="border-color:var(--c-green);background:var(--c-green-50);">
+                                <div class="cn" style="color:var(--c-green);">🆕 context-sense</div>
+                                <div class="cd">三维上下文感知，只感知上报不决策</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="eng-row">
+                        <div class="eng-lbl el-b">推理层<br>加工</div>
+                        <div class="eng-cells">
+                            <div class="ecell">
+                                <div class="cn">essence-insight</div>
+                                <div class="cd">穿透表象，找底层规律</div>
+                            </div>
+                            <div class="ecell">
+                                <div class="cn">analogy-transfer</div>
+                                <div class="cd">三步类比迁移，跨领域复用模式</div>
+                            </div>
+                            <div class="ecell">
+                                <div class="cn">product-thinking</div>
+                                <div class="cd">内置核心能力，顺用户意</div>
+                            </div>
+                            <div class="ecell" style="border-color:var(--c-blue);background:var(--c-blue-50);">
+                                <div class="cn" style="color:var(--c-blue);">🆕 uncertainty-marker</div>
+                                <div class="cd">四级置信度审计 L4/L3/L2/L1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="eng-row">
+                        <div class="eng-lbl el-a">执行层<br>保障</div>
+                        <div class="eng-cells">
+                            <div class="ecell core">
+                                <div class="cn">⭐ meta-execution v2.16 — 系统心脏</div>
+                                <div class="cd">P-1续接 → P1启动 → 执行中 → P0交付自审 → P2触发复盘（v2.16: frontmatter规范补全+绑定标准C1-C8统一+22活跃绑定）</div>
+                            </div>
+                            <div class="ecell" style="border-color:var(--c-amber);background:var(--c-amber-50);">
+                                <div class="cn" style="color:var(--c-amber);">🆕 boundary-sense</div>
+                                <div class="cd">三层决策树：停止/升级/求助，响应 context-sense 信号</div>
+                            </div>
+                            <div class="ecell" style="border-color:var(--c-amber);background:var(--c-amber-50);">
+                                <div class="cn" style="color:var(--c-amber);">🆕 trust-builder</div>
+                                <div class="cd">预期对齐 → 执行透明 → 交付确认，协作层信任机制</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="eng-row">
+                        <div class="eng-lbl el-p">进化层<br>沉淀</div>
+                        <div class="eng-cells">
+                            <div class="ecell">
+                                <div class="cn">learn-from-mistakes</div>
+                                <div class="cd">即时复盘，Mode B 被 P2 自动调用（静默）</div>
+                            </div>
+                            <div class="ecell">
+                                <div class="cn">daily-reflection-evolution</div>
+                                <div class="cd">每日流水线，launchd 5:00 自动触发</div>
+                            </div>
+                            <div class="ecell">
+                                <div class="cn">skill-dojo / skill-evaluator</div>
+                                <div class="cd">技能场景测试，退化检测与精进</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="eng-row">
+                        <div class="eng-lbl el-s">存储层<br>四棵树</div>
+                        <div class="eng-cells">
+                            <div class="ecell">
+                                <div class="cn">记忆树</div>
+                                <div class="cd">感性经验 → 当…时必须…规则</div>
+                            </div>
+                            <div class="ecell">
+                                <div class="cn">技能树</div>
+                                <div class="cd">程序性能力 → 可复用 技能定义文件</div>
+                            </div>
+                            <div class="ecell">
+                                <div class="cn">知识树</div>
+                                <div class="cd">结构化知识 → 领域深度文档</div>
+                            </div>
+                            <div class="ecell">
+                                <div class="cn">思维树</div>
+                                <div class="cd">思维模型 → 推理框架库</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="eng-row">
+                        <div class="eng-lbl el-r">IO层<br>进出口</div>
+                        <div class="eng-cells">
+                            <div class="ecell">
+                                <div class="cn">吸星大法（外→内）</div>
+                                <div class="cd">从外部生态提取精华融入体系</div>
+                            </div>
+                            <div class="ecell">
+                                <div class="cn">自进化体系（内部导航）</div>
+                                <div class="cd">导航整个体系，触发周/月反思</div>
+                            </div>
+                            <div class="ecell">
+                                <div class="cn">北冥神功（内→外）</div>
+                                <div class="cd">能力打包导出，自动脱敏，供新环境安装</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout callout-rule" style="margin-top:18px;">
+                <div class="callout-label cl-purple">四棵树的依赖顺序是刻意设计的</div>
+                <div class="callout-text">
+                    内功修炼执行三维度优化时，顺序严格为：<strong>记忆 → 技能 → 知识</strong>。<br>
+                    这对应人类认知的形成顺序：感性经验（记忆）→ 程序性能力（技能）→ 结构化知识（知识）。<br>
+                    记忆是输入，技能依赖记忆提炼，知识是最终沉淀。这个顺序不能颠倒。
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /tab-engine -->
+
+
+    <!-- ═══════════════════════════════════════════
+         TAB 4: 完备性验证
+    ═══════════════════════════════════════════ -->
+    <div id="tab-completeness" class="tab-panel">
+
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">✅</div>
+                <div>
+                    <div class="sec-title">用 MECE 框架验证：哪些方向已覆盖，哪里还有缺口</div>
+                    <div class="sec-sub">「越练越强」需要五个维度同时在线，缺任何一个都会有短板</div>
+                </div>
+            </div>
+
+            <p style="font-size:14px;color:var(--c-text-2);line-height:1.8;margin-bottom:20px;">
+                用 MECE 框架把「持续进化」拆解为五个互斥完备的维度，
+                逐一检查当前体系的覆盖情况。
+            </p>
+
+            <div class="dim-row">
+                <div class="dim-head" style="background:linear-gradient(135deg,#ECFDF5,#fff);">
+                    <span style="font-size:22px;">👁</span>
+                    <div>
+                        <div class="dim-title">① 感知层 — 信息摄入质量</div>
+                        <div class="dim-sub">接收到的「原材料」有多准、多全</div>
+                    </div>
+                </div>
+                <div class="dim-body">
+                    <span class="tag t-green">✅ 信息来源覆盖</span>
+                    <span class="tag t-green">✅ 信息质量鉴别</span>
+                    <span class="tag t-green">✅ 信号放大提取（新增）</span>
+                    <span class="tag t-green">✅ 上下文感知（context-sense v1.0）</span>
+                </div>
+            </div>
+
+            <div class="dim-row">
+                <div class="dim-head" style="background:linear-gradient(135deg,#EFF6FF,#fff);">
+                    <span style="font-size:22px;">🧠</span>
+                    <div>
+                        <div class="dim-title">② 推理层 — 认知加工质量</div>
+                        <div class="dim-sub">拿到信息之后，怎么想得更深更准</div>
+                    </div>
+                </div>
+                <div class="dim-body">
+                    <span class="tag t-green">✅ 本质穿透</span>
+                    <span class="tag t-green">✅ 假设验证</span>
+                    <span class="tag t-green">✅ 类比迁移推理（新增）</span>
+                    <span class="tag t-green">✅ 不确定性量化（uncertainty-marker v1.0）</span>
+                </div>
+            </div>
+
+            <div class="dim-row">
+                <div class="dim-head" style="background:linear-gradient(135deg,#FFFBEB,#fff);">
+                    <span style="font-size:22px;">⚙️</span>
+                    <div>
+                        <div class="dim-title">③ 执行层 — 输出实现质量</div>
+                        <div class="dim-sub">想清楚后，能否一次做对、稳定交付</div>
+                    </div>
+                </div>
+                <div class="dim-body">
+                    <span class="tag t-green">✅ 任务分解</span>
+                    <span class="tag t-green">✅ 执行质量保障（meta-execution）</span>
+                    <span class="tag t-green">✅ 错误恢复</span>
+                    <span class="tag t-green">✅ 执行边界感知（boundary-sense v1.2）</span>
+                </div>
+            </div>
+
+            <div class="dim-row">
+                <div class="dim-head" style="background:linear-gradient(135deg,#F5F3FF,#fff);">
+                    <span style="font-size:22px;">📈</span>
+                    <div>
+                        <div class="dim-title">④ 进化层 — 时间累积效率</div>
+                        <div class="dim-sub">做完一件事后，有没有变得更好</div>
+                    </div>
+                </div>
+                <div class="dim-body">
+                    <span class="tag t-green">✅ 即时复盘</span>
+                    <span class="tag t-green">✅ 体系周期维护</span>
+                    <span class="tag t-green">✅ 记忆/技能/知识三棵树健康管理</span>
+                    <span class="tag t-green">✅ 能力迁移测试（8个场景JSON + skill-dojo 迁移维度10%权重）</span>
+                </div>
+            </div>
+
+            <div class="dim-row">
+                <div class="dim-head" style="background:linear-gradient(135deg,#F0FDF4,#fff);">
+                    <span style="font-size:22px;">🤝</span>
+                    <div>
+                        <div class="dim-title">⑤ 协作层 — 外部交互质量</div>
+                        <div class="dim-sub">与人和系统的协同效率、信任建立</div>
+                    </div>
+                </div>
+                <div class="dim-body">
+                    <span class="tag t-green">✅ 需求理解</span>
+                    <span class="tag t-green">✅ 产品交付思维（内置）</span>
+                    <span class="tag t-green">✅ 高质量沟通规范</span>
+                    <span class="tag t-green">✅ 信任建立机制（trust-builder v1.0）</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 缺口优先级 -->
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">🎯</div>
+                <div>
+                    <div class="sec-title">缺口分析 — 当前最值得补齐的方向</div>
+                </div>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="tbl">
+                    <thead>
+                        <tr>
+                            <th>优先级</th>
+                            <th>缺失能力</th>
+                            <th>维度</th>
+                            <th>状态</th>
+                            <th>补齐方向</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag t-green">已补齐</span></td>
+                            <td style="font-weight:600;color:var(--c-text);">类比迁移推理</td>
+                            <td><span class="tag t-blue">推理层</span></td>
+                            <td><span class="tag t-green">✅ 完成</span></td>
+                            <td>analogy-transfer，三步类比迁移法 + 模式库自增长</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag t-green">已补齐</span></td>
+                            <td style="font-weight:600;color:var(--c-text);">信号提取过滤</td>
+                            <td><span class="tag t-green">感知层</span></td>
+                            <td><span class="tag t-green">✅ 完成</span></td>
+                            <td>signal-extractor，四维信号评分 + 趋势萌芽识别</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag t-green">已补齐</span></td>
+                            <td style="font-weight:600;color:var(--c-text);">执行边界感知</td>
+                            <td><span class="tag t-amber">执行层</span></td>
+                            <td><span class="tag t-green">✅ 完成</span></td>
+                            <td>boundary-sense v1.2，三层决策树 + 响应 context-sense 信号</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag t-green">已补齐</span></td>
+                            <td style="font-weight:600;color:var(--c-text);">不确定性量化</td>
+                            <td><span class="tag t-blue">推理层</span></td>
+                            <td><span class="tag t-green">✅ 完成</span></td>
+                            <td>uncertainty-marker v1.0，四级置信度 L4/L3/L2/L1 审计</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag t-green">已补齐</span></td>
+                            <td style="font-weight:600;color:var(--c-text);">能力迁移测试</td>
+                            <td><span class="tag t-purple">进化层</span></td>
+                            <td><span class="tag t-green">✅ 加强</span></td>
+                            <td>skill-dojo 新增迁移维度 10% 权重 + 8 个测试场景 JSON</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag t-green">新增</span></td>
+                            <td style="font-weight:600;color:var(--c-text);">上下文感知</td>
+                            <td><span class="tag t-green">感知层</span></td>
+                            <td><span class="tag t-green">✅ 完成</span></td>
+                            <td>context-sense v1.0，三维感知（会话/资源/执行），与 boundary-sense 分工明确</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag t-green">新增</span></td>
+                            <td style="font-weight:600;color:var(--c-text);">信任建立机制</td>
+                            <td><span class="tag t-blue">协作层</span></td>
+                            <td><span class="tag t-green">✅ 完成</span></td>
+                            <td>trust-builder v1.0，预期对齐→执行透明→交付确认三阶段</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div><!-- /tab-completeness -->
+
+
+    <!-- ═══════════════════════════════════════════
+         TAB 5: 隐藏设计
+    ═══════════════════════════════════════════ -->
+    <div id="tab-hidden" class="tab-panel">
+
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">💡</div>
+                <div>
+                    <div style="font-size:15px;font-weight:700;color:var(--c-text)">七个反直觉的设计决策（v5.0 新增第7条）</div>
+                    <div class="sec-sub">理解这些决策背后的逻辑，才能理解这套体系为什么这么设计而不是那么设计</div>
+                </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:16px;">
+
+                <div style="border:1px solid var(--c-border);border-radius:var(--r-lg);overflow:hidden;">
+                    <div style="padding:16px 20px 12px;border-bottom:1px solid var(--c-border-l);display:flex;align-items:center;gap:10px;">
+                        <div style="width:32px;height:32px;background:linear-gradient(135deg,#312e81,#4C1D95);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:14px;flex-shrink:0;">1</div>
+                        <div>
+                            <div style="font-size:15px;font-weight:700;color:var(--c-text);">meta-execution 是「心脏」，不是「工具」</div>
+                            <div style="font-size:12px;color:var(--c-text-3);">反直觉：一个不做业务的技能，却是整个体系最重要的组件</div>
+                        </div>
+                    </div>
+                    <div style="padding:14px 20px;">
+                        <div style="font-size:13px;color:var(--c-text-2);line-height:1.75;">
+                            很多人觉得「质量保障」是锦上添花，可以之后再加。
+                            这套体系的设计反过来：meta-execution 是第一个建的，几乎所有重要技能都强制绑定它（技能定义文件 第零步）。<br><br>
+                            类比：操作系统的内核调度器——不执行用户程序，但决定所有程序以什么优先级运行。
+                            心脏停跳，整个系统退化。这就是为什么它叫「心脏」而不是「工具」。
+                        </div>
+                        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span class="tag t-purple">关注点分离</span>
+                            <span class="tag t-blue">强制绑定</span>
+                            <span class="tag t-slate">不做业务，只做质量</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border:1px solid var(--c-border);border-radius:var(--r-lg);overflow:hidden;">
+                    <div style="padding:16px 20px 12px;border-bottom:1px solid var(--c-border-l);display:flex;align-items:center;gap:10px;">
+                        <div style="width:32px;height:32px;background:linear-gradient(135deg,#1D4ED8,#2563EB);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:14px;flex-shrink:0;">2</div>
+                        <div>
+                            <div style="font-size:15px;font-weight:700;color:var(--c-text);">进化不依赖用户触发，这是反直觉的设计</div>
+                            <div style="font-size:12px;color:var(--c-text-3);">大多数人认为 AI 需要用户告诉它做什么，这套体系不是</div>
+                        </div>
+                    </div>
+                    <div style="padding:14px 20px;">
+                        <div style="font-size:13px;color:var(--c-text-2);line-height:1.75;">
+                            复盘（learn-from-mistakes Mode B）在每次任务执行完毕后自动触发，静默，最多 2 行输出，用户感知不到。
+                            每日进化循环（daily-reflection-evolution）通过 launchd 在每天凌晨 5:00 自动运行。<br><br>
+                            设计哲学：如果进化需要用户「记得触发」，它就不会持续发生。
+                            <strong style="color:var(--c-text)">把高意志力消耗的行为自动化掉，才能让它真正持续。</strong>
+                        </div>
+                        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span class="tag t-green">零意志力消耗</span>
+                            <span class="tag t-blue">launchd 定时驱动</span>
+                            <span class="tag t-purple">自主驱动而非被动响应</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border:1px solid var(--c-border);border-radius:var(--r-lg);overflow:hidden;">
+                    <div style="padding:16px 20px 12px;border-bottom:1px solid var(--c-border-l);display:flex;align-items:center;gap:10px;">
+                        <div style="width:32px;height:32px;background:linear-gradient(135deg,#047857,#059669);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:14px;flex-shrink:0;">3</div>
+                        <div>
+                            <div style="font-size:15px;font-weight:700;color:var(--c-text);">三个优化工具被设计为「被调用」而非「自主运行」</div>
+                            <div style="font-size:12px;color:var(--c-text-3);">反直觉：「健康维护工具」为什么不让它们主动工作？</div>
+                        </div>
+                    </div>
+                    <div style="padding:14px 20px;">
+                        <div style="font-size:13px;color:var(--c-text-2);line-height:1.75;">
+                            memory-hygiene、skill-management、knowledge-curator 三个优化工具，都设计为「被调用」。
+                            它们只在内功修炼（daily-reflection-evolution）调用时出现，不主动抢占 context。<br><br>
+                            这是刻意的反膨胀设计：<strong style="color:var(--c-text)">技能不是越多越好，关系越清晰越好。</strong>
+                            让它们「自主运行」，反而会互相干扰、制造噪声。调用方（内功修炼）统一管控时序，避免混乱。
+                        </div>
+                        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span class="tag t-amber">反膨胀设计</span>
+                            <span class="tag t-slate">单一调用入口</span>
+                            <span class="tag t-green">关系清晰 &gt; 数量多</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border:1px solid var(--c-border);border-radius:var(--r-lg);overflow:hidden;">
+                    <div style="padding:16px 20px 12px;border-bottom:1px solid var(--c-border-l);display:flex;align-items:center;gap:10px;">
+                        <div style="width:32px;height:32px;background:linear-gradient(135deg,#B45309,#D97706);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:14px;flex-shrink:0;">4</div>
+                        <div>
+                            <div style="font-size:15px;font-weight:700;color:var(--c-text);">产品思维是「内置」的，不是可选的</div>
+                            <div style="font-size:12px;color:var(--c-text-3);">所有交付物默认要「顺用户的意」，这是运行时规范而非文档建议</div>
+                        </div>
+                    </div>
+                    <div style="padding:14px 20px;">
+                        <div style="font-size:13px;color:var(--c-text-2);line-height:1.75;">
+                            product-thinking 技能的触发模式是「内置核心能力自动生效，无需显式调用」。
+                            这代表一个价值判断：用户视角不是「某类任务才需要的」，而是所有交付物的默认态。<br><br>
+                            类比：编程语言的 runtime——不需要 import，但一直在运行。
+                            <strong style="color:var(--c-text)">每个交付物都是给别人用的产品，「顺用户的意」是默认规范，不是可选功能。</strong>
+                        </div>
+                        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span class="tag t-blue">内置运行时</span>
+                            <span class="tag t-purple">非可选功能</span>
+                            <span class="tag t-green">用户视角默认优先</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border:1px solid var(--c-border);border-radius:var(--r-lg);overflow:hidden;">
+                    <div style="padding:16px 20px 12px;border-bottom:1px solid var(--c-border-l);display:flex;align-items:center;gap:10px;">
+                        <div style="width:32px;height:32px;background:linear-gradient(135deg,#BE123C,#E11D48);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:14px;flex-shrink:0;">5</div>
+                        <div>
+                            <div style="font-size:15px;font-weight:700;color:var(--c-text);">analogy-transfer 的模式库会自增长</div>
+                            <div style="font-size:12px;color:var(--c-text-3);">每次成功的类比都自动写回 技能定义文件，让类比能力越用越强</div>
+                        </div>
+                    </div>
+                    <div style="padding:14px 20px;">
+                        <div style="font-size:13px;color:var(--c-text-2);line-height:1.75;">
+                            类比迁移技能在每次成功后，会把「这次用的是什么模式」写回到自己的模式库。
+                            下次遇到类似情境时，可以直接调用已有模式，而不是从零推导。<br><br>
+                            这是「复利的复利」：<strong style="color:var(--c-text)">类比能力本身在自我增强，每次使用都让下次更快更准。</strong>
+                            这个设计把「使用工具」的过程变成了「改进工具」的过程。
+                        </div>
+                        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span class="tag t-rose">模式库自增长</span>
+                            <span class="tag t-purple">复利的复利</span>
+                            <span class="tag t-blue">使用即改进</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- v4.0 新增 -->
+            <div style="border:2px solid var(--c-green-100);border-radius:var(--r-lg);overflow:hidden;background:linear-gradient(135deg,#ECFDF5,#fff);">
+                    <div style="padding:16px 20px 12px;border-bottom:1px solid var(--c-green-100);display:flex;align-items:center;gap:10px;">
+                        <div style="width:32px;height:32px;background:linear-gradient(135deg,#047857,#059669);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:14px;flex-shrink:0;">6</div>
+                        <div>
+                            <div style="font-size:15px;font-weight:700;color:var(--c-text);">感知和决策必须分开 — context-sense 只上报，boundary-sense 才行动</div>
+                            <div style="font-size:12px;color:var(--c-text-3);">v4.0 新增 — 两个技能曾经职责重叠，修复后形成「感知→信号→决策」清晰链路</div>
+                        </div>
+                    </div>
+                    <div style="padding:14px 20px;">
+                        <div style="font-size:13px;color:var(--c-text-2);line-height:1.75;">
+                            最初 boundary-sense 和 context-sense 都定义了「context &gt;70% 时执行 WAL 存档」——职责重叠。
+                            修复后的分工是：<strong style="color:var(--c-text)">context-sense 只负责感知和上报状态信号，
+                            boundary-sense 收到信号后做决策和行动。</strong><br><br>
+                            类比：体温计和医生。体温计只量温度（感知），
+                            医生根据温度决定要不要用药（决策）。让体温计自己开药，就是系统设计的灾难。
+                        </div>
+                        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span class="tag t-green">感知↔决策分离</span>
+                            <span class="tag t-blue">信号驱动架构</span>
+                            <span class="tag t-purple">v4.0 新增</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- v5.0 新增 第7条 -->
+                <div style="border:2px solid var(--c-blue-100);border-radius:var(--r-lg);overflow:hidden;background:linear-gradient(135deg,#EFF6FF,#fff);">
+                    <div style="padding:16px 20px 12px;border-bottom:1px solid var(--c-blue-100);display:flex;align-items:center;gap:10px;">
+                        <div style="width:32px;height:32px;background:linear-gradient(135deg,#1D4ED8,#2563EB);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:14px;flex-shrink:0;">7</div>
+                        <div>
+                            <div style="font-size:15px;font-weight:700;color:var(--c-text);">规范要用结构约束，而不是文字规则</div>
+                            <div style="font-size:12px;color:var(--c-text-3);">v5.0 新增 — 17个元技能全部补齐4字段 frontmatter，C1-C8绑定标准三文件对齐</div>
+                        </div>
+                    </div>
+                    <div style="padding:14px 20px;">
+                        <div style="font-size:13px;color:var(--c-text-2);line-height:1.75;">
+                            在这套体系完善过程中，发现一个反直觉问题：「每个技能必须标注 trigger_mode 和 layer」这条规范，
+                            如果只写在文档里，就变成了一条<strong style="color:var(--c-text)">「知道但做不到」的文字规则</strong>。
+                            62.5% 的元技能（10/16）缺少这些字段，就是证明。<br><br>
+                            解决方案不是把文字规则写得更显眼，而是：<strong style="color:var(--c-text)">把规范写进结构里</strong>。
+                            为所有 17 个技能统一补齐 4 个 frontmatter 字段（trigger_mode / layer / dimension / requires_meta_execution），
+                            同时把绑定标准从 C1-C5 扩展到 C1-C8 并同步到 binding-list.md、scoring-and-tracking.md、技能定义文件 三处。<br><br>
+                            类比：与其在代码规范文档里写「函数必须有返回值类型」，不如直接用 TypeScript 的类型系统强制它。
+                            <strong style="color:var(--c-text)">结构约束比文字规则的执行成本低两个数量级。</strong>
+                        </div>
+                        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span class="tag t-blue">结构约束 &gt; 文字规则</span>
+                            <span class="tag t-purple">frontmatter 标准化</span>
+                            <span class="tag t-green">C1-C8 三文件对齐</span>
+                            <span class="tag t-slate">v5.0 新增</span>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+
+    </div><!-- /tab-hidden -->
+
+
+    <!-- ═══════════════════════════════════════════
+         TAB 6: 思想来源
+    ═══════════════════════════════════════════ -->
+    <div id="tab-sources" class="tab-panel">
+
+        <div class="sec">
+            <div class="sec-head">
+                <div class="sec-ico">📚</div>
+                <div>
+                    <div class="sec-title">站在哪些巨人的肩膀上</div>
+                    <div class="sec-sub">理论给了框架，90+ 次踩坑给了血肉——两者缺一不可</div>
+                </div>
+            </div>
+
+            <p style="font-size:14px;color:var(--c-text-2);line-height:1.8;margin-bottom:20px;">
+                这套体系不是凭空想出来的。它站在六个不同领域的思想基础上，
+                每一个都提供了某一层面的理论支撑。
+                重要的是：这些思想本来就存在，元技能体系只是把它们在 AI 能力领域做了一次工程化实现。
+            </p>
+
+            <div class="src-card">
+                <div class="src-row">
+                    <div class="src-year">1948</div>
+                    <div class="src-name">控制论（Cybernetics）</div>
+                    <span class="tag t-blue">Norbert Wiener</span>
+                </div>
+                <div class="src-body">
+                    任何智能系统 = 行动 + 反馈 + 调整的循环。区分一阶反馈（调整当前行为）和二阶反馈（调整反馈机制本身）。
+                    前者让你做得更好，后者让「做得更好的机制」变得更好。
+                </div>
+                <div class="src-link">→ 整套体系的数学底层：飞轮就是控制论的二阶反馈环</div>
+            </div>
+
+            <div class="src-card">
+                <div class="src-row">
+                    <div class="src-year">1977</div>
+                    <div class="src-name">双环学习（Double-Loop Learning）</div>
+                    <span class="tag t-purple">Chris Argyris · 哈佛商学院</span>
+                </div>
+                <div class="src-body">
+                    单环学习只修复错误，双环学习质疑「产生这个错误的假设本身」。
+                    大多数组织和个人停留在单环——把同样的坑踩第二次、第三次，因为从未质疑根本假设。
+                </div>
+                <div class="src-link">→ learn-from-mistakes 的设计哲学：不只提「怎么修」，还问「什么假设导致了这个错误」</div>
+            </div>
+
+            <div class="src-card">
+                <div class="src-row">
+                    <div class="src-year">1990</div>
+                    <div class="src-name">第五项修炼（The Fifth Discipline）</div>
+                    <span class="tag t-green">Peter Senge</span>
+                </div>
+                <div class="src-body">
+                    学习能力本身是最可持续的竞争优势，而不只是学习的结果。
+                    五项修炼的核心：系统思考、自我超越、心智模式、共同愿景、团队学习——
+                    其中「系统思考」是底层，其他四项都依赖它。
+                </div>
+                <div class="src-link">→ 每日修炼体系的设计原则：把「持续学习」从个人意志力变成系统性机制</div>
+            </div>
+
+            <div class="src-card">
+                <div class="src-row">
+                    <div class="src-year">2011</div>
+                    <div class="src-name">思考，快与慢（Thinking, Fast and Slow）</div>
+                    <span class="tag t-amber">Daniel Kahneman</span>
+                </div>
+                <div class="src-body">
+                    System 1（直觉/自动）和 System 2（理性/刻意）的区分。
+                    把理性的检查清单反复执行，直到它内化为 System 1 的自动行为——这是刻意练习的本质。
+                    技能文档的作用正是强制激活 System 2，直到它变成习惯。
+                </div>
+                <div class="src-link">→ 为什么把所有规则写成 技能定义文件 文档：强制 System 2 介入，防止 System 1 走捷径犯错</div>
+            </div>
+
+            <div class="src-card">
+                <div class="src-row">
+                    <div class="src-year">永恒</div>
+                    <div class="src-name">递归与抽象（Software Engineering）</div>
+                    <span class="tag t-slate">计算机科学基础</span>
+                </div>
+                <div class="src-body">
+                    递归：用同样的方法处理更高层的问题。
+                    抽象：把具体实现封装起来，只暴露接口。
+                    元技能就是对「自身能力」的递归抽象——用改进能力的方式，来改进「改进能力的方式」。
+                </div>
+                <div class="src-link">→ 三层架构的设计原理：Layer 1 函数调用 → Layer 2 封装 → Layer 3 元编程</div>
+            </div>
+
+            <div class="src-card special">
+                <div class="src-row">
+                    <div class="src-year">2024–26</div>
+                    <div class="src-name">90+ 次真实踩坑</div>
+                    <span class="tag t-amber">被现实打出来的规律</span>
+                </div>
+                <div class="src-body">
+                    理论给了框架，踩坑给了血肉。精确打击原则、断点快照规范、单一写入点、
+                    危险函数物理清空……每一条规则背后都有一次真实失败。
+                    <br><br>
+                    纯理论框架最大的问题是：它不知道边界条件在哪里。
+                    90 次踩坑，就是 90 次边界条件的探索。
+                    <strong style="color:var(--c-amber)">这是这套体系与纸上谈兵最大的区别。</strong>
+                </div>
+                <div class="src-link" style="color:var(--c-amber);">→ 被现实检验过的规律，而不是被推演出来的规律，这就是为什么这套体系能实际运转</div>
+            </div>
+
+        </div>
+
+    </div><!-- /tab-sources -->
+
+
+
+
+    <!-- Footer -->
+    <div class="pg-footer">
+        <strong>元技能体系 v5.0</strong><br>
+        自然规律 × 工程实现 × 90+ 次真实踩坑<br>
+        ───<br>
+        越练越强，这不是口号，这是一条可以被工程化的规律。
+    </div>
+
+</div>
+<script>
+function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    const panels = document.querySelectorAll('.tab-panel');
+    const btns = document.querySelectorAll('.tab-btn');
+    const names = ['overview','law','mapping','engine','completeness','hidden','sources'];
+    const idx = names.indexOf(name);
+    if(idx >= 0){ panels[idx].classList.add('active'); btns[idx].classList.add('active'); }
+}
+</script>
+</body>
+</html>

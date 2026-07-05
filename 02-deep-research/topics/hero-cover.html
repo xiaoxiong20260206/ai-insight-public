@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: 1600px; height: 900px;
+  background: linear-gradient(135deg, #0a1628 0%, #0f2137 30%, #132f4c 60%, #0a1628 100%);
+  font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+}
+.bg-grid {
+  position: absolute; inset: 0;
+  background-image: 
+    linear-gradient(rgba(5,150,105,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(5,150,105,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.bg-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+}
+.glow1 { background: #059669; top: -200px; left: 100px; }
+.glow2 { background: #2563EB; bottom: -200px; right: 100px; }
+.glow3 { background: #7C3AED; top: 200px; right: 300px; opacity: 0.08; }
+
+.title-area {
+  position: absolute; top: 32px; left: 60px; right: 60px;
+  text-align: center;
+}
+.main-title {
+  font-size: 38px; font-weight: 800;
+  background: linear-gradient(90deg, #10B981, #3B82F6, #8B5CF6);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+}
+.sub-title {
+  font-size: 16px; color: rgba(255,255,255,0.6); margin-top: 8px;
+  font-weight: 400;
+}
+
+/* 三层叠加模型 */
+.layers-section {
+  position: absolute; top: 110px; left: 60px; width: 520px; bottom: 80px;
+}
+.layer-card {
+  position: absolute; left: 0; right: 0;
+  border-radius: 12px; padding: 14px 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.layer-top {
+  top: 0; height: 60px;
+  background: rgba(124,58,237,0.12); border-color: rgba(124,58,237,0.25);
+}
+.layer-mid {
+  top: 68px; height: 60px;
+  background: rgba(37,99,235,0.12); border-color: rgba(37,99,235,0.25);
+}
+.layer-bottom {
+  top: 136px; height: 80px;
+  background: rgba(5,150,105,0.15); border-color: rgba(5,150,105,0.3);
+  box-shadow: 0 4px 20px rgba(5,150,105,0.2);
+}
+.layer-label {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.04em;
+}
+.layer-top .layer-label { color: #8B5CF6; }
+.layer-mid .layer-label { color: #3B82F6; }
+.layer-bottom .layer-label { color: #10B981; }
+.layer-desc {
+  font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 4px;
+}
+.layer-tag {
+  display: inline-block;
+  font-size: 10px; padding: 2px 8px; border-radius: 10px;
+  margin-top: 6px; margin-right: 4px;
+}
+.layer-top .layer-tag { background: rgba(124,58,237,0.2); color: #A78BFA; }
+.layer-mid .layer-tag { background: rgba(37,99,235,0.2); color: #60A5FA; }
+.layer-bottom .layer-tag { background: rgba(5,150,105,0.2); color: #34D399; }
+
+.foundation-label {
+  position: absolute; top: 230px; left: 0; right: 0;
+  text-align: center; font-size: 11px; color: #10B981;
+  font-weight: 600; letter-spacing: 0.1em;
+  padding: 6px; border: 1px dashed rgba(5,150,105,0.3);
+  border-radius: 8px;
+}
+
+/* 左侧：三收敛趋势 */
+.convergence-section {
+  position: absolute; top: 270px; left: 60px; width: 520px;
+}
+.conv-title {
+  font-size: 13px; font-weight: 700; color: #F43F5E;
+  letter-spacing: 0.06em; margin-bottom: 12px;
+}
+.conv-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.conv-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700;
+}
+.conv-icon-1 { background: rgba(239,68,68,0.15); color: #EF4444; }
+.conv-icon-2 { background: rgba(249,115,22,0.15); color: #F97316; }
+.conv-icon-3 { background: rgba(234,179,8,0.15); color: #EAB308; }
+.conv-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); }
+.conv-desc { font-size: 11px; color: rgba(255,255,255,0.5); }
+.conv-arrow {
+  margin-top: 8px; text-align: center;
+  font-size: 12px; color: #F43F5E; font-weight: 600;
+}
+
+/* 六个洞见 */
+.insights-section {
+  position: absolute; top: 110px; right: 60px; width: 520px; bottom: 80px;
+  display: flex; flex-direction: column;
+}
+.insights-title {
+  font-size: 13px; font-weight: 700; color: #10B981;
+  letter-spacing: 0.06em; margin-bottom: 12px;
+}
+.insight-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; flex: 1;
+}
+.insight-card {
+  padding: 10px 14px; border-radius: 10px;
+  border: 1px solid rgba(5,150,105,0.15);
+  background: rgba(5,150,105,0.06);
+}
+.insight-num {
+  font-size: 10px; font-weight: 700; color: #10B981;
+  letter-spacing: 0.08em;
+}
+.insight-name {
+  font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9);
+  margin-top: 2px;
+}
+.insight-brief {
+  font-size: 10px; color: rgba(255,255,255,0.45);
+  margin-top: 3px;
+}
+
+/* 从→到转变 */
+.transform-section {
+  position: absolute; bottom: 32px; left: 60px; right: 60px;
+  display: flex; gap: 12px; justify-content: center;
+}
+.transform-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.from-text { font-size: 11px; color: rgba(255,255,255,0.4); }
+.arrow-icon { font-size: 12px; color: #10B981; }
+.to-text { font-size: 11px; color: rgba(255,255,255,0.85); font-weight: 600; }
+
+.brand {
+  position: absolute; top: 32px; right: 60px;
+  font-size: 10px; color: rgba(255,255,255,0.25);
+  letter-spacing: 0.1em; font-weight: 600;
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow glow1"></div>
+<div class="bg-glow glow2"></div>
+<div class="bg-glow glow3"></div>
+
+<div class="brand">AI行业洞察 · 深度调研</div>
+
+<div class="title-area">
+  <div class="main-title">护城河不在代码里</div>
+  <div class="sub-title">组织形态才是AI时代真正抄不走的东西 · 全景图</div>
+</div>
+
+<!-- 三层叠加模型 -->
+<div class="layers-section">
+  <div class="layer-card layer-top">
+    <div class="layer-label">L3 技术护城河 · 易复制层</div>
+    <div class="layer-desc">模型能力趋同、专利壁垒失效、开源生态加速</div>
+    <div class="layer-tag">产品功能</div>
+    <div class="layer-tag">技术专利</div>
+    <div class="layer-tag">赛道概念</div>
+  </div>
+  <div class="layer-card layer-mid">
+    <div class="layer-label">L2 数据+分布护城河 · 可积累层</div>
+    <div class="layer-desc">用户数据飞轮、渠道覆盖、品牌认知</div>
+    <div class="layer-tag">数据飞轮</div>
+    <div class="layer-tag">渠道分布</div>
+    <div class="layer-tag">品牌心智</div>
+  </div>
+  <div class="layer-card layer-bottom">
+    <div class="layer-label">L1 组织形态 · 基础设施层 ⭐</div>
+    <div class="layer-desc">人才吸引机制 · 权力分配结构 · 身份认同路径 · 复利式工作系统</div>
+    <div class="layer-tag">不可复制</div>
+    <div class="layer-tag">长期积累</div>
+    <div class="layer-tag">灵魂级</div>
+  </div>
+  <div class="foundation-label">⚡ 组织形态 = 其他护城河的基础设施（无此层，上层无法建立）</div>
+</div>
+
+<!-- 三收敛 -->
+<div class="convergence-section">
+  <div class="conv-title">❌ 三件事正在同质化</div>
+  <div class="conv-row">
+    <div class="conv-icon conv-icon-1">M</div>
+    <div><div class="conv-name">模型能力趋同</div><div class="conv-desc">GPT-4/Claude/Gemini差距缩小，开源追赶</div></div>
+  </div>
+  <div class="conv-row">
+    <div class="conv-icon conv-icon-2">UI</div>
+    <div><div class="conv-name">界面体验趋同</div><div class="conv-desc">Chat→Canvas→Agent，各家UI范式趋同</div></div>
+  </div>
+  <div class="conv-row">
+    <div class="conv-icon conv-icon-3">$</div>
+    <div><div class="conv-name">迭代成本趋同</div><div class="conv-desc">API调用成本下降，产品迭代周期缩短</div></div>
+  </div>
+  <div class="conv-arrow">→ 技术/产品/赛道容易被快速模仿 ⚡</div>
+</div>
+
+<!-- 六个洞见 -->
+<div class="insights-section">
+  <div class="insights-title">✅ 六个核心洞见</div>
+  <div class="insight-grid">
+    <div class="insight-card">
+      <div class="insight-num">洞见 01</div>
+      <div class="insight-name">人才即公司</div>
+      <div class="insight-brief">Top 0.1%人才=公司本身</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-num">洞见 02</div>
+      <div class="insight-name">身份认同 > 薪酬</div>
+      <div class="insight-brief">顶尖人才追求"成为自己"</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-num">洞见 03</div>
+      <div class="insight-name">情绪承诺 ≟ 结构承诺</div>
+      <div class="insight-brief">必须匹配否则是假声明</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-num">洞见 04</div>
+      <div class="insight-name">被选中 ≠ 被看见</div>
+      <div class="insight-brief">承认独特性>给予机会</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-num">洞见 05</div>
+      <div class="insight-name">故事高度 ≟ 格局</div>
+      <div class="insight-brief">叙事水平=公司天花板</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-num">洞见 06</div>
+      <div class="insight-name">使命必然筛选</div>
+      <div class="insight-brief">使命是过滤器不是营销</div>
+    </div>
+  </div>
+</div>
+
+<!-- 从→到转变 -->
+<div class="transform-section">
+  <div class="transform-item">
+    <div class="from-text">技术护城河</div>
+    <div class="arrow-icon">→</div>
+    <div class="to-text">组织基础设施</div>
+  </div>
+  <div class="transform-item">
+    <div class="from-text">薪酬竞争</div>
+    <div class="arrow-icon">→</div>
+    <div class="to-text">身份认同竞争</div>
+  </div>
+  <div class="transform-item">
+    <div class="from-text">框架可抄</div>
+    <div class="arrow-icon">→</div>
+    <div class="to-text">灵魂不可抄</div>
+  </div>
+  <div class="transform-item">
+    <div class="from-text">规模优势</div>
+    <div class="arrow-icon">→</div>
+    <div class="to-text">规模悖论</div>
+  </div>
+</div>
+</body>
+</html>

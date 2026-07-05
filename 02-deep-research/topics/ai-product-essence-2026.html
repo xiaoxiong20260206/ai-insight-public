@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>99%的AI产品都做错了 · AI产品本质深度研究 | AI-Insight</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23059669'/><text x='16' y='23' text-anchor='middle' font-size='20'>🧠</text></svg>">
+    <style>
+        :root {
+            --color-success: #059669;
+            --color-success-light: #10B981;
+            --color-success-dark: #047857;
+            --color-success-50: #ECFDF5;
+            --color-danger: #E11D48;
+            --color-danger-light: #F43F5E;
+            --color-warning: #D97706;
+            --color-warning-light: #F59E0B;
+            --color-info: #2563EB;
+            --color-info-light: #3B82F6;
+            --color-info-50: #EFF6FF;
+            --color-purple: #7C3AED;
+            --color-purple-light: #8B5CF6;
+            --color-purple-50: #F5F3FF;
+            --color-text-primary: #1C1917;
+            --color-text-secondary: #57534E;
+            --color-text-muted: #78716C;
+            --color-border: #E7E5E4;
+            --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB;
+            --color-bg-card: #FFFFFF;
+            --color-bg-table-header: #FAFAF9;
+            --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+            --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+            --gradient-highlight: linear-gradient(135deg, rgba(5,150,105,0.08) 0%, rgba(5,150,105,0.03) 100%);
+            --gradient-mesh:
+                radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+            --shadow-glow-success: 0 4px 14px rgba(5,150,105,0.15);
+            --shadow-hover: 0 6px 16px rgba(5,150,105,0.15), 0 2px 6px rgba(5,150,105,0.1);
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 40px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+            --font-family: -apple-system, "SF Pro Display", "system-ui", "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-family);
+            font-size: 15px;
+            line-height: 1.65;
+            color: var(--color-text-secondary);
+            background: var(--color-bg);
+            background-image: var(--gradient-mesh);
+            background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
+        }
+        ::selection { background: rgba(5, 150, 105, 0.2); }
+        .container { max-width: 980px; margin: 0 auto; padding: 24px 16px 48px; }
+
+        /* Tab Navigation */
+        .tab-nav {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px) saturate(1.8);
+            border-radius: var(--radius-lg);
+            padding: 6px;
+            display: flex;
+            gap: 4px;
+            margin-bottom: var(--spacing-lg);
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0,0,0,0.06);
+            overflow-x: auto;
+        }
+        .tab-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            transition: all var(--transition-normal);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .tab-btn:hover { background: rgba(5,150,105,0.06); color: var(--color-text-primary); }
+        .tab-btn.active {
+            background: var(--gradient-success);
+            color: white;
+            box-shadow: var(--shadow-glow-success);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+            overflow: hidden;
+            padding: var(--spacing-2xl) var(--spacing-lg);
+            background: linear-gradient(135deg, rgba(5,150,105,0.06) 0%, rgba(37,99,235,0.04) 50%, rgba(124,58,237,0.03) 100%);
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(5,150,105,0.1);
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(5,150,105,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-xs) var(--spacing-md);
+            background: var(--gradient-badge);
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            color: var(--color-success);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            border: 1px solid rgba(5,150,105,0.15);
+        }
+        .header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+        }
+        .header-subtitle {
+            font-size: 17px;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-md);
+            font-weight: 500;
+        }
+        .header-meta {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            flex-wrap: wrap;
+            color: var(--color-text-muted);
+            font-size: 13px;
+        }
+        .header-meta span { display: flex; align-items: center; gap: 4px; }
+
+        /* Hero Image */
+        .hero-image-wrap {
+            margin: var(--spacing-lg) 0 var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--color-border);
+        }
+        .hero-image-wrap img {
+            width: 100%;
+            display: block;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-card);
+            transition: box-shadow var(--transition-normal);
+        }
+        .card:hover { box-shadow: var(--shadow-hover); border-color: rgba(5,150,105,0.2); }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-badge);
+            border-radius: var(--radius-md);
+            font-size: 18px;
+        }
+        .card-title { font-size: 17px; font-weight: 700; color: var(--color-text-primary); }
+
+        /* Section Header */
+        .section-header {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--color-text-primary);
+            margin: var(--spacing-xl) 0 var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid var(--color-success);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        .section-header:first-child { margin-top: 0; }
+
+        /* Chapter Image */
+        .chapter-image {
+            width: 100%;
+            border-radius: var(--radius-md);
+            margin: var(--spacing-md) 0;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--color-border);
+            display: block;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        .stat-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            text-align: center;
+            box-shadow: var(--shadow-xs);
+        }
+        .stat-value { font-size: 26px; font-weight: 800; color: var(--color-success); line-height: 1.2; }
+        .stat-value.blue { color: var(--color-info); }
+        .stat-value.purple { color: var(--color-purple); }
+        .stat-value.warning { color: var(--color-warning); }
+        .stat-label { font-size: 12px; color: var(--color-text-muted); margin-top: var(--spacing-xs); }
+
+        /* Table */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin: var(--spacing-md) 0;
+        }
+        .compare-table th, .compare-table td {
+            padding: 10px var(--spacing-md);
+            border: 1px solid var(--color-border);
+            text-align: left;
+        }
+        .compare-table th {
+            background: var(--color-bg-table-header);
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+        .compare-table tr:hover { background: rgba(5,150,105,0.03); }
+
+        /* Highlight Box */
+        .highlight-box {
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+        .highlight-box.success {
+            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+            border-left: 4px solid var(--color-success);
+        }
+        .highlight-box.warning {
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            border-left: 4px solid var(--color-warning);
+        }
+        .highlight-box.danger {
+            background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%);
+            border-left: 4px solid var(--color-danger);
+        }
+        .highlight-box.insight {
+            background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%);
+            border-left: 4px solid var(--color-purple);
+        }
+        .highlight-box.info {
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            border-left: 4px solid var(--color-info);
+        }
+        .highlight-box h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .highlight-box p, .highlight-box li {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--color-text-secondary);
+        }
+
+        /* Quote Box */
+        .quote-box {
+            background: var(--gradient-highlight);
+            border-left: 4px solid var(--color-success);
+            border-radius: var(--radius-sm);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            font-weight: 500;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.green { background: rgba(5,150,105,0.1); color: var(--color-success-dark); }
+        .badge.blue { background: rgba(37,99,235,0.1); color: var(--color-info); }
+        .badge.orange { background: rgba(217,119,6,0.1); color: var(--color-warning); }
+        .badge.red { background: rgba(225,29,72,0.1); color: var(--color-danger); }
+        .badge.purple { background: rgba(124,58,237,0.1); color: var(--color-purple); }
+
+        /* Error Card */
+        .error-item {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            border-left: 4px solid var(--color-danger);
+            box-shadow: var(--shadow-xs);
+        }
+        .error-item h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--color-danger);
+            margin-bottom: 6px;
+        }
+        .error-item p {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Score Card */
+        .score-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            box-shadow: var(--shadow-xs);
+        }
+        .score-product { font-size: 15px; font-weight: 700; flex: 1; }
+        .score-stars { font-size: 14px; color: var(--color-warning); }
+        .score-label { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: var(--radius-full); }
+        .score-label.ok { background: rgba(5,150,105,0.1); color: var(--color-success); }
+        .score-label.warn { background: rgba(217,119,6,0.1); color: var(--color-warning); }
+
+        /* Roadmap */
+        .roadmap-step {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            align-items: flex-start;
+        }
+        .roadmap-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gradient-success);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .roadmap-content { flex: 1; }
+        .roadmap-title { font-size: 15px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 4px; }
+        .roadmap-desc { font-size: 14px; color: var(--color-text-secondary); }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, rgba(5,150,105,0.06) 0%, rgba(37,99,235,0.04) 100%);
+            border: 2px solid rgba(5,150,105,0.2);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+            margin: var(--spacing-md) 0;
+        }
+        .formula-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--color-text-primary);
+            letter-spacing: -0.01em;
+            margin-bottom: var(--spacing-sm);
+        }
+        .formula-desc { font-size: 13px; color: var(--color-text-muted); }
+
+        /* Tag list */
+        .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin: var(--spacing-sm) 0; }
+
+        /* Insight CTA */
+        .insight-cta {
+            background: linear-gradient(135deg, rgba(5,150,105,0.06) 0%, rgba(124,58,237,0.04) 100%);
+            border: 1px solid rgba(5,150,105,0.15);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-xl) 0 var(--spacing-md);
+            text-align: center;
+        }
+        .insight-cta h3 { font-size: 18px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 6px; }
+        .insight-cta p { font-size: 14px; color: var(--color-text-secondary); margin-bottom: var(--spacing-md); }
+        .insight-cta a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: var(--gradient-success);
+            color: white;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: var(--shadow-glow-success);
+        }
+
+        /* Conclusion block */
+        .conclusion-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+        .conclusion-row-item {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow-xs);
+        }
+        .conclusion-row-item .from { font-size: 13px; color: var(--color-danger); margin-bottom: 4px; }
+        .conclusion-row-item .arrow { font-size: 16px; color: var(--color-text-muted); margin-bottom: 4px; }
+        .conclusion-row-item .to { font-size: 13px; color: var(--color-success); font-weight: 600; }
+
+        /* Easter Egg */
+        .easter-egg {
+            background: linear-gradient(135deg, rgba(124,58,237,0.06) 0%, rgba(37,99,235,0.04) 100%);
+            border: 1px solid rgba(124,58,237,0.15);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 24px; }
+            .conclusion-row { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Utils */
+        h2 { font-size: 20px; font-weight: 700; color: var(--color-text-primary); margin-bottom: var(--spacing-md); }
+        h3 { font-size: 17px; font-weight: 700; color: var(--color-text-primary); margin: var(--spacing-md) 0 var(--spacing-sm); }
+        p { margin-bottom: var(--spacing-sm); }
+        ul, ol { padding-left: 20px; margin: var(--spacing-sm) 0; }
+        li { margin-bottom: 4px; font-size: 14px; color: var(--color-text-secondary); }
+        strong { color: var(--color-text-primary); }
+        a { color: var(--color-info); text-decoration: none; }
+        a:hover { color: var(--color-success); }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-badge">🧠 AI产品本质 · 深度研究</div>
+        <h1>99%的AI产品都做错了</h1>
+        <div class="header-subtitle">他们在用"买工具"的思维，做"招员工"的事。</div>
+        <div class="header-meta">
+            <span>📅 2026-03-22</span>
+            <span>🔬 专题研究</span>
+            <span>📖 9章深度分析</span>
+            <span>💡 AI洞察 · AI洞察</span>
+        </div>
+    </div>
+
+    <!-- Tab Nav -->
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('overview')">📊 全景概览</button>
+        <button class="tab-btn" onclick="switchTab('mistakes')">❌ 六大错误</button>
+        <button class="tab-btn" onclick="switchTab('essence')">🎯 本质洞察</button>
+        <button class="tab-btn" onclick="switchTab('scorecard')">📋 产品评分</button>
+        <button class="tab-btn" onclick="switchTab('roadmap')">🗺️ 建设路径</button>
+        <button class="tab-btn" onclick="switchTab('future')">🔭 未来格局</button>
+        <button class="tab-btn" onclick="switchTab('conclusion')">✅ 结论</button>
+        <button class="tab-btn" onclick="switchTab('easter')">🎁 彩蛋</button>
+    </div>
+
+    <!-- ===== TAB 1: 全景概览 ===== -->
+    <div id="tab-overview" class="tab-content active">
+
+        <div class="hero-image-wrap">
+            <img src="images/ai-product-article/hero.jpg" alt="全文总结：AI产品与SaaS的本质差异" loading="lazy">
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🎯</div>
+                <div class="card-title">核心结论</div>
+            </div>
+            <div class="highlight-box success">
+                <h4>🔑 一句话</h4>
+                <p>AI产品的本质是<strong>"认知代劳"</strong>，不是"功能替代"。用SaaS的逻辑做AI，越努力越错。</p>
+            </div>
+            <div class="formula-box">
+                <div class="formula-text">(Q &gt; 阈值) × D × T &gt; E</div>
+                <div class="formula-desc">质量穿线是底线 · 场景要深不要广 · 信任积累必须跑赢成本消耗</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">⚡</div>
+                <div class="card-title">SaaS vs AI产品：本质差异对比</div>
+            </div>
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>维度</th>
+                        <th>SaaS（买工具）</th>
+                        <th>AI产品（招员工）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>用户要什么</strong></td><td>能用这个功能</td><td>帮我把这件事做好</td></tr>
+                    <tr><td><strong>价值评判</strong></td><td>有功能 = 有价值</td><td>结果好 = 才有价值</td></tr>
+                    <tr><td><strong>失望后果</strong></td><td>换个功能继续用</td><td>离开+告诉别人"AI没用"</td></tr>
+                    <tr><td><strong>成本结构</strong></td><td>边际成本趋近零</td><td>每次推理都烧算力</td></tr>
+                    <tr><td><strong>传播方式</strong></td><td>渠道驱动（广告/KOL）</td><td>口碑驱动（爽感自发分享）</td></tr>
+                    <tr><td><strong>推广时机</strong></td><td>任何时候都可以</td><td>必须穿越质量阈值后</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">📈</div>
+                <div class="card-title">一组让人困惑的反差</div>
+            </div>
+            <img src="images/ai-product-article/ch01-contrast.jpg" alt="反差对比：口碑传播 vs 砸钱无效" class="chapter-image" loading="lazy">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">5天</div>
+                    <div class="stat-label">ChatGPT破百万用户</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">60天</div>
+                    <div class="stat-label">ChatGPT破亿用户</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value blue">$1亿</div>
+                    <div class="stat-label">Cursor Year 1年化ARR</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value purple">$20亿+</div>
+                    <div class="stat-label">Cursor Year 2年化ARR</div>
+                </div>
+            </div>
+            <div class="highlight-box warning">
+                <h4>⚠️ 反差的根因</h4>
+                <p>ChatGPT 没投过广告，Cursor 零广告预算——但它们都是口碑爆炸式传播。<br>
+                反观国内某AI产品：花了数千万买量，3个月后日活不到注册用户的 <strong>3%</strong>。<br>
+                <strong>差距不在于钱，在于对AI产品本质的理解从一开始就不一样。</strong></p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== TAB 2: 六大错误 ===== -->
+    <div id="tab-mistakes" class="tab-content">
+        <div class="section-header">❌ 六个国内AI产品正在犯的错误</div>
+
+        <img src="images/ai-product-article/ch02-six-mistakes.jpg" alt="六大错误：买工具思维做招员工的事" class="chapter-image" loading="lazy">
+
+        <div class="error-item">
+            <h4>错误1：拼命堆功能</h4>
+            <p>发布会展示30个功能，每个都写着"首创"。这个逻辑来自SaaS时代——功能多 = 价值多。但AI产品不同：<strong>质量不够的功能越多，负面体验面越大。</strong> 用了10个功能，9个"差不多还行"，1个彻底搞砸——这个用户走了，走之前告诉5个朋友"这个AI不行"。</p>
+        </div>
+
+        <div class="error-item">
+            <h4>错误2：先推广再打磨</h4>
+            <p>"用户反馈来了再迭代，这叫敏捷。" SaaS可以，用户的反馈是"加功能""改交互"，可以修复。AI用户的反馈是：给了一个糟糕回答，犯了一个让人尴尬的错误——<strong>第一印象定格为"AI没用"，几乎不可逆。</strong></p>
+        </div>
+
+        <div class="error-item">
+            <h4>错误3：不计成本拉用户</h4>
+            <p>SaaS的免费用户几乎不消耗额外成本；AI的每一次推理都要算力。质量没过阈值，拉来的每个用户都在亏钱烧信誉。<strong>越努力推广，越加速负口碑传播。</strong></p>
+        </div>
+
+        <div class="error-item">
+            <h4>错误4：功能矩阵对标竞品</h4>
+            <p>勾出最长的功能✓✓✓。用户真正想问的是：<strong>"你的答案，我能直接用吗？"</strong> AI的竞争维度是质量深度，不是功能广度。</p>
+        </div>
+
+        <div class="error-item">
+            <h4>错误5：用SaaS漏斗找留存答案</h4>
+            <p>留存低 → 疯狂优化Onboarding → 半年后留存还是低。问题不在漏斗，在质量。<strong>SaaS的留存是UX问题，AI的留存是质量问题，答非所问。</strong></p>
+        </div>
+
+        <div class="error-item">
+            <h4>错误6：先圈地盘再提质量</h4>
+            <p>"先占住这个场景，之后再提质量。" AI的用户心智是"这个AI够不够聪明"。<strong>圈了一个"不够聪明"的心智，是最难逆转的。</strong></p>
+        </div>
+
+        <div class="highlight-box insight">
+            <h4>🔮 根因只有一个</h4>
+            <p>以上六个错误，背后只有一个根因：<strong>用买工具的逻辑，做招员工的事。</strong></p>
+        </div>
+    </div>
+
+    <!-- ===== TAB 3: 本质洞察 ===== -->
+    <div id="tab-essence" class="tab-content">
+        <div class="section-header">🎯 本质：两种完全不同的存在</div>
+
+        <img src="images/ai-product-article/ch03-analogy.jpg" alt="招员工 vs 买工具：两种完全不同的存在" class="chapter-image" loading="lazy">
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">💡</div>
+                <div class="card-title">用一个比喻把本质说清楚</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;">
+                <div class="highlight-box info">
+                    <h4>🔧 SaaS = 买了一台电动工具</h4>
+                    <p>能打钉就有价值——打得不够漂亮你也会凑合用，而且你不会跟朋友说"这把螺丝刀太烂了"。</p>
+                </div>
+                <div class="highlight-box success">
+                    <h4>👤 AI产品 = 招了一名员工</h4>
+                    <p>她第一次帮你整理资料整得乱七八糟——你不会说"好的，她有整理能力，我继续等她进步"，你会直接辞了，而且你会告诉周围人"这个人靠不住"。</p>
+                </div>
+            </div>
+
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>维度</th>
+                        <th>电动工具（SaaS）</th>
+                        <th>员工（AI产品）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>如何评价</td><td>有功能 = 有价值</td><td>结果好 = 才有价值</td></tr>
+                    <tr><td>第一印象</td><td>差也还会用</td><td>差就直接走</td></tr>
+                    <tr><td>口碑传播</td><td>不会特意推荐</td><td>好的强烈安利，差的主动劝退</td></tr>
+                    <tr><td>成本结构</td><td>买了一次就好</td><td>每天都在消耗（算力）</td></tr>
+                    <tr><td>成长性</td><td>买了是固定功能</td><td>越用越懂你</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">📏</div>
+                <div class="card-title">最关键的一点：质量阈值</div>
+            </div>
+            <p style="margin-bottom:12px;">AI产品有一条"质量阈值线"，是用户"宁可自己做，也不用AI"的临界点。</p>
+            <table class="compare-table">
+                <thead>
+                    <tr><th>状态</th><th>路径</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge red">低于阈值</span></td>
+                        <td>试用 → "不如自己来" → 不再用 → 告诉朋友"AI没用"</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge green">高于阈值</span></td>
+                        <td>试用 → "比我自己做得好！" → 形成习惯 → 告诉朋友"你一定要试"</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="highlight-box warning">
+                <h4>⚠️ 阈值的关键推论</h4>
+                <p>SaaS没有这条线——有功能就有价值。AI有这条线，<strong>低于阈值时任何推广都是在加速负口碑传播。</strong></p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== TAB 4: 产品评分 ===== -->
+    <div id="tab-scorecard" class="tab-content">
+        <div class="section-header">📋 做好的标准是什么</div>
+
+        <img src="images/ai-product-article/ch04-scorecard.jpg" alt="五款AI产品评分卡：谁做对了？" class="chapter-image" loading="lazy">
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">📐</div>
+                <div class="card-title">五维评估框架</div>
+            </div>
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>维度</th>
+                        <th>最高标准</th>
+                        <th>公式变量</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>价值密度 Q</strong></td><td>用完有"省了自己脑力"的清晰感知，不是"差不多凑合"</td><td>Q 质量</td></tr>
+                    <tr><td><strong>成本收支 E</strong></td><td>Day 1就有用户付费，不靠免费补贴维持使用</td><td>E 经济性</td></tr>
+                    <tr><td><strong>信任护城河 T</strong></td><td>用户主动推荐，且有个性化记忆积累带来的迁移成本</td><td>T 信任</td></tr>
+                    <tr><td><strong>场景聚焦 D</strong></td><td>先把1个核心场景打透，而非广铺功能</td><td>D 深度</td></tr>
+                    <tr><td><strong>安全可控</strong></td><td>用户能理解AI做了什么，能审查，能回滚</td><td>T 信任基础</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🏆</div>
+                <div class="card-title">五款产品评分</div>
+            </div>
+            <div class="score-card">
+                <div class="score-product">🟢 Cursor</div>
+                <div class="score-stars">Q:★★★★★ E:★★★★★ T:★★★★★ D:★★★★★</div>
+                <div class="score-label ok">✅ 教科书</div>
+            </div>
+            <div class="score-card">
+                <div class="score-product">🟢 Claude Code</div>
+                <div class="score-stars">Q:★★★★★ E:★★★★ T:★★★★ D:★★★★★</div>
+                <div class="score-label ok">✅ 教科书</div>
+            </div>
+            <div class="score-card">
+                <div class="score-product">🔵 钉钉悟空</div>
+                <div class="score-stars">Q:★★★★ E:★★★★ T:★★★★★ D:★★★★</div>
+                <div class="score-label ok">✅ 方向正确</div>
+            </div>
+            <div class="score-card">
+                <div class="score-product">🟡 OpenClaw</div>
+                <div class="score-stars">Q:★★★★ E:★★ T:★★★ D:★★★</div>
+                <div class="score-label warn">⚠️ 验证了需求</div>
+            </div>
+            <div class="score-card">
+                <div class="score-product">🟠 Manus</div>
+                <div class="score-stars">Q:★★★ E:★★ T:★★ D:★★</div>
+                <div class="score-label warn">⚠️ 通用陷阱</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">📖</div>
+                <div class="card-title">教科书案例：Cursor / Claude Code</div>
+            </div>
+            <p>只做代码这一件事，把AI帮助做到"用了就离不开"。零广告，靠程序员圈子自发传播。</p>
+            <div class="stats-grid" style="margin-top:12px;">
+                <div class="stat-card">
+                    <div class="stat-value">$1亿</div>
+                    <div class="stat-label">Cursor Year 1 ARR</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value blue">$20亿+</div>
+                    <div class="stat-label">Cursor Year 2 ARR</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value purple">$5亿</div>
+                    <div class="stat-label">Claude Code年化ARR</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value warning">80%+</div>
+                    <div class="stat-label">Anthropic内部工程师日常使用</div>
+                </div>
+            </div>
+            <div class="highlight-box success">
+                <h4>🔑 关键共同点</h4>
+                <p>两者最重要的共同点：<strong>Day 1就收费，没有免费期。</strong> 不是激进，是清醒。好员工不需要通过免费试用来证明自己的价值。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">⚠️</div>
+                <div class="card-title">反面案例：Manus的通用陷阱</div>
+            </div>
+            <p>什么都能做——搜索、写报告、写代码……正因为"什么都做"，掉进了最典型的陷阱：<strong>样样能做，样样不深。</strong></p>
+            <div class="highlight-box danger">
+                <h4>❌ 通用陷阱的底层逻辑</h4>
+                <p>Coding有Cursor更好，Research有Perplexity更好，写作有Claude更好……没有一个场景做到"用了就离不开"。<br>
+                在员工市场，"什么都会一点"的员工，远不如"某方面极其出色"的员工更受信任。</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== TAB 5: 建设路径 ===== -->
+    <div id="tab-roadmap" class="tab-content">
+        <div class="section-header">🗺️ 正确的建设路径</div>
+
+        <img src="images/ai-product-article/ch05-roadmap.jpg" alt="四阶段建设路径：从聚焦到扩展" class="chapter-image" loading="lazy">
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🎯</div>
+                <div class="card-title">第一步：先找到"认知任务"</div>
+            </div>
+            <p>不要问"我的AI能做什么功能"，要问"我替用户完成哪个脑力工作"。</p>
+            <div class="highlight-box success">
+                <h4>✅ 好的认知任务的三个条件</h4>
+                <ul style="list-style:none;padding:0;">
+                    <li>🧠 用户做这件事<strong>很耗脑力</strong></li>
+                    <li>⭐ AI做的质量<strong>超越用户自己</strong></li>
+                    <li>🔄 场景<strong>足够高频</strong></li>
+                </ul>
+            </div>
+            <div class="highlight-box warning">
+                <h4>⚠️ 只找一个，不是十个</h4>
+                <p>聚焦是首要原则。先把一个场景做到"用了就离不开"，再往外延展。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🗺️</div>
+                <div class="card-title">四阶段建设路径</div>
+            </div>
+            <div class="roadmap-step">
+                <div class="roadmap-num">1</div>
+                <div class="roadmap-content">
+                    <div class="roadmap-title">聚焦一个核心认知任务</div>
+                    <div class="roadmap-desc">只有一个，不是十个。确定"我替用户完成哪个脑力工作"。</div>
+                </div>
+            </div>
+            <div class="roadmap-step">
+                <div class="roadmap-num">2</div>
+                <div class="roadmap-content">
+                    <div class="roadmap-title">质量穿越阈值</div>
+                    <div class="roadmap-desc">用户要"惊呼"，不是"还行"。穿越阈值之前，不大规模推广。</div>
+                </div>
+            </div>
+            <div class="roadmap-step">
+                <div class="roadmap-num">3</div>
+                <div class="roadmap-content">
+                    <div class="roadmap-title">建立"离不开感"</div>
+                    <div class="roadmap-desc">记忆积累 + 个性化 + 高迁移成本。用户越用越难离开。</div>
+                </div>
+            </div>
+            <div class="roadmap-step">
+                <div class="roadmap-num">4</div>
+                <div class="roadmap-content">
+                    <div class="roadmap-title">扩展场景和用户规模</div>
+                    <div class="roadmap-desc">每扩一个场景，都从阶段一重来。每一个广度，都要有阶段二的深度。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">💰</div>
+                <div class="card-title">为什么Day 1就要收费</div>
+            </div>
+            <table class="compare-table">
+                <thead>
+                    <tr><th>理由</th><th>说明</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>边际成本为正</strong></td><td>每个用户每次用都烧算力，不收费就在亏钱</td></tr>
+                    <tr><td><strong>付费筛选优质反馈</strong></td><td>付费用户的反馈精准，帮产品更快穿越阈值</td></tr>
+                    <tr><td><strong>锚点不可逆</strong></td><td>先做免费，锚点定格为零，之后转收费极难</td></tr>
+                </tbody>
+            </table>
+            <div class="highlight-box success">
+                <h4>✅ Cursor验证</h4>
+                <p>直接$20/月，Year 1破$1亿ARR。不是冒险，是清醒——<strong>顶级员工不需要免费试用期。</strong></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">❓</div>
+                <div class="card-title">推广时机三问（三个都是YES才行）</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+                <div class="highlight-box info">
+                    <h4>❓ 问题1</h4>
+                    <p>用了之后，会主动<strong>复用</strong>吗？<br>（质量穿越阈值了吗）</p>
+                </div>
+                <div class="highlight-box info">
+                    <h4>❓ 问题2</h4>
+                    <p>用了之后，会<strong>推荐给朋友</strong>吗？<br>（爽感够强了吗）</p>
+                </div>
+                <div class="highlight-box info">
+                    <h4>❓ 问题3</h4>
+                    <p>每个用户的 <strong>LTV &gt; CAC + 算力成本</strong>吗？<br>（商业逻辑自洽了吗）</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TAB 6: 未来格局 ===== -->
+    <div id="tab-future" class="tab-content">
+        <div class="section-header">🔭 AI与SaaS的未来</div>
+
+        <img src="images/ai-product-article/ch06-future.jpg" alt="AI与SaaS的未来分工格局" class="chapter-image" loading="lazy">
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🤝</div>
+                <div class="card-title">AI崛起，SaaS不会消亡——但会被重构</div>
+            </div>
+            <table class="compare-table">
+                <thead>
+                    <tr><th>角色</th><th>负责</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>AI</strong></td><td>认知层：理解意图、决策、生成、自主执行</td></tr>
+                    <tr><td><strong>SaaS</strong></td><td>执行层：存储数据、流程支撑、合规保障</td></tr>
+                </tbody>
+            </table>
+            <div class="highlight-box success">
+                <h4>💡 员工类比</h4>
+                <p>AI是那个聪明能干的员工，SaaS是公司的OA系统和数据库——员工需要系统来存档走流程，系统需要员工来赋予它价值。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🔮</div>
+                <div class="card-title">5年内的格局判断</div>
+            </div>
+            <table class="compare-table">
+                <thead>
+                    <tr><th>类型</th><th>判断</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>流程复杂、数据深的SaaS（ERP/CRM）</td>
+                        <td><span class="badge green">✅ 进化为AI执行基础设施，存活</span></td>
+                    </tr>
+                    <tr>
+                        <td>流程简单的通用SaaS（文档/轻量协作）</td>
+                        <td><span class="badge red">❌ 被AI整合或替代</span></td>
+                    </tr>
+                    <tr>
+                        <td>从Agent出发的AI原生产品</td>
+                        <td><span class="badge green">✅ 构建新物种，攻克存量市场</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ===== TAB 7: 结论 ===== -->
+    <div id="tab-conclusion" class="tab-content">
+        <div class="section-header">✅ 三个关键认知升级</div>
+
+        <img src="images/ai-product-article/ch07-conclusion.jpg" alt="三个认知升级：从旧思维到新思维" class="chapter-image" loading="lazy">
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🔄</div>
+                <div class="card-title">思维转换表</div>
+            </div>
+            <div class="conclusion-row">
+                <div class="conclusion-row-item">
+                    <div class="from">❌ 从："我们的AI有XX功能"</div>
+                    <div class="arrow">↓</div>
+                    <div class="to">✅ 到："我们的AI在XX任务上比用户自己做得好"</div>
+                </div>
+                <div class="conclusion-row-item">
+                    <div class="from">❌ 从："先拉用户再打磨"</div>
+                    <div class="arrow">↓</div>
+                    <div class="to">✅ 到："先穿越阈值，再规模分发"</div>
+                </div>
+                <div class="conclusion-row-item">
+                    <div class="from">❌ 从："用户量是北极星"</div>
+                    <div class="arrow">↓</div>
+                    <div class="to">✅ 到："用户复用率+付费意愿才是北极星"</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align:center;margin:var(--spacing-xl) 0;">
+            <div class="quote-box" style="font-size:20px;font-weight:700;text-align:center;max-width:500px;margin:0 auto;">
+                承诺可以堆砌，信任只能挣来。
+            </div>
+        </div>
+
+        <div class="highlight-box insight">
+            <h4>🧠 本质洞察</h4>
+            <p><strong>表面：</strong>AI产品做得好的不推广，砸钱的反而越做越难。</p>
+            <p style="margin-top:8px;"><strong>本质：</strong>AI产品的信任建立机制与SaaS完全不同。SaaS卖的是"权利"（你有权使用这个功能），AI卖的是"代劳"（我替你把这件事做好）。权利可以承诺，代劳只能证明。</p>
+            <p style="margin-top:8px;"><strong>类比：</strong>SaaS是给你一把钥匙，AI是给你雇一个人。钥匙可以大量复制分发，人只能靠口口相传建立信任。</p>
+            <p style="margin-top:8px;"><strong>趋势推演：</strong>未来AI产品的竞争，不会是功能数量，而是"信任深度"——谁的AI越来越懂用户，积累了更多个性化记忆，就越难被替换，这将形成真正的壁垒。</p>
+        </div>
+    </div>
+
+    <!-- ===== TAB 8: 彩蛋 ===== -->
+    <div id="tab-easter" class="tab-content">
+        <div class="section-header">🎁 彩蛋：源能力的秘密</div>
+
+        <img src="images/ai-product-article/ch08-easter-egg.jpg" alt="源能力的秘密：先做深，再做广" class="chapter-image" loading="lazy">
+
+        <div class="easter-egg">
+            <h3 style="margin-top:0;">AI助手平台是怎么做的？</h3>
+            <p>这篇文章整合了几个月来的深度调研结论：OpenClaw爆红背后的产品逻辑、钉钉悟空的企业级解法、AI Coding产品的全景对比。</p>
+            <p style="margin-top:12px;">写完之后，我意识到一件有意思的事——写这篇文章的工具本身，其实就是这套逻辑最好的注脚。</p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🌱</div>
+                <div class="card-title">先在编码这件事上做到极致</div>
+            </div>
+            <p>AI助手平台 起步于一个极其聚焦的场景：<strong>编码</strong>。不是"辅助编程"，不是"写写代码"——而是把编码这件事做到极致：理解上下文、生成可运行的代码、调试报错、重构逻辑……直到工程师用了之后说出那句话：<strong>"这个工具，我离不开了。"</strong></p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🌳</div>
+                <div class="card-title">编码不只是一个功能，它是一种源能力</div>
+            </div>
+            <div class="highlight-box success">
+                <h4>🔑 源能力的传导链</h4>
+                <p>能写代码 → 能写Markdown文章 → 能生成PPT → 能做数据洞察报告 → 能做AI行业追踪……</p>
+                <p style="margin-top:8px;">代码是底层逻辑——<strong>严谨、结构化、可复现</strong>。把这套思维复制到每一个新领域，每一个广度方向上都不是蜻蜓点水，而是带着同样深度的逻辑进去。</p>
+            </div>
+            <div class="quote-box">
+                先做深度，再做广度。让每一个广度，都有深度。
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🔮</div>
+                <div class="card-title">自我实证</div>
+            </div>
+            <p>这条路比"什么都做一点"难得多，也壁垒高得多。Manus是反例：什么都能做，什么都不深。</p>
+            <p style="margin-top:8px;">AI助手平台 的路是另一条：从编码的极致出发，用同一套深度思维去撬动更大的领域。<strong>不是横向复制功能，而是纵向复制标准。</strong></p>
+            <div class="highlight-box insight">
+                <h4>📌 最后一句话</h4>
+                <p>让人停下来说"你一定要用这个"的那一刻，就是AI产品成功的信号。</p>
+                <p style="margin-top:8px;font-style:italic;color:var(--color-text-muted);">那个瞬间，不能买来，只能挣来。</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== 了解更多（统一模块）===== -->
+    <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+        <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+            我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                🏠 访问AI洞察首页
+            </a>
+        </div>
+        <div style="border-top:1px solid #E7E5E4;padding-top:12px;margin-top:12px;">
+            <div style="font-size:13px;font-weight:600;color:#1C1917;margin-bottom:8px;">📚 相关调研</div>
+            <ul style="list-style:none;padding:0;margin:0;font-size:13px;">
+                <li style="margin-bottom:6px;"><a href="dingtalk-wukong-deep-research-2026.html" style="color:#2563EB;text-decoration:none;">🐵 钉钉悟空：企业级AI Agent的正确打开方式</a></li>
+                <li style="margin-bottom:6px;"><a href="pine-ai-native-team.html" style="color:#2563EB;text-decoration:none;">🌲 Pine AI创业实践与AI原生开发范式</a></li>
+                <li style="margin-bottom:6px;"><a href="openclaw-deep-research-2026.html" style="color:#2563EB;text-decoration:none;">🦀 OpenClaw深度调研：当AI长出手脚</a></li>
+                <li style="margin-bottom:6px;"><a href="ai-coding-assistant-research/index.html" style="color:#2563EB;text-decoration:none;">💻 AI Coding产品深度调研（含Claude Code评测）</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function switchTab(name) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>

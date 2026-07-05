@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第三章：落地实践 - AI Agent 团队落地指南</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/><circle cx='10' cy='8' r='1.5' fill='white'/><circle cx='22' cy='8' r='1.5' fill='white'/><line x1='11' y1='9' x2='13' y2='11' stroke='white' stroke-width='1.5'/><line x1='21' y1='9' x2='19' y2='11' stroke='white' stroke-width='1.5'/></svg>">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="header">
+            <span class="header-badge">AI行业洞察 · 第三章</span>
+            <h1 class="header-title">如何在团队中落地 AI Agent？</h1>
+            <p class="header-subtitle">分阶段路径、资源估算、风险提示，可直接用于向上汇报</p>
+        </header>
+
+        <!-- Tab导航 -->
+        <nav class="tab-nav" role="navigation" aria-label="章节导航">
+            <a href="index.html" class="tab-btn">
+                <span class="tab-btn-num">📋</span>
+                <span>目录</span>
+            </a>
+            <a href="chapter1-scenarios.html" class="tab-btn">
+                <span class="tab-btn-num">1</span>
+                <span>场景与价值</span>
+            </a>
+            <a href="chapter2-architecture.html" class="tab-btn">
+                <span class="tab-btn-num">2</span>
+                <span>能力架构</span>
+            </a>
+            <a href="chapter3-implementation.html" class="tab-btn active">
+                <span class="tab-btn-num">3</span>
+                <span>落地实践</span>
+            </a>
+            <a href="chapter4-future.html" class="tab-btn">
+                <span class="tab-btn-num">4</span>
+                <span>未来演进</span>
+            </a>
+            <a href="appendix-industry-research.html" class="tab-btn">
+                <span class="tab-btn-num">📊</span>
+                <span>行业调研</span>
+            </a>
+        </nav>
+
+        <!-- 核心洞察 -->
+        <div class="summary-box">
+            <div class="summary-label">本章核心观点</div>
+            <h2 class="summary-title">落地原则：<em>先跑起来，再逐步完善</em></h2>
+            <p class="summary-text">
+                AI Agent 落地不是"一步到位"的大工程，而是"小步快跑"的迭代过程。建议分 4 个阶段推进：MVP验证 → 能力扩展 → 深度集成 → 规模推广。每个阶段都有清晰的目标、交付物和成功标准。
+            </p>
+        </div>
+
+        <!-- 3.1 落地路线图 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">3.1</span>
+                <h2 class="section-title">落地路线图：四阶段推进</h2>
+            </div>
+
+            <!-- 章节概览图 - 时间线 -->
+            <div class="section-overview">
+                <span class="section-overview-label">落地路线图</span>
+                <div class="section-overview-content">
+                    <svg viewBox="0 0 700 140" style="max-width: 700px;">
+                        <defs>
+                            <linearGradient id="phaseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#059669"/>
+                                <stop offset="100%" stop-color="#10B981"/>
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- 时间轴 -->
+                        <line x1="50" y1="70" x2="650" y2="70" stroke="#E7E5E4" stroke-width="3"/>
+                        
+                        <!-- 阶段1 -->
+                        <g transform="translate(80, 30)">
+                            <circle cx="0" cy="40" r="12" fill="url(#phaseGrad)"/>
+                            <text x="0" y="44" text-anchor="middle" font-size="11" font-weight="600" fill="white">1</text>
+                            <rect x="-50" y="-30" width="100" height="50" rx="8" fill="white" stroke="#059669"/>
+                            <text x="0" y="-12" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">MVP验证</text>
+                            <text x="0" y="4" text-anchor="middle" font-size="10" fill="#78716C">2-4周</text>
+                            <text x="0" y="100" text-anchor="middle" font-size="9" fill="#78716C">跑通核心流程</text>
+                        </g>
+                        
+                        <!-- 阶段2 -->
+                        <g transform="translate(230, 30)">
+                            <circle cx="0" cy="40" r="12" fill="url(#phaseGrad)"/>
+                            <text x="0" y="44" text-anchor="middle" font-size="11" font-weight="600" fill="white">2</text>
+                            <rect x="-50" y="-30" width="100" height="50" rx="8" fill="white" stroke="#2563EB"/>
+                            <text x="0" y="-12" text-anchor="middle" font-size="11" font-weight="600" fill="#2563EB">能力扩展</text>
+                            <text x="0" y="4" text-anchor="middle" font-size="10" fill="#78716C">4-6周</text>
+                            <text x="0" y="100" text-anchor="middle" font-size="9" fill="#78716C">补齐核心工具</text>
+                        </g>
+                        
+                        <!-- 阶段3 -->
+                        <g transform="translate(380, 30)">
+                            <circle cx="0" cy="40" r="12" fill="url(#phaseGrad)"/>
+                            <text x="0" y="44" text-anchor="middle" font-size="11" font-weight="600" fill="white">3</text>
+                            <rect x="-50" y="-30" width="100" height="50" rx="8" fill="white" stroke="#7C3AED"/>
+                            <text x="0" y="-12" text-anchor="middle" font-size="11" font-weight="600" fill="#7C3AED">深度集成</text>
+                            <text x="0" y="4" text-anchor="middle" font-size="10" fill="#78716C">6-8周</text>
+                            <text x="0" y="100" text-anchor="middle" font-size="9" fill="#78716C">融入工作流</text>
+                        </g>
+                        
+                        <!-- 阶段4 -->
+                        <g transform="translate(530, 30)">
+                            <circle cx="0" cy="40" r="12" fill="url(#phaseGrad)"/>
+                            <text x="0" y="44" text-anchor="middle" font-size="11" font-weight="600" fill="white">4</text>
+                            <rect x="-55" y="-30" width="110" height="50" rx="8" fill="#F0FDF4" stroke="#059669" stroke-width="2"/>
+                            <text x="0" y="-12" text-anchor="middle" font-size="11" font-weight="700" fill="#059669">规模推广</text>
+                            <text x="0" y="4" text-anchor="middle" font-size="10" fill="#78716C">持续迭代</text>
+                            <text x="0" y="100" text-anchor="middle" font-size="9" fill="#78716C">全团队使用</text>
+                        </g>
+                        
+                        <!-- 箭头 -->
+                        <polygon points="650,65 660,70 650,75" fill="#059669"/>
+                    </svg>
+                </div>
+                <p class="section-overview-caption">总周期约 3-4 个月，可根据团队情况调整</p>
+            </div>
+
+            <!-- 阶段详情 -->
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">MVP验证期</h3>
+                    <p class="step-desc">
+                        <strong>目标：</strong>跑通一个完整场景<br>
+                        <strong>周期：</strong>2-4周<br>
+                        <strong>投入：</strong>1-2人
+                    </p>
+                    <span class="step-arrow">→</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">能力扩展期</h3>
+                    <p class="step-desc">
+                        <strong>目标：</strong>补齐工具和记忆<br>
+                        <strong>周期：</strong>4-6周<br>
+                        <strong>投入：</strong>2-3人
+                    </p>
+                    <span class="step-arrow">→</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">深度集成期</h3>
+                    <p class="step-desc">
+                        <strong>目标：</strong>融入日常工作流<br>
+                        <strong>周期：</strong>6-8周<br>
+                        <strong>投入：</strong>2-3人
+                    </p>
+                    <span class="step-arrow">→</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">规模推广期</h3>
+                    <p class="step-desc">
+                        <strong>目标：</strong>全团队使用<br>
+                        <strong>周期：</strong>持续迭代<br>
+                        <strong>投入：</strong>1-2人维护
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3.2 各阶段详解 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">3.2</span>
+                <h2 class="section-title">各阶段详解</h2>
+            </div>
+
+            <h3 class="subsection-title">阶段一：MVP验证（2-4周）</h3>
+            
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>要素</th>
+                            <th>具体内容</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>目标</strong></td>
+                            <td>验证 AI Agent 在团队场景下的可行性，跑通一个完整的端到端流程</td>
+                        </tr>
+                        <tr>
+                            <td><strong>选择场景</strong></td>
+                            <td>选一个<strong>高频+低风险</strong>的场景，如：文档生成、代码审查、调研报告</td>
+                        </tr>
+                        <tr>
+                            <td><strong>核心交付</strong></td>
+                            <td>能在选定场景下，从"输入需求"到"输出成果"完整运行</td>
+                        </tr>
+                        <tr>
+                            <td><strong>成功标准</strong></td>
+                            <td>团队成员试用后认可效果，愿意继续投入</td>
+                        </tr>
+                        <tr>
+                            <td><strong>资源投入</strong></td>
+                            <td>1-2名开发人员，兼职或全职均可</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">MVP 阶段的关键</div>
+                <p class="insight-text">
+                    <strong>不追求完美，只追求"能用"。</strong>先让团队看到 Agent 的价值，建立信心后再逐步完善。过早追求功能完整会拖慢进度、消耗热情。
+                </p>
+            </div>
+
+            <h3 class="subsection-title">阶段二：能力扩展（4-6周）</h3>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>要素</th>
+                            <th>具体内容</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>目标</strong></td>
+                            <td>补齐核心能力，覆盖更多场景</td>
+                        </tr>
+                        <tr>
+                            <td><strong>重点工作</strong></td>
+                            <td>完善工具系统、建立记忆系统、开发 2-3 个核心技能</td>
+                        </tr>
+                        <tr>
+                            <td><strong>核心交付</strong></td>
+                            <td>Agent 能处理团队日常 3-5 个高频场景</td>
+                        </tr>
+                        <tr>
+                            <td><strong>成功标准</strong></td>
+                            <td>日常工作中有 20%+ 的任务可以交给 Agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>资源投入</strong></td>
+                            <td>2-3名开发人员</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">阶段三：深度集成（6-8周）</h3>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>要素</th>
+                            <th>具体内容</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>目标</strong></td>
+                            <td>将 Agent 融入团队日常工作流，成为"标配"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>重点工作</strong></td>
+                            <td>与现有工具集成、建立使用规范、培训团队成员</td>
+                        </tr>
+                        <tr>
+                            <td><strong>核心交付</strong></td>
+                            <td>Agent 成为工作流程的一部分，有明确的使用场景和规范</td>
+                        </tr>
+                        <tr>
+                            <td><strong>成功标准</strong></td>
+                            <td>团队成员主动使用 Agent，使用频率稳定</td>
+                        </tr>
+                        <tr>
+                            <td><strong>资源投入</strong></td>
+                            <td>2-3名开发人员 + 1名产品经理协调</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">阶段四：规模推广（持续）</h3>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>要素</th>
+                            <th>具体内容</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>目标</strong></td>
+                            <td>全团队/跨团队推广使用</td>
+                        </tr>
+                        <tr>
+                            <td><strong>重点工作</strong></td>
+                            <td>持续优化体验、收集反馈迭代、沉淀最佳实践</td>
+                        </tr>
+                        <tr>
+                            <td><strong>核心交付</strong></td>
+                            <td>稳定的 Agent 服务、完善的文档和培训材料</td>
+                        </tr>
+                        <tr>
+                            <td><strong>成功标准</strong></td>
+                            <td>Agent 成为团队基础设施，效率提升可量化</td>
+                        </tr>
+                        <tr>
+                            <td><strong>资源投入</strong></td>
+                            <td>1-2名开发人员持续维护</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3.3 资源估算 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">3.3</span>
+                <h2 class="section-title">资源投入估算</h2>
+            </div>
+
+            <div class="section-overview">
+                <span class="section-overview-label">投入概览</span>
+                <div class="section-overview-content">
+                    <svg viewBox="0 0 600 100" style="max-width: 600px;">
+                        <!-- 卡片1 -->
+                        <g transform="translate(20, 10)">
+                            <rect width="130" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="130" height="3" rx="1.5" fill="#059669"/>
+                            <text x="65" y="35" text-anchor="middle" font-size="24" font-weight="700" fill="#059669">2-4人</text>
+                            <text x="65" y="55" text-anchor="middle" font-size="11" fill="#78716C">研发人力</text>
+                            <text x="65" y="72" text-anchor="middle" font-size="10" fill="#059669">峰值阶段</text>
+                        </g>
+                        
+                        <!-- 卡片2 -->
+                        <g transform="translate(165, 10)">
+                            <rect width="130" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="130" height="3" rx="1.5" fill="#2563EB"/>
+                            <text x="65" y="35" text-anchor="middle" font-size="24" font-weight="700" fill="#2563EB">3-4月</text>
+                            <text x="65" y="55" text-anchor="middle" font-size="11" fill="#78716C">总周期</text>
+                            <text x="65" y="72" text-anchor="middle" font-size="10" fill="#2563EB">到规模推广</text>
+                        </g>
+                        
+                        <!-- 卡片3 -->
+                        <g transform="translate(310, 10)">
+                            <rect width="130" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="130" height="3" rx="1.5" fill="#D97706"/>
+                            <text x="65" y="35" text-anchor="middle" font-size="24" font-weight="700" fill="#D97706">$500+</text>
+                            <text x="65" y="55" text-anchor="middle" font-size="11" fill="#78716C">月度成本</text>
+                            <text x="65" y="72" text-anchor="middle" font-size="10" fill="#D97706">API调用费用</text>
+                        </g>
+                        
+                        <!-- 卡片4 -->
+                        <g transform="translate(455, 10)">
+                            <rect width="130" height="80" rx="10" fill="white" stroke="#F5F5F4"/>
+                            <rect width="130" height="3" rx="1.5" fill="#7C3AED"/>
+                            <text x="65" y="35" text-anchor="middle" font-size="24" font-weight="700" fill="#7C3AED">60%+</text>
+                            <text x="65" y="55" text-anchor="middle" font-size="11" fill="#78716C">效率提升</text>
+                            <text x="65" y="72" text-anchor="middle" font-size="10" fill="#7C3AED">重复工作节省</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">人力成本</h3>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>阶段</th>
+                            <th>开发人员</th>
+                            <th>产品/运营</th>
+                            <th>工作量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MVP验证</td>
+                            <td>1-2人</td>
+                            <td>0.5人</td>
+                            <td>2-4周</td>
+                        </tr>
+                        <tr>
+                            <td>能力扩展</td>
+                            <td>2-3人</td>
+                            <td>0.5人</td>
+                            <td>4-6周</td>
+                        </tr>
+                        <tr>
+                            <td>深度集成</td>
+                            <td>2-3人</td>
+                            <td>1人</td>
+                            <td>6-8周</td>
+                        </tr>
+                        <tr>
+                            <td>规模推广</td>
+                            <td>1-2人</td>
+                            <td>0.5人</td>
+                            <td>持续</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">基础设施成本</h3>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>项目</th>
+                            <th>月度费用</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LLM API 调用</td>
+                            <td>$300-1000</td>
+                            <td>根据使用量，Claude/GPT-4 等</td>
+                        </tr>
+                        <tr>
+                            <td>向量数据库</td>
+                            <td>$50-200</td>
+                            <td>记忆存储，如 Pinecone</td>
+                        </tr>
+                        <tr>
+                            <td>服务器资源</td>
+                            <td>$100-300</td>
+                            <td>Agent 运行环境</td>
+                        </tr>
+                        <tr>
+                            <td><strong>合计</strong></td>
+                            <td><strong>$500-1500</strong></td>
+                            <td>中等规模团队估算</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">ROI 参考</div>
+                <p class="insight-text">
+                    假设团队 10 人，每人每天节省 1 小时重复工作时间。按平均时薪 200 元计算，每月节省：<strong>10人 × 1小时 × 22天 × 200元 = 44,000 元</strong>。基础设施月成本约 3,000-10,000 元，<strong>ROI 约 4-14 倍</strong>。
+                </p>
+            </div>
+        </section>
+
+        <!-- 3.4 风险与应对 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">3.4</span>
+                <h2 class="section-title">风险与应对策略</h2>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>风险</th>
+                            <th>影响</th>
+                            <th>应对策略</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag tag-red">Agent 输出不准确</span></td>
+                            <td>产出质量问题</td>
+                            <td>关键输出需人工审核；建立反馈机制持续优化</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-orange">团队抵触使用</span></td>
+                            <td>落地推进困难</td>
+                            <td>从意见领袖开始试用；展示真实效果案例</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-orange">成本超出预期</span></td>
+                            <td>预算压力</td>
+                            <td>监控使用量；优化调用策略；设置成本上限</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-blue">数据安全顾虑</span></td>
+                            <td>合规风险</td>
+                            <td>使用企业版 API；敏感数据脱敏处理</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-purple">技术依赖风险</span></td>
+                            <td>供应商锁定</td>
+                            <td>抽象 LLM 接口；保持切换能力</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="compare-grid">
+                <div class="compare-box negative">
+                    <div class="compare-header">
+                        <span class="compare-icon">⚠️</span>
+                        <h3 class="compare-title">常见失败模式</h3>
+                    </div>
+                    <ul class="compare-list">
+                        <li>一开始就追求"大而全"</li>
+                        <li>没有选好第一个场景</li>
+                        <li>忽视团队培训和习惯养成</li>
+                        <li>没有持续收集反馈迭代</li>
+                        <li>对 Agent 期望过高</li>
+                    </ul>
+                </div>
+                <div class="compare-box positive">
+                    <div class="compare-header">
+                        <span class="compare-icon">✅</span>
+                        <h3 class="compare-title">成功关键因素</h3>
+                    </div>
+                    <ul class="compare-list">
+                        <li>从小场景开始，快速验证</li>
+                        <li>选择高频+低风险的场景切入</li>
+                        <li>有专人负责推进和答疑</li>
+                        <li>建立反馈渠道，持续优化</li>
+                        <li>正确定位：助手而非替代</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3.5 向上汇报要点 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">3.5</span>
+                <h2 class="section-title">向上汇报要点</h2>
+            </div>
+
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                如果你需要向领导汇报 AI Agent 落地方案，以下是建议的汇报结构：
+            </p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3 class="timeline-title">① 背景与问题</h3>
+                    <p class="timeline-desc">团队当前面临的效率瓶颈、重复工作占比、痛点场景</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="timeline-title">② 解决方案</h3>
+                    <p class="timeline-desc">引入 AI Agent 的核心价值——自动化重复工作、统一标准、沉淀经验</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="timeline-title">③ 落地计划</h3>
+                    <p class="timeline-desc">四阶段路线图，每阶段的目标、交付物、里程碑</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="timeline-title">④ 资源需求</h3>
+                    <p class="timeline-desc">人力投入、基础设施成本、时间周期</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="timeline-title">⑤ 预期收益</h3>
+                    <p class="timeline-desc">效率提升预估、ROI 分析、长期价值</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="timeline-title">⑥ 风险与对策</h3>
+                    <p class="timeline-desc">主要风险识别、应对策略、止损机制</p>
+                </div>
+            </div>
+
+            <div class="quote">
+                <p class="quote-text">"我们计划用 2-4 周做 MVP 验证，选择 [具体场景] 作为切入点，投入 1-2 名开发人员。如果效果符合预期，再逐步扩展。初期投入可控，风险可控。"</p>
+                <p class="quote-author">— 建议的汇报话术</p>
+            </div>
+        </section>
+
+        <!-- 本章小结 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">📝</span>
+                <h2 class="section-title">本章小结</h2>
+            </div>
+
+            <ul class="content-list">
+                <li><strong>落地原则：</strong>先跑起来，再逐步完善</li>
+                <li><strong>四阶段路径：</strong>MVP验证 → 能力扩展 → 深度集成 → 规模推广</li>
+                <li><strong>资源估算：</strong>峰值 2-4 人，总周期 3-4 个月</li>
+                <li><strong>成功关键：</strong>选好第一个场景，快速见效，持续迭代</li>
+                <li><strong>风险应对：</strong>关键输出人工审核，正确定位期望</li>
+            </ul>
+
+            <div class="insight-box">
+                <div class="insight-title">下一步</div>
+                <p class="insight-text">
+                    落地计划有了，最后一章我们来看看<strong>AI Agent 的未来发展方向</strong>——它会如何演进？对团队能力有什么长期影响？需要提前布局什么？
+                </p>
+            </div>
+        </section>
+
+        <!-- 页脚导航 -->
+        <!-- 章节导航 -->
+        <div style="margin-top:24px;padding-top:16px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <a href="chapter2-architecture.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">← 上一章：能力架构</a>
+            <a href="chapter4-future.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">下一章：未来演进 →</a>
+        </div>
+
+        <!-- 了解更多 -->
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+        <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+        我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+        </p>
+        <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+        🏠 访问AI洞察首页
+        </a>
+        </div>
+    </div>
+</body>
+</html>

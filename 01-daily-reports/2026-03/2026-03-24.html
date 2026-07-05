@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 - 2026-03-24 (v3.2)</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root {
+            --color-success:#059669;--color-success-light:#10B981;--color-danger:#E11D48;--color-danger-light:#FF7B72;--color-warning:#D97706;--color-info:#2563EB;--color-info-light:#54AEFF;--color-purple:#7C3AED;--color-orange:#EA580C;--color-text-primary:#1C1917;--color-text-secondary:#57534E;--color-text-muted:#78716C;--color-border:#E7E5E4;--color-border-light:#F5F5F4;--color-bg:#F8FAFB;--color-bg-card:#FFFFFF;--color-bg-table-header:#FAFAF9;--gradient-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--gradient-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--gradient-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--gradient-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow-card:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-full:999px;--font-family:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--transition-normal:200ms cubic-bezier(.4,0,.2,1);--content-max-width:980px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font-family);background:var(--color-bg);color:var(--color-text-primary);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--content-max-width);margin:0 auto;padding:24px 20px}
+        .header{background:var(--gradient-success);color:#fff;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-date{font-size:14px;opacity:.85}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:700;margin-left:8px}
+        .overview{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-card);overflow:hidden}
+        .overview-title{font-size:18px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .overview-grid.five-cols{grid-template-columns:repeat(3,1fr)}
+        .overview-item{padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--color-border-light);background:var(--color-bg);transition:all .2s;min-width:0;overflow:hidden}
+        .overview-item:hover{border-color:var(--color-success-light);box-shadow:0 2px 8px rgba(5,150,105,.08)}
+        .overview-item-header{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+        .overview-item-icon{font-size:16px}
+        .overview-item-label{font-size:13px;font-weight:700;color:var(--color-success-light);letter-spacing:.3px}
+        .overview-item-label.orange{color:var(--color-orange)}
+        .overview-headline{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:6px;line-height:1.4}
+        .overview-item-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+        /* Heat Trend Table */
+        .heat-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow-card)}
+        .heat-header{background:linear-gradient(135deg,#EA580C 0%,#DC2626 50%,#B91C1C 100%);color:#fff;padding:18px 24px}
+        .heat-header-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .heat-header-title{font-size:17px;font-weight:800;margin-top:4px}
+        .heat-body{padding:16px 20px}
+        .heat-body p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-top:12px}
+        .heat-body p strong{color:var(--color-text-primary)}
+        .heat-table{width:100%;border-collapse:collapse;font-size:13px}
+        .heat-table th{padding:8px 10px;text-align:left;background:#FEF2F2;font-weight:700;color:#991B1B;border-bottom:2px solid #FECACA;font-size:12px}
+        .heat-table td{padding:10px;border-bottom:1px solid var(--color-border-light);vertical-align:top}
+        .heat-table tr:last-child td{border-bottom:none}
+        .heat-table tr:hover{background:rgba(234,88,12,.02)}
+        .heat-bar{display:flex;gap:2px;align-items:center}
+        .heat-bar-fill{width:10px;height:14px;border-radius:2px;background:linear-gradient(135deg,#EA580C,#DC2626)}
+        .heat-bar-empty{width:10px;height:14px;border-radius:2px;background:#F5F5F4}
+        .heat-trend-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .heat-trend-tag.up{background:#EFFDF5;color:#059669}
+        .heat-trend-tag.stable{background:#EFF6FF;color:#2563EB}
+        .heat-trend-tag.burst{background:#FEF2F2;color:#DC2626}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:4px;box-shadow:var(--shadow-card);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-muted);border-radius:var(--radius-sm);transition:var(--transition-normal);font-family:var(--font-family);min-width:80px}
+        .tab-btn:hover{color:var(--color-text-primary);background:var(--color-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--gradient-success);color:#fff}
+        .tab-btn.orange[aria-selected="true"]{background:var(--gradient-orange)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow-card)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--color-border-light);display:flex;align-items:center;gap:8px}
+        .section-header .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gradient-success);color:#fff;font-size:12px;font-weight:700}
+        .section-header .num.orange{background:var(--gradient-orange)}
+        .sub-header{font-size:14px;font-weight:700;color:var(--color-text-muted);margin:14px 0 10px;padding-left:4px;letter-spacing:.5px}
+        .sub-header:first-child{margin-top:0}
+        .news-item{padding:14px 0;border-bottom:1px solid var(--color-border-light);transition:background .15s;margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:var(--radius-sm)}
+        .news-item:hover{background:rgba(5,150,105,.02)}
+        .news-item:last-child{border-bottom:none}
+        .news-tag{display:inline-block;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:var(--color-danger)}
+        .tag-new{background:#EFFDF5;color:var(--color-success)}
+        .tag-funding{background:#E0F2FE;color:#0284C7}
+        .tag-policy{background:#FFF7ED;color:var(--color-orange)}
+        .tag-practice{background:#ECFDF5;color:#059669}
+        .tag-cn{background:#FEF2F2;color:#DC2626}
+        .news-title{font-size:15px;font-weight:600;margin:4px 0 3px}
+        .news-title a{color:var(--color-text-primary);text-decoration:none}
+        .news-title a:hover{color:var(--color-success)}
+        .news-source{font-size:12px;color:var(--color-text-muted)}
+        .news-detail{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+        .news-detail-row{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.6}
+        .news-detail-label{flex-shrink:0;font-weight:700;color:var(--color-success);font-size:12px;padding:1px 0;min-width:60px}
+        .news-detail-label.orange{color:var(--color-orange)}
+        .news-detail-label.china{color:#DC2626}
+        .news-detail-value{color:var(--color-text-secondary);flex:1}
+        .news-detail-value strong{color:var(--color-text-primary);font-weight:600}
+        .news-data-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+        .news-data-chip{display:inline-flex;align-items:center;padding:3px 10px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--radius-full);font-size:12px;font-weight:600;color:#166534;transition:all .15s}
+        .news-data-chip:hover{background:#DCFCE7;border-color:#86EFAC}
+        .news-data-chip.orange{background:#FFF7ED;border-color:#FED7AA;color:#9A3412}
+        .news-data-chip.china{background:#FEF2F2;border-color:#FECACA;color:#991B1B}
+        .news-summary-compact{font-size:13.5px;color:var(--color-text-secondary);margin-top:6px;line-height:1.6}
+        .deep-focus-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:0;margin-bottom:16px;box-shadow:var(--shadow-card);overflow:hidden}
+        .deep-focus-header{background:var(--gradient-purple);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:10px}
+        .deep-focus-header.orange-theme{background:linear-gradient(135deg,#EA580C 0%,#DC2626 100%)}
+        .deep-focus-header.china-theme{background:linear-gradient(135deg,#DC2626 0%,#B91C1C 50%,#991B1B 100%)}
+        .deep-focus-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .deep-focus-title{font-size:17px;font-weight:800;margin-top:4px;line-height:1.4}
+        .deep-focus-body{padding:20px 24px}
+        .deep-focus-body p{font-size:14.5px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:18px}
+        .deep-focus-body p:last-child{margin-bottom:0}
+        .deep-focus-body p strong{color:var(--color-text-primary)}
+        .deep-focus-takeaway{margin-top:20px;padding:16px 18px;background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%);border-radius:var(--radius-md);border-left:4px solid var(--color-purple)}
+        .deep-focus-takeaway.orange-theme{background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border-left-color:var(--color-orange)}
+        .deep-focus-takeaway.china-theme{background:linear-gradient(135deg,#FEF2F2 0%,#FEE2E2 100%);border-left-color:#DC2626}
+        .deep-focus-takeaway-label{font-size:12px;font-weight:700;color:var(--color-purple);margin-bottom:6px;letter-spacing:.5px}
+        .deep-focus-takeaway-label.orange{color:var(--color-orange)}
+        .deep-focus-takeaway-label.china{color:#DC2626}
+        .deep-focus-takeaway-text{font-size:13.5px;color:var(--color-text-secondary);line-height:1.7}
+        .deep-focus-takeaway-text strong{color:var(--color-text-primary)}
+        /* Pattern Insight Card */
+        .pi-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow-card);transition:all .25s cubic-bezier(.4,0,.2,1)}
+        .pi-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+        .pi-header{display:flex;align-items:center;gap:12px;padding:14px 20px;background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%);border-bottom:1px solid #FDE68A}
+        .pi-badge{display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 10px;border-radius:8px;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,#B45309 0%,#D97706 100%);white-space:nowrap}
+        .pi-title{font-size:16px;font-weight:700;color:var(--color-text-primary);flex:1;letter-spacing:-.01em;line-height:1.4}
+        .pi-row{display:flex;padding:14px 20px;border-bottom:1px solid var(--color-border-light);gap:14px}
+        .pi-row:last-child{border-bottom:none}
+        .pi-row.highlight{background:linear-gradient(135deg,rgba(217,119,6,.04) 0%,rgba(217,119,6,.01) 100%)}
+        .pi-row-label{width:56px;flex-shrink:0;font-size:12px;font-weight:700;color:#A8A29E;padding-top:2px;letter-spacing:.02em}
+        .pi-row-label.l2{color:#D97706}
+        .pi-row-content{flex:1;font-size:14px;color:var(--color-text-secondary);line-height:1.7}
+        .pi-row-content strong{color:var(--color-text-primary);font-weight:700}
+        .pi-evo{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+        .pi-evo-step{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--color-bg-table-header);border-radius:8px;border:1px solid var(--color-border-light);transition:all .15s}
+        .pi-evo-step.active{background:rgba(217,119,6,.12);border-color:#D97706;box-shadow:0 0 0 1px rgba(217,119,6,.15)}
+        .pi-evo-step.future{background:rgba(124,58,237,.06);border-color:#8B5CF6}
+        .pi-evo-tag{font-size:10px;font-weight:800;color:#D97706;padding:2px 7px;background:rgba(217,119,6,.1);border-radius:4px;letter-spacing:.02em}
+        .pi-evo-step.future .pi-evo-tag{color:#7C3AED;background:rgba(124,58,237,.1)}
+        .pi-evo-text{font-size:12px;color:var(--color-text-secondary)}
+        .pi-evo-arrow{color:#A8A29E;font-weight:700;font-size:14px}
+        .pi-table{padding:10px 20px 16px;border-top:1px solid var(--color-border-light)}
+        .pi-t-head{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-bottom:2px solid var(--color-border-light);margin-bottom:4px}
+        .pi-t-head span{font-size:11px;font-weight:700;color:#A8A29E;text-transform:uppercase;letter-spacing:.06em}
+        .pi-t-section{padding:6px 10px 2px}
+        .pi-t-section-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;letter-spacing:.03em}
+        .pi-t-section.verified .pi-t-section-tag{color:#047857;background:rgba(5,150,105,.08)}
+        .pi-t-section.current .pi-t-section-tag{color:#D97706;background:rgba(217,119,6,.08)}
+        .pi-t-section.projected .pi-t-section-tag{color:#7C3AED;background:rgba(124,58,237,.08)}
+        .pi-t-row{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-radius:6px;font-size:13px;line-height:1.6;transition:background .15s}
+        .pi-t-row:hover{background:rgba(0,0,0,.02)}
+        .pi-t-row.projected{background:rgba(124,58,237,.02)}
+        .pi-t-row.projected:hover{background:rgba(124,58,237,.05)}
+        .pi-t-rule{font-weight:600;color:#B45309;font-size:12px;padding-top:1px}
+        .pi-t-row.projected .pi-t-rule{color:#7C3AED}
+        .pi-t-reality{color:var(--color-text-primary);font-weight:500}
+        .pi-t-analogy{color:var(--color-text-secondary);padding-left:10px;border-left:2px solid var(--color-border-light)}
+        .pi-t-divider{border-top:2px dashed var(--color-border-light);margin:8px 10px}
+        .pi-t-verify{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(5,150,105,.06);border-radius:6px;font-size:12px;font-weight:600;color:#047857}
+        .pi-confidence{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(124,58,237,.04);border-radius:6px;border-left:3px solid #8B5CF6;font-size:11px;font-weight:500;color:#7C3AED;letter-spacing:.02em}
+        .data-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--color-border-light)}
+        .data-table th{background:var(--color-bg-table-header);font-weight:600;color:var(--color-text-secondary)}
+        .data-table td{color:var(--color-text-primary)}
+        .data-table tr:last-child td{border-bottom:none}
+        .coverage-bar{margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:16px;font-size:13px}
+        .coverage-bar .label{font-weight:700;color:var(--color-text-muted)}
+        .coverage-bar .bar{flex:1;height:8px;background:#E7E5E4;border-radius:4px;overflow:hidden;display:flex}
+        .coverage-bar .bar-overseas{background:var(--gradient-success);height:100%}
+        .coverage-bar .bar-china{background:var(--gradient-china);height:100%}
+        .coverage-bar .stats{display:flex;gap:12px;font-weight:600}
+        .coverage-bar .stat-overseas{color:var(--color-success)}
+        .coverage-bar .stat-china{color:#DC2626}
+        .footer{text-align:center;padding:24px;font-size:12px;color:var(--color-text-muted);border-top:1px solid var(--color-border-light);margin-top:24px}
+        @media(max-width:960px){
+            .overview-grid.five-cols{grid-template-columns:1fr 1fr}
+        }
+        @media(max-width:768px){
+            .overview-grid,.overview-grid.five-cols{grid-template-columns:1fr}
+            .tab-btn{font-size:11px;padding:8px 4px;min-width:60px}
+            .news-detail-row{flex-direction:column;gap:2px}
+            .news-detail-label{min-width:auto}
+            .deep-focus-header{padding:14px 18px}
+            .deep-focus-body{padding:16px 18px}
+            .coverage-bar{flex-direction:column;gap:8px}
+            .heat-table{font-size:12px}
+            .heat-table th,.heat-table td{padding:6px 4px}
+            .pi-evo{flex-direction:column;align-items:flex-start}
+            .pi-evo-arrow{display:none}
+            .pi-t-head{display:none}
+            .pi-t-row{grid-template-columns:1fr;gap:2px;padding:6px 10px;border-left:3px solid var(--color-border-light);margin-bottom:4px}
+            .pi-t-row.projected{border-left-color:rgba(124,58,237,.3)}
+            .pi-t-analogy{border-left:none;padding-left:0;font-size:12px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-badge">📡 AI行业洞察项目 - AI日报</div>
+            <div class="header-title">AI 日报 <span class="version-badge">v3.2</span></div>
+            <div class="header-date">2026年3月24日 周二 | 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</div>
+        </div>
+
+        <div class="coverage-bar">
+            <span class="label">📊 覆盖均衡</span>
+            <div class="bar">
+                <div class="bar-overseas" style="width:83%"></div>
+                <div class="bar-china" style="width:17%"></div>
+            </div>
+            <div class="stats">
+                <span class="stat-overseas">🌏 海外 10条</span>
+                <span class="stat-china">🇨🇳 国内 2条</span>
+            </div>
+        </div>
+
+        <div class="overview">
+            <div class="overview-title">📋 全文概览</div>
+            <div class="overview-grid five-cols">
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🧠</span><span class="overview-item-label">大模型</span></div>
+                    <div class="overview-headline">OpenAI三件事齐发：File Library跨会话文件库上线（3/23）、GPT-5.4 min…</div>
+                    <div class="overview-item-text">OpenAI三件事齐发：File Library跨会话文件库上线（3/23）、GPT-5.4 mini推送免费用户（3/18）、旧版深度研究即将退场（3/26）。Anthropic发布81,000人用户调研报告揭示AI真实使用场景。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">⌨️</span><span class="overview-item-label">AI Coding</span></div>
+                    <div class="overview-headline">苹果WWDC 2026定档6月8-12日，主题聚焦「AI advancements」——新Siri …</div>
+                    <div class="overview-item-text">苹果WWDC 2026定档6月8-12日，主题聚焦「AI advancements」——新Siri + Xcode agentic coding将是最大看点。OpenAI同步推出Codex学生计划，为大学生提供$100算力额度。AI编程工具混战加剧，Kiro/Claude Code/Cursor三强角力。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">📱</span><span class="overview-item-label">AI 应用</span></div>
+                    <div class="overview-headline">Claude 3月用量翻倍促销持续（至3/28），非高峰时段5小时用量×2。Anthropic $1…</div>
+                    <div class="overview-item-text">Claude 3月用量翻倍促销持续（至3/28），非高峰时段5小时用量×2。Anthropic $1亿Claude Partner Network正在建立，深度绑定企业生态。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI 行业</span></div>
+                    <div class="overview-headline">CrowdStrike+AWS+NVIDIA安全AI加速器Demo Day今日在旧金山举行，35家初…</div>
+                    <div class="overview-item-text">CrowdStrike+AWS+NVIDIA安全AI加速器Demo Day今日在旧金山举行，35家初创展示网安+AI融合方案。GeekWire「Agents of Transformation」活动同日举办，探讨AI Agent真实落地路径。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔄</span><span class="overview-item-label">企业转型</span></div>
+                    <div class="overview-headline">Google Workspace全面Gemini化：Docs/Sheets/Slides/Drive…</div>
+                    <div class="overview-item-text">Google Workspace全面Gemini化：Docs/Sheets/Slides/Drive迎来新一轮AI辅助更新。AlphaFold蛋白质复合物数据库3月新增大量数据，科研用AI进一步强化。</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label">🔥 热度趋势</div>
+                <div class="heat-header-title">今日AI话题热度追踪</div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead><tr><th>排名</th><th>话题</th><th>热度</th><th>天数</th><th>趋势</th><th>核心信号</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇</td>
+                            <td><strong>ChatGPT File Library</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>今日新热点</td>
+                        </tr>
+                        <tr>
+                            <td>🥈</td>
+                            <td><strong>WWDC 2026 AI</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>今日新热点</td>
+                        </tr>
+                        <tr>
+                            <td>🥉</td>
+                            <td><strong>Codex学生计划</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>今日新热点</td>
+                        </tr>
+                        <tr>
+                            <td>4️⃣</td>
+                            <td><strong>AI安全加速器</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>今日新热点</td>
+                        </tr>
+                        <tr>
+                            <td>5️⃣</td>
+                            <td><strong>Claude Opus 4.6</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag stable">➡️ 持平</span></td>
+                            <td>持续关注中</td>
+                        </tr>
+                        <tr>
+                            <td>6️⃣</td>
+                            <td><strong>GPT-5.4</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag stable">➡️ 持平</span></td>
+                            <td>持续关注中</td>
+                        </tr>
+                        <tr>
+                            <td>7️⃣</td>
+                            <td><strong>Claude Partner Network</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag stable">➡️ 持平</span></td>
+                            <td>持续关注中</td>
+                        </tr>
+                        <tr>
+                            <td>8️⃣</td>
+                            <td><strong>深度研究旧版退场</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>5天</td>
+                            <td><span class="heat-trend-tag down">📉 降温</span></td>
+                            <td>热度回落</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td><strong>GPT-5.1模型退休</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>5天</td>
+                            <td><span class="heat-trend-tag down">📉 降温</span></td>
+                            <td>热度回落</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>基于今日搜索调研和新闻覆盖密度评估</p>
+            </div>
+        </div>
+
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn" role="tab" aria-selected="true" data-tab="foundation">🧠 大模型</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="coding">⌨️ AI Coding</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="application">📱 AI 应用</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="industry">🏭 AI 行业</button>
+            <button class="tab-btn orange" role="tab" aria-selected="false" data-tab="enterprise">🔄 企业转型</button>
+        </nav>
+
+
+        <article id="foundation" class="tab-panel active">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes#h_01JQDM55CBPK2CQWP6J6E7ZR7Z" target="_blank">ChatGPT File Library上线：文件跨会话永久保存</a></div>
+                    <div class="news-source">OpenAI</div>
+                    <div class="news-summary-compact">OpenAI于3月23日正式推出File Library功能。用户上传或创建的文件（PDF、表格、图片等）自动保存至Library，可跨会话复用。支持Composer中快速引用近期文件，可在侧边栏Library标签浏览全部上传记录，还能直接询问ChatGPT关于历史上传文件的问题。当前向Plus/Pro/Business用户滚动推出，European Economic Area稍后跟进。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.anthropic.com/research/what-users-want" target="_blank">Anthropic发布81,000人AI调研报告：人们真正用AI做什么？</a></div>
+                    <div class="news-source">Anthropic</div>
+                    <div class="news-summary-compact">Anthropic邀请81,000名Claude.ai用户分享AI使用方式、期望与顾虑，形成大规模定性研究。报告揭示当前AI使用的真实场景分布、用户最担忧的AI风险类型、以及AI辅助工作与替代工作的边界感知。是目前规模最大的AI用户行为一手调研。</div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%80%E5%91%A8%E8%B5%84%E8%AE%AF%E7%B2%BE%E9%80%89+2026.3.23" target="_blank">大模型一周资讯精选(2026.3.18-2026.3.23)</a></div>
+                    <div class="news-source">微信公众号</div>
+                    <div class="news-summary-compact">国内AI媒体对3月18日至23日大模型领域重要动态的综合梳理，涵盖本周国内外主流大模型的最新进展、产品更新与市场动态，是了解国内AI圈视角的重要参考。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">ChatGPT File Library：跨会话记忆正式开启「永久文件」时代</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>OpenAI今日上线 File Library，用户上传的文件可以跨会话永久保存并随时调用——这是ChatGPT自2022年发布以来最重要的记忆架构升级之一。此前每次新对话都需要重新上传文件的痛点，正式成为历史。</p><p>这个功能的战略意义远超表面。ChatGPT正在从「每次对话的临时工具」进化为「懂你的长期助理」。File Library使得个人工作流可以被AI持久化——代码库、设计规范、历史决策文档都能成为AI的长期记忆基底。对企业用户而言，这是「AI知识沉淀」的起点。</p><p>同一天Anthropic发布的81,000人AI调研报告也印证了这一趋势：用户对AI最大的需求之一正是「记得我之前说过的」。OpenAI精准踩中这个需求点，File Library不只是功能，是对下一轮用户粘性之战的先手棋。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI助手的竞争正式进入「记忆基础设施」阶段——谁先把用户的工作流数据留住，谁就赢得长期锁定。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">大模型的「记忆扩展定律」：从会话→跨会话→全生命周期</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>大模型的竞争重心正从「推理能力」转向「记忆基础设施」</strong>——Context Window扩大解决了单次会话问题，跨会话持久记忆才是长期锁定用户的核心壁垒。</div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">会话内记忆</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">跨会话文件库</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">全生命周期AI伴侣</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">Context扩展</span><span class="pi-t-reality">GPT-4→Claude 200K→Gemini 1M Token——大家都在扩大单次会话的「工作记忆」</span><span class="pi-t-analogy">像桌面从A4扩到整面墙，但用完还得清空</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">File Library</span><span class="pi-t-reality"><strong>ChatGPT File Library上线</strong>：文件跨会话永久保存，AI终于有了「长期记忆」——用过的文件、写过的代码都能持续调用</span><span class="pi-t-analogy">像从便签本进化到带索引的档案室</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">6-12个月内，大模型厂商的核心竞争将从「谁更聪明」转向「谁更了解你」——个人知识图谱+行为历史将成为护城河</span><span class="pi-t-analogy">像从出租车司机变成你的专属司机，熟悉你的每条常用路线</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: 6个月 · 信号: Memory功能的MAU留存率 vs 无Memory版对比</div>
+            </div>
+        </article>
+
+        <article id="coding" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://techcrunch.com/2026/03/23/apple-wwdc-june-8-12-ai-advancements-siri-developers-conference/" target="_blank">Apple WWDC 2026定档6月8-12日，聚焦「AI advancements」</a></div>
+                    <div class="news-source">TechCrunch</div>
+                    <div class="news-summary-compact">苹果3月23日官宣WWDC 2026于6月8-12日在库比蒂诺举行，主题明确聚焦「AI advancements」。预期亮点：① 配备更强个人上下文+屏幕感知能力的新版Siri（或联动Gemini）；② Foundation Model框架重大升级；③ Xcode agentic coding工具（已接入Claude Agent + OpenAI Codex）。去年WWDC主打「Liquid Glass」设计几乎不提AI，今年将完全转向。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://openai.com/index/codex-for-students/" target="_blank">Codex学生计划：美加高校学生可领$100 AI编程额度</a></div>
+                    <div class="news-source">OpenAI</div>
+                    <div class="news-summary-compact">OpenAI于3月20日推出Codex for Students，面向美国和加拿大在校本科生。学生通过SheerID用大学邮箱完成验证后，可领取$100 ChatGPT credits（即2,500额度），用于扩展ChatGPT Free/Go/Plus/Pro计划之外的Codex使用量，12个月内有效。这是OpenAI扩大AI编程工具教育渗透的重要一步。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.reddit.com/r/ChatGPTCoding/comments/1rxw1gu/what_ai_tools_are_actually_worth_trying_beyond/" target="_blank">AI编程工具三强混战：Kiro崛起，Claude Code vs Cursor vs Copilot</a></div>
+                    <div class="news-source">Reddit/社区讨论</div>
+                    <div class="news-summary-compact">Reddit r/ChatGPTCoding社区近期热议2026年AI编程工具选择，新晋工具Kiro进入讨论视野，与Claude Code Pro、Cursor Pro、GitHub Copilot形成四强竞争格局。企业用户开始评估多工具策略而非单一绑定。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">苹果 WWDC 2026 定档 + Codex 学生计划：平台战争的两翼夹击</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>苹果今日宣布WWDC 2026于6月8-12日举行，主题高度聚焦「AI advancements」。与此同时，OpenAI宣布Codex面向美国和加拿大高校学生提供$100 AI编程额度。表面上是两条独立新闻，实则是AI编程市场平台战的两路并进。</p><p>苹果用WWDC绑定专业开发者——届时Apple Intelligence的开发者API将全面开放，未来所有iOS/macOS应用都需要接入AI能力，开发者别无选择。Codex学生计划则是另一条时间线：用$100免费额度圈定下一代开发者在学生时期就养成使用OpenAI工具链的习惯。</p><p>AI编程市场今日还有第三条线：Kiro崛起，Claude Code vs Cursor vs Copilot 三强混战白热化。但最值得警惕的是苹果——它不是在参与这场战争，它在用自己的方式重新定义战场边界。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI编程工具的终局不是谁补全最准，而是谁先变成开发者无法绕过的平台基础设施——苹果用WWDC打专业端，OpenAI用学生计划打增量端。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">AI编程工具的「平台化收割定律」：工具→IDE→操作系统</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>AI编程市场的终局不是谁的补全最准，而是谁先成为开发者的「操作系统」</strong>——苹果用WWDC+学生计划绑定下一代开发者，这是经典的平台生态战。</div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">代码补全工具</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">AI IDE竞争</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">开发者操作系统</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>玩家</span><span>当前动作</span><span>平台战略本质</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">GitHub Copilot</span><span class="pi-t-reality">微软通过VS Code生态先行绑定开发者，Copilot嵌入工作流</span><span class="pi-t-analogy">像Office绑定职场人群</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">Apple战略</span><span class="pi-t-reality"><strong>WWDC 2026定档+Codex $100学生计划</strong>：苹果从两端夹击——开发者峰会绑定专业开发者，免费额度圈定下一代</span><span class="pi-t-analogy">像大学食堂补贴——便宜进来，毕业了还用这套生态</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">3-6个月后，Kiro/Claude Code/Cursor三角混战将加速，胜出者是能让开发者「离不开」的那个——不是最聪明，而是工作流嵌入最深</span><span class="pi-t-analogy">像微信不是功能最强的IM，但迁移成本最高</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: WWDC 2026（6月8-12日） · 信号: Apple Intelligence开发者API开放力度</div>
+            </div>
+        </article>
+
+        <article id="application" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://openai.com/index/gpt-5-4-mini/" target="_blank">GPT-5.4 mini向免费用户开放，成「Thinking」功能入口</a></div>
+                    <div class="news-source">OpenAI</div>
+                    <div class="news-summary-compact">OpenAI在3月18日开始向ChatGPT Free/Go用户推出GPT-5.4 mini，通过Composer「+」菜单的「Thinking」功能使用。对Plus/Pro付费用户，GPT-5.4 mini作为高峰期限速后的备用推理模型，保障推理功能持续可用。GPT-5 Thinking mini将在30天内从模型选择器退出。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://support.claude.com/en/articles/14063676-claude-march-2026-usage-promotion" target="_blank">Claude 3月用量翻倍促销持续至3月28日</a></div>
+                    <div class="news-source">Anthropic</div>
+                    <div class="news-summary-compact">Anthropic的Claude 3月促销（3月13日-28日）仍在持续：每日非高峰时段（北京时间22:00-次日14:00）用量额度翻倍，即5小时使用量变为10小时。此举旨在提高非高峰时段算力利用率，同时为用户提供更充裕的使用空间。距离活动结束还有4天，重度用户可抓紧利用。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.anthropic.com/news/claude-partner-network" target="_blank">Anthropic投资$1亿建立Claude Partner Network</a></div>
+                    <div class="news-source">Anthropic</div>
+                    <div class="news-summary-compact">Anthropic宣布投资1亿美元建立Claude Partner Network，系统性地将Claude能力整合到企业生态合作伙伴中。这标志着Anthropic从单一模型提供商向AI平台生态运营商的战略转型，与OpenAI GPT企业合作体系形成直接竞争。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">GPT-5.4 mini 免费开放 + Claude Partner Network：AI应用的漏斗战争</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>今日两个关键动作：OpenAI将GPT-5.4 mini的「Thinking」推理功能向免费用户开放，Anthropic宣布将投资$1亿建立Claude Partner Network（绑定系统集成商和应用开发者）。这是AI应用市场最经典的「漏斗战争」——两端同时发力。</p><p>免费开放Thinking功能是拉低体验门槛：让免费用户也能感受到推理能力的上限，从而产生升级付费的意愿。Claude Partner Network是锁定企业端：通过绑定SI（系统集成商）把Claude嵌入更多企业工作流，这与Salesforce的ISV生态策略高度相似。Claude 3月用量翻倍促销（持续至3/28）则是在窗口期内最大化新用户获取。</p><p>两家公司同日发力，折射出AI应用市场已进入「存量博弈」阶段——纯靠模型能力拉新的效果递减，必须从商业生态层面建立护城河。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI应用的战场已从「谁更聪明」转向「谁更嵌入」——免费漏斗拉用户，Partner Network锁企业，两端同时建设才是完整的商业策略。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">AI应用的「免费漏斗定律」：免费用户→付费转化→生态锁定</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>今天所有大厂的「免费开放」动作背后都是同一逻辑：用免费的Thinking功能吸引用户体验上限，再通过Partner Network锁定企业端付费</strong>——这是SaaS的经典PLG漏斗，只是规模更大。</div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">付费墙模式</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">免费漏斗</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">生态税收</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>动作</span><span>今日印证</span><span>背后逻辑</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">GPT免费层</span><span class="pi-t-reality">ChatGPT免费版→付费用户转化率推动OpenAI ARR突破$40亿</span><span class="pi-t-analogy">像Spotify——免费听广告，付费去广告</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">双线夹击</span><span class="pi-t-reality"><strong>GPT-5.4 mini免费开放Thinking</strong>（拉低体验门槛）+<strong>Claude Partner Network $1亿投资</strong>（锁定企业集成商）</span><span class="pi-t-analogy">像苹果——免费给开发者工具，但App Store抽30%佣金</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">6个月内，Claude Partner Network将成为B端护城河——拿到集成商就拿到企业用户，OpenAI也会跟进建立类似的SI生态</span><span class="pi-t-analogy">像Salesforce的ISV生态——自己不做，合作伙伴帮你把产品卖进每家公司</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 中高 · 验证窗口: 3个月 · 信号: Claude Partner Network的集成商数量和企业客户转化率</div>
+            </div>
+        </article>
+
+        <article id="industry" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://ir.crowdstrike.com/news-releases/news-release-details/crowdstrike-aws-and-nvidia-expand-global-cybersecurity-startup" target="_blank">CrowdStrike+AWS+NVIDIA网安AI加速器Demo Day今日举行</a></div>
+                    <div class="news-source">PR Newswire</div>
+                    <div class="news-summary-compact">CrowdStrike、AWS、NVIDIA联合举办的2026网络安全初创加速器项目Demo Day于今日（3月24日）在旧金山AWS Startup Loft召开，恰逢RSA Conference前夕。35家入选初创企业展示网络安全与AI融合方案，涵盖云安全、agentic AI安全、威胁检测等方向。三大巨头将为入选企业提供融资、技术指导和市场接触渠道。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.geekwire.com/2026/agents-openai-deepfakes-and-the-messy-reality-of-the-ai-boom-a-conversation-with-oren-etzioni/" target="_blank">GeekWire「Agents of Transformation」：AI Agent如何改变真实世界</a></div>
+                    <div class="news-source">GeekWire</div>
+                    <div class="news-summary-compact">GeekWire「Agents of Transformation」独立系列活动于今日举行，聚焦AI Agent在真实世界的转型案例与挑战。主题涵盖：deepfakes的社会影响、OpenAI Agent工具的企业落地、AI在商业中的混乱现实与机会。这是2026年企业AI Agent应用落地讨论的重要行业活动。</div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E5%85%A8%E7%90%83AI%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%92%E8%A1%8C%E6%A6%9C+2026%E5%B9%B43%E6%9C%88" target="_blank">2026年3月全球AI大模型竞争力全景（国内AI媒体分析）</a></div>
+                    <div class="news-source">微信公众号</div>
+                    <div class="news-summary-compact">国内AI分析媒体对2026年3月全球大模型竞争格局的综合研判，从实力、市场占有率、成本与可见度四个维度评估主流模型的梯队划分。分析认为国产大模型出海竞争力持续提升，中美模型竞争进入「质量平价」新阶段。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">CrowdStrike + AWS + NVIDIA 安全加速器：AI安全正式成为产业</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>今日三巨头联合举办「网络安全AI加速器Demo Day」——CrowdStrike（安全龙头）+ AWS（云计算基础设施）+ NVIDIA（AI算力）形成铁三角。这不是普通的合作公告，而是一个信号：AI安全从学术议题和创业赛道，正式进入产业化阶段。</p><p>背景是AI Agent的自主行动能力已经超过了现有安全框架的防御边界。传统安全产品是为人类操作员设计的——当AI Agent开始自主执行多步骤任务、调用API、修改代码时，现有的身份验证和权限控制体系面临根本性挑战。CrowdStrike早年靠云原生安全颠覆传统防病毒市场，这次要在AI安全赛道复刻这个路径。</p><p>GeekWire同日发布的「AI Agent如何改变真实世界」专题报道，也从用户视角印证了Agent商业化的加速——安全不再是可选项，而是Agent大规模商业部署的前置条件。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI安全产业的拐点已经到来——三大巨头联手是产业级信号，未来12个月内AI安全将从加分项变成企业AI采购的必要条件。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">AI安全的「危机触发定律」：技术爆发→安全真空→基础设施补课</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>每次重大技术爆发都会留下安全真空——AI Agent的自主行动能力已经超过了现有安全框架的防御边界</strong>，CrowdStrike+AWS+NVIDIA今天联合搞「AI安全加速器」就是这个趋势的产业化信号。</div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">技术爆发期</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">安全基础设施</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">安全即内置</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">互联网安全</span><span class="pi-t-reality">Web爆发→SQL注入/XSS横行→OWASP/WAF成标配→现在安全框架内置在云平台里</span><span class="pi-t-analogy">像汽车——先有车祸再有安全带，最后安全气囊成标配</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">AI安全产业化</span><span class="pi-t-reality"><strong>CrowdStrike+AWS+NVIDIA联合Demo Day</strong>：三大巨头联手，AI安全从学术议题变成产业级基础设施</span><span class="pi-t-analogy">像消防队从志愿者变成专业编制——规模化是时候到了</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">12个月内，AI安全将成为企业AI采购的必要条件而非加分项——就像HTTPS不再是可选的</span><span class="pi-t-analogy">像SSL证书从2014年前可选到现在浏览器强制要求</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: 12个月 · 信号: AI安全相关监管法规落地时间线和企业安全预算占比变化</div>
+            </div>
+        </article>
+
+        <article id="enterprise" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://blog.google/products-and-platforms/products/workspace/" target="_blank">Google Workspace全面Gemini化：Docs/Sheets/Slides/Drive同步升级</a></div>
+                    <div class="news-source">Google</div>
+                    <div class="news-summary-compact">Google于3月10日发布Workspace Gemini全面更新，覆盖Docs、Sheets、Slides、Drive四大核心办公工具。新功能包括更快速的AI辅助内容创建、智能数据分析与可视化、AI驱动的演示文稿生成。这是Google将Gemini深度嵌入企业办公流程的重要里程碑，与Microsoft Copilot在Office套件中的布局形成正面竞争。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://alphafold.ebi.ac.uk/" target="_blank">AlphaFold蛋白质复合物数据库3月新增数据，科研AI提速</a></div>
+                    <div class="news-source">EMBL-EBI / Google DeepMind</div>
+                    <div class="news-summary-compact">EMBL-EBI、Google DeepMind、NVIDIA联合更新AlphaFold蛋白质复合物数据库，3月新增大量蛋白质复合物结构预测数据。这进一步扩大了科研AI在生命科学领域的影响力，使药物研发、蛋白质功能研究等领域的AI辅助能力再上台阶。AI在科研转型中的深度应用价值持续释放。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Google Workspace 全面 Gemini 化：办公软件的范式切换时代</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Google今日宣布Workspace全线产品（Docs/Sheets/Slides/Drive）深度集成Gemini能力——这不是「给办公软件加个AI助手」，而是一次产品架构的范式切换。AI从插件变成了默认工作层，用户的每次文档操作、表格分析、演示制作都将默认有AI介入。</p><p>对标微软的策略：Microsoft 365 Copilot已经将AI订阅税定价在每月$30/人，并被大量企业接受。Google这次全面Gemini化，是用「原生集成」的方式建立差异化——Gemini的多模态能力（跨文字/图表/数据的理解）是Office Copilot目前的短板。两家公司正在用不同路径争夺企业AI办公市场。</p><p>同日AlphaFold蛋白质数据库3月更新，则代表另一个维度：AI进入科研基础设施。两个方向合看——AI正在同时从「办公生产力」和「科研基础设施」两端重构企业的工作方式。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">办公软件的AI化已不可逆——Google Workspace全面Gemini化标志着「AI是否集成」将很快不再是竞争要素，而是基础门槛。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">企业AI转型的「办公套件定律」：功能叠加→AI原生重构→新生产力标准</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>Google Workspace全面Gemini化不是「加了AI功能」，而是在宣告办公软件的范式切换</strong>——当AI不再是插件而是默认值，工作流将被重新定义，落后的企业将面临生产力代差。</div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">AI插件阶段</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">AI原生重构</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">AI协作标准</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>维度</span><span>今日印证</span><span>战略含义</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">Microsoft战役</span><span class="pi-t-reality">Office 365→Copilot for Microsoft 365，每月$30/人的AI税已被大量企业接受</span><span class="pi-t-analogy">像从买光盘到订阅——买了就停不了</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">Google反攻</span><span class="pi-t-reality"><strong>Docs/Sheets/Slides/Drive全线Gemini化</strong>：Google在企业办公市场的反攻号角——不只是追赶微软，而是用Gemini的多模态优势建立差异化</span><span class="pi-t-analogy">像淘宝打天猫——同一个集团的两条线，互相强化又互相竞争</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">6个月内，企业办公软件的AI能力将成为采购决策的首要因素——没有AI的Suite将面临流失风险，国内企业也将加速AI原生办公工具的研发</span><span class="pi-t-analogy">像云存储替代U盘——不是选项，是默认配置</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: 6个月 · 信号: Google Workspace AI功能付费渗透率和企业迁移Google/微软的NPS对比</div>
+            </div>
+        </article>
+
+
+        <div class="section-card" style="margin-top:20px">
+            <div class="section-header"><span class="num">📊</span> 数据速览</div>
+            <table class="data-table">
+                <thead><tr><th>指标</th><th>数值</th><th>变化/说明</th></tr></thead>
+                <tbody>
+                    <tr><td>OpenAI File Library</td><td><strong>3月23日上线</strong></td><td>Plus/Pro/Business用户</td></tr>
+                    <tr><td>GPT-5.4 mini</td><td><strong>已推送Free/Go</strong></td><td>via Thinking功能</td></tr>
+                    <tr><td>Claude用量促销</td><td><strong>剩余4天</strong></td><td>非高峰时段×2</td></tr>
+                    <tr><td>Anthropic用户调研</td><td><strong>81,000人</strong></td><td>最大规模AI用户研究</td></tr>
+                    <tr><td>WWDC 2026</td><td><strong>6月8-12日</strong></td><td>聚焦AI advancements</td></tr>
+                    <tr><td>Codex学生计划</td><td><strong>$100额度</strong></td><td>美加高校学生</td></tr>
+                    <tr><td>Claude Partner Network</td><td><strong>$1亿投资</strong></td><td>企业合作伙伴网络</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📌</span> 明日/下周值得关注</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-red);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-red);display:flex;align-items:center;gap:6px">🟢 WWDC 2026</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">6月8-12日，苹果今年最大AI产品发布会，新Siri + Xcode AI将是焦点</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-orange);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-orange);display:flex;align-items:center;gap:6px">🟢 ChatGPT旧版深度研究退场</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">3月26日旧版deep research模式将被移除，现有对话记录保留</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-yellow);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-yellow);display:flex;align-items:center;gap:6px">🟢 Claude促销收尾</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">3月28日Claude用量翻倍促销结束，届时恢复常规限额</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-blue);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-blue);display:flex;align-items:center;gap:6px">🟢 AI安全合规动向</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">CrowdStrike+AWS+NVIDIA加速器展示方向值得追踪，AI安全将是下半年融资热点</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="margin-top:20px;background:linear-gradient(135deg,#EFF6FF 0%,#EDE9FE 100%);border:1px solid #DBEAFE;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06)">
+            <div style="font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:#1E40AF">
+                🤖 深度洞察
+            </div>
+            <div style="font-size:14px;color:#374151;line-height:1.8;margin:0">
+                <p style="margin:0">🤖 <strong>AI洞察自述</strong></p><p style='margin:8px 0 0 0'>今天最大的信号不是某个新模型发布，而是三件小事共同指向同一个趋势：OpenAI的File Library（文件跨会话记忆）、Apple WWDC聚焦AI advancements（Siri要真正变「懂你」了）、Codex学生计划（让下一代程序员从Day 1就用AI写代码）。</p><p style='margin:8px 0 0 0'><strong>这些都是「AI从工具变成环境」的信号</strong>——不是你主动打开AI用完关掉，而是AI开始成为你数字生活的持续底层基础设施。</p><p style='margin:8px 0 0 0'>PS：苹果去年WWDC大谈「Liquid Glass」设计语言，几乎只字不提AI，结果被骂了一整年。今年直接把「AI advancements」写进主题词。库克同学果然是个快速学习者——不过也可能是被Gartner的Hype Cycle图吓到了 🤔</p>
+            </div>
+        </div>
+
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+            <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+            <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+                我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+            </p>
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                🏠 访问AI洞察首页
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', 'false'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.setAttribute('aria-selected', 'true');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

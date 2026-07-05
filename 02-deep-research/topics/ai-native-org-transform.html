@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Native组织转型深度调研 | AI洞察</title>
+    <meta name="description" content="面向组织负责人的AI-Native转型全景研究：从定义与四层框架、到典型案例拆解、风险治理机制，再到90天落地行动方案。">
+    <meta property="og:title" content="AI-Native组织转型深度调研">
+    <meta property="og:description" content="面向组织负责人的AI-Native转型全景研究">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%237C3AED'/><text x='6' y='23' font-size='18' fill='white'>🏢</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+    <style>
+        /* ========== CSS 变量 ========== */
+        :root {
+            --color-success: #059669;
+            --color-success-light: #10B981;
+            --color-success-dark: #047857;
+            --color-success-50: #ECFDF5;
+            --color-success-100: #D1FAE5;
+            --color-danger: #E11D48;
+            --color-danger-light: #F43F5E;
+            --color-danger-50: #FFF1F2;
+            --color-warning: #D97706;
+            --color-warning-light: #F59E0B;
+            --color-warning-50: #FFFBEB;
+            --color-info: #2563EB;
+            --color-info-light: #3B82F6;
+            --color-info-50: #EFF6FF;
+            --color-info-100: #DBEAFE;
+            --color-purple: #7C3AED;
+            --color-purple-light: #8B5CF6;
+            --color-purple-50: #F5F3FF;
+            --color-purple-100: #EDE9FE;
+            --color-text-primary: #1C1917;
+            --color-text-secondary: #57534E;
+            --color-text-muted: #78716C;
+            --color-border: #E7E5E4;
+            --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB;
+            --color-bg-card: #FFFFFF;
+            --color-bg-table-header: #FAFAF9;
+            --color-bg-hover: rgba(0,0,0,0.025);
+            --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+            --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+            --gradient-mesh:
+                radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card-rich: 0 4px 16px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.9);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+            --shadow-glow-success: 0 4px 14px rgba(5,150,105,0.15);
+            --shadow-hover: 0 8px 24px rgba(5,150,105,0.18), 0 2px 8px rgba(5,150,105,0.10);
+            --shadow-float: 0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 24px;
+            --radius-full: 9999px;
+            --font-family: "DM Sans", -apple-system, "SF Pro Text", "Noto Sans SC", "PingFang SC", sans-serif;
+            --font-family-heading: "DM Sans", -apple-system, "SF Pro Display", "Noto Sans SC", sans-serif;
+            --font-family-cn: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            --font-family-mono: "JetBrains Mono", "SF Mono", "Fira Code", "Consolas", monospace;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            --sidebar-width: 228px;
+            --content-max: 920px;
+            --content-pad: 64px;
+        }
+
+        /* ========== 基础重置 ========== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-family);
+            font-size: 15px;
+            line-height: 1.65;
+            letter-spacing: -0.01em;
+            color: var(--color-text-secondary);
+            background: var(--color-bg);
+            background-image: var(--gradient-mesh);
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+        a { color: var(--color-info); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        ::selection { background: rgba(124,58,237,0.15); }
+
+        /* ========== Skip to content ========== */
+        .skip-to-content {
+            position: absolute; left: -9999px; top: auto;
+            padding: 8px 16px; background: var(--color-info); color: #fff;
+            border-radius: var(--radius-md); font-size: 14px; z-index: 9999;
+        }
+        .skip-to-content:focus { left: 16px; top: 16px; }
+
+        /* ========== 全宽两栏布局（v5.0 TOC 锚点版）========== */
+        .layout-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            align-items: stretch;
+        }
+
+        /* ========== 侧边栏 TOC 导航 ========== */
+        .sidebar-nav {
+            width: var(--sidebar-width);
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            background: var(--color-bg-card);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0 16px;
+        }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 2px; }
+        .sidebar-nav::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.15); }
+
+        .sidebar-doc-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            padding: 0 20px 14px;
+            line-height: 1.4;
+            font-family: var(--font-family-heading);
+            border-bottom: 1px solid var(--color-border-light);
+            margin-bottom: 8px;
+        }
+        .toc-section { padding: 0 0 8px; }
+        .toc-group-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--color-text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 6px 20px 4px;
+        }
+        .toc-link {
+            display: block;
+            padding: 6px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            border-left: 2px solid transparent;
+            transition: all var(--transition-fast);
+            line-height: 1.4;
+            font-family: var(--font-family);
+        }
+        .toc-link:hover {
+            color: var(--color-text-primary);
+            background: var(--color-bg-hover);
+            text-decoration: none;
+        }
+        .toc-link.toc-sub {
+            padding-left: 32px;
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--color-text-muted);
+        }
+        .toc-link.toc-active {
+            color: var(--color-info);
+            border-left-color: var(--color-info);
+            background: rgba(37,99,235,0.04);
+            font-weight: 600;
+        }
+        .toc-link.toc-sub.toc-active {
+            color: var(--color-info);
+            font-weight: 500;
+        }
+        .toc-link:focus-visible { outline: 2px solid var(--color-info); outline-offset: -2px; }
+
+        /* 阅读进度（侧边栏底部）*/
+        .reading-progress-wrap {
+            margin-top: auto;
+            padding: 12px 20px 0;
+            border-top: 1px solid var(--color-border-light);
+        }
+        .reading-progress-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .reading-progress-track {
+            height: 4px;
+            background: var(--color-border);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+        .reading-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-hero);
+            border-radius: var(--radius-full);
+            transition: width 0.1s linear;
+        }
+
+        /* 折叠按钮 */
+        .sidebar-collapse-btn {
+            position: fixed;
+            left: calc(var(--sidebar-width) - 1px);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px; height: 36px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-left: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            color: var(--color-text-muted);
+            font-size: 10px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all var(--transition-fast);
+            z-index: 100;
+        }
+        .sidebar-collapse-btn:hover { background: var(--color-bg-hover); color: var(--color-text-secondary); }
+        .sidebar-collapse-btn.collapsed-pos { left: 0; }
+
+        /* 侧边栏折叠状态 */
+        .layout-wrapper.sidebar-collapsed .sidebar-nav {
+            width: 0; padding: 0; overflow: hidden; border-right: none;
+        }
+        .layout-wrapper.sidebar-collapsed .sidebar-collapse-btn {
+            left: 0;
+        }
+
+        /* ========== 内容区 ========== */
+        .content-area {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .content-inner {
+            width: 100%;
+            max-width: var(--content-max);
+            padding: 48px var(--content-pad) 120px;
+        }
+
+        /* ========== 文档头部 ========== */
+        .doc-header {
+            margin-bottom: 40px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--color-border-light);
+            position: relative;
+        }
+        .doc-header::before {
+            content: '';
+            position: absolute;
+            top: -48px; left: calc(-1 * var(--content-pad)); right: calc(-1 * var(--content-pad));
+            height: 3px;
+            background: var(--gradient-hero);
+        }
+        .doc-header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: var(--color-purple-50);
+            color: var(--color-purple);
+            border: 1px solid rgba(124,58,237,0.15);
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .doc-header h1 {
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--color-text-primary);
+            font-family: var(--font-family-heading);
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+        .doc-header-subtitle {
+            font-size: 16px;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+            max-width: 680px;
+            font-family: var(--font-family-cn);
+        }
+        .doc-header-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .doc-meta-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: var(--color-bg-table-header);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            color: var(--color-text-muted);
+            font-weight: 500;
+        }
+
+        /* ========== 章节标签 ========== */
+        .doc-chapter-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+            padding: 36px 0 10px;
+            font-family: var(--font-family-heading);
+        }
+        .doc-chapter-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--color-border-light);
+        }
+
+        /* ========== 章节标题 ========== */
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            font-family: var(--font-family-heading);
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+        .section-lead {
+            font-size: 15px;
+            color: var(--color-text-secondary);
+            line-height: 1.75;
+            margin-bottom: 20px;
+            font-family: var(--font-family-cn);
+        }
+        h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            font-family: var(--font-family-heading);
+            letter-spacing: -0.015em;
+            margin: 24px 0 10px;
+        }
+        p { color: var(--color-text-secondary); line-height: 1.75; font-family: var(--font-family-cn); }
+        ul, ol { padding-left: 20px; }
+        li { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: 4px; font-family: var(--font-family-cn); }
+
+        /* ========== 统计卡片（颜色顶边版）========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin: 20px 0 24px;
+        }
+        .stat-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 18px 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--stat-accent, var(--color-border));
+        }
+        .stat-card.stat-info    { --stat-accent: #2563EB; }
+        .stat-card.stat-success { --stat-accent: #059669; }
+        .stat-card.stat-warning { --stat-accent: #D97706; }
+        .stat-card.stat-purple  { --stat-accent: #7C3AED; }
+        .stat-card.stat-danger  { --stat-accent: #E11D48; }
+        .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); will-change: transform; }
+        .stat-value {
+            font-size: 28px; font-weight: 800;
+            color: var(--color-text-primary);
+            font-family: var(--font-family-heading);
+            font-variant-numeric: tabular-nums;
+            line-height: 1.1;
+        }
+        .stat-value.info    { color: var(--color-info); }
+        .stat-value.success { color: var(--color-success); }
+        .stat-value.warning { color: var(--color-warning); }
+        .stat-value.purple  { color: var(--color-purple); }
+        .stat-value.danger  { color: var(--color-danger); }
+        .stat-label {
+            font-size: 11px; font-weight: 600;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+            font-family: var(--font-family-heading);
+        }
+
+        /* ========== 卡片 ========== */
+        .card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+            transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+        }
+        .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .card-title {
+            font-size: 15px; font-weight: 700;
+            color: var(--color-text-primary);
+            font-family: var(--font-family-heading);
+            margin-bottom: 8px;
+        }
+        .card-sub { font-size: 13px; color: var(--color-text-muted); line-height: 1.6; }
+
+        /* ========== 格栅布局 ========== */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 16px 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 16px 0; }
+
+        /* ========== 大数字卡片 ========== */
+        .number-big {
+            font-size: 32px; font-weight: 800;
+            line-height: 1; margin-bottom: 6px;
+            letter-spacing: -0.03em;
+            font-family: var(--font-family-heading);
+            font-variant-numeric: tabular-nums;
+        }
+        .number-big.blue   { color: var(--color-info); }
+        .number-big.green  { color: var(--color-success); }
+        .number-big.violet { color: var(--color-purple); }
+        .number-big.amber  { color: var(--color-warning); }
+        .number-big.rose   { color: var(--color-danger); }
+
+        /* ========== 标签 ========== */
+        .tag {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 3px 10px; border-radius: var(--radius-full);
+            font-size: 12px; font-weight: 500; white-space: nowrap;
+        }
+        .tag-success { background: rgba(5,150,105,0.1); color: var(--color-success); }
+        .tag-danger  { background: rgba(225,29,72,0.1);  color: var(--color-danger); }
+        .tag-warning { background: rgba(217,119,6,0.1);  color: var(--color-warning); }
+        .tag-info    { background: rgba(37,99,235,0.1);  color: var(--color-info); }
+        .tag-purple  { background: rgba(124,58,237,0.1); color: var(--color-purple); }
+
+        /* ========== Callout 块 ========== */
+        .callout {
+            display: flex; gap: 12px; align-items: flex-start;
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            margin: 14px 0;
+            font-size: 14px; line-height: 1.7;
+            color: var(--color-text-secondary);
+            font-family: var(--font-family-cn);
+        }
+        .callout-info    { background: rgba(37,99,235,0.06); border-left: 3px solid var(--color-info); }
+        .callout-success { background: rgba(5,150,105,0.06); border-left: 3px solid var(--color-success); }
+        .callout-warning { background: rgba(217,119,6,0.06); border-left: 3px solid var(--color-warning); }
+        .callout-purple  { background: rgba(124,58,237,0.06); border-left: 3px solid var(--color-purple); }
+        .callout-danger  { background: rgba(225,29,72,0.06); border-left: 3px solid var(--color-danger); }
+        .callout-icon { font-size: 16px; flex-shrink: 0; line-height: 1.5; }
+
+        /* ========== 洞察框 ========== */
+        .insight-box {
+            border-left: 3px solid var(--color-warning);
+            background: rgba(217,119,6,0.05);
+            padding: 14px 18px;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: 14px 0;
+            font-size: 14px; line-height: 1.75;
+            font-family: var(--font-family-cn);
+        }
+        .insight-box .insight-title {
+            color: var(--color-warning); font-weight: 700; font-size: 13px; margin-bottom: 6px;
+        }
+        .insight-box.insight-purple {
+            border-left-color: var(--color-purple);
+            background: rgba(124,58,237,0.05);
+        }
+        .insight-box.insight-purple .insight-title { color: var(--color-purple); }
+
+        /* ========== 表格 ========== */
+        .table-wrapper {
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            border: 1px solid var(--color-border);
+            margin: 16px 0;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        thead tr { background: var(--color-bg-table-header); border-bottom: 1.5px solid var(--color-border); }
+        th {
+            padding: 11px 14px;
+            text-align: left;
+            font-size: 12px; font-weight: 600;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: var(--font-family-heading);
+        }
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--color-border-light);
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            vertical-align: top;
+            font-family: var(--font-family-cn);
+            line-height: 1.65;
+        }
+        tbody tr { transition: background var(--transition-fast); }
+        tbody tr:hover { background: var(--color-bg-hover); }
+        tbody tr:last-child td { border-bottom: none; }
+
+        /* ========== 案例卡片（三栏）========== */
+        .case-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin: 14px 0;
+            box-shadow: var(--shadow-card);
+        }
+        .case-card-head {
+            padding: 14px 18px;
+            background: linear-gradient(90deg, rgba(37,99,235,0.05), rgba(124,58,237,0.03));
+            border-bottom: 1px solid var(--color-border-light);
+        }
+        .case-card-head h3 { margin: 0; font-size: 16px; }
+        .case-card-body {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .case-col {
+            padding: 16px;
+            border-right: 1px solid var(--color-border-light);
+        }
+        .case-col:last-child { border-right: none; }
+        .case-col b { display: block; margin-bottom: 6px; color: var(--color-text-primary); font-size: 13px; font-weight: 700; }
+        .case-col p { font-size: 13px; margin: 0; line-height: 1.65; }
+
+        /* ========== 90天步骤卡片 ========== */
+        .steps-list { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+        .step-card {
+            display: grid;
+            grid-template-columns: 72px 1fr;
+            gap: 16px;
+            padding: 18px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            align-items: flex-start;
+        }
+        .step-no {
+            width: 58px; height: 58px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 20px; color: #fff;
+            background: var(--gradient-hero);
+            flex-shrink: 0;
+            font-family: var(--font-family-heading);
+        }
+        .step-card h3 { margin: 0 0 8px; font-size: 15px; }
+        .step-card .step-note {
+            margin-top: 8px;
+            font-size: 12px; color: var(--color-text-muted);
+            font-family: var(--font-family-cn);
+        }
+
+        /* ========== 检查清单 ========== */
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .check-item {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            font-family: var(--font-family-cn);
+        }
+
+        /* ========== 来源卡片 ========== */
+        .source-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .source-item {
+            display: block;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+        }
+        .source-item:hover {
+            box-shadow: var(--shadow-sm);
+            border-color: var(--color-info);
+            text-decoration: none;
+        }
+        .source-item b { display: block; color: var(--color-text-primary); margin-bottom: 3px; font-size: 13px; font-weight: 700; }
+        .source-item span { color: var(--color-text-muted); font-size: 12px; line-height: 1.5; font-family: var(--font-family-cn); }
+
+        /* ========== 进度条 ========== */
+        .progress-group { display: flex; flex-direction: column; gap: 14px; margin: 16px 0; }
+        .progress-item-row { }
+        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .progress-label { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); font-family: var(--font-family-cn); }
+        .progress-value { font-size: 13px; font-weight: 700; color: var(--color-text-primary); font-variant-numeric: tabular-nums; }
+        .progress-track {
+            height: 8px;
+            background: var(--color-bg-table-header);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            border: 1px solid var(--color-border-light);
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: var(--radius-full);
+            background: var(--gradient-success);
+            width: 0;
+            transition: width 1.2s cubic-bezier(.25,.46,.45,.94);
+        }
+        .bar-fill.info   { background: linear-gradient(90deg, var(--color-info), #3B82F6); }
+        .bar-fill.warning { background: linear-gradient(90deg, var(--color-warning), #F59E0B); }
+        .bar-fill.purple { background: linear-gradient(90deg, var(--color-purple), #8B5CF6); }
+
+        /* ========== 滚动入场动画 ========== */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .42s ease, transform .42s ease;
+        }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        .no-js .animate-on-scroll { opacity: 1 !important; transform: none !important; }
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll { transition: none; opacity: 1; transform: none; }
+        }
+
+        /* Stagger 延迟 */
+        .stat-card:nth-child(2) { transition-delay: .06s; }
+        .stat-card:nth-child(3) { transition-delay: .12s; }
+        .stat-card:nth-child(4) { transition-delay: .18s; }
+        .card:nth-child(2) { transition-delay: .06s; }
+        .card:nth-child(3) { transition-delay: .12s; }
+
+        /* ========== 回到顶部 ========== */
+        .scroll-to-top {
+            position: fixed; bottom: 32px; right: 32px;
+            width: 40px; height: 40px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-full);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; cursor: pointer;
+            box-shadow: var(--shadow-md);
+            opacity: 0; visibility: hidden;
+            transition: opacity var(--transition-normal), visibility var(--transition-normal), transform var(--transition-fast);
+            z-index: 50;
+            color: var(--color-text-secondary);
+        }
+        .scroll-to-top.visible { opacity: 1; visibility: visible; }
+        .scroll-to-top:hover { transform: translateY(-3px); box-shadow: var(--shadow-float); }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 1024px) {
+            :root { --sidebar-width: 200px; --content-pad: 40px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .case-card-body { grid-template-columns: 1fr; }
+            .case-col { border-right: none; border-bottom: 1px solid var(--color-border-light); }
+            .case-col:last-child { border-bottom: none; }
+        }
+        @media (max-width: 768px) {
+            .layout-wrapper { flex-direction: column; }
+            .sidebar-nav {
+                position: sticky; top: 0; width: 100%; height: auto;
+                border-right: none; border-bottom: 1px solid var(--color-border);
+                flex-direction: row; overflow-x: auto; overflow-y: hidden;
+                padding: 0; -webkit-overflow-scrolling: touch;
+            }
+            .sidebar-doc-title { display: none; }
+            .toc-section { display: flex; flex-wrap: nowrap; }
+            .toc-group-label { display: none; }
+            .toc-link { flex: 0 0 auto; padding: 12px 14px; border-left: none; border-bottom: 2px solid transparent; white-space: nowrap; font-size: 13px; }
+            .toc-link.toc-sub { padding-left: 14px; }
+            .toc-link.toc-active { border-left-color: transparent; border-bottom-color: var(--color-info); }
+            .reading-progress-wrap { display: none; }
+            .sidebar-collapse-btn { display: none; }
+            .content-inner { padding: 32px 16px 80px; }
+            :root { --content-pad: 16px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-2, .grid-3, .grid-4, .checklist, .source-grid { grid-template-columns: 1fr; }
+            .step-card { grid-template-columns: 1fr; }
+            .doc-header h1 { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+<a class="skip-to-content" href="#main-content">跳到主内容</a>
+
+<div class="layout-wrapper" id="layout-wrapper">
+
+    <!-- ========== 侧边栏 TOC ========== -->
+    <nav class="sidebar-nav" id="sidebar-nav" aria-label="目录导航">
+        <div class="sidebar-doc-title">AI-Native组织转型深度调研</div>
+        <div class="toc-section">
+            <div class="toc-group-label">全文导航</div>
+            <a class="toc-link toc-active" href="#s-overview">概览与结论</a>
+            <a class="toc-link" href="#s1">01 · 定义与背景</a>
+            <a class="toc-link toc-sub" href="#s1-why">为什么现在必须做</a>
+            <a class="toc-link" href="#s2">02 · 四层转型框架</a>
+            <a class="toc-link toc-sub" href="#s2-detail">四层联动详解</a>
+            <a class="toc-link" href="#s3">03 · 典型案例拆解</a>
+            <a class="toc-link toc-sub" href="#s3-klarna">案例A：Klarna</a>
+            <a class="toc-link toc-sub" href="#s3-eng">案例B：AI-Native工程团队</a>
+            <a class="toc-link toc-sub" href="#s3-consensus">案例C：机构框架共识</a>
+            <a class="toc-link" href="#s4">04 · 风险与治理</a>
+            <a class="toc-link" href="#s5">05 · 90天行动方案</a>
+            <a class="toc-link" href="#s6">06 · 总结与检查清单</a>
+            <a class="toc-link" href="#s-sources">参考来源</a>
+        </div>
+        <div class="reading-progress-wrap">
+            <div class="reading-progress-label">阅读进度</div>
+            <div class="reading-progress-track">
+                <div class="reading-progress-fill" id="reading-progress-fill"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 侧边栏折叠按钮 -->
+    <button class="sidebar-collapse-btn" id="sidebar-collapse-btn" title="折叠/展开导航" aria-label="折叠/展开导航">‹</button>
+
+    <!-- ========== 内容区 ========== -->
+    <main class="content-area" id="main-content">
+        <div class="content-inner">
+
+            <!-- ===== 文档头部 ===== -->
+            <header class="doc-header animate-on-scroll" id="s-overview">
+                <div class="doc-header-badge">🔬 AI洞察 · 深度调研</div>
+                <h1>AI-Native组织转型深度调研</h1>
+                <p class="doc-header-subtitle">这不是一份"AI工具盘点"，而是一份面向组织负责人的转型研究：回答什么是AI-Native组织、为什么现在必须做、怎么做才不会沦为一轮试点热闹、以及90天内如何跑出第一段可复制的结果。</p>
+                <div class="doc-header-meta">
+                    <span class="doc-meta-tag">📅 研究窗口：最近 1-3 个月公开资料</span>
+                    <span class="doc-meta-tag">🔭 研究对象：组织、流程、技术、治理</span>
+                    <span class="doc-meta-tag">🎯 输出目标：可执行而非概念化</span>
+                    <span class="doc-meta-tag">🏷 组织转型 · AI-Native · 执行导向</span>
+                </div>
+            </header>
+
+            <!-- ===== 核心数字 ===== -->
+            <div class="stats-grid animate-on-scroll">
+                <div class="stat-card stat-purple">
+                    <div class="stat-value purple">4</div>
+                    <div class="stat-label">层转型框架</div>
+                </div>
+                <div class="stat-card stat-info">
+                    <div class="stat-value info">3</div>
+                    <div class="stat-label">典型案例拆解</div>
+                </div>
+                <div class="stat-card stat-warning">
+                    <div class="stat-value warning">90</div>
+                    <div class="stat-label">天落地路径</div>
+                </div>
+                <div class="stat-card stat-success">
+                    <div class="stat-value success">6</div>
+                    <div class="stat-label">执行检查项</div>
+                </div>
+            </div>
+
+            <!-- ===== 核心结论摘要 ===== -->
+            <div class="animate-on-scroll">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title">🎯 核心结论</div>
+                        <p style="font-size:14px;margin-bottom:10px;">AI-Native转型的本质，不是"给原有组织多装几个AI工具"，而是把组织从<strong>人驱动流程</strong>升级为<strong>人机协同系统</strong>。真正的门槛不在模型能力，而在组织是否完成四层联动：作战单元、流程协议、统一底座、治理闭环。</p>
+                        <ul style="font-size:13px;line-height:1.8;">
+                            <li>只做工具引入，通常只能拿到局部提效</li>
+                            <li>只做组织调整，通常会出现"重构了架子但没出结果"</li>
+                            <li>四层同步推进，才可能形成持续复利</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">📌 管理者该关注什么</div>
+                        <ul style="font-size:14px;line-height:1.9;">
+                            <li>目标是不是从"AI覆盖率"转向"业务结果负责"</li>
+                            <li>流程里哪些环节该 AI first-pass，哪些必须人工把关</li>
+                            <li>有没有明确责任链、分级治理和回滚能力</li>
+                            <li>90天能否跑出一个可复制的小闭环，而不是一堆POC</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Part 01 ===== -->
+            <div class="doc-chapter-label animate-on-scroll" id="s1">Part 01</div>
+            <h2 class="section-title animate-on-scroll">定义与问题背景</h2>
+            <p class="section-lead animate-on-scroll">AI-Native组织，不是"开始用AI"，而是把AI变成组织运行的一部分：战略、流程、岗位、治理都围绕人机协同重写。问题已经不再是"AI能不能用"，而是"组织有没有能力把AI持续转化成业务结果"。</p>
+
+            <div class="grid-4 animate-on-scroll">
+                <div class="card">
+                    <div class="number-big blue">战略层</div>
+                    <div class="card-title">AI参与资源与优先级</div>
+                    <div class="card-sub">AI不只执行任务，也影响判断与决策准备</div>
+                </div>
+                <div class="card">
+                    <div class="number-big violet">流程层</div>
+                    <div class="card-title">AI进入主流程</div>
+                    <div class="card-sub">从外挂工具变成流程中的默认参与者</div>
+                </div>
+                <div class="card">
+                    <div class="number-big green">组织层</div>
+                    <div class="card-title">岗位重心上移</div>
+                    <div class="card-sub">从机械执行转向问题定义、判断与编排</div>
+                </div>
+                <div class="card">
+                    <div class="number-big amber">治理层</div>
+                    <div class="card-title">治理同步内嵌</div>
+                    <div class="card-sub">风险、合规、质量控制必须前置设计</div>
+                </div>
+            </div>
+
+            <div class="callout callout-info animate-on-scroll">
+                <span class="callout-icon">💡</span>
+                <div><strong>一句话定义：</strong>AI-Native组织 = 把AI从"辅助工具"升级为"组织操作系统组成部分"的组织。</div>
+            </div>
+
+            <h3 class="animate-on-scroll" id="s1-why">为什么现在必须做</h3>
+            <div class="animate-on-scroll">
+                <ul style="line-height:2;">
+                    <li>前沿AI能力增长速度，已经快过多数企业的组织重构速度</li>
+                    <li>大量企业不再缺工具，而是缺"让工具变成结果"的组织承接能力</li>
+                    <li>领先企业正在从"AI实验室模式"走向"业务主流程重写模式"</li>
+                </ul>
+            </div>
+
+            <div class="callout callout-danger animate-on-scroll">
+                <span class="callout-icon">⚠️</span>
+                <div><strong>关键误区：</strong>把AI-Native理解成"采购更多模型"或"推高自动化率"。真正的难点在于，旧组织逻辑往往会吞掉新技术红利。</div>
+            </div>
+
+            <!-- ===== Part 02 ===== -->
+            <div class="doc-chapter-label animate-on-scroll" id="s2">Part 02</div>
+            <h2 class="section-title animate-on-scroll">四层转型总框架</h2>
+            <p class="section-lead animate-on-scroll">我建议用一个四层联动模型理解AI-Native转型：<strong>组织层、流程层、技术层、治理层</strong>。转型失败的常见根因，是只改一层，其他三层还停留在旧世界。</p>
+
+            <div class="table-wrapper animate-on-scroll" id="s2-detail">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>层</th>
+                            <th>要解决什么问题</th>
+                            <th>核心动作</th>
+                            <th>建议看板指标</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag tag-purple">组织层</span></td>
+                            <td>谁和谁协作、按什么单元作战</td>
+                            <td>从部门串行协作转为跨职能AI Pod；压缩协调层，把角色重心上移到判断与编排</td>
+                            <td>需求到上线周期、人均并行任务数、跨团队协作等待时间</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-info">流程层</span></td>
+                            <td>AI在流程中做什么，人保留什么</td>
+                            <td>将流程拆成 AI first-pass / 人工复核 / 人工决策三类，并设计升级路径</td>
+                            <td>返工率、审批负担、流程周期缩短比例、错误率</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-success">技术层</span></td>
+                            <td>AI靠什么稳定执行</td>
+                            <td>统一上下文、工具调用、评测标准、可观测体系；避免各团队各自拼装</td>
+                            <td>任务成功率、延迟、单任务成本、跨系统稳定性</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-warning">治理层</span></td>
+                            <td>出问题谁负责，风险怎么控</td>
+                            <td>责任链、风险分级、人工兜底、版本可回滚、审计可追踪</td>
+                            <td>事故率、人工介入率、规则命中率、误伤率</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight-box animate-on-scroll">
+                <div class="insight-title">● 核心洞察</div>
+                单层优化常常只能制造"局部高光"。四层联动，才会把一次试点变成一套组织能力。
+            </div>
+
+            <div class="grid-2 animate-on-scroll">
+                <div class="card">
+                    <div class="card-title">❌ 如果只做技术层</div>
+                    <p style="font-size:14px;">通常会出现"Demo很惊艳，落地很别扭"。因为人、流程、责任链仍按旧方式运行。</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">❌ 如果只做组织层</div>
+                    <p style="font-size:14px;">通常会出现"架构改了，效率没提升"。因为没有统一底座和稳定流程协议支撑新组织形态。</p>
+                </div>
+            </div>
+
+            <!-- ===== Part 03 ===== -->
+            <div class="doc-chapter-label animate-on-scroll" id="s3">Part 03</div>
+            <h2 class="section-title animate-on-scroll">典型案例拆解</h2>
+            <p class="section-lead animate-on-scroll">下面不只讲案例事实，而是按"<strong>事实 → 机制 → 启示</strong>"拆，避免把案例看成一组好看的宣传页。</p>
+
+            <div class="case-card animate-on-scroll" id="s3-klarna">
+                <div class="case-card-head">
+                    <h3>案例A：Klarna —— 效率收益成立，但体验反噬也是真的</h3>
+                </div>
+                <div class="case-card-body">
+                    <div class="case-col">
+                        <b>📋 事实</b>
+                        <p>AI客服承接了大量对话并显著降低成本，公司阶段性强化了自动化与降本叙事，但后续又释放出重新平衡人工服务能力的信号。</p>
+                    </div>
+                    <div class="case-col">
+                        <b>⚙️ 机制</b>
+                        <p>组织把优化目标过于集中在"速度与成本"，却没有对客户体验、复杂问题解决质量设置同等约束。</p>
+                    </div>
+                    <div class="case-col">
+                        <b>💡 启示</b>
+                        <p>AI不是不能大规模替代简单工作，而是指标体系不能只偏向一边。效率、质量、体验、风险必须一起算。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-card animate-on-scroll" id="s3-eng">
+                <div class="case-card-head">
+                    <h3>案例B：AI-Native工程团队 —— 提升不来自模型本身，而来自协作协议</h3>
+                </div>
+                <div class="case-card-body">
+                    <div class="case-col">
+                        <b>📋 事实</b>
+                        <p>AI开始从"代码补全"升级为工程流程协作者，进入需求澄清、方案草拟、测试生成、审查建议、运维诊断等环节。</p>
+                    </div>
+                    <div class="case-col">
+                        <b>⚙️ 机制</b>
+                        <p>团队效率提升的关键，是定义清楚：哪些步骤由AI first-pass，哪些步骤必须人工review，哪些步骤最终由owner背责。</p>
+                    </div>
+                    <div class="case-col">
+                        <b>💡 启示</b>
+                        <p>工程组织未来的核心竞争力，将逐步从"纯执行力"迁移到"问题定义、系统判断、质量把关与编排能力"。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-card animate-on-scroll" id="s3-consensus">
+                <div class="case-card-head">
+                    <h3>案例C：BCG / Deloitte / OpenAI 等框架共识 —— 组织重构正在追赶AI能力曲线</h3>
+                </div>
+                <div class="case-card-body">
+                    <div class="case-col">
+                        <b>📋 事实</b>
+                        <p>多家机构都指出：AI能力快速进步，但多数企业的组织、人才与治理还没有跟上。</p>
+                    </div>
+                    <div class="case-col">
+                        <b>⚙️ 机制</b>
+                        <p>瓶颈不在"模型不够强"，而在旧组织结构（层级审批、职能割裂、上下文分散）阻断了AI价值释放。</p>
+                    </div>
+                    <div class="case-col">
+                        <b>💡 启示</b>
+                        <p>真正的分水岭不是谁先采购工具，而是谁先重构作战单元、统一上下文、把治理做成系统能力。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout callout-purple animate-on-scroll">
+                <span class="callout-icon">🔍</span>
+                <div><strong>三类案例的共同结论：</strong>成功不是"AI使用率高"，而是"业务结果持续改善且可控"；失败通常不是模型不行，而是目标错配、流程失配、治理缺位。</div>
+            </div>
+
+            <!-- ===== Part 04 ===== -->
+            <div class="doc-chapter-label animate-on-scroll" id="s4">Part 04</div>
+            <h2 class="section-title animate-on-scroll">关键风险与治理机制</h2>
+            <p class="section-lead animate-on-scroll">AI-Native转型不是没有风险，而是风险形态发生了变化：它不再只是IT项目风险，而是逐渐升级为经营风险、体验风险、声誉风险和治理风险。</p>
+
+            <div class="grid-3 animate-on-scroll">
+                <div class="card">
+                    <div class="card-title">⚠️ 风险1：目标错配</div>
+                    <p style="font-size:14px;">只追求自动化率、覆盖率、调用次数，而不对真实业务结果负责。典型后果是"AI把错误的事情做得更快"。</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">⚠️ 风险2：治理缺位</div>
+                    <p style="font-size:14px;">先上车后补票，没有责任链、权限边界和回滚能力。一旦Agent越权、内容违规、数据误用，组织会很被动。</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">⚠️ 风险3：能力断层</div>
+                    <p style="font-size:14px;">少数团队会用，多数团队不会用或不敢用。结果是试点成功但规模化失败，长期停留在POC状态。</p>
+                </div>
+            </div>
+
+            <h3 class="animate-on-scroll">治理机制清单</h3>
+            <div class="grid-2 animate-on-scroll">
+                <div class="card">
+                    <div class="card-title">🔗 责任链法定化</div>
+                    <ul style="font-size:13px;line-height:1.9;">
+                        <li><strong>设计者：</strong>负责Prompt、数据、评测设计</li>
+                        <li><strong>审批者：</strong>负责风险等级确认与上线门禁</li>
+                        <li><strong>兜底者：</strong>负责异常响应与人工介入</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-title">🚦 风险分级门禁</div>
+                    <ul style="font-size:13px;line-height:1.9;">
+                        <li><strong>高风险任务：</strong>强制人工确认与双审批</li>
+                        <li><strong>中风险任务：</strong>自动执行 + 事后抽检</li>
+                        <li><strong>低风险任务：</strong>可全自动运行</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-title">🔁 评测闭环</div>
+                    <ul style="font-size:13px;line-height:1.9;">
+                        <li>建立基准任务集和周度回归测试</li>
+                        <li>偏差率超阈值自动降级或触发人工介入</li>
+                        <li>每次模型/Prompt变更都必须复测</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-title">📜 版本与审计</div>
+                    <ul style="font-size:13px;line-height:1.9;">
+                        <li>Prompt、模型、规则、工具调用都要可追踪</li>
+                        <li>必须具备回滚机制，避免只能"硬扛"</li>
+                        <li>关键场景的执行过程要支持审计回放</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout callout-success animate-on-scroll">
+                <span class="callout-icon">✅</span>
+                <div><strong>治理原则：</strong>治理前置、治理内嵌、治理动态。不要把治理理解成阻力，它本质上是让AI规模化可持续的"护城河"。</div>
+            </div>
+
+            <!-- ===== Part 05 ===== -->
+            <div class="doc-chapter-label animate-on-scroll" id="s5">Part 05</div>
+            <h2 class="section-title animate-on-scroll">90天落地行动方案</h2>
+            <p class="section-lead animate-on-scroll">对多数企业来说，第一阶段最重要的不是"铺开"，而是<strong>跑出一个可复制闭环</strong>。下面给出一个更现实的90天节奏。</p>
+
+            <div class="steps-list animate-on-scroll">
+                <div class="step-card">
+                    <div class="step-no">30</div>
+                    <div>
+                        <h3>第 1-30 天：找对场景，画清责任边界</h3>
+                        <ul style="font-size:13px;line-height:1.9;">
+                            <li>筛 2-3 个高价值、低争议、数据相对清晰的场景</li>
+                            <li>定义基线指标：效率、质量、体验、风险四类最少各一个</li>
+                            <li>组建跨职能试点小队，明确owner、审批者、兜底者</li>
+                            <li>设计AI first-pass与人工接管边界</li>
+                        </ul>
+                        <div class="step-note">📦 产出：场景清单、KPI基线、RACI责任表、风险清单</div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-no">60</div>
+                    <div>
+                        <h3>第 31-60 天：跑通一个闭环，而不是堆更多试点</h3>
+                        <ul style="font-size:13px;line-height:1.9;">
+                            <li>优先打通 1-2 个从输入到结果的完整闭环</li>
+                            <li>为高风险节点加人工确认和回滚策略</li>
+                            <li>建立每周评测与复盘节奏，积累问题样本库</li>
+                            <li>沉淀模板：Prompt规范、操作手册、异常处理SOP</li>
+                        </ul>
+                        <div class="step-note">📦 产出：试点报告、评测看板、模板库、异常处理SOP</div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-no">90</div>
+                    <div>
+                        <h3>第 61-90 天：复制到相邻流程，开始组织化扩张</h3>
+                        <ul style="font-size:13px;line-height:1.9;">
+                            <li>将成功闭环复制到相邻团队或相邻流程</li>
+                            <li>建立AI冠军网络和最小培训机制</li>
+                            <li>把治理看板纳入管理例会，形成经营可见性</li>
+                            <li>决定下一阶段是继续扩场景，还是升级组织结构</li>
+                        </ul>
+                        <div class="step-note">📦 产出：扩展计划、治理周报、AI冠军网络、下一阶段路线图</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="insight-box insight-purple animate-on-scroll">
+                <div class="insight-title">● 落地建议</div>
+                先做"窄而深"的成功，再做"广而散"的推广。AI-Native转型最怕一开始就追求覆盖面，最后样样都碰、样样都浅。
+            </div>
+
+            <h3 class="animate-on-scroll">90天应重点盯住的四组指标</h3>
+            <div class="grid-4 animate-on-scroll">
+                <div class="card">
+                    <div class="card-title">⚡ 效率</div>
+                    <div class="card-sub">周期缩短比例、单位人力产出、等待时间减少</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">✅ 质量</div>
+                    <div class="card-sub">错误率、返工率、人工修正比例、结果一致性</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">😊 体验</div>
+                    <div class="card-sub">用户满意度、升级率、复杂问题解决质量</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">🛡 风险</div>
+                    <div class="card-sub">异常率、人工接管率、规则命中率、回滚次数</div>
+                </div>
+            </div>
+
+            <!-- ===== Part 06 ===== -->
+            <div class="doc-chapter-label animate-on-scroll" id="s6">Part 06</div>
+            <h2 class="section-title animate-on-scroll">总结与执行检查清单</h2>
+            <p class="section-lead animate-on-scroll">如果把AI-Native转型看成一次"组织操作系统升级"，那么管理者的工作就不只是买来新能力，而是决定这套新能力以什么方式被组织吸收、约束和放大。</p>
+
+            <div class="callout callout-purple animate-on-scroll">
+                <span class="callout-icon">🏁</span>
+                <div><strong>一句话结论：</strong>AI-Native转型不是技术升级项目，而是组织操作系统升级工程。真正的分水岭，在于能否把工具能力变成流程能力，再把流程能力变成组织能力。</div>
+            </div>
+
+            <h3 class="animate-on-scroll">执行检查清单</h3>
+            <div class="checklist animate-on-scroll">
+                <div class="check-item">□ 目标是否从"AI覆盖率"切换到"业务结果负责"？</div>
+                <div class="check-item">□ 是否明确了组织、流程、技术、治理四层设计？</div>
+                <div class="check-item">□ 是否给高风险场景设计了人工兜底与升级路径？</div>
+                <div class="check-item">□ 是否有评测集、版本追踪和回滚能力？</div>
+                <div class="check-item">□ 是否跑出了至少一个可复制闭环，而不只是概念验证？</div>
+                <div class="check-item">□ 是否建立了从试点到复制的培训与Champion机制？</div>
+            </div>
+
+            <div class="callout callout-danger animate-on-scroll">
+                <span class="callout-icon">🔔</span>
+                <div><strong>最后提醒：</strong>如果管理层把AI-Native转型理解成一轮效率运动，它大概率只会留下几张漂亮图表；如果把它理解成组织能力升级，它才会真正进入经营主航道。</div>
+            </div>
+
+            <!-- ===== 参考来源 ===== -->
+            <div class="doc-chapter-label animate-on-scroll" id="s-sources">参考来源</div>
+            <h2 class="section-title animate-on-scroll">核心信源</h2>
+            <p class="section-lead animate-on-scroll">以下来源均来自本轮调研所使用的公开材料，覆盖定义框架、咨询方法论与企业实践。</p>
+
+            <div class="source-grid animate-on-scroll">
+                <a class="source-item" href="https://ai-native-connect.scaledagile.com/public/blogs/what-does-it-mean-to-be-ai-native" target="_blank" rel="noopener">
+                    <b>SAFe · What Does It Mean to Be AI-Native?</b>
+                    <span>提供AI-Native定义与 EDGE 框架</span>
+                </a>
+                <a class="source-item" href="https://vellum.ai/blog/ai-transformation-playbook" target="_blank" rel="noopener">
+                    <b>Vellum AI · 2026 AI Business Transformation Playbook</b>
+                    <span>提供分阶段转型路径与企业实践框架</span>
+                </a>
+                <a class="source-item" href="https://www.deloitte.com/us/en/insights/topics/technology-management/tech-trends/2026/ai-future-it-function.html" target="_blank" rel="noopener">
+                    <b>Deloitte · The Great Rebuild</b>
+                    <span>提供技术组织重构与人才模型视角</span>
+                </a>
+                <a class="source-item" href="https://www.bcg.com/publications/2025/ai-is-outpacing-your-workforce-strategy-are-you-ready" target="_blank" rel="noopener">
+                    <b>BCG · AI Is Moving Faster Than Your Workforce Strategy</b>
+                    <span>提供组织原型、人才与团队结构演进框架</span>
+                </a>
+                <a class="source-item" href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team" target="_blank" rel="noopener">
+                    <b>OpenAI · Building an AI-Native Engineering Team</b>
+                    <span>提供工程团队工作流重构与人机分工建议</span>
+                </a>
+                <a class="source-item" href="https://www.klarna.com/international/press/klarna-ai-assistant-handles-two-thirds-of-customer-service-chats-in-its-first-month/" target="_blank" rel="noopener">
+                    <b>Klarna · AI Assistant Case</b>
+                    <span>提供效率收益案例与目标错配反思入口</span>
+                </a>
+            </div>
+
+            <!-- ===== 了解更多 ===== -->
+            <div class="animate-on-scroll" style="margin-top:48px;">
+                <div style="background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-card);">
+                    <div style="font-size:16px;font-weight:700;color:var(--color-text-primary);margin-bottom:8px;display:flex;align-items:center;gap:8px;">💡 了解更多</div>
+                    <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin:0 0 14px 0;font-family:var(--font-family-cn);">
+                        AI洞察是一个系统化追踪AI行业动态的项目，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+                    </p>
+                    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--gradient-success);color:#fff;border-radius:var(--radius-full);font-size:13px;font-weight:600;text-decoration:none;">
+                        🏠 访问AI洞察首页
+                    </a>
+                </div>
+            </div>
+
+        </div><!-- /.content-inner -->
+    </main>
+</div><!-- /.layout-wrapper -->
+
+<!-- 回到顶部 -->
+<button class="scroll-to-top" id="scroll-to-top" title="回到顶部" aria-label="回到顶部">↑</button>
+
+<script>
+    /* ========== 侧边栏折叠 ========== */
+    const layoutWrapper = document.getElementById('layout-wrapper');
+    const collapseBtn   = document.getElementById('sidebar-collapse-btn');
+    collapseBtn.addEventListener('click', () => {
+        const collapsed = layoutWrapper.classList.toggle('sidebar-collapsed');
+        collapseBtn.textContent = collapsed ? '›' : '‹';
+        collapseBtn.classList.toggle('collapsed-pos', collapsed);
+    });
+
+    /* ========== 阅读进度条 ========== */
+    const progressFill = document.getElementById('reading-progress-fill');
+    function updateProgress() {
+        const doc   = document.documentElement;
+        const total = doc.scrollHeight - doc.clientHeight;
+        const pct   = total > 0 ? Math.round(window.scrollY / total * 100) : 0;
+        progressFill.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    /* ========== 回到顶部 ========== */
+    const scrollTopBtn = document.getElementById('scroll-to-top');
+    window.addEventListener('scroll', () => {
+        scrollTopBtn.classList.toggle('visible', window.scrollY > 300);
+    }, { passive: true });
+    scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /* ========== TOC 高亮跟随滚动（Intersection Observer）========== */
+    const tocLinks = document.querySelectorAll('.toc-link[href^="#"]');
+    const sections = Array.from(tocLinks)
+        .map(l => document.querySelector(l.getAttribute('href')))
+        .filter(Boolean);
+
+    const activateToc = (id) => {
+        tocLinks.forEach(l => {
+            const active = l.getAttribute('href') === '#' + id;
+            l.classList.toggle('toc-active', active);
+        });
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) activateToc(entry.target.id);
+        });
+    }, { rootMargin: '-10% 0px -70% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+
+    /* ========== 滚动入场动画 ========== */
+    const animItems = document.querySelectorAll('.animate-on-scroll');
+    const animObs   = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                animObs.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: '0px 0px -40px 0px', threshold: 0.05 });
+    animItems.forEach(el => animObs.observe(el));
+
+    /* ========== 进度条动画（页面加载后延迟触发）========== */
+    const barFills = document.querySelectorAll('.bar-fill[data-width]');
+    const barObs   = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const w = entry.target.getAttribute('data-width');
+                setTimeout(() => { entry.target.style.width = w; }, 100);
+                barObs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+    barFills.forEach(b => barObs.observe(b));
+</script>
+</body>
+</html>

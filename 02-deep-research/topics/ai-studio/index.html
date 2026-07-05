@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="企业AI工程师完整产品体系 - 用户场景分析、产品设计、技术架构">
+    <title>企业AI工程师 - 完整产品体系</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="dns-prefetch" href="//fonts.loli.net">
+    <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.loli.net/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+    <style>
+        /* 关键CSS内联 - 首屏渲染 */
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary: #764ba2;
+            --accent: #00d9ff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-dark: #0f172a;
+            --bg-light: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e293b 50%, #334155 100%);
+            color: white;
+            padding: 32px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 0%, #e0e7ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 650px;
+            margin: 0 auto 16px;
+            line-height: 1.5;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 20px;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stat-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 2px;
+        }
+
+        /* Navigation */
+        .nav {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 8px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .nav-item {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            color: var(--primary);
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        /* Section */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .section-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Pain Point Section */
+        .pain-section {
+            background: linear-gradient(180deg, #fef2f2 0%, var(--bg-light) 100%);
+        }
+
+        .pain-image-container {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pain-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .pain-image-caption {
+            text-align: center;
+            margin-top: 10px;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .pain-card {
+            background: white;
+            border-radius: 10px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .pain-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            border-color: var(--danger);
+        }
+
+        .pain-icon {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+
+        .pain-card h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .pain-card p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Framework Section */
+        .framework-flow {
+            display: flex;
+            align-items: stretch;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .framework-arrow {
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .framework-card {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            padding: 14px;
+            border: 2px solid var(--border);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .framework-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .framework-card.analysis::before {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+
+        .framework-card.product::before {
+            background: linear-gradient(90deg, #10b981, #34d399);
+        }
+
+        .framework-card.tech::before {
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+        }
+
+        .framework-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .framework-step {
+            display: inline-block;
+            background: var(--bg-light);
+            color: var(--text-secondary);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .framework-icon {
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+
+        .framework-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .framework-card p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .framework-highlights {
+            list-style: none;
+            padding: 0;
+        }
+
+        .framework-highlights li {
+            padding: 3px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .framework-highlights li:last-child {
+            border-bottom: none;
+        }
+
+        .framework-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 8px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .framework-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Methodology Section */
+        .methodology {
+            background: linear-gradient(180deg, var(--bg-light) 0%, #f1f5f9 100%);
+        }
+
+        .methodology-diagram {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .methodology-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .methodology-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .methodology-label {
+            width: 85px;
+            text-align: right;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+        }
+
+        .methodology-connector {
+            width: 30px;
+            height: 2px;
+            background: var(--border);
+            position: relative;
+        }
+
+        .methodology-connector::after {
+            content: '→';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .methodology-items {
+            flex: 1;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .methodology-item {
+            background: var(--bg-light);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .methodology-item:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .methodology-item.highlight {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Quick Links */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .quick-link-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.4s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .quick-link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .quick-link-header {
+            padding: 14px 16px 12px;
+            position: relative;
+        }
+
+        .quick-link-card.analysis .quick-link-header {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .quick-link-card.product .quick-link-header {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .quick-link-card.tech .quick-link-header {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+        }
+
+        .quick-link-icon {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+
+        .quick-link-header h3 {
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .quick-link-header p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.72rem;
+        }
+
+        .quick-link-body {
+            padding: 12px 16px;
+        }
+
+        .quick-link-stats {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .quick-link-stat {
+            text-align: center;
+        }
+
+        .quick-link-stat-value {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .quick-link-stat-label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+        }
+
+        .quick-link-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quick-link-features li {
+            padding: 3px 0;
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .quick-link-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 8px;
+            background: var(--bg-light);
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link-card:hover .quick-link-cta {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Value Proposition */
+        .value-section {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e293b 100%);
+            color: white;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .value-icon {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+
+        .value-card h4 {
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .value-card p {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 20px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .footer-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .framework-flow {
+                flex-direction: column;
+            }
+
+            .framework-arrow {
+                transform: rotate(90deg);
+                justify-content: center;
+            }
+
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+
+            .value-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pain-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .nav-content {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pain-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .methodology-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .methodology-label {
+                width: auto;
+                text-align: left;
+            }
+
+            .methodology-connector {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">📚 AI行业洞察项目 - 深度调研报告</div>
+            <h1>🚀 AI Studio</h1>
+            <p class="hero-subtitle">
+                从用户场景洞察到产品设计，再到技术架构实现<br>
+                构建企业级AI数字员工平台的完整方法论
+            </p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">48</div>
+                    <div class="hero-stat-label">覆盖工作任务</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">9</div>
+                    <div class="hero-stat-label">Agent类型</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">6</div>
+                    <div class="hero-stat-label">架构层级</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">100%</div>
+                    <div class="hero-stat-label">场景覆盖</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="#pain" class="nav-item">用户痛点</a>
+            <a href="#framework" class="nav-item">完整框架</a>
+            <a href="#methodology" class="nav-item">方法论</a>
+            <a href="#projects" class="nav-item">详细方案</a>
+            <a href="#value" class="nav-item">核心价值</a>
+        </div>
+    </nav>
+
+    <!-- Pain Point Section -->
+    <section id="pain" class="section pain-section">
+        <div class="section-header">
+            <div class="section-badge">问题洞察</div>
+            <h2 class="section-title">为什么需要统一的AI工程师平台？</h2>
+            <p class="section-desc">企业工程师每天面对数十种AI工具，切换成本高、学习曲线陡、最佳实践难以沉淀</p>
+        </div>
+
+        <!-- 痛点对比图 -->
+        <div class="pain-image-container">
+            <img src="assets/comparison.jpg" alt="多个AI工具 vs 统一AI平台" class="pain-image" loading="lazy" width="900" height="450" decoding="async">
+            <p class="pain-image-caption">左：当前现状 - 工程师需要在多个AI工具之间切换 → 右：理想状态 - 一个统一入口覆盖所有场景</p>
+        </div>
+
+        <!-- 痛点卡片 -->
+        <div class="pain-grid">
+            <div class="pain-card">
+                <div class="pain-icon">🔀</div>
+                <h4>工具碎片化</h4>
+                <p>Cursor、ChatGPT、Perplexity、Midjourney... 几十种AI工具，切换成本极高</p>
+            </div>
+            <div class="pain-card">
+                <div class="pain-icon">📚</div>
+                <h4>学习成本高</h4>
+                <p>每个工具有不同的使用方式和最佳实践，需要逐一学习掌握</p>
+            </div>
+            <div class="pain-card">
+                <div class="pain-icon">🏢</div>
+                <h4>缺乏企业上下文</h4>
+                <p>通用AI工具不理解企业内部代码库、知识库、技术规范</p>
+            </div>
+            <div class="pain-card">
+                <div class="pain-icon">📝</div>
+                <h4>最佳实践未沉淀</h4>
+                <p>个人经验难以在团队内共享和传承，重复踩坑</p>
+            </div>
+            <div class="pain-card">
+                <div class="pain-icon">🔒</div>
+                <h4>数据安全顾虑</h4>
+                <p>敏感数据流向外部AI产品存在合规风险</p>
+            </div>
+            <div class="pain-card">
+                <div class="pain-icon">😴</div>
+                <h4>被动响应模式</h4>
+                <p>现有AI工具只能被动响应，缺乏主动服务能力，不像真正的员工</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Framework Section -->
+    <section id="framework" class="section">
+        <div class="section-header">
+            <div class="section-badge">完整框架</div>
+            <h2 class="section-title">三位一体的产品体系</h2>
+            <p class="section-desc">从场景分析到产品设计，再到技术实现，构建完整的AI工程师平台解决方案</p>
+        </div>
+
+        <div class="framework-flow">
+            <!-- Step 1: 场景分析 -->
+            <div class="framework-card analysis">
+                <div class="framework-step">STEP 1</div>
+                <div class="framework-icon">🔍</div>
+                <h3>用户场景分析</h3>
+                <p>深入研究企业AI工程师日常工作，识别48个核心任务，抽象9种Agent类型</p>
+                <ul class="framework-highlights">
+                    <li>📊 48个具体工作任务</li>
+                    <li>💻 25个研发场景 + 23个非研发场景</li>
+                    <li>🤖 9种Agent类型覆盖</li>
+                    <li>📈 任务时间占比分析</li>
+                    <li>🎯 P0-P4优先级排序</li>
+                </ul>
+                <a href="1-ai-engineer-analysis/index.html" class="framework-link" target="_blank">
+                    查看详情 →
+                </a>
+            </div>
+
+            <div class="framework-arrow">→</div>
+
+            <!-- Step 2: 产品设计 -->
+            <div class="framework-card product">
+                <div class="framework-step">STEP 2</div>
+                <div class="framework-icon">🎨</div>
+                <h3>产品设计与规划</h3>
+                <p>基于场景分析，设计AI Studio产品方案，提出Agentic核心理念</p>
+                <ul class="framework-highlights">
+                    <li>🧠 从工具到员工的Agentic理念</li>
+                    <li>📋 主动规划 + 后台执行 + 主动预警</li>
+                    <li>🔀 一个入口，智能路由</li>
+                    <li>🖥️ 产品形态设计</li>
+                    <li>🗓️ 建设路径规划</li>
+                </ul>
+                <a href="2-ai-workbench/index.html" class="framework-link" target="_blank">
+                    查看详情 →
+                </a>
+            </div>
+
+            <div class="framework-arrow">→</div>
+
+            <!-- Step 3: 技术架构 -->
+            <div class="framework-card tech">
+                <div class="framework-step">STEP 3</div>
+                <div class="framework-icon">⚙️</div>
+                <h3>技术架构设计</h3>
+                <p>设计研发Agent Infra理想架构，6层分层设计，支撑产品落地</p>
+                <ul class="framework-highlights">
+                    <li>🏛️ 6层架构分层设计</li>
+                    <li>🔧 能力层：工具、记忆、知识、推理</li>
+                    <li>🔀 编排层：Multi-Agent协作</li>
+                    <li>📦 实现层：统一SDK</li>
+                    <li>🏭 基础设施层：安全、可观测</li>
+                </ul>
+                <a href="3-agent-infra/index.html" class="framework-link" target="_blank">
+                    查看详情 →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Section - 重新设计的完整体系大图 -->
+    <section id="methodology" class="section methodology">
+        <div class="section-header">
+            <div class="section-badge">体系大图</div>
+            <h2 class="section-title">从场景到实现的完整链路</h2>
+            <p class="section-desc">六层递进的系统性方法论，确保产品方向正确、技术方案可落地</p>
+        </div>
+
+        <div class="methodology-diagram">
+            <!-- 第一层：用户角色 -->
+            <div class="methodology-row">
+                <div class="methodology-label">👤 用户角色</div>
+                <div class="methodology-connector"></div>
+                <div class="methodology-items">
+                    <span class="methodology-item highlight">企业研发工程师</span>
+                    <span class="methodology-item">测试工程师</span>
+                    <span class="methodology-item">运维工程师</span>
+                    <span class="methodology-item">技术Leader</span>
+                    <span class="methodology-item">产品经理</span>
+                </div>
+            </div>
+
+            <!-- 第二层：工作场景 -->
+            <div class="methodology-row">
+                <div class="methodology-label">📋 工作场景</div>
+                <div class="methodology-connector"></div>
+                <div class="methodology-items">
+                    <span class="methodology-item" style="background:#dbeafe;border-color:#3b82f6;">研发场景 (65%)</span>
+                    <span class="methodology-item" style="background:#dcfce7;border-color:#22c55e;">非研发场景 (35%)</span>
+                </div>
+            </div>
+
+            <!-- 第三层：具体任务 -->
+            <div class="methodology-row">
+                <div class="methodology-label">✅ 具体任务</div>
+                <div class="methodology-connector"></div>
+                <div class="methodology-items">
+                    <span class="methodology-item">AI编程</span>
+                    <span class="methodology-item">代码审查</span>
+                    <span class="methodology-item">文档写作</span>
+                    <span class="methodology-item">技术调研</span>
+                    <span class="methodology-item">数据分析</span>
+                    <span class="methodology-item">会议纪要</span>
+                    <span class="methodology-item" style="color:#64748b;">... 共48个</span>
+                </div>
+            </div>
+
+            <!-- 第四层：Agent能力抽象 -->
+            <div class="methodology-row">
+                <div class="methodology-label">🤖 Agent抽象</div>
+                <div class="methodology-connector"></div>
+                <div class="methodology-items">
+                    <span class="methodology-item highlight">💻 Coding (47%)</span>
+                    <span class="methodology-item">💬 Chatbot (15%)</span>
+                    <span class="methodology-item">⚙️ Workflow (15%)</span>
+                    <span class="methodology-item">🔬 Research (8%)</span>
+                    <span class="methodology-item">🎨 Design (4%)</span>
+                    <span class="methodology-item" style="color:#64748b;">... 共9种</span>
+                </div>
+            </div>
+
+            <!-- 第五层：产品触点 -->
+            <div class="methodology-row">
+                <div class="methodology-label">🖥️ 产品触点</div>
+                <div class="methodology-connector"></div>
+                <div class="methodology-items">
+                    <span class="methodology-item" style="background:#fef3c7;border-color:#f59e0b;">IDE内嵌</span>
+                    <span class="methodology-item" style="background:#fef3c7;border-color:#f59e0b;">Web工作台</span>
+                    <span class="methodology-item" style="background:#fef3c7;border-color:#f59e0b;">IM机器人</span>
+                    <span class="methodology-item" style="background:#fef3c7;border-color:#f59e0b;">CLI命令行</span>
+                    <span class="methodology-item" style="background:#fef3c7;border-color:#f59e0b;">API接口</span>
+                </div>
+            </div>
+
+            <!-- 第六层：技术架构 -->
+            <div class="methodology-row">
+                <div class="methodology-label">⚙️ 技术架构</div>
+                <div class="methodology-connector"></div>
+                <div class="methodology-items">
+                    <span class="methodology-item" style="background:#f3e8ff;border-color:#a855f7;">产品层</span>
+                    <span class="methodology-item" style="background:#f3e8ff;border-color:#a855f7;">应用层</span>
+                    <span class="methodology-item" style="background:#f3e8ff;border-color:#a855f7;">编排层</span>
+                    <span class="methodology-item" style="background:#f3e8ff;border-color:#a855f7;">实现层</span>
+                    <span class="methodology-item" style="background:#f3e8ff;border-color:#a855f7;">能力层</span>
+                    <span class="methodology-item" style="background:#f3e8ff;border-color:#a855f7;">基础设施层</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 核心逻辑说明 -->
+        <div class="methodology-logic" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px;">
+            <div style="background:white;border-radius:10px;padding:16px;border:1px solid var(--border);">
+                <div style="font-size:1.2rem;margin-bottom:6px;">🎯</div>
+                <h4 style="font-size:0.85rem;font-weight:700;margin-bottom:4px;color:var(--text-primary);">场景驱动</h4>
+                <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.4;">从真实用户场景出发，而非技术能力出发，确保产品解决真问题</p>
+            </div>
+            <div style="background:white;border-radius:10px;padding:16px;border:1px solid var(--border);">
+                <div style="font-size:1.2rem;margin-bottom:6px;">🔗</div>
+                <h4 style="font-size:0.85rem;font-weight:700;margin-bottom:4px;color:var(--text-primary);">能力复用</h4>
+                <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.4;">9种Agent抽象覆盖48个任务，同一Agent能力在不同触点复用</p>
+            </div>
+            <div style="background:white;border-radius:10px;padding:16px;border:1px solid var(--border);">
+                <div style="font-size:1.2rem;margin-bottom:6px;">📐</div>
+                <h4 style="font-size:0.85rem;font-weight:700;margin-bottom:4px;color:var(--text-primary);">分层解耦</h4>
+                <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.4;">6层架构各司其职，产品触点与Agent逻辑解耦，灵活扩展</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="section-header">
+            <div class="section-badge">详细方案</div>
+            <h2 class="section-title">深入了解每个模块</h2>
+            <p class="section-desc">点击卡片查看完整的交互式文档</p>
+        </div>
+
+        <div class="quick-links">
+            <!-- 场景分析 -->
+            <a href="1-ai-engineer-analysis/index.html" class="quick-link-card analysis" target="_blank">
+                <div class="quick-link-header">
+                    <div class="quick-link-icon">🔍</div>
+                    <h3>企业AI工程师场景分析</h3>
+                    <p>工作场景与任务的可视化分析</p>
+                </div>
+                <div class="quick-link-body">
+                    <div class="quick-link-stats">
+                        <div class="quick-link-stat">
+                            <div class="quick-link-stat-value">48</div>
+                            <div class="quick-link-stat-label">工作任务</div>
+                        </div>
+                        <div class="quick-link-stat">
+                            <div class="quick-link-stat-value">9</div>
+                            <div class="quick-link-stat-label">Agent类型</div>
+                        </div>
+                        <div class="quick-link-stat">
+                            <div class="quick-link-stat-value">5</div>
+                            <div class="quick-link-stat-label">优先级</div>
+                        </div>
+                    </div>
+                    <ul class="quick-link-features">
+                        <li>✓ 交互式关系图可视化</li>
+                        <li>✓ 任务时间占比分析</li>
+                        <li>✓ 开发优先级排序</li>
+                        <li>✓ 业界产品对标</li>
+                    </ul>
+                </div>
+                <div class="quick-link-cta">
+                    查看场景分析 →
+                </div>
+            </a>
+
+            <!-- 产品方案 -->
+            <a href="2-ai-workbench/index.html" class="quick-link-card product" target="_blank">
+                <div class="quick-link-header">
+                    <div class="quick-link-icon">🎨</div>
+                    <h3>AI Studio 产品方案</h3>
+                    <p>企业级AI数字员工平台设计</p>
+                </div>
+                <div class="quick-link-body">
+                    <div class="quick-link-stats">
+                        <div class="quick-link-stat">
+                            <div class="quick-link-stat-value">v2.0</div>
+                            <div class="quick-link-stat-label">方案版本</div>
+                        </div>
+                        <div class="quick-link-stat">
+                            <div class="quick-link-stat-value">8</div>
+                            <div class="quick-link-stat-label">核心模块</div>
+                        </div>
+                        <div class="quick-link-stat">
+                            <div class="quick-link-stat-value">100%</div>
+                            <div class="quick-link-stat-label">场景覆盖</div>
+                        </div>
+                    </div>
+                    <ul class="quick-link-features">
+                        <li>✓ Agentic核心理念</li>
+                        <li>✓ 主动服务设计</li>
+                        <li>✓ 产品形态规划</li>
+                        <li>✓ 建设路径时间表</li>
+                    </ul>
+                </div>
+                <div class="quick-link-cta">
+                    查看产品方案 →
+                </div>
+            </a>
+
+            <!-- 技术架构 -->
+            <a href="3-agent-infra/index.html" class="quick-link-card tech" target="_blank">
+                <div class="quick-link-header">
+                    <div class="quick-link-icon">⚙️</div>
+                    <h3>Agent Infra 理想架构</h3>
+                    <p>研发Agent基础设施深度解析</p>
+                </div>
+                <div class="quick-link-body">
+                    <div class="quick-link-stats">
+                        <div class="quick-link-stat">
+                            <div class="quick-link-stat-value">6</div>
+                            <div class="quick-link-stat-label">架构层级</div>
+                        </div>
+                        <div class="quick-link-stat">
+                            <div class="quick-link-stat-value">30+</div>
+                            <div class="quick-link-stat-label">核心组件</div>
+                        </div>
+                        <div class="quick-link-stat">
+                            <div class="quick-link-stat-value">v2.1</div>
+                            <div class="quick-link-stat-label">架构版本</div>
+                        </div>
+                    </div>
+                    <ul class="quick-link-features">
+                        <li>✓ 6层分层架构设计</li>
+                        <li>✓ 能力层核心原子</li>
+                        <li>✓ Multi-Agent编排</li>
+                        <li>✓ 基础设施保障</li>
+                    </ul>
+                </div>
+                <div class="quick-link-cta">
+                    查看技术架构 →
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Value Section -->
+    <section id="value" class="section value-section">
+        <div class="section-header">
+            <div class="section-badge" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: white;">核心价值</div>
+            <h2 class="section-title" style="color: white;">为什么选择统一的AI工程师平台？</h2>
+            <p class="section-desc" style="color: rgba(255,255,255,0.7);">一个入口，智能路由，主动服务</p>
+        </div>
+
+        <div class="value-grid">
+            <div class="value-card">
+                <div class="value-icon">🎯</div>
+                <h4>一个入口</h4>
+                <p>告别工具切换，所有AI能力一站式获取</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🔀</div>
+                <h4>智能路由</h4>
+                <p>自动识别意图，匹配最佳Agent处理</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🤖</div>
+                <h4>主动服务</h4>
+                <p>不只是工具，更是主动规划的AI员工</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🏢</div>
+                <h4>企业上下文</h4>
+                <p>理解企业代码库、知识库、技术规范</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 了解更多 -->
+    <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+    <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+    <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+    我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+    </p>
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+    🏠 访问AI洞察首页
+    </a>
+    </div>
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 导航高亮（使用IntersectionObserver替代scroll事件）
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('section[id]');
+
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navItems.forEach(item => {
+                            item.style.color = '';
+                            item.style.background = '';
+                            if (item.getAttribute('href') === `#${id}`) {
+                                item.style.color = '#667eea';
+                                item.style.background = 'rgba(102, 126, 234, 0.1)';
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-20% 0px -70% 0px' });
+            
+            sections.forEach(section => observer.observe(section));
+        }
+    </script>
+</body>
+</html>

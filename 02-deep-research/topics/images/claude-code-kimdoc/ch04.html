@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1060px;
+    background: linear-gradient(135deg, #f8fafc 0%, #fdf4ff 50%, #f0f9ff 100%);
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    padding: 44px 52px;
+  }
+  .label { font-size: 13px; font-weight: 600; color: #7c3aed; letter-spacing: 2px; margin-bottom: 10px; }
+  h1 { font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 6px; }
+  .subtitle { font-size: 14px; color: #64748b; margin-bottom: 24px; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  .half-card {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 14px;
+    padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  }
+  .half-title {
+    font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 20px;
+    display: inline-block; margin-bottom: 14px;
+  }
+  .old { background: #fee2e2; color: #991b1b; }
+  .new { background: #ede9fe; color: #5b21b6; }
+  .row2 { padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
+  .row2:last-child { border-bottom: none; }
+  .row2 .dim { color: #94a3b8; font-size: 11px; margin-bottom: 2px; }
+  .row2 .val { color: #334155; }
+  table {
+    width: 100%; border-collapse: collapse; background: #fff;
+    border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    margin-bottom: 18px;
+  }
+  th { background: #f5f3ff; color: #5b21b6; font-size: 13px; font-weight: 600; padding: 11px 14px; text-align: left; }
+  td { padding: 11px 14px; font-size: 13px; color: #334155; border-top: 1px solid #f1f5f9; }
+  .conclusion {
+    background: #fffbeb; border-left: 4px solid #f59e0b;
+    border-radius: 0 12px 12px 0; padding: 12px 16px;
+    font-size: 13.5px; color: #78350f; line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+  <div class="label">第 04 章</div>
+  <h1>本质洞察：认知代理 vs 工具代理</h1>
+  <p class="subtitle">CC 是「认知代理」理念的最佳工程实现——两种代理范式的本质差异</p>
+
+  <div class="compare-grid">
+    <div class="half-card">
+      <span class="half-title old">工具代理（大多数 AI 工具）</span>
+      <div class="row2"><div class="dim">工作模式</div><div class="val">你告诉它做什么，它执行</div></div>
+      <div class="row2"><div class="dim">能力上限</div><div class="val">你的指令清晰度</div></div>
+      <div class="row2"><div class="dim">对话风格</div><div class="val">「好的，我已执行你的指令」</div></div>
+      <div class="row2"><div class="dim">主动性</div><div class="val">被动响应</div></div>
+    </div>
+    <div class="half-card">
+      <span class="half-title new">认知代理（Claude Code）</span>
+      <div class="row2"><div class="dim">工作模式</div><div class="val">理解你在做什么，自主决策</div></div>
+      <div class="row2"><div class="dim">能力上限</div><div class="val">AI 的推理能力</div></div>
+      <div class="row2"><div class="dim">对话风格</div><div class="val">「我发现问题，先检查再动」</div></div>
+      <div class="row2"><div class="dim">主动性</div><div class="val">主动感知 + 主动提醒</div></div>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>层级</th><th>动作</th><th>输出</th></tr></thead>
+    <tbody>
+      <tr><td>L1 感知</td><td>读取仓库状态、用户意图</td><td>结构化的任务上下文</td></tr>
+      <tr><td>L2 理解</td><td>解析依赖关系、影响范围</td><td>操作风险评估</td></tr>
+      <tr><td>L3 规划</td><td>拆解任务为原子操作序列</td><td>可执行计划</td></tr>
+      <tr><td>L4 执行</td><td>按计划调用工具</td><td>操作结果</td></tr>
+      <tr><td>L5 反思</td><td>验证结果、更新上下文</td><td>优化后的新起点</td></tr>
+    </tbody>
+  </table>
+
+  <div class="conclusion">
+    📌 <strong>核心结论</strong>：工具代理的天花板是你的语言精度，认知代理的天花板是 AI 的推理深度。<strong>这是两种本质上不同的产品设计哲学。</strong>
+  </div>
+</body>
+</html>

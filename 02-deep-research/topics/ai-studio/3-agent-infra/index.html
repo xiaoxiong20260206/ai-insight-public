@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研发Agent Infra 理想架构 - 深度解析</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 架构图专用样式 */
+        .architecture-container {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 24px;
+            padding: 45px;
+            margin-bottom: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .architecture-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #00d9ff);
+        }
+
+        .arch-title {
+            font-size: 2em;
+            color: #1a1a2e;
+            margin-bottom: 35px;
+            padding-bottom: 18px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #667eea, #764ba2, #f093fb) 1;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .architecture-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .arch-layer {
+            border-radius: 18px;
+            padding: 22px 25px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+        }
+
+        .arch-layer:hover {
+            transform: translateX(8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .layer-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .layer-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6em;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .layer-info {
+            flex: 1;
+        }
+
+        .layer-name {
+            font-size: 1.35em;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.3px;
+        }
+
+        .layer-desc {
+            font-size: 0.92em;
+            color: #666;
+            margin: 5px 0 0 0;
+        }
+
+        .layer-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.72em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d9ff, #00ff88);
+            color: #0a0a1a;
+            margin-left: 10px;
+            animation: pulse-glow 2s ease-in-out infinite;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(0, 217, 255, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(0, 255, 136, 0.7); }
+        }
+
+        .layer-link {
+            color: #667eea;
+            font-size: 0.92em;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border-radius: 25px;
+            border: 2px solid #667eea;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .layer-link:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .layer-components {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .component-item {
+            background: white;
+            border: 2px solid #e8ecf0;
+            border-radius: 14px;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.92em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .component-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .component-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .component-item:hover {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #f8f9ff, #fff);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.18);
+        }
+
+        .component-item .icon {
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .component-item .name {
+            flex: 1;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .component-item .arrow {
+            color: #667eea;
+            opacity: 0;
+            transform: translateX(-5px);
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .component-item:hover .arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* 层级颜色 */
+        .layer-product { 
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08)); 
+            border-color: rgba(102, 126, 234, 0.2);
+        }
+        .layer-product .layer-icon { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .layer-product .layer-name { color: #667eea; }
+        .layer-product:hover { border-color: #667eea; }
+        .layer-product .component-item:hover { border-color: #667eea; }
+        .layer-product .component-item:hover::before { background: linear-gradient(90deg, #667eea, #764ba2); }
+
+        .layer-app { 
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.08), rgba(245, 87, 108, 0.08)); 
+            border-color: rgba(245, 87, 108, 0.2);
+        }
+        .layer-app .layer-icon { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .layer-app .layer-name { color: #e91e63; }
+        .layer-app:hover { border-color: #f5576c; }
+        .layer-app .component-item:hover { border-color: #f5576c; }
+        .layer-app .component-item:hover::before { background: linear-gradient(90deg, #f093fb, #f5576c); }
+        .layer-app .layer-link { color: #f5576c; border-color: #f5576c; }
+        .layer-app .layer-link:hover { background: #f5576c; color: white; }
+
+        .layer-orchestration { 
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.08), rgba(0, 242, 254, 0.08)); 
+            border-color: rgba(79, 172, 254, 0.2);
+        }
+        .layer-orchestration .layer-icon { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .layer-orchestration .layer-name { color: #0288d1; }
+        .layer-orchestration:hover { border-color: #4facfe; }
+        .layer-orchestration .component-item:hover { border-color: #4facfe; }
+        .layer-orchestration .component-item:hover::before { background: linear-gradient(90deg, #4facfe, #00f2fe); }
+        .layer-orchestration .layer-link { color: #4facfe; border-color: #4facfe; }
+        .layer-orchestration .layer-link:hover { background: #4facfe; color: white; }
+
+        .layer-impl { 
+            background: linear-gradient(135deg, rgba(17, 153, 142, 0.08), rgba(56, 239, 125, 0.08)); 
+            border-color: rgba(56, 239, 125, 0.2);
+        }
+        .layer-impl .layer-icon { background: linear-gradient(135deg, #11998e, #38ef7d); }
+        .layer-impl .layer-name { color: #00897b; }
+        .layer-impl:hover { border-color: #38ef7d; }
+        .layer-impl .component-item:hover { border-color: #11998e; }
+        .layer-impl .component-item:hover::before { background: linear-gradient(90deg, #11998e, #38ef7d); }
+        .layer-impl .layer-link { color: #11998e; border-color: #11998e; }
+        .layer-impl .layer-link:hover { background: #11998e; color: white; }
+
+        .layer-capability { 
+            background: linear-gradient(135deg, rgba(250, 112, 154, 0.08), rgba(254, 225, 64, 0.08)); 
+            border-color: rgba(250, 112, 154, 0.2);
+        }
+        .layer-capability .layer-icon { background: linear-gradient(135deg, #fa709a, #fee140); }
+        .layer-capability .layer-name { color: #e91e63; }
+        .layer-capability:hover { border-color: #fa709a; }
+        .layer-capability .component-item:hover { border-color: #fa709a; }
+        .layer-capability .component-item:hover::before { background: linear-gradient(90deg, #fa709a, #fee140); }
+        .layer-capability .layer-link { color: #fa709a; border-color: #fa709a; }
+        .layer-capability .layer-link:hover { background: #fa709a; color: white; }
+
+        .layer-infra { 
+            background: linear-gradient(135deg, rgba(92, 107, 192, 0.08), rgba(121, 134, 203, 0.08)); 
+            border-color: rgba(92, 107, 192, 0.2);
+        }
+        .layer-infra .layer-icon { background: linear-gradient(135deg, #5c6bc0, #7986cb); }
+        .layer-infra .layer-name { color: #5c6bc0; }
+        .layer-infra:hover { border-color: #5c6bc0; }
+        .layer-infra .component-item:hover { border-color: #5c6bc0; }
+        .layer-infra .component-item:hover::before { background: linear-gradient(90deg, #5c6bc0, #7986cb); }
+        .layer-infra .layer-link { color: #5c6bc0; border-color: #5c6bc0; }
+        .layer-infra .layer-link:hover { background: #5c6bc0; color: white; }
+
+        /* 连接线 */
+        .arch-connector {
+            display: flex;
+            justify-content: center;
+            padding: 4px 0;
+            position: relative;
+        }
+
+        .arch-connector::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .arch-connector::after {
+            content: '▼';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #764ba2;
+            font-size: 10px;
+        }
+
+        /* 图例 */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #f0f0f5;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.88em;
+            color: #555;
+            padding: 8px 16px;
+            border-radius: 25px;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+
+        .legend-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 设计原则部分 */
+        .principles-section {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 24px;
+            padding: 45px;
+            margin-bottom: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        .principles-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00d9ff, #00ff88, #667eea);
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+            margin-top: 25px;
+        }
+
+        .principle-card {
+            background: linear-gradient(135deg, #fafbfc, #ffffff);
+            border-radius: 16px;
+            padding: 25px;
+            border: 2px solid #f0f0f5;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .principle-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .principle-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .principle-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.15);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .principle-card .icon {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .principle-card h4 {
+            color: #1a1a2e;
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+            font-weight: 700;
+        }
+
+        .principle-card p {
+            color: #555;
+            font-size: 0.9em;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* 统计数字 */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-radius: 16px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.92em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .layer-components {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .component-item {
+                padding: 12px;
+                font-size: 0.85em;
+            }
+
+            .legend {
+                gap: 12px;
+            }
+
+            .layer-header {
+                flex-wrap: wrap;
+            }
+
+            .layer-link {
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
+            }
+
+            .stats-bar {
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .layer-components {
+                grid-template-columns: 1fr;
+            }
+
+            .architecture-container,
+            .principles-section {
+                padding: 25px 20px;
+            }
+        }
+
+        /* 动画 */
+        .arch-layer {
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .arch-layer:nth-child(1) { animation-delay: 0.1s; }
+        .arch-layer:nth-child(3) { animation-delay: 0.2s; }
+        .arch-layer:nth-child(5) { animation-delay: 0.3s; }
+        .arch-layer:nth-child(7) { animation-delay: 0.4s; }
+        .arch-layer:nth-child(9) { animation-delay: 0.5s; }
+        .arch-layer:nth-child(11) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏗️ 研发Agent Infra 理想架构</h1>
+            <p>六层架构 · 深度解析 · 点击组件查看详情</p>
+        </header>
+
+        <div class="architecture-container">
+            <h2 class="arch-title">📐 架构全景图</h2>
+            
+            <!-- 统计概览 -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">架构层级</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">核心组件</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">新增层级</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">业界资料</div>
+                </div>
+            </div>
+            
+            <div class="architecture-diagram">
+                <!-- 产品层 -->
+                <div class="arch-layer layer-product">
+                    <div class="layer-header">
+                        <div class="layer-icon">🎨</div>
+                        <div class="layer-info">
+                            <h3 class="layer-name">产品层 (Product Layer)</h3>
+                            <p class="layer-desc">用户触达的产品形态，提供统一的交互体验</p>
+                        </div>
+                        <a href="pages/product-layer.html" class="layer-link">详情 →</a>
+                    </div>
+                    <div class="layer-components">
+                        <a href="pages/product-layer.html#kate-studio" class="component-item">
+                            <span class="icon">🖥️</span>
+                            <span class="name">Agent平台-AI Studio</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/product-layer.html#cf-ide" class="component-item">
+                            <span class="icon">💻</span>
+                            <span class="name">AI助手平台-IDE</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/product-layer.html#cf-web" class="component-item">
+                            <span class="icon">🌐</span>
+                            <span class="name">AI助手平台-Web</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/product-layer.html#design-system" class="component-item">
+                            <span class="icon">📐</span>
+                            <span class="name">Design System</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="arch-connector"></div>
+
+                <!-- 应用层 -->
+                <div class="arch-layer layer-app">
+                    <div class="layer-header">
+                        <div class="layer-icon">🤖</div>
+                        <div class="layer-info">
+                            <h3 class="layer-name">应用层 (Application Layer)</h3>
+                            <p class="layer-desc">面向用户场景的Agent定义，逻辑统一、多形态复用</p>
+                        </div>
+                        <a href="pages/application-layer.html" class="layer-link">详情 →</a>
+                    </div>
+                    <div class="layer-components">
+                        <a href="pages/application-layer.html#dev-agent" class="component-item">
+                            <span class="icon">👨‍💻</span>
+                            <span class="name">开发Agent</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/application-layer.html#test-agent" class="component-item">
+                            <span class="icon">🧪</span>
+                            <span class="name">测试Agent</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/application-layer.html#ops-agent" class="component-item">
+                            <span class="icon">🔧</span>
+                            <span class="name">运维Agent</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/application-layer.html#data-agent" class="component-item">
+                            <span class="icon">📊</span>
+                            <span class="name">数据Agent</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="arch-connector"></div>
+
+                <!-- 编排层 -->
+                <div class="arch-layer layer-orchestration">
+                    <div class="layer-header">
+                        <div class="layer-icon">🔀</div>
+                        <div class="layer-info">
+                            <h3 class="layer-name">编排层 (Orchestration Layer) <span class="layer-tag">NEW</span></h3>
+                            <p class="layer-desc">Multi-Agent协作与任务编排，支持复杂工作流</p>
+                        </div>
+                        <a href="pages/orchestration-layer.html" class="layer-link">详情 →</a>
+                    </div>
+                    <div class="layer-components">
+                        <a href="pages/orchestration-layer.html#agent-router" class="component-item">
+                            <span class="icon">🧭</span>
+                            <span class="name">Agent Router</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/orchestration-layer.html#workflow-engine" class="component-item">
+                            <span class="icon">🔄</span>
+                            <span class="name">Workflow Engine</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/orchestration-layer.html#context-manager" class="component-item">
+                            <span class="icon">📋</span>
+                            <span class="name">Context Manager</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/orchestration-layer.html#conflict-resolver" class="component-item">
+                            <span class="icon">⚖️</span>
+                            <span class="name">Conflict Resolver</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="arch-connector"></div>
+
+                <!-- 实现层 -->
+                <div class="arch-layer layer-impl">
+                    <div class="layer-header">
+                        <div class="layer-icon">⚙️</div>
+                        <div class="layer-info">
+                            <h3 class="layer-name">实现层 (Implementation Layer)</h3>
+                            <p class="layer-desc">Agent的具体实现，统一SDK + 团队定制</p>
+                        </div>
+                        <a href="pages/implementation-layer.html" class="layer-link">详情 →</a>
+                    </div>
+                    <div class="layer-components">
+                        <a href="pages/implementation-layer.html#agent-sdk" class="component-item">
+                            <span class="icon">📦</span>
+                            <span class="name">Agent SDK</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/implementation-layer.html#arch-patterns" class="component-item">
+                            <span class="icon">🏛️</span>
+                            <span class="name">架构模式</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/implementation-layer.html#prompt-engineering" class="component-item">
+                            <span class="icon">📝</span>
+                            <span class="name">Prompt工程</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/implementation-layer.html#best-practices" class="component-item">
+                            <span class="icon">📚</span>
+                            <span class="name">最佳实践库</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="arch-connector"></div>
+
+                <!-- 能力层 -->
+                <div class="arch-layer layer-capability">
+                    <div class="layer-header">
+                        <div class="layer-icon">🧠</div>
+                        <div class="layer-info">
+                            <h3 class="layer-name">能力层 (Capability Layer)</h3>
+                            <p class="layer-desc">Agent的核心能力原子，统一建设、全面共享</p>
+                        </div>
+                        <a href="pages/capability-layer.html" class="layer-link">详情 →</a>
+                    </div>
+                    <div class="layer-components">
+                        <a href="pages/capability-layer.html#tool" class="component-item">
+                            <span class="icon">🔧</span>
+                            <span class="name">工具 (Tool)</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/capability-layer.html#perception" class="component-item">
+                            <span class="icon">👁️</span>
+                            <span class="name">感知</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/capability-layer.html#memory" class="component-item">
+                            <span class="icon">🧩</span>
+                            <span class="name">记忆</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/capability-layer.html#knowledge" class="component-item">
+                            <span class="icon">📚</span>
+                            <span class="name">知识</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/capability-layer.html#planning" class="component-item">
+                            <span class="icon">🎯</span>
+                            <span class="name">规划</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/capability-layer.html#reasoning" class="component-item">
+                            <span class="icon">💭</span>
+                            <span class="name">推理</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/capability-layer.html#evaluation" class="component-item">
+                            <span class="icon">📊</span>
+                            <span class="name">评估</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/capability-layer.html#self-evolution" class="component-item">
+                            <span class="icon">🔄</span>
+                            <span class="name">自进化</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="arch-connector"></div>
+
+                <!-- 基础设施层 -->
+                <div class="arch-layer layer-infra">
+                    <div class="layer-header">
+                        <div class="layer-icon">🏭</div>
+                        <div class="layer-info">
+                            <h3 class="layer-name">基础设施层 (Infrastructure) <span class="layer-tag">NEW</span></h3>
+                            <p class="layer-desc">Agent运行的底层支撑，保障安全、性能、成本</p>
+                        </div>
+                        <a href="pages/infrastructure-layer.html" class="layer-link">详情 →</a>
+                    </div>
+                    <div class="layer-components">
+                        <a href="pages/infrastructure-layer.html#security" class="component-item">
+                            <span class="icon">🔐</span>
+                            <span class="name">安全与治理</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/infrastructure-layer.html#observability" class="component-item">
+                            <span class="icon">👁️</span>
+                            <span class="name">可观测性</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/infrastructure-layer.html#cost" class="component-item">
+                            <span class="icon">💰</span>
+                            <span class="name">成本优化</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/infrastructure-layer.html#model-service" class="component-item">
+                            <span class="icon">🧪</span>
+                            <span class="name">模型服务</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/infrastructure-layer.html#feature-flag" class="component-item">
+                            <span class="icon">🚀</span>
+                            <span class="name">Feature Flag</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="pages/infrastructure-layer.html#metrics" class="component-item">
+                            <span class="icon">📈</span>
+                            <span class="name">效果监控</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 图例 -->
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: linear-gradient(135deg, #667eea, #764ba2);"></div>
+                    <span>产品层</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: linear-gradient(135deg, #f093fb, #f5576c);"></div>
+                    <span>应用层</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
+                    <span>编排层</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: linear-gradient(135deg, #11998e, #38ef7d);"></div>
+                    <span>实现层</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: linear-gradient(135deg, #fa709a, #fee140);"></div>
+                    <span>能力层</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: linear-gradient(135deg, #5c6bc0, #7986cb);"></div>
+                    <span>基础设施层</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="principles-section">
+            <h2 class="arch-title">💡 设计原则</h2>
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="icon">🎯</div>
+                    <h4>用户视角优先</h4>
+                    <p>架构复杂性对用户透明，体验统一简洁。用户看到的是1个智能助手，而非N个Agent。</p>
+                </div>
+                <div class="principle-card">
+                    <div class="icon">🧱</div>
+                    <h4>分层解耦</h4>
+                    <p>上层依赖下层接口而非实现，通过标准协议通信。每层可独立演进。</p>
+                </div>
+                <div class="principle-card">
+                    <div class="icon">♻️</div>
+                    <h4>能力复用</h4>
+                    <p>能力层统一建设，所有Agent共享。避免重复造轮子，投入产出最大化。</p>
+                </div>
+                <div class="principle-card">
+                    <div class="icon">📐</div>
+                    <h4>SDK优先</h4>
+                    <p>基于SDK扩展而非从零实现，降低门槛保证一致性。提供参考实现加速开发。</p>
+                </div>
+                <div class="principle-card">
+                    <div class="icon">🔒</div>
+                    <h4>安全内置</h4>
+                    <p>安全不是后置项，而是基础设施。权限、审计、护栏从Day1就要建设。</p>
+                </div>
+                <div class="principle-card">
+                    <div class="icon">📊</div>
+                    <h4>可观测先行</h4>
+                    <p>没有观测就没有优化。Tracing、Logging、Metrics从第一天就要完善。</p>
+                </div>
+                <div class="principle-card">
+                    <div class="icon">💰</div>
+                    <h4>成本意识</h4>
+                    <p>Token不是免费的。缓存、预算控制、成本监控是必备能力，而非锦上添花。</p>
+                </div>
+                <div class="principle-card">
+                    <div class="icon">🔄</div>
+                    <h4>持续进化</h4>
+                    <p>自进化飞轮形成闭环，Agent越用越智能。数据驱动优化，A/B验证上线。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 了解更多 -->
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+        <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+        我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+        </p>
+        <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+        🏠 访问AI洞察首页
+        </a>
+        </div>
+    </div>
+</body>
+</html>

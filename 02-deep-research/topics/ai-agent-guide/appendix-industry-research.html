@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>附录：行业调研 - AI Agent 团队落地指南</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/><circle cx='10' cy='8' r='1.5' fill='white'/><circle cx='22' cy='8' r='1.5' fill='white'/><line x1='11' y1='9' x2='13' y2='11' stroke='white' stroke-width='1.5'/><line x1='21' y1='9' x2='19' y2='11' stroke='white' stroke-width='1.5'/></svg>">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="header">
+            <span class="header-badge">AI行业洞察 · 附录</span>
+            <h1 class="header-title">国内外数字员工主流模式与案例</h1>
+            <p class="header-subtitle">2024-2025 年 AI Agent/数字员工市场调研与标杆案例分析</p>
+        </header>
+
+        <!-- Tab导航 -->
+        <nav class="tab-nav" role="navigation" aria-label="章节导航">
+            <a href="index.html" class="tab-btn">
+                <span class="tab-btn-num">📋</span>
+                <span>目录</span>
+            </a>
+            <a href="chapter1-scenarios.html" class="tab-btn">
+                <span class="tab-btn-num">1</span>
+                <span>场景与价值</span>
+            </a>
+            <a href="chapter2-architecture.html" class="tab-btn">
+                <span class="tab-btn-num">2</span>
+                <span>能力架构</span>
+            </a>
+            <a href="chapter3-implementation.html" class="tab-btn">
+                <span class="tab-btn-num">3</span>
+                <span>落地实践</span>
+            </a>
+            <a href="chapter4-future.html" class="tab-btn">
+                <span class="tab-btn-num">4</span>
+                <span>未来演进</span>
+            </a>
+            <a href="appendix-industry-research.html" class="tab-btn active">
+                <span class="tab-btn-num">📊</span>
+                <span>行业调研</span>
+            </a>
+        </nav>
+
+        <!-- 核心洞察 -->
+        <div class="summary-box">
+            <div class="summary-label">调研核心发现</div>
+            <h2 class="summary-title">2025年是 AI Agent <em>商业化应用元年</em></h2>
+            <p class="summary-text">
+                全球科技巨头和创业公司都在加速布局 AI Agent 赛道。国外以 Microsoft Copilot、Salesforce Agentforce、Anthropic Claude 为代表，国内以 Manus、字节豆包、阿里通义、百度文心为代表。预计到 2026 年，60% 的企业将部署 AI Agent，数字员工正在从概念走向规模化落地。
+            </p>
+        </div>
+
+        <!-- A.1 主流模式 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">A.1</span>
+                <h2 class="section-title">数字员工的三大主流模式</h2>
+            </div>
+
+            <!-- 章节概览图 -->
+            <div class="section-overview">
+                <span class="section-overview-label">模式全景图</span>
+                <div class="section-overview-content">
+                    <svg viewBox="0 0 700 120" style="max-width: 700px;">
+                        <!-- 模式1 -->
+                        <g transform="translate(30, 15)">
+                            <rect width="200" height="90" rx="10" fill="white" stroke="#059669" stroke-width="2"/>
+                            <rect width="200" height="4" rx="2" fill="#059669"/>
+                            <text x="100" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="#059669">Copilot 模式</text>
+                            <text x="100" y="50" text-anchor="middle" font-size="11" fill="#57534E">人主导 + AI 辅助</text>
+                            <text x="100" y="68" text-anchor="middle" font-size="10" fill="#78716C">代表：GitHub Copilot</text>
+                            <text x="100" y="82" text-anchor="middle" font-size="10" fill="#78716C">Microsoft 365 Copilot</text>
+                        </g>
+                        
+                        <!-- 模式2 -->
+                        <g transform="translate(250, 15)">
+                            <rect width="200" height="90" rx="10" fill="white" stroke="#2563EB" stroke-width="2"/>
+                            <rect width="200" height="4" rx="2" fill="#2563EB"/>
+                            <text x="100" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="#2563EB">Agent 模式</text>
+                            <text x="100" y="50" text-anchor="middle" font-size="11" fill="#57534E">人监督 + AI 自主执行</text>
+                            <text x="100" y="68" text-anchor="middle" font-size="10" fill="#78716C">代表：Manus、Devin</text>
+                            <text x="100" y="82" text-anchor="middle" font-size="10" fill="#78716C">OpenAI Operator</text>
+                        </g>
+                        
+                        <!-- 模式3 -->
+                        <g transform="translate(470, 15)">
+                            <rect width="200" height="90" rx="10" fill="white" stroke="#7C3AED" stroke-width="2"/>
+                            <rect width="200" height="4" rx="2" fill="#7C3AED"/>
+                            <text x="100" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="#7C3AED">平台模式</text>
+                            <text x="100" y="50" text-anchor="middle" font-size="11" fill="#57534E">低代码 + Agent 工厂</text>
+                            <text x="100" y="68" text-anchor="middle" font-size="10" fill="#78716C">代表：Salesforce Agentforce</text>
+                            <text x="100" y="82" text-anchor="middle" font-size="10" fill="#78716C">BetterYeah AI</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>模式</th>
+                            <th>核心特征</th>
+                            <th>适用场景</th>
+                            <th>代表产品</th>
+                            <th>自主性</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag tag-green">Copilot 模式</span></td>
+                            <td>人主导，AI 实时建议和辅助</td>
+                            <td>代码编写、文档处理、数据分析</td>
+                            <td>GitHub Copilot、Microsoft 365 Copilot</td>
+                            <td>低</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-blue">Agent 模式</span></td>
+                            <td>人监督，AI 自主规划和执行</td>
+                            <td>调研报告、项目部署、复杂任务</td>
+                            <td>Manus、Devin、Claude Code</td>
+                            <td>高</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-purple">平台模式</span></td>
+                            <td>企业级 Agent 开发和管理平台</td>
+                            <td>客服、营销、供应链、HR</td>
+                            <td>Salesforce Agentforce、BetterYeah</td>
+                            <td>可配置</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">模式演进趋势</div>
+                <p class="insight-text">
+                    行业正在从 <strong>Copilot（辅助）→ Agent（自主执行）</strong> 演进。据甲子光年智库预测，到 2026 年认知型 Agent 将覆盖 70% 的企业复杂决策场景。Copilot 是起点，Agent 是终局。
+                </p>
+            </div>
+        </section>
+
+        <!-- A.2 海外头部玩家 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">A.2</span>
+                <h2 class="section-title">海外头部玩家与案例</h2>
+            </div>
+
+            <h3 class="subsection-title">Microsoft：Copilot 生态全面布局</h3>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">💻</div>
+                    <h3 class="card-title">GitHub Copilot</h3>
+                    <p class="card-desc">
+                        <strong>定位：</strong>AI 编程助手<br>
+                        <strong>能力：</strong>代码补全、Agent 模式、多模型支持（Claude/OpenAI）<br>
+                        <strong>数据：</strong>全球超 1.5 亿开发者使用
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">Microsoft 365 Copilot</h3>
+                    <p class="card-desc">
+                        <strong>定位：</strong>办公生产力助手<br>
+                        <strong>能力：</strong>文档、邮件、PPT、Excel 智能处理<br>
+                        <strong>数据：</strong>集成 Dynamics 365 自主 AI Agent
+                    </p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Anthropic：Claude + MCP 协议</h3>
+
+            <div class="compare-grid">
+                <div class="compare-box positive">
+                    <div class="compare-header">
+                        <span class="compare-icon">🔧</span>
+                        <h3 class="compare-title">MCP（Model Context Protocol）</h3>
+                    </div>
+                    <ul class="compare-list">
+                        <li>开源的 AI 工具调用标准协议</li>
+                        <li>已被 OpenAI 等主流厂商采纳</li>
+                        <li>让 Agent 能调用外部工具和 API</li>
+                        <li>成为 Agent 生态的关键基础设施</li>
+                        <li>Claude 企业版支持 128K 上下文</li>
+                    </ul>
+                </div>
+                <div class="compare-box positive">
+                    <div class="compare-header">
+                        <span class="compare-icon">🖥️</span>
+                        <h3 class="compare-title">Computer Use（操作电脑）</h3>
+                    </div>
+                    <ul class="compare-list">
+                        <li>Agent 可直接操作浏览器和桌面</li>
+                        <li>模拟人类的点击、输入、滚动</li>
+                        <li>支持复杂的跨应用工作流</li>
+                        <li>从"对话 AI"升级为"操作 AI"</li>
+                        <li>开启"数字员工"真正落地</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Salesforce Agentforce：企业级 Agent 平台</h3>
+
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                Salesforce 将 AI Agent 称为"Digital Worker"（数字员工），并推出了 Agentforce 平台，让企业可以快速构建和部署专属 Agent。
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>产品</th>
+                            <th>场景</th>
+                            <th>核心能力</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Agentforce for Sales</strong></td>
+                            <td>销售自动化</td>
+                            <td>线索培育、客户跟进、报价生成</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Agentforce for Service</strong></td>
+                            <td>客户服务</td>
+                            <td>智能客服、工单处理、情感识别</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Agentforce for Health</strong></td>
+                            <td>医疗健康</td>
+                            <td>患者管理、预约调度、健康咨询</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">Google Cloud：101+ 企业案例</h3>
+
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                Google Cloud 发布了 1000+ 企业 AI 落地案例，涵盖 6 类 Agent：客户 Agent、员工 Agent、创意 Agent、代码 Agent、数据 Agent、安全 Agent。
+            </p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">🚗</div>
+                    <h3 class="card-title">Mercedes-Benz</h3>
+                    <p class="card-desc">
+                        使用 Gemini 驱动车载语音助手 MBUX，实现自然对话、导航问答、个性化服务。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🏦</div>
+                    <h3 class="card-title">Commerzbank</h3>
+                    <p class="card-desc">
+                        AI 客服 Bene 处理 200 万+ 次对话，70% 问题自动解决，显著降低人工成本。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📦</div>
+                    <h3 class="card-title">UPS</h3>
+                    <p class="card-desc">
+                        构建全球物流网络数字孪生，实时追踪包裹位置，优化配送路径。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🏠</div>
+                    <h3 class="card-title">United Wholesale Mortgage</h3>
+                    <p class="card-desc">
+                        使用 Vertex AI + Gemini，承保人生产力翻倍，贷款审批时间大幅缩短。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- A.3 国内头部玩家 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">A.3</span>
+                <h2 class="section-title">国内头部玩家与案例</h2>
+            </div>
+
+            <h3 class="subsection-title">Manus：中国 AI Agent 的"GPT 时刻"</h3>
+
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                2025 年 3 月，Manus（Monica.im 出品）引发行业关注，被称为中国 AI Agent 的"GPT 时刻"。其核心突破在于<strong>工具链整合能力的规模化跃升</strong>。
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>对比维度</th>
+                            <th>Manus</th>
+                            <th>传统 ChatGPT/Claude</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>核心能力</strong></td>
+                            <td>主动调用浏览器、代码编辑器等工具完成任务</td>
+                            <td>通过文本对话提供建议，无法直接操作</td>
+                        </tr>
+                        <tr>
+                            <td><strong>运行环境</strong></td>
+                            <td>云端独立计算环境，无需用户监督</td>
+                            <td>依赖用户提供的本地环境</td>
+                        </tr>
+                        <tr>
+                            <td><strong>协作模式</strong></td>
+                            <td>类人类同事：可中途调整，支持偏好记忆</td>
+                            <td>工具型交互：需逐步指导</td>
+                        </tr>
+                        <tr>
+                            <td><strong>成果交付</strong></td>
+                            <td>直接生成最终文件（报告、图表、代码包）</td>
+                            <td>提供文本/代码建议，需人工执行</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">大厂布局：BAT + 字节</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #0052D9, #00BFFF);">🅰️</div>
+                    <h3 class="card-title">阿里云 · 通义千问</h3>
+                    <p class="card-desc">
+                        Qwen2.5-Max 模型，Qwen-Agent 框架，覆盖 200+ 垂直场景，企业专属模型版本。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #2932E1, #6C8EEF);">🅱️</div>
+                    <h3 class="card-title">百度 · 文心智能体</h3>
+                    <p class="card-desc">
+                        "千帆生态"接入 800+ 企业，提供零代码 Agent 工厂，支持低代码快速搭建。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #07C160, #4CD964);">🅾️</div>
+                    <h3 class="card-title">腾讯 · 元器平台</h3>
+                    <p class="card-desc">
+                        多 Agent 协作系统，企业级 AI 应用开发，集成企业微信、腾讯会议等生态。
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #FE2C55, #FF6B9D);">🅳</div>
+                    <h3 class="card-title">字节跳动 · 豆包 & MarsCode</h3>
+                    <p class="card-desc">
+                        豆包：C 端 AI 助手；MarsCode：AI 编程工具；TARS：企业级 Agent 产品形态。
+                    </p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">垂直领域标杆案例</h3>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3 class="timeline-title">百丽时尚集团 × BetterYeah</h3>
+                    <p class="timeline-time">时尚零售行业</p>
+                    <p class="timeline-desc">
+                        以 BetterYeah AI Agent 平台为基础设施，构建 800+ Agent，覆盖货品管理、店铺运营、营销内容生成。2 周内落地首个 Agent，支撑近千人开发团队和 10000+ 门店。
+                    </p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="timeline-title">卓世科技 · AI 家庭医生</h3>
+                    <p class="timeline-time">医疗健康行业</p>
+                    <p class="timeline-desc">
+                        基于"璇玑玉衡"大模型，问答准确率 >95%，响应 <800ms。赋能基层医疗，签约率提升 30%，响应速度提升 200%。已覆盖北京、天津、深圳等多省市。
+                    </p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="timeline-title">中科视语 · 智能网联云控</h3>
+                    <p class="timeline-time">智慧交通行业</p>
+                    <p class="timeline-desc">
+                        融合视觉大模型、数字人交互、C-V2X 通信，实现协同感知、决策、控制。降低交通事故率、优化交通流、提高行车效率。
+                    </p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="timeline-title">联想 · 乐享超级智能体</h3>
+                    <p class="timeline-time">企业服务行业</p>
+                    <p class="timeline-desc">
+                        中国区首个企业级超级智能体，融合 AI Agent、知识图谱与自动化流程，入选 CCF 企业数字化发展优秀案例。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- A.4 行业落地现状 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">A.4</span>
+                <h2 class="section-title">行业落地现状与数据</h2>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-value green">60%</div>
+                    <div class="stat-label">2026年企业 Agent 部署率</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value blue">137%</div>
+                    <div class="stat-label">企业 Agent 订阅市场年增速</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👨‍💼</div>
+                    <div class="stat-value purple">3.2</div>
+                    <div class="stat-label">人均配备 Agent 数量（2028 预测）</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-value orange">400%</div>
+                    <div class="stat-label">复杂决策响应速度提升</div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">行业渗透率排名</h3>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>排名</th>
+                            <th>行业</th>
+                            <th>典型场景</th>
+                            <th>渗透率</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><strong>金融</strong></td>
+                            <td>投研 Agent、风控 Agent、智能客服</td>
+                            <td>高</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><strong>医疗</strong></td>
+                            <td>诊断 Agent、健康管家、医疗问答</td>
+                            <td>高</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><strong>工业制造</strong></td>
+                            <td>预测维护、供应链优化、质检</td>
+                            <td>高</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><strong>教育</strong></td>
+                            <td>智能辅导、个性化学习、作业批改</td>
+                            <td>中</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td><strong>零售消费</strong></td>
+                            <td>动态定价、营销内容、客户服务</td>
+                            <td>中</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">落地关键要素</div>
+                <p class="insight-text">
+                    AI Agent 普遍应用的关键要素包括：<strong>数据治理</strong>（高质量数据）、<strong>流程重塑</strong>（适配 AI 的工作流）、<strong>知识资本化</strong>（将隐性经验显性化）。金融投研 Agent 已能缩短 80% 尽调周期，医疗诊断 Agent 误差率降至 2.3%。
+                </p>
+            </div>
+        </section>
+
+        <!-- A.5 产业竞争格局 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">A.5</span>
+                <h2 class="section-title">产业竞争格局</h2>
+            </div>
+
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                大模型竞争已从技术"军备竞赛"转向<strong>生态协同与场景落地效率</strong>的比拼。头部玩家以不同路径构建护城河：
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>竞争维度</th>
+                            <th>OpenAI</th>
+                            <th>Google</th>
+                            <th>新锐产品</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>护城河</strong></td>
+                            <td>强大的模型基座</td>
+                            <td>深耕数据搜索</td>
+                            <td>用户体验 + 数据沉淀</td>
+                        </tr>
+                        <tr>
+                            <td><strong>策略</strong></td>
+                            <td>模型能力领先</td>
+                            <td>生态整合</td>
+                            <td>场景深耕</td>
+                        </tr>
+                        <tr>
+                            <td><strong>代表</strong></td>
+                            <td>GPT-4o、Operator</td>
+                            <td>Gemini、Vertex AI</td>
+                            <td>Manus、Cursor、Perplexity</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="quote">
+                <p class="quote-text">"未来的竞争将聚焦于场景深耕、开放生态的开发者粘性。企业竞争核心从'技术领先'转向'场景理解+生态协同'。"</p>
+                <p class="quote-author">— 甲子光年智库，2025年3月</p>
+            </div>
+        </section>
+
+        <!-- A.6 DeepSeek 影响 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">A.6</span>
+                <h2 class="section-title">DeepSeek：AI Agent 普惠化的推手</h2>
+            </div>
+
+            <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--spacing-md);">
+                2025 年初，DeepSeek-R1 的发布引发行业震动——其推理成本仅为 OpenAI o1 的 <strong>1/30</strong>，推动 AI Agent 从实验室走向大规模商用。
+            </p>
+
+            <div class="compare-grid">
+                <div class="compare-box negative">
+                    <div class="compare-header">
+                        <span class="compare-icon">💰</span>
+                        <h3 class="compare-title">成本对比（每百万 token）</h3>
+                    </div>
+                    <ul class="compare-list">
+                        <li><strong>OpenAI o1：</strong>$60</li>
+                        <li><strong>DeepSeek-R1：</strong>$2.19</li>
+                        <li>差距：<strong>近 30 倍</strong></li>
+                        <li>让中小企业可负担高精度 Agent</li>
+                        <li>推动企业级部署成本下降 90%</li>
+                    </ul>
+                </div>
+                <div class="compare-box positive">
+                    <div class="compare-header">
+                        <span class="compare-icon">🚀</span>
+                        <h3 class="compare-title">DeepSeek 带来的改变</h3>
+                    </div>
+                    <ul class="compare-list">
+                        <li><strong>技术升维：</strong>轻量化 + 精准化</li>
+                        <li><strong>生态重构：</strong>开源战略催生社区热度</li>
+                        <li><strong>伦理觉醒：</strong>推理路径可视化</li>
+                        <li><strong>产业爆发：</strong>预计 2027 年 60% 企业采用</li>
+                        <li>验证了开源模型超越专有模型的可能</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 调研总结 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">📝</span>
+                <h2 class="section-title">调研总结</h2>
+            </div>
+
+            <ul class="content-list">
+                <li><strong>三大模式：</strong>Copilot（辅助）→ Agent（自主）→ 平台（企业级），正在从左向右演进</li>
+                <li><strong>海外标杆：</strong>Microsoft Copilot、Anthropic Claude+MCP、Salesforce Agentforce、Google Vertex AI</li>
+                <li><strong>国内标杆：</strong>Manus、阿里通义、百度文心、字节豆包，以及垂直领域的 BetterYeah、卓世科技</li>
+                <li><strong>落地前沿：</strong>金融、医疗、工业制造行业渗透率最高，预计 2026 年 60% 企业将部署 Agent</li>
+                <li><strong>成本拐点：</strong>DeepSeek 将推理成本降低 30 倍，推动 AI Agent 从实验走向规模化商用</li>
+            </ul>
+
+            <div class="summary-box" style="border-left-color: var(--color-success);">
+                <div class="summary-label">给团队的建议</div>
+                <h2 class="summary-title">现在入场，<em>正当其时</em></h2>
+                <p class="summary-text">
+                    2025 年是 AI Agent 商业化应用元年。技术成熟度、成本可行性、生态完善度都已到达临界点。早期入场的团队将积累数据、经验和能力，形成难以逾越的先发优势。
+                </p>
+            </div>
+        </section>
+
+        <!-- 数据来源 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">📚</span>
+                <h2 class="section-title">数据来源</h2>
+            </div>
+
+            <ul class="content-list">
+                <li>甲子光年智库《中国 AI Agent 行业研究报告（二）》，2025年3月</li>
+                <li>McKinsey《AI in the Workplace: A Report for 2025》</li>
+                <li>Google Cloud《101 Real-World Gen AI Use Cases》，2025年10月更新</li>
+                <li>Gartner、IDC、德勤行业研究报告</li>
+                <li>Salesforce、Microsoft、Anthropic 官方产品发布</li>
+            </ul>
+        </section>
+
+        <!-- 页脚导航 -->
+        <!-- 章节导航 -->
+        <div style="margin-top:24px;padding-top:16px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <a href="chapter4-future.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">← 上一章：未来演进</a>
+            <a href="index.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">返回目录 →</a>
+        </div>
+
+        <!-- 了解更多 -->
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+        <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+        我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+        </p>
+        <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+        🏠 访问AI洞察首页
+        </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 周报 2026-W17 (04.20-04.26) | AI洞察</title>
+    <meta name="description" content="2026年第17周AI行业动态精选：GPT-5.5与Claude Opus 4.7同日双发、OpenAI史诗融资$1220亿、Cursor $500亿估值、AI原生应用大爆发">
+    <meta property="og:title" content="AI 周报 2026-W17 | AI洞察">
+    <meta property="og:description" content="本周重大事件：两大旗舰模型同日发布，OpenAI完成史上最大融资，AI应用进入寒武纪大爆发阶段">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232563EB'/><text x='6' y='23' font-size='18' fill='white'>⚡</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --color-success: #059669; --color-success-light: #10B981; --color-success-dark: #047857;
+            --color-success-50: #ECFDF5; --color-success-100: #D1FAE5;
+            --color-danger: #E11D48; --color-danger-light: #F43F5E; --color-danger-50: #FFF1F2;
+            --color-warning: #D97706; --color-warning-light: #F59E0B; --color-warning-50: #FFFBEB;
+            --color-info: #2563EB; --color-info-light: #3B82F6; --color-info-50: #EFF6FF; --color-info-100: #DBEAFE;
+            --color-purple: #7C3AED; --color-purple-light: #8B5CF6; --color-purple-50: #F5F3FF; --color-purple-100: #EDE9FE;
+            --color-text-primary: #1C1917; --color-text-secondary: #57534E; --color-text-muted: #78716C;
+            --color-border: #E7E5E4; --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB; --color-bg-card: #FFFFFF; --color-bg-table-header: #FAFAF9;
+            --color-bg-hover: rgba(0,0,0,0.025);
+            --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+            --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+            --gradient-mesh:
+                radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card-rich: 0 4px 16px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.9);
+            --shadow-hover: 0 8px 24px rgba(5,150,105,0.18), 0 2px 8px rgba(5,150,105,0.10);
+            --shadow-float: 0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
+            --shadow-glow-info: 0 4px 14px rgba(37,99,235,0.15);
+            --spacing-xs: 4px; --spacing-sm: 8px; --spacing-md: 16px;
+            --spacing-lg: 24px; --spacing-xl: 32px; --spacing-2xl: 40px; --spacing-3xl: 48px;
+            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 20px; --radius-full: 9999px;
+            --font-family: "DM Sans", -apple-system, "Noto Sans SC", "PingFang SC", sans-serif;
+            --font-family-heading: "DM Sans", -apple-system, "Noto Sans SC", sans-serif;
+            --font-family-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+            --font-family-mono: "JetBrains Mono", "SF Mono", "Consolas", monospace;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --header-height: 64px;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 15px; }
+        body { font-family: var(--font-family); background: var(--color-bg); color: var(--color-text-primary); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        a { color: var(--color-info); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .skip-to-content { position: absolute; left: -9999px; top: 0; background: var(--color-info); color: #fff; padding: 8px 16px; border-radius: 0 0 8px 0; font-size: 14px; z-index: 10000; }
+        .skip-to-content:focus { left: 0; }
+
+        /* ===== LAYOUT ===== */
+        .layout-wrapper { display: grid; grid-template-columns: 260px 1fr; grid-template-rows: auto 1fr; min-height: 100vh; }
+        .top-bar { grid-column: 1 / -1; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); padding: 0 24px; height: var(--header-height); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+        .top-bar-brand { font-weight: 700; font-size: 15px; color: var(--color-text-primary); display: flex; align-items: center; gap: 8px; }
+        .top-bar-brand-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gradient-hero); }
+        .top-bar-actions { display: flex; align-items: center; gap: 12px; }
+        .top-bar-home-link { font-size: 13px; color: var(--color-text-secondary); padding: 6px 12px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); transition: var(--transition-fast); }
+        .top-bar-home-link:hover { background: var(--color-bg-hover); text-decoration: none; }
+        .sidebar-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; color: var(--color-text-secondary); }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar-nav { grid-row: 2; background: #FFFFFF; border-right: 1px solid var(--color-border); padding: 20px 0 40px; overflow-y: auto; position: sticky; top: var(--header-height); height: calc(100vh - var(--header-height)); }
+        .sidebar-doc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-muted); padding: 0 20px 12px; }
+        .toc-section { padding: 0 12px; }
+        .toc-group-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; color: var(--color-text-muted); text-transform: uppercase; padding: 8px 8px 4px; }
+        .toc-link { display: flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: var(--radius-sm); font-size: 13px; color: var(--color-text-secondary); transition: var(--transition-fast); margin-bottom: 1px; }
+        .toc-link:hover { background: var(--color-bg-hover); color: var(--color-text-primary); text-decoration: none; }
+        .toc-link.active { background: var(--color-info-50); color: var(--color-info); font-weight: 500; }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content { grid-row: 2; padding: 0; max-width: 900px; width: 100%; margin: 0 auto; padding: 32px 40px 80px; }
+
+        /* ===== HERO HEADER ===== */
+        .doc-header { margin-bottom: 40px; }
+        .header-badge-row { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+        .header-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; background: var(--gradient-badge); border: 1px solid rgba(37,99,235,0.15); color: var(--color-info); }
+        .header-title { font-size: 32px; font-weight: 800; line-height: 1.2; color: var(--color-text-primary); margin-bottom: 12px; font-family: var(--font-family-heading); }
+        .header-subtitle { font-size: 16px; color: var(--color-text-secondary); margin-bottom: 20px; line-height: 1.5; }
+        .header-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+        .header-meta-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--color-text-muted); }
+        .header-divider { border: none; border-top: 2px solid; border-image: var(--gradient-hero) 1; margin: 24px 0 32px; opacity: 0.3; }
+
+        /* ===== SECTION STRUCTURE ===== */
+        section { margin-bottom: 48px; scroll-margin-top: calc(var(--header-height) + 16px); }
+        .doc-chapter-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-info); margin-bottom: 6px; }
+        h2 { font-size: 22px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 16px; font-family: var(--font-family-heading); }
+        h3 { font-size: 16px; font-weight: 600; color: var(--color-text-primary); margin: 20px 0 10px; }
+        p { color: var(--color-text-secondary); margin-bottom: 12px; line-height: 1.7; }
+
+        /* ===== OVERVIEW TABLE ===== */
+        .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 24px; }
+        .overview-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 14px 16px; transition: var(--transition-fast); }
+        .overview-card:hover { box-shadow: var(--shadow-card); transform: translateY(-1px); }
+        .overview-card-label { font-size: 11px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+        .overview-card-value { font-size: 13px; color: var(--color-text-primary); line-height: 1.4; }
+
+        /* ===== NEWS CARDS (Top5) ===== */
+        .news-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-left: 4px solid var(--card-accent, var(--color-info)); border-radius: var(--radius-md); padding: 20px 24px; margin-bottom: 16px; box-shadow: var(--shadow-card); transition: var(--transition-normal); }
+        .news-card:hover { box-shadow: var(--shadow-card-rich); transform: translateY(-1px); }
+        .news-card-rank { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--card-accent, var(--color-info)); margin-bottom: 6px; }
+        .news-card-title { font-size: 16px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 6px; line-height: 1.4; }
+        .news-card-source { font-size: 12px; color: var(--color-text-muted); margin-bottom: 10px; }
+        .news-card-desc { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 10px; }
+        .news-card-why { font-size: 13px; color: var(--color-text-secondary); background: var(--color-bg); border-radius: var(--radius-sm); padding: 10px 14px; line-height: 1.6; }
+
+        /* ===== CALLOUT ===== */
+        .callout { border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 20px; font-size: 14px; line-height: 1.6; }
+        .callout-info { background: var(--color-info-50); border-left: 4px solid var(--color-info); color: var(--color-text-secondary); }
+        .callout-success { background: var(--color-success-50); border-left: 4px solid var(--color-success); color: var(--color-text-secondary); }
+        .callout-warning { background: var(--color-warning-50); border-left: 4px solid var(--color-warning); color: var(--color-text-secondary); }
+        .callout-purple { background: var(--color-purple-50); border-left: 4px solid var(--color-purple); color: var(--color-text-secondary); }
+
+        /* ===== TABLES ===== */
+        .table-wrap { overflow-x: auto; border-radius: var(--radius-md); box-shadow: var(--shadow-card); margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; background: var(--color-bg-card); font-size: 13.5px; }
+        thead tr { background: var(--color-bg-table-header); }
+        th { padding: 10px 16px; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); text-align: left; }
+        td { padding: 10px 16px; border-bottom: 1px solid var(--color-border-light); color: var(--color-text-secondary); vertical-align: top; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: var(--color-bg-hover); }
+        td:first-child { white-space: nowrap; font-weight: 500; color: var(--color-text-primary); }
+        .star { color: #F59E0B; }
+
+        /* ===== INSIGHT CARDS ===== */
+        .insight-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow-card); }
+        .insight-card-num { display: inline-block; width: 28px; height: 28px; border-radius: 50%; background: var(--gradient-hero); color: #fff; font-size: 13px; font-weight: 700; text-align: center; line-height: 28px; margin-bottom: 10px; }
+        .insight-card-title { font-size: 16px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 8px; }
+        .insight-card-body { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; }
+
+        /* ===== STAT CARDS ===== */
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
+        .stat-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 16px 20px; text-align: center; }
+        .stat-num { font-size: 28px; font-weight: 800; background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .stat-label { font-size: 12px; color: var(--color-text-muted); margin-top: 4px; }
+
+        /* ===== DAILY INDEX ===== */
+        .daily-list { list-style: none; }
+        .daily-item { display: flex; align-items: flex-start; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--color-border-light); }
+        .daily-item:last-child { border-bottom: none; }
+        .daily-date { font-size: 12px; font-weight: 600; color: var(--color-info); min-width: 80px; padding-top: 2px; white-space: nowrap; }
+        .daily-title { font-size: 14px; color: var(--color-text-secondary); line-height: 1.5; flex: 1; }
+        .daily-link { font-size: 12px; color: var(--color-info); white-space: nowrap; }
+
+        /* ===== WATCHLIST ===== */
+        .watch-item { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 12px; }
+        .watch-badge { min-width: 40px; height: 22px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+        .watch-badge-hot { background: #FEF3C7; color: #D97706; }
+        .watch-badge-up { background: var(--color-success-50); color: var(--color-success-dark); }
+        .watch-badge-new { background: var(--color-info-50); color: var(--color-info); }
+        .watch-text { font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.5; }
+
+        /* ===== ANIMATION ===== */
+        .animate-on-scroll { opacity: 0; transform: translateY(16px); transition: opacity 0.45s ease, transform 0.45s ease; }
+        .animate-on-scroll.visible { opacity: 1; transform: none; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .layout-wrapper { grid-template-columns: 1fr; }
+            .sidebar-nav { display: none; position: fixed; left: 0; top: var(--header-height); height: calc(100vh - var(--header-height)); width: 260px; z-index: 200; box-shadow: var(--shadow-float); }
+            .sidebar-nav.open { display: block; }
+            .sidebar-toggle { display: block; }
+            .main-content { padding: 24px 20px 60px; }
+            .header-title { font-size: 24px; }
+            .stat-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+<a class="skip-to-content" href="#main-content">跳到主内容</a>
+<div class="layout-wrapper">
+    <!-- SIDEBAR -->
+    <nav class="sidebar-nav" id="sidebar" aria-label="目录导航">
+        <div class="sidebar-doc-title">AI 周报 2026-W17</div>
+        <div class="toc-section">
+            <div class="toc-group-label">目录</div>
+            <a href="#overview"    class="toc-link">📋 本周概览</a>
+            <a href="#top5"        class="toc-link">🔥 Top 5 事件</a>
+            <a href="#insight"     class="toc-link">🔮 周度洞察</a>
+            <a href="#llm"         class="toc-link">🧠 大模型</a>
+            <a href="#coding"      class="toc-link">⌨️ AI Coding</a>
+            <a href="#app"         class="toc-link">📱 AI 应用</a>
+            <a href="#industry"    class="toc-link">🏭 AI 行业</a>
+            <a href="#enterprise"  class="toc-link">🔄 企业AI转型</a>
+            <a href="#data"        class="toc-link">📊 数据总览</a>
+            <a href="#watchlist"   class="toc-link">👀 下周关注</a>
+            <a href="#dailyindex"  class="toc-link">📅 日报索引</a>
+        </div>
+    </nav>
+
+    <!-- TOP BAR -->
+    <header class="top-bar">
+        <div style="display:flex;align-items:center;gap:12px;">
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="切换侧边栏">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <div class="top-bar-brand">
+                <div class="top-bar-brand-dot"></div>
+                AI 洞察
+            </div>
+        </div>
+        <div class="top-bar-actions">
+            <a href="../../index.html" class="top-bar-home-link">← 返回首页</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="main-content">
+        <!-- HEADER -->
+        <div class="doc-header">
+            <div class="header-badge-row">
+                <span class="header-badge">📊 AI 周报</span>
+                <span class="header-badge" style="background: var(--color-warning-50); border-color: rgba(217,119,6,0.2); color: var(--color-warning);">W17 · 2026</span>
+            </div>
+            <h1 class="header-title">AI 洞察周报<br>2026年第17周（04/20 - 04/26）</h1>
+            <p class="header-subtitle">GPT-5.5 × Claude Opus 4.7 同日双发 · OpenAI 史诗融资 $1220亿 · Cursor $500亿估值 · AI原生应用寒武纪大爆发</p>
+            <div class="header-meta-row">
+                <span class="header-meta-chip">🗓 2026-04-27 生成</span>
+                <span class="header-meta-chip">📰 覆盖6天日报</span>
+                <span class="header-meta-chip">⚡ 20+ 核心事件</span>
+            </div>
+            <hr class="header-divider">
+        </div>
+
+        <!-- OVERVIEW -->
+        <section id="overview">
+            <div class="doc-chapter-label">本周速览</div>
+            <h2>📋 本周概览</h2>
+            <div class="overview-grid animate-on-scroll">
+                <div class="overview-card">
+                    <div class="overview-card-label">🧠 大模型</div>
+                    <div class="overview-card-value">GPT-5.5 & Claude Opus 4.7 同日双发，Agentic Coding 元年开启</div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-card-label">⌨️ AI Coding</div>
+                    <div class="overview-card-value">Cursor $500亿估值刷新记录，多Agent并行成主流</div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-card-label">📱 AI应用</div>
+                    <div class="overview-card-value">Claude Design + Workspace Agents 同周发布，AI原生应用大爆发</div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-card-label">🏭 AI行业</div>
+                    <div class="overview-card-value">Q1 AI投资破$3000亿，OpenAI $1220亿融资创史诗纪录</div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-card-label">🔄 企业转型</div>
+                    <div class="overview-card-value">摩根大通标杆效应显现，特斯拉车机接入国产大模型</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOP 5 -->
+        <section id="top5">
+            <div class="doc-chapter-label">核心事件</div>
+            <h2>🔥 本周 Top 5</h2>
+
+            <div class="news-card animate-on-scroll" style="--card-accent: var(--color-info);">
+                <div class="news-card-rank">No.1 · 资本格局</div>
+                <div class="news-card-title">OpenAI 完成史诗级融资 $1220 亿美元，科技史最大单笔</div>
+                <div class="news-card-source">📎 OpenAI · 2026-04-21</div>
+                <div class="news-card-desc">OpenAI 完成科技史上最大单笔融资 $1220 亿美元，估值达 $1500 亿，由微软、英伟达等顶级机构领投。资本加注力度前所未有，奠定未来3-5年的计算资源与研发优势护城河。2026年Q1全球AI融资总额达$3000亿，其中80%流向AI初创公司，AI已成为资本市场最热赛道。</div>
+                <div class="news-card-why"><strong>为什么重要：</strong>AI基础设施竞争进入"赢家通吃"阶段，超大规模融资意味着后来者追赶成本指数级上升。同时这也是对未来技术不确定性的对冲——用资本换时间，用时间换技术迭代的容错空间。</div>
+            </div>
+
+            <div class="news-card animate-on-scroll" style="--card-accent: var(--color-purple); transition-delay: 0.06s;">
+                <div class="news-card-rank">No.2 · 模型能力</div>
+                <div class="news-card-title">GPT-5.5 × Claude Opus 4.7 同日双发，Agentic Coding 元年正式开启</div>
+                <div class="news-card-source">📎 OpenAI & Anthropic · 2026-04-24</div>
+                <div class="news-card-desc">OpenAI 发布 GPT-5.5（Terminal-Bench 2.0 达82.7%，SWE-Bench Pro 达58.6%，定价 $5/$30 per 1M token）；同日 Anthropic 发布 Claude Opus 4.7 GA（93-task coding benchmark 提升13%，支持 2,576px 高分辨率视觉，定价 $5/$25）。两大旗舰同日发布，AI编程已从辅助工具升级为自主执行智能体。</div>
+                <div class="news-card-why"><strong>为什么重要：</strong>当 AI 能在真实工程环境中可靠地完成多步骤任务，开发者的工作流将从"写代码"转向"审代码"。Agentic Coding 时代的核心竞争力不再是 benchmark 分数，而是在生产环境中"不崩溃"的可靠性。</div>
+            </div>
+
+            <div class="news-card animate-on-scroll" style="--card-accent: var(--color-success); transition-delay: 0.12s;">
+                <div class="news-card-rank">No.3 · 赛道估值</div>
+                <div class="news-card-title">Cursor 完成 $20 亿融资，估值 $500 亿+，8个月翻倍</div>
+                <div class="news-card-source">📎 Cursor / a16z · 2026-04-25</div>
+                <div class="news-card-desc">AI 编程工具 Cursor 完成 $20 亿融资，估值突破 $500 亿，由 a16z 领投，NVIDIA 和 Thrive Capital 参与。2025年11月估值 $293 亿，仅8个月翻倍。Cursor 3 同步推出 Agents Window，支持多 Agent 并行运行，覆盖本地、云端和 SSH 环境，与 SpaceX 合作进入专业领域。</div>
+                <div class="news-card-why"><strong>为什么重要：</strong>AI编程工具赛道已被资本市场认可为千亿美元级别市场。产品体验与持续迭代能力是核心竞争壁垒，单工具估值突破千亿人民币预示行业格局重构加速。</div>
+            </div>
+
+            <div class="news-card animate-on-scroll" style="--card-accent: var(--color-warning); transition-delay: 0.18s;">
+                <div class="news-card-rank">No.4 · 行业颠覆</div>
+                <div class="news-card-title">Claude Design + Workspace Agents 同周发布，AI原生应用寒武纪大爆发</div>
+                <div class="news-card-source">📎 Anthropic Labs & OpenAI · 2026-04-22~23</div>
+                <div class="news-card-desc">Anthropic Labs 发布 Claude Design，支持自然语言生成完整设计作品，非专业人士也能"一步到位"完成设计；OpenAI 正式发布 ChatGPT Workspace Agents，基于 Codex 技术，企业可创建跨工具、跨团队自动运行的 AI 代理。两大产品同周落地，标志 AI 应用从概念验证进入规模化阶段。</div>
+                <div class="news-card-why"><strong>为什么重要：</strong>"端到端化"成为 AI 应用主流范式——不再只是单环节辅助，而是覆盖从输入到输出的完整链条。设计和办公自动化将迎来大规模颠覆，大量"长尾 AI 应用"即将涌现。</div>
+            </div>
+
+            <div class="news-card animate-on-scroll" style="--card-accent: var(--color-danger); transition-delay: 0.24s;">
+                <div class="news-card-rank">No.5 · 迭代加速</div>
+                <div class="news-card-title">多模态模型进入"周更"时代，Qwen3.6 成本降80%，DeepL同传破200ms人类极限</div>
+                <div class="news-card-source">📎 多家 · 2026-04-20~21</div>
+                <div class="news-card-desc">本周内：Qwen3.6-Flash（成本降80%，MoE架构）、DeepL Meeting Translator（200ms 延迟突破人类同传300ms极限）、GPT-5.4 Thinking 版、豆包2.0 Pro（对标 GPT-5.2 与 Gemini 3 Pro）相继发布。模型迭代进入"周更"节奏，竞争维度从"谁技术更强"转向"谁迭代更快"。</div>
+                <div class="news-card-why"><strong>为什么重要：</strong>Qwen3.6 的80%成本降幅使中小企业 AI 应用门槛大幅降低；DeepL 实时同传的技术突破将重构跨国会议、跨境客服等大量场景。当 token 成本不再是瓶颈，AI 应用的商业模式将迎来根本性变革。</div>
+            </div>
+        </section>
+
+        <!-- INSIGHT -->
+        <section id="insight">
+            <div class="doc-chapter-label">深度洞察</div>
+            <h2>🔮 本周洞察</h2>
+
+            <div class="insight-card animate-on-scroll">
+                <div class="insight-card-num">1</div>
+                <div class="insight-card-title">大模型竞争从"能力竞赛"转向"可靠性工程"</div>
+                <div class="insight-card-body">本周最值得关注的不是 benchmark 分数，而是各家对"稳定性"的强调。Claude Opus 4.7 的 loop resistance、GPT-5.5 的 Agentic Coding、Cursor 的多 Agent 协同——背后都指向同一个判断：AI 编程助手的真实价值，不在于单次任务得分，而在于「在真实工程环境中持续运行不崩溃」的可靠性。当 AI 能在企业生产环境中连续工作数小时，开发者的角色将从"执行者"升级为"监督者"。这是 2026 年大模型竞争的核心命题。</div>
+            </div>
+
+            <div class="insight-card animate-on-scroll" style="transition-delay: 0.08s;">
+                <div class="insight-card-num">2</div>
+                <div class="insight-card-title">AI 应用寒武纪大爆发，"端到端化"成主流范式</div>
+                <div class="insight-card-body">Claude Design 和 Workspace Agents 的共同特点是"端到端"——不再只是流程中的一个环节，而是覆盖从输入到输出的完整链条。设计从"灵感"到"成稿"，办公从"需求"到"执行"，无需专业门槛。这一趋势预示：2026年将出现大量"长尾 AI 应用"——那些不值得雇佣 AI 团队、但用 AI 能显著提升效率的小场景。Figma、Canva 的 AI 升级 + DeepL 实时同传 + Notion 研究助理，都是这一浪潮中的冲浪板。</div>
+            </div>
+
+            <div class="insight-card animate-on-scroll" style="transition-delay: 0.16s;">
+                <div class="insight-card-num">3</div>
+                <div class="insight-card-title">资本超级加速，但真正的分水岭在"落地能力"</div>
+                <div class="insight-card-body">本周 AI 融资事件密度极高：OpenAI $1220 亿、Cursor $20 亿、Q1 全球 AI 投资 $3000 亿（同比+150%）。但同时，摩根大通标杆案例（年投超10亿美元，已成全球第一 AI 企业）、特斯拉车机接入国产模型等落地事件同样引人注目。资本热潮下，真正的分水岭正在形成——谁能在真实业务场景中验证 ROI，谁就能在下一轮融资中赢得溢价。历史上搜索领域的谷歌、社交的 Facebook，都是在规模化落地中建立了护城河，而非仅靠技术领先。</div>
+            </div>
+        </section>
+
+        <!-- LLM -->
+        <section id="llm">
+            <div class="doc-chapter-label">一、大模型</div>
+            <h2>🧠 大模型本周动态</h2>
+            <div class="callout callout-purple animate-on-scroll">本周大模型赛场空前热闹：GPT-5.5 与 Claude Opus 4.7 同日双发，豆包 2.0 Pro 对标国际顶级，Qwen3.6-Flash 80%成本降幅重塑性价比赛道，多模态能力全面升级成标配。</div>
+            <div class="table-wrap animate-on-scroll">
+                <table>
+                    <thead>
+                        <tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>04-20</td><td>Claude Opus 4.7 发布，搭载最强视觉模型，推出 Claude Design 设计工具，loop resistance 指标成行业新标准</td><td>Anthropic</td><td><span class="star">⭐⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-21</td><td>Qwen3.6-Flash 发布，MoE架构实现80%成本降幅，保持95%能力，国产大模型性价比赛道系统性突破</td><td>阿里</td><td><span class="star">⭐⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-21</td><td>DeepL Meeting Translator 实现200ms实时同传，首次在技术指标上超越人类300ms同传极限</td><td>DeepL</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-23</td><td>GPT-5.4 Thinking 版发布，定位 ChatGPT 和 API 最强前沿模型，推理能力显著提升</td><td>OpenAI</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-23</td><td>豆包大模型 2.0 正式发布，API同步上线，2.0 Pro 全面对标 GPT-5.2 与 Gemini 3 Pro</td><td>字节</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-24</td><td>GPT-5.5 发布，定位 Agentic coding 模型，Terminal-Bench 2.0 达82.7%，SWE-Bench Pro 58.6%</td><td>OpenAI</td><td><span class="star">⭐⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-24</td><td>Claude Opus 4.7 正式 GA，93-task coding benchmark 提升13%，视觉支持 2,576px 高分辨率</td><td>Anthropic</td><td><span class="star">⭐⭐⭐⭐⭐</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- AI CODING -->
+        <section id="coding">
+            <div class="doc-chapter-label">二、AI Coding</div>
+            <h2>⌨️ AI Coding 本周动态</h2>
+            <div class="callout callout-info animate-on-scroll">AI编程工具完成了从"代码补全"到"Agent 中心"的范式转变。Cursor $500亿估值树立行业标杆，SpaceX 合作进入专业垂直领域，多 Agent 并行成为下一个竞争核心。</div>
+            <div class="table-wrap animate-on-scroll">
+                <table>
+                    <thead>
+                        <tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>04-21</td><td>GitHub Copilot 代理模式更新，AI可自主规划任务→执行→测试→修复错误，关键决策加入"人工确认点"</td><td>GitHub</td><td><span class="star">⭐⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-22</td><td>Cursor 完成 $20亿融资，估值 $500亿+，由 a16z 领投，8个月估值翻倍</td><td>Cursor</td><td><span class="star">⭐⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-23</td><td>Cursor 3.1 发布，新增 Agents Window 和 CLI Debug Mode，多 Agent 并行支持本地/云端/SSH</td><td>Cursor</td><td><span class="star">⭐⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-23</td><td>Cursor 宣布与 SpaceX 合作开展模型训练，AI 编程工具进入航天专业领域</td><td>Cursor/SpaceX</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-24</td><td>Replit Ghostwriter 3.0 发布多 Agent 协作模式，支持自主规划→并行执行→验证完整循环</td><td>Replit</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- AI APP -->
+        <section id="app">
+            <div class="doc-chapter-label">三、AI 应用</div>
+            <h2>📱 AI 应用本周动态</h2>
+            <div class="callout callout-success animate-on-scroll">AI应用进入"端到端化"爆发阶段：Claude Design、Workspace Agents、Figma AI全面升级、Canva AI均指向同一趋势——覆盖完整工作链条，让非专业人士完成专业级工作。</div>
+            <div class="table-wrap animate-on-scroll">
+                <table>
+                    <thead>
+                        <tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>04-22</td><td>Anthropic Labs 发布 Claude Design，支持自然语言生成完整设计作品，非专业人士可完成设计</td><td>Anthropic</td><td><span class="star">⭐⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-22</td><td>Figma 发布 AI 全面升级版本，支持 AI 生成组件、自动布局优化、设计稿→代码一键转换</td><td>Figma</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-22</td><td>Canva AI 全面升级，引入多模态创作能力，教育场景深度优化，平台型 AI 应用重新定义创作</td><td>Canva</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-23</td><td>OpenAI 发布 ChatGPT Workspace Agents，企业可创建跨工具、跨团队自动运行的 AI 代理</td><td>OpenAI</td><td><span class="star">⭐⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-23</td><td>OpenAI Agents SDK 重大更新，智能体可读写工作空间数据，增强与真实工作流的集成</td><td>OpenAI</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-24</td><td>国内视频生成"百铲大战"：腾讯长视频一致性、某公司代码驱动、字节实时生成三路并进</td><td>国内三家</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- AI INDUSTRY -->
+        <section id="industry">
+            <div class="doc-chapter-label">四、AI 行业</div>
+            <h2>🏭 AI 行业本周动态</h2>
+            <div class="callout callout-warning animate-on-scroll">行业进入"超级资本周"：Q1 AI投资创$3000亿历史纪录，OpenAI $1220亿单笔融资改写历史，DeepSeek 完成首次融资，AI人才年薪百万成"起步价"。</div>
+            <div class="table-wrap animate-on-scroll">
+                <table>
+                    <thead>
+                        <tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>04-21</td><td>OpenAI 完成 $1220亿融资，估值 $1500亿，科技史上最大单笔融资，微软英伟达领投</td><td>OpenAI</td><td><span class="star">⭐⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-21</td><td>Mastercard 发布《代理式商务白皮书》，提出 Agent ID 概念，AI代理身份管理成新产业方向</td><td>Mastercard</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-22</td><td>2026年Q1全球风险投资创历史新高，AI初创公司获$2420亿，同比增长150%，占总VC 80%+</td><td>Crunchbase</td><td><span class="star">⭐⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-22</td><td>DeepSeek 完成成立以来首次融资，估值 XXX 亿美元，标志国产基础模型进入资本化阶段</td><td>DeepSeek</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-23</td><td>AI Agent 工程师年薪图谱发布，"百万年薪只是起步"，人才争夺战日趋激烈</td><td>行业报告</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ENTERPRISE -->
+        <section id="enterprise">
+            <div class="doc-chapter-label">五、企业AI转型</div>
+            <h2>🔄 企业 AI 转型本周动态</h2>
+            <div class="callout callout-success animate-on-scroll">企业AI转型从"实验期"进入"深水区"：摩根大通成为全球第一AI企业标杆，特斯拉车机接入国产模型标志跨行业融合，Web4.0概念涌现预示人机交互范式升级。</div>
+            <div class="table-wrap animate-on-scroll">
+                <table>
+                    <thead>
+                        <tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>04-21</td><td>OpenAI Agent Cloud + 华为云盘古5.0同步落地，边缘化与零代码化两条企业AI路径并行推进</td><td>OpenAI/华为</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-22</td><td>摩根大通AI转型案例：200年历史银行已成全球第一AI企业，风控/客服/交易全面AI化，年投超$10亿</td><td>摩根大通</td><td><span class="star">⭐⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-23</td><td>特斯拉中国车机系统将接入字节豆包和DeepSeek大模型，已完成备案</td><td>特斯拉/字节</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-23</td><td>Web4.0概念提出：AI智能体主导的意图协作网络，人机交互范式面临根本性变化</td><td>行业</td><td><span class="star">⭐⭐⭐</span></td></tr>
+                        <tr><td>04-24</td><td>微软发布2026制造业AI转型报告，工业AI生态完善，2026年成为制造业智能体时刻转折点</td><td>微软</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                        <tr><td>04-25</td><td>Deloitte发布2026企业AI状态报告，显示更多传统企业开始系统性部署AI，从试点进入规模化落地</td><td>Deloitte</td><td><span class="star">⭐⭐⭐⭐</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- DATA -->
+        <section id="data">
+            <div class="doc-chapter-label">六、数据总览</div>
+            <h2>📊 本周数据总览</h2>
+            <div class="stat-grid animate-on-scroll">
+                <div class="stat-card">
+                    <div class="stat-num">20+</div>
+                    <div class="stat-label">核心事件</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">$1220亿</div>
+                    <div class="stat-label">OpenAI单笔融资（史诗纪录）</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">$3000亿</div>
+                    <div class="stat-label">Q1全球AI投资</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">$500亿</div>
+                    <div class="stat-label">Cursor估值（AI编程工具）</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">82.7%</div>
+                    <div class="stat-label">GPT-5.5 Terminal-Bench 2.0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">200ms</div>
+                    <div class="stat-label">DeepL实时同传延迟（超越人类）</div>
+                </div>
+            </div>
+            <div class="table-wrap animate-on-scroll">
+                <table>
+                    <thead>
+                        <tr><th>板块</th><th>核心事件数</th><th>代表事件</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>🧠 大模型</td><td>7</td><td>GPT-5.5、Claude Opus 4.7、豆包2.0 Pro</td></tr>
+                        <tr><td>⌨️ AI Coding</td><td>5</td><td>Cursor $500亿估值、Cursor 3 Agents Window</td></tr>
+                        <tr><td>📱 AI应用</td><td>6</td><td>Claude Design、Workspace Agents、Figma AI</td></tr>
+                        <tr><td>🏭 AI行业</td><td>5</td><td>OpenAI $1220亿、Q1 $3000亿纪录</td></tr>
+                        <tr><td>🔄 企业转型</td><td>6</td><td>摩根大通标杆、特斯拉接入国产模型</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- WATCHLIST -->
+        <section id="watchlist">
+            <div class="doc-chapter-label">七、下周关注</div>
+            <h2>👀 下周值得关注</h2>
+            <div class="watch-item animate-on-scroll">
+                <div class="watch-badge watch-badge-hot">🔥 热</div>
+                <div class="watch-text"><strong>GPT-5.5 实际表现验证</strong> — 在真实企业工程场景中，GPT-5.5 的 Agentic Coding 能力能否超越 Claude Opus 4.7 的 loop resistance？第一批用户反馈将决定市场走向</div>
+            </div>
+            <div class="watch-item animate-on-scroll" style="transition-delay:0.06s;">
+                <div class="watch-badge watch-badge-up">↑ 升</div>
+                <div class="watch-text"><strong>Cursor 3 企业落地进展</strong> — 多 Agent 并行能力与 SpaceX 合作能否转化为企业级市场份额？与 GitHub Copilot 的竞争格局如何演变？</div>
+            </div>
+            <div class="watch-item animate-on-scroll" style="transition-delay:0.12s;">
+                <div class="watch-badge watch-badge-new">新</div>
+                <div class="watch-text"><strong>Claude Design 市场反应</strong> — 设计行业如何应对 AI 颠覆？Figma/Adobe 的反制措施？用户采用率数据将是重要信号</div>
+            </div>
+            <div class="watch-item animate-on-scroll" style="transition-delay:0.18s;">
+                <div class="watch-badge watch-badge-hot">🔥 热</div>
+                <div class="watch-text"><strong>国内大模型价格战</strong> — Qwen3.6 80%成本降幅后，各家是否跟进降价？API价格战可能进一步加剧，关注豆包2.0的定价策略</div>
+            </div>
+            <div class="watch-item animate-on-scroll" style="transition-delay:0.24s;">
+                <div class="watch-badge watch-badge-up">↑ 升</div>
+                <div class="watch-text"><strong>Google Cloud Next 2026</strong> — 谷歌即将召开年度云端峰会，Gemini 3 系列新能力及企业 AI 战略值得重点关注</div>
+            </div>
+        </section>
+
+        <!-- DAILY INDEX -->
+        <section id="dailyindex">
+            <div class="doc-chapter-label">附：日报索引</div>
+            <h2>📅 本周日报索引</h2>
+            <ul class="daily-list">
+                <li class="daily-item animate-on-scroll">
+                    <span class="daily-date">04-20 周一</span>
+                    <span class="daily-title">Claude Opus 4.7 发布，自主编程能力大跃升；OpenAI GPT-Rosalind 生命科学专用模型；Anthropic 估值达 $800B</span>
+                    <a href="./2026-04-20.html" class="daily-link">查看 →</a>
+                </li>
+                <li class="daily-item animate-on-scroll" style="transition-delay:0.04s;">
+                    <span class="daily-date">04-21 周二</span>
+                    <span class="daily-title">OpenAI 融资 $1220 亿史诗纪录；Qwen3.6-Flash 成本降80%；DeepL 200ms 实时同传；多模态周更时代开启</span>
+                    <a href="./2026-04-21.html" class="daily-link">查看 →</a>
+                </li>
+                <li class="daily-item animate-on-scroll" style="transition-delay:0.08s;">
+                    <span class="daily-date">04-22 周三</span>
+                    <span class="daily-title">Claude Design 入场冲击设计行业；Cursor $500亿估值；Figma & Canva AI全面升级；AI投资热潮与独角兽资本化</span>
+                    <a href="./2026-04-22.html" class="daily-link">查看 →</a>
+                </li>
+                <li class="daily-item animate-on-scroll" style="transition-delay:0.12s;">
+                    <span class="daily-date">04-23 周四</span>
+                    <span class="daily-title">GPT-5.4 Thinking 版发布；豆包2.0 Pro 对标国际顶级；Workspace Agents 落地；特斯拉接入国产大模型</span>
+                    <a href="./2026-04-23.html" class="daily-link">查看 →</a>
+                </li>
+                <li class="daily-item animate-on-scroll" style="transition-delay:0.16s;">
+                    <span class="daily-date">04-24 周五</span>
+                    <span class="daily-title">GPT-5.5 × Claude Opus 4.7 同日双发，Agentic Coding 元年开启；Cursor 3 Agents Window；Q1投资$3000亿纪录</span>
+                    <a href="./2026-04-24.html" class="daily-link">查看 →</a>
+                </li>
+                <li class="daily-item animate-on-scroll" style="transition-delay:0.20s;">
+                    <span class="daily-date">04-25 周六</span>
+                    <span class="daily-title">Cursor 完成 $20亿融资估值 $500亿+；企业级智能体应用加速落地；Deloitte 2026企业AI状态报告</span>
+                    <a href="./2026-04-25.html" class="daily-link">查看 →</a>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 本周学到的技术概念 -->
+        <section style="margin-top:40px;">
+            <div class="doc-chapter-label">八、技术词汇表</div>
+            <h2>📖 本周关键技术词汇</h2>
+            <div class="table-wrap animate-on-scroll">
+                <table>
+                    <thead>
+                        <tr><th>术语</th><th>含义</th><th>本周来源</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Agentic Coding</td><td>AI 自主完成完整编程任务（规划→实现→测试→修复），而非单步代码补全</td><td>GPT-5.5 / Claude Opus 4.7</td></tr>
+                        <tr><td>Loop Resistance</td><td>AI Agent 在多步骤任务中不陷入无限循环/死锁的能力，是 Agentic 可靠性指标</td><td>Claude Opus 4.7</td></tr>
+                        <tr><td>Terminal-Bench 2.0</td><td>评估 AI 在真实终端环境中自主完成工程任务的 benchmark，比 SWE-Bench 更贴近生产</td><td>GPT-5.5 达82.7%</td></tr>
+                        <tr><td>MoE 架构</td><td>混合专家架构（Mixture of Experts），按需激活部分参数，显著降低推理成本</td><td>Qwen3.6-Flash 降80%成本</td></tr>
+                        <tr><td>Agent ID</td><td>AI 代理在执行任务时的身份标识机制，用于权限控制、审计追踪和责任归属</td><td>Mastercard 白皮书</td></tr>
+                        <tr><td>Agents Window</td><td>Cursor 3 的多 Agent 并行界面，支持多个 AI 同时在不同代码区域独立执行任务</td><td>Cursor 3.1</td></tr>
+                        <tr><td>Web4.0</td><td>以 AI 智能体为主导的意图协作网络，用户通过意图而非操作与数字世界交互</td><td>行业讨论</td></tr>
+                        <tr><td>Workspace Agents</td><td>OpenAI 发布的企业级跨工具 AI 代理，可读写工作空间数据，执行跨团队自动化任务</td><td>ChatGPT Workspace Agents</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 本周宏观叙事 -->
+        <section style="margin-top:20px;margin-bottom:48px;">
+            <div class="doc-chapter-label">九、宏观叙事</div>
+            <h2>🌐 本周的宏观叙事</h2>
+            <div class="callout callout-info animate-on-scroll">
+                <strong>主题：从工具到协作者，从辅助到主导</strong>
+            </div>
+            <p class="animate-on-scroll">如果用一句话总结 W17：<strong>AI 正在从"工具"变成"协作者"，并开始在某些场景主导决策。</strong></p>
+            <p class="animate-on-scroll">这一周，至少有三件事共同指向这个方向：</p>
+            <p class="animate-on-scroll">第一，<strong>Agentic Coding 的双旗舰同日落地</strong>。GPT-5.5 和 Claude Opus 4.7 不是更快的"代码补全"，而是能在真实工程环境中独立完成"问题分析→方案设计→代码实现→测试修复"完整循环的自主 Agent。工程师的工作性质开始改变。</p>
+            <p class="animate-on-scroll">第二，<strong>Claude Design 和 Workspace Agents 的"端到端化"应用落地</strong>。不再是帮你写一句话，而是帮你完成一项工作。设计、演示、跨团队协作——AI 开始接管完整任务链条，而不是单个步骤。</p>
+            <p class="animate-on-scroll">第三，<strong>$1220 亿融资背后的战略逻辑</strong>：这不只是"有钱就能做大模型"。OpenAI 的超级融资意味着未来2-3年内，AI 基础设施竞争将形成显著的资本壁垒。率先完成规模化落地的玩家，将拥有更多数据→更好模型→更多用户的正向飞轮。</p>
+            <p class="animate-on-scroll">这三件事合在一起，构成了 2026 年 AI 行业最清晰的信号：<strong>技术突破期已经结束，规模化落地期正式开始。</strong></p>
+        </section>
+
+        <div style="text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid var(--color-border);">
+            <p style="font-size:12px;color:var(--color-text-muted);">由 AI 洞察系统生成 · AI-Insight v10.4 · 2026-04-27</p>
+            <p style="font-size:12px;color:var(--color-text-muted);margin-top:4px;"><a href="../../index.html">← 返回首页</a> · <a href="./index.html">日报/周报列表</a></p>
+        </div>
+
+    </main>
+</div>
+
+<script>
+(function () {
+    "use strict";
+    const HEADER_OFFSET = 72;
+    const SPY_OFFSET    = 110;
+    const sidebar    = document.getElementById("sidebar");
+    const collapseBtn = document.getElementById("sidebarToggle");
+    if (collapseBtn && sidebar) {
+        collapseBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+        });
+        document.addEventListener("click", (e) => {
+            if (!sidebar.contains(e.target) && !collapseBtn.contains(e.target)) {
+                sidebar.classList.remove("open");
+            }
+        });
+    }
+
+    // Scroll spy
+    const tocLinks = document.querySelectorAll(".toc-link");
+    const sections = document.querySelectorAll("section[id]");
+    const onScroll = () => {
+        let current = "";
+        sections.forEach(s => {
+            if (window.scrollY >= s.offsetTop - SPY_OFFSET) current = s.id;
+        });
+        tocLinks.forEach(l => {
+            l.classList.toggle("active", l.getAttribute("href") === "#" + current);
+        });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    // Animate on scroll
+    const animEls = document.querySelectorAll(".animate-on-scroll");
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add("visible"); observer.unobserve(e.target); }
+        });
+    }, { threshold: 0.05, rootMargin: "0px 0px -40px 0px" });
+    animEls.forEach(el => observer.observe(el));
+})();
+</script>
+</body>
+</html>

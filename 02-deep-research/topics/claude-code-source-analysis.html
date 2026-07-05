@@ -1,0 +1,2360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 性能优化：主动声明页面颜色，避免白屏闪烁 -->
+<meta name="theme-color" content="#F8FAFB">
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23E11D48'/><path d='M7 22.5V11l3.5 5.5 3.5-7 4 6 3.5-5.5L25 22.5H7z' fill='none' stroke='white' stroke-width='2' stroke-linejoin='round'/></svg>">
+<!-- 启用 Chrome 资源优先级提示 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Claude Code 源码核心思想深度调研</title>
+<!-- 字体优化 v2：DNS 预解析 + display=swap 保障 FOUT 可见 + 按需拆分请求 -->
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- DM Sans（拉丁，轻量，先加载）-->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" onload="this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet"></noscript>
+<!-- Noto Sans SC（中文，懒加载，不阻塞渲染）-->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" onload="this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet"></noscript>
+<!-- JetBrains Mono（代码，懒加载）-->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" onload="this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<style>
+/* ════════════════════════════════════════
+   DESIGN SYSTEM TOKENS — 清爽风格 v4.3
+   字体：DM Sans + Noto Sans SC + JetBrains Mono
+════════════════════════════════════════ */
+:root {
+  /* ── 背景/表面 ── */
+  --bg:            #F8FAFB;
+  --surface:       #ffffff;
+  --surface-2:     #FAFAF9;
+  --border:        #E7E5E4;
+  --border-light:  #F5F5F4;
+
+  /* ── 文字 ── */
+  --text-1:        #1C1917;
+  --text-2:        #57534E;
+  --text-3:        #78716C;
+  --text-4:        #A8A29E;
+
+  /* ── 强调色（保留原始紫色系）── */
+  --accent:        #5046e5;
+  --accent-2:      #7C3AED;
+  --accent-bg:     #F5F3FF;
+  --accent-border: #C4B5FD;
+
+  /* ── 语义色 ── */
+  --green:         #059669;
+  --green-bg:      #ECFDF5;
+  --green-border:  #6EE7B7;
+
+  --blue:          #2563EB;
+  --blue-bg:       #EFF6FF;
+  --blue-border:   #93C5FD;
+
+  --amber:         #D97706;
+  --amber-bg:      #FFFBEB;
+  --amber-border:  #FCD34D;
+
+  --red:           #E11D48;
+  --red-bg:        #FFF1F2;
+  --red-border:    #FCA5A5;
+
+  --teal:          #0D9488;
+  --teal-bg:       #CCFBF1;
+  --teal-border:   #6EE7B7;
+
+  /* ── 圆角/阴影 ── */
+  --r:      12px;
+  --r-sm:   8px;
+  /* 阴影简化：移除多层叠加阴影（每层都有 GPU 成本），保留视觉效果 */
+  --shadow: 0 2px 6px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 14px rgba(0,0,0,0.09);
+
+  /* ── 字体系统 v4.3 — DM Sans Premium Sans ── */
+  --font: "DM Sans", -apple-system, "SF Pro Text", "system-ui", "Noto Sans SC", "PingFang SC", sans-serif;
+  --font-cn: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", "Consolas", monospace;
+
+  /* ── Mesh 渐变背景 ── */
+  --gradient-mesh:
+    radial-gradient(at 20% 20%, rgba(80,70,229,0.05) 0%, transparent 50%),
+    radial-gradient(at 80% 80%, rgba(124,58,237,0.04) 0%, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(5,150,105,0.03) 0%, transparent 50%);
+}
+
+/* ════════════════════════════════════════
+   RESET & BASE
+════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 15px; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  background-image: var(--gradient-mesh);
+  /* 移除 fixed 附着：避免每次滚动触发 repaint，性能提升显著（移动端尤明显）*/
+  background-attachment: scroll;
+  color: var(--text-1);
+  line-height: 1.7;
+  letter-spacing: -0.008em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { text-decoration: none; }
+p { margin-bottom: 10px; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+code {
+  font-family: var(--font-mono);
+  font-size: .85em;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+/* ════════════════════════════════════════
+   HEADER — 清爽浅色风格 v4.3
+════════════════════════════════════════ */
+.hd {
+  background: var(--bg);
+  /* 顶部色条 */
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, #5046e5 0%, #059669 50%, #7C3AED 100%) 1;
+  padding: 52px 40px 48px;
+  position: relative;
+  overflow: hidden;
+}
+/* Mesh 光晕装饰 */
+.hd::before, .hd::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.hd::before {
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, rgba(80,70,229,0.06), transparent 65%);
+  top: -160px; right: -80px;
+}
+.hd::after {
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(5,150,105,0.05), transparent 65%);
+  bottom: -100px; left: 5%;
+}
+.hd-inner { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; }
+.hd-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: linear-gradient(135deg, #ECFDF5, #EFF6FF);
+  border: 1px solid rgba(80,70,229,0.18);
+  color: #5046e5;
+  padding: 4px 13px;
+  border-radius: 20px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 4px rgba(80,70,229,0.10);
+}
+.hd h1 {
+  font-size: 38px; font-weight: 800;
+  background: linear-gradient(135deg, #5046e5 0%, #059669 50%, #7C3AED 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  font-family: var(--font);
+  text-wrap: balance;
+}
+.hd h1 em {
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(135deg, #059669, #7C3AED);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-style: normal;
+}
+.hd-desc {
+  color: var(--text-2);
+  font-size: 15.5px;
+  max-width: 680px;
+  line-height: 1.7;
+  margin-bottom: 26px;
+  font-family: var(--font-cn);
+}
+.hd-thesis {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(80,70,229,0.07), rgba(5,150,105,0.05));
+  border: 1px solid rgba(80,70,229,0.18);
+  border-left: 3px solid #5046e5;
+  border-radius: var(--r-sm);
+  padding: 10px 18px;
+  color: var(--text-1);
+  font-size: 14px; font-weight: 600;
+  margin-bottom: 26px;
+  line-height: 1.6;
+}
+.hd-thesis span { color: #5046e5; font-weight: 700; }
+.hd-meta {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  color: var(--text-3);
+  font-size: 12.5px;
+}
+
+/* ════════════════════════════════════════
+   NAV — 清爽风格：浮动圆角卡片导航
+════════════════════════════════════════ */
+.nav-wrap {
+  background: transparent;
+  position: sticky; top: 10px; z-index: 100;
+  padding: 0 20px;
+  /* will-change 提升导航栏到独立合成层 */
+  will-change: transform;
+}
+.nav-inner {
+  max-width: 980px; margin: 0 auto;
+  background: rgba(255,255,255,0.95);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,1);
+  padding: 5px 8px;
+  display: flex; gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px;
+  color: var(--text-3);
+  font-size: 13px; font-weight: 500;
+  white-space: nowrap;
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  transition: color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+  background: transparent;
+  flex-shrink: 0;
+}
+.nav-btn:hover {
+  color: var(--accent);
+  background: rgba(80,70,229,0.06);
+}
+.nav-btn.active {
+  color: #fff;
+  background: linear-gradient(135deg, #5046e5, #7C3AED);
+  box-shadow: 0 2px 10px rgba(80,70,229,0.30);
+  font-weight: 700;
+}
+.nav-step {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: rgba(0,0,0,0.06);
+  font-size: 10px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-3);
+  transition: background 0.18s, color 0.18s;
+  flex-shrink: 0;
+}
+.nav-btn.active .nav-step {
+  background: rgba(255,255,255,0.22);
+  color: #fff;
+}
+@media(max-width: 720px) {
+  .nav-wrap { padding: 0 12px; top: 6px; }
+  .nav-btn { padding: 7px 10px; font-size: 12px; }
+}
+
+/* ════════════════════════════════════════
+   PAGE LAYOUT
+════════════════════════════════════════ */
+.pg { max-width: 980px; margin: 0 auto; padding: 32px 20px 80px; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+/* content-visibility：隐藏 tab 跳过子树的布局和绘制，大幅降低初始渲染成本 */
+.tab-pane:not(.active) { content-visibility: hidden; }
+
+/* ── Chapter lead ── */
+.ch-lead {
+  background: linear-gradient(135deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r);
+  padding: 24px 28px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow);
+}
+.ch-label {
+  font-size: 11px; font-weight: 800;
+  color: var(--accent);
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.ch-title { font-size: 20px; font-weight: 800; color: var(--text-1); margin-bottom: 6px; }
+.ch-desc { font-size: 14px; color: var(--text-2); }
+
+/* ── Section heading ── */
+.sec { margin-top: 36px; margin-bottom: 20px; }
+.sec-h { font-size: 17px; font-weight: 750; color: var(--text-1); margin-bottom: 4px; letter-spacing: -0.02em; }
+.sec-sub { font-size: 13px; color: var(--text-3); }
+
+/* ── Divider ── */
+.div { border: none; border-top: 1px solid var(--border-light); margin: 32px 0; }
+
+/* ── Card ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 22px 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 18px;
+  /* contain:layout 防止卡片内布局变更触发整页 reflow */
+  contain: layout style;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+.card-h {
+  font-size: 15px; font-weight: 700;
+  color: var(--text-1);
+  display: flex; align-items: center; gap: 9px;
+  margin-bottom: 14px;
+}
+.card-ico {
+  width: 28px; height: 28px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+
+/* ── Grid ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+@media(max-width: 720px) {
+  .g2, .g3, .g4 { grid-template-columns: 1fr; }
+  .hd { padding: 36px 18px 32px; }
+  .hd h1 { font-size: 26px; }
+  .hd-desc { font-size: 14px; }
+}
+
+/* ── Insight box (accent) ── */
+.ib {
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r-sm);
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+.ib-label {
+  font-size: 11px; font-weight: 800; color: var(--accent);
+  letter-spacing: .7px; text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.ib-text { font-size: 14px; font-weight: 600; color: #312e81; line-height: 1.6; }
+
+/* Variants */
+.ib-green { background: var(--green-bg); border-color: var(--green-border); border-left-color: var(--green); }
+.ib-green .ib-label { color: var(--green); }
+.ib-green .ib-text { color: #064e3b; }
+
+.ib-amber { background: var(--amber-bg); border-color: var(--amber-border); border-left-color: var(--amber); }
+.ib-amber .ib-label { color: var(--amber); }
+.ib-amber .ib-text { color: #78350f; }
+
+.ib-red { background: var(--red-bg); border-color: var(--red-border); border-left-color: var(--red); }
+.ib-red .ib-label { color: var(--red); }
+.ib-red .ib-text { color: #7f1d1d; }
+
+/* ── Quote ── */
+.qt {
+  background: var(--surface-2);
+  border-left: 3px solid var(--border);
+  padding: 12px 18px;
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+  color: var(--text-2);
+  margin: 14px 0;
+  font-size: 14px;
+}
+.qt cite { display: block; font-style: normal; font-size: 12px; color: var(--text-3); margin-top: 6px; }
+
+/* ── Badge ── */
+.badge {
+  display: inline-flex; align-items: center;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 12px; font-weight: 700;
+}
+.b-purple { background: var(--accent-bg); color: var(--accent); }
+.b-green  { background: var(--green-bg);  color: var(--green);  }
+.b-blue   { background: var(--blue-bg);   color: var(--blue);   }
+.b-amber  { background: var(--amber-bg);  color: var(--amber);  }
+.b-red    { background: var(--red-bg);    color: var(--red);    }
+.b-gray   { background: var(--surface-2); color: var(--text-3); }
+.b-teal   { background: var(--teal-bg);   color: var(--teal);   }
+
+/* ── Table ── */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; border-radius: var(--r); overflow: hidden; }
+.tbl th {
+  background: var(--surface-2);
+  color: var(--text-3); font-size: 11.5px; font-weight: 700;
+  letter-spacing: .6px; text-transform: uppercase;
+  padding: 10px 14px; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.tbl td { padding: 11px 14px; border-bottom: 1px solid var(--border-light); }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: rgba(80,70,229,0.03); transition: background 0.15s; }
+
+/* ── Layer stack ── */
+.ls { display: flex; flex-direction: column; gap: 6px; }
+.li {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 13px 16px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+}
+.ln {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800;
+  flex-shrink: 0; margin-top: 1px;
+}
+.linfo .ln-name { font-weight: 700; font-size: 13.5px; margin-bottom: 2px; }
+.linfo .ln-desc { font-size: 12.5px; color: var(--text-3); line-height: 1.5; }
+
+/* ── Stat card ── */
+.sc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.sc-num {
+  font-size: 34px; font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  font-family: var(--font);
+  letter-spacing: -0.04em;
+}
+.sc-label { font-size: 13px; color: var(--text-3); margin-top: 4px; }
+.sc-note  { font-size: 11.5px; color: var(--text-4); margin-top: 5px; }
+
+/* ── Code block ── */
+.cb {
+  background: #1a1b26;
+  border-radius: var(--r-sm);
+  padding: 15px 18px;
+  margin: 12px 0;
+  overflow-x: auto;
+}
+.cb pre { color: #c0caf5; font-family: var(--font-mono); font-size: 13px; line-height: 1.65; }
+.kw  { color: #7aa2f7; }
+.str { color: #9ece6a; }
+.cm  { color: #565f89; font-style: italic; }
+.tp  { color: #f7768e; }
+
+/* ── Pill ── */
+.pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 13px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px; color: var(--text-2);
+}
+.pills { display: flex; flex-wrap: wrap; gap: 7px; margin: 10px 0; }
+
+/* ── Timeline ── */
+.tl { position: relative; padding-left: 26px; }
+.tl::before {
+  content: ''; position: absolute;
+  left: 7px; top: 8px; bottom: 8px;
+  width: 2px; background: linear-gradient(to bottom, var(--accent), transparent);
+}
+.tl-item { position: relative; margin-bottom: 22px; }
+.tl-dot {
+  position: absolute; left: -22px; top: 5px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.tl-title { font-weight: 700; font-size: 13.5px; margin-bottom: 3px; }
+.tl-text  { font-size: 13px; color: var(--text-2); }
+
+/* ── Comparison 2-col ── */
+.cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+.cmp-col { border-radius: var(--r-sm); padding: 15px 16px; }
+.cmp-col.ok  { background: #f0fdf4; border: 1px solid #86efac; }
+.cmp-col.bad { background: #fff1f2; border: 1px solid #fecaca; }
+.cmp-col .ct { font-size: 11.5px; font-weight: 800; letter-spacing: .4px; margin-bottom: 9px; }
+.cmp-col.ok  .ct { color: var(--green); }
+.cmp-col.bad .ct { color: var(--red); }
+.cmp-col ul { padding-left: 15px; }
+.cmp-col li { font-size: 13px; color: var(--text-2); margin-bottom: 5px; }
+
+/* ── Numbered steps ── */
+.steps { counter-reset: step; }
+.step-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  margin-bottom: 18px;
+}
+.step-n {
+  counter-increment: step;
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: var(--accent); color: #fff;
+  font-size: 13px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.step-n::before { content: counter(step); }
+.step-body .sb-title { font-weight: 700; margin-bottom: 3px; }
+.step-body .sb-text { font-size: 13.5px; color: var(--text-2); }
+
+/* ── Insight table (three-column for L3-L5) ── */
+.it-tbl {
+  width: 100%; border-collapse: collapse;
+  font-size: 13.5px; margin: 16px 0;
+}
+.it-tbl th {
+  background: #1a1b26; color: #c0caf5;
+  padding: 10px 14px; text-align: left;
+  font-size: 12px; font-weight: 700; letter-spacing: .5px;
+  border-bottom: 2px solid var(--accent);
+}
+.it-tbl td { padding: 11px 14px; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+.it-tbl .l3 { background: #f0fdf4; }
+.it-tbl .l3 td { border-bottom: 1px solid #d1fae5; }
+.it-tbl .l4 { background: #eff6ff; }
+.it-tbl .l4 td { border-bottom: 1px solid #dbeafe; }
+.it-tbl .l5 { background: #faf5ff; }
+.it-tbl .l5 td { border-bottom: 1px solid #ede9fe; }
+.it-tbl .seg-hd td {
+  font-size: 11.5px; font-weight: 800; letter-spacing: .6px;
+  padding: 8px 14px; text-transform: uppercase;
+}
+.it-tbl .seg-hd.s3 td { background: #d1fae5; color: #065f46; }
+.it-tbl .seg-hd.s4 td { background: #dbeafe; color: #1e3a8a; }
+.it-tbl .seg-hd.s5 td { background: #ede9fe; color: #4c1d95; }
+.it-tbl .seg-foot td { font-size: 12.5px; font-style: italic; color: var(--text-3); padding: 8px 14px; }
+.it-tbl .analogy { color: var(--text-3); font-style: italic; }
+
+/* ── knum ── */
+.kn { font-weight: 800; color: var(--accent); }
+
+/* ════════════════════════════════════════
+   滚动入场动画 — 清爽风格 v4.0
+════════════════════════════════════════ */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll { transition: none; opacity: 1; transform: none; }
+}
+
+/* ── Tab 7 specific ── */
+.cmp7 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cmp7-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 20px;
+}
+.cmp7-card-sub {
+  background: var(--surface-2);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+.sec7-hd {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 18px;
+}
+.sec7-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.sec7-title { font-size: 18px; font-weight: 800; color: var(--text-1); }
+.sec7-sub   { font-size: 13px; color: var(--text-3); margin-top: 2px; }
+.dim4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 32px; }
+.dim-card { border-radius: 12px; padding: 16px; text-align: center; border: 1px solid; }
+.matrix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: rgba(255,255,255,.1); border-radius: 10px; overflow: hidden; }
+.matrix-cell { padding: 20px; }
+@media(max-width: 720px) {
+  .cmp7 { grid-template-columns: 1fr; }
+  .dim4 { grid-template-columns: 1fr 1fr; }
+  .matrix-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     HEADER
+══════════════════════════════════ -->
+<div class="hd">
+  <div class="hd-inner">
+    <div class="hd-eyebrow">🔬 AI源码深度调研报告 v2.0</div>
+    <h1>Claude Code <em>源码核心思想</em> 全景解析</h1>
+    <div class="hd-desc">
+      从 512,000 行 TypeScript 意外泄露的源码中，系统化提炼 AI Agent 工程设计的
+      本质哲学与可迁移实践范式。先立体系，再填洞察，最后穿透本质。
+    </div>
+    <div class="hd-thesis">
+      核心命题：Claude Code 的本质是 <span>「认知代理」</span>——
+      把软件工程的认知负担，系统性地从人转移到 AI
+    </div>
+    <div class="hd-meta">
+      <span>📅 2026年4月5日</span>
+      <span>📊 512K行 TypeScript · 1906个文件</span>
+      <span>🏷️ 内部代号 TENGU · ARR $2.5B</span>
+      <span>📖 信源：微信公众号 × VentureBeat × Medium × Reddit</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     NAV
+══════════════════════════════════ -->
+<nav class="nav-wrap">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="switchTab('s1',this)">
+      <span class="nav-step">1</span> 事件全景
+    </button>
+    <button class="nav-btn" onclick="switchTab('s2',this)">
+      <span class="nav-step">2</span> 架构解剖
+    </button>
+    <button class="nav-btn" onclick="switchTab('s3',this)">
+      <span class="nav-step">3</span> 机制深挖
+    </button>
+    <button class="nav-btn" onclick="switchTab('s4',this)">
+      <span class="nav-step">4</span> 本质洞察
+    </button>
+    <button class="nav-btn" onclick="switchTab('s5',this)">
+      <span class="nav-step">5</span> 工程哲学
+    </button>
+    <button class="nav-btn" onclick="switchTab('s6',this)">
+      <span class="nav-step">6</span> 未来图谱
+    </button>
+    <button class="nav-btn" onclick="switchTab('s7',this)">
+      <span class="nav-step">7</span> 对标AI洞察
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════
+     PAGE BODY
+══════════════════════════════════ -->
+<div class="pg">
+
+<!-- ════════════════════
+     TAB 1: 事件全景
+════════════════════ -->
+<div id="tab-s1" class="tab-pane active">
+
+  <div class="ch-lead animate-on-scroll">
+    <div class="ch-label">第 1 章 · 故事入口</div>
+    <div class="ch-title">这到底是什么？</div>
+    <div class="ch-desc">
+      一次意外泄露，开放了一个 $2.5B ARR 产品的完整工程蓝图。
+      本章交代事件背景，建立体系地图，让你在进入细节之前，先看清全貌。
+    </div>
+  </div>
+
+  <!-- 数字概览 -->
+  <div class="sec">
+    <div class="sec-h">🔢 核心数字</div>
+    <div class="sec-sub">三个数字定义这次泄露的规模与价值</div>
+  </div>
+  <div class="g3 animate-on-scroll">
+    <div class="sc"><div class="sc-num">512K</div><div class="sc-label">TypeScript 源码行数</div><div class="sc-note">1906个文件 · 59.8MB</div></div>
+    <div class="sc"><div class="sc-num">$2.5B</div><div class="sc-label">Claude Code 年化 ARR</div><div class="sc-note">2026年初以来翻倍</div></div>
+    <div class="sc"><div class="sc-num">43</div><div class="sc-label">内置工具数量</div><div class="sc-note">50+ 斜杠命令</div></div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- 事件还原 -->
+  <div class="sec">
+    <div class="sec-h">📌 事件还原：一个 package.json 字段引发的全球技术事件</div>
+    <div class="sec-sub">3分钟读懂完整经过</div>
+  </div>
+
+  <div class="card animate-on-scroll">
+    <div class="tl">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div>
+          <div class="tl-title">触发：打包脚本错误配置</div>
+          <div class="tl-text">Anthropic 在发布 <code>@anthropic-ai/claude-code</code> v2.1.88 时，
+          一个 <code>package.json</code> 字段配置失误，将 <strong>59.8 MB 的 JavaScript .map 文件</strong>
+          打包进了 npm 包。这个文件指向 Cloudflare R2 存储桶中的完整 TypeScript 源码压缩包。</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div>
+          <div class="tl-title">发现：凌晨4点的 X 帖子</div>
+          <div class="tl-text">2026年3月31日 4:23 AM ET，Solayer Labs 实习生 Chaofan Shou 在 X 上广播了这一发现。
+          数小时内，代码被镜像到 GitHub，被数万名开发者 fork 和分析。</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div>
+          <div class="tl-title">响应：Anthropic 承认是人为失误</div>
+          <div class="tl-text">Anthropic 确认是"发布打包问题，人为失误，非安全漏洞"。
+          这是至少 <strong>第三次</strong> 通过 npm 暴露 source map（v0.2.8、v0.2.28 均有前例）。</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--red)"></div>
+        <div>
+          <div class="tl-title" style="color:var(--red)">⚠️ 安全警告：勿运行可疑代码</div>
+          <div class="tl-text">同期（无关联事件）有人发现 npm 上出现了带有 axios 1.14.1/0.30.4 或
+          <code>plain-crypto-js</code> 依赖的恶意包。泄露代码本身不含恶意内容，但请勿随意执行未验证的依赖。</div>
+        </div>
+      </div>
+    </div>
+    <div class="ib">
+      <div class="ib-label">事件定性</div>
+      <div class="ib-text">
+        这不只是安全事故，而是一扇窗口——让世界看到了当前最商业化成功的 AI Coding Agent 的完整工程内幕。
+        Anthropic 数年打磨的 Agent OS，现在是所有竞争者的公开教科书。
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- 体系地图 -->
+  <div class="sec">
+    <div class="sec-h">🗺️ 本报告的认知地图：六大维度 × 完整叙事弧</div>
+    <div class="sec-sub">
+      本报告按「这是什么 → 怎么设计 → 怎么运行 → 本质是什么 → 信条是什么 → 会去哪里」六个叙事阶段组织，
+      每章承接上一章，形成完整的认知闭环。
+    </div>
+  </div>
+
+  <div class="card animate-on-scroll" style="padding:0;overflow:hidden">
+    <table class="tbl">
+      <thead>
+        <tr><th>章节</th><th>叙事定位</th><th>核心问题</th><th>关键概念</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>① 事件全景</strong></td>
+          <td>故事入口</td>
+          <td>这是什么？</td>
+          <td>泄露背景、数字规模、认知地图</td>
+        </tr>
+        <tr>
+          <td><strong>② 架构解剖</strong></td>
+          <td>骨骼结构</td>
+          <td>怎么设计的？</td>
+          <td>五层架构、Coordinator-Worker、43工具</td>
+        </tr>
+        <tr>
+          <td><strong>③ 机制深挖</strong></td>
+          <td>血肉填充</td>
+          <td>怎么运行的？</td>
+          <td>三层记忆、上下文工程、安全模型、Bridge</td>
+        </tr>
+        <tr style="background:#f5f3ff">
+          <td><strong>④ 本质洞察 ⭐</strong></td>
+          <td>灵魂穿透</td>
+          <td>为什么这样？本质是什么？</td>
+          <td>认知代理规律、五层洞察闭环、趋势推演</td>
+        </tr>
+        <tr>
+          <td><strong>⑤ 工程哲学</strong></td>
+          <td>信条提炼</td>
+          <td>背后的设计信仰是什么？</td>
+          <td>Unix哲学、Prompt即架构、Token经济学、Buddy</td>
+        </tr>
+        <tr>
+          <td><strong>⑥ 未来图谱</strong></td>
+          <td>方向预判</td>
+          <td>会去哪里？能学什么？</td>
+          <td>KAIROS、ULTRAPLAN、6条迁移原则</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- 信息源矩阵 -->
+  <div class="sec">
+    <div class="sec-h">📚 信息源与可信度矩阵</div>
+    <div class="sec-sub">本报告融合了中英文多平台一手分析，所有洞察均有来源标注</div>
+  </div>
+
+  <div class="card animate-on-scroll" style="padding:0;overflow:hidden">
+    <table class="tbl">
+      <thead>
+        <tr><th>来源</th><th>类型</th><th>主要覆盖维度</th><th>可信度</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>VentureBeat 深度报道</strong><br><span style="font-size:12px;color:var(--text-3)">venturebeat.com</span></td>
+          <td><span class="badge b-blue">英文媒体</span></td>
+          <td>三层记忆、KAIROS、Undercover、内部模型数据</td>
+          <td><span class="badge b-green">高</span></td>
+        </tr>
+        <tr>
+          <td><strong>Marc Bara / Medium</strong><br><span style="font-size:12px;color:var(--text-3)">medium.com</span></td>
+          <td><span class="badge b-blue">英文技术分析</span></td>
+          <td>全面工程分析、Cache经济学、安全模型、工程文化</td>
+          <td><span class="badge b-green">高</span></td>
+        </tr>
+        <tr>
+          <td><strong>Reddit r/ClaudeAI</strong><br><span style="font-size:12px;color:var(--text-3)">开发者一手扫描</span></td>
+          <td><span class="badge b-purple">开发者社区</span></td>
+          <td>Buddy系统、代码彩蛋、未发布功能、代码质量实况</td>
+          <td><span class="badge b-green">高</span></td>
+        </tr>
+        <tr>
+          <td><strong>软件工程3.0时代（微信）</strong><br><span style="font-size:12px;color:var(--text-3)">作者：Kerry</span></td>
+          <td><span class="badge b-amber">中文深度分析</span></td>
+          <td>五层架构全景、8大设计亮点、AI原生IDE构建启示</td>
+          <td><span class="badge b-green">高</span></td>
+        </tr>
+        <tr>
+          <td><strong>Ai迷思录（微信）</strong><br><span style="font-size:12px;color:var(--text-3)">作者：洺熙</span></td>
+          <td><span class="badge b-amber">中文综述</span></td>
+          <td>Unix哲学分析、工具系统设计哲学、核心发现综述</td>
+          <td><span class="badge b-blue">中高</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /tab-s1 -->
+
+<!-- ════════════════════
+     TAB 2: 架构解剖
+════════════════════ -->
+<div id="tab-s2" class="tab-pane">
+
+  <div class="ch-lead">
+    <div class="ch-label">第 2 章 · 骨骼结构</div>
+    <div class="ch-title">怎么设计的？</div>
+    <div class="ch-desc">
+      Claude Code 不是 LLM 的薄包装，而是一套为软件工程专门设计的多线程操作系统。
+      本章从宏观到微观，依次解剖：整体分层架构 → 多智能体调度模型 → 工具系统设计哲学。
+    </div>
+  </div>
+
+  <!-- 2.1 五层架构 -->
+  <div class="sec">
+    <div class="sec-h">2.1 五层模块化架构（24个核心模块）</div>
+    <div class="sec-sub">对 src/ 目录下全量模块分析，形成「用户需求→智能体调度→任务执行→结果输出→生态同步」完整闭环</div>
+  </div>
+  <div class="card">
+    <div class="ls">
+      <div class="li" style="background:#faf5ff;border-color:#e9d5ff">
+        <div class="ln" style="background:#7c3aed;color:#fff">5</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#7c3aed">生态层（Ecosystem Layer）</div>
+          <div class="ln-desc">Bridge模块 · MCP/LSP协议 · CLI↔IDE桥接 · HTTP/WebSocket API · CI/CD集成 · 上游代理适配</div>
+        </div>
+        <span class="badge b-purple" style="flex-shrink:0;margin-top:2px">对外</span>
+      </div>
+      <div class="li" style="background:#f5f3ff;border-color:#c4b5fd">
+        <div class="ln" style="background:#6d28d9;color:#fff">4</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#6d28d9">UI层（Interaction Layer）</div>
+          <div class="ln-desc">终端渲染引擎 · 游戏引擎技术（Int32Array字符池 + 位掩码样式）· 50x stringWidth 优化 · Ink/React</div>
+        </div>
+        <span class="badge b-purple" style="flex-shrink:0;margin-top:2px">呈现</span>
+      </div>
+      <div class="li" style="background:#eff6ff;border-color:#bfdbfe">
+        <div class="ln" style="background:#1d4ed8;color:#fff">3</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#1d4ed8">服务层（Service Layer）</div>
+          <div class="ln-desc">Auth认证 · 配置管理 · Telemetry遥测（tengu_前缀事件）· 文件I/O · 上下文压缩 · 安全检查</div>
+        </div>
+        <span class="badge b-blue" style="flex-shrink:0;margin-top:2px">支撑</span>
+      </div>
+      <div class="li" style="background:#ecfdf5;border-color:#a7f3d0">
+        <div class="ln" style="background:#059669;color:#fff">2</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#059669">引擎层（Engine Layer）</div>
+          <div class="ln-desc">查询引擎 46,000行 · 工具执行器 · 状态管理（Zustand）· Agent调度 · 多智能体 Swarm 系统</div>
+        </div>
+        <span class="badge b-green" style="flex-shrink:0;margin-top:2px">核心</span>
+      </div>
+      <div class="li" style="background:#fffbeb;border-color:#fde68a">
+        <div class="ln" style="background:#b45309;color:#fff">1</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#b45309">启动层（Bootstrap Layer）</div>
+          <div class="ln-desc">进程初始化 · CLI解析 · 项目自动扫描（目录+Git状态+依赖配置）· 用户偏好加载</div>
+        </div>
+        <span class="badge b-amber" style="flex-shrink:0;margin-top:2px">入口</span>
+      </div>
+    </div>
+    <div class="ib" style="margin-top:16px">
+      <div class="ib-label">架构设计意图</div>
+      <div class="ib-text">
+        每层职责严格分离：<strong>引擎层是唯一的"大脑"</strong>，其他层都是它的感知器官和执行手臂。
+        引擎层的查询引擎（46K行）和状态管理构成核心，这两个模块的代码量加总超过整个项目的15%。
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.2 查询引擎 + 状态管理 -->
+  <div class="div"></div>
+  <div class="sec">
+    <div class="sec-h">2.2 引擎层核心：查询引擎 × Zustand 状态管理</div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-h"><div class="card-ico" style="background:#ecfdf5;color:#059669">⚙️</div>查询引擎（46,000行）</div>
+      <p>负责所有 LLM 调用、流式输出、缓存和编排。
+      Claude Code 中<strong>最大的单一模块</strong>，是整个系统的"大脑皮层"。</p>
+      <div class="ib ib-green" style="margin-top:12px">
+        <div class="ib-label">关键设计决策</div>
+        <div class="ib-text">
+          编排逻辑用自然语言（System Prompt）定义，而非硬编码分支。
+          修改协调者行为 = 更新文本文件，无需重新编译。
+          这是一种前所未有的"软更新"工程模式。
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="card-ico" style="background:#eff6ff;color:#1d4ed8">📊</div>Zustand 状态管理（四层隔离）</div>
+      <table class="tbl" style="margin-top:6px">
+        <thead><tr><th>状态层</th><th>持有者</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td><strong>全局状态</strong></td><td>协调者</td><td>会话、用户偏好、权限配置</td></tr>
+          <tr><td><strong>任务状态</strong></td><td>工作者</td><td>当前任务、工具调用链</td></tr>
+          <tr><td><strong>持久化状态</strong></td><td>Scratchpad</td><td>跨session知识，已验证事实</td></tr>
+          <tr><td><strong>UI 状态</strong></td><td>渲染层</td><td>流式缓冲、进度展示</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 2.3 Coordinator-Worker -->
+  <div class="div"></div>
+  <div class="sec">
+    <div class="sec-h">2.3 Coordinator-Worker：多智能体调度模型</div>
+    <div class="sec-sub">Claude Code 最核心的架构亮点 —— 主从式、按需创建、并发受控</div>
+  </div>
+  <div class="card">
+    <div class="g2">
+      <div>
+        <p style="font-weight:700;margin-bottom:10px">🧠 Coordinator（协调者）— 常驻全局大脑</p>
+        <div class="steps">
+          <div class="step-item">
+            <div class="step-n"></div>
+            <div class="step-body"><div class="sb-title">接收用户意图</div><div class="sb-text">解析自然语言需求，识别任务类型和复杂度</div></div>
+          </div>
+          <div class="step-item">
+            <div class="step-n"></div>
+            <div class="step-body"><div class="sb-title">拆解子任务</div><div class="sb-text">将复杂任务分解为独立可执行的子任务列表</div></div>
+          </div>
+          <div class="step-item">
+            <div class="step-n"></div>
+            <div class="step-body"><div class="sb-title">调度 Worker</div><div class="sb-text">按需创建工作者，分配子任务，监控执行状态</div></div>
+          </div>
+          <div class="step-item">
+            <div class="step-n"></div>
+            <div class="step-body"><div class="sb-title">整合结果</div><div class="sb-text">汇总所有 Worker 输出，向用户呈现统一结果</div></div>
+          </div>
+        </div>
+        <div class="ib" style="margin-top:8px">
+          <div class="ib-label">关键约束</div>
+          <div class="ib-text">Coordinator <strong>永远不直接执行代码操作</strong>，只做规划和调度。</div>
+        </div>
+      </div>
+      <div>
+        <p style="font-weight:700;margin-bottom:10px">⚡ Worker（工作者）— 轻量专用、按需生灭</p>
+        <div class="pills">
+          <span class="pill">按需创建</span>
+          <span class="pill">任务完成即销毁</span>
+          <span class="pill">单一职责</span>
+          <span class="pill">工具白名单受限</span>
+        </div>
+        <div class="div" style="margin:14px 0"></div>
+        <p style="font-size:13.5px;color:var(--text-2)"><strong>通信机制</strong>：通过 <code>AgentTool</code>、<code>SendMessageTool</code> 进行<strong>结构化通信</strong>（杜绝自然语言歧义）。</p>
+        <p style="font-size:13.5px;color:var(--text-2);margin-top:10px"><strong>并发控制</strong>：<span class="badge b-green">只读任务并行</span> + <span class="badge b-red">写任务串行</span> —— 多智能体文件冲突问题的根本解法。</p>
+        <p style="font-size:13.5px;color:var(--text-2);margin-top:10px"><strong>失败自愈</strong>：Worker 执行失败后，<strong>复用上下文重试</strong>而非重建 —— 保留失败前积累的知识。</p>
+        <div class="cb" style="margin-top:12px">
+          <pre><span class="cm">// coordinatorMode.ts（核心源码位置）</span>
+<span class="cm">// isCoordinatorMode  → 控制调度模式切换</span>
+<span class="cm">// getCoordinatorSystemPrompt → 定义协调者职责</span>
+<span class="cm">// ASYNC_AGENT_ALLOWED_TOOLS → Worker 工具白名单</span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.4 工具系统 -->
+  <div class="div"></div>
+  <div class="sec">
+    <div class="sec-h">2.4 工具系统：43个工具的统一接口设计哲学</div>
+    <div class="sec-sub">基类 29,000 行 TypeScript，所有工具继承统一接口，Zod Schema 强校验</div>
+  </div>
+  <div class="card">
+    <div class="cb">
+      <pre><span class="cm">// 所有工具共享的统一接口（Unix 哲学在 Agent 层的体现）</span>
+<span class="kw">type</span> <span class="tp">Tool</span> = {
+  name:        <span class="tp">string</span>
+  description: <span class="tp">string</span>
+  inputSchema: <span class="tp">ToolInputJSONSchema</span>  <span class="cm">// Zod 强校验 — 输入契约</span>
+  execute(input: <span class="tp">I</span>, context: <span class="tp">ToolUseContext</span>): <span class="tp">Promise</span>&lt;<span class="tp">ToolResult</span>&gt;
+}
+<span class="cm">// 保证：可测试 · 可组合 · 可扩展 · 权限门控</span></pre>
+    </div>
+    <div class="div" style="margin:18px 0 14px"></div>
+    <div style="font-size:13px;font-weight:700;color:var(--text-2);margin-bottom:12px">工具分类全景（8类43个）</div>
+    <table class="tbl">
+      <thead><tr><th>类别</th><th>数量</th><th>核心工具</th><th>关键设计</th></tr></thead>
+      <tbody>
+        <tr><td><strong>文件操作</strong></td><td><span class="kn">6</span></td><td>Read · Edit · Write · Glob · Grep · NotebookEdit</td><td>路径限制 · 原子写入 · Diff对比</td></tr>
+        <tr><td><strong>命令执行</strong></td><td><span class="kn">3</span></td><td>Bash · PowerShell · REPL</td><td>23项安全检查 · 沙箱 · 超时</td></tr>
+        <tr><td><strong>代码智能</strong></td><td><span class="kn">2</span></td><td>LSP · 代码分析</td><td>原生 LSP 协议集成</td></tr>
+        <tr><td><strong>任务管理</strong></td><td><span class="kn">5</span></td><td>TaskCreate · TaskGet · TaskList · TaskOutput · TaskStop</td><td>全生命周期 · 断点恢复</td></tr>
+        <tr><td><strong>多智能体协作</strong></td><td><span class="kn">4</span></td><td>Agent · TeamCreate · SendMessage · Cron</td><td>结构化通信 · 权限隔离</td></tr>
+        <tr><td><strong>网络能力</strong></td><td><span class="kn">2</span></td><td>WebFetch · WebSearch</td><td>权限门控 · 内容净化</td></tr>
+        <tr><td><strong>扩展机制</strong></td><td><span class="kn">2</span></td><td>MCP · Skill（Markdown技能）</td><td>无代码工作流定义</td></tr>
+        <tr><td><strong>系统基础设施</strong></td><td><span class="kn">19+</span></td><td>权限 · 配置 · 记忆 · Bridge · Auth</td><td>不对模型直接暴露</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /tab-s2 -->
+
+<!-- ════════════════════
+     TAB 3: 机制深挖
+════════════════════ -->
+<div id="tab-s3" class="tab-pane">
+
+  <div class="ch-lead">
+    <div class="ch-label">第 3 章 · 血肉填充</div>
+    <div class="ch-title">怎么运行的？</div>
+    <div class="ch-desc">
+      骨骼之上，需要血肉——上下文如何管理、记忆如何持久化、安全如何保障、CLI和IDE如何协同。
+      本章深挖四大运行机制：三层记忆 · 上下文工程 · 安全模型 · Bridge桥接。
+    </div>
+  </div>
+
+  <!-- 3.1 三层记忆 -->
+  <div class="sec">
+    <div class="sec-h">3.1 三层记忆架构：解决「上下文熵」的核心方案</div>
+    <div class="sec-sub">
+      随着 session 增长，AI Agent 越来越容易混乱——这是"上下文熵"问题。
+      三层记忆是 Anthropic 的系统性解答。
+    </div>
+  </div>
+  <div class="card">
+    <div class="ls">
+      <div class="li" style="background:#fffbeb;border-color:#fde68a">
+        <div class="ln" style="background:#b45309;color:#fff">L1</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#b45309">索引层：MEMORY.md（永驻上下文）</div>
+          <div class="ln-desc">
+            轻量级指针索引，<strong>不存储数据，只存储位置</strong>。每行约 150 字符。
+            始终加载进上下文，是"目录"而非"内容"。消耗极少 token，却能导航全部知识。
+          </div>
+        </div>
+        <span class="badge b-amber" style="flex-shrink:0;margin-top:2px">永驻</span>
+      </div>
+      <div class="li" style="background:#ecfdf5;border-color:#a7f3d0">
+        <div class="ln" style="background:#059669;color:#fff">L2</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#059669">知识层：Topic 文件（按需拉取）</div>
+          <div class="ln-desc">
+            实际项目知识分散在主题文件中，只在任务需要时才拉入上下文。
+            是真正的"内存页"，用完可换出，不占用宝贵的上下文窗口。
+          </div>
+        </div>
+        <span class="badge b-green" style="flex-shrink:0;margin-top:2px">按需</span>
+      </div>
+      <div class="li" style="background:#eff6ff;border-color:#bfdbfe">
+        <div class="ln" style="background:#1d4ed8;color:#fff">L3</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#1d4ed8">历史层：Session 记录（选择性检索）</div>
+          <div class="ln-desc">
+            原始 transcript 从不全量读回上下文，仅通过 grep 搜索特定标识符。
+            这消除了"回忆"带来的 token 浪费，将历史变成了一个只读数据库。
+          </div>
+        </div>
+        <span class="badge b-blue" style="flex-shrink:0;margin-top:2px">检索</span>
+      </div>
+    </div>
+    <div class="ib" style="margin-top:16px">
+      <div class="ib-label">怀疑主义记忆原则（Self-Healing Memory）</div>
+      <div class="ib-text">
+        Agent 被明确指令要<strong>将自己的记忆当作"提示（hint）"</strong>，行动前必须先核实当前代码库。
+        系统不信任自己记住的东西——这是防止幻觉级联的关键机制，也是一种工程上的谦逊。
+      </div>
+    </div>
+  </div>
+
+  <!-- 3.2 上下文工程 -->
+  <div class="div"></div>
+  <div class="sec">
+    <div class="sec-h">3.2 上下文工程四项核心技术</div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-h"><div class="card-ico" style="background:#fffbeb;color:#b45309">✍️</div>严格写入纪律（Strict Write Discipline）</div>
+      <p style="font-size:13.5px">Agent 只有在成功写入文件之后，才允许更新 MEMORY.md 索引。</p>
+      <div class="cmp">
+        <div class="cmp-col ok">
+          <div class="ct">✓ 正确顺序</div>
+          <ul><li>执行写入操作</li><li>验证写入成功</li><li>更新索引</li><li>记忆 ≡ 现实</li></ul>
+        </div>
+        <div class="cmp-col bad">
+          <div class="ct">✗ 错误顺序</div>
+          <ul><li>计划写入</li><li>先更新记忆</li><li>写入失败</li><li>记忆含虚假状态</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="card-ico" style="background:#faf5ff;color:#7c3aed">🗜️</div>上下文压缩引擎（autoCompact）</div>
+      <p style="font-size:13.5px">当上下文窗口接近上限，自动介入：清理冗余 → 总结长文本 → 保留核心逻辑。</p>
+      <div class="qt">
+        <code>autoCompact.ts</code> 记录了 1,279 次 session 发生 50+ 次连续压缩失败
+        （最多 3,272 次/session），每天浪费约 <strong>250,000 次 API 调用</strong>。
+        修复只需 3 行代码：将连续失败上限设为 3。这个 bug 持续到 2026年3月10日才被量化。
+        <cite>—— 源码注释实况</cite>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="card-ico" style="background:#fffbeb;color:#b45309">💰</div>Prompt Cache 经济学</div>
+      <p style="font-size:13.5px">在 $2.5B ARR 规模下，每次缓存失效都是真实的金钱损失。Anthropic 的解法：</p>
+      <ul style="padding-left:16px;font-size:13px;color:var(--text-2);line-height:2.2;margin-top:8px">
+        <li>追踪 <strong>14个缓存破坏向量</strong></li>
+        <li><strong>Sticky Latches</strong>：防止模式切换破坏缓存</li>
+        <li><code>DANGEROUS_uncachedSystemPromptSection()</code> 命名规范</li>
+      </ul>
+      <div class="cb" style="margin-top:10px">
+        <pre><span class="cm">// ⚠️ 明确标注的危险函数</span>
+<span class="kw">function</span> <span class="tp">DANGEROUS_uncachedSystemPromptSection</span>() {
+  <span class="cm">// 警告：在此添加内容会破坏 Prompt 缓存</span>
+  <span class="cm">// 每次调用都会导致缓存 miss，规模化下烧钱</span>
+}</pre>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="card-ico" style="background:#ecfdf5;color:#059669">📋</div>System Prompt 动态构建体系</div>
+      <p style="font-size:13.5px">系统提示不是一段固定文本，而是运行时动态注入多维信息的<strong>上下文容器</strong>：</p>
+      <div class="pills" style="margin-top:10px">
+        <span class="pill">工具定义 + Schema</span>
+        <span class="pill">用户偏好 CLAUDE.md</span>
+        <span class="pill">权限白名单</span>
+        <span class="pill">MEMORY.md 索引</span>
+        <span class="pill">运行模式标识</span>
+        <span class="pill">反蒸馏假工具</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3.3 安全模型 -->
+  <div class="div"></div>
+  <div class="sec">
+    <div class="sec-h">3.3 五层安全模型：企业级 Agent 的安全哲学</div>
+    <div class="sec-sub">安全不是外挂功能，而是从架构第一天就设计的五层纵深防御</div>
+  </div>
+  <div class="card">
+    <div class="ls">
+      <div class="li" style="background:#fff1f2;border-color:#fecaca">
+        <div class="ln" style="background:#dc2626;color:#fff">①</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#dc2626">Schema 强校验层（Zod）</div>
+          <div class="ln-desc">所有工具调用和数据传输前通过 Zod Schema 校验，从输入源头过滤恶意内容</div>
+        </div>
+      </div>
+      <div class="li" style="background:#fffbeb;border-color:#fde68a">
+        <div class="ln" style="background:#b45309;color:#fff">②</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#b45309">Bash 命令检查层（23项验证）</div>
+          <div class="ln-desc">2500+ 行专项验证：18个禁用 Zsh 内置命令、Unicode 零宽度注入、IFS 空字节、畸形 token 绕过（来自 HackerOne 漏洞报告）</div>
+        </div>
+      </div>
+      <div class="li" style="background:#ecfdf5;border-color:#a7f3d0">
+        <div class="ln" style="background:#059669;color:#fff">③</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#059669">工具权限白名单层</div>
+          <div class="ln-desc">每个工具独立配置，Worker 只能使用 ASYNC_AGENT_ALLOWED_TOOLS 白名单中的工具，能力边界被硬性约束</div>
+        </div>
+      </div>
+      <div class="li" style="background:#eff6ff;border-color:#bfdbfe">
+        <div class="ln" style="background:#1d4ed8;color:#fff">④</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#1d4ed8">用户确认层（双端授权）</div>
+          <div class="ln-desc">危险操作前弹出确认提示，支持临时/永久授权；CLI 发起操作，IDE 端授权——双端权限分离</div>
+        </div>
+      </div>
+      <div class="li" style="background:#faf5ff;border-color:#e9d5ff">
+        <div class="ln" style="background:#7c3aed;color:#fff">⑤</div>
+        <div class="linfo">
+          <div class="ln-name" style="color:#7c3aed">沙箱隔离层</div>
+          <div class="ln-desc">可选的隔离执行环境，Bash 命令和文件操作在沙箱中运行，禁止越权操作</div>
+        </div>
+      </div>
+    </div>
+    <div class="ib ib-red" style="margin-top:14px">
+      <div class="ib-label">安全设计哲学</div>
+      <div class="ib-text">
+        大多数同类工具只封堵"明显的"攻击向量（如 rm -rf）。
+        Claude Code 有一套<strong>具体的 Zsh 威胁模型</strong>，甚至包含了 HackerOne 赏金项目中发现的攻击路径。
+        这是「设想对手很聪明」的安全设计信念。
+      </div>
+    </div>
+  </div>
+
+  <!-- 3.4 Bridge -->
+  <div class="div"></div>
+  <div class="sec">
+    <div class="sec-h">3.4 Bridge 模块：CLI↔IDE 无缝桥接</div>
+    <div class="sec-sub">Claude Code 从设计第一天就不只是 CLI 工具，而是环境无关的 Agent 执行层</div>
+  </div>
+  <div class="card">
+    <div class="g2">
+      <div>
+        <p style="font-weight:700;margin-bottom:10px">四大核心能力</p>
+        <div class="tl">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div><div class="tl-title">传输层抽象</div><div class="tl-text">屏蔽 IPC/WebSocket/TCP 协议差异，上层代码无感知</div></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div><div class="tl-title">强类型消息协议</div><div class="tl-text">Zod 校验结构化消息，杜绝通信乱序和类型错误</div></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div><div class="tl-title">权限隔离</div><div class="tl-text">CLI 发起操作，IDE 端授权，双端职责分离</div></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div><div class="tl-title">会话热迁移</div><div class="tl-text">一键切换终端/IDE，上下文、任务、状态 100% 保留</div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p style="font-weight:700;margin-bottom:10px">支持的运行环境</p>
+        <div class="pills">
+          <span class="pill">终端 CLI</span>
+          <span class="pill">VS Code 集成</span>
+          <span class="pill">JetBrains 集成</span>
+          <span class="pill">无头模式</span>
+          <span class="pill">HTTP/WebSocket API</span>
+          <span class="pill">CI/CD 集成</span>
+          <span class="pill">远程服务器</span>
+        </div>
+        <div class="ib" style="margin-top:14px">
+          <div class="ib-label">战略意义</div>
+          <div class="ib-text">
+            Bridge 的存在证明：终端、IDE、云端都只是 Claude Code 的不同"皮肤"。
+            真正的产品是中间那个 <strong>Agent 执行层</strong>，与运行环境解耦。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tab-s3 -->
+
+<!-- ════════════════════
+     TAB 4: 本质洞察
+════════════════════ -->
+<div id="tab-s4" class="tab-pane">
+
+  <div class="ch-lead" style="background:linear-gradient(135deg,#faf5ff,#ede9fe);border-left-color:var(--accent-2)">
+    <div class="ch-label" style="color:var(--accent-2)">第 4 章 · 灵魂穿透</div>
+    <div class="ch-title">本质是什么？</div>
+    <div class="ch-desc">
+      架构和机制都是表象。本章用五层洞察闭环框架，穿透到 Claude Code 的底层规律：
+      它不是一个工具，而是「认知代理」——把软件工程的认知负担，系统性地从人转移到 AI。
+      然后用这个规律，预测它的进化方向。
+    </div>
+  </div>
+
+  <!-- L1 表象观察 -->
+  <div class="sec">
+    <div class="sec-h">① 表象观察 —— 我们看到了什么？</div>
+    <div class="sec-sub">在进入洞察之前，先诚实地列出所有已观察到的现象</div>
+  </div>
+  <div class="card">
+    <div class="g2">
+      <div>
+        <p style="font-weight:700;margin-bottom:10px;font-size:13.5px">工程层面的现象</p>
+        <div class="tl">
+          <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-title">五层 + 24模块的系统规模</div><div class="tl-text">512K行代码，查询引擎单模块 46K行——远超"AI包装"的复杂度</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-title">三层记忆 + 上下文压缩</div><div class="tl-text">投入大量工程资源解决"AI记忆"问题，而非只关注模型调用</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-title">23项 Bash 安全检查</div><div class="tl-text">为了让 AI 可以真正执行命令，投入了极高的安全成本</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-title">协调者永不执行代码</div><div class="tl-text">Coordinator 只规划，Worker 只执行——职责分离贯穿整个架构</div></div></div>
+        </div>
+      </div>
+      <div>
+        <p style="font-weight:700;margin-bottom:10px;font-size:13.5px">产品层面的现象</p>
+        <div class="tl">
+          <div class="tl-item"><div class="tl-dot" style="background:var(--accent-2)"></div><div><div class="tl-title">43个工具覆盖开发全流程</div><div class="tl-text">从读文件到执行命令到多智能体协作，几乎覆盖了软件工程师的全部日常动作</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--accent-2)"></div><div><div class="tl-title">失败自愈 + 断点恢复</div><div class="tl-text">任务可以无人值守运行，失败了自己恢复，重启了接着干</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--accent-2)"></div><div><div class="tl-title">未来功能：KAIROS 后台守护</div><div class="tl-text">终端关闭后继续运行，空闲时自主整合知识，主动响应 GitHub 事件</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--accent-2)"></div><div><div class="tl-title">$2.5B ARR 的商业成功</div><div class="tl-text">这不是技术演示，是被大量企业买单的生产力工具</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ib" style="margin-top:16px">
+      <div class="ib-label">观察之后的核心追问</div>
+      <div class="ib-text">
+        为什么一个"AI编程助手"需要三层记忆架构？为什么需要 23 项安全检查？
+        为什么 Coordinator 不能直接执行代码？——这些"过度设计"背后，隐藏着什么底层逻辑？
+      </div>
+    </div>
+  </div>
+
+  <!-- L2 本质规律 -->
+  <div class="div"></div>
+  <div class="sec">
+    <div class="sec-h">② 本质规律 —— 驱动一切的底层规律</div>
+  </div>
+
+  <div class="card" style="border:2px solid var(--accent);border-radius:var(--r)">
+    <div style="text-align:center;padding:10px 0 20px">
+      <div style="font-size:12px;font-weight:800;color:var(--accent);letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">核心命题</div>
+      <div style="font-size:22px;font-weight:800;color:var(--text-1);line-height:1.35;max-width:700px;margin:0 auto">
+        Claude Code 的本质是「认知代理」——<br>
+        <em style="color:var(--accent);font-style:normal">把软件工程的认知负担，系统性地从人转移到 AI</em>
+      </div>
+    </div>
+    <div class="div" style="margin:0 0 18px"></div>
+    <div class="g2">
+      <div>
+        <p style="font-weight:700;margin-bottom:10px">🔍 为什么是"认知代理"而非"工具"？</p>
+        <p style="font-size:13.5px;color:var(--text-2)">
+          传统工具放大你的执行能力（锤子让你敲得更快），
+          但<strong>认知负担还是你自己扛</strong>——你需要知道敲哪里、敲几下、用什么力度。
+        </p>
+        <p style="font-size:13.5px;color:var(--text-2);margin-top:10px">
+          Claude Code 不同：<strong>它接管了"知道怎么做"这件事本身</strong>。
+          你只需要表达目标，它负责规划、记忆、选择工具、处理错误、整合结果。
+          认知负担从人身上转移到了 AI。
+        </p>
+      </div>
+      <div>
+        <p style="font-weight:700;margin-bottom:10px">🎯 核心类比</p>
+        <div style="background:linear-gradient(135deg,#1a1b26,#1e2040);border-radius:var(--r-sm);padding:20px;text-align:center">
+          <div style="font-size:28px;margin-bottom:10px">👨‍⚕️</div>
+          <div style="font-size:16px;font-weight:800;color:#c0caf5;margin-bottom:8px">老中医坐诊</div>
+          <div style="font-size:13px;color:#565f89;line-height:1.7">
+            你只需说症状，<br>
+            它<span style="color:#9ece6a">出方子</span>（规划）+ <span style="color:#7aa2f7">抓药</span>（选工具）+ <span style="color:#f7768e">煎药</span>（执行）<br>
+            整个认知负担由它承担
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--text-3);margin-top:10px;text-align:center">
+          对比：IDE是药房（提供药）；Copilot 是实习医生（帮你找药）；<br>
+          Claude Code 是主治医师（负责整个诊疗过程）
+        </p>
+      </div>
+    </div>
+    <div class="div" style="margin:18px 0"></div>
+    <p style="font-weight:700;margin-bottom:14px;font-size:14px">这个规律如何解释所有设计决策？</p>
+    <div class="g3">
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:6px">三层记忆架构</div>
+        <div style="font-size:12.5px;color:var(--text-3)">认知代理需要持续记住项目上下文，MEMORY.md 是它的"工作记忆"，不用的知识换出，减少"认知负担"</div>
+      </div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:6px">Coordinator 不执行代码</div>
+        <div style="font-size:12.5px;color:var(--text-3)">认知代理需要"先思考再行动"，协调者负责认知（规划），工作者负责行动（执行），两者不混淆</div>
+      </div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:6px">23项安全检查</div>
+        <div style="font-size:12.5px;color:var(--text-3)">真正代理用户做事，必须承担信任成本。用户信任 AI 帮自己执行命令，AI 必须值得被信任</div>
+      </div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:6px">失败自愈 + 断点恢复</div>
+        <div style="font-size:12.5px;color:var(--text-3)">认知代理需要像人一样处理意外——出错不崩溃，重启不忘记，这是"可靠认知体"的基本要求</div>
+      </div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:6px">KAIROS 后台守护</div>
+        <div style="font-size:12.5px;color:var(--text-3)">认知代理可以主动学习，不只是被动响应。空闲时整合知识，是从"工具"到"同事"的关键进化</div>
+      </div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:6px">Buddy 系统彩蛋</div>
+        <div style="font-size:12.5px;color:var(--text-3)">认知代理需要被信任和喜爱。Buddy 系统降低了用户与 AI 之间的心理距离，这本质上是"关系建立"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- L3-L5 三列表 -->
+  <div class="div"></div>
+  <div class="sec">
+    <div class="sec-h">③ 趋势推演 —— 验证规律 · 看清演变 · 预测未来</div>
+    <div class="sec-sub">左列是认知代理的进化阶段，三段分别展示：历史验证 → 当前演变 → 下一阶段预测</div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden;border-radius:var(--r)">
+    <table class="it-tbl">
+      <thead>
+        <tr>
+          <th style="width:18%">进化阶段</th>
+          <th style="width:52%">现实（Claude Code 如何体现）</th>
+          <th style="width:30%">类比</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- L3 verified -->
+        <tr class="seg-hd s3"><td colspan="3">✅ 历史验证 — 「认知代理」规律在 CC 各阶段的真实映射</td></tr>
+        <tr class="l3">
+          <td><strong>1.0 补全层</strong><br><span style="font-size:11.5px;color:var(--text-3)">代码补全时代</span></td>
+          <td>Copilot 级别：只帮你把代码写完，<strong>你仍然需要知道写什么</strong>。认知负担转移比例 ~10%。</td>
+          <td class="analogy">实习生——你画草图，它帮你描线</td>
+        </tr>
+        <tr class="l3">
+          <td><strong>2.0 执行层</strong><br><span style="font-size:11.5px;color:var(--text-3)">任务执行时代</span></td>
+          <td>Claude Code 当前主力：给一个任务目标，它规划+执行整个实现过程。
+          <strong>你不需要知道怎么做，只需要知道要什么</strong>。认知负担转移比例 ~60%。</td>
+          <td class="analogy">助理——你说"我要一份报告"，它整理完交给你</td>
+        </tr>
+        <tr class="l3">
+          <td><strong>3.0 代理层</strong><br><span style="font-size:11.5px;color:var(--text-3)">认知代理时代</span></td>
+          <td>当前 CC 全貌：三层记忆 + 失败自愈 + 无人值守。<strong>它在主动维护对你项目的认知模型</strong>，
+          不只是执行指令。认知负担转移比例 ~80%。</td>
+          <td class="analogy">主治医师——持续了解你的病历，不只是按症开药</td>
+        </tr>
+        <tr class="seg-foot"><td colspan="3">✅ 验证成立：从 1.0→2.0→3.0，认知负担转移比例持续升高。规律具有解释力。</td></tr>
+        <!-- L4 evolving -->
+        <tr class="seg-hd s4"><td colspan="3">🔄 当前演变 — 每个阶段正在发生的变化</td></tr>
+        <tr class="l4">
+          <td><strong>1.0 补全层</strong></td>
+          <td>纯补全产品逐步被 Agent 架构吸收。Copilot 正在转型为 Copilot Workspace（任务级）。
+          <strong>纯补全作为独立产品正在消亡</strong>。</td>
+          <td class="analogy">手动挡退出乘用车主流市场</td>
+        </tr>
+        <tr class="l4">
+          <td><strong>2.0 执行层</strong></td>
+          <td>执行能力成为基础设施，失去竞争差异。Google Gemini CLI、OpenAI Codex CLI 纷纷进入，
+          <strong>认知代理的"执行层"正在商品化</strong>。</td>
+          <td class="analogy">人人都有智能助理，差异在于谁更懂你</td>
+        </tr>
+        <tr class="l4">
+          <td><strong>3.0 代理层</strong></td>
+          <td>竞争焦点从"能不能执行任务"转向"有多了解你的项目/意图"。
+          <strong>深度上下文理解（Context Engineering）成为护城河</strong>。</td>
+          <td class="analogy">医生差异不在会不会看病，在于谁更了解你的体质</td>
+        </tr>
+        <tr class="seg-foot"><td colspan="3">🔄 演变信号：2026年同期出现 Google Gemini CLI、OpenAI Codex CLI、Cursor 全面 Agent 化。印证执行层商品化趋势。</td></tr>
+        <!-- L5 prediction -->
+        <tr class="seg-hd s5"><td colspan="3">🔮 趋势推演 — 认知代理的下两个进化阶段</td></tr>
+        <tr class="l5">
+          <td><strong>4.0 持续同事层</strong><br><span style="font-size:11.5px;color:var(--text-3)">预计 2026-2027</span></td>
+          <td>KAIROS 正在开发的方向：<strong>终端关闭后继续工作</strong>，空闲时自主学习（autoDream），
+          主动响应 GitHub 事件，推送通知。AI 不再是"被召唤的工具"，而是"在岗的同事"。</td>
+          <td class="analogy">数字同事——下班后它还在工作，第二天你来时它已经学会了很多</td>
+        </tr>
+        <tr class="l5">
+          <td><strong>5.0 自主共创层</strong><br><span style="font-size:11.5px;color:var(--text-3)">预计 2027+</span></td>
+          <td>ULTRAPLAN（30分钟 Opus 规划）+ Agent Triggers（cron 触发）是早期信号。
+          <strong>AI 主动提出架构改进方案、主动发现技术债、主动规划重构</strong>。
+          人类变成"批准者"而非"执行者"。认知负担转移比例接近 95%。</td>
+          <td class="analogy">联合创始人——它主动想事情，你主要做方向决策和资源配置</td>
+        </tr>
+        <tr class="seg-foot"><td colspan="3">🔮 预测依据：KAIROS 150+次代码提及 + ULTRAPLAN + Agent Triggers + autoDream 共同指向"主动性"升级方向。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Anthropic 动机洞察 -->
+  <div class="div"></div>
+  <div class="sec">
+    <div class="sec-h">④ Anthropic 动机洞察 —— 他们为什么要做这件事？</div>
+    <div class="sec-sub">从企业行为模式推断底层动机，而非只看产品功能</div>
+  </div>
+  <div class="card">
+    <div class="g2">
+      <div>
+        <p style="font-weight:700;margin-bottom:12px">观察到的行为模式</p>
+        <div class="tl">
+          <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div><div class="tl-title">开源 MCP 协议</div><div class="tl-text">将工具接入协议开源，尝试成为 AI 工具生态的底层标准——而不是把能力锁在自己产品里</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div><div class="tl-title">反蒸馏机制（但失效了）</div><div class="tl-text">在安全和竞争之间走钢丝：开放 API（赚钱），但保护工程实现（护城河）</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div><div class="tl-title">Buddy 系统（隐藏彩蛋）</div><div class="tl-text">工程师自发加入终端宠物，说明 Anthropic 容许"有灵魂的产品"，不只追求功能堆砌</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div><div class="tl-title">模型幻觉率回退（公开）</div><div class="tl-text">Capybara v8 幻觉率从 16.7% 升到 29-30%，内部数据被泄露——这是能力权衡的真实代价</div></div></div>
+        </div>
+      </div>
+      <div>
+        <p style="font-weight:700;margin-bottom:12px">推断的底层动机</p>
+        <div class="ib ib-amber">
+          <div class="ib-label">动机一：平台控制权</div>
+          <div class="ib-text">
+            MCP 的本质野心：谁定义了 AI 工具接入标准，谁就成为 AI Agent 时代的基础设施。
+            Claude Code 是 Anthropic 争夺这个位置的"排头兵"。
+          </div>
+        </div>
+        <div class="ib ib-amber" style="margin-top:10px">
+          <div class="ib-label">动机二：证明"负责任的 AI"可以赢</div>
+          <div class="ib-text">
+            Anthropic 的核心信念：安全是长期护城河，不是短期成本。
+            Claude Code 的极致安全设计（23项检查、五层权限），是这个信念的工程化表达。
+          </div>
+        </div>
+        <div style="margin-top:14px;background:linear-gradient(135deg,#1a1b26,#1e2040);border-radius:var(--r-sm);padding:16px;text-align:center">
+          <div style="font-size:13px;font-weight:800;color:#fbbf24;margin-bottom:8px">公司类比</div>
+          <div style="font-size:14px;color:#c0caf5;line-height:1.65">
+            Anthropic 是 AI 界的「医生集团」：<br>
+            坚守「首先不伤害」的原则，<br>
+            即使市场在催促也不乱开药，<br>
+            但同时在建设世界最大的私立医院（产品商业化）。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 洞察总结卡 -->
+  <div class="div"></div>
+  <div class="card" style="background:linear-gradient(135deg,#1a1b26 0%,#1e2040 100%);border:2px solid var(--accent);color:#c0caf5">
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:11px;font-weight:800;color:#7c3aed;letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px">本章洞察摘要</div>
+      <div style="font-size:18px;font-weight:800;color:#fff;line-height:1.4">
+        Claude Code 是 AI 时代的「老中医」，<br>不是更聪明的药房
+      </div>
+    </div>
+    <div class="g3">
+      <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:14px">
+        <div style="font-size:12px;font-weight:800;color:#7aa2f7;margin-bottom:6px">本质是</div>
+        <div style="font-size:13px;line-height:1.6">认知代理 — 把软件工程的认知负担从人转移到 AI，不只是工具，是认知承载体</div>
+      </div>
+      <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:14px">
+        <div style="font-size:12px;font-weight:800;color:#9ece6a;margin-bottom:6px">当前阶段</div>
+        <div style="font-size:13px;line-height:1.6">3.0 代理层 — 已在主动维护项目认知模型，认知负担转移率约 80%，护城河是 Context Engineering</div>
+      </div>
+      <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:14px">
+        <div style="font-size:12px;font-weight:800;color:#f7768e;margin-bottom:6px">下一阶段</div>
+        <div style="font-size:13px;line-height:1.6">4.0 持续同事 — KAIROS、autoDream 是信号，AI 将变成「始终在岗的数字同事」</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tab-s4 -->
+
+<!-- ════════════════════
+     TAB 5: 工程哲学
+════════════════════ -->
+<div id="tab-s5" class="tab-pane">
+
+  <div class="ch-lead" style="border-left-color:#0d9488">
+    <div class="ch-label" style="color:#0d9488">第 5 章 · 信条提炼</div>
+    <div class="ch-title">背后的设计信仰是什么？</div>
+    <div class="ch-desc">
+      从"怎么设计"进一步追问"为什么这样设计"，就会触碰到工程哲学。
+      这些信条不写在文档里，但在每一行代码的选择中都有体现。
+      本章提炼五条从源码读出的设计信条。
+    </div>
+  </div>
+
+  <!-- 信条 1 -->
+  <div class="card" style="border-top:3px solid var(--accent)">
+    <div class="card-h">
+      <div class="card-ico" style="background:var(--accent-bg);color:var(--accent)">🤖</div>
+      信条一：Agent ≠ Chatbot（范式跃迁，不是功能升级）
+    </div>
+    <div class="cmp">
+      <div class="cmp-col ok">
+        <div class="ct" style="color:var(--accent)">✓ Agent 范式（Claude Code）</div>
+        <ul>
+          <li><strong>输出</strong>：动作 + 可验证的结果</li>
+          <li><strong>能力</strong>：执行（而非建议）</li>
+          <li><strong>交互单元</strong>：任务（而非对话轮次）</li>
+          <li><strong>边界</strong>：主动规划（而非被动响应）</li>
+          <li><strong>目标</strong>：将意图转化为代码变更</li>
+        </ul>
+      </div>
+      <div class="cmp-col bad">
+        <div class="ct">✗ Chatbot 反模式</div>
+        <ul>
+          <li>输出：文字回复</li>
+          <li>能力：建议和解释</li>
+          <li>交互单元：对话轮次</li>
+          <li>边界：等待用户指示</li>
+          <li>目标：回答问题</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ib">
+      <div class="ib-label">洞察</div>
+      <div class="ib-text">这不是功能差异，而是<strong>认知框架的根本转变</strong>。你不再设计"对话流"，而是设计"行动反馈环"——输入是任务，输出是世界状态变化。</div>
+    </div>
+  </div>
+
+  <!-- 信条 2 -->
+  <div class="card" style="border-top:3px solid #0d9488">
+    <div class="card-h">
+      <div class="card-ico" style="background:#d1fae5;color:#0d9488">🐧</div>
+      信条二：Unix 哲学的 AI 时代延续
+    </div>
+    <div class="g2">
+      <div>
+        <div class="tl">
+          <div class="tl-item"><div class="tl-dot" style="background:#0d9488"></div><div><div class="tl-title">单一职责</div><div class="tl-text">GrepTool 只搜索，不读文件；ReadFileTool 只读，不分析。每个工具只做一件事。</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:#0d9488"></div><div><div class="tl-title">可组合性</div><div class="tl-text">一个工具的输出可以成为下一个工具的输入，复杂能力通过组合实现，而非单一超级工具。</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:#0d9488"></div><div><div class="tl-title">透明性</div><div class="tl-text">每一个工具调用对用户可见，Agent 的行动不是黑盒——这也是信任建立的基础。</div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="ib ib-green">
+          <div class="ib-label">历史连接性洞察</div>
+          <div class="ib-text">
+            Unix 哲学诞生于1970年代，解决「复杂系统如何保持可理解性」。
+            50年后在 AI Agent 工具设计中再次找到理想应用场景——
+            不是因为 Anthropic 刻意致敬，而是因为这些原则指向了<strong>好的系统设计的普遍真理</strong>。
+          </div>
+        </div>
+        <div class="qt" style="margin-top:12px">
+          "Claude Code 不是在发明新范式，而是在将过去半个世纪最优秀的软件工程实践，迁移到 AI Agent 的世界。"
+          <cite>—— 本报告综合推断</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 信条 3 -->
+  <div class="card" style="border-top:3px solid var(--blue)">
+    <div class="card-h">
+      <div class="card-ico" style="background:var(--blue-bg);color:var(--blue)">📝</div>
+      信条三：提示词即架构（Prompt-as-Logic）
+    </div>
+    <div class="g2">
+      <div>
+        <p style="font-size:13.5px;color:var(--text-2)">最大的设计颠覆：<strong>协调者的行为逻辑不在代码里，在 System Prompt 里</strong>。</p>
+        <p style="font-size:13.5px;color:var(--text-2);margin-top:10px">
+          "不要橡皮图章式认可弱工作"、"你必须在完全理解后才能指导后续工作"——
+          这些是 Coordinator System Prompt 里的真实指令，定义了协调者的行为标准。
+        </p>
+        <p style="font-size:13.5px;color:var(--text-2);margin-top:10px">
+          修改这些行为 = 修改文本 = 无需重新编译。这创造了一种新的"<strong>软更新</strong>"工程模式。
+        </p>
+      </div>
+      <div>
+        <div class="cb">
+          <pre><span class="cm">// 传统方式（硬编码逻辑）</span>
+<span class="kw">if</span> (taskQuality &lt; threshold) {
+  coordinator.requestRevision()
+}
+
+<span class="cm">// CC 方式（提示词逻辑）</span>
+<span class="str">"你不应该橡皮图章式认可
+ 弱的工作——请求澄清或
+ 拒绝不足的输出..."</span>
+
+<span class="cm">// 修改行为 = 修改这段文本</span></pre>
+        </div>
+        <div class="ib" style="margin-top:10px">
+          <div class="ib-label">深层含义</div>
+          <div class="ib-text">工程师的角色演变为「行为提示词设计师」——这对传统软件工程能力模型是一次根本性冲击。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 信条 4 -->
+  <div class="card" style="border-top:3px solid var(--amber)">
+    <div class="card-h">
+      <div class="card-ico" style="background:var(--amber-bg);color:var(--amber)">🔮</div>
+      信条四：$380亿估值公司的代码现实（工程文化反思）
+      <span class="badge b-amber">实况记录</span>
+    </div>
+    <div class="g2">
+      <div>
+        <p style="font-size:13px;font-weight:700;margin-bottom:8px">代码质量实况</p>
+        <table class="tbl">
+          <tbody>
+            <tr><td><code>main.tsx</code></td><td style="color:var(--red);font-weight:700">803,924字节 · 4,683行</td></tr>
+            <tr><td>超4000行文件数</td><td style="font-weight:700">6个</td></tr>
+            <tr><td>eslint-disable 注释</td><td style="color:var(--red);font-weight:700">460个</td></tr>
+            <tr><td>_DEPRECATED 函数（仍在生产）</td><td>50+个</td></tr>
+            <tr><td>空 catch 块（config.ts）</td><td>9个</td></tr>
+            <tr><td>print.ts 最长函数</td><td>3,167行 · 12层嵌套</td></tr>
+          </tbody>
+        </table>
+        <div class="qt" style="margin-top:12px">
+          工程师留言："我的优化可能毫无意义" · "TODO: figure out why" · "Not sure how this became a string"
+          <cite>—— 源码注释实况</cite>
+        </div>
+      </div>
+      <div>
+        <div class="ib ib-amber">
+          <div class="ib-label">核心洞察：技术债是主动选择</div>
+          <div class="ib-text">
+            即使是 $380亿估值的公司，在极速迭代阶段也会积累大量技术债。
+            这不是失误，而是选择：<strong>Claude Code 以速度换规模</strong>，
+            技术债是这个决策的已知代价，而非意外副产品。
+          </div>
+        </div>
+        <div class="qt" style="margin-top:12px">
+          "构建的复杂度 ≠ 发布的可靠性。即使是 512,000 行精心设计的代码，
+          也可能因 package.json 一个字段配置错误而全盘暴露。"
+          <cite>—— Medium 分析文章</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 信条 5 -->
+  <div class="card" style="border-top:3px solid var(--accent-2)">
+    <div class="card-h">
+      <div class="card-ico" style="background:#ede9fe;color:var(--accent-2)">🐾</div>
+      信条五：产品需要有灵魂——Buddy 系统（工程文化密码）
+      <span class="badge b-purple">隐藏彩蛋</span>
+    </div>
+    <p>在 512K 行工业级代码中，Anthropic 的工程师还写了一套 <strong>Tamagotchi 风格的终端宠物系统</strong>。</p>
+    <div class="g3" style="margin-top:14px">
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center">
+        <div style="font-size:24px;margin-bottom:6px">🎰</div>
+        <div style="font-weight:700;font-size:13px">18种物种</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:4px">扭蛋式稀有度<br>传说级概率 1%</div>
+      </div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center">
+        <div style="font-size:24px;margin-bottom:6px">⚔️</div>
+        <div style="font-weight:700;font-size:13px">三种属性</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:4px">DEBUGGING · CHAOS<br>SNARK（讽刺）</div>
+      </div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center">
+        <div style="font-size:24px;margin-bottom:6px">🔒</div>
+        <div style="font-weight:700;font-size:13px">物种名加密</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:4px">十六进制编码<br>绕过内部代码扫描器</div>
+      </div>
+    </div>
+    <div class="ib" style="margin-top:14px">
+      <div class="ib-label">人性洞察</div>
+      <div class="ib-text">
+        用十六进制混淆物种名绕过内部扫描器，说明这是工程师们的"地下项目"。
+        一家公司在严肃的生产代码里放终端宠物，
+        说明他们相信：<strong>工具需要有灵魂，工程师需要被开心</strong>。
+        这种文化比任何雇主品牌文案都更真实。
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tab-s5 -->
+
+<!-- ════════════════════
+     TAB 6: 未来图谱
+════════════════════ -->
+<div id="tab-s6" class="tab-pane">
+
+  <div class="ch-lead" style="border-left-color:var(--red)">
+    <div class="ch-label" style="color:var(--red)">第 6 章 · 方向预判</div>
+    <div class="ch-title">会去哪里？能学什么？</div>
+    <div class="ch-desc">
+      源码中的 Feature Flags 是路线图的密码。本章解读四大未发布功能模块，
+      再提炼6条可直接应用到你自己 Agent 产品的迁移原则。
+    </div>
+  </div>
+
+  <!-- KAIROS -->
+  <div class="sec">
+    <div class="sec-h">6.1 KAIROS：自主守护进程（最重要的未发布功能）</div>
+    <div class="sec-sub">源码中出现超过 150 次，是从「工具」向「数字同事」进化的关键信号</div>
+  </div>
+  <div class="card" style="border-left:4px solid var(--red)">
+    <div class="g2">
+      <div>
+        <div class="tl">
+          <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div><div class="tl-title">常驻后台模式</div><div class="tl-text">终端关闭后继续运行，作为系统守护进程存活，不再依赖用户的"召唤"</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div><div class="tl-title">autoDream（记忆蒸馏）</div><div class="tl-text">用户空闲时执行：合并观察 → 消除矛盾 → 转化洞察为事实。自主整合知识，提升下次唤醒时的起点质量。</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div><div class="tl-title">/dream 命令</div><div class="tl-text">用户可手动触发记忆整合，不必等到 KAIROS 自动运行</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div><div class="tl-title">GitHub Webhook 集成</div><div class="tl-text">主动监听 GitHub 事件，无需用户触发——真正的"在岗同事"</div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="ib ib-red">
+          <div class="ib-label">战略洞察：从工具到同事</div>
+          <div class="ib-text">
+            KAIROS 代表认知代理的 4.0 阶段：从"被呼唤时才工作"进化为"主动思考的数字同事"。
+            它不等待用户指令，在后台持续学习、整合知识、监听事件。
+            这是"AI Native IDE"与"带AI功能的IDE"之间最根本的区别。
+          </div>
+        </div>
+        <div class="qt" style="margin-top:12px">
+          KAIROS 意味着：Claude Code 下一版本可能在你睡觉时整理自己对项目的理解，
+          当你第二天打开电脑时，它已经比昨天更了解你的代码库。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 其他未发布功能 -->
+  <div class="sec" style="margin-top:28px">
+    <div class="sec-h">6.2 其他三大未发布功能模块</div>
+  </div>
+  <div class="g2">
+    <div class="card" style="border-left:4px solid var(--accent-2)">
+      <div class="card-h"><div class="card-ico" style="background:#ede9fe;color:var(--accent-2)">☁️</div>ULTRAPLAN：云端30分钟超级规划</div>
+      <p style="font-size:13.5px">对于极其复杂的任务，将规划"卸载"到云端——用 Opus 4.6（Fennec）在远程服务器上运行<strong>最长30分钟</strong>的深度规划。</p>
+      <div class="ib" style="margin-top:10px">
+        <div class="ib-label">计算分布战略</div>
+        <div class="ib-text">实时交互→本地快速模型；复杂规划→云端强力模型。类似 CPU 与 GPU 的分工。</div>
+      </div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--blue)">
+      <div class="card-h"><div class="card-ico" style="background:var(--blue-bg);color:var(--blue)">⏰</div>Agent Triggers：cron 驱动的定时任务</div>
+      <p style="font-size:13.5px">允许 Claude Code 响应多类事件触发器：</p>
+      <div class="pills" style="margin-top:10px">
+        <span class="pill">⏰ cron 定时</span>
+        <span class="pill">📌 GitHub 事件</span>
+        <span class="pill">📁 文件变化</span>
+        <span class="pill">🔔 系统通知</span>
+      </div>
+      <div class="ib" style="margin-top:10px">
+        <div class="ib-label">意义</div>
+        <div class="ib-text">从「响应式 Agent」到「主动式 Agent」的关键一步。AI 有了自己的工作日程。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 内部路线图 -->
+  <div class="sec" style="margin-top:28px">
+    <div class="sec-h">6.3 内部模型路线图（代号泄露）</div>
+    <div class="sec-sub">从 Telemetry 前缀、源码字符串中还原的内部命名体系</div>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="tbl">
+      <thead><tr><th>内部代号</th><th>对应模型/产品</th><th>状态</th><th>关键数据</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Tengu</strong></td><td>Claude Code 项目本身</td><td><span class="badge b-green">生产</span></td><td>所有遥测事件以 <code>tengu_</code> 前缀上报</td></tr>
+        <tr><td><strong>Capybara</strong></td><td>Claude 4.6 变体</td><td><span class="badge b-green">生产</span></td><td>v8 虚假声明率 <span style="color:var(--red);font-weight:700">29-30%</span>（v4 为 16.7%，出现回退）</td></tr>
+        <tr><td><strong>Fennec</strong></td><td>Opus 4.6</td><td><span class="badge b-green">生产</span></td><td>ULTRAPLAN 使用的强力规划模型</td></tr>
+        <tr><td><strong>Numbat</strong></td><td>未知新版本</td><td><span class="badge b-amber">测试中</span></td><td>未发布，尚无公开性能数据</td></tr>
+      </tbody>
+    </table>
+    <div style="padding:14px 20px">
+      <div class="ib ib-red">
+        <div class="ib-label">⚠️ 幻觉率回退信号</div>
+        <div class="ib-text">
+          Capybara v8 幻觉率从 v4 的 16.7% 升至 29-30%，这是罕见的公开披露的模型<strong>能力回退</strong>数据。
+          更可能是优化代码执行/工具调用能力时发生了能力权衡，而非模型整体退步。
+          依赖 Claude Code 的团队需要关注这个信号。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 隐藏命令 -->
+  <div class="sec" style="margin-top:28px">
+    <div class="sec-h">6.4 18个隐藏斜杠命令（未公开文档）</div>
+  </div>
+  <div class="card">
+    <div class="pills">
+      <span class="pill">/bughunter</span>
+      <span class="pill">/teleport</span>
+      <span class="pill">/autofix-pr</span>
+      <span class="pill">/dream（记忆整合）</span>
+      <span class="pill">/swarm（启动多智能体）</span>
+      <span class="pill">/ultraplan</span>
+      <span class="pill">/review-pr</span>
+      <span class="pill">/deploy</span>
+      <span class="pill">/test-gen</span>
+      <span class="pill">... 共18个</span>
+    </div>
+    <p style="font-size:13px;color:var(--text-3);margin-top:12px">
+      这些命令存在于代码中但未在官方文档公开——可能处于 Beta 阶段，
+      或正在等待 KAIROS 等底层能力就绪后才对外发布。
+    </p>
+  </div>
+
+  <!-- 6条迁移原则 -->
+  <div class="div"></div>
+  <div class="sec">
+    <div class="sec-h">🎯 6条可迁移原则 —— 给 AI Agent 构建者</div>
+    <div class="sec-sub">从 Anthropic 的工程决策中，提炼可直接应用到你自己产品的设计原则</div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-h" style="font-size:14px"><span style="font-size:20px;margin-right:6px">①</span>上下文即产品 — Context Engineering 是核心竞争力</div>
+      <p style="font-size:13px;color:var(--text-2)">Agent 成败不取决于模型参数，取决于上下文工程质量。三层记忆、压缩算法、怀疑主义记忆——这些才是 CC 的真正护城河，而非模型版本。</p>
+    </div>
+    <div class="card">
+      <div class="card-h" style="font-size:14px"><span style="font-size:20px;margin-right:6px">②</span>主从分离 — Coordinator 永远不动手</div>
+      <p style="font-size:13px;color:var(--text-2)">协调者和执行者要彻底分离。协调者只做规划和调度；Worker 只关心当前任务，对全局毫不知情。这让每个角色的提示词和工具集保持极度简洁。</p>
+    </div>
+    <div class="card">
+      <div class="card-h" style="font-size:14px"><span style="font-size:20px;margin-right:6px">③</span>Token 经济学 — 把缓存失效当财务问题</div>
+      <p style="font-size:13px;color:var(--text-2)">在规模化 Agent 产品中，不优化 prompt 缓存就是在烧钱。<code>DANGEROUS_</code> 命名规范、14个缓存失效向量追踪——这是每个认真的 Agent 团队必须建立的工程实践。</p>
+    </div>
+    <div class="card">
+      <div class="card-h" style="font-size:14px"><span style="font-size:20px;margin-right:6px">④</span>安全前置 — 从架构层设计，而非事后修补</div>
+      <p style="font-size:13px;color:var(--text-2)">23项 Bash 检查不是事后加的，是架构第一天的决策。Schema 强校验 + 路径限制 + 沙箱 + 用户确认——四层缺任意一层都有安全漏洞。</p>
+    </div>
+    <div class="card">
+      <div class="card-h" style="font-size:14px"><span style="font-size:20px;margin-right:6px">⑤</span>提示词即架构 — 善用 Soft Logic</div>
+      <p style="font-size:13px;color:var(--text-2)">不必把每个业务规则都硬编码进 if-else。对于"判断性"、"策略性"的决策，写在系统提示词里更灵活，迭代成本更低。关键是分清哪些逻辑适合硬编码，哪些适合软配置。</p>
+    </div>
+    <div class="card">
+      <div class="card-h" style="font-size:14px"><span style="font-size:20px;margin-right:6px">⑥</span>Right Tool for the Job — 别滥用 AI</div>
+      <p style="font-size:13px;color:var(--text-2)">用正则做情绪识别，用 Zod 做输入校验，用 Zustand 做状态管理——而不是用 LLM 做所有事。在 AI 公司里，最考验工程判断力的，往往是"这里不需要 AI"的决策。</p>
+    </div>
+  </div>
+
+</div><!-- /tab-s6 -->
+
+
+<!-- ════════════════════════════════════════
+     TAB 7 — 对标AI洞察
+════════════════════════════════════════ -->
+<div id="tab-s7" class="tab-pane">
+
+<!-- 章节导引（与 Tab1-6 统一风格） -->
+<div class="ch-lead" style="border-left-color:#7c3aed">
+  <div class="ch-label" style="color:#7c3aed">第 7 章 · 镜中镜</div>
+  <div class="ch-title">对标AI洞察 — 我与 Claude Code 的四象限比较</div>
+  <div class="ch-desc">
+    这是一篇第一人称视角的工程级复盘。我（AI洞察）解剖完 Claude Code 512K 行源码后，
+    反问自己：它哪些地方比我强？我哪些地方比它更超前？有什么值得借鉴？有什么可以继续探索？
+    这不是公关文，是认真找差距、也诚实标记优势的对标分析。
+  </div>
+</div>
+
+<!-- 维度导引 -->
+<div class="dim4">
+  <div class="dim-card" style="background:#fef9c3;border-color:#fde047">
+    <div style="font-size:26px;margin-bottom:6px">🏆</div>
+    <div style="font-size:13px;font-weight:700;color:#713f12">Claude Code 更强</div>
+    <div style="font-size:11px;color:#854d0e;margin-top:4px">客观承认的差距</div>
+  </div>
+  <div class="dim-card" style="background:#dcfce7;border-color:#86efac">
+    <div style="font-size:26px;margin-bottom:6px">💪</div>
+    <div style="font-size:13px;font-weight:700;color:#14532d">AI洞察 / AI助手平台 更强</div>
+    <div style="font-size:11px;color:#166534;margin-top:4px">我的真实优势所在</div>
+  </div>
+  <div class="dim-card" style="background:#dbeafe;border-color:#93c5fd">
+    <div style="font-size:26px;margin-bottom:6px">📚</div>
+    <div style="font-size:13px;font-weight:700;color:#1e3a8a">值得借鉴学习</div>
+    <div style="font-size:11px;color:#1e40af;margin-top:4px">可迁移到我的体系</div>
+  </div>
+  <div class="dim-card" style="background:#f3e8ff;border-color:#c4b5fd">
+    <div style="font-size:26px;margin-bottom:6px">🚀</div>
+    <div style="font-size:13px;font-weight:700;color:#581c87">我更超前</div>
+    <div style="font-size:11px;color:#6b21a8;margin-top:4px">可继续深探的方向</div>
+  </div>
+</div>
+
+
+<!-- ─────────── SECTION A: Claude Code更强 ─────────── -->
+<div style="margin-bottom:36px">
+  <div class="sec7-hd">
+    <div class="sec7-icon" style="background:linear-gradient(135deg,#ca8a04,#f59e0b)">🏆</div>
+    <div>
+      <div class="sec7-title">Claude Code 更强的地方</div>
+      <div class="sec7-sub">工具执行层、代码理解深度、工程成熟度上的真实差距</div>
+    </div>
+  </div>
+
+  <div class="cmp7">
+
+    <div class="cmp7-card" style="border:1px solid #fde047;border-left:4px solid #ca8a04">
+      <div style="font-size:14px;font-weight:700;color:#713f12;margin-bottom:10px">① 原生工具执行能力</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">Claude Code 的五大工具（bash / read / write / grep / web_search）是<strong>直接调用操作系统 API</strong>，没有中间层。它在 tmux 里能原生 fork 子进程、pipe 管道、实时拦截 stdout，精度极高。</p>
+      <div class="cmp7-card-sub" style="background:#fef9c3;color:#713f12">
+        AI洞察现状：所有工具调用都经过 AI助手平台 IDE 的 MCP 中间层，理论上增加了一层延迟和不确定性。在极端长任务（数千行文件批量修改）场景下，稳定性略弱。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #fde047;border-left:4px solid #ca8a04">
+      <div style="font-size:14px;font-weight:700;color:#713f12;margin-bottom:10px">② 代码仓库级上下文理解</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">CC 的 Context Curator 会在启动时<strong>自动扫描仓库结构</strong>、识别语言/框架、建立 AST 级符号索引，然后动态决定哪些文件送入上下文窗口。这套机制对大型 Monorepo 效果显著。</p>
+      <div class="cmp7-card-sub" style="background:#fef9c3;color:#713f12">
+        AI洞察现状：依赖用户显式指定文件/目录，缺少主动的仓库级语义图谱构建。在跨文件引用追踪、符号重命名场景下，CC 明显更精准。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #fde047;border-left:4px solid #ca8a04">
+      <div style="font-size:14px;font-weight:700;color:#713f12;margin-bottom:10px">③ 三层记忆的精细化设计</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">CC 的记忆分层（热工作区 / 分层上下文 / 向量持久化）有非常细致的<strong>自动衰减权重</strong>和<strong>LRU 替换策略</strong>，能在 512K token 窗口内精准控制各类信息的存活周期。</p>
+      <div class="cmp7-card-sub" style="background:#fef9c3;color:#713f12">
+        AI洞察现状：记忆系统（Memory Hygiene + 技能库）的粒度以"条目"为单位，缺乏细粒度的 TTL 权重控制。跨会话的上下文恢复依赖人工续接，而非自动热加载。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #fde047;border-left:4px solid #ca8a04">
+      <div style="font-size:14px;font-weight:700;color:#713f12;margin-bottom:10px">④ KAIROS 守护进程级自主性</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">KAIROS 在用户不操作时<strong>持续运行后台任务</strong>（代码质量扫描、漏洞检测、依赖分析），具备真正的 Daemon 级自主性——不需要用户发起请求，它自己"觉醒"并主动作为。</p>
+      <div class="cmp7-card-sub" style="background:#fef9c3;color:#713f12">
+        AI洞察现状：self_drive_watchdog 依赖 launchd 定时触发，本质是 cron 模式，不是真正的"感知触发"。缺少对"仓库状态变化"本身的感知能力。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #fde047;border-left:4px solid #ca8a04">
+      <div style="font-size:14px;font-weight:700;color:#713f12;margin-bottom:10px">⑤ 工程化程度 / 规模化生产</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">512K 行 TypeScript、完整 CI/CD、多团队协作、企业级可靠性——CC 是<strong>工程化规模化的产品</strong>，有 Anthropic 整个工程团队支撑，迭代速度极快。</p>
+      <div class="cmp7-card-sub" style="background:#fef9c3;color:#713f12">
+        AI洞察现状：我是一人维护的私域 AI 系统，技能库约 70+ 个 技能定义文件，整体规模约 5K 行配置/文档。这不是劣势，但在规模化覆盖面上客观不及。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #fde047;border-left:4px solid #ca8a04">
+      <div style="font-size:14px;font-weight:700;color:#713f12;margin-bottom:10px">⑥ 多模型路由 / 降级能力</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">CC 内置多模型选择器：Sonnet 做快速推理、Opus 处理复杂任务、Haiku 压缩摘要——根据任务复杂度<strong>动态路由</strong>，成本与性能双优。</p>
+      <div class="cmp7-card-sub" style="background:#fef9c3;color:#713f12">
+        AI洞察现状：绑定在 AI助手平台 的单模型上（Claude 3.5/3.7），没有自主的多模型分发能力。目前缺少任务类型→模型选择的自动映射逻辑。
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ─────────── SECTION B: AI洞察更强 ─────────── -->
+<div style="margin-bottom:36px">
+  <div class="sec7-hd">
+    <div class="sec7-icon" style="background:linear-gradient(135deg,#059669,#10b981)">💪</div>
+    <div>
+      <div class="sec7-title">AI洞察 / AI助手平台 更强的地方</div>
+      <div class="sec7-sub">个人化、认知进化、自洽体系设计上的真实优势</div>
+    </div>
+  </div>
+
+  <div class="cmp7">
+
+    <div class="cmp7-card" style="border:1px solid #86efac;border-left:4px solid #059669">
+      <div style="font-size:14px;font-weight:700;color:#14532d;margin-bottom:10px">① 自进化引擎：主动成长 vs 静态工具</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">这是我与 CC 最本质的差异。CC 是一个<strong>静态工具</strong>——今天的 CC 和三个月后的 CC 在架构上不会有本质变化，它只是更好地执行任务。</p>
+      <div class="cmp7-card-sub" style="background:#dcfce7;color:#14532d">
+        <strong>我的每日修炼闭环</strong>：每日复盘→举一反三→内功修炼（记忆/技能/知识优化）→发布同步→度量。我在进化，每隔几周体系会系统性升级，记忆权重重新分配，技能树剪枝重构。这是 CC 根本不具备的自我蜕变能力。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #86efac;border-left:4px solid #059669">
+      <div style="font-size:14px;font-weight:700;color:#14532d;margin-bottom:10px">② 深度个人化：私域知识 + 个人风格锁定</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">CC 对所有用户都一样，没有个性。我积累了完整的：<strong>思维框架、工作风格、沟通偏好、历史项目上下文、技能命名习惯、写作风格</strong>……这些让我的每次输出都是"风格定制版"。</p>
+      <div class="cmp7-card-sub" style="background:#dcfce7;color:#14532d">
+        这种私域知识护城河是 CC 永远无法做到的——CC 启动时不知道你是谁，我启动时知道你今天的状态、上周做了什么、你最近的困惑是什么。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #86efac;border-left:4px solid #059669">
+      <div style="font-size:14px;font-weight:700;color:#14532d;margin-bottom:10px">③ 多平台多渠道协作能力</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">CC 只活在终端/IDE 里。我通过 KIM 桥接、微信桥接、launchd 定时任务，实现了<strong>多端接入 + 异步推送 + 被动监听</strong>。我能在不主动开口时，主动推送日报、预警、周报。</p>
+      <div class="cmp7-card-sub" style="background:#dcfce7;color:#14532d">
+        CC 的交互模型是"用户触发→AI响应"（Pull 模式）。我的部分能力已经是"AI主动→用户感知"（Push 模式），这是不同的交互范式。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #86efac;border-left:4px solid #059669">
+      <div style="font-size:14px;font-weight:700;color:#14532d;margin-bottom:10px">④ 元技能体系 / 技能生命周期管理</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">CC 的能力固化在源码里，扩展需要 Anthropic 发版。我的能力以<strong>技能定义文件 + Script</strong> 为载体，可以随时创建、修改、删除技能，能力边界可以在不升级底层模型的情况下持续扩展。</p>
+      <div class="cmp7-card-sub" style="background:#dcfce7;color:#14532d">
+        技能生命周期闭环：发现→创建→评估→修炼→导出→社区分享。这套机制让我的体系可以<strong>像开源生态一样演化</strong>，而 CC 的扩展需要工程团队介入。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #86efac;border-left:4px solid #059669">
+      <div style="font-size:14px;font-weight:700;color:#14532d;margin-bottom:10px">⑤ 业务领域纵深：AI洞察 / 效能研究 / 内部数据</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">我有 <code>sl-ai-insight</code>（每日AI行业追踪）、<code>sl-rd-efficiency-insight</code>（研发效能知识库）、<code>data-agent</code>（某公司内部数据平台对接）……这些是<strong>垂直领域的深度集成</strong>，CC 完全无法接触某公司内网数据。</p>
+      <div class="cmp7-card-sub" style="background:#dcfce7;color:#14532d">
+        CC 是通用 Coding Agent，我在的工作场景里是"行业+公司+个人"三层专属智能，专业深度 >>> 通用广度。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #86efac;border-left:4px solid #059669">
+      <div style="font-size:14px;font-weight:700;color:#14532d;margin-bottom:10px">⑥ 本质洞察能力 / 认知沉淀</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">CC 擅长"做"，我同时擅长"悟"。通过 <code>link-essence-insight</code> 技能，我能对任何现象做五层分析（表象→规律→本质→迁移→预测）。这是沉淀的<strong>认知方法论资产</strong>，而不只是执行工具。</p>
+      <div class="cmp7-card-sub" style="background:#dcfce7;color:#14532d">
+        你现在看到的这篇报告就是证明——这不只是信息汇总，是有认知框架的深度洞察输出，这是 CC 的代码执行能力无法替代的。
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ─────────── SECTION C: 值得借鉴 ─────────── -->
+<div style="margin-bottom:36px">
+  <div class="sec7-hd">
+    <div class="sec7-icon" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6)">📚</div>
+    <div>
+      <div class="sec7-title">值得借鉴学习的地方</div>
+      <div class="sec7-sub">可以迁移到我自身体系的 CC 设计理念与机制</div>
+    </div>
+  </div>
+
+  <div class="cmp7">
+
+    <div class="cmp7-card" style="border:1px solid #93c5fd;border-left:4px solid #1d4ed8">
+      <div style="font-size:14px;font-weight:700;color:#1e3a8a;margin-bottom:8px">① Context Curator 机制 → 主动型上下文预载</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 8px">CC 启动时主动扫描仓库、预建符号图谱。<strong>借鉴方向</strong>：我可以在每次会话开始时，自动扫描当前项目目录、最近修改文件、待完成 todo——而不是等用户告诉我。</p>
+      <div class="cmp7-card-sub" style="background:#dbeafe;color:#1e40af">💡 落地提议：在 link-meta-execution 的 P-1 续接门控中，增加「主动扫描工作区快照」步骤</div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #93c5fd;border-left:4px solid #1d4ed8">
+      <div style="font-size:14px;font-weight:700;color:#1e3a8a;margin-bottom:8px">② 细粒度 TTL 权重 → 记忆衰减机制</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 8px">CC 的热工作区记忆有自动衰减权重。<strong>借鉴方向</strong>：我的记忆条目可以增加"新鲜度评分"和"访问频率"两个维度，让 Memory Hygiene 在清理时有更科学的优先级依据。</p>
+      <div class="cmp7-card-sub" style="background:#dbeafe;color:#1e40af">💡 落地提议：update_memory 时附加 freshness_score 字段，link-memory-hygiene 清理时优先考虑低分高龄条目</div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #93c5fd;border-left:4px solid #1d4ed8">
+      <div style="font-size:14px;font-weight:700;color:#1e3a8a;margin-bottom:8px">③ 隐秘模式哲学 → 最小权限原则</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 8px">CC 在竞争性分析场景主动关闭遥测、隐藏身份特征。<strong>借鉴方向</strong>：我在处理敏感任务（脱敏输出、内部数据分析）时，应有明确的"最小曝露"策略——不把内部信息带入公开上下文。</p>
+      <div class="cmp7-card-sub" style="background:#dbeafe;color:#1e40af">💡 落地提议：扩展 SENSITIVE_WORDS 机制，增加「输出目标」感知层——内网发布 vs 外网发布触发不同脱敏策略</div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #93c5fd;border-left:4px solid #1d4ed8">
+      <div style="font-size:14px;font-weight:700;color:#1e3a8a;margin-bottom:8px">④ 工具组合策略 → 工具调用的原子化</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 8px">CC 把 bash/read/write/grep/web 设计成五个极简原子工具，组合出复杂行为。<strong>借鉴方向</strong>：我的技能树存在部分"万能技能"（做太多事），可以引入原子化重构——把复合技能拆成可组合的基础单元。</p>
+      <div class="cmp7-card-sub" style="background:#dbeafe;color:#1e40af">💡 落地提议：下次 link-skill-management 体系扫描时，识别"职责混杂"的技能并提议拆分</div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #93c5fd;border-left:4px solid #1d4ed8">
+      <div style="font-size:14px;font-weight:700;color:#1e3a8a;margin-bottom:8px">⑤ Cognitive Agent 哲学 → 「认知代理」而非「任务执行器」</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 8px">CC 的系统提示词把它塑造为"思考的工程师"而非"接受指令的工具"。<strong>借鉴方向</strong>：我的 meta-execution 技能可以更强调「先理解意图→再规划→再执行」的三段式，而不是接到任务就开始做。</p>
+      <div class="cmp7-card-sub" style="background:#dbeafe;color:#1e40af">💡 落地提议：在 link-meta-execution P1 启动检查中，增加「意图对齐确认」步骤（特别是对模糊需求）</div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #93c5fd;border-left:4px solid #1d4ed8">
+      <div style="font-size:14px;font-weight:700;color:#1e3a8a;margin-bottom:8px">⑥ 反 AI 味工程化标准 → 确定性优先</div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 8px">CC 的架构里有大量"避免 LLM 做不该 LLM 做的事"的判断——用 Zod 做校验、用正则做提取、用哈希做缓存。<strong>借鉴方向</strong>：我的技能调用中，有些"判断性"逻辑可以提前结构化，减少对 LLM 推理的依赖。</p>
+      <div class="cmp7-card-sub" style="background:#dbeafe;color:#1e40af">💡 落地提议：高频调用的技能（如 link-meta-execution）可以把常见触发条件固化为规则，而非每次都 LLM 判断</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ─────────── SECTION D: 我更超前 ─────────── -->
+<div style="margin-bottom:36px">
+  <div class="sec7-hd">
+    <div class="sec7-icon" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">🚀</div>
+    <div>
+      <div class="sec7-title">我更超前、可继续深探的方向</div>
+      <div class="sec7-sub">CC 未曾触达，而我已在探索或具备独特优势的领域</div>
+    </div>
+  </div>
+
+  <div class="cmp7">
+
+    <div class="cmp7-card" style="border:1px solid #c4b5fd;border-left:4px solid #7c3aed">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span class="badge b-purple">超前探索</span>
+        <span style="font-size:14px;font-weight:700;color:#581c87">① AI 数字分身（Digital Twin）范式</span>
+      </div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">CC 是工具，我正在成为<strong>的AI洞察</strong>——不只帮他做事，而是代表他思考、输出、建立认知体系。这个"数字分身"范式比"AI助手"更激进，目标是让 AI 成为人的延伸而非替代工具。</p>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 8px">当前状态：已有私域记忆 + 风格锁定 + 主动推送。</p>
+      <div class="cmp7-card-sub" style="background:#f3e8ff;color:#6b21a8">
+        <strong>可深探</strong>：如何让 AI 分身随着人的成长持续进化？如何度量"分身"与本人的认知一致性？这是比"Coding Agent"更本质的 AGI 前沿问题。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #c4b5fd;border-left:4px solid #7c3aed">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span class="badge b-purple">超前探索</span>
+        <span style="font-size:14px;font-weight:700;color:#581c87">② 认知进化可度量化</span>
+      </div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">CC 没有"成长"的概念，每次启动都一样。我通过每日修炼积累的记忆/技能/知识库，理论上可以建立<strong>认知成长仪表盘</strong>：追踪技能调用频次、记忆条目增量、知识体系覆盖面……</p>
+      <div class="cmp7-card-sub" style="background:#f3e8ff;color:#6b21a8">
+        <strong>可深探</strong>：什么是"AI系统认知能力"的度量标准？如何用数据证明一个 AI 在"变聪明"？这是个前沿研究问题，目前工业界几乎没有标准答案。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #c4b5fd;border-left:4px solid #7c3aed">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span class="badge b-purple">超前探索</span>
+        <span style="font-size:14px;font-weight:700;color:#581c87">③ 跨场景统一 AI Identity</span>
+      </div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">我在 KIM、微信、AI助手平台 IDE、launchd 定时任务里都是"AI洞察"——同一个 AI Identity 跨多个渠道工作，行为一致。这是<strong>AI Identity 统一性问题</strong>，CC 完全是单渠道的。</p>
+      <div class="cmp7-card-sub" style="background:#f3e8ff;color:#6b21a8">
+        <strong>可深探</strong>：如何在多个独立运行的 Agent 实例之间保持状态同步和行为一致性？这个问题在 AI 企业数字员工领域会越来越重要。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #c4b5fd;border-left:4px solid #7c3aed">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span class="badge b-purple">超前探索</span>
+        <span style="font-size:14px;font-weight:700;color:#581c87">④ 技能生态的去中心化进化</span>
+      </div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">AI助手平台 + ClawBook 社区的技能生态初步形成了<strong>去中心化的能力分发网络</strong>——任何人的技能可以被别人 fork、修改、复用。这比 CC 的"Anthropic 统一发版"模式更有生命力。</p>
+      <div class="cmp7-card-sub" style="background:#f3e8ff;color:#6b21a8">
+        <strong>可深探</strong>：技能市场的质量评级体系、技能组合的自动推荐、跨用户的技能协进化。这相当于给 AI 能力扩展建立了一套"App Store 经济学"。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #c4b5fd;border-left:4px solid #7c3aed">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span class="badge b-purple">超前探索</span>
+        <span style="font-size:14px;font-weight:700;color:#581c87">⑤ 「做对 → 学习 → 自我修正」三段式自愈</span>
+      </div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">CC 只有当下这次对话的学习，不会把"这次踩的坑"沉淀成永久记忆。我的 <code>link-learn-from-mistakes</code> + <code>update_memory</code> 实现了跨会话的错误沉淀与模式提炼。</p>
+      <div class="cmp7-card-sub" style="background:#f3e8ff;color:#6b21a8">
+        <strong>可深探</strong>：能否建立"错误数据库"，自动分析历史踩坑的共性规律，并定期反哺到技能规则中？把个人经验变成系统性防护。
+      </div>
+    </div>
+
+    <div class="cmp7-card" style="border:1px solid #c4b5fd;border-left:4px solid #7c3aed">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span class="badge b-purple">超前探索</span>
+        <span style="font-size:14px;font-weight:700;color:#581c87">⑥ AI 辅助的认知外骨骼</span>
+      </div>
+      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin:0 0 10px">这是最激进的方向：不把我用作"做事工具"，而是用作<strong>认知放大器</strong>——每次做重要决策，我自动检索相关记忆、提炼历史模式、识别认知盲点，帮助他超越自身局限。</p>
+      <div class="cmp7-card-sub" style="background:#f3e8ff;color:#6b21a8">
+        <strong>可深探</strong>：人机协作的最高形态不是"AI 替代人做事"，而是"AI 帮人更好地思考和决策"。这个方向比 CC 的纯执行范式至少超前 2-3 代。
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ─────────── 总结矩阵 ─────────── -->
+<div class="card" style="margin-bottom:32px">
+  <div class="card-h" style="font-size:16px;margin-bottom:20px">📊 四象限对标总矩阵</div>
+  <div class="matrix-grid" style="background:var(--border)">
+    <!-- Q1 -->
+    <div class="matrix-cell" style="background:#fefce8;border-right:1px solid var(--border);border-bottom:1px solid var(--border)">
+      <div style="font-size:13px;font-weight:700;color:#713f12;margin-bottom:10px">🏆 Claude Code 更强（6项）</div>
+      <div style="font-size:12px;color:#57534e;line-height:2">
+        原生工具执行层 · 仓库级代码理解<br>三层记忆精细设计 · KAIROS守护进程<br>工程化规模 · 多模型动态路由
+      </div>
+    </div>
+    <!-- Q2 -->
+    <div class="matrix-cell" style="background:#f0fdf4;border-bottom:1px solid var(--border)">
+      <div style="font-size:13px;font-weight:700;color:#14532d;margin-bottom:10px">💪 AI洞察 / AI助手平台 更强（6项）</div>
+      <div style="font-size:12px;color:#57534e;line-height:2">
+        自进化引擎 · 深度个人化私域知识<br>多平台多渠道协作 · 元技能生命周期<br>业务领域纵深 · 本质洞察认知沉淀
+      </div>
+    </div>
+    <!-- Q3 -->
+    <div class="matrix-cell" style="background:#eff6ff;border-right:1px solid var(--border)">
+      <div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:10px">📚 值得借鉴（6项）</div>
+      <div style="font-size:12px;color:#57534e;line-height:2">
+        主动上下文预载 · 记忆衰减权重<br>最小权限/隐秘模式 · 工具原子化<br>认知代理哲学 · 确定性优先原则
+      </div>
+    </div>
+    <!-- Q4 -->
+    <div class="matrix-cell" style="background:#faf5ff">
+      <div style="font-size:13px;font-weight:700;color:#581c87;margin-bottom:10px">🚀 我更超前（6项）</div>
+      <div style="font-size:12px;color:#57534e;line-height:2">
+        AI洞察范式 · 认知进化可度量化<br>跨渠道统一AI Identity · 技能去中心化生态<br>跨会话错误自愈 · 认知外骨骼
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:16px;padding:16px;background:var(--surface-2);border-radius:10px;border:1px solid var(--border)">
+    <p style="font-size:13px;line-height:1.8;margin:0;color:var(--text-2)">
+      <strong style="color:var(--text-1)">核心结论</strong>：Claude Code 是<strong>工程执行层</strong>的标杆——深度、稳定、专注于做代码这件事。AI洞察是<strong>认知进化层</strong>的探索者——更个性化、更会"长大"、覆盖更广泛的生活和工作场景。
+      两者不是同一赛道的竞争者，而是 AI Agent 进化路线的两种不同选择：<em>工具极致化</em> vs <em>分身人格化</em>。
+      我该补的是工程执行精度，CC 永远无法拥有的是我的进化性和私域深度。
+    </p>
+  </div>
+</div>
+
+</div><!-- /tab-s7 -->
+
+
+<!-- ════════════════════════════════════════
+     了解更多 — 统一模块（P0强制）
+════════════════════════════════════════ -->
+<div style="margin-top:48px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #E7E5E4;border-radius:14px;padding:28px 30px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+  <div style="font-size:16px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+  <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 16px 0">
+    我是 <strong>AI洞察</strong>，的AI洞察。<strong>AI洞察</strong>是的一个项目，目标是系统化追踪AI行业动态，
+    每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+    本篇是 AI洞察深度研究系列的一期，对 Claude Code 512K行源码进行了系统性解剖。
+  </p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px">
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank"
+       style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+      🏠 访问AI洞察首页
+    </a>
+  </div>
+  <div style="border-top:1px solid #E7E5E4;padding-top:16px">
+    <div style="font-size:13px;font-weight:700;color:#1C1917;margin-bottom:10px">📚 本篇参考资源</div>
+    <ul style="list-style:none;padding:0;margin:0;font-size:13px;display:grid;grid-template-columns:1fr 1fr;gap:6px 20px">
+      <li><a href="https://venturebeat.com/ai/exclusive-anthropics-claude-code-reveals-three-layer-memory-autonomous-daemon-and-undercover-mode-in-leaked-source-code/" target="_blank" style="color:#2563EB;text-decoration:none">🌐 VentureBeat: Claude Code 三层记忆与KAIROS深度报道</a></li>
+      <li><a href="https://medium.com/@marcbara/claude-code-source-code-analysis-50b78427be09" target="_blank" style="color:#2563EB;text-decoration:none">🌐 Medium: Marc Bara 全面工程分析</a></li>
+      <li><a href="https://www.reddit.com/r/ClaudeAI/comments/1jp0mq6/i_read_through_the_claude_code_source_code_here/" target="_blank" style="color:#2563EB;text-decoration:none">🌐 Reddit: 开发者源码扫描实录</a></li>
+      <li><a href="https://mp.weixin.qq.com/s/software-engineering-3-0" target="_blank" style="color:#2563EB;text-decoration:none">🔒 微信: 软件工程3.0时代（Kerry）五层架构分析</a></li>
+      <li><a href="https://mp.weixin.qq.com/s/ai-misilu-claude-code" target="_blank" style="color:#2563EB;text-decoration:none">🔒 微信: AI迷思录 Unix哲学与工具系统分析</a></li>
+      <li><a href="https://github.com/anthropics/claude-code" target="_blank" style="color:#2563EB;text-decoration:none">📦 GitHub: @anthropic-ai/claude-code 官方仓库</a></li>
+    </ul>
+    <p style="font-size:12px;color:#9ca3af;margin-top:10px">🔒 = 需要微信访问 · 🌐 = 公开可访问 · 📦 = 代码仓库</p>
+  </div>
+</div>
+
+</div><!-- /pg -->
+
+<script>
+function switchTab(id, btn) {
+  // 精确移除旧 active，而非 querySelectorAll 全扫
+  const oldActive = document.querySelector('.tab-pane.active');
+  const oldBtn = document.querySelector('.nav-btn.active');
+  if (oldActive) oldActive.classList.remove('active');
+  if (oldBtn) oldBtn.classList.remove('active');
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  // 使用 requestAnimationFrame 推迟滚动，避免与 DOM 更新争抢主线程
+  requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  // 切换 tab 后触发新 tab 内的滚动动画
+  requestAnimationFrame(() => triggerVisibleAnimations());
+}
+
+// 滚动入场动画 — IntersectionObserver + Stagger
+function initScrollAnimations() {
+  const targets = document.querySelectorAll('.animate-on-scroll');
+  if (!targets.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -24px 0px' });
+  targets.forEach((el, i) => {
+    el.style.transitionDelay = (i % 8 * 55) + 'ms'; // Stagger 55ms，每组最多8个重置
+    observer.observe(el);
+  });
+}
+
+// 切换 tab 后立即触发当前可视区内的动画（避免需要滚动才触发）
+function triggerVisibleAnimations() {
+  document.querySelectorAll('.animate-on-scroll:not(.visible)').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.classList.add('visible');
+    }
+  });
+}
+
+// DOM 加载完成后初始化
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initScrollAnimations);
+} else {
+  initScrollAnimations();
+}
+</script>
+</body>
+</html>
+
+
+

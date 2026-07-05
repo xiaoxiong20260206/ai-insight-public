@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent平台深度对比：Hermes vs OpenClaw vs KAIROS | AI洞察</title>
+    <meta name="description" content="Hermes Agent、OpenClaw、Anthropic KAIROS三大AI Agent平台的来龙去脉、架构哲学与深度对比分析">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%237C3AED'/><text x='6' y='23' font-size='18' fill='white'>🤖</text></svg>">
+    <!-- 字体：v5.0 精简版 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+    <style>
+        /* ========== CSS 变量（v5.0 完整版）========== */
+        :root {
+            --color-success: #059669;
+            --color-success-light: #10B981;
+            --color-success-dark: #047857;
+            --color-success-50: #ECFDF5;
+            --color-success-100: #D1FAE5;
+            --color-danger: #E11D48;
+            --color-danger-light: #F43F5E;
+            --color-danger-50: #FFF1F2;
+            --color-warning: #D97706;
+            --color-warning-light: #F59E0B;
+            --color-warning-50: #FFFBEB;
+            --color-info: #2563EB;
+            --color-info-light: #3B82F6;
+            --color-info-50: #EFF6FF;
+            --color-info-100: #DBEAFE;
+            --color-purple: #7C3AED;
+            --color-purple-light: #8B5CF6;
+            --color-purple-50: #F5F3FF;
+            --color-purple-100: #EDE9FE;
+            --color-text-primary: #1C1917;
+            --color-text-secondary: #57534E;
+            --color-text-muted: #78716C;
+            --color-border: #E7E5E4;
+            --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB;
+            --color-bg-card: #FFFFFF;
+            --color-bg-table-header: #FAFAF9;
+            --color-bg-hover: rgba(0,0,0,0.025);
+            --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+            --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+            --gradient-mesh:
+                radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card-rich: 0 4px 16px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.9);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+            --shadow-glow-success: 0 4px 14px rgba(5,150,105,0.15);
+            --shadow-hover: 0 8px 24px rgba(5,150,105,0.18), 0 2px 8px rgba(5,150,105,0.10);
+            --shadow-float: 0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
+            --spacing-xs: 4px; --spacing-sm: 8px; --spacing-md: 16px;
+            --spacing-lg: 24px; --spacing-xl: 32px; --spacing-2xl: 40px;
+            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px;
+            --radius-xl: 20px; --radius-2xl: 24px; --radius-full: 9999px;
+            --font-family: "DM Sans", -apple-system, "SF Pro Text", "system-ui", "Noto Sans SC", "PingFang SC", sans-serif;
+            --font-family-heading: "DM Sans", -apple-system, "SF Pro Display", "Noto Sans SC", sans-serif;
+            --font-family-cn: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            --font-family-mono: "JetBrains Mono", "SF Mono", "Fira Code", "Consolas", monospace;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            --content-max: 920px;
+            --content-pad: 48px;
+        }
+
+        /* ========== 基础 ========== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-family);
+            font-size: 15px;
+            line-height: 1.7;
+            letter-spacing: -0.01em;
+            color: var(--color-text-secondary);
+            background: var(--color-bg);
+            background-image: var(--gradient-mesh);
+            background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            font-feature-settings: "kern" 1, "liga" 1;
+        }
+        ::selection { background: rgba(124,58,237,0.18); }
+
+        /* ========== Skip to content (A11y) ========== */
+        .skip-to-content {
+            position: absolute; left: -9999px; top: auto;
+            padding: 8px 16px; background: var(--color-info); color: var(--color-bg-card);
+            border-radius: var(--radius-md); font-size: 14px; z-index: 9999;
+        }
+        .skip-to-content:focus { left: 16px; top: 16px; }
+
+        /* ========== 布局：v5.0 长页面 + TOC 锚点 ========== */
+        .layout-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            align-items: stretch;
+        }
+        .content-area {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .content-inner {
+            width: 100%;
+            max-width: var(--content-max);
+            padding: 48px var(--content-pad) 120px;
+        }
+
+        /* ========== 侧边栏 TOC 导航 ========== */
+        .sidebar-nav {
+            width: 240px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            background: var(--color-bg-card);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+        }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 2px; }
+
+        .sidebar-doc-title {
+            font-size: 14px; font-weight: 700;
+            color: var(--color-text-primary);
+            padding: 0 20px 16px;
+            line-height: 1.4;
+            font-family: var(--font-family-heading);
+        }
+
+        .toc-section { flex: 1; overflow-y: auto; }
+        .toc-group-label {
+            font-size: 11px; font-weight: 700;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 8px 20px;
+        }
+
+        .toc-link {
+            display: block;
+            padding: 7px 20px;
+            font-size: 14px; font-weight: 500;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all var(--transition-fast);
+            line-height: 1.5;
+        }
+        .toc-link:hover {
+            background: rgba(0,0,0,0.03);
+            color: var(--color-text-primary);
+        }
+        .toc-link.toc-active {
+            color: var(--color-purple);
+            background: rgba(124,58,237,0.04);
+            border-left-color: var(--color-purple);
+        }
+        .toc-link.toc-sub {
+            padding-left: 36px;
+            font-size: 13px;
+        }
+
+        /* 阅读进度条 */
+        .reading-progress-wrap {
+            margin-top: auto;
+            padding: 16px 20px;
+            border-top: 1px solid var(--color-border-light);
+        }
+        .reading-progress-label {
+            font-size: 11px; font-weight: 600;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+        .reading-progress-track {
+            height: 6px;
+            background: var(--color-border-light);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+        .reading-progress-fill {
+            height: 100%;
+            background: var(--gradient-success);
+            width: 0%;
+            transition: width 200ms ease;
+            border-radius: var(--radius-full);
+        }
+
+        /* 折叠按钮 */
+        .sidebar-collapse-btn {
+            position: fixed;
+            left: 240px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px; height: 28px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--color-text-muted);
+            font-size: 14px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all var(--transition-fast);
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        .sidebar-collapse-btn:hover {
+            background: var(--color-bg-hover);
+            color: var(--color-text-primary);
+        }
+        .sidebar-collapse-btn.collapsed-pos {
+            left: 48px;
+        }
+        .layout-wrapper.sidebar-collapsed .sidebar-nav {
+            width: 48px;
+            overflow: hidden;
+        }
+        .layout-wrapper.sidebar-collapsed .sidebar-nav .sidebar-doc-title,
+        .layout-wrapper.sidebar-collapsed .sidebar-nav .toc-link,
+        .layout-wrapper.sidebar-collapsed .sidebar-nav .reading-progress-wrap {
+            display: none;
+        }
+        .layout-wrapper.sidebar-collapsed .sidebar-collapse-btn {
+            left: 48px;
+        }
+
+        /* 回到顶部 */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 44px; height: 44px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            font-size: 18px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--color-text-muted);
+            opacity: 0;
+            pointer-events: none;
+            transition: all var(--transition-normal);
+            z-index: 100;
+        }
+        .scroll-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-to-top:hover {
+            background: var(--color-info);
+            color: white;
+            border-color: var(--color-info);
+        }
+
+        /* ========== 头部 ========== */
+        .doc-header {
+            text-align: center;
+            padding: 32px 0 40px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+        .doc-header::before {
+            content: '';
+            position: absolute;
+            top: -60%; left: 50%;
+            transform: translateX(-50%);
+            width: 600px; height: 300px;
+            background: radial-gradient(ellipse, rgba(124,58,237,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .doc-header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-hero);
+        }
+        .header-badge {
+            display: inline-block;
+            background: var(--gradient-badge);
+            color: var(--color-info);
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            border: 1px solid rgba(37,99,235,0.12);
+            box-shadow: var(--shadow-xs);
+        }
+        .main-title {
+            font-size: 34px; font-weight: 800;
+            letter-spacing: -0.025em;
+            font-family: var(--font-family-heading);
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-wrap: balance;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        .subtitle {
+            color: var(--color-text-muted);
+            font-size: 16px;
+            font-family: var(--font-family-cn);
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ========== 章节标签 ========== */
+        .doc-chapter-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+            padding: 36px 0 10px;
+            margin-bottom: 20px;
+        }
+        .doc-chapter-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--color-border);
+        }
+
+        /* ========== 统计卡片（v5.0 颜色顶边）========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .stat-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+            border-top: 3px solid var(--stat-accent, #E7E5E4);
+        }
+        .stat-card.stat-info    { --stat-accent: #2563EB; }
+        .stat-card.stat-success { --stat-accent: #059669; }
+        .stat-card.stat-warning { --stat-accent: #D97706; }
+        .stat-card.stat-purple  { --stat-accent: #7C3AED; }
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.1;
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum";
+            font-family: var(--font-family-heading);
+            margin-bottom: 4px;
+        }
+        .stat-card.stat-info    .stat-value { color: var(--color-info); }
+        .stat-card.stat-success .stat-value { color: var(--color-success); }
+        .stat-card.stat-warning .stat-value { color: var(--color-warning); }
+        .stat-card.stat-purple  .stat-value { color: var(--color-purple); }
+        .stat-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-family: var(--font-family-heading);
+        }
+
+        /* ========== 内容卡片 ========== */
+        .section {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 24px;
+            transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+        }
+        .section:hover {
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(124,58,237,0.15);
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-family-heading);
+        }
+        .section-title .icon { font-size: 22px; }
+
+        /* ========== 平台对比卡片 ========== */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .platform-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-top: 3px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            transition: all var(--transition-normal);
+        }
+        .platform-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+        .platform-card.emerald { border-top-color: var(--color-success); }
+        .platform-card.blue    { border-top-color: var(--color-info); }
+        .platform-card.violet  { border-top-color: var(--color-purple); }
+        .platform-card .name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 6px;
+        }
+        .platform-card .tagline {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin-bottom: 12px;
+            font-family: var(--font-family-cn);
+        }
+        .platform-card .stats {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        /* ========== 对比表格 ========== */
+        .table-wrapper {
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            border: 1px solid var(--color-border);
+            margin: 16px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead tr {
+            background: var(--color-bg-table-header);
+            border-bottom: 1.5px solid var(--color-border);
+        }
+        th {
+            padding: 11px 16px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--color-border-light);
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+        tbody tr { transition: background var(--transition-fast); }
+        tbody tr:hover { background: var(--color-bg-hover); }
+        tbody tr:last-child td { border-bottom: none; }
+
+        /* ========== 洞察框 ========== */
+        .insight-box {
+            border-left: 3px solid var(--color-purple);
+            background: rgba(124,58,237,0.05);
+            padding: 16px 20px;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: 20px 0;
+        }
+        .insight-box .title {
+            font-weight: 700;
+            color: var(--color-purple);
+            font-size: 13px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .insight-box p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--color-text-secondary);
+            margin: 0;
+        }
+
+        /* ========== 引用框 ========== */
+        .quote-box {
+            background: var(--color-bg-table-header);
+            border-left: 3px solid var(--color-info);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: 16px 20px;
+            margin: 16px 0;
+            font-style: italic;
+            color: var(--color-text-secondary);
+        }
+
+        /* ========== 特性列表 ========== */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 6px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .feature-list li::before {
+            content: "✓";
+            color: var(--color-success);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ========== 时间线 ========== */
+        .timeline {
+            position: relative;
+            padding-left: 28px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 4px;
+            bottom: 4px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--color-success), var(--color-purple));
+            border-radius: 1px;
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 20px;
+        }
+        .timeline-item:last-child { padding-bottom: 0; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--color-bg-card);
+            border: 2px solid var(--color-success);
+            transition: all var(--transition-fast);
+        }
+        .timeline-item:hover::before {
+            background: var(--color-success);
+            box-shadow: var(--shadow-glow-success);
+            transform: scale(1.2);
+        }
+        .timeline-date {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+        .timeline-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 4px;
+        }
+        .timeline-desc {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ========== 标签 ========== */
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .tag::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+            flex-shrink: 0;
+        }
+        .tag-success { background: rgba(5,150,105,0.1); color: var(--color-success); }
+        .tag-info    { background: rgba(37,99,235,0.1); color: var(--color-info); }
+        .tag-warning { background: rgba(217,119,6,0.1); color: var(--color-warning); }
+        .tag-purple  { background: rgba(124,58,237,0.1); color: var(--color-purple); }
+
+        /* ========== 滚动入场动画 ========== */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .42s ease, transform .42s ease;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll { transition: none; opacity: 1; transform: none; }
+        }
+
+        /* ========== 了解更多模块 ========== */
+        .learn-more {
+            background: linear-gradient(135deg, #F8FAFB 0%, #EEF2F6 100%);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            margin-top: 48px;
+        }
+        .learn-more-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .learn-more p {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .learn-more a {
+            color: var(--color-info);
+            text-decoration: none;
+        }
+        .learn-more a:hover {
+            text-decoration: underline;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: var(--gradient-success);
+            color: white;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-normal);
+        }
+        .btn-primary:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+        .ref-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .ref-list li {
+            padding: 4px 0;
+            font-size: 13px;
+        }
+        .ref-list a {
+            color: var(--color-info);
+            text-decoration: none;
+        }
+        .ref-list a:hover {
+            text-decoration: underline;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 1024px) {
+            .sidebar-nav { width: 200px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .platform-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .layout-wrapper { flex-direction: column; }
+            .sidebar-nav {
+                width: 100%;
+                position: sticky;
+                top: 0;
+                height: auto;
+                max-height: none;
+                overflow-y: visible;
+                border-right: none;
+                border-bottom: 1px solid var(--color-border);
+                flex-direction: row;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+                padding: 8px 0;
+            }
+            .sidebar-collapse-btn { display: none; }
+            .sidebar-doc-title { display: none; }
+            .toc-section {
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+            }
+            .toc-group-label { display: none; }
+            .toc-link {
+                flex: 0 0 auto;
+                border-left: none;
+                border-bottom: 2px solid transparent;
+                white-space: nowrap;
+                padding: 8px 16px;
+                scroll-snap-align: start;
+            }
+            .toc-link.toc-active {
+                border-left-color: transparent;
+                border-bottom-color: var(--color-purple);
+            }
+            .reading-progress-wrap { display: none; }
+            .content-inner {
+                padding: 32px 16px 80px;
+            }
+            .main-title { font-size: 26px; }
+            .subtitle { font-size: 14px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .stat-card { padding: 16px; }
+            .stat-value { font-size: 24px; }
+            background-attachment: scroll;
+        }
+    </style>
+</head>
+<body>
+<a class="skip-to-content" href="#main-content">跳到主内容</a>
+<div class="layout-wrapper">
+    <!-- 侧边栏 TOC 导航 -->
+    <nav class="sidebar-nav" id="sidebar" aria-label="目录导航">
+        <div class="sidebar-doc-title">AI Agent平台深度对比</div>
+        <div class="toc-section">
+            <div class="toc-group-label">目录</div>
+            <a href="#overview" class="toc-link">01 概述</a>
+            <a href="#hermes" class="toc-link">02 Hermes Agent</a>
+            <a href="#openclaw" class="toc-link">03 OpenClaw</a>
+            <a href="#kairos" class="toc-link">04 KAIROS</a>
+            <a href="#comparison" class="toc-link">05 深度对比</a>
+            <a href="#insights" class="toc-link">06 核心洞察</a>
+        </div>
+        <!-- 阅读进度条 -->
+        <div class="reading-progress-wrap">
+            <div class="reading-progress-label">阅读进度</div>
+            <div class="reading-progress-track">
+                <div class="reading-progress-fill" id="readingProgress"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 折叠按钮 -->
+    <button class="sidebar-collapse-btn" id="collapseBtn" title="折叠导航" aria-label="折叠导航">«</button>
+
+    <!-- 主内容区 -->
+    <main class="content-area" id="main-content">
+        <div class="content-inner">
+            <!-- 头部 -->
+            <header class="doc-header animate-on-scroll">
+                <span class="header-badge">深度调研 · AI Agent</span>
+                <h1 class="main-title">AI Agent平台深度对比</h1>
+                <p class="subtitle">Hermes Agent vs OpenClaw vs Anthropic KAIROS——三大Agent平台来龙去脉、架构哲学与深度对比分析</p>
+            </header>
+
+            <!-- 概述章节 -->
+            <section id="overview">
+            <div class="doc-chapter-label animate-on-scroll">01 · 三足鼎立的Agent格局</div>
+
+            <p class="animate-on-scroll" style="margin-bottom: 24px; line-height: 1.8; color: var(--color-text-secondary);">
+                2026年的AI Agent市场正在经历一场范式转移——从「会话式助手」向「常驻型智能体」演进。
+                这场转变的根源在于：ChatGPT 和 Claude 证明了 LLM 的推理能力，但<strong>对话式交互的局限性</strong>很快暴露——
+                每次开启新对话都是"失忆"的开始，Agent 无法记住你的偏好、代码风格、项目上下文。
+            </p>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">📈</span> 市场背景：为什么是现在？</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    2024-2025 年，AI Coding 工具（Cursor、Windsurf、Claude Code）验证了"AI 能写生产级代码"。
+                    但这些工具本质上是<strong>增强型 IDE</strong>，它们不会主动思考、不会跨会话学习、不会在后台持续运行。
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+                    <div style="background: var(--color-bg-card); padding: 16px; border-radius: var(--radius-lg); border-left: 3px solid var(--color-info);">
+                        <div style="font-weight: 600; color: var(--color-text-primary); margin-bottom: 8px;">2024 Q3</div>
+                        <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">
+                            Cursor 和 Claude Code 证明 AI 可以处理复杂代码任务，但用户抱怨"每次对话都要重新解释项目"
+                        </div>
+                    </div>
+                    <div style="background: var(--color-bg-card); padding: 16px; border-radius: var(--radius-lg); border-left: 3px solid var(--color-success);">
+                        <div style="font-weight: 600; color: var(--color-text-primary); margin-bottom: 8px;">2025 Q2</div>
+                        <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">
+                            OpenClaw 开源后迅速积累 30万+ stars，"常驻后台的 AI 助手"概念开始普及
+                        </div>
+                    </div>
+                    <div style="background: var(--color-bg-card); padding: 16px; border-radius: var(--radius-lg); border-left: 3px solid var(--color-purple);">
+                        <div style="font-weight: 600; color: var(--color-text-primary); margin-bottom: 8px;">2026 Q1</div>
+                        <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">
+                            Hermes Agent 和 KAIROS 亮相，"Agent 应该持续学习"成为新共识
+                        </div>
+                    </div>
+                </div>
+                <p style="line-height: 1.8; color: var(--color-text-secondary);">
+                    三大平台的出现并非巧合——它们代表了<strong>三种根本不同的产品假设</strong>：
+                    OpenClaw 假设用户想要"无限扩展的工具箱"；Hermes 假设用户想要"一个懂我的合伙人"；
+                    KAIROS 假设用户想要"从不掉线的云端助手"。
+                </p>
+            </div>
+
+            <div class="insight-box animate-on-scroll">
+                <div class="title">💡 核心命题</div>
+                <p>它们都在回答同一个问题：<em>一个真正有用的 AI Agent 应该是什么样子？</em> 但答案截然不同。
+                这不仅是技术路线的分歧，更是<strong>对人机关系的不同想象</strong>——工具 vs 伙伴 vs 员工。</p>
+            </div>
+
+            <!-- 统计数据 -->
+            <div class="stats-grid animate-on-scroll">
+                <div class="stat-card stat-success">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">主流平台</div>
+                </div>
+                <div class="stat-card stat-info">
+                    <div class="stat-value">345K</div>
+                    <div class="stat-label">OpenClaw Stars</div>
+                </div>
+                <div class="stat-card stat-warning">
+                    <div class="stat-value">13K+</div>
+                    <div class="stat-label">社区技能</div>
+                </div>
+                <div class="stat-card stat-purple">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">架构哲学</div>
+                </div>
+            </div>
+
+            <!-- 平台概览卡片 -->
+            <div class="platform-grid animate-on-scroll">
+                <div class="platform-card emerald">
+                    <div class="name">🦅 Hermes Agent</div>
+                    <div class="tagline">"The agent that grows with you"</div>
+                    <div class="stats">
+                        <span>⭐ 22K stars</span>
+                        <span>🏢 Nous Research</span>
+                    </div>
+                </div>
+                <div class="platform-card blue">
+                    <div class="name">🦀 OpenClaw</div>
+                    <div class="tagline">开源个人AI助手先锋</div>
+                    <div class="stats">
+                        <span>⭐ 345K stars</span>
+                        <span>📦 13K+ skills</span>
+                    </div>
+                </div>
+                <div class="platform-card violet">
+                    <div class="name">⏰ KAIROS</div>
+                    <div class="tagline">Always-On 云端Agent</div>
+                    <div class="stats">
+                        <span>🔒 未发布</span>
+                        <span>🏢 Anthropic</span>
+                    </div>
+                </div>
+            </div>
+            </section>
+
+            <!-- Hermes Agent 章节 -->
+            <section id="hermes">
+            <div class="doc-chapter-label animate-on-scroll">02 · Hermes Agent：学习型Agent的典范</div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">📝</span> 核心定位</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    Hermes Agent由<strong>Nous Research</strong>（开源AI研究实验室）于2026年2月发布，
+                    其核心命题是：<em>如果一个Agent能够从经验中学习并自我改进，会发生什么？</em>
+                    它不仅仅是一个工具，而是一个"与你共同成长的Agent"。
+                </p>
+                <div class="insight-box">
+                    <div class="title">💡 关键洞察</div>
+                    <p>Hermes的差异化在于<strong>内置学习循环（learning loop）</strong>——它能从经验中创建技能、在使用过程中改进技能、
+                    主动提醒自己要持久化知识、搜索过往对话，并在多次会话中构建对你的深度理解。</p>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">⚙️</span> 技术架构</div>
+                <ul class="feature-list">
+                    <li><strong>AIAgent执行循环为核心</strong>：与OpenClaw的Gateway控制平面不同，Hermes将Agent循环本身作为核心同步编排引擎</li>
+                    <li><strong>分层记忆系统</strong>：FTS5全文搜索 + SQLite持久化 + LLM驱动的会话摘要，支持跨会话召回</li>
+                    <li><strong>自主技能创建</strong>：完成复杂任务后，Agent自动编写结构化技能文档，记录程序、陷阱和验证步骤</li>
+                    <li><strong>自训练循环</strong>：集成Atropos RL框架，可生成批量轨迹并训练Agent行为</li>
+                    <li><strong>六终端后端</strong>：local、Docker、SSH、Daytona、Singularity、Modal，支持serverless休眠</li>
+                </ul>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🧠</span> 学习循环：核心创新</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    Hermes 的学习循环是其区别于其他 Agent 的核心机制。这不是简单的"记住对话历史"，
+                    而是一个<strong>主动的知识提取-验证-应用-迭代</strong>的闭环。
+                </p>
+                <div class="timeline" style="margin: 24px 0;">
+                    <div class="timeline-item">
+                        <div class="timeline-date">阶段 1</div>
+                        <div class="timeline-title">经验捕获</div>
+                        <div class="timeline-desc">完成任务后，LLM 自动提取"学到了什么"，识别可复用的模式、陷阱、验证步骤</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">阶段 2</div>
+                        <div class="timeline-title">技能文档化</div>
+                        <div class="timeline-desc">将经验转化为结构化技能文档（YAML 格式），包含：适用场景、执行步骤、常见错误、验证方法</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">阶段 3</div>
+                        <div class="timeline-title">上下文整合</div>
+                        <div class="timeline-desc">新对话开始时，自动检索相关技能，将"你的偏好"注入系统提示词（如"用户喜欢用 TypeScript"）</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">阶段 4</div>
+                        <div class="timeline-title">持续迭代</div>
+                        <div class="timeline-desc">每次使用技能时收集反馈，用 RL 框架（Atropos）优化技能质量，自动淘汰低效技能</div>
+                    </div>
+                </div>
+                <div class="insight-box" style="background: var(--color-success-50); border-left-color: var(--color-success);">
+                    <div class="title" style="color: var(--color-success);">🎯 关键差异</div>
+                    <p>传统 Agent 的"记忆"是<strong>被动存储</strong>对话历史；Hermes 的"学习"是<strong>主动提炼</strong>可复用知识。
+                    类比：前者是写日志，后者是写操作手册。</p>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">💻</span> 使用场景与案例</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+                    <div style="background: var(--color-bg-card); padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                        <div style="font-weight: 700; color: var(--color-text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <span>📊</span> 长期项目维护
+                        </div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; margin: 0 0 12px 0;">
+                            开发者在 3 个月的项目中，Hermes 会记住：代码规范、架构决策、技术债务位置、团队沟通风格。
+                        </p>
+                        <div style="font-size: 12px; color: var(--color-success); background: var(--color-success-50); padding: 8px 12px; border-radius: 6px;">
+                            ✓ 无需每次对话都解释"我们项目用 Redux 还是 Zustand"
+                        </div>
+                    </div>
+                    <div style="background: var(--color-bg-card); padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                        <div style="font-weight: 700; color: var(--color-text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <span>🔧</span> 复杂调试任务
+                        </div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; margin: 0 0 12px 0;">
+                            调试一个棘手的并发 Bug 后，Hermes 会记录：错误模式、排查步骤、验证方法，下次遇到类似问题自动应用。
+                        </p>
+                        <div style="font-size: 12px; color: var(--color-success); background: var(--color-success-50); padding: 8px 12px; border-radius: 6px;">
+                            ✓ 经验转化为可复用的"调试技能"
+                        </div>
+                    </div>
+                    <div style="background: var(--color-bg-card); padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                        <div style="font-weight: 700; color: var(--color-text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <span>📝</span> 个人知识管理
+                        </div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; margin: 0 0 12px 0;">
+                            持续对话中构建个人知识图谱：常用工具、偏好设置、未竟事项、决策历史。
+                        </p>
+                        <div style="font-size: 12px; color: var(--color-success); background: var(--color-success-50); padding: 8px 12px; border-radius: 6px;">
+                            ✓ 成为你的"第二大脑"，而非一次性助手
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">⚠️</span> 限制与挑战</div>
+                <ul class="feature-list">
+                    <li><strong>学习质量依赖 LLM 能力</strong>：如果底层模型提取知识的能力有限，生成的技能文档质量也会受限</li>
+                    <li><strong>隐私与数据积累</strong>：长期学习意味着大量个人数据存储，需要更强的本地加密和权限控制</li>
+                    <li><strong>技能膨胀问题</strong>：随着时间推移，技能库可能变得臃肿，需要有效的淘汰和归档机制</li>
+                    <li><strong>冷启动成本</strong>：新用户需要积累一定对话历史才能体现学习价值，初期体验可能不如其他平台</li>
+                </ul>
+            </div>
+            </section>
+
+            <!-- OpenClaw 章节 -->
+            <section id="openclaw">
+            <div class="doc-chapter-label animate-on-scroll">03 · OpenClaw：生态型Agent的霸主</div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">📝</span> 核心定位</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    OpenClaw由奥地利开发者<strong>Peter Steinberger</strong>于2025年底作为周末项目启动（原名Clawdbot），
+                    迅速成为GitHub增长最快的开源项目之一，截至2026年4月已获得<strong>34.5万stars</strong>。
+                    2026年2月，Steinberger宣布加入OpenAI，OpenClaw将移交独立基金会运营。
+                </p>
+                <div class="quote-box">
+                    "OpenClaw让'个人自托管Agent'这个想法变得可行。它解决了开发者一直在等待有人解决的问题：
+                    一个能连接到你已经在使用的消息应用的自托管AI Agent。"
+                    <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-muted); font-style: normal;">— The New Stack</div>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🏗️</span> 架构特点</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    OpenClaw采用<strong>Gateway控制平面</strong>架构——一个单一的长运行进程拥有会话、路由、
+                    工具执行和状态。所有数据流都经过它。这与Hermes的"Agent循环为核心"形成鲜明对比。
+                </p>
+                <ul class="feature-list">
+                    <li><strong>Gateway作为控制平面</strong>：集中式会话管理和路由</li>
+                    <li><strong>跨平台消息网关</strong>：单一进程支持多平台同时在线</li>
+                    <li><strong>模型无关设计</strong>：Anthropic、OpenAI、Google、Ollama本地模型无缝切换</li>
+                    <li><strong>技能插件系统</strong>：workspace、personal、shared、plugins四级作用域</li>
+                </ul>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🌐</span> Gateway 架构深度解析</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    OpenClaw 的 Gateway 架构是其区别于 Hermes 的核心设计选择。如果说 Hermes 是"Agent 即核心"，
+                    OpenClaw 就是"Gateway 即核心"——所有数据流、状态管理、路由决策都经过这个单一进程。
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+                    <div style="background: var(--color-bg-card); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                        <div style="font-weight: 600; color: var(--color-info); margin-bottom: 8px;">会话管理层</div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin: 0;">
+                            Gateway 维护所有活跃会话的状态，包括：当前对话历史、已加载技能、用户偏好、工具调用上下文
+                        </p>
+                    </div>
+                    <div style="background: var(--color-bg-card); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                        <div style="font-weight: 600; color: var(--color-success); margin-bottom: 8px;">消息路由层</div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin: 0;">
+                            统一处理多平台消息（Telegram/Discord/Slack等），将外部消息格式转换为内部标准格式
+                        </p>
+                    </div>
+                    <div style="background: var(--color-bg-card); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                        <div style="font-weight: 600; color: var(--color-purple); margin-bottom: 8px;">工具执行沙箱</div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin: 0;">
+                            所有技能代码在受控环境中执行，通过 IPC 与 Gateway 通信，隔离用户系统
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box" style="background: var(--color-info-50); border-left-color: var(--color-info);">
+                    <div class="title" style="color: var(--color-info);">⚖️ 架构权衡</div>
+                    <p><strong>Gateway 优势</strong>：中心化控制，易于跨平台同步状态，技能生态系统统一<br>
+                    <strong>Gateway 劣势</strong>：单点故障风险，水平扩展困难，所有流量经过 Gateway 可能成为瓶颈</p>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">📦</span> ClawHub 生态系统</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    <strong>ClawHub</strong> 是 OpenClaw 的公开技能仓库，截至 2026 年 4 月拥有超过 <strong>13,000 个社区技能</strong>。
+                    这个数字意味着：平均每天都有数十个新技能被提交，社区活跃度堪比 npm 早期。
+                </p>
+                <div style="background: var(--color-bg-card); padding: 20px; border-radius: var(--radius-lg); margin: 16px 0;">
+                    <div style="font-weight: 600; color: var(--color-text-primary); margin-bottom: 12px;">技能四级作用域</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                        <div style="padding: 12px; background: var(--color-success-50); border-radius: 8px;">
+                            <div style="font-weight: 600; color: var(--color-success); font-size: 13px;">workspace</div>
+                            <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">仅当前项目可用</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--color-info-50); border-radius: 8px;">
+                            <div style="font-weight: 600; color: var(--color-info); font-size: 13px;">personal</div>
+                            <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">用户全局可用</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--color-purple-50); border-radius: 8px;">
+                            <div style="font-weight: 600; color: var(--color-purple); font-size: 13px;">shared</div>
+                            <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">团队共享技能</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--color-warning-50); border-radius: 8px;">
+                            <div style="font-weight: 600; color: var(--color-warning); font-size: 13px;">plugins</div>
+                            <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">ClawHub 社区技能</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🛡️</span> 安全事件深度分析</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    OpenClaw 的快速扩张也带来了严峻的安全挑战。2026 年初的一系列事件，暴露了"npm 早期模式"的风险。
+                </p>
+                <div style="background: var(--color-danger-50); border: 1px solid #FECACA; border-radius: 12px; padding: 20px; margin: 16px 0;">
+                    <div style="font-weight: 700; color: var(--color-danger); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                        <span>⚠️</span> ClawHavoc 攻击事件（2026年2月）
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px;">
+                        <div>
+                            <div style="font-weight: 600; font-size: 13px; color: var(--color-text-primary); margin-bottom: 4px;">攻击规模</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--color-danger);">341</div>
+                            <div style="font-size: 12px; color: var(--color-text-secondary);">恶意技能总数</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 13px; color: var(--color-text-primary); margin-bottom: 4px;">主要来源</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--color-danger);">335</div>
+                            <div style="font-size: 12px; color: var(--color-text-secondary);">来自单一攻击活动</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 13px; color: var(--color-text-primary); margin-bottom: 4px;">发现者</div>
+                            <div style="font-size: 16px; font-weight: 600; color: var(--color-text-primary);">Koi Security</div>
+                            <div style="font-size: 12px; color: var(--color-text-secondary);">安全审计公司</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin: 16px 0;">
+                    <div style="background: var(--color-bg-card); padding: 16px; border-radius: var(--radius-lg); border-left: 3px solid var(--color-warning);">
+                        <div style="font-weight: 600; color: var(--color-warning); margin-bottom: 8px;">CVE-2026-25253</div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin: 0 0 8px 0;">
+                            CVSS 8.8 高危漏洞，涉及不安全的 WebSocket 自动连接行为
+                        </p>
+                        <div style="font-size: 12px; color: var(--color-text-muted);">攻击者可利用此漏洞在未经用户确认的情况下建立远程连接</div>
+                    </div>
+                    <div style="background: var(--color-bg-card); padding: 16px; border-radius: var(--radius-lg); border-left: 3px solid var(--color-info);">
+                        <div style="font-weight: 600; color: var(--color-info); margin-bottom: 8px;">Microsoft 建议</div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin: 0 0 8px 0;">
+                            将 OpenClaw 运行时视为"可能被不可信输入影响"的环境
+                        </p>
+                        <div style="font-size: 12px; color: var(--color-text-muted);">建议企业用户在隔离容器中运行，限制网络访问权限</div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <div class="title">🔍 安全 vs 开放的张力</div>
+                    <p>OpenClaw 的安全事件反映了<strong>生态扩张与信任建设之间的根本张力</strong>。
+                    低门槛带来了繁荣的社区（13K+ 技能），但也引入了"供应链攻击"风险。
+                    这与 npm、PyPI 等包管理器早期面临的问题如出一辙——<em>如何在不扼杀创新的前提下建立安全边界？</em></p>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">⚠️</span> 限制与挑战</div>
+                <ul class="feature-list">
+                    <li><strong>安全风险</strong>：ClawHub 技能质量参差不齐，恶意技能、供应链攻击是持续威胁</li>
+                    <li><strong>基金会化转型不确定性</strong>：创始人加入 OpenAI 后，独立基金会的治理能力和资源投入存疑</li>
+                    <li><strong>企业级功能缺失</strong>：审计日志、RBAC、SSO 等企业必需功能尚未完善</li>
+                    <li><strong>Gateway 单点瓶颈</strong>：大规模部署时，中心化 Gateway 可能成为性能瓶颈</li>
+                    <li><strong>技能碎片化</strong>：13K+ 技能中大量重复、低质量实现，缺乏统一标准</li>
+                </ul>
+            </div>
+            </section>
+
+            <!-- KAIROS 章节 -->
+            <section id="kairos">
+            <div class="doc-chapter-label animate-on-scroll">04 · KAIROS：云端常驻Agent的未来</div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🔮</span> 泄露事件与曝光</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    2026年3月底，Claude Code的完整源码通过npm包中的.map文件泄露，有人将其上传至GitHub。
+                    这次泄露揭示了Anthropic正在秘密开发的多个未发布功能，其中最引人注目的是<strong>KAIROS</strong>——
+                    一个始终在线的自治Agent，能够发送推送通知并监控GitHub PR。
+                </p>
+                <div class="insight-box">
+                    <div class="title">💡 泄露发现</div>
+                    <p>Reddit用户通过分析泄露代码发现：<strong>"kairos: an autonomous agent that can send push notifications and monitor github prs"</strong>。
+                    这表明Anthropic正在从"会话式工具"向"常驻式服务"转型。</p>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">☁️</span> 架构推测：云端 Agent 即服务</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    基于泄露代码和 Anthropic 的产品哲学，我们可以对 KAIROS 的架构进行合理推测。
+                    与 OpenClaw/Hermes 的"自托管"路线不同，KAIROS 很可能是<strong>完全托管的 SaaS 服务</strong>。
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+                    <div style="background: var(--color-bg-card); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                        <div style="font-weight: 600; color: var(--color-purple); margin-bottom: 8px;">Serverless Agent</div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin: 0;">
+                            用户无需关心运行环境，Agent 在 Anthropic 的云端持续运行，按需唤醒执行
+                        </p>
+                    </div>
+                    <div style="background: var(--color-bg-card); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                        <div style="font-weight: 600; color: var(--color-info); margin-bottom: 8px;">事件驱动架构</div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin: 0;">
+                            GitHub webhook、定时任务、外部 API 调用作为触发器，Agent 被动/主动响应
+                        </p>
+                    </div>
+                    <div style="background: var(--color-bg-card); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                        <div style="font-weight: 600; color: var(--color-success); margin-bottom: 8px;">托管记忆层</div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin: 0;">
+                            用户偏好、项目上下文、历史决策存储在云端，跨设备同步
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box" style="background: var(--color-purple-50); border-left-color: var(--color-purple);">
+                    <div class="title" style="color: var(--color-purple);">🎯 SaaS vs 自托管的取舍</div>
+                    <p><strong>优势</strong>：零运维成本、即时可用、跨设备一致体验、Anthropic 级别的安全合规<br>
+                    <strong>劣势</strong>：数据主权问题、Vendor Lock-in、订阅成本、无法深度定制</p>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🎯</span> 已知能力</div>
+                <ul class="feature-list">
+                    <li><strong>推送通知</strong>：主动而非被动响应，具备真正的 proactive 能力——当 PR 被提交、CI 失败时主动通知用户</li>
+                    <li><strong>GitHub PR监控</strong>：代码审查自动化，能读懂代码变更、发现潜在问题、提供修改建议</li>
+                    <li><strong>Always-On常驻</strong>：不依赖用户主动发起会话，7x24 小时持续监控和响应</li>
+                    <li><strong>云端托管</strong>：与 Claude Code 本地运行不同，KAIROS 是云服务，无需本地安装</li>
+                </ul>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">⚔️</span> 与 Claude Code 的对比</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    Claude Code 和 KAIROS 代表了 Anthropic 的两条产品线：前者是<strong>本地增强型 IDE</strong>，
+                    后者是<strong>云端常驻 Agent</strong>。理解两者的差异，有助于判断 KAIROS 的定位。
+                </p>
+                <div class="table-wrapper">
+                    <table style="font-size: 13px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">维度</th>
+                                <th style="width: 37.5%;">Claude Code</th>
+                                <th style="width: 37.5%;">KAIROS（推测）</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>运行模式</strong></td>
+                                <td>本地 CLI 工具</td>
+                                <td>云端托管服务</td>
+                            </tr>
+                            <tr>
+                                <td><strong>触发方式</strong></td>
+                                <td>用户主动发起</td>
+                                <td>事件触发 + 主动推送</td>
+                            </tr>
+                            <tr>
+                                <td><strong>持续状态</strong></td>
+                                <td>进程结束即消失</td>
+                                <td>Always-On 常驻</td>
+                            </tr>
+                            <tr>
+                                <td><strong>集成方式</strong></td>
+                                <td>IDE/终端集成</td>
+                                <td>GitHub/消息应用集成</td>
+                            </tr>
+                            <tr>
+                                <td><strong>适用场景</strong></td>
+                                <td>编码时的实时协助</td>
+                                <td>项目监控、自动化审查</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="insight-box">
+                    <div class="title">💡 产品矩阵思路</div>
+                    <p>Anthropic 似乎在构建<strong>分层产品矩阵</strong>：Claude（通用对话）→ Claude Code（编码助手）→ KAIROS（项目管家）。
+                    每一层都增加"持久性"和"主动性"，最终目标是让企业为"永不掉线的 AI 员工"付费。</p>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">📅</span> 发布策略推测</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    KAIROS 的泄露可能是意外的，但也可能是 Anthropic 的"软启动"策略——
+                    通过泄露测试市场反应，同时给竞争对手施加压力。
+                </p>
+                <div style="background: var(--color-bg-card); padding: 20px; border-radius: var(--radius-lg); margin: 16px 0;">
+                    <div style="font-weight: 600; color: var(--color-text-primary); margin-bottom: 12px;">可能的时间线</div>
+                    <div class="timeline" style="margin: 0;">
+                        <div class="timeline-item">
+                            <div class="timeline-date">2026 Q2</div>
+                            <div class="timeline-title">内部测试 / 合作伙伴试点</div>
+                            <div class="timeline-desc">向大型企业客户开放有限测试，收集反馈</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2026 Q3</div>
+                            <div class="timeline-title">公开 Beta</div>
+                            <div class="timeline-desc">Pro/Enterprise 用户优先体验，验证付费意愿</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2026 Q4</div>
+                            <div class="timeline-title">正式发布 + 独立定价</div>
+                            <div class="timeline-desc">与 Claude Pro 分开定价，推出 KAIROS for Teams</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">⚠️</span> 限制与挑战</div>
+                <ul class="feature-list">
+                    <li><strong>未正式发布</strong>：所有信息基于泄露代码，实际功能可能有较大差异</li>
+                    <li><strong>数据隐私顾虑</strong>：云端常驻意味着代码和对话持续上传，企业用户可能担忧</li>
+                    <li><strong>定价策略不明</strong>：Always-On 服务成本高，定价可能超出个人用户承受范围</li>
+                    <li><strong>生态锁定风险</strong>：深度集成 GitHub 等第三方服务，迁移成本高</li>
+                </ul>
+            </div>
+            </section>
+
+            <!-- 深度对比章节 -->
+            <section id="comparison">
+            <div class="doc-chapter-label animate-on-scroll">05 · 三维度深度对比</div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">📊</span> 核心参数对比</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">维度</th>
+                                <th style="width: 26.6%;">Hermes Agent</th>
+                                <th style="width: 26.6%;">OpenClaw</th>
+                                <th style="width: 26.6%;">Anthropic KAIROS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>发布时间</strong></td>
+                                <td>2026年2月</td>
+                                <td>2025年底</td>
+                                <td>未发布（泄露曝光）</td>
+                            </tr>
+                            <tr>
+                                <td><strong>开发方</strong></td>
+                                <td>Nous Research</td>
+                                <td>Peter Steinberger → 基金会</td>
+                                <td>Anthropic</td>
+                            </tr>
+                            <tr>
+                                <td><strong>GitHub Stars</strong></td>
+                                <td>~22,000</td>
+                                <td>~345,000</td>
+                                <td>闭源</td>
+                            </tr>
+                            <tr>
+                                <td><strong>部署模式</strong></td>
+                                <td>自托管（本地/VPS/云端）</td>
+                                <td>自托管（本地/云端）</td>
+                                <td>云端SaaS</td>
+                            </tr>
+                            <tr>
+                                <td><strong>核心哲学</strong></td>
+                                <td>"与你共同成长"</td>
+                                <td>"无处不在的AI助手"</td>
+                                <td>"Always-On智能员工"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>架构核心</strong></td>
+                                <td>AIAgent执行循环</td>
+                                <td>Gateway控制平面</td>
+                                <td>云端常驻服务</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Skills来源</strong></td>
+                                <td>自主生成 + 人工编写</td>
+                                <td>人工编写（社区为主）</td>
+                                <td>未知</td>
+                            </tr>
+                            <tr>
+                                <td><strong>记忆系统</strong></td>
+                                <td>FTS5+SQLite+LLM摘要</td>
+                                <td>MEMORY.md/CLAUDE.md</td>
+                                <td>云端持久化</td>
+                            </tr>
+                            <tr>
+                                <td><strong>模型支持</strong></td>
+                                <td>200+（OpenRouter等）</td>
+                                <td>全主流模型</td>
+                                <td>Claude系列</td>
+                            </tr>
+                            <tr>
+                                <td><strong>安全模型</strong></td>
+                                <td>容器隔离/Tirith预执行扫描</td>
+                                <td>VirusTotal扫描（后期补强）</td>
+                                <td>企业级云端安全</td>
+                            </tr>
+                            <tr>
+                                <td><strong>定价</strong></td>
+                                <td>免费开源</td>
+                                <td>免费开源</td>
+                                <td>预计订阅制</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🎯</span> 适用场景矩阵</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    选择哪个平台，取决于你的核心需求：是追求长期陪伴的学习型伙伴，还是功能强大的工具箱，抑或是无需运维的云端助手？
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin: 20px 0;">
+                    <div style="background: var(--color-success-50); padding: 20px; border-radius: var(--radius-lg); border-left: 4px solid var(--color-success);">
+                        <div style="font-weight: 700; color: var(--color-success); margin-bottom: 12px; font-size: 16px;">🦅 选择 Hermes Agent</div>
+                        <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.7;">
+                            <strong>如果你：</strong>
+                            <ul style="margin: 8px 0; padding-left: 18px;">
+                                <li>希望 Agent "越用越懂你"</li>
+                                <li>有长期项目需要持续维护</li>
+                                <li>重视隐私，希望数据本地存储</li>
+                                <li>愿意投入时间培养"数字合伙人"</li>
+                            </ul>
+                            <strong>典型用户：</strong>独立开发者、技术作家、研究员
+                        </div>
+                    </div>
+                    <div style="background: var(--color-info-50); padding: 20px; border-radius: var(--radius-lg); border-left: 4px solid var(--color-info);">
+                        <div style="font-weight: 700; color: var(--color-info); margin-bottom: 12px; font-size: 16px;">🦀 选择 OpenClaw</div>
+                        <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.7;">
+                            <strong>如果你：</strong>
+                            <ul style="margin: 8px 0; padding-left: 18px;">
+                                <li>需要丰富的现成技能生态</li>
+                                <li>重视多平台消息接入</li>
+                                <li>愿意承担一定安全风险换取便利</li>
+                                <li>希望快速上手，不想等待"培养期"</li>
+                            </ul>
+                            <strong>典型用户：</strong>效率工具爱好者、团队协作者、自动化极客
+                        </div>
+                    </div>
+                    <div style="background: var(--color-purple-50); padding: 20px; border-radius: var(--radius-lg); border-left: 4px solid var(--color-purple);">
+                        <div style="font-weight: 700; color: var(--color-purple); margin-bottom: 12px; font-size: 16px;">⏰ 选择 KAIROS</div>
+                        <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.7;">
+                            <strong>如果你：</strong>
+                            <ul style="margin: 8px 0; padding-left: 18px;">
+                                <li>不想维护任何基础设施</li>
+                                <li>需要 7x24 小时的项目监控</li>
+                                <li>重视企业级安全和合规</li>
+                                <li>愿意为便利支付订阅费用</li>
+                            </ul>
+                            <strong>典型用户：</strong>企业团队、项目经理、非技术背景用户
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🧭</span> 选择决策框架</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    如果仍难以决定，可以用以下决策树快速定位：
+                </p>
+                <div style="background: var(--color-bg-card); padding: 24px; border-radius: var(--radius-lg); margin: 16px 0;">
+                    <div style="font-family: monospace; font-size: 13px; line-height: 1.8; color: var(--color-text-primary);">
+                        <div style="margin-bottom: 12px;"><strong>Q1: 你愿意自己托管/维护吗？</strong></div>
+                        <div style="padding-left: 20px; margin-bottom: 12px;">
+                            → 不愿意 → <span style="color: var(--color-purple); font-weight: 600;">选择 KAIROS</span>（或等待其发布）
+                        </div>
+                        <div style="padding-left: 20px; margin-bottom: 12px;">
+                            → 愿意 → <strong>Q2: 你更看重生态丰富度还是长期学习能力？</strong>
+                        </div>
+                        <div style="padding-left: 40px; margin-bottom: 12px;">
+                            → 生态丰富度 → <span style="color: var(--color-info); font-weight: 600;">选择 OpenClaw</span>
+                        </div>
+                        <div style="padding-left: 40px;">
+                            → 长期学习能力 → <span style="color: var(--color-success); font-weight: 600;">选择 Hermes Agent</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <div class="title">⚠️ 混合策略</div>
+                    <p>实际上，许多用户可能会采用<strong>混合策略</strong>：用 OpenClaw 处理日常自动化任务（集成多平台消息），
+                    用 Hermes 处理长期项目（积累领域知识），用 KAIROS 监控关键业务（Always-On 保障）。
+                    这不是"三选一"，而是"如何组合"的问题。</p>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🔄</span> 迁移成本分析</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    如果未来需要从一个平台迁移到另一个，成本如何？
+                </p>
+                <div class="table-wrapper">
+                    <table style="font-size: 13px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;">迁移方向</th>
+                                <th style="width: 35%;">数据可迁移性</th>
+                                <th style="width: 35%;">成本评估</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hermes → OpenClaw</td>
+                                <td>技能可导出为 Markdown，但学习积累丢失</td>
+                                <td><span style="color: var(--color-warning);">中等</span>：需重新积累技能生态</td>
+                            </tr>
+                            <tr>
+                                <td>OpenClaw → Hermes</td>
+                                <td>Skills 可重写，但 ClawHub 生态无法迁移</td>
+                                <td><span style="color: var(--color-warning);">中等</span>：需等待 Hermes 学习周期</td>
+                            </tr>
+                            <tr>
+                                <td>自托管 → KAIROS</td>
+                                <td>云端同步，记忆/技能理论上可迁移</td>
+                                <td><span style="color: var(--color-success);">较低</span>：但数据主权转移</td>
+                            </tr>
+                            <tr>
+                                <td>KAIROS → 自托管</td>
+                                <td>取决于 Anthropic 的数据导出政策</td>
+                                <td><span style="color: var(--color-danger);">较高</span>：Vendor Lock-in 风险</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            </section>
+
+            <!-- 核心洞察章节 -->
+            <section id="insights">
+            <div class="doc-chapter-label animate-on-scroll">06 · 核心洞察与趋势判断</div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🔍</span> 洞察一：三种架构哲学的分化</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    三大平台代表了AI Agent的三种不同架构哲学：
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="display: flex; gap: 12px; align-items: flex-start;">
+                        <div style="background: var(--color-success); color: white; padding: 4px 12px; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; white-space: nowrap;">学习优先</div>
+                        <div>
+                            <strong>Hermes</strong>押注Agent的<strong>自我进化能力</strong>。它的假设是：一个能学习的Agent，长期来看会超越一个功能丰富但不会学习的Agent。
+                            这是一种"内功"路线——初期可能不如OpenClaw功能多，但越用越强。
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: flex-start;">
+                        <div style="background: var(--color-info); color: white; padding: 4px 12px; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; white-space: nowrap;">生态优先</div>
+                        <div>
+                            <strong>OpenClaw</strong>押注<strong>网络效应</strong>。它的假设是：一个拥有13,000个技能的生态系统，比单个Agent再聪明也有价值。
+                            这是"外延"路线——用社区力量弥补个体能力的不足。
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: flex-start;">
+                        <div style="background: var(--color-purple); color: white; padding: 4px 12px; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; white-space: nowrap;">托管优先</div>
+                        <div>
+                            <strong>KAIROS</strong>押注<strong>云端化和易用性</strong>。它的假设是：大多数用户不想自托管，愿意付费换取便利。
+                            这是"SaaS"路线——将Agent作为服务而非软件。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🔮</span> 洞察二：从"工具"到"员工"的范式转移</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    这三个平台的共同点是：<strong>它们都在推动AI Agent从"会话式工具"向"常驻式员工"转型</strong>。
+                </p>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024-2025</div>
+                        <div class="timeline-title">会话式AI（ChatGPT/Claude）</div>
+                        <div class="timeline-desc">"我问，你答"</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2025-2026</div>
+                        <div class="timeline-title">持久化会话（Claude Code/Cursor）</div>
+                        <div class="timeline-desc">"记住我们聊过什么"</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026+</div>
+                        <div class="timeline-title">常驻Agent（Hermes/OpenClaw/KAIROS）</div>
+                        <div class="timeline-desc">"我在，随时待命"</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">⚠️</span> 洞察三：安全成为分水岭</div>
+                <p style="line-height: 1.8;">
+                    OpenClaw的ClawHavoc事件和341个恶意技能暴露了<strong>生态扩张与安全之间的张力</strong>。
+                    Hermes从架构上更保守（容器隔离、预执行扫描），OpenClaw从运营上补救（VirusTotal合作）。
+                    随着Agent获得更高权限（如KAIROS监控PR、发送通知），<strong>安全将成为用户选择的首要考量</strong>。
+                </p>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🎭</span> 洞察四：类比迁移——Agent 操作系统之争</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    当前的 Agent 平台格局，与早期的操作系统之争有着惊人的相似性。
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+                    <div style="background: var(--color-bg-card); padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                        <div style="font-weight: 600; color: var(--color-success); margin-bottom: 8px;">Hermes ≈ Linux</div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; margin: 0;">
+                            开源、高度可定制、需要技术能力维护、长期潜力最大。
+                            选择它的用户看重的是<strong>自由度和进化能力</strong>，而非即插即用。
+                        </p>
+                    </div>
+                    <div style="background: var(--color-bg-card); padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                        <div style="font-weight: 600; color: var(--color-info); margin-bottom: 8px;">OpenClaw ≈ Windows</div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; margin: 0;">
+                            生态最丰富、兼容性最好、但也最容易成为攻击目标。
+                            选择它的用户看重的是<strong>应用生态和易用性</strong>，愿意接受一定风险。
+                        </p>
+                    </div>
+                    <div style="background: var(--color-bg-card); padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                        <div style="font-weight: 600; color: var(--color-purple); margin-bottom: 8px;">KAIROS ≈ macOS/iOS</div>
+                        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; margin: 0;">
+                            封闭但精致、安全可控、用户体验优先、价格较高。
+                            选择它的用户看重的是<strong>无需操心和品质保证</strong>，愿意为便利付费。
+                        </p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <div class="title">💡 类比启示</div>
+                    <p>操作系统市场最终没有"一统天下"，而是三种路线共存——Linux 统治服务器，Windows 统治桌面，macOS/iOS 统治创意和消费级市场。
+                    Agent 平台很可能走向类似的<strong>分层共存格局</strong>，而非赢家通吃。</p>
+                </div>
+            </div>
+
+            <div class="section animate-on-scroll">
+                <div class="section-title"><span class="icon">🔬</span> 洞察五：本质——Agent 的三种存在形态</div>
+                <p style="line-height: 1.8; margin-bottom: 16px;">
+                    透过表面功能差异，我们看到的是 Agent 的<strong>三种存在形态</strong>，对应三种人机关系：
+                </p>
+                <div style="background: var(--color-bg-card); padding: 24px; border-radius: var(--radius-lg); margin: 16px 0;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                        <div style="text-align: center; padding: 16px;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">🌱</div>
+                            <div style="font-weight: 700; color: var(--color-success); margin-bottom: 8px;">有机体</div>
+                            <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">
+                                Hermes 代表的<strong>生长型 Agent</strong>——像植物一样，从经验中汲取养分，越用越强大。
+                                关系是<strong>共生</strong>：你们共同成长。
+                            </div>
+                        </div>
+                        <div style="text-align: center; padding: 16px;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">🛠️</div>
+                            <div style="font-weight: 700; color: var(--color-info); margin-bottom: 8px;">工具箱</div>
+                            <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">
+                                OpenClaw 代表的<strong>扩展型 Agent</strong>——像瑞士军刀，功能丰富，即拿即用。
+                                关系是<strong>主仆</strong>：你指挥，它执行。
+                            </div>
+                        </div>
+                        <div style="text-align: center; padding: 16px;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">👔</div>
+                            <div style="font-weight: 700; color: var(--color-purple); margin-bottom: 8px;">员工</div>
+                            <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">
+                                KAIROS 代表的<strong>服务型 Agent</strong>——像远程助理，专业、可靠、随时待命。
+                                关系是<strong>雇佣</strong>：你付费，它服务。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-box" style="background: var(--color-warning-50); border-left-color: var(--color-warning);">
+                    <div class="title" style="color: var(--color-warning);">🎯 本质洞察</div>
+                    <p>三种形态没有绝对优劣，取决于你的需求：
+                    需要<strong>深度陪伴</strong>选有机体（Hermes），需要<strong>广度能力</strong>选工具箱（OpenClaw），
+                    需要<strong>专业可靠</strong>选员工（KAIROS）。
+                    未来的高级用户，可能同时拥有三种形态的 Agent，各司其职。</p>
+                </div>
+            </div>
+
+            <div class="insight-box animate-on-scroll">
+                <div class="title">🔮 12 个月趋势预测</div>
+                <p style="margin-bottom: 16px;">基于当前格局和演化逻辑，我们预测以下趋势将在未来 12-18 个月内显现：</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+                    <div style="background: rgba(255,255,255,0.5); padding: 16px; border-radius: 8px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">📋 技能标准化</div>
+                        <p style="font-size: 13px; margin: 0; opacity: 0.9;">agentskills.io 或类似标准将成为跨平台技能交换的基础协议，类似于 npm 之于 JavaScript</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.5); padding: 16px; border-radius: 8px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">🏢 混合部署模式</div>
+                        <p style="font-size: 13px; margin: 0; opacity: 0.9;">企业用户采用"云端+本地"混合：敏感任务本地处理，协作任务云端执行</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.5); padding: 16px; border-radius: 8px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">⚖️ 基金会化浪潮</div>
+                        <p style="font-size: 13px; margin: 0; opacity: 0.9;">更多开源项目走向中立治理（如 OpenClaw），以平衡商业化和社区利益</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.5); padding: 16px; border-radius: 8px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">🛡️ 安全评级体系</div>
+                        <p style="font-size: 13px; margin: 0; opacity: 0.9;">第三方安全审计和技能评分成为标配，类似应用商店的"已验证"标签</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.5); padding: 16px; border-radius: 8px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">💼 企业级 KAIROS</div>
+                        <p style="font-size: 13px; margin: 0; opacity: 0.9;">Anthropic 推出 KAIROS Enterprise，与自托管方案正面竞争企业市场</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.5); padding: 16px; border-radius: 8px;">
+                        <div style="font-weight: 600; margin-bottom: 8px;">🔄 Agent 间协作</div>
+                        <p style="font-size: 13px; margin: 0; opacity: 0.9;">不同平台的 Agent 开始支持跨平台通信和任务委托，形成 Agent 网络</p>
+                    </div>
+                </div>
+            </div>
+            </section>
+
+            <!-- 了解更多模块 -->
+            <div class="learn-more animate-on-scroll">
+                <div class="learn-more-title">💡 了解更多</div>
+                <p>
+                    我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+                </p>
+                <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" class="btn-primary">
+                    🏠 访问AI洞察首页
+                </a>
+                <div style="border-top: 1px solid var(--color-border); padding-top: 16px; margin-top: 16px;">
+                    <div style="font-size: 13px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 8px;">📚 参考来源</div>
+                    <ul class="ref-list">
+                        <li><a href="https://github.com/NousResearch/hermes-agent" target="_blank">🔗 Hermes Agent GitHub</a></li>
+                        <li><a href="https://hermes-agent.nousresearch.com/" target="_blank">🔗 Hermes Agent 官网</a></li>
+                        <li><a href="https://thenewstack.io/persistent-ai-agents-compared/" target="_blank">📰 The New Stack: Persistent AI Agents Compared</a></li>
+                        <li><a href="https://turingpost.substack.com/p/ai-101-hermes-agent-openclaws-rival" target="_blank">📰 Turing Post: Hermes vs OpenClaw</a></li>
+                        <li><a href="https://www.reddit.com/r/ClaudeAI/comments/1s8lkkm/i_dug_through_claude_codes_leaked_source_and/" target="_blank">💬 Reddit: Claude Code Source Leak Analysis</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- 回到顶部按钮 -->
+<button class="scroll-to-top" id="scrollToTop" title="回到顶部">↑</button>
+
+<script>
+(function () {
+    "use strict";
+    const HEADER_OFFSET = 72;
+    const SPY_OFFSET    = 110;
+    const sidebar    = document.getElementById("sidebar");
+    const collapseBtn = document.getElementById("collapseBtn");
+    const progressBar = document.getElementById("readingProgress");
+    const scrollTopBtn = document.getElementById("scrollToTop");
+
+    // 平滑锚点滚动 + 点击时高亮 TOC
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener("click", e => {
+            const target = document.getElementById(link.getAttribute("href").slice(1));
+            if (!target) return;
+            e.preventDefault();
+            window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET, behavior: "smooth" });
+            // 点击时立即高亮对应 TOC 链接
+            tocLinks.forEach(l => l.classList.remove("toc-active"));
+            link.classList.add("toc-active");
+        });
+    });
+
+    // Scroll Spy
+    const tocLinks = Array.from(document.querySelectorAll(".toc-link"));
+    const anchorEls = tocLinks.map(a => document.getElementById((a.getAttribute("href")||"").slice(1))).filter(Boolean);
+    function updateTocHighlight() {
+        const scrollY = window.scrollY + SPY_OFFSET;
+        let activeEl = anchorEls[0];
+        for (const el of anchorEls) { if (el && el.offsetTop <= scrollY) activeEl = el; else break; }
+        tocLinks.forEach(link => link.classList.toggle("toc-active", link.getAttribute("href") === "#" + (activeEl&&activeEl.id)));
+    }
+
+    // 阅读进度条
+    function updateProgress() {
+        if (!progressBar) return;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = (total > 0 ? Math.min(100, window.scrollY / total * 100) : 0).toFixed(1) + "%";
+    }
+
+    // 侧边栏折叠
+    collapseBtn && collapseBtn.addEventListener("click", () => {
+        const isCollapsed = sidebar.closest('.layout-wrapper').classList.toggle('sidebar-collapsed');
+        collapseBtn.textContent = isCollapsed ? "»" : "«";
+        collapseBtn.classList.toggle("collapsed-pos", isCollapsed);
+    });
+
+    // 回到顶部
+    scrollTopBtn && scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+    // rAF 节流滚动
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+        if (!ticking) {
+            requestAnimationFrame(() => { updateTocHighlight(); updateProgress();
+                scrollTopBtn && scrollTopBtn.classList.toggle("visible", window.scrollY > 280);
+                ticking = false; });
+            ticking = true;
+        }
+    }, { passive: true });
+
+    updateTocHighlight(); updateProgress();
+
+    // 滚动入场动画
+    const animEls = document.querySelectorAll(".animate-on-scroll");
+    if (!("IntersectionObserver" in window)) {
+        animEls.forEach(el => el.classList.add("visible"));
+    } else {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.06, rootMargin: "0px 0px -30px 0px" });
+        animEls.forEach(el => observer.observe(el));
+    }
+})();
+</script>
+</body>
+</html>

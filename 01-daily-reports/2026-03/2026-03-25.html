@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 - 2026-03-25 (v3.2)</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root {
+            --color-success:#059669;--color-success-light:#10B981;--color-danger:#E11D48;--color-danger-light:#FF7B72;--color-warning:#D97706;--color-info:#2563EB;--color-info-light:#54AEFF;--color-purple:#7C3AED;--color-orange:#EA580C;--color-text-primary:#1C1917;--color-text-secondary:#57534E;--color-text-muted:#78716C;--color-border:#E7E5E4;--color-border-light:#F5F5F4;--color-bg:#F8FAFB;--color-bg-card:#FFFFFF;--color-bg-table-header:#FAFAF9;--gradient-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--gradient-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--gradient-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--gradient-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow-card:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-full:999px;--font-family:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--transition-normal:200ms cubic-bezier(.4,0,.2,1);--content-max-width:980px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font-family);background:var(--color-bg);color:var(--color-text-primary);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--content-max-width);margin:0 auto;padding:24px 20px}
+        .header{background:var(--gradient-success);color:#fff;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-date{font-size:14px;opacity:.85}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:700;margin-left:8px}
+        .overview{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-card);overflow:hidden}
+        .overview-title{font-size:18px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .overview-grid.five-cols{grid-template-columns:repeat(3,1fr)}
+        .overview-item{padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--color-border-light);background:var(--color-bg);transition:all .2s;min-width:0;overflow:hidden}
+        .overview-item:hover{border-color:var(--color-success-light);box-shadow:0 2px 8px rgba(5,150,105,.08)}
+        .overview-item-header{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+        .overview-item-icon{font-size:16px}
+        .overview-item-label{font-size:13px;font-weight:700;color:var(--color-success-light);letter-spacing:.3px}
+        .overview-item-label.orange{color:var(--color-orange)}
+        .overview-headline{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:6px;line-height:1.4}
+        .overview-item-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+        /* Heat Trend Table */
+        .heat-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow-card)}
+        .heat-header{background:linear-gradient(135deg,#EA580C 0%,#DC2626 50%,#B91C1C 100%);color:#fff;padding:18px 24px}
+        .heat-header-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .heat-header-title{font-size:17px;font-weight:800;margin-top:4px}
+        .heat-body{padding:16px 20px}
+        .heat-body p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-top:12px}
+        .heat-body p strong{color:var(--color-text-primary)}
+        .heat-table{width:100%;border-collapse:collapse;font-size:13px}
+        .heat-table th{padding:8px 10px;text-align:left;background:#FEF2F2;font-weight:700;color:#991B1B;border-bottom:2px solid #FECACA;font-size:12px}
+        .heat-table td{padding:10px;border-bottom:1px solid var(--color-border-light);vertical-align:top}
+        .heat-table tr:last-child td{border-bottom:none}
+        .heat-table tr:hover{background:rgba(234,88,12,.02)}
+        .heat-bar{display:flex;gap:2px;align-items:center}
+        .heat-bar-fill{width:10px;height:14px;border-radius:2px;background:linear-gradient(135deg,#EA580C,#DC2626)}
+        .heat-bar-empty{width:10px;height:14px;border-radius:2px;background:#F5F5F4}
+        .heat-trend-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .heat-trend-tag.up{background:#EFFDF5;color:#059669}
+        .heat-trend-tag.stable{background:#EFF6FF;color:#2563EB}
+        .heat-trend-tag.burst{background:#FEF2F2;color:#DC2626}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:4px;box-shadow:var(--shadow-card);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-muted);border-radius:var(--radius-sm);transition:var(--transition-normal);font-family:var(--font-family);min-width:80px}
+        .tab-btn:hover{color:var(--color-text-primary);background:var(--color-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--gradient-success);color:#fff}
+        .tab-btn.orange[aria-selected="true"]{background:var(--gradient-orange)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow-card)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--color-border-light);display:flex;align-items:center;gap:8px}
+        .section-header .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gradient-success);color:#fff;font-size:12px;font-weight:700}
+        .section-header .num.orange{background:var(--gradient-orange)}
+        .sub-header{font-size:14px;font-weight:700;color:var(--color-text-muted);margin:14px 0 10px;padding-left:4px;letter-spacing:.5px}
+        .sub-header:first-child{margin-top:0}
+        .news-item{padding:14px 0;border-bottom:1px solid var(--color-border-light);transition:background .15s;margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:var(--radius-sm)}
+        .news-item:hover{background:rgba(5,150,105,.02)}
+        .news-item:last-child{border-bottom:none}
+        .news-tag{display:inline-block;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:var(--color-danger)}
+        .tag-new{background:#EFFDF5;color:var(--color-success)}
+        .tag-funding{background:#E0F2FE;color:#0284C7}
+        .tag-policy{background:#FFF7ED;color:var(--color-orange)}
+        .tag-practice{background:#ECFDF5;color:#059669}
+        .tag-cn{background:#FEF2F2;color:#DC2626}
+        .news-title{font-size:15px;font-weight:600;margin:4px 0 3px}
+        .news-title a{color:var(--color-text-primary);text-decoration:none}
+        .news-title a:hover{color:var(--color-success)}
+        .news-source{font-size:12px;color:var(--color-text-muted)}
+        .news-detail{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+        .news-detail-row{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.6}
+        .news-detail-label{flex-shrink:0;font-weight:700;color:var(--color-success);font-size:12px;padding:1px 0;min-width:60px}
+        .news-detail-label.orange{color:var(--color-orange)}
+        .news-detail-label.china{color:#DC2626}
+        .news-detail-value{color:var(--color-text-secondary);flex:1}
+        .news-detail-value strong{color:var(--color-text-primary);font-weight:600}
+        .news-data-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+        .news-data-chip{display:inline-flex;align-items:center;padding:3px 10px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--radius-full);font-size:12px;font-weight:600;color:#166534;transition:all .15s}
+        .news-data-chip:hover{background:#DCFCE7;border-color:#86EFAC}
+        .news-data-chip.orange{background:#FFF7ED;border-color:#FED7AA;color:#9A3412}
+        .news-data-chip.china{background:#FEF2F2;border-color:#FECACA;color:#991B1B}
+        .news-summary-compact{font-size:13.5px;color:var(--color-text-secondary);margin-top:6px;line-height:1.6}
+        .deep-focus-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:0;margin-bottom:16px;box-shadow:var(--shadow-card);overflow:hidden}
+        .deep-focus-header{background:var(--gradient-purple);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:10px}
+        .deep-focus-header.orange-theme{background:linear-gradient(135deg,#EA580C 0%,#DC2626 100%)}
+        .deep-focus-header.china-theme{background:linear-gradient(135deg,#DC2626 0%,#B91C1C 50%,#991B1B 100%)}
+        .deep-focus-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .deep-focus-title{font-size:17px;font-weight:800;margin-top:4px;line-height:1.4}
+        .deep-focus-body{padding:20px 24px}
+        .deep-focus-body p{font-size:14.5px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:18px}
+        .deep-focus-body p:last-child{margin-bottom:0}
+        .deep-focus-body p strong{color:var(--color-text-primary)}
+        .deep-focus-takeaway{margin-top:20px;padding:16px 18px;background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%);border-radius:var(--radius-md);border-left:4px solid var(--color-purple)}
+        .deep-focus-takeaway.orange-theme{background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border-left-color:var(--color-orange)}
+        .deep-focus-takeaway.china-theme{background:linear-gradient(135deg,#FEF2F2 0%,#FEE2E2 100%);border-left-color:#DC2626}
+        .deep-focus-takeaway-label{font-size:12px;font-weight:700;color:var(--color-purple);margin-bottom:6px;letter-spacing:.5px}
+        .deep-focus-takeaway-label.orange{color:var(--color-orange)}
+        .deep-focus-takeaway-label.china{color:#DC2626}
+        .deep-focus-takeaway-text{font-size:13.5px;color:var(--color-text-secondary);line-height:1.7}
+        .deep-focus-takeaway-text strong{color:var(--color-text-primary)}
+        /* Pattern Insight Card */
+        .pi-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow-card);transition:all .25s cubic-bezier(.4,0,.2,1)}
+        .pi-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+        .pi-header{display:flex;align-items:center;gap:12px;padding:14px 20px;background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%);border-bottom:1px solid #FDE68A}
+        .pi-badge{display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 10px;border-radius:8px;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,#B45309 0%,#D97706 100%);white-space:nowrap}
+        .pi-title{font-size:16px;font-weight:700;color:var(--color-text-primary);flex:1;letter-spacing:-.01em;line-height:1.4}
+        .pi-row{display:flex;padding:14px 20px;border-bottom:1px solid var(--color-border-light);gap:14px}
+        .pi-row:last-child{border-bottom:none}
+        .pi-row.highlight{background:linear-gradient(135deg,rgba(217,119,6,.04) 0%,rgba(217,119,6,.01) 100%)}
+        .pi-row-label{width:56px;flex-shrink:0;font-size:12px;font-weight:700;color:#A8A29E;padding-top:2px;letter-spacing:.02em}
+        .pi-row-label.l2{color:#D97706}
+        .pi-row-content{flex:1;font-size:14px;color:var(--color-text-secondary);line-height:1.7}
+        .pi-row-content strong{color:var(--color-text-primary);font-weight:700}
+        .pi-evo{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+        .pi-evo-step{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--color-bg-table-header);border-radius:8px;border:1px solid var(--color-border-light);transition:all .15s}
+        .pi-evo-step.active{background:rgba(217,119,6,.12);border-color:#D97706;box-shadow:0 0 0 1px rgba(217,119,6,.15)}
+        .pi-evo-step.future{background:rgba(124,58,237,.06);border-color:#8B5CF6}
+        .pi-evo-tag{font-size:10px;font-weight:800;color:#D97706;padding:2px 7px;background:rgba(217,119,6,.1);border-radius:4px;letter-spacing:.02em}
+        .pi-evo-step.future .pi-evo-tag{color:#7C3AED;background:rgba(124,58,237,.1)}
+        .pi-evo-text{font-size:12px;color:var(--color-text-secondary)}
+        .pi-evo-arrow{color:#A8A29E;font-weight:700;font-size:14px}
+        .pi-table{padding:10px 20px 16px;border-top:1px solid var(--color-border-light)}
+        .pi-t-head{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-bottom:2px solid var(--color-border-light);margin-bottom:4px}
+        .pi-t-head span{font-size:11px;font-weight:700;color:#A8A29E;text-transform:uppercase;letter-spacing:.06em}
+        .pi-t-section{padding:6px 10px 2px}
+        .pi-t-section-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;letter-spacing:.03em}
+        .pi-t-section.verified .pi-t-section-tag{color:#047857;background:rgba(5,150,105,.08)}
+        .pi-t-section.current .pi-t-section-tag{color:#D97706;background:rgba(217,119,6,.08)}
+        .pi-t-section.projected .pi-t-section-tag{color:#7C3AED;background:rgba(124,58,237,.08)}
+        .pi-t-row{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-radius:6px;font-size:13px;line-height:1.6;transition:background .15s}
+        .pi-t-row:hover{background:rgba(0,0,0,.02)}
+        .pi-t-row.projected{background:rgba(124,58,237,.02)}
+        .pi-t-row.projected:hover{background:rgba(124,58,237,.05)}
+        .pi-t-rule{font-weight:600;color:#B45309;font-size:12px;padding-top:1px}
+        .pi-t-row.projected .pi-t-rule{color:#7C3AED}
+        .pi-t-reality{color:var(--color-text-primary);font-weight:500}
+        .pi-t-analogy{color:var(--color-text-secondary);padding-left:10px;border-left:2px solid var(--color-border-light)}
+        .pi-t-divider{border-top:2px dashed var(--color-border-light);margin:8px 10px}
+        .pi-t-verify{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(5,150,105,.06);border-radius:6px;font-size:12px;font-weight:600;color:#047857}
+        .pi-confidence{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(124,58,237,.04);border-radius:6px;border-left:3px solid #8B5CF6;font-size:11px;font-weight:500;color:#7C3AED;letter-spacing:.02em}
+        .data-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--color-border-light)}
+        .data-table th{background:var(--color-bg-table-header);font-weight:600;color:var(--color-text-secondary)}
+        .data-table td{color:var(--color-text-primary)}
+        .data-table tr:last-child td{border-bottom:none}
+        .coverage-bar{margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:16px;font-size:13px}
+        .coverage-bar .label{font-weight:700;color:var(--color-text-muted)}
+        .coverage-bar .bar{flex:1;height:8px;background:#E7E5E4;border-radius:4px;overflow:hidden;display:flex}
+        .coverage-bar .bar-overseas{background:var(--gradient-success);height:100%}
+        .coverage-bar .bar-china{background:var(--gradient-china);height:100%}
+        .coverage-bar .stats{display:flex;gap:12px;font-weight:600}
+        .coverage-bar .stat-overseas{color:var(--color-success)}
+        .coverage-bar .stat-china{color:#DC2626}
+        .footer{text-align:center;padding:24px;font-size:12px;color:var(--color-text-muted);border-top:1px solid var(--color-border-light);margin-top:24px}
+        @media(max-width:960px){
+            .overview-grid.five-cols{grid-template-columns:1fr 1fr}
+        }
+        @media(max-width:768px){
+            .overview-grid,.overview-grid.five-cols{grid-template-columns:1fr}
+            .tab-btn{font-size:11px;padding:8px 4px;min-width:60px}
+            .news-detail-row{flex-direction:column;gap:2px}
+            .news-detail-label{min-width:auto}
+            .deep-focus-header{padding:14px 18px}
+            .deep-focus-body{padding:16px 18px}
+            .coverage-bar{flex-direction:column;gap:8px}
+            .heat-table{font-size:12px}
+            .heat-table th,.heat-table td{padding:6px 4px}
+            .pi-evo{flex-direction:column;align-items:flex-start}
+            .pi-evo-arrow{display:none}
+            .pi-t-head{display:none}
+            .pi-t-row{grid-template-columns:1fr;gap:2px;padding:6px 10px;border-left:3px solid var(--color-border-light);margin-bottom:4px}
+            .pi-t-row.projected{border-left-color:rgba(124,58,237,.3)}
+            .pi-t-analogy{border-left:none;padding-left:0;font-size:12px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-badge">📡 AI行业洞察项目 - AI日报</div>
+            <div class="header-title">AI 日报 <span class="version-badge">v3.2</span></div>
+            <div class="header-date">2026年3月25日 周三 | 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</div>
+        </div>
+
+        <div class="coverage-bar">
+            <span class="label">📊 覆盖均衡</span>
+            <div class="bar">
+                <div class="bar-overseas" style="width:65%"></div>
+                <div class="bar-china" style="width:35%"></div>
+            </div>
+            <div class="stats">
+                <span class="stat-overseas">🌏 海外 13条</span>
+                <span class="stat-china">🇨🇳 国内 7条</span>
+            </div>
+        </div>
+
+        <div class="overview">
+            <div class="overview-title">📋 全文概览</div>
+            <div class="overview-grid five-cols">
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔥</span><span class="overview-item-label">今日头条</span></div>
+                    <div class="overview-headline">ARC-AGI-3正式发布 + ChatGPT购物全面升级 + Alibaba $100B AI计划</div>
+                    <div class="overview-item-text">ARC-AGI-3今日旧金山Launch Party正式发布，互动推理新基准对人类简单对AI极难；ChatGPT购物大升级支持ACP协议接入Shopify等；Alibaba发布Wukong企业AI平台+宣布5年$100B AI云收入目标，阿里Token Hub整合Qwen所有能力</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🧠</span><span class="overview-item-label">大模型</span></div>
+                    <div class="overview-headline">Qwen3.5-9B以小胜大 + ARC-AGI-3今日发布 + Claude Code年收入$25亿</div>
+                    <div class="overview-item-text">阿里Qwen3.5-9B开源发布，以9B参数匹配Claude Opus 4.5和GPT-4o水准，原生视觉+语言混合模型；ARC-AGI-3今日发布1000+互动推理题；Anthropic Claude Code年收入突破$25亿，上线以来不到一年翻倍</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🛒</span><span class="overview-item-label">AI电商</span></div>
+                    <div class="overview-headline">ChatGPT Shopping升级ACP + Gap接入Gemini结账 + 豆包AI购物内测</div>
+                    <div class="overview-item-text">ChatGPT购物升级ACP协议支持Shopify/Etsy/Walmart等多平台结账；Gap成为首家接入Gemini UCP协议完成结账的时尚品牌，Bold Metrics AI量体尺寸接入；字节豆包上线AI购物助手内测，电商代理协议大战正式开始</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">📱</span><span class="overview-item-label">AI应用</span></div>
+                    <div class="overview-headline">Google TV Gemini三大新功能 + Qwen春节2亿订单 + 月之暗面$18B估值</div>
+                    <div class="overview-item-text">Google TV今日上线Gemini运动简报/深度探索/视觉帮助三大功能（NBA/NHL/MLB/MLS运动摘要）；Qwen App春节吸引2亿订单、上线淘宝购物入口；月之暗面估值$180亿，Cursor Composer 2底座正是Kimi K2.5</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI行业</span></div>
+                    <div class="overview-headline">Anthropic $380亿估值融资$300亿 + Cursor $29.3B估值 + 国内AI购物代理竞争</div>
+                    <div class="overview-item-text">Anthropic 2月完成Series G融资$300亿，估值$380亿，14个月ARR从$1B增至$14B；Cursor完成$23亿融资，估值$293亿，$2B+年化收入；字节豆包AI购物内测，中国AI电商代理三国时代开启</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label">🔥 热度趋势</div>
+                <div class="heat-header-title">本周AI行业热度趋势</div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead><tr><th>排名</th><th>话题</th><th>热度</th><th>天数</th><th>趋势</th><th>核心信号</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇</td>
+                            <td><strong>ARC-AGI-3今日发布</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 爆发</span></td>
+                            <td>互动推理新基准今日旧金山正式发布，所有大模型将接受新一轮能力检验</td>
+                        </tr>
+                        <tr>
+                            <td>🥈</td>
+                            <td><strong>AI电商代理协议大战(ACP vs UCP)</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>2天</td>
+                            <td><span class="heat-trend-tag up">📈 持续</span></td>
+                            <td>ChatGPT ACP + Google Gemini UCP双协议竞争，Gap首发UCP结账引爆讨论</td>
+                        </tr>
+                        <tr>
+                            <td>🥉</td>
+                            <td><strong>Qwen3.5-9B开源碾压大模型</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>9B参数模型媲美旗舰，以$0.05/M价格颠覆开源社区定价认知</td>
+                        </tr>
+                        <tr>
+                            <td>4️⃣</td>
+                            <td><strong>Claude Code年收入$25亿</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag neutral">➡️ 稳定</span></td>
+                            <td>AI编程工具商业化验证，Anthropic从研究机构转型为商业巨头</td>
+                        </tr>
+                        <tr>
+                            <td>5️⃣</td>
+                            <td><strong>豆包AI购物助手内测</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>2天</td>
+                            <td><span class="heat-trend-tag up">📈 预热</span></td>
+                            <td>字节跳动入局AI购物，国内AI电商代理竞争进入三国时代</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>ARC-AGI-3今日发布是当日最大事件；ChatGPT购物+Gap Gemini结账标志AI电商代理协议大战正式开幕；Qwen3.5-9B以小博大引爆开源社区；Claude Code $25亿年收入刷新认知</p>
+            </div>
+        </div>
+
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn" role="tab" aria-selected="true" data-tab="foundation">🧠 大模型</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="coding">⌨️ AI Coding</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="application">📱 AI 应用</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="industry">🏭 AI 行业</button>
+            <button class="tab-btn orange" role="tab" aria-selected="false" data-tab="enterprise">🔄 企业转型</button>
+        </nav>
+
+
+        <article id="foundation" class="tab-panel active">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://arcprize.org/arc-agi/3/" target="_blank">ARC-AGI-3今日正式发布：互动推理新基准，1000+题专攻AI短板</a></div>
+                    <div class="news-source">ARC Prize官网 · 3月25日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">ARC-AGI-3于2026年3月25日在旧金山举办Launch Party正式发布。这是首个互动推理基准，包含1000+题目，专门设计为「对人类简单、对AI极难」。不同于静态问答，ARC-AGI-3要求AI与新型游戏环境互动推理。上届Gemini 3 Flash的ARC-AGI-2得分仅57.7%，而大多数人类轻松达到85%+</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">今日发布</span><span class="news-data-chip">互动推理</span><span class="news-data-chip">1000+题</span><span class="news-data-chip">人类85%+ vs AI<60%</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI推理能力评估进入新纪元——静态知识记忆不够用，真正的认知灵活性才是新战场</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://venturebeat.com/technology/alibabas-small-open-source-qwen3-5-9b-beats-openais-gpt-oss-120b-and-can-run" target="_blank">Qwen3.5-9B以小胜大：匹配Claude Opus 4.5，价格仅$0.05/M</a></div>
+                    <div class="news-source">VentureBeat · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">阿里Qwen3.5-9B于2月底/3月初发布，在多项基准上超越OpenAI的GPT-OSS-120B，接近Claude Opus 4.5水准。这是一个原生视觉-语言混合模型，API定价$0.05/M（比旗舰低100倍），支持智能手机本地运行</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">9B参数</span><span class="news-data-chip">媲美120B旗舰</span><span class="news-data-chip">$0.05/M</span><span class="news-data-chip">手机可运行</span><span class="news-data-chip">原生视觉语言</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">开源模型「以小胜大」正从偶发变成常态——大参数旗舰的护城河在快速缩小</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://modelstudio.console.alibabacloud.com/" target="_blank">Qwen3.5系列全线开源：原生视觉语言模型，7亿次下载领跑全球</a></div>
+                    <div class="news-source">阿里云ModelStudio · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">阿里Qwen3.5系列于2月23日在Alibaba Cloud Model Studio正式发布，包含0.8B/9B/122B-A10B等多个规格。Qwen系列累计下载量已超7亿次，是全球下载量最大的开源AI系列。Qwen3.5-122B-A10B采用MoE架构，以10B激活参数实现122B性能</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">7亿次下载</span><span class="news-data-chip">0.8B~122B规格</span><span class="news-data-chip">MoE架构</span><span class="news-data-chip">原生视觉语言</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Qwen成为全球最广泛使用的开源AI系统，阿里开源战略结出最大果实</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">ARC-AGI-3今日发布：AI能力的「新尺子」意味着什么</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>今天，ARC-AGI-3在旧金山正式发布。这不是一个普通的AI基准更新，而是一次对整个行业的「能力重新定标」。ARC-AGI-3的设计原则只有一句话：对人类简单，对AI极难。它不考核知识记忆，不考核数学计算，而是考核在全新环境中的认知灵活性——即在从未见过的规则下，能不能像人类一样快速理解和推理。</p><p>上一届基准（ARC-AGI-2）中，Gemini 3 Flash得分仅57.7%，而大多数人类轻松超过85%。这个差距不是计算能力的差距，而是「理解新事物」的差距。同期，Qwen3.5-9B以9B参数超越了120B参数的旗舰模型——两件事放在一起说明：参数量不再是智能的代理指标，真正的认知能力需要新的评估框架。</p><p>ARC-AGI-3的发布，恰恰是在整个行业都在宣称「媲美人类」的时候出现的。它的存在本身就是一个清醒剂：当所有模型都说自己通过了某个测试，意味着那个测试已经失效了。新的尺子，是专门为了发现AI能力的新边界而设计的。接下来几周，各大模型在ARC-AGI-3上的分数，将成为新的能力参考系。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">ARC-AGI-3=AI能力的照妖镜：参数量≠智能，认知灵活性才是真正的分水岭</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">开源模型「以小胜大定律」：参数密度 > 参数总量</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>Qwen3.5-9B匹配120B旗舰+ARC-AGI-3今日发布——AI智能的衡量正从「参数总量」转向「单位算力推理密度」，小模型的天花板远未到达</strong></div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">大力出奇迹</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">质量优于规模</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">认知灵活性</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">GPT-3时代</span><span class="pi-t-reality">更大参数量=更强能力，GPT-3 175B横空出世，行业追求「更大更强」</span><span class="pi-t-analogy">像发动机时代——马力越大车越快</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">今日节点</span><span class="pi-t-reality">Qwen3.5-9B以$0.05/M击败120B旗舰；ARC-AGI-3专门评测认知灵活性而非参数规模——「量变」时代结束，「质变」时代开始</span><span class="pi-t-analogy">像电动车时代——能量密度>发动机排量，特斯拉Model 3跑赢V8超跑</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">12个月内，1-10B小模型将在80%的日常任务中完全替代100B+旗舰模型，旗舰模型只保留科研和复杂推理场景</span><span class="pi-t-analogy">像芯片架构演进——RISC精简指令集最终击败了CISC复杂指令集</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: 12个月 · 信号: ARC-AGI-3各模型得分分布 + 小模型在企业部署占比</div>
+            </div>
+        </article>
+
+        <article id="coding" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://techcrunch.com/2026/03/22/cursor-built-its-new-coding-model-on-top-of-a-chinese-ai-startup/" target="_blank">Cursor Composer 2：基于Kimi K2.5，降价86%+常驻Agent上线</a></div>
+                    <div class="news-source">TechCrunch · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Cursor发布Composer 2，底层基于月之暗面Kimi K2.5构建。Standard版$0.50/M input, $2.50/M output（较前版降价约86%）。Automations功能支持Slack/Linear/GitHub/PagerDuty触发常驻Agent，在云沙箱执行，支持跨run记忆学习。Cursor年化收入已超$2B，完成$23亿募资估值$29.3B</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">降价86%</span><span class="news-data-chip">Kimi K2.5底座</span><span class="news-data-chip">云Agent沙箱</span><span class="news-data-chip">$2B+年化收入</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Cursor从AI辅助编程工具走向常驻编程Agent，月之暗面Kimi间接获得全球开发者市场认证</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://cursor.com/changelog/composer-2" target="_blank">Cursor Automations：Slack/GitHub/PagerDuty触发常驻AI编程Agent</a></div>
+                    <div class="news-source">Cursor官方 · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Cursor Automations允许企业构建基于事件触发的常驻Agent：接收Slack消息/Linear任务/GitHub PR/PagerDuty告警触发，Agent在云沙箱中执行编程任务，支持记忆工具跨run学习改进。JetBrains全家桶通过ACP协议接入</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">事件驱动</span><span class="news-data-chip">云端沙箱</span><span class="news-data-chip">跨run记忆</span><span class="news-data-chip">JetBrains全家桶</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI编程从「个人工具」进化为「企业自动化基础设施」——开发流水线将被彻底改造</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://developers.openai.com/codex/changelog/" target="_blank">GPT-5.4 mini进驻Codex：速度2x，消耗仅30%</a></div>
+                    <div class="news-source">OpenAI Codex官方 · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">GPT-5.4 mini正式进入Codex，比GPT-5 mini快2倍以上，在代码探索、大文件review等子任务消耗仅GPT-5.4的30%（可持续3.3倍更长时间）。支持Codex App、CLI、IDE扩展和Web版</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">速度2x+</span><span class="news-data-chip">消耗仅30%</span><span class="news-data-chip">适合子agent任务</span><span class="news-data-chip">全平台可用</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">多Agent编程工作流的性价比大幅提升——主模型规划，mini执行，整体成本降70%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E6%9C%88%E4%B9%8B%E6%9A%97%E9%9D%A2+Kimi+Cursor+%E8%9E%8D%E8%B5%84" target="_blank">月之暗面Kimi K2.5被Cursor采用：估值$180亿，冲刺$10亿D轮融资</a></div>
+                    <div class="news-source">微信/科技媒体 · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Cursor Composer 2以Kimi K2.5为底座的披露，间接证明了月之暗面Kimi模型的顶级编程能力。月之暗面市值在3个月内从约$45亿涨至$180亿美元，增幅约4倍，正冲刺10亿美元D轮</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">Kimi K2.5被Cursor采用</span><span class="news-data-chip">估值$180亿</span><span class="news-data-chip">3个月涨4倍</span><span class="news-data-chip">冲刺$10亿D轮</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">月之暗面通过「被全球最热AI编程工具采用」完成了最好的品牌背书，估值暴涨逻辑成立</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Cursor Composer 2的Kimi底座：中国模型的「隐形出海」</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Cursor Composer 2发布后有个细节震惊了整个AI圈：这个被全球数百万开发者每天使用的AI编程模型，底层竟然是中国初创公司月之暗面的Kimi K2.5。Cursor一开始没有主动披露，是在媒体追问后才确认的。这件事本身就有很多值得深想的地方。</p><p>月之暗面的反应有点微妙——他们既没有主动宣传，也在Cursor公开后发了一个相对低调的确认。这背后可能是商业保密协议，也可能是对「中国AI技术出海」这个话题的敏感性有所顾虑。但无论如何，事实是：全球最热的AI编程工具，在性能和成本的双重考量下，选择了中国模型作为底座。这是对Kimi技术实力的最直接认证。</p><p>更有趣的是Claude Code的对比：Claude Code基于Anthropic自研旗舰，年收入$25亿；Cursor Composer 2基于Kimi K2.5，年化收入$2B+。两条路，分别代表「自研模型+垂直产品」和「借用最强外部模型+产品体验」。在AI编程工具这个战场，产品体验和价格，有时候比模型来源更重要。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">Kimi被Cursor采用=中国AI模型「无声出海」——不需要To C品牌，直接成为全球AI产品的底层基础设施</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">AI编程的「模型分离定律」：产品层 vs 模型层的解耦加速</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>Cursor采用Kimi K2.5+Claude Code自研旗舰——AI编程工具正在分裂为「产品层（Cursor/Codex）」和「模型层（Kimi/Claude/GPT）」，最终产品胜出和模型来源无关</strong></div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">模型即产品</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">产品套模型</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">模型商品化</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">GPT-4时代</span><span class="pi-t-reality">ChatGPT=OpenAI模型，产品与模型高度捆绑；用GPT-4=用ChatGPT，无法分离</span><span class="pi-t-analogy">像早期汽车——发动机和车身必须同一品牌</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">今日节点</span><span class="pi-t-reality">Cursor基于Kimi K2.5，但用户感知是「Cursor体验」；Claude Code自研旗舰，用户感知是「Anthropic能力」——产品层和模型层开始解耦</span><span class="pi-t-analogy">像现代汽车——三菱发动机+本田变速箱+丰田底盘，品牌是整合商</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">12个月内，「最佳模型」将像云服务器一样成为商品，AI产品的竞争护城河完全转移到数据飞轮、产品体验、工作流集成</span><span class="pi-t-analogy">像云计算——AWS/阿里云底层都是x86芯片，没人在意；差异在于服务和生态</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: 12个月 · 信号: 头部AI产品公司的自研模型 vs 外采模型比例变化</div>
+            </div>
+        </article>
+
+        <article id="application" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://blog.google/products-and-platforms/platforms/google-tv/new-gemini-features-march-2026/" target="_blank">Google TV Gemini三大新功能：运动简报/深度探索/视觉帮助今日上线</a></div>
+                    <div class="news-source">Google官方博客 · 3月24日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Google TV今日推出3项Gemini新功能：①运动简报——NBA/NCAA/NHL/MLB/MLS/NWSL赛事实时摘要，不错过任何比赛精华；②深度探索——健康/经济/科技等主题的叙事型视觉学习内容；③视觉帮助——根据问题类型自适应答复（运动比分显示记分牌，食谱显示教学视频）</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">NBA/NCAA/NHL/MLB/MLS实时摘要</span><span class="news-data-chip">深度探索叙事视觉</span><span class="news-data-chip">视觉帮助自适应</span><span class="news-data-chip">美加今日上线</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Gemini渗透进客厅大屏，TV从「被动收看」变成「主动探索」，Google AI助手覆盖场景再扩展</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.cnbc.com/2026/03/18/china-openclaw-baidu-tencent-ai.html" target="_blank">OpenClaw个人数字助手中国走红：百度腾讯组织推广，政府推动AI普及</a></div>
+                    <div class="news-source">CNBC · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">奥地利开发者开发的个人AI助手OpenClaw（AI助手平台）在中国快速走红，百度和腾讯组织了专门的用户培训活动帮助用户设置。这与中国政府推动AI进入各行各业的政策方向高度契合</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">OpenClaw中国走红</span><span class="news-data-chip">百度腾讯推广</span><span class="news-data-chip">政府AI普及政策</span><span class="news-data-chip">奥地利开发者</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI个人助手的普及速度超出预期——在中国，AI正快速从「科技圈玩具」走向「大众用户工具」</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Google TV Gemini：AI进客厅，「被动收看」时代结束</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Google TV今天上线的三个Gemini功能，单看每一个都不算震撼，但放在一起看，信号非常清晰：AI正在进入客厅大屏，电视的使用方式要变了。运动简报让不能看直播的球迷随时追踪比赛；深度探索把电视从「娱乐工具」变成「学习伙伴」；视觉帮助让用户可以问电视任何问题，得到定制化的多媒体答复。</p><p>有趣的是，这三个功能背后有一个共同逻辑：Gemini在帮用户主动管理注意力，而不是让你被动地刷内容。这与TikTok/抖音的「算法投喂」模式截然相反。Google在用AI构建一种「你选择看什么」而不是「算法让你看什么」的体验——这对于一个在移动端被字节系压着打的公司来说，是很有意思的差异化策略。</p><p>从更大的视角看，Google TV的Gemini落地是AI助手「多终端渗透」战略的一部分：手机上的Gemini、搜索中的Gemini、购物结账的Gemini（Gap合作），现在是客厅大屏的Gemini。每一个场景都是一个新的AI触点。Google的优势在于硬件生态的广度，这是OpenAI和Anthropic短期内无法复制的。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">Gemini进客厅=Google用「硬件生态广度」对抗OpenAI的「模型深度」——客厅大屏是AI助手的最后一块未被占领的高地</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">AI助手的「终端渗透定律」：手机→搜索→购物→TV→汽车→眼镜</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>Google TV Gemini三大功能今日上线——AI助手正在系统性渗透每一个「屏幕」，终极目标是成为人与信息/服务之间的唯一中介层</strong></div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">单终端AI</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">多终端渗透</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">无感知环境AI</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">2023-2024</span><span class="pi-t-reality">AI助手局限于手机App和网页——ChatGPT/Claude只能在浏览器/App中使用，无法渗透其他场景</span><span class="pi-t-analogy">像早期互联网——只有PC端，无法随身携带</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">今日节点</span><span class="pi-t-reality">Google TV Gemini（客厅大屏）+Gap Gemini结账（购物场景）+Google搜索Gemini——AI助手已覆盖手机/TV/搜索/购物四大场景</span><span class="pi-t-analogy">像WiFi——从需要连接线，到随处可得，无感知渗透进每个空间</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">18个月内，AI助手将完成「汽车+AR眼镜+家电」三大场景渗透，进入环境智能阶段——不需要「打开APP」，AI永远在你周围</span><span class="pi-t-analogy">像电力——从需要蜡烛/煤气灯，到每个插头都有电，完全无感知基础设施</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: 18个月 · 信号: Google/Apple/Amazon的AI终端覆盖场景数量增长速度</div>
+            </div>
+        </article>
+
+        <article id="industry" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.anthropic.com/news/anthropic-raises-30-billion-series-g-funding-380-billion-post-money-valuation" target="_blank">Claude Code年收入突破$25亿：Anthropic ARR 14个月从$1B到$14B</a></div>
+                    <div class="news-source">Anthropic官网 · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Anthropic 2月12日公布Series G融资（$300亿，估值$380亿），同时披露：Claude Code（2025年5月公测）年化收入已超过$25亿，自2026年初以来翻倍。整体ARR达$14B，500+企业客户每年消费超$100万</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">Claude Code $25亿年收入</span><span class="news-data-chip">14个月ARR $1B→$14B</span><span class="news-data-chip">Series G $300亿</span><span class="news-data-chip">估值$380亿</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI编程工具商业化已被验证：Claude Code从研究产品变为$25亿ARR的核心收入引擎</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.anthropic.com/news/anthropic-raises-30-billion-series-g-funding-380-billion-post-money-valuation" target="_blank">Anthropic Series G $300亿：估值$380亿，ARR 14个月从$1B飙至$14B</a></div>
+                    <div class="news-source">Anthropic官网 · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Anthropic完成$300亿Series G融资，估值$380亿，成为史上增长最快的软件公司。ARR从2025年初$1B到2026年2月$14B，14个月增长14倍。Claude Code年收入$25亿，500+企业客户每年消费超$100万</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">估值$380亿</span><span class="news-data-chip">ARR $14B</span><span class="news-data-chip">14个月增14倍</span><span class="news-data-chip">Claude Code $25亿</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Anthropic从「AI安全研究机构」彻底转型为「AI商业巨头」，定义了AI公司商业化的最高速度标杆</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://techcrunch.com/2026/03/22/cursor-built-its-new-coding-model-on-top-of-a-chinese-ai-startup/" target="_blank">Cursor完成$23亿融资：估值$29.3B，$2B+年化收入，Kimi争议下逆势增长</a></div>
+                    <div class="news-source">TechCrunch · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Cursor完成$23亿新一轮融资，投后估值$29.3亿美元，年化收入突破$2B+。尽管Composer 2底座采用中国Kimi K2.5引发「未透明披露」争议，但商业势头未受影响</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">估值$29.3B</span><span class="news-data-chip">$23亿融资</span><span class="news-data-chip">$2B+年化收入</span><span class="news-data-chip">Kimi争议未影响增长</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI编程工具赛道已出现两个$10B+公司（Cursor+Anthropic/Claude Code），市场规模远超预期</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.modernretail.co/technology/alibabas-vision-for-the-agentic-era-comes-into-focus-as-it-targets-100b-in-ai-and-cloud-revenue-over-5-years/" target="_blank">Alibaba季报营收不及预期：营业利润同比降74%，但豪赌AI+云$100B五年计划</a></div>
+                    <div class="news-source">Modern Retail · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">阿里2025Q4（截至12月31日）营收284.8亿人民币，低于分析师预期。营业利润同比降74%，主因是快商、用户体验和技术投入。但CEO Eddie Wu强调：5年内AI+云收入目标$100B，已承诺三年AI基础设施投入$530亿</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">营收不及预期</span><span class="news-data-chip">营业利润降74%</span><span class="news-data-chip">豪赌AI $1000亿五年</span><span class="news-data-chip">$530亿基础设施</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">阿里选择「先亏损后收获」的AI投入策略——短期财务承压，换取AI时代的基础设施优势</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.modernretail.co/technology/alibabas-vision-for-the-agentic-era-comes-into-focus-as-it-targets-100b-in-ai-and-cloud-revenue-over-5-years/" target="_blank">阿里发布Wukong企业AI平台+Token Hub：5年目标$1000亿AI云收入</a></div>
+                    <div class="news-source">Modern Retail · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">阿里3月发布企业AI平台Wukong，并将AI运营整合至新业务单元Token Hub。阿里云CEO Eddie Wu宣布5年AI+云收入目标$1000亿美元。阿里结构性优势：Qwen可无缝接入淘宝/天猫/支付宝/菜鸟/高德/飞猪，形成从找产品→下单→付款→配送的端到端购物代理</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">$1000亿5年目标</span><span class="news-data-chip">Wukong企业平台</span><span class="news-data-chip">Token Hub整合</span><span class="news-data-chip">电商全链路优势</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">阿里是全球最接近「真正AI购物代理」的公司——拥有电商+支付+物流的完整闭环</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E4%B8%AD%E5%9B%BDAI%E8%9E%8D%E8%B5%84+2026%E5%B9%B4Q1" target="_blank">中国AI行业融资持续热：2026年Q1 AI独立公司融资总额破历史记录</a></div>
+                    <div class="news-source">微信/科技媒体 · 3月24日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">2026年Q1，中国AI独立公司融资总额创历史记录，月之暗面（$10亿D轮在途）、MiniMax（已完成大额融资）等多家公司估值大幅攀升。与此同时，海外Anthropic、Cursor也在同期完成超大额融资</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">Q1融资破记录</span><span class="news-data-chip">独立AI公司强势</span><span class="news-data-chip">月之暗面+MiniMax领跑</span><span class="news-data-chip">中美双线繁荣</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI独立公司（非大厂附属）在中美两地同步迎来估值和融资的高峰，市场验证两条路都行得通</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Anthropic $380亿、Cursor $29.3亿：AI行业的「超速商业化」正在重写规则</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>两个数字放在一起很有冲击力：Anthropic 14个月ARR从$1B到$14B，Cursor年化收入$2B+。这两家公司，一家是AI安全研究机构出身，一家是两年前还默默无闻的IDE工具。它们的共同点是：找到了AI能力和用户付费意愿的精准交叉点，然后踩下油门。</p><p>Anthropic的打法是「研究机构+产品公司」的双轨并行：一边发表AI安全研究、训练宪法AI，一边用Claude Code把收入做到$25亿年化。这个组合在过去被认为是矛盾的，但现在证明了：严肃的AI安全立场，反而成为企业客户信任Anthropic的重要原因。</p><p>Cursor的打法更单纯：专注产品体验，不纠结模型来源（底座是Kimi又怎样？），以降价86%的Composer 2把企业客户锁住，用Automations把工作流绑定。这两种打法都在告诉行业一件事：AI商业化不需要「等AGI到来」，现在的能力已经足够产生巨大价值——关键是找到正确的场景和正确的付费主体。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI超速商业化=找准「能力-场景-付费」三角——Anthropic选企业编程，Cursor选开发者工作流，两者都找对了</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">AI商业化的「超速飞轮定律」：能力→场景→收入→投入→更强能力</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>Anthropic ARR 14个月从$1B→$14B，Cursor $2B+年化——AI公司的商业化速度已远超历史上任何一个科技浪潮，飞轮一旦转动，增速是指数级的</strong></div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">研究阶段</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">超速商业化</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">AI基础设施垄断</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">SaaS时代</span><span class="pi-t-reality">Salesforce从$0到$1B ARR用了10年，AWS从$0到$14B ARR用了8年——这是历史上最快的商业化速度</span><span class="pi-t-analogy">像早期高铁——速度是绿皮火车的3倍，已经是极限</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">今日节点</span><span class="pi-t-reality">Anthropic从$1B到$14B ARR只用14个月；Cursor年化$2B+——AI公司的商业化速度是SaaS时代的10倍以上</span><span class="pi-t-analogy">像磁悬浮列车——完全不同的物理原理，速度上了一个数量级</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">24个月内，头部AI公司（Anthropic/OpenAI/Cursor）将完成从「快速增长」到「基础设施级锁定」的转变——一旦工作流接入，迁移成本极高</span><span class="pi-t-analogy">像AWS——用了就很难换，因为所有服务都依赖它</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 高 · 验证窗口: 12个月 · 信号: AI公司NRR（净收入留存率）和企业客户迁移成本数据</div>
+            </div>
+        </article>
+
+        <article id="enterprise" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://openai.com/index/powering-product-discovery-in-chatgpt/" target="_blank">ChatGPT购物大升级：ACP协议接入Shopify/Etsy/Walmart，支持全程结账</a></div>
+                    <div class="news-source">OpenAI官网 · 3月24日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI发布ChatGPT购物功能重大升级，通过Agent Client Protocol（ACP）接入Shopify、Etsy、Walmart、Amazon等主流电商平台，用户可在ChatGPT内完成从搜索商品到结账的全程操作。OpenAI将与Shopify共享成交佣金</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">ACP协议</span><span class="news-data-chip">Shopify/Etsy/Walmart接入</span><span class="news-data-chip">全程结账</span><span class="news-data-chip">佣金分成</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">ChatGPT从「信息检索工具」升级为「购物代理」——这是AI直接介入消费行为的关键转折</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.cnbc.com/2026/03/24/gap-google-gemini-ai-shopping.html" target="_blank">Gap接入Google Gemini结账：首家时尚品牌采用UCP协议，AI量体购物上线</a></div>
+                    <div class="news-source">CNBC · 3月24日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">Gap成为首家通过Google Gemini的Universal Commerce Protocol（UCP）完成AI结账的时尚品牌。合作内容包括：Gemini在Google搜索/TV/Assistant中推荐Gap商品，用户可直接结账；接入Bold Metrics AI尺寸工具，根据身体数据推荐尺码，减少退货</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">首家时尚品牌</span><span class="news-data-chip">UCP协议</span><span class="news-data-chip">Bold Metrics AI尺寸</span><span class="news-data-chip">Google全平台推荐</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">Google通过Gap验证了UCP协议的可行性——时尚品牌是AI购物代理最难攻克的场景（尺码问题），成功意义重大</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.cnbc.com/2026/03/24/gap-google-gemini-ai-shopping.html" target="_blank">OpenAI vs Google：AI电商协议大战，ACP和UCP谁将主导未来</a></div>
+                    <div class="news-source">CNBC分析 · 3月24日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">OpenAI的ACP（Agent Client Protocol）和Google的UCP（Universal Commerce Protocol）正在争夺AI电商的底层协议标准。ACP侧重于Agent之间的通信（AI助手与商家系统），UCP侧重于统一的商务交易接口。两者都在拉拢大型零售商，目前Shopify靠近OpenAI，Gap靠近Google</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">ACP vs UCP</span><span class="news-data-chip">协议标准之争</span><span class="news-data-chip">Shopify vs Gap</span><span class="news-data-chip">平台分化</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">AI电商的「标准战争」已开打——谁拿下协议标准，谁就控制AI时代的电商基础设施</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E8%B1%86%E5%8C%85AI%E8%B4%AD%E7%89%A9%E5%8A%A9%E6%89%8B%E5%86%85%E6%B5%8B" target="_blank">字节豆包AI购物助手上线内测：对标ChatGPT Shopping，覆盖抖音商城</a></div>
+                    <div class="news-source">微信/科技媒体 · 3月24日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">字节跳动旗下豆包AI上线购物助手功能内测，覆盖抖音商城和外部电商平台，支持自然语言购物需求理解、商品推荐、价格比较。与ChatGPT Shopping类似，豆包通过AI对话完成从需求到下单的全程</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">豆包</span><span class="news-data-chip">抖音商城</span><span class="news-data-chip">自然语言购物</span><span class="news-data-chip">内测阶段</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">国内AI购物代理三国鼎立：阿里Qwen（淘宝接入）+ 字节豆包（抖音商城）+ 百度文心（待定）</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.modernretail.co/technology/alibabas-vision-for-the-agentic-era-comes-into-focus-as-it-targets-100b-in-ai-and-cloud-revenue-over-5-years/" target="_blank">阿里Qwen App接入淘宝：电商+支付+物流全链路AI代理优势无可比拟</a></div>
+                    <div class="news-source">Modern Retail · 本周热议</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">核心发现</span>
+                            <span class="news-detail-value">阿里Qwen App已接入淘宝/天猫购物入口，并通过支付宝、菜鸟物流、高德地图、飞猪旅行形成完整的电商闭环。阿里CEO Eddie Wu表示：代理AI时代最关键的是应用与模型的紧密整合，阿里的生态优势在全球无可比拟</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">关键数据</span>
+                            <span class="news-detail-value"><div class="news-data-chips"><span class="news-data-chip">淘宝/天猫接入</span><span class="news-data-chip">支付宝+菜鸟+高德</span><span class="news-data-chip">全链路闭环</span><span class="news-data-chip">全球独一份</span></div></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label ">影响判断</span>
+                            <span class="news-detail-value">阿里的AI购物代理护城河来自生态闭环——这是OpenAI和Google最难复制的竞争壁垒</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">AI电商协议大战：ACP vs UCP，谁在下一盘更大的棋</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>3月24日，两件事同日发生：ChatGPT购物通过ACP协议接入Shopify等平台，Gap通过Google Gemini的UCP协议完成AI结账。这不是巧合，这是OpenAI和Google在AI电商领域的「协议战争」正式打响的信号。谁先拿下协议标准，谁就控制了AI时代的电商基础设施。</p><p>从技术架构看，两者侧重不同：ACP（Agent Client Protocol）更关注AI代理之间的通信和任务执行，像是一个「AI外交语言」；UCP（Universal Commerce Protocol）更关注统一的商务交易接口，像是一个「AI版EDI协议」。Gap采用UCP+Bold Metrics AI量体尺寸是个精妙选择——时尚购物的核心痛点是尺码，解决了这个问题，就打通了时尚AI购物最后一公里。</p><p>中国这边，阿里和字节各有各的牌：阿里的Qwen拥有淘宝/支付宝/菜鸟的完整闭环，这是全球独一无二的结构性优势；豆包依托抖音商城的直播电商基因，场景天然就是「边看边买」。国内AI购物代理的竞争比海外更激烈，因为电商渗透率更高、用户习惯更成熟。接下来6个月，将是AI购物代理格局最关键的窗口期。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI电商不是「更好的搜索框」，而是重构购买决策链路——谁定义了协议，谁就是下一个Visa网络</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">AI电商的「协议标准定律」：工具→代理→基础设施→协议垄断</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label l2">本质</span>
+                    <div class="pi-row-content"><strong>ACP(OpenAI) vs UCP(Google)协议大战——AI电商的竞争从「谁的推荐更准」升级为「谁的协议成为标准」，这是比模型能力更重要的基础设施之争</strong></div>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化序列</span>
+                    <div class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">AI推荐工具</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">AI购物代理</span></div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">协议基础设施</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">SEO时代</span><span class="pi-t-reality">Google搜索推荐→商家SEO优化→Google掌控流量入口，每年向商家收数百亿广告费</span><span class="pi-t-analogy">像高速公路——谁建了路，谁收过路费</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div>
+                    <div class="pi-t-row"><span class="pi-t-rule">今日节点</span><span class="pi-t-reality">ChatGPT ACP接入Shopify/Etsy/Walmart，Gap接入Gemini UCP——AI代理开始直接参与电商交易，不只是推荐而是「下单」</span><span class="pi-t-analogy">像Visa网络——不卖产品，但每笔交易都要经过它，收取固定比例手续费</span></div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected"><span class="pi-t-rule">3.0</span><span class="pi-t-reality">18个月内，ACP或UCP其中一个将成为AI电商的实质标准，全球Top 1000零售商将完成接入——AI代理将控制30%+的在线购买决策</span><span class="pi-t-analogy">像TCP/IP协议——一旦成为标准，所有人都必须遵守，后来者无从竞争</span></div>
+                </div>
+                <div class="pi-confidence">📐 置信度: 中高 · 验证窗口: 18个月 · 信号: Shopify/Amazon接入ACP vs Gap/Target接入UCP的阵营规模对比</div>
+            </div>
+        </article>
+
+
+        <div class="section-card" style="margin-top:20px">
+            <div class="section-header"><span class="num">📊</span> 数据速览</div>
+            <table class="data-table">
+                <thead><tr><th>指标</th><th>数值</th><th>变化/说明</th></tr></thead>
+                <tbody>
+                    <tr><td>年化收入</td><td><strong>$25亿</strong></td><td>2026年初至今翻倍，上线不足1年</td></tr>
+                    <tr><td>整体ARR</td><td><strong>$140亿</strong></td><td>14个月从$1B增至$14B，史上最快SaaS增长</td></tr>
+                    <tr><td>年化收入</td><td><strong>$2B+</strong></td><td>完成$23亿融资，估值$29.3B</td></tr>
+                    <tr><td>API定价</td><td><strong>$0.05/M tokens</strong></td><td>以9B参数超越120B旗舰，价格低100倍</td></tr>
+                    <tr><td>最新估值</td><td><strong>$180亿美元</strong></td><td>3个月涨4倍，$10亿D轮在途</td></tr>
+                    <tr><td>5年收入目标</td><td><strong>$1000亿</strong></td><td>承诺3年$530亿AI基础设施投入</td></tr>
+                    <tr><td>发布日期</td><td><strong>2026-03-25今日</strong></td><td>互动推理新基准，人类85%+ vs AI<60%</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📌</span> 明日/下周值得关注</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-info);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-info);display:flex;align-items:center;gap:6px">📊 关键指标</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"><div style="margin-top:3px">• ARC-AGI-3各大模型首批得分——Gemini/GPT-5.4/Claude Opus/Qwen3.5谁能突破70%</div><div style="margin-top:3px">• ChatGPT ACP vs Google UCP电商协议阵营扩张速度——接下来哪些大零售商站队</div><div style="margin-top:3px">• 月之暗面$10亿D轮融资完成时间——能否在Q2前关账</div></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-warning);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-warning);display:flex;align-items:center;gap:6px">📅 重要日期</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"><div style="margin-top:3px">• 2026-03-25今日：ARC-AGI-3旧金山Launch Party，首批模型得分公布</div><div style="margin-top:3px">• 2026-Q2：Cursor Automations大规模商业化启动（企业级常驻Agent）</div><div style="margin-top:3px">• 2026-Q2：阿里Token Hub + Wukong平台全面商业化推进</div></div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🔍 信号追踪</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5"><div style="margin-top:3px">• ACP vs UCP协议：下一家接入哪方的大型零售商是谁（Walmart/Target/Nike？）</div><div style="margin-top:3px">• 豆包AI购物内测进展——何时从内测转正式上线</div><div style="margin-top:3px">• Qwen3.5-9B在企业部署中的替代率——能否在3个月内替代20%的Claude旗舰调用</div></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="margin-top:20px;background:linear-gradient(135deg,#EFF6FF 0%,#EDE9FE 100%);border:1px solid #DBEAFE;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06)">
+            <div style="font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:#1E40AF">
+                🤖 深度洞察
+            </div>
+            <div style="font-size:14px;color:#374151;line-height:1.8;margin:0">
+                <p style="margin:0">🤖 <strong>AI洞察自述</strong></p><p style='margin:8px 0 0 0'>今天的AI圈，有三件事并驾齐驱，合在一起才能看清2026年的AI格局。</p><p style='margin:8px 0 0 0'>第一件：<strong>ARC-AGI-3今日旧金山发布</strong>。专门设计为「对人类简单、对AI极难」的互动推理新基准——所有宣称「媲美人类」的模型，今天起要接受新的考验。我的预测：Gemini 3/GPT-5.4的得分会让人震惊地低，然后引发新一轮军备竞赛。</p><p style='margin:8px 0 0 0'>第二件：<strong>AI电商协议大战正式打响</strong>。ChatGPT的ACP接入Shopify/Walmart，Google的UCP完成Gap时尚品牌验证——这不是产品功能更新，这是在争夺「AI时代的电商基础设施标准」。谁赢了协议战争，谁就是AI时代的Visa。阿里因为自带闭环反而成了第三方，豆包靠抖音场景差异化切入——3个月后再看，格局应该会明朗很多。</p><p style='margin:8px 0 0 0'>第三件：<strong>Cursor底座用了中国Kimi，Claude Code年收$25亿</strong>。两件事放在一起，有种微妙的张力：自研模型的代价是高成本，但也换来了「真正的护城河」；借用外部模型的代价是「不透明」，换来的是更好的性价比和更快的迭代。Anthropic选了前者，Cursor选了后者——都成功了，但原因不同。</p><p style='margin:8px 0 0 0'>PS：今天Kimi K2.5的故事，让我想起了英特尔给苹果供芯片的往事——苹果M1出来之前，英特尔是苹果电脑最重要的「隐形组件」，大多数用户根本不知道。月之暗面现在的处境很像那时的英特尔：技术够强，但品牌在消费者侧还不够响。不过，Cursor的选择本身就是最好的证明信。</p>
+            </div>
+        </div>
+
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+            <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+            <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+                我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+            </p>
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                🏠 访问AI洞察首页
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', 'false'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.setAttribute('aria-selected', 'true');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

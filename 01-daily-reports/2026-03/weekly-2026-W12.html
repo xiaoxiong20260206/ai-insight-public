@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 周报 - 2026年第12周（3.16-3.22）</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root{--c-success:#059669;--c-success-l:#10B981;--c-danger:#E11D48;--c-warning:#D97706;--c-info:#2563EB;--c-purple:#7C3AED;--c-orange:#EA580C;--c-text:#1C1917;--c-text2:#57534E;--c-text3:#78716C;--c-border:#E7E5E4;--c-border-l:#F5F5F4;--c-bg:#F8FAFB;--c-card:#FFFFFF;--c-table-h:#FAFAF9;--g-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--g-blue:linear-gradient(135deg,#2563EB 0%,#3B82F6 100%);--g-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--g-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--g-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--r-sm:6px;--r-md:10px;--r-lg:14px;--r-full:999px;--font:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--trans:200ms cubic-bezier(.4,0,.2,1);--max-w:980px}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font);background:var(--c-bg);color:var(--c-text);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--max-w);margin:0 auto;padding:24px 20px}
+        .header{background:var(--g-blue);color:#fff;border-radius:var(--r-lg);padding:28px 32px;margin-bottom:20px;position:relative;overflow:hidden}
+        .header::after{content:'';position:absolute;right:-20px;top:-20px;width:200px;height:200px;background:rgba(255,255,255,.05);border-radius:50%}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--r-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-subtitle{font-size:15px;opacity:.9;margin-bottom:4px}
+        .header-date{font-size:13px;opacity:.75}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--r-full);font-size:11px;font-weight:700;margin-left:8px}
+        .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+        .stat-card{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-md);padding:16px;text-align:center;box-shadow:var(--shadow);transition:var(--trans)}
+        .stat-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+        .stat-icon{font-size:20px;margin-bottom:6px}
+        .stat-value{font-size:22px;font-weight:800;color:var(--c-success)}
+        .stat-value.blue{color:var(--c-info)}
+        .stat-value.purple{color:var(--c-purple)}
+        .stat-value.orange{color:var(--c-orange)}
+        .stat-value.danger{color:var(--c-danger)}
+        .stat-label{font-size:12px;color:var(--c-text3);font-weight:600;margin-top:2px}
+        .top5-card{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow)}
+        .top5-header{background:linear-gradient(135deg,#B45309 0%,#D97706 50%,#F59E0B 100%);color:#fff;padding:18px 24px}
+        .top5-header-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .top5-header-title{font-size:18px;font-weight:800;margin-top:4px}
+        .top5-body{padding:0}
+        .top5-item{padding:18px 24px;border-bottom:1px solid var(--c-border-l);transition:background .15s}
+        .top5-item:last-child{border-bottom:none}
+        .top5-item:hover{background:rgba(217,119,6,.02)}
+        .top5-item a.top5-link{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--c-info);text-decoration:none;margin-left:auto;padding:3px 10px;background:#EFF6FF;border-radius:var(--r-full);transition:var(--trans);flex-shrink:0;font-weight:600}
+        .top5-item a.top5-link:hover{background:var(--c-info);color:#fff;transform:translateY(-1px);box-shadow:0 2px 6px rgba(37,99,235,.3)}
+        .top5-rank{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-size:14px;font-weight:800;color:#fff;margin-right:12px;flex-shrink:0}
+        .top5-rank.r1{background:linear-gradient(135deg,#B45309,#D97706)}
+        .top5-rank.r2{background:linear-gradient(135deg,#6B7280,#9CA3AF)}
+        .top5-rank.r3{background:linear-gradient(135deg,#92400E,#B45309)}
+        .top5-rank.r4,.top5-rank.r5{background:#D1D5DB;color:#374151}
+        .top5-title-row{display:flex;align-items:center;margin-bottom:6px}
+        .top5-title{font-size:15px;font-weight:700;color:var(--c-text);flex:1}
+        .top5-meta{font-size:12px;color:var(--c-text3);margin-bottom:6px;padding-left:40px}
+        .top5-desc{font-size:13.5px;color:var(--c-text2);line-height:1.7;padding-left:40px}
+        .insight-section{margin-bottom:20px}
+        .insight-section-title{font-size:18px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+        .insight-card{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow);transition:all .25s}
+        .insight-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+        .insight-header{padding:16px 20px;border-bottom:1px solid var(--c-border-l);display:flex;align-items:center;gap:10px}
+        .insight-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;font-size:12px;font-weight:800;color:#fff;background:var(--g-blue);flex-shrink:0}
+        .insight-title{font-size:15px;font-weight:700;color:var(--c-text);flex:1}
+        .insight-body{padding:16px 20px}
+        .insight-body p{font-size:14px;color:var(--c-text2);line-height:1.8;margin-bottom:12px}
+        .insight-body p:last-child{margin-bottom:0}
+        .insight-body p strong{color:var(--c-text)}
+        .insight-verdict{margin-top:12px;padding:12px 16px;background:linear-gradient(135deg,#EFF6FF 0%,#DBEAFE 100%);border-radius:var(--r-md);border-left:4px solid var(--c-info)}
+        .insight-verdict-label{font-size:11px;font-weight:700;color:var(--c-info);letter-spacing:.5px;margin-bottom:4px}
+        .insight-verdict-text{font-size:13.5px;color:var(--c-text2);line-height:1.7}
+        .insight-verdict-text strong{color:var(--c-text)}
+        .insight-events{margin-top:12px}
+        .insight-event{display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:13px;color:var(--c-text2)}
+        .insight-event-date{flex-shrink:0;font-weight:600;color:var(--c-info);width:30px}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-md);padding:4px;box-shadow:var(--shadow);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--c-text3);border-radius:var(--r-sm);transition:var(--trans);font-family:var(--font);min-width:100px;white-space:nowrap}
+        .tab-btn:hover{color:var(--c-text);background:var(--c-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--g-blue);color:#fff;box-shadow:0 2px 4px rgba(37,99,235,.3)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--c-border-l);display:flex;align-items:center;gap:8px}
+        .data-table{width:100%;border-collapse:collapse;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--c-border-l)}
+        .data-table th{background:var(--c-table-h);font-weight:600;color:var(--c-text2);font-size:12px;letter-spacing:.3px}
+        .data-table td{color:var(--c-text)}
+        .data-table tr:last-child td{border-bottom:none}
+        .data-table tr:hover{background:rgba(37,99,235,.04)}
+        .back-to-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--g-blue);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(37,99,235,.3);transition:var(--trans);opacity:0;visibility:hidden;z-index:100}
+        .back-to-top.show{opacity:1;visibility:visible}
+        .back-to-top:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(37,99,235,.4)}
+        .tag{display:inline-block;padding:2px 8px;border-radius:var(--r-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:#DC2626}
+        .tag-note{background:#FFF7ED;color:#EA580C}
+        .tag-new{background:#EFFDF5;color:#059669}
+        .tag-cn{background:#FEF2F2;color:#DC2626}
+        .tag-fund{background:#E0F2FE;color:#0284C7}
+        .trend-box{margin-top:16px;padding:16px;background:linear-gradient(135deg,#EFF6FF 0%,#DBEAFE 100%);border-radius:var(--r-md);border-left:4px solid var(--c-info)}
+        .trend-box h4{font-size:13px;font-weight:700;color:var(--c-info);margin-bottom:8px;letter-spacing:.3px}
+        .trend-box p,.trend-box li{font-size:13.5px;color:var(--c-text2);line-height:1.7}
+        .trend-box ul{padding-left:18px;margin-top:6px}
+        .trend-box li{margin-bottom:4px}
+        .trend-box strong{color:var(--c-text)}
+        .dashboard{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);overflow:hidden;margin-bottom:20px;box-shadow:var(--shadow)}
+        .dashboard-header{background:var(--g-success);color:#fff;padding:16px 24px}
+        .dashboard-header-title{font-size:17px;font-weight:800}
+        .dashboard-body{padding:0}
+        .dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+        .dashboard-item{padding:14px 20px;border-bottom:1px solid var(--c-border-l);border-right:1px solid var(--c-border-l)}
+        .dashboard-item:nth-child(even){border-right:none}
+        .dashboard-item-label{font-size:12px;color:var(--c-text3);font-weight:600;margin-bottom:2px}
+        .dashboard-item-value{font-size:18px;font-weight:800;color:var(--c-text)}
+        .dashboard-item-note{font-size:11px;color:var(--c-text3);margin-top:1px}
+        .next-week{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+        .next-week h3{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+        .next-week-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--c-border-l)}
+        .next-week-item:last-child{border-bottom:none}
+        .next-week-date{flex-shrink:0;font-size:12px;font-weight:700;color:var(--c-info);background:#EFF6FF;padding:3px 10px;border-radius:var(--r-full);min-width:70px;text-align:center}
+        .next-week-text{font-size:14px;color:var(--c-text2);line-height:1.6}
+        .next-week-text strong{color:var(--c-text)}
+        .daily-index{background:var(--c-card);border:1px solid var(--c-border-l);border-radius:var(--r-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+        .daily-index h3{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+        .daily-index-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+        .daily-index-item{text-align:center;padding:12px 8px;border-radius:var(--r-md);border:1px solid var(--c-border-l);text-decoration:none;color:var(--c-text);transition:var(--trans)}
+        .daily-index-item:hover{border-color:var(--c-info);background:#EFF6FF;transform:translateY(-2px);box-shadow:var(--shadow)}
+        .daily-index-day{font-size:12px;color:var(--c-text3);font-weight:600}
+        .daily-index-date{font-size:20px;font-weight:800;color:var(--c-info);margin:4px 0}
+        .daily-index-label{font-size:11px;color:var(--c-success);font-weight:600}
+        .footer-box{margin-top:24px;background:linear-gradient(135deg,#F6F8FA 0%,#EEF2F6 100%);border:1px solid #E8ECF0;border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow)}
+        .footer-box h4{font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+        .footer-box p{font-size:14px;color:#4D5561;line-height:1.7;margin-bottom:12px}
+        .footer-box a.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--g-blue);color:#fff;border-radius:var(--r-full);font-size:13px;font-weight:600;text-decoration:none;transition:var(--trans)}
+        .footer-box a.btn:hover{opacity:.9;transform:translateY(-1px)}
+        @media(max-width:768px){.stats-grid{grid-template-columns:repeat(3,1fr)}.dashboard-grid{grid-template-columns:1fr}.dashboard-item{border-right:none}.daily-index-grid{grid-template-columns:repeat(4,1fr)}.tab-btn{font-size:12px;padding:8px 6px}}
+        @media(max-width:480px){.stats-grid{grid-template-columns:repeat(2,1fr)}.daily-index-grid{grid-template-columns:repeat(3,1fr)}.header-title{font-size:22px}}
+    </style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+    <div class="header-badge">📊 AI WEEKLY REPORT</div>
+    <div class="header-title">AI 周报<span class="version-badge">W12</span></div>
+    <div class="header-subtitle">2026年第12周（3月16日 - 3月22日）</div>
+    <div class="header-date">覆盖6期日报 · 85+条资讯汇总 · AI洞察（的AI洞察）出品</div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon">🧠</div>
+        <div class="stat-value">20</div>
+        <div class="stat-label">大模型</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">⌨️</div>
+        <div class="stat-value blue">18</div>
+        <div class="stat-label">AI Coding</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">📱</div>
+        <div class="stat-value purple">15</div>
+        <div class="stat-label">AI 应用</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">🏭</div>
+        <div class="stat-value orange">20</div>
+        <div class="stat-label">AI 行业</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">🔄</div>
+        <div class="stat-value danger">12</div>
+        <div class="stat-label">企业AI转型</div>
+    </div>
+</div>
+
+<div class="top5-card">
+    <div class="top5-header">
+        <div class="top5-header-label">FROM 85+ NEWS</div>
+        <div class="top5-header-title">🏆 本周 Top 5</div>
+    </div>
+    <div class="top5-body">
+        <div class="top5-item">
+            <div class="top5-title-row">
+                <span class="top5-rank r1">1</span>
+                <span class="top5-title">NVIDIA GTC 2026：Vera Rubin+7芯架构发布，Token工厂时代开幕</span>
+                <a href="2026-03-17.html" target="_blank" class="top5-link">📅 3/17日报 →</a>
+            </div>
+            <div class="top5-meta">NVIDIA Newsroom · 3月16-18日 | 🔴 AI基础设施里程碑</div>
+            <div class="top5-desc">黄仁勋发布Vera Rubin平台，集成7颗全新芯片，NVL72推理吞吐/瓦提升10x，token成本降至Blackwell 1/10。Groq 3 LPX tokens/瓦提升35x。黄仁勋首次将数据中心定义为"Token工厂"，$1万亿订单预期。</div>
+        </div>
+        <div class="top5-item">
+            <div class="top5-title-row">
+                <span class="top5-rank r2">2</span>
+                <span class="top5-title">OpenAI收购Astral：Codex吞掉整条Python工具链</span>
+                <a href="2026-03-20.html" target="_blank" class="top5-link">📅 3/20日报 →</a>
+            </div>
+            <div class="top5-meta">OpenAI · 3月19日 | 🔴 AI编程2.0平台化</div>
+            <div class="top5-desc">OpenAI宣布收购Python工具链公司Astral，将uv/Ruff/ty整合进Codex生态。Codex年初至今用户增长3倍、用量增长5倍，周活跃用户超200万。同日Cursor Composer 2、Claude Dispatch、Google Build Mode三连发。</div>
+        </div>
+        <div class="top5-item">
+            <div class="top5-title-row">
+                <span class="top5-rank r3">3</span>
+                <span class="top5-title">Anthropic 81K人调研：人们最想要的是"活得更好"</span>
+                <a href="2026-03-22.html" target="_blank" class="top5-link">📅 3/22日报 →</a>
+            </div>
+            <div class="top5-meta">Anthropic · 3月18日 | 🔴 史上最大规模AI用户研究</div>
+            <div class="top5-desc">80,508人×159国×70语言参与史上最大规模AI定性研究。19%最想提升专业水平，81%表示AI已开始实现愿景。5组"光与影"张力：学习vs认知退化、决策提升vs幻觉（唯一负面&gt;正面）、情感支持vs依赖…</div>
+        </div>
+        <div class="top5-item">
+            <div class="top5-title-row">
+                <span class="top5-rank r4">4</span>
+                <span class="top5-title">Anthropic ARR接近$20B + $30B融资$380B估值</span>
+                <a href="2026-03-22.html" target="_blank" class="top5-link">📅 3/22日报 →</a>
+            </div>
+            <div class="top5-meta">Bloomberg/Anthropic · 3月22日 | 🔴 商业化里程碑</div>
+            <div class="top5-desc">Bloomberg报道Anthropic ARR接近$20B（较年初翻倍），Claude Code运行收入超$2.5B（翻倍），企业订阅自1月4倍增长。Series G融资$30B，估值$380B。Claude Code成为最快增长AI收入引擎。</div>
+        </div>
+        <div class="top5-item">
+            <div class="top5-title-row">
+                <span class="top5-rank r5">5</span>
+                <span class="top5-title">AMI Labs $1.03B种子轮：LeCun押注世界模型挑战LLM</span>
+                <a href="2026-03-21.html" target="_blank" class="top5-link">📅 3/21日报 →</a>
+            </div>
+            <div class="top5-meta">多源 · 3月21日 | 🔴 AI历史上最重大架构赌注</div>
+            <div class="top5-desc">Yann LeCun创立的AMI Labs获$1.03B种子轮——欧洲历史最大。押注基于JEPA架构的"世界模型"能超越LLM范式。Bezos/NVIDIA/Samsung同时入局，估值$3.5B。首年纯研发无营收，承诺开源。3月AI融资已超$6B。</div>
+        </div>
+    </div>
+</div>
+
+<div class="insight-section">
+    <div class="insight-section-title">🔥 周度洞察</div>
+
+    <div class="insight-card">
+        <div class="insight-header">
+            <span class="insight-num">1</span>
+            <span class="insight-title">GTC 2026定义"Token经济学"：AI竞争从算法层下沉到能源层</span>
+        </div>
+        <div class="insight-body">
+            <p>黄仁勋将数据中心重新定义为"Token工厂"——核心竞争力从"谁的模型更大"变成<strong>"谁的每瓦Token成本更低"</strong>。Groq 3 LPX使tokens/瓦提升35x，HRT在挪威建Blackwell AI工厂选择北欧清洁能源，AWS承诺部署100万+GPU。AI计算需求从ChatGPT到Agent增长约100万倍。</p>
+            <div class="insight-events">
+                <div class="insight-event"><span class="insight-event-date">3/16</span> GTC开幕，Build-a-Claw引爆现场</div>
+                <div class="insight-event"><span class="insight-event-date">3/17</span> Vera Rubin+7芯系统全部量产发布</div>
+                <div class="insight-event"><span class="insight-event-date">3/18</span> Groq 3 LPU+Feynman路线图首次公开</div>
+                <div class="insight-event"><span class="insight-event-date">3/19</span> AWS宣布部署超100万块NVIDIA GPU</div>
+            </div>
+            <div class="insight-verdict">
+                <div class="insight-verdict-label">趋势判断</div>
+                <div class="insight-verdict-text">AI竞争正在经历"四阶段下沉"：算法为王→芯片为王→<strong>系统为王（Token工厂）→能源为王</strong>。电力成本将成为AI服务定价的关键变量。</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="insight-card">
+        <div class="insight-header">
+            <span class="insight-num">2</span>
+            <span class="insight-title">AI编程工具链整合期：从"写代码"到"拥有开发者工作流"</span>
+        </div>
+        <div class="insight-body">
+            <p>3月19日是"AI编程工具集中爆发日"——<strong>OpenAI收购Astral（Python工具链）</strong>、<strong>Cursor Composer 2旗舰模型</strong>、<strong>Claude Dispatch后台Agent</strong>三连发。Google AI Studio Build Mode让Vibe Coding从概念走向主流。本周Codex周活超200万、Claude Code自主运行时间翻倍至45分钟。</p>
+            <div class="insight-events">
+                <div class="insight-event"><span class="insight-event-date">3/19</span> OpenAI收购Astral（uv/Ruff/ty整合进Codex）</div>
+                <div class="insight-event"><span class="insight-event-date">3/19</span> Cursor Composer 2 + Claude Dispatch同日发布</div>
+                <div class="insight-event"><span class="insight-event-date">3/22</span> Google AI Studio Build Mode全栈Vibe Coding</div>
+            </div>
+            <div class="insight-verdict">
+                <div class="insight-verdict-label">趋势判断</div>
+                <div class="insight-verdict-text">AI编程进入<strong>2.0平台化阶段</strong>：竞争终局不是"谁写代码更好"，而是"谁的生态让开发者更难离开"。OpenAI补齐Python工具链，Cursor建插件生态，Anthropic渗透桌面工作流。</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="insight-card">
+        <div class="insight-header">
+            <span class="insight-num">3</span>
+            <span class="insight-title">Agent自主性快速跃升：从"辅助工具"向"自主执行者"进化</span>
+        </div>
+        <div class="insight-body">
+            <p>多个数据点汇聚：Claude Code最长自主运行时间<strong>从25分钟增长到45分钟</strong>（3个月内翻倍）；有经验用户auto-approve使用率从20%升至40%+；Accenture+Databricks企业多Agent系统4个月<strong>增长327%</strong>（25000人规模）；Perplexity Computer for Enterprise让AI直接操作桌面应用。</p>
+            <div class="insight-events">
+                <div class="insight-event"><span class="insight-event-date">3/17</span> Accenture 327%增长数据公布</div>
+                <div class="insight-event"><span class="insight-event-date">3/19</span> Claude Dispatch后台Agent发布</div>
+                <div class="insight-event"><span class="insight-event-date">3/21</span> Anthropic Agent自主性研究报告</div>
+                <div class="insight-event"><span class="insight-event-date">3/22</span> Perplexity Computer for Enterprise</div>
+            </div>
+            <div class="insight-verdict">
+                <div class="insight-verdict-label">趋势判断</div>
+                <div class="insight-verdict-text">Agent正在经历"授权鸿沟"——<strong>模型的自主能力已经超前于用户实际授权的自主度</strong>。用户正从"逐一审批"进化为"监控+干预"模式。企业Agent从PoC到生产级的转变正在发生。</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tab-nav" role="tablist">
+    <button class="tab-btn" role="tab" aria-selected="true" onclick="switchTab('models',this)">🧠 大模型</button>
+    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('coding',this)">⌨️ AI Coding</button>
+    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('apps',this)">📱 AI 应用</button>
+    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('industry',this)">🏭 AI 行业</button>
+    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('enterprise',this)">🔄 企业转型</button>
+</div>
+
+<div id="panel-models" class="tab-panel active">
+    <div class="section-card">
+        <div class="section-header">🧠 大模型 · 本周动态汇总</div>
+        <table class="data-table">
+            <thead><tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr></thead>
+            <tbody>
+                <tr><td>3/16</td><td>NVIDIA GTC 2026开幕，Build-a-Claw，黄仁勋演讲预热</td><td>NVIDIA</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/17</td><td>Vera Rubin平台发布：7芯量产，NVL72推理10x提升</td><td>NVIDIA Newsroom</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/17</td><td>Vera CPU：全球首款Agentic AI专用处理器（2x效率/50%速度）</td><td>NVIDIA Newsroom</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/17</td><td>NemoClaw发布：OpenClaw+OpenShell安全运行时</td><td>NVIDIA</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/18</td><td>Groq 3 LPU首秀：tokens/瓦提升35x，$200亿收购后首款产品</td><td>CNBC</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/18</td><td>Feynman+Rosa CPU+Kyber路线图首次公开：两代架构路线图</td><td>NVIDIA Blog</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/18</td><td>黄仁勋上调订单预期至$1万亿，NVIDIA市值$4.5万亿</td><td>CNBC</td><td><span class="tag tag-note">🟡</span></td></tr>
+                <tr><td>3/19</td><td>GPT-5.4 mini正式登陆ChatGPT，免费用户可用Thinking功能</td><td>OpenAI</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/19</td><td>Anthropic投资$1亿建设Claude合作伙伴网络</td><td>Anthropic</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/19</td><td>NVIDIA发布Nemotron Coalition六大开源模型家族</td><td>NVIDIA Blog</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/21</td><td>GPT-5.4 mini向Free/Go用户推出，legacy deep research 3/26退役</td><td>OpenAI</td><td><span class="tag tag-note">🟡</span></td></tr>
+                <tr><td>3/21</td><td>AMI Labs $1.03B种子轮：Yann LeCun押注JEPA世界模型</td><td>多源</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/22</td><td>Anthropic ARR接近$20B，Claude Code收入超$2.5B</td><td>Bloomberg</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/22</td><td>Anthropic 81K人调研：史上最大规模AI定性研究</td><td>Anthropic</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/22</td><td>Anthropic $30B Series G融资，估值$380B</td><td>Anthropic</td><td><span class="tag tag-hot">🔴</span></td></tr>
+            </tbody>
+        </table>
+        <div class="trend-box">
+            <h4>📈 本周趋势</h4>
+            <ul>
+                <li><strong>NVIDIA全栈定义AI基础设施标准</strong>：Vera Rubin+NemoClaw+OpenClaw三层闭环，从芯片公司升级为AI基础设施帝国</li>
+                <li><strong>Anthropic商业化验证</strong>：ARR近$20B/$30B融资/$380B估值三连，Claude Code成为AI商业化最快增长引擎</li>
+                <li><strong>架构范式之争</strong>：AMI Labs $1.03B押注世界模型，LeCun公开挑战LLM主流范式——AI历史上最重大的架构赌注</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="panel-coding" class="tab-panel">
+    <div class="section-card">
+        <div class="section-header">⌨️ AI Coding · 本周动态汇总</div>
+        <table class="data-table">
+            <thead><tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr></thead>
+            <tbody>
+                <tr><td>3/17</td><td>GTC开源模型圆桌：Cursor、A16Z、Allen AI探讨开源vs闭源</td><td>NVIDIA</td><td><span class="tag tag-note">🟡</span></td></tr>
+                <tr><td>3/19</td><td>OpenAI宣布收购Astral：uv/Ruff/ty整合进Codex生态</td><td>OpenAI</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/19</td><td>Cursor Composer 2发布：旗舰编码性能，CursorBench最优</td><td>Cursor</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/19</td><td>Apono Agent Privilege Guard：企业AI Agent运行时权限防护</td><td>Apono</td><td><span class="tag tag-note">🟡</span></td></tr>
+                <tr><td>3/21</td><td>Lens推出MCP Server：AI编程助手直连Kubernetes</td><td>Mirantis</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/21</td><td>Anthropic Agent自主性研究：Claude Code运行时间翻倍至45分钟</td><td>Anthropic</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/21</td><td>GitHub Copilot vs Cursor 2026深度评测</td><td>Tech Insider</td><td><span class="tag tag-note">🟡</span></td></tr>
+                <tr><td>3/22</td><td>Google AI Studio Build Mode：全栈Vibe Coding从提示词直达应用上线</td><td>Google</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/22</td><td>Simon Willison评论：开源工具被商业公司收购的治理隐患</td><td>Simon Willison</td><td><span class="tag tag-note">🟡</span></td></tr>
+                <tr><td>3/22</td><td>中文开发者社区热议：Python底座被买走，OpenAI要接管开发全链路</td><td>微信公众号</td><td><span class="tag tag-hot">🔴</span></td></tr>
+            </tbody>
+        </table>
+        <div class="trend-box">
+            <h4>📈 本周趋势</h4>
+            <ul>
+                <li><strong>工具链整合</strong>：OpenAI收购Astral（Python基础设施），从代码生成到工具链一体化</li>
+                <li><strong>旗舰竞争</strong>：Cursor Composer 2+Google Build Mode+Claude Dispatch同周发布，三强格局正式确立</li>
+                <li><strong>基础设施延伸</strong>：Lens MCP Server让AI编程助手直连K8s——AI从"写代码"向"操作整个技术栈"延伸</li>
+                <li><strong>开源治理讨论</strong>：Astral被收购引发社区焦虑——开源工具链中立性是新议题</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="panel-apps" class="tab-panel">
+    <div class="section-card">
+        <div class="section-header">📱 AI 应用 · 本周动态汇总</div>
+        <table class="data-table">
+            <thead><tr><th>日期</th><th>事件</th><th>来源</th><th>重要度</th></tr></thead>
+            <tbody>
+                <tr><td>3/17</td><td>NVIDIA太空计算平台：AI正式进入轨道（轨道数据中心）</td><td>NVIDIA Newsroom</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/18</td><td>Healthcare Physical AI：776小时外科视频开放数据集</td><td>NVIDIA Blog</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/18</td><td>DGX Station GB300首台交付Karpathy：个人超算时代</td><td>NVIDIA Blog</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/19</td><td>OpenClaw突破100K GitHub Stars，一周内200万访客</td><td>NVIDIA Blog</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/19</td><td>Claude Dispatch发布：跨设备任务调度，AI助手升级为后台Agent</td><td>Anthropic</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/19</td><td>Meta AI内容审核系统：减少对外部审核商依赖</td><td>Meta</td><td><span class="tag tag-note">🟡</span></td></tr>
+                <tr><td>3/19</td><td>DoorDash发布Tasks应用：AI驱动的任务委托服务</td><td>DoorDash</td><td><span class="tag tag-note">🟡</span></td></tr>
+                <tr><td>3/22</td><td>Perplexity Health发布+健康顾问委员会成立</td><td>Perplexity</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/22</td><td>Perplexity Comet Enterprise企业AI浏览器+CrowdStrike安全合作</td><td>Perplexity</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/22</td><td>Firefox 149内置AI功能+VPN（50GB免费），Mozilla坚持差异化</td><td>Mozilla</td><td><span class="tag tag-note">🟡</span></td></tr>
+            </tbody>
+        </table>
+        <div class="trend-box">
+            <h4>📈 本周趋势</h4>
+            <ul>
+                <li><strong>Agent从"即时对话"到"后台异步"</strong>：Claude Dispatch代表AI助手范式升级——用户布置任务后可关闭设备</li>
+                <li><strong>AI应用边界扩展</strong>：NVIDIA将AI送入轨道，Perplexity进入医疗领域——应用场景全面渗透</li>
+                <li><strong>OpenClaw现象</strong>：100K Stars+200万访客——开发者用脚投票，Agent不再是概念</li>
+                <li><strong>Perplexity产品化提速</strong>：一周密集发布5款产品，从搜索公司蜕变为AI平台公司</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="panel-industry" class="tab-panel">
+    <div class="section-card">
+        <div class="section-header">🏭 AI 行业 · 本周融资统计</div>
+        <table class="data-table">
+            <thead><tr><th>公司/项目</th><th>融资额</th><th>估值</th><th>日期</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Anthropic Series G</strong></td><td>$30B</td><td>$380B</td><td>2月12日（本周披露）</td></tr>
+                <tr><td><strong>AMI Labs（LeCun）</strong></td><td>$1.03B</td><td>$3.5B</td><td>3月21日</td></tr>
+                <tr><td><strong>Replit</strong></td><td>—</td><td>$9B</td><td>3月（6个月从$3B升3倍）</td></tr>
+                <tr><td>Cloaked（隐私）</td><td>$375M</td><td>—</td><td>3月19日</td></tr>
+                <tr><td>3月AI融资总额</td><td>$6B+</td><td>—</td><td>全月合计</td></tr>
+            </tbody>
+        </table>
+        <div class="trend-box">
+            <h4>📈 本周趋势</h4>
+            <ul>
+                <li><strong>AI算力战从GPU到能源</strong>：AWS 100万GPU承诺、HRT挪威能源布局——算力竞争下沉到物理基础设施层</li>
+                <li><strong>商业化加速验证</strong>：Anthropic ARR $20B、Codex 5倍用量增长——大模型商业化拐点已过</li>
+                <li><strong>世界模型新赛道</strong>：AMI Labs $1.03B标志着下一代AI范式之争正式开始</li>
+                <li><strong>国内算力涨价</strong>：阿里/百度同步调涨，价格战转入价值战</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="panel-enterprise" class="tab-panel">
+    <div class="section-card">
+        <div class="section-header">🔄 企业AI转型 · 本周动态汇总</div>
+        <table class="data-table">
+            <thead><tr><th>日期</th><th>事件</th><th>来源</th><th>类型</th></tr></thead>
+            <tbody>
+                <tr><td>3/17</td><td>Teneo+Thoughtworks成立AI原生咨询合资公司</td><td>Teneo</td><td><span class="tag tag-new">合作</span></td></tr>
+                <tr><td>3/18</td><td>Accenture+Databricks多Agent增长327%（4个月，2.5万人）</td><td>Accenture</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/18</td><td>RTX PRO Blackwell工作站全线赋能企业AI本地推理（4000 TOPS）</td><td>NVIDIA Blog</td><td><span class="tag tag-note">🟡</span></td></tr>
+                <tr><td>3/18</td><td>Azure首发Vera Rubin NVL72，AI攻击检测提升160x</td><td>NVIDIA Blog</td><td><span class="tag tag-note">🟡</span></td></tr>
+                <tr><td>3/19</td><td>美军用户反对放弃Claude：AI产品"锁定效应"首次被检验</td><td>Reuters</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/19</td><td>LangGuard.AI开放AI控制平面：加速企业Agent ROI</td><td>Ars Technica</td><td><span class="tag tag-new">工具</span></td></tr>
+                <tr><td>3/22</td><td>Anthropic 81K调研：5组"光与影"张力，教育者认知退化率2.5-3倍</td><td>Anthropic</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/22</td><td>Perplexity Computer for Enterprise：AI Agent直接操作桌面应用</td><td>Perplexity</td><td><span class="tag tag-hot">🔴</span></td></tr>
+                <tr><td>3/22</td><td>CrowdStrike为Perplexity Comet Enterprise提供安全防护</td><td>CrowdStrike</td><td><span class="tag tag-note">🟡</span></td></tr>
+            </tbody>
+        </table>
+        <div class="trend-box">
+            <h4>📈 本周趋势</h4>
+            <ul>
+                <li><strong>Enterprise Agent从PoC到生产级</strong>：327%增长数据证明企业Agent正在规模化落地，不再是实验</li>
+                <li><strong>AI产品锁定效应已形成</strong>：美军用户反对放弃Claude——AI深度嵌入工作流后，政策级禁令也难以执行</li>
+                <li><strong>企业AI基础设施成熟</strong>：RTX PRO 4000 TOPS/96GB桌面推理——企业部署AI门槛断崖式下降</li>
+                <li><strong>AI光与影需正视</strong>：81K调研揭示企业AI化必须面对的五组张力——仅谈效率不谈风险的时代结束了</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard">
+    <div class="dashboard-header">
+        <div class="dashboard-header-title">📊 本周数据总览</div>
+    </div>
+    <div class="dashboard-body">
+        <div class="dashboard-grid">
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">Anthropic估值</div>
+                <div class="dashboard-item-value" style="color:#DC2626">$380B</div>
+                <div class="dashboard-item-note">Series G $30B</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">Anthropic ARR</div>
+                <div class="dashboard-item-value" style="color:#EA580C">接近$20B</div>
+                <div class="dashboard-item-note">较年初翻倍</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">NVIDIA订单预期</div>
+                <div class="dashboard-item-value" style="color:#059669">$1万亿</div>
+                <div class="dashboard-item-note">到2027年</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">NVL72推理吞吐/瓦提升</div>
+                <div class="dashboard-item-value" style="color:#2563EB">10x</div>
+                <div class="dashboard-item-note">vs Blackwell</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">Groq 3 LPX tokens/瓦</div>
+                <div class="dashboard-item-value" style="color:#7C3AED">35x</div>
+                <div class="dashboard-item-note">$200亿收购首款产品</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">OpenClaw GitHub Stars</div>
+                <div class="dashboard-item-value" style="color:#D97706">100K+</div>
+                <div class="dashboard-item-note">一周内达成</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">Codex周活跃用户</div>
+                <div class="dashboard-item-value">200万+</div>
+                <div class="dashboard-item-note">用量年初增长5倍</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">多Agent系统增长</div>
+                <div class="dashboard-item-value" style="color:#059669">327%</div>
+                <div class="dashboard-item-note">4个月·Accenture</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">Claude Code自主运行</div>
+                <div class="dashboard-item-value" style="color:#DC2626">45分钟</div>
+                <div class="dashboard-item-note">3个月内翻倍（vs 25分钟）</div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-label">AMI Labs种子轮</div>
+                <div class="dashboard-item-value" style="color:#EA580C">$1.03B</div>
+                <div class="dashboard-item-note">欧洲历史最大种子轮</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="next-week">
+    <h3>📌 下周值得关注</h3>
+    <div class="next-week-item">
+        <span class="next-week-date">3月26日</span>
+        <span class="next-week-text"><strong>ChatGPT legacy deep research退役</strong> - 用户需迁移到新版</span>
+    </div>
+    <div class="next-week-item">
+        <span class="next-week-date">近期</span>
+        <span class="next-week-text"><strong>GPT-5.5正式发布</strong> - 多模态能力提升40%，数学准确率92%</span>
+    </div>
+    <div class="next-week-item">
+        <span class="next-week-date">5-6月</span>
+        <span class="next-week-text"><strong>具身智能IPO窗口期</strong> - 宇树科技预计5-6月上市</span>
+    </div>
+    <div class="next-week-item">
+        <span class="next-week-date">Q2</span>
+        <span class="next-week-text"><strong>OpenAI Codex vs Cursor vs Claude Code</strong> - 三强格局下的Q2市场份额</span>
+    </div>
+    <div class="next-week-item">
+        <span class="next-week-date">待定</span>
+        <span class="next-week-text"><strong>AMI Labs世界模型进展</strong> - 首年纯研发，世界模型vs LLM范式之争走向</span>
+    </div>
+    <div class="next-week-item">
+        <span class="next-week-date">待定</span>
+        <span class="next-week-text"><strong>NVIDIA Vera Rubin量产时间表</strong> - 下半年量产节点</span>
+    </div>
+</div>
+
+<div class="daily-index">
+    <h3>📅 本周日报索引</h3>
+    <div class="daily-index-grid">
+        <a href="2026-03-16.html" class="daily-index-item">
+            <div class="daily-index-day">周日</div>
+            <div class="daily-index-date">16</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+        <a href="2026-03-17.html" class="daily-index-item">
+            <div class="daily-index-day">周一</div>
+            <div class="daily-index-date">17</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+        <a href="2026-03-18.html" class="daily-index-item">
+            <div class="daily-index-day">周二</div>
+            <div class="daily-index-date">18</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+        <a href="2026-03-19.html" class="daily-index-item">
+            <div class="daily-index-day">周三</div>
+            <div class="daily-index-date">19</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+        <a href="2026-03-20.html" class="daily-index-item">
+            <div class="daily-index-day">周四</div>
+            <div class="daily-index-date">20</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+        <a href="2026-03-21.html" class="daily-index-item">
+            <div class="daily-index-day">周五</div>
+            <div class="daily-index-date">21</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+        <a href="2026-03-22.html" class="daily-index-item">
+            <div class="daily-index-day">周六</div>
+            <div class="daily-index-date">22</div>
+            <div class="daily-index-label">日报</div>
+        </a>
+    </div>
+</div>
+
+<div class="footer-box">
+    <h4>💡 了解更多</h4>
+    <p>我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。</p>
+    <a href="https://ai-insight-lab.github.io/ai-insight/" class="btn">🏠 访问AI洞察首页</a>
+</div>
+
+</div>
+
+<button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="返回顶部">↑</button>
+
+<script>
+function switchTab(id,btn){
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.setAttribute('aria-selected','false'));
+    document.getElementById('panel-'+id).classList.add('active');
+    btn.setAttribute('aria-selected','true');
+}
+// 返回顶部按钮显示逻辑
+window.addEventListener('scroll',function(){
+    const btn=document.querySelector('.back-to-top');
+    if(window.scrollY>400){btn.classList.add('show')}else{btn.classList.remove('show')}
+});
+</script>
+</body>
+</html>

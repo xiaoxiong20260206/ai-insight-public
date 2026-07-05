@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 - 2026-03-11 (v3.2)</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root {
+            --color-success:#059669;--color-success-light:#10B981;--color-danger:#E11D48;--color-danger-light:#FF7B72;--color-warning:#D97706;--color-info:#2563EB;--color-info-light:#54AEFF;--color-purple:#7C3AED;--color-orange:#EA580C;--color-text-primary:#1C1917;--color-text-secondary:#57534E;--color-text-muted:#78716C;--color-border:#E7E5E4;--color-border-light:#F5F5F4;--color-bg:#F8FAFB;--color-bg-card:#FFFFFF;--color-bg-table-header:#FAFAF9;--gradient-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--gradient-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--gradient-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--gradient-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow-card:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-full:999px;--font-family:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--transition-normal:200ms cubic-bezier(.4,0,.2,1);--content-max-width:980px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font-family);background:var(--color-bg);color:var(--color-text-primary);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--content-max-width);margin:0 auto;padding:24px 20px}
+        .header{background:var(--gradient-success);color:#fff;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-date{font-size:14px;opacity:.85}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:700;margin-left:8px}
+        .overview{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-card)}
+        .overview-title{font-size:18px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .overview-grid.five-cols{grid-template-columns:1fr 1fr 1fr}
+        .overview-item{padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--color-border-light);background:var(--color-bg)}
+        .overview-item-header{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+        .overview-item-icon{font-size:16px}
+        .overview-item-label{font-size:13px;font-weight:700;color:var(--color-success-light);letter-spacing:.3px}
+        .overview-item-label.orange{color:var(--color-orange)}
+        .overview-headline{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:6px;line-height:1.4}
+        .overview-item-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+        .heat-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow-card)}
+        .heat-header{background:linear-gradient(135deg,#EA580C 0%,#DC2626 50%,#B91C1C 100%);color:#fff;padding:18px 24px}
+        .heat-header-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .heat-header-title{font-size:17px;font-weight:800;margin-top:4px}
+        .heat-body{padding:16px 20px}
+        .heat-body p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-top:12px}
+        .heat-body p strong{color:var(--color-text-primary)}
+        .heat-table{width:100%;border-collapse:collapse;font-size:13px}
+        .heat-table th{padding:8px 10px;text-align:left;background:#FEF2F2;font-weight:700;color:#991B1B;border-bottom:2px solid #FECACA;font-size:12px}
+        .heat-table td{padding:10px;border-bottom:1px solid var(--color-border-light);vertical-align:top}
+        .heat-table tr:last-child td{border-bottom:none}
+        .heat-table tr:hover{background:rgba(234,88,12,.02)}
+        .heat-bar{display:flex;gap:2px;align-items:center}
+        .heat-bar-fill{width:10px;height:14px;border-radius:2px;background:linear-gradient(135deg,#EA580C,#DC2626)}
+        .heat-bar-empty{width:10px;height:14px;border-radius:2px;background:#F5F5F4}
+        .heat-trend-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .heat-trend-tag.up{background:#EFFDF5;color:#059669}
+        .heat-trend-tag.stable{background:#EFF6FF;color:#2563EB}
+        .heat-trend-tag.burst{background:#FEF2F2;color:#DC2626}
+        .heat-trend-tag.new{background:#FEF2F2;color:#DC2626}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:4px;box-shadow:var(--shadow-card);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-muted);border-radius:var(--radius-sm);transition:var(--transition-normal);font-family:var(--font-family);min-width:80px}
+        .tab-btn:hover{color:var(--color-text-primary);background:var(--color-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--gradient-success);color:#fff}
+        .tab-btn.orange[aria-selected="true"]{background:var(--gradient-orange)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow-card)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--color-border-light);display:flex;align-items:center;gap:8px}
+        .section-header .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gradient-success);color:#fff;font-size:12px;font-weight:700}
+        .section-header .num.orange{background:var(--gradient-orange)}
+        .sub-header{font-size:14px;font-weight:700;color:var(--color-text-muted);margin:14px 0 10px;padding-left:4px;letter-spacing:.5px}
+        .sub-header:first-child{margin-top:0}
+        .news-item{padding:12px 0;border-bottom:1px solid var(--color-border-light)}
+        .news-item:last-child{border-bottom:none}
+        .news-tag{display:inline-block;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:var(--color-danger)}
+        .tag-new{background:#EFFDF5;color:var(--color-success)}
+        .tag-policy{background:#FFF7ED;color:var(--color-orange)}
+        .news-title{font-size:15px;font-weight:600;margin:4px 0 3px}
+        .news-title a{color:var(--color-text-primary);text-decoration:none}
+        .news-title a:hover{color:var(--color-success)}
+        .news-source{font-size:12px;color:var(--color-text-muted)}
+        .news-detail{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+        .news-detail-row{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.6}
+        .news-detail-label{flex-shrink:0;font-weight:700;color:var(--color-success);font-size:12px;padding:1px 0;min-width:60px}
+        .news-detail-value{color:var(--color-text-secondary);flex:1}
+        .news-detail-value strong{color:var(--color-text-primary);font-weight:600}
+        .deep-focus-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:0;margin-bottom:16px;box-shadow:var(--shadow-card);overflow:hidden}
+        .deep-focus-header{background:var(--gradient-purple);color:#fff;padding:18px 24px}
+        .deep-focus-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .deep-focus-title{font-size:17px;font-weight:800;margin-top:4px;line-height:1.4}
+        .deep-focus-body{padding:20px 24px}
+        .deep-focus-body p{font-size:14.5px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:14px}
+        .deep-focus-body p:last-child{margin-bottom:0}
+        .deep-focus-body p strong{color:var(--color-text-primary)}
+        .deep-focus-takeaway{margin-top:16px;padding:14px 16px;background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%);border-radius:var(--radius-md);border-left:4px solid var(--color-purple)}
+        .deep-focus-takeaway-label{font-size:12px;font-weight:700;color:var(--color-purple);margin-bottom:6px;letter-spacing:.5px}
+        .deep-focus-takeaway-text{font-size:13.5px;color:var(--color-text-secondary);line-height:1.7}
+        .deep-focus-takeaway-text strong{color:var(--color-text-primary)}
+        .data-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--color-border-light)}
+        .data-table th{background:var(--color-bg-table-header);font-weight:600;color:var(--color-text-secondary)}
+        .data-table td{color:var(--color-text-primary)}
+        .data-table tr:last-child td{border-bottom:none}
+        .coverage-bar{margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:16px;font-size:13px}
+        .coverage-bar .label{font-weight:700;color:var(--color-text-muted)}
+        .coverage-bar .bar{flex:1;height:8px;background:#E7E5E4;border-radius:4px;overflow:hidden;display:flex}
+        .coverage-bar .bar-overseas{background:var(--gradient-success);height:100%}
+        .coverage-bar .bar-china{background:var(--gradient-china);height:100%}
+        .coverage-bar .stats{display:flex;gap:12px;font-weight:600}
+        .coverage-bar .stat-overseas{color:var(--color-success)}
+        .coverage-bar .stat-china{color:#DC2626}
+        .footer{text-align:center;padding:24px;font-size:12px;color:var(--color-text-muted);border-top:1px solid var(--color-border-light);margin-top:24px}
+        @media(max-width:768px){
+            .overview-grid,.overview-grid.five-cols{grid-template-columns:1fr}
+            .tab-btn{font-size:11px;padding:8px 4px;min-width:60px}
+            .news-detail-row{flex-direction:column;gap:2px}
+            .news-detail-label{min-width:auto}
+            .deep-focus-header{padding:14px 18px}
+            .deep-focus-body{padding:16px 18px}
+            .coverage-bar{flex-direction:column;gap:8px}
+            .heat-table{font-size:12px}
+            .heat-table th,.heat-table td{padding:6px 4px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-badge">📡 AI行业洞察项目 - AI日报</div>
+            <div class="header-title">AI 日报 <span class="version-badge">v3.2</span></div>
+            <div class="header-date">2026年3月11日 周三 | 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</div>
+        </div>
+
+        <div class="coverage-bar">
+            <span class="label">📊 覆盖均衡</span>
+            <div class="bar">
+                <div class="bar-overseas" style="width:55%"></div>
+                <div class="bar-china" style="width:45%"></div>
+            </div>
+            <div class="stats">
+                <span class="stat-overseas">🌏 海外 9条</span>
+                <span class="stat-china">🇨🇳 国内 8条</span>
+            </div>
+        </div>
+
+        <div class="overview">
+            <div class="overview-title">📋 全文概览</div>
+            <div class="overview-grid five-cols">
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🧠</span><span class="overview-item-label">大模型</span></div>
+                    <div class="overview-headline">Anthropic起诉政府+杨立昆10亿融资</div>
+                    <div class="overview-item-text">Anthropic被国防部列入供应链风险名单后起诉政府；杨立昆世界模型初创获10.3亿美元</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">⌨️</span><span class="overview-item-label">AI Coding</span></div>
+                    <div class="overview-headline">Cursor年化营收20亿美元+进入战时状态</div>
+                    <div class="overview-item-text">Cursor三月翻番ARR破20亿；内部宣布进入战时状态应对Claude Code等竞争</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">📱</span><span class="overview-item-label">AI 应用</span></div>
+                    <div class="overview-headline">腾讯全系龙虾矩阵发布+SkillHub上线</div>
+                    <div class="overview-item-text">腾讯WorkBuddy/QClaw等全系产品发布；SkillHub社区上线收录1.3万AI技能</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI 行业</span></div>
+                    <div class="overview-headline">2月风投1890亿创纪录+Nscale融资20亿</div>
+                    <div class="overview-item-text">全球风投创纪录AI占90%；AI算力公司Nscale估值146亿美元</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔄</span><span class="overview-item-label orange">企业转型</span></div>
+                    <div class="overview-headline">短剧AI化+作家联名抗议</div>
+                    <div class="overview-item-text">AI真人剧产能爆发千倍；万名作家联名抗议AI侵权</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label">🔥 热度趋势</div>
+                <div class="heat-header-title">近7期日报交叉分析（3/5-3/11）</div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead><tr><th>排名</th><th>话题</th><th>热度</th><th>天数</th><th>趋势</th><th>核心信号</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇</td>
+                            <td><strong>Anthropic vs 美国国防部</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span></div></td>
+                            <td>7天</td>
+                            <td><span class="heat-trend-tag burst">⚡ 发酵</span></td>
+                            <td>被列入供应链风险名单+起诉政府+行业联名声援</td>
+                        </tr>
+                        <tr>
+                            <td>🥈</td>
+                            <td><strong>AI龙虾生态大战</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>4天</td>
+                            <td><span class="heat-trend-tag up">📈 爆发</span></td>
+                            <td>腾讯全系发布+深圳千人大会+无锡500万补贴</td>
+                        </tr>
+                        <tr>
+                            <td>🥉</td>
+                            <td><strong>Cursor商业化里程碑</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>ARR破20亿美元+三月翻番+60%企业客户</td>
+                        </tr>
+                        <tr>
+                            <td>4️⃣</td>
+                            <td><strong>全球风投创纪录</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>2天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>2月1890亿美元+AI占90%+三巨头1560亿</td>
+                        </tr>
+                        <tr>
+                            <td>5️⃣</td>
+                            <td><strong>杨立昆世界模型融资</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag new">🆕 新兴</span></td>
+                            <td>LeCun AI初创获10.3亿美元</td>
+                        </tr>
+                        <tr>
+                            <td>6️⃣</td>
+                            <td><strong>Nscale AI算力新贵</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag new">🆕 新兴</span></td>
+                            <td>20亿美元C轮+估值146亿美元</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>本期最强信号是<strong>Anthropic与美国政府的正面冲突</strong>——被国防部列入供应链风险名单后起诉政府，OpenAI和Google员工联名声援，AI行业首次出现头部公司与政府公开对抗。<strong>AI龙虾生态大战</strong>全面开打——腾讯WorkBuddy/QClaw全系发布，深圳无锡政府纷纷出台支持政策。<strong>Cursor</strong>以20亿美元年化营收证明AI编程已进入商业爆发期。</p>
+            </div>
+        </div>
+
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn" role="tab" aria-selected="true" data-tab="foundation">🧠 大模型</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="coding">⌨️ AI Coding</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="application">📱 AI 应用</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="industry">🏭 AI 行业</button>
+            <button class="tab-btn orange" role="tab" aria-selected="false" data-tab="enterprise">🔄 企业转型</button>
+        </nav>
+
+        <article id="foundation" class="tab-panel active">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.anthropic.com/news/where-stand-department-war" target="_blank" rel="noopener">Anthropic被美国国防部列入供应链风险名单：起诉政府引发行业震动</a></div>
+                    <div class="news-source">Anthropic · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">Anthropic收到国防部确认函，被认定为"国家安全供应链风险"，CEO Dario Amodei发表声明表示将起诉政府</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">关键数据</span>
+                            <span class="news-detail-value">将在法庭挑战该决定 | <strong>绝大多数客户不受影响</strong> | 继续以名义成本支持国防社区</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://news.crunchbase.com/ai/yann-lecun-startup-funding-world-model/" target="_blank" rel="noopener">杨立昆AI初创公司完成10.3亿美元融资：进军世界模型</a></div>
+                    <div class="news-source">Crunchbase · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">图灵奖得主Yann LeCun参与创立的AI初创公司完成<strong>10.3亿美元</strong>大额融资，专注于"世界模型"研究方向</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E9%98%BF%E9%87%8CQwen%E7%AE%A1%E7%90%86%E5%B1%82%E8%B0%83%E6%95%B4%EF%BC%9A%E5%91%A8%E9%9D%96%E4%BA%BA%E4%BB%A3%E7%AE%A1%E5%8D%83%E9%97%AE%E6%A8%A1%E5%9E%8B%E4%B8%80%E5%8F%B7%E4%BD%8D" target="_blank" rel="noopener">阿里Qwen管理层调整：周靖人代管千问模型一号位</a></div>
+                    <div class="news-source">多来源 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">阿里云CTO周靖人将代管通义千问模型团队一号位，阿里持续调整AI战略布局</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E4%B8%AD%E5%9B%BD%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%91%A8%E8%B0%83%E7%94%A8%E9%87%8F%E8%9D%89%E8%81%94%E5%85%A8%E7%90%83%E7%AC%AC%E4%B8%80%EF%BC%9AMiniMax%20M2.5%E7%A8%B3%E5%9D%90%E5%A4%B4%E6%8A%8A%E4%BA%A4%E6%A4%85" target="_blank" rel="noopener">中国大模型周调用量蝉联全球第一：MiniMax M2.5稳坐头把交椅</a></div>
+                    <div class="news-source">公众号 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">中国大模型周调用量连续保持<strong>全球第一</strong>，MiniMax M2.5凭借多模态能力持续领先</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div class="deep-focus-label">💡 深度聚焦</div>
+                    <div class="deep-focus-title">Anthropic vs 美国政府：AI行业的"反垄断时刻"？</div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Anthropic被美国国防部列入供应链风险名单，是AI行业发展史上的标志性事件。CEO Dario Amodei的声明透露了几个关键信息：</p>
+                    <p>1. <strong>法律依据存疑</strong>：Anthropic认为该认定"法律上站不住脚"，将通过法庭挑战；2. <strong>影响范围有限</strong>：仅适用于"作为国防部合同直接组成部分的Claude使用"；3. <strong>行业团结</strong>：OpenAI和Google员工联名声援Anthropic；4. <strong>红线坚守</strong>：坚持"完全自主武器"和"大规模国内监控"两条红线。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">这次事件将定义AI公司与政府的边界、AI军事应用的红线、以及行业自律的标准。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article id="coding" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://news.crunchbase.com/ai/cursor-2-billion-arr-ai-coding/" target="_blank" rel="noopener">Cursor年化营收突破20亿美元：三个月翻番创AI编程新纪录</a></div>
+                    <div class="news-source">多来源 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">AI编程工具Cursor的年化收入已突破<strong>20亿美元</strong>，较三个月前翻倍，约60%收入来自企业客户</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">关键数据</span>
+                            <span class="news-detail-value">ARR <strong>20亿美元</strong> | 三月翻番 | 企业客户占<strong>60%</strong> | 用户增长持续加速</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.anthropic.com/news" target="_blank" rel="noopener">Anthropic发布Claude Code代码审查工具：专治Vibe Coding后遗症</a></div>
+                    <div class="news-source">Anthropic · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">Anthropic在Claude Code中推出AI代码审查功能，专门解决"Vibe Coding"带来的代码质量问题</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">关键数据</span>
+                            <span class="news-detail-value">自动审查AI生成代码 | 识别潜在安全风险 | 集成PR工作流</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://openai.com/index/promptfoo/" target="_blank" rel="noopener">OpenAI收编Promptfoo：补齐提示词工程最后短板</a></div>
+                    <div class="news-source">OpenAI · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">OpenAI宣布收购提示词测试和评估平台Promptfoo，进一步完善AI开发工具链</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=Cursor%E8%BF%9B%E5%85%A5%E6%88%98%E6%97%B6%E7%8A%B6%E6%80%81%EF%BC%9A%E6%8D%8D%E5%8D%ABAI%E7%BC%96%E7%A8%8B%E9%A2%86%E5%85%88%E5%9C%B0%E4%BD%8D" target="_blank" rel="noopener">Cursor进入战时状态：捍卫AI编程领先地位</a></div>
+                    <div class="news-source">公众号 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">Cursor内部宣布进入"<strong>战时状态</strong>"，面对Claude Code、Copilot、国产工具等多方竞争全力应对</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div class="deep-focus-label">💡 深度聚焦</div>
+                    <div class="deep-focus-title">Cursor商业化奇迹：20亿美元背后的AI编程革命</div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Cursor在三个月内将年化营收从10亿翻到20亿美元，这个速度在软件行业是极其罕见的。几个关键数据点值得注意：</p>
+                    <p>1. <strong>企业客户主导</strong>：60%收入来自企业，AI编程已从个人工具进化为企业级基础设施；2. <strong>竞争反应</strong>：Cursor内部进入"战时状态"；3. <strong>市场证明</strong>：独立AI编程工具可以构建独立商业模式；4. <strong>行业影响</strong>：代码质量保障成为新竞争点。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI编程工具已经是一个20亿美元级别的独立市场，关键差异化正在从"代码生成"转向"代码质量保障"和"团队协作"。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article id="application" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank" rel="noopener">ChatGPT推出交互式数学学习功能：70+主题支持实时实验</a></div>
+                    <div class="news-source">OpenAI · 3月10日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">ChatGPT新增交互式可视化模块，支持勾股定理、理想气体定律等<strong>70+</strong>数学和科学主题的实时变量调整</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank" rel="noopener">Shazam深度入驻ChatGPT：路边听到的歌一问便知</a></div>
+                    <div class="news-source">多来源 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">OpenAI与Shazam合作，ChatGPT现在支持<strong>实时音乐识别</strong>功能</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E8%85%BE%E8%AE%AF%E5%85%A8%E7%B3%BB%E9%BE%99%E8%99%BE%E4%BA%A7%E5%93%81%E7%9F%A9%E9%98%B5%E5%8F%91%E5%B8%83%EF%BC%9AWorkBuddy/QClaw%E4%B8%80%E9%94%AE%E5%BC%80%E5%90%AFAI%E7%89%B9%E5%B7%A5%E6%97%B6%E4%BB%A3" target="_blank" rel="noopener">腾讯全系龙虾产品矩阵发布：WorkBuddy/QClaw一键开启AI特工时代</a></div>
+                    <div class="news-source">公众号 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">腾讯一口气发布WorkBuddy、QClaw等全系龙虾（AI Agent）产品，<strong>1分钟连接企微</strong>，智能体大战进入桌面时代</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">关键数据</span>
+                            <span class="news-detail-value">首日流量超预期 | 紧急扩容10倍 | 发布致歉补偿</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=SkillHub%E7%A4%BE%E5%8C%BA%E6%AD%A3%E5%BC%8F%E4%B8%8A%E7%BA%BF%EF%BC%9A%E6%94%B6%E5%BD%95%E8%B6%851.3%E4%B8%87%E4%B8%AAAI%E6%8A%80%E8%83%BD" target="_blank" rel="noopener">SkillHub社区正式上线：收录超1.3万个AI技能</a></div>
+                    <div class="news-source">公众号 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">腾讯SkillHub社区上线，针对中国用户优化，收录超过<strong>1.3万个AI技能</strong></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E7%BD%91%E6%98%93%E9%BE%99%E8%99%BE%E5%BC%80%E6%BA%90LobsterAI%E5%8F%91%E5%B8%830.2.2%E7%89%88%E6%9C%AC%EF%BC%9A%E6%8E%A5%E5%85%A5%E4%BC%81%E5%BE%AE%E5%8F%8AQQ" target="_blank" rel="noopener">网易龙虾开源LobsterAI发布0.2.2版本：接入企微及QQ</a></div>
+                    <div class="news-source">公众号 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">网易开源AI Agent框架LobsterAI更新，支持企业微信和QQ接入</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-policy">政策</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E6%B7%B1%E5%9C%B3%E9%BE%99%E5%B2%97%E8%81%94%E5%90%88Kimi%E4%B8%BE%E5%8A%9E%E5%8D%83%E4%BA%BA%E9%BE%99%E8%99%BE%E5%A4%A7%E4%BC%9A%EF%BC%9A%E5%8A%A9%E9%98%B5OpenClaw%E9%83%A8%E7%BD%B2" target="_blank" rel="noopener">深圳龙岗联合Kimi举办千人龙虾大会：助阵OpenClaw部署</a></div>
+                    <div class="news-source">公众号 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">深圳龙岗区与月之暗面Kimi联合举办<strong>千人龙虾大会</strong>，推动OpenClaw本地化部署</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div class="deep-focus-label">💡 深度聚焦</div>
+                    <div class="deep-focus-title">AI龙虾大战：中国版"ChatGPT应用商店"的三国杀</div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>"龙虾"（AI Agent）正在成为2026年中国AI最热的应用赛道。今天的新闻揭示了三股力量：</p>
+                    <p>1. <strong>腾讯系</strong>：WorkBuddy+QClaw，依托企微/QQ生态，主打"1分钟接入"；2. <strong>网易开源</strong>：LobsterAI开源框架，走社区路线；3. <strong>OpenClaw生态</strong>：Kimi/深圳政府推动的千人大会，无锡500万补贴。这场大战的本质是<strong>AI Agent的分发渠道之争</strong>。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">如果你在做AI Agent，现在就要考虑"选边站"——接入哪个生态、走什么分发渠道，可能比Agent本身能力更重要。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article id="industry" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://news.crunchbase.com/venture/record-setting-global-funding-february-2026-openai-anthropic/" target="_blank" rel="noopener">2月全球风投创1890亿美元纪录：AI占90%，三巨头融资1560亿</a></div>
+                    <div class="news-source">Crunchbase · 3月10日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">2月全球风投总额达<strong>1890亿美元</strong>，创历史单月纪录；83%资金流向OpenAI/Anthropic/Waymo三家</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">关键数据</span>
+                            <span class="news-detail-value">同比增长<strong>780%</strong> | AI占<strong>90%</strong> | 美国占<strong>92%</strong></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://news.crunchbase.com/ai/nscale-funding-round-20b-valuation/" target="_blank" rel="noopener">Nscale完成20亿美元C轮融资：估值146亿美元成AI算力新贵</a></div>
+                    <div class="news-source">多来源 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">AI算力基础设施公司Nscale完成<strong>20亿美元</strong>C轮融资，估值达到<strong>146亿美元</strong></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+                <div class="news-item">
+                    <span class="news-tag tag-policy">政策</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E6%97%A0%E9%94%A1%E9%AB%98%E6%96%B0%E5%8C%BA%E5%8F%91%E5%B8%83%E6%94%AF%E6%8C%81OpenClaw%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE12%E6%9D%A1%E6%8E%AA%E6%96%BD%EF%BC%9A%E5%8D%95%E9%A1%B9%E8%A1%A5%E8%B4%B4%E6%9C%80%E9%AB%98500%E4%B8%87" target="_blank" rel="noopener">无锡高新区发布支持OpenClaw开源项目12条措施：单项补贴最高500万</a></div>
+                    <div class="news-source">公众号 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">无锡高新区出台12条支持措施，对OpenClaw开源项目单项补贴最高<strong>500万元</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div class="deep-focus-label">💡 深度聚焦</div>
+                    <div class="deep-focus-title">1890亿美元：AI融资的"超级泡沫"还是"范式转移"？</div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>2月全球风投1890亿美元的纪录数字背后，隐藏着几个关键事实：</p>
+                    <p>1. <strong>极度集中</strong>：83%资金流向三家公司，不是"行业繁荣"，而是"头部通吃"；2. <strong>AI主导</strong>：AI占90%，非AI领域融资实际在萎缩；3. <strong>美国绝对主导</strong>：92%资金流向美国；4. <strong>早期萎缩</strong>：种子轮同比下降11%，新项目启动在减少。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">这不是普通的融资热潮，而是资本对"AI将重构一切"的极端押注。对创业者来说，要么做到头部，要么找到头部企业生态位——中间地带正在消失。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article id="enterprise" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.cnbc.com/2026/03/11/microsoft-nadella-ai-job-skills.html" target="_blank" rel="noopener">微软CEO纳德拉：别担心被AI替代，真正危机是拒绝学习新技能</a></div>
+                    <div class="news-source">多来源 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">萨提亚·纳德拉强调，AI不会替代会学习的人，真正的职业风险是拒绝适应变化</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.theverge.com/2026/3/11/anthropic-lawsuit-defense-department" target="_blank" rel="noopener">OpenAI与Google员工联名声援Anthropic起诉国防部</a></div>
+                    <div class="news-source">多来源 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">多家AI公司员工联名支持Anthropic的法律行动，行业<strong>罕见的竞争对手相互声援</strong></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E7%9F%AD%E5%89%A7%E8%A1%8C%E4%B8%9A%E8%BF%8E%E6%9D%A5%E5%A4%A7%E5%9C%B0%E9%9C%87%EF%BC%9AAI%E7%9C%9F%E4%BA%BA%E5%89%A7%E4%BA%A7%E8%83%BD%E7%88%86%E5%8F%91%E5%8D%83%E5%80%8D" target="_blank" rel="noopener">短剧行业迎来大地震：AI真人剧产能爆发千倍</a></div>
+                    <div class="news-source">公众号 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">短剧行业取消真人制作保底要求，AI生成真人短剧产能实现<strong>千倍级爆发</strong></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E4%B8%87%E5%90%8D%E4%BD%9C%E5%AE%B6%E8%81%94%E5%90%8D%E5%87%BA%E7%89%88%E7%A9%BA%E7%99%BD%E4%B9%A6%EF%BC%9A%E7%9F%B3%E9%BB%91%E4%B8%80%E9%9B%84%E7%AD%89%E5%B7%A8%E5%8C%A0%E6%8A%97%E8%AE%AEAI%E4%BE%B5%E6%9D%83" target="_blank" rel="noopener">万名作家联名出版空白书：石黑一雄等巨匠抗议AI侵权</a></div>
+                    <div class="news-source">公众号 · 3月11日</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">全球<strong>万名作家</strong>联名出版空白书籍，抗议AI公司未经授权使用作品训练模型</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div class="deep-focus-label">💡 深度聚焦</div>
+                    <div class="deep-focus-title">短剧AI化：内容产业的"iPhone时刻"</div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>"真人制作保底取消+AI真人剧产能千倍爆发"——这条新闻预示着内容产业的根本性变革：</p>
+                    <p>1. <strong>生产力跃升</strong>：从"人拍"到"AI生成"，产能指数级爆发；2. <strong>成本坍塌</strong>：人力、场地、时间成本大幅下降；3. <strong>创意民主化</strong>：小团队也能生产"准专业级"短剧；4. <strong>版权新战场</strong>：万名作家联名抗议，AI训练数据版权问题将长期博弈。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">内容创作正在从"稀缺资源"变成"过剩商品"，未来竞争的核心不是"谁能创作"，而是"谁能分发"和"谁能获得注意力"。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <div class="section-card" style="margin-top:20px">
+            <div class="section-header"><span class="num">📊</span> 数据速览</div>
+            <table class="data-table">
+                <thead><tr><th>指标</th><th>数值</th><th>变化/说明</th></tr></thead>
+                <tbody>
+                    <tr><td>Cursor年化营收</td><td>20亿美元</td><td>三月翻番</td></tr>
+                    <tr><td>企业客户占比</td><td>60%</td><td>Cursor收入结构</td></tr>
+                    <tr><td>2月全球风投总额</td><td>1890亿美元</td><td>创历史纪录</td></tr>
+                    <tr><td>AI融资占比</td><td>90%</td><td>2月全球风投</td></tr>
+                    <tr><td>OpenAI融资额</td><td>1100亿美元</td><td>史上最大单轮</td></tr>
+                    <tr><td>Anthropic融资额</td><td>300亿美元</td><td>史上第三大</td></tr>
+                    <tr><td>美国融资占比</td><td>92%</td><td>vs去年59%</td></tr>
+                    <tr><td>Nscale估值</td><td>146亿美元</td><td>AI算力新贵</td></tr>
+                    <tr><td>SkillHub技能数</td><td>1.3万+</td><td>腾讯上线</td></tr>
+                    <tr><td>无锡OpenClaw补贴</td><td>500万元/项</td><td>12条措施</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📌</span> 明日/下周值得关注</div>
+            <ul style="padding-left:20px;color:var(--color-text-secondary);line-height:2">
+                <li><strong>NVIDIA GTC 2026</strong> (3月16-19日) - Jensen Huang主题演讲，AI Agent和物理AI焦点</li>
+                <li><strong>华为中国合作伙伴大会2026</strong> (3月19-20日) - 深圳</li>
+                <li><strong>AWE 2026</strong> (3月12-15日) - AI科技·慧享未来，上海</li>
+                <li><strong>Anthropic vs 国防部诉讼</strong> - 持续关注进展</li>
+                <li><strong>腾讯龙虾产品</strong> - 流量恢复后的用户反馈</li>
+            </ul>
+        </div>
+
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+            <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+            <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+                我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+            </p>
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                🏠 访问AI洞察首页
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', 'false'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.setAttribute('aria-selected', 'true');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

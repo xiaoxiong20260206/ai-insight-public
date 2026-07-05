@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barry Zhang (Anthropic) 思想体系总结 | AI-Insight</title>
+    
+    <!-- Favicon - 思考/洞察类 -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><path d='M16 6c-4.4 0-8 3.6-8 8 0 2.5 1.2 4.8 3 6.2V24l5-3 5 3v-3.8c1.8-1.4 3-3.7 3-6.2 0-4.4-3.6-8-8-8z' fill='none' stroke='white' stroke-width='2' stroke-linejoin='round'/><line x1='16' y1='10' x2='16' y2='15' stroke='white' stroke-width='2' stroke-linecap='round'/><circle cx='16' cy='18' r='1' fill='white'/></svg>">
+    
+    <style>
+        /* ============ CSS 变量定义 ============ */
+        :root {
+            --color-success: #059669;
+            --color-success-light: #10B981;
+            --color-success-dark: #047857;
+            --color-danger: #E11D48;
+            --color-warning: #D97706;
+            --color-warning-dark: #B45309;
+            --color-info: #2563EB;
+            --color-purple: #7C3AED;
+            
+            --color-text-primary: #1C1917;
+            --color-text-secondary: #57534E;
+            --color-text-muted: #78716C;
+            --color-border: #E7E5E4;
+            --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB;
+            --color-bg-card: #FFFFFF;
+            --color-bg-table-header: #FAFAF9;
+            
+            --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            --gradient-badge: linear-gradient(135deg, #E6F7ED 0%, #E1F0F8 100%);
+            --gradient-hero: linear-gradient(135deg, rgba(5, 150, 105, 0.06) 0%, rgba(37, 99, 235, 0.04) 100%);
+            
+            --shadow-sm: 0 1px 3px rgba(31, 35, 40, 0.06), 0 1px 2px rgba(31, 35, 40, 0.04);
+            --shadow-card: 0 2px 8px rgba(31, 35, 40, 0.06), 0 1px 2px rgba(31, 35, 40, 0.04);
+            --shadow-hover: 0 6px 16px rgba(5, 150, 105, 0.15), 0 2px 6px rgba(5, 150, 105, 0.1);
+            
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-full: 999px;
+            
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --content-max-width: 980px;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, "system-ui", "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text-primary);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+        
+        a { color: var(--color-info); text-decoration: none; }
+        a:hover { color: var(--color-success); }
+        
+        .container {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-lg) 60px;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: var(--spacing-xl) var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            background: var(--gradient-hero);
+            border-radius: var(--radius-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: var(--gradient-success);
+        }
+        
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-xs) 14px;
+            background: var(--gradient-badge);
+            color: var(--color-info);
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .header-title {
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--color-text-primary), var(--color-success-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header-subtitle {
+            font-size: 15px;
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .header-meta {
+            margin-top: var(--spacing-md);
+            font-size: 13px;
+            color: var(--color-text-muted);
+        }
+        
+        /* Profile Card */
+        .profile-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-card { flex-direction: column; text-align: center; }
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .profile-info { flex: 1; }
+        
+        .profile-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 4px;
+        }
+        
+        .profile-title {
+            font-size: 14px;
+            color: var(--color-success);
+            font-weight: 500;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .profile-desc {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+        
+        .profile-links {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-sm);
+        }
+        
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 4px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 6px;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-card);
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            overflow-x: auto;
+        }
+        
+        .tab-btn {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 14px;
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+        }
+        
+        .tab-btn:hover {
+            background: var(--color-bg-table-header);
+            color: var(--color-text-secondary);
+        }
+        
+        .tab-btn.active {
+            background: var(--gradient-success);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+        }
+        
+        .tab-btn-num {
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.06);
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .tab-btn.active .tab-btn-num { background: rgba(255,255,255,0.2); }
+        
+        .tab-panel { display: none; animation: fadeIn 0.3s ease-out; }
+        .tab-panel.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Section */
+        .section {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--color-border-light);
+        }
+        
+        .section-number {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-success);
+            color: #fff;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+        
+        .subsection-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin: var(--spacing-lg) 0 var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        /* Table */
+        .table-wrap { overflow-x: auto; margin: var(--spacing-md) 0; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--color-border-light);
+            vertical-align: top;
+        }
+        
+        th {
+            background: var(--color-bg-table-header);
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            font-size: 12px;
+        }
+        
+        tbody tr:hover td { background: rgba(0, 0, 0, 0.02); }
+        td:first-child { font-weight: 500; color: var(--color-text-primary); }
+        
+        /* Quote Box */
+        .quote-box {
+            background: var(--color-bg-table-header);
+            border-left: 3px solid var(--color-info);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: var(--spacing-md) 20px;
+            margin: var(--spacing-md) 0;
+        }
+        
+        .quote-box p {
+            font-style: italic;
+            color: var(--color-text-secondary);
+            font-size: 14px;
+        }
+        
+        /* Insight Box */
+        .insight-box {
+            border-left: 3px solid var(--color-warning);
+            background: rgba(217, 119, 6, 0.06);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: var(--spacing-md) 20px;
+            margin: var(--spacing-md) 0;
+        }
+        
+        .insight-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-warning-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .insight-content {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        
+        /* Tag */
+        .tag {
+            display: inline-flex;
+            padding: 2px 8px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .tag-green { background: rgba(5, 150, 105, 0.12); color: var(--color-success); }
+        .tag-blue { background: rgba(37, 99, 235, 0.12); color: var(--color-info); }
+        .tag-orange { background: rgba(217, 119, 6, 0.12); color: var(--color-warning-dark); }
+        
+        /* Code Block */
+        .code-block {
+            background: #1C1917;
+            color: #E6EDF3;
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            font-family: 'SF Mono', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        
+        /* List */
+        .col-list { list-style: none; }
+        
+        .col-list li {
+            padding: var(--spacing-sm) 0;
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            line-height: 1.6;
+        }
+        
+        .col-list li::before {
+            content: '→';
+            color: var(--color-success);
+            flex-shrink: 0;
+        }
+        
+        /* Back Link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: var(--spacing-xl) 0;
+            margin-top: var(--spacing-xl);
+            border-top: 1px solid var(--color-border-light);
+            color: var(--color-text-muted);
+            font-size: 13px;
+        }
+        
+        .footer a { color: var(--color-success); }
+        
+        /* Principle Card */
+        .principle-card {
+            background: var(--color-bg-table-header);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            border-left: 4px solid var(--color-success);
+        }
+        
+        .principle-card h4 {
+            font-size: 15px;
+            color: var(--color-success);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .principle-card p {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--color-border);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: var(--spacing-lg);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            background: var(--color-success);
+            border-radius: 50%;
+            border: 2px solid var(--color-bg);
+        }
+        
+        .timeline-date {
+            font-size: 12px;
+            color: var(--color-success);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .timeline-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 4px;
+        }
+        
+        .timeline-desc {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">← 返回 AI-Insight</a>
+        
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge">
+                <span>📚</span>
+                <span>AI行业洞察项目 - 深度调研报告</span>
+            </div>
+            <h1 class="header-title">Barry Zhang (Anthropic) 思想体系总结</h1>
+            <p class="header-subtitle">
+                Anthropic Applied AI 负责人的 Agent 设计哲学与实践方法论
+            </p>
+            <div class="header-meta">
+                整理：AI洞察 · 2026年2月28日 · v2.0
+            </div>
+        </header>
+        
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <div class="profile-avatar">BZ</div>
+            <div class="profile-info">
+                <div class="profile-name">Barry Zhang (张宇杰)</div>
+                <div class="profile-title">Anthropic Applied AI 团队 · Head of Applied AI, Digital Natives & Strategics</div>
+                <div class="profile-desc">前 Meta AI 产品工程师，前 Shopify、Box 工程师。Agent 设计领域最具影响力的实践者之一。</div>
+                <div class="profile-links">
+                    <a href="https://x.com/barry_zyj" target="_blank">Twitter/X</a>
+                    <a href="https://www.linkedin.com/in/barry-z" target="_blank">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="overview">
+                <span class="tab-btn-num">1</span>
+                <span>内容来源</span>
+            </button>
+            <button class="tab-btn" data-tab="core">
+                <span class="tab-btn-num">2</span>
+                <span>核心框架</span>
+            </button>
+            <button class="tab-btn" data-tab="principles">
+                <span class="tab-btn-num">3</span>
+                <span>三大原则</span>
+            </button>
+            <button class="tab-btn" data-tab="patterns">
+                <span class="tab-btn-num">4</span>
+                <span>工作流模式</span>
+            </button>
+            <button class="tab-btn" data-tab="skills">
+                <span class="tab-btn-num">5</span>
+                <span>Skills范式</span>
+            </button>
+            <button class="tab-btn" data-tab="practice">
+                <span class="tab-btn-num">6</span>
+                <span>实践建议</span>
+            </button>
+        </nav>
+        
+        <!-- Tab 1: Overview -->
+        <article id="overview" class="tab-panel active">
+            <section class="section">
+                <div class="section-header">
+                    <span class="section-number">1</span>
+                    <h2 class="section-title">内容来源清单</h2>
+                </div>
+                
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>类型</th>
+                                <th>标题</th>
+                                <th>平台</th>
+                                <th>时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="tag tag-blue">📝 博客</span></td>
+                                <td>Building Effective AI Agents</td>
+                                <td>Anthropic 官方</td>
+                                <td>2024.12</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag tag-green">🎤 演讲</span></td>
+                                <td>How We Build Effective Agents</td>
+                                <td>AI Engineer Summit</td>
+                                <td>2025.02</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag tag-green">🎤 演讲</span></td>
+                                <td>Don't Build Agents, Build Skills Instead</td>
+                                <td>AI Engineer Code Summit</td>
+                                <td>2025.11</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag tag-orange">🎥 视频</span></td>
+                                <td>Tips for building AI agents</td>
+                                <td>Anthropic 官方</td>
+                                <td>2025.02</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag tag-orange">📰 采访</span></td>
+                                <td>More AI Agents Isn't the Answer</td>
+                                <td>Business Insider</td>
+                                <td>2025.12</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3 class="subsection-title" style="margin-top: var(--spacing-lg);">📊 影响力数据</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>指标</th>
+                                <th>数据</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>"How We Build Effective Agents" 观看量</td>
+                                <td><strong style="color: var(--color-success);">404K+</strong></td>
+                            </tr>
+                            <tr>
+                                <td>"Don't Build Agents, Build Skills" 观看量</td>
+                                <td><strong style="color: var(--color-success);">742K+</strong></td>
+                            </tr>
+                            <tr>
+                                <td>入选2025年度50个最受关注软件工程演讲</td>
+                                <td>✅</td>
+                            </tr>
+                            <tr>
+                                <td>Skills 发布后5周内创建数量</td>
+                                <td><strong>数千个</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </article>
+        
+        <!-- Tab 2: Core -->
+        <article id="core" class="tab-panel">
+            <section class="section">
+                <div class="section-header">
+                    <span class="section-number">2</span>
+                    <h2 class="section-title">核心思想框架</h2>
+                </div>
+                
+                <h3 class="subsection-title">Agent 定义与分类</h3>
+                <p style="color: var(--color-text-secondary); margin-bottom: var(--spacing-md);">
+                    Barry Zhang 与 Erik Schluntz 共同提出了业界最清晰的 Agent 定义框架：
+                </p>
+                
+                <div class="code-block">Agentic Systems (智能系统)
+├── Workflows (工作流)
+│   └── 通过预定义代码路径编排 LLM 和工具
+│   └── 特点：可预测、一致性强、适合明确定义的任务
+└── Agents (智能体)
+    └── LLM 动态指导自己的流程和工具使用
+    └── 特点：自主性强、灵活性高、适合开放问题</div>
+                
+                <h3 class="subsection-title">Augmented LLM (增强型LLM)</h3>
+                <p style="color: var(--color-text-secondary); margin-bottom: var(--spacing-md);">
+                    这是构建所有 agentic systems 的基础构建块：
+                </p>
+                
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>增强能力</th>
+                                <th>描述</th>
+                                <th>实现方式</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Retrieval</strong></td>
+                                <td>生成搜索查询，获取外部知识</td>
+                                <td>RAG、向量数据库</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tools</strong></td>
+                                <td>选择并调用合适的工具</td>
+                                <td>Function Calling</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Memory</strong></td>
+                                <td>决定保留哪些信息</td>
+                                <td>上下文管理、长期记忆</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="insight-box">
+                    <div class="insight-title">关键洞察</div>
+                    <div class="insight-content">
+                        Augmented LLM 填补了"简单 LLM 调用"和"完整 Agent"之间的空白，是 Barry Zhang 框架的核心基础。
+                    </div>
+                </div>
+            </section>
+        </article>
+        
+        <!-- Tab 3: Principles -->
+        <article id="principles" class="tab-panel">
+            <section class="section">
+                <div class="section-header">
+                    <span class="section-number">3</span>
+                    <h2 class="section-title">Agent 设计三大核心原则</h2>
+                </div>
+                
+                <div class="principle-card">
+                    <h4>原则一：Don't Build Agents for Everything</h4>
+                    <p>不要为所有事情构建 Agent。如果你能轻松画出整个决策树，那就直接构建它，然后优化每个节点。</p>
+                </div>
+                
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>维度</th>
+                                <th>适合 Agent ✅</th>
+                                <th>适合 Workflow ⚡</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>任务复杂度</td>
+                                <td>问题空间模糊，难以预测步骤</td>
+                                <td>可以轻松画出完整决策树</td>
+                            </tr>
+                            <tr>
+                                <td>任务价值</td>
+                                <td>高价值产出，不限 token 预算</td>
+                                <td>低预算（如每任务 $0.10）</td>
+                            </tr>
+                            <tr>
+                                <td>错误成本</td>
+                                <td>低风险、错误易发现和恢复</td>
+                                <td>高风险、错误难以检测</td>
+                            </tr>
+                            <tr>
+                                <td>可验证性</td>
+                                <td>结果可通过测试或反馈验证</td>
+                                <td>结果难以客观评估</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="principle-card" style="margin-top: var(--spacing-lg);">
+                    <h4>原则二：Keep It Simple (保持简单)</h4>
+                    <p>Agent 的本质定义惊人地简单：Agent = Model + Tools + Loop (环境反馈)</p>
+                </div>
+                
+                <div class="quote-box">
+                    <p>"We have learned the hard way to keep this simple, because any complexity up front is really going to kill iteration speed."</p>
+                </div>
+                
+                <div class="principle-card" style="margin-top: var(--spacing-lg);">
+                    <h4>原则三：Think Like Your Agents</h4>
+                    <p>将自己置于 Agent 的上下文窗口中。Agent 在每一步推理时，所知道的关于世界的一切都只有 10-20K tokens。</p>
+                </div>
+                
+                <div class="insight-box">
+                    <div class="insight-title">调试技巧</div>
+                    <div class="insight-content">
+                        <ul class="col-list">
+                            <li>让 Claude 检查 System Prompt：问"这个 prompt 有歧义吗？"</li>
+                            <li>让 Claude 评估工具描述：问"这个工具描述清楚吗？"</li>
+                            <li>分析 Agent 轨迹：把决策历史喂给 Claude 分析</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </article>
+        
+        <!-- Tab 4: Patterns -->
+        <article id="patterns" class="tab-panel">
+            <section class="section">
+                <div class="section-header">
+                    <span class="section-number">4</span>
+                    <h2 class="section-title">五大工作流模式</h2>
+                </div>
+                
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>模式</th>
+                                <th>核心思想</th>
+                                <th>适用场景</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. Prompt Chaining</strong></td>
+                                <td>将任务分解为顺序步骤，每个 LLM 处理前一个的输出</td>
+                                <td>任务可干净地分解为固定子任务</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. Routing</strong></td>
+                                <td>分类输入并路由到专门处理流程</td>
+                                <td>有明确分类且各类需要不同处理</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. Parallelization</strong></td>
+                                <td>拆分为独立子任务并行执行，或同一任务多次执行取共识</td>
+                                <td>子任务独立、可并行</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. Orchestrator-Workers</strong></td>
+                                <td>中央 LLM 动态分解任务，委派给工作 LLM</td>
+                                <td>子任务不是预定义的</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5. Evaluator-Optimizer</strong></td>
+                                <td>一个 LLM 生成，另一个评估并提供反馈循环</td>
+                                <td>有明确评估标准，需迭代精炼</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3 class="subsection-title">为什么 Coding 是 Agent 的最佳用例</h3>
+                
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>维度</th>
+                                <th>分析</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>复杂性 ✅</td>
+                                <td>从设计文档到 PR，过程高度模糊和复杂</td>
+                            </tr>
+                            <tr>
+                                <td>价值 ✅</td>
+                                <td>优质代码价值极高，值得消耗大量 tokens</td>
+                            </tr>
+                            <tr>
+                                <td>可验证性 ✅</td>
+                                <td>通过单元测试、CI/CD 自动验证结果正确性</td>
+                            </tr>
+                            <tr>
+                                <td>反馈循环 ✅</td>
+                                <td>测试结果提供明确的环境反馈</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </article>
+        
+        <!-- Tab 5: Skills -->
+        <article id="skills" class="tab-panel">
+            <section class="section">
+                <div class="section-header">
+                    <span class="section-number">5</span>
+                    <h2 class="section-title">"Don't Build Agents, Build Skills Instead" 新范式</h2>
+                </div>
+                
+                <div class="insight-box">
+                    <div class="insight-title">核心思想转变</div>
+                    <div class="insight-content">
+                        <strong>旧范式</strong>：为每个领域/用例构建不同的 Agent<br>
+                        <strong>新范式</strong>：单一通用 Agent + 可扩展的 Skills 库
+                    </div>
+                </div>
+                
+                <div class="quote-box">
+                    <p>"We used to think agents in different domains will look very different. The agent underneath is actually more universal than we thought."</p>
+                </div>
+                
+                <h3 class="subsection-title">Skills 的定义</h3>
+                <div class="quote-box">
+                    <p>"Skills are organized collections of files that package composable procedural knowledge for agents."</p>
+                </div>
+                
+                <div class="code-block">Skills = Markdown + YAML 元数据 + 可选脚本</div>
+                
+                <h3 class="subsection-title">Skills 的优势</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>优势</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>可复用性</strong></td>
+                                <td>技能可以跨 Agent、跨项目共享</td>
+                            </tr>
+                            <tr>
+                                <td><strong>网络效应</strong></td>
+                                <td>技能越多，Agent 能力增长越快</td>
+                            </tr>
+                            <tr>
+                                <td><strong>专业化</strong></td>
+                                <td>每个 Skill 可以深度优化</td>
+                            </tr>
+                            <tr>
+                                <td><strong>低门槛</strong></td>
+                                <td>非技术人员也能创建 skill</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Token 高效</strong></td>
+                                <td>按需加载，节省上下文</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3 class="subsection-title">实际采用情况</h3>
+                <ul class="col-list">
+                    <li>发布 5 周内用户创建了<strong>数千个 skills</strong></li>
+                    <li>会计、法律、招聘等<strong>非技术领域</strong>都有人创建 skills</li>
+                    <li><strong>Fortune 100 公司</strong>正在使用 skills "教 Agent 组织最佳实践"</li>
+                </ul>
+                
+                <div class="insight-box" style="margin-top: var(--spacing-lg);">
+                    <div class="insight-title">未来展望</div>
+                    <div class="insight-content">
+                        "Agents writing skills for other agents" —— 预示着一个自我进化的生态系统。
+                    </div>
+                </div>
+            </section>
+        </article>
+        
+        <!-- Tab 6: Practice -->
+        <article id="practice" class="tab-panel">
+            <section class="section">
+                <div class="section-header">
+                    <span class="section-number">6</span>
+                    <h2 class="section-title">实践启示</h2>
+                </div>
+                
+                <h3 class="subsection-title">对开发者的建议</h3>
+                
+                <h4 style="font-size: 14px; color: var(--color-text-primary); margin: var(--spacing-md) 0;">起步阶段</h4>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>建议</th>
+                                <th>具体做法</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>从简单开始</td>
+                                <td>先用 LLM API 直接调用，验证单点能力</td>
+                            </tr>
+                            <tr>
+                                <td>避免过早框架</td>
+                                <td>框架可以快速启动，但先理解底层</td>
+                            </tr>
+                            <tr>
+                                <td>小步迭代</td>
+                                <td>先让行为正确，优化放到后期</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h4 style="font-size: 14px; color: var(--color-text-primary); margin: var(--spacing-md) 0;">设计阶段</h4>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>建议</th>
+                                <th>具体做法</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>评估是否需要 Agent</td>
+                                <td>使用决策检查清单判断</td>
+                            </tr>
+                            <tr>
+                                <td>选择合适模式</td>
+                                <td>从五大工作流模式中选择</td>
+                            </tr>
+                            <tr>
+                                <td>投资工具设计</td>
+                                <td>在工具上花的时间可能超过 prompt</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3 class="subsection-title">对组织的建议</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>维度</th>
+                                <th>建议</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Skills 策略</strong></td>
+                                <td>开始创建组织专属 skills 库</td>
+                            </tr>
+                            <tr>
+                                <td><strong>知识沉淀</strong></td>
+                                <td>将最佳实践转化为 skills</td>
+                            </tr>
+                            <tr>
+                                <td><strong>共享机制</strong></td>
+                                <td>建立 skills 共享和评价体系</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3 class="subsection-title">思想演进脉络</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024.12.19</div>
+                        <div class="timeline-title">"Building Effective Agents" 博客发布</div>
+                        <div class="timeline-desc">定义 Agentic Systems、Workflows vs Agents，提出 Augmented LLM 概念</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2025.02</div>
+                        <div class="timeline-title">AI Engineer Summit 演讲</div>
+                        <div class="timeline-desc">三大核心原则深化，提出未来三大开放问题</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2025.11</div>
+                        <div class="timeline-title">"Don't Build Agents, Build Skills Instead"</div>
+                        <div class="timeline-desc">从"多Agent"到"单Agent+多Skills"的范式转变</div>
+                    </div>
+                </div>
+            </section>
+        </article>
+        
+        <!-- 了解更多 -->
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+        <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+        我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+        </p>
+        <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+        🏠 访问AI洞察首页
+        </a>
+        </div>
+    </div>
+    
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

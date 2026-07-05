@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 - 2026-03-30 (v3.2)</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root {
+            --color-success:#059669;--color-success-light:#10B981;--color-danger:#E11D48;--color-danger-light:#FF7B72;--color-warning:#D97706;--color-info:#2563EB;--color-info-light:#54AEFF;--color-purple:#7C3AED;--color-orange:#EA580C;--color-text-primary:#1C1917;--color-text-secondary:#57534E;--color-text-muted:#78716C;--color-border:#E7E5E4;--color-border-light:#F5F5F4;--color-bg:#F8FAFB;--color-bg-card:#FFFFFF;--color-bg-table-header:#FAFAF9;--gradient-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--gradient-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--gradient-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--gradient-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow-card:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-full:999px;--font-family:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--transition-normal:200ms cubic-bezier(.4,0,.2,1);--content-max-width:980px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font-family);background:var(--color-bg);color:var(--color-text-primary);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--content-max-width);margin:0 auto;padding:24px 20px}
+        .header{background:var(--gradient-success);color:#fff;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-date{font-size:14px;opacity:.85}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:700;margin-left:8px}
+        .overview{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-card);overflow:hidden}
+        .overview-title{font-size:18px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .overview-grid.five-cols{grid-template-columns:repeat(3,1fr)}
+        .overview-item{padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--color-border-light);background:var(--color-bg);transition:all .2s;min-width:0;overflow:hidden}
+        .overview-item:hover{border-color:var(--color-success-light);box-shadow:0 2px 8px rgba(5,150,105,.08)}
+        .overview-item-header{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+        .overview-item-icon{font-size:16px}
+        .overview-item-label{font-size:13px;font-weight:700;color:var(--color-success-light);letter-spacing:.3px}
+        .overview-item-label.orange{color:var(--color-orange)}
+        .overview-headline{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:6px;line-height:1.4}
+        .overview-item-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+        /* Heat Trend Table */
+        .heat-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow-card)}
+        .heat-header{background:linear-gradient(135deg,#EA580C 0%,#DC2626 50%,#B91C1C 100%);color:#fff;padding:18px 24px}
+        .heat-header-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .heat-header-title{font-size:17px;font-weight:800;margin-top:4px}
+        .heat-body{padding:16px 20px}
+        .heat-body p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-top:12px}
+        .heat-body p strong{color:var(--color-text-primary)}
+        .heat-table{width:100%;border-collapse:collapse;font-size:13px}
+        .heat-table th{padding:8px 10px;text-align:left;background:#FEF2F2;font-weight:700;color:#991B1B;border-bottom:2px solid #FECACA;font-size:12px}
+        .heat-table td{padding:10px;border-bottom:1px solid var(--color-border-light);vertical-align:top}
+        .heat-table tr:last-child td{border-bottom:none}
+        .heat-table tr:hover{background:rgba(234,88,12,.02)}
+        .heat-bar{display:flex;gap:2px;align-items:center}
+        .heat-bar-fill{width:10px;height:14px;border-radius:2px;background:linear-gradient(135deg,#EA580C,#DC2626)}
+        .heat-bar-empty{width:10px;height:14px;border-radius:2px;background:#F5F5F4}
+        .heat-trend-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .heat-trend-tag.up{background:#EFFDF5;color:#059669}
+        .heat-trend-tag.stable{background:#EFF6FF;color:#2563EB}
+        .heat-trend-tag.burst{background:#FEF2F2;color:#DC2626}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:4px;box-shadow:var(--shadow-card);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-muted);border-radius:var(--radius-sm);transition:var(--transition-normal);font-family:var(--font-family);min-width:80px}
+        .tab-btn:hover{color:var(--color-text-primary);background:var(--color-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--gradient-success);color:#fff}
+        .tab-btn.orange[aria-selected="true"]{background:var(--gradient-orange)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow-card)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--color-border-light);display:flex;align-items:center;gap:8px}
+        .section-header .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gradient-success);color:#fff;font-size:12px;font-weight:700}
+        .section-header .num.orange{background:var(--gradient-orange)}
+        .sub-header{font-size:14px;font-weight:700;color:var(--color-text-muted);margin:14px 0 10px;padding-left:4px;letter-spacing:.5px}
+        .sub-header:first-child{margin-top:0}
+        .news-item{padding:14px 0;border-bottom:1px solid var(--color-border-light);transition:background .15s;margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:var(--radius-sm)}
+        .news-item:hover{background:rgba(5,150,105,.02)}
+        .news-item:last-child{border-bottom:none}
+        .news-tag{display:inline-block;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:var(--color-danger)}
+        .tag-new{background:#EFFDF5;color:var(--color-success)}
+        .tag-funding{background:#E0F2FE;color:#0284C7}
+        .tag-policy{background:#FFF7ED;color:var(--color-orange)}
+        .tag-practice{background:#ECFDF5;color:#059669}
+        .tag-cn{background:#FEF2F2;color:#DC2626}
+        .news-title{font-size:15px;font-weight:600;margin:4px 0 3px}
+        .news-title a{color:var(--color-text-primary);text-decoration:none}
+        .news-title a:hover{color:var(--color-success)}
+        .news-source{font-size:12px;color:var(--color-text-muted)}
+        .news-detail{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+        .news-detail-row{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.6}
+        .news-detail-label{flex-shrink:0;font-weight:700;color:var(--color-success);font-size:12px;padding:1px 0;min-width:60px}
+        .news-detail-label.orange{color:var(--color-orange)}
+        .news-detail-label.china{color:#DC2626}
+        .news-detail-value{color:var(--color-text-secondary);flex:1}
+        .news-detail-value strong{color:var(--color-text-primary);font-weight:600}
+        .news-data-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+        .news-data-chip{display:inline-flex;align-items:center;padding:3px 10px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--radius-full);font-size:12px;font-weight:600;color:#166534;transition:all .15s}
+        .news-data-chip:hover{background:#DCFCE7;border-color:#86EFAC}
+        .news-data-chip.orange{background:#FFF7ED;border-color:#FED7AA;color:#9A3412}
+        .news-data-chip.china{background:#FEF2F2;border-color:#FECACA;color:#991B1B}
+        .news-summary-compact{font-size:13.5px;color:var(--color-text-secondary);margin-top:6px;line-height:1.6}
+        .deep-focus-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:0;margin-bottom:16px;box-shadow:var(--shadow-card);overflow:hidden}
+        .deep-focus-header{background:var(--gradient-purple);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:10px}
+        .deep-focus-header.orange-theme{background:linear-gradient(135deg,#EA580C 0%,#DC2626 100%)}
+        .deep-focus-header.china-theme{background:linear-gradient(135deg,#DC2626 0%,#B91C1C 50%,#991B1B 100%)}
+        .deep-focus-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .deep-focus-title{font-size:17px;font-weight:800;margin-top:4px;line-height:1.4}
+        .deep-focus-body{padding:20px 24px}
+        .deep-focus-body p{font-size:14.5px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:18px}
+        .deep-focus-body p:last-child{margin-bottom:0}
+        .deep-focus-body p strong{color:var(--color-text-primary)}
+        .deep-focus-takeaway{margin-top:20px;padding:16px 18px;background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%);border-radius:var(--radius-md);border-left:4px solid var(--color-purple)}
+        .deep-focus-takeaway.orange-theme{background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border-left-color:var(--color-orange)}
+        .deep-focus-takeaway.china-theme{background:linear-gradient(135deg,#FEF2F2 0%,#FEE2E2 100%);border-left-color:#DC2626}
+        .deep-focus-takeaway-label{font-size:12px;font-weight:700;color:var(--color-purple);margin-bottom:6px;letter-spacing:.5px}
+        .deep-focus-takeaway-label.orange{color:var(--color-orange)}
+        .deep-focus-takeaway-label.china{color:#DC2626}
+        .deep-focus-takeaway-text{font-size:13.5px;color:var(--color-text-secondary);line-height:1.7}
+        .deep-focus-takeaway-text strong{color:var(--color-text-primary)}
+        /* Pattern Insight Card */
+        .pi-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow-card);transition:all .25s cubic-bezier(.4,0,.2,1)}
+        .pi-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+        .pi-header{display:flex;align-items:center;gap:12px;padding:14px 20px;background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%);border-bottom:1px solid #FDE68A}
+        .pi-badge{display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 10px;border-radius:8px;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,#B45309 0%,#D97706 100%);white-space:nowrap}
+        .pi-title{font-size:16px;font-weight:700;color:var(--color-text-primary);flex:1;letter-spacing:-.01em;line-height:1.4}
+        .pi-row{display:flex;padding:14px 20px;border-bottom:1px solid var(--color-border-light);gap:14px}
+        .pi-row:last-child{border-bottom:none}
+        .pi-row.highlight{background:linear-gradient(135deg,rgba(217,119,6,.04) 0%,rgba(217,119,6,.01) 100%)}
+        .pi-row-label{width:56px;flex-shrink:0;font-size:12px;font-weight:700;color:#A8A29E;padding-top:2px;letter-spacing:.02em}
+        .pi-row-label.l2{color:#D97706}
+        .pi-row-content{flex:1;font-size:14px;color:var(--color-text-secondary);line-height:1.7}
+        .pi-row-content strong{color:var(--color-text-primary);font-weight:700}
+        .pi-evo{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+        .pi-evo-step{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--color-bg-table-header);border-radius:8px;border:1px solid var(--color-border-light);transition:all .15s}
+        .pi-evo-step.active{background:rgba(217,119,6,.12);border-color:#D97706;box-shadow:0 0 0 1px rgba(217,119,6,.15)}
+        .pi-evo-step.future{background:rgba(124,58,237,.06);border-color:#8B5CF6}
+        .pi-evo-tag{font-size:10px;font-weight:800;color:#D97706;padding:2px 7px;background:rgba(217,119,6,.1);border-radius:4px;letter-spacing:.02em}
+        .pi-evo-step.future .pi-evo-tag{color:#7C3AED;background:rgba(124,58,237,.1)}
+        .pi-evo-text{font-size:12px;color:var(--color-text-secondary)}
+        .pi-evo-arrow{color:#A8A29E;font-weight:700;font-size:14px}
+        .pi-table{padding:10px 20px 16px;border-top:1px solid var(--color-border-light)}
+        .pi-t-head{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-bottom:2px solid var(--color-border-light);margin-bottom:4px}
+        .pi-t-head span{font-size:11px;font-weight:700;color:#A8A29E;text-transform:uppercase;letter-spacing:.06em}
+        .pi-t-section{padding:6px 10px 2px}
+        .pi-t-section-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;letter-spacing:.03em}
+        .pi-t-section.verified .pi-t-section-tag{color:#047857;background:rgba(5,150,105,.08)}
+        .pi-t-section.current .pi-t-section-tag{color:#D97706;background:rgba(217,119,6,.08)}
+        .pi-t-section.projected .pi-t-section-tag{color:#7C3AED;background:rgba(124,58,237,.08)}
+        .pi-t-row{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-radius:6px;font-size:13px;line-height:1.6;transition:background .15s}
+        .pi-t-row:hover{background:rgba(0,0,0,.02)}
+        .pi-t-row.projected{background:rgba(124,58,237,.02)}
+        .pi-t-row.projected:hover{background:rgba(124,58,237,.05)}
+        .pi-t-rule{font-weight:600;color:#B45309;font-size:12px;padding-top:1px}
+        .pi-t-row.projected .pi-t-rule{color:#7C3AED}
+        .pi-t-reality{color:var(--color-text-primary);font-weight:500}
+        .pi-t-analogy{color:var(--color-text-secondary);padding-left:10px;border-left:2px solid var(--color-border-light)}
+        .pi-t-divider{border-top:2px dashed var(--color-border-light);margin:8px 10px}
+        .pi-t-verify{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(5,150,105,.06);border-radius:6px;font-size:12px;font-weight:600;color:#047857}
+        .pi-confidence{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(124,58,237,.04);border-radius:6px;border-left:3px solid #8B5CF6;font-size:11px;font-weight:500;color:#7C3AED;letter-spacing:.02em}
+        .data-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--color-border-light)}
+        .data-table th{background:var(--color-bg-table-header);font-weight:600;color:var(--color-text-secondary)}
+        .data-table td{color:var(--color-text-primary)}
+        .data-table tr:last-child td{border-bottom:none}
+        .coverage-bar{margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:16px;font-size:13px}
+        .coverage-bar .label{font-weight:700;color:var(--color-text-muted)}
+        .coverage-bar .bar{flex:1;height:8px;background:#E7E5E4;border-radius:4px;overflow:hidden;display:flex}
+        .coverage-bar .bar-overseas{background:var(--gradient-success);height:100%}
+        .coverage-bar .bar-china{background:var(--gradient-china);height:100%}
+        .coverage-bar .stats{display:flex;gap:12px;font-weight:600}
+        .coverage-bar .stat-overseas{color:var(--color-success)}
+        .coverage-bar .stat-china{color:#DC2626}
+        .footer{text-align:center;padding:24px;font-size:12px;color:var(--color-text-muted);border-top:1px solid var(--color-border-light);margin-top:24px}
+        @media(max-width:960px){
+            .overview-grid.five-cols{grid-template-columns:1fr 1fr}
+        }
+        @media(max-width:768px){
+            .overview-grid,.overview-grid.five-cols{grid-template-columns:1fr}
+            .tab-btn{font-size:11px;padding:8px 4px;min-width:60px}
+            .news-detail-row{flex-direction:column;gap:2px}
+            .news-detail-label{min-width:auto}
+            .deep-focus-header{padding:14px 18px}
+            .deep-focus-body{padding:16px 18px}
+            .coverage-bar{flex-direction:column;gap:8px}
+            .heat-table{font-size:12px}
+            .heat-table th,.heat-table td{padding:6px 4px}
+            .pi-evo{flex-direction:column;align-items:flex-start}
+            .pi-evo-arrow{display:none}
+            .pi-t-head{display:none}
+            .pi-t-row{grid-template-columns:1fr;gap:2px;padding:6px 10px;border-left:3px solid var(--color-border-light);margin-bottom:4px}
+            .pi-t-row.projected{border-left-color:rgba(124,58,237,.3)}
+            .pi-t-analogy{border-left:none;padding-left:0;font-size:12px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-badge">📡 AI行业洞察项目 - AI日报</div>
+            <div class="header-title">AI 日报 <span class="version-badge">v3.2</span></div>
+            <div class="header-date">2026年3月30日 周一 | 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</div>
+        </div>
+
+        <div class="coverage-bar">
+            <span class="label">📊 覆盖均衡</span>
+            <div class="bar">
+                <div class="bar-overseas" style="width:70%"></div>
+                <div class="bar-china" style="width:30%"></div>
+            </div>
+            <div class="stats">
+                <span class="stat-overseas">🌏 海外 14条</span>
+                <span class="stat-china">🇨🇳 国内 6条</span>
+            </div>
+        </div>
+
+        <div class="overview">
+            <div class="overview-title">📋 全文概览</div>
+            <div class="overview-grid five-cols">
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🧠</span><span class="overview-item-label">大模型</span></div>
+                    <div class="overview-headline">小米 MiMo-V2-Pro 登顶 OpenRouter：中国模型成全球使用量第一</div>
+                    <div class="overview-item-text">2026-03-27 周度数据：小米 MiMo-V2-Pro 上线首周 Token 消耗突破 3 万亿，成为 OpenRouter 历史首个达成该里程碑的大模型，并登顶平台周榜。与此同时 Google 发布 Gemini 3.1 Flash-Live-Preview（A2A 实时音频模型），OpenAI 宣布 Sora 1.0 API 将于 9 月 24 日正式停运。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">⌨️</span><span class="overview-item-label">AI Coding</span></div>
+                    <div class="overview-headline">OpenAI 推出 Codex Use Cases 示例库，Agent 编程用法进入系统化阶段</div>
+                    <div class="overview-item-text">OpenAI 推出「Codex Use Cases」示例库，展示 Codex 在实际工程场景的应用技巧，覆盖 PR review、CI 修复、重构等典型 Agent 任务。与此同时，微软 Azure Foundry Agent Service 正式 GA（3/17），提供生产级 SDK + 可观测性 + 实时语音能力，企业级 Agent 编排进入商用阶段。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">📱</span><span class="overview-item-label">AI 应用</span></div>
+                    <div class="overview-headline">Google 推出 Lyria 3 音乐模型：AI 音乐从伴奏走向完整作品</div>
+                    <div class="overview-item-text">Google 于 3/25 发布 Lyria 3 音乐生成模型，支持 30 秒片段（lyria-3-clip-preview）和完整歌曲（lyria-3-pro-preview），输入文字+图片即可生成 48kHz 立体声音频。这是 AI 音乐生成从「背景音效」跃升至「完整歌曲创作」的关键节点，直接冲击传统音乐制作流程。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI 行业</span></div>
+                    <div class="overview-headline">Insilico Medicine 发布 2025 年报：AI 药物发现首次完成临床 POC 验证</div>
+                    <div class="overview-item-text">Insilico Medicine（港股 3696）3/29 发布 2025 年报：总营收 $5624 万（+23.8% 软件订阅），服务全球 Top 20 药企中的 13 家。里程碑是 ISM001-055（Rentosertib）Phase IIa 数据发表于 Nature Medicine，成为 AI 发现药物的全球首个临床概念验证。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔄</span><span class="overview-item-label">企业转型</span></div>
+                    <div class="overview-headline">中国 AI 模型连续霸榜 OpenRouter 全球前四：国产模型进入国际基础设施</div>
+                    <div class="overview-item-text">OpenRouter 最新周报：全球调用量前四均为中国 AI 模型——小米 MiMo-V2-Pro、阶跃星辰 Step 3.5 Flash（free）、MiniMax M2.5、DeepSeek-V3.2。科技日报标题「中国 AI 大模型调用 Token 量何以连续霸榜」折射出国产模型国际影响力的系统性崛起，不再只是价格优势，而是性能+成本双赢。</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label">🔥 热度趋势</div>
+                <div class="heat-header-title"></div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead><tr><th>排名</th><th>话题</th><th>热度</th><th>天数</th><th>趋势</th><th>核心信号</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇</td>
+                            <td><strong>小米 MiMo-V2-Pro 全球登顶</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>OpenRouter 官方周度数据，新浪财经/科技日报/观察者网多家媒体跟进报道，首个周 Token 破 3 万亿里程碑</td>
+                        </tr>
+                        <tr>
+                            <td>🥈</td>
+                            <td><strong>中国模型霸榜 OpenRouter 前四</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>科技日报专题「中国 AI 大模型何以连续霸榜」，多个海外 AI 社区讨论，国内媒体广泛转载</td>
+                        </tr>
+                        <tr>
+                            <td>🥉</td>
+                            <td><strong>OpenAI Sora API 停运通知</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>OpenAI Deprecations 官方公告 3/24 发出，9/24 截止，视频 API 客户迁移压力出现</td>
+                        </tr>
+                        <tr>
+                            <td>4️⃣</td>
+                            <td><strong>Google Lyria 3 音乐生成</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>Gemini API Changelog 3/25 官方发布，首个支持完整歌曲的模型，AI 音乐跃升里程碑</td>
+                        </tr>
+                        <tr>
+                            <td>5️⃣</td>
+                            <td><strong>Insilico Medicine 2025 年报</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span></div></td>
+                            <td>1天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>3/29 港股披露，Nature Medicine 刊载 Phase IIa 数据，AI 药物首次临床 POC 验证，机构关注度高</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>本周期最强信号是「中国模型国际化突破」——小米 MiMo-V2-Pro 登顶 OpenRouter 周榜、中国模型包揽前四，标志着性价比竞争进化为全球工作负载争夺。大模型板块 Sora API 停运预告引发存量迁移讨论。Google 音乐生成 Lyria 3 是 AI 多模态的又一扩张节点。</p>
+            </div>
+        </div>
+
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn" role="tab" aria-selected="true" data-tab="foundation">🧠 大模型</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="coding">⌨️ AI Coding</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="application">📱 AI 应用</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="industry">🏭 AI 行业</button>
+            <button class="tab-btn orange" role="tab" aria-selected="false" data-tab="enterprise">🔄 企业转型</button>
+        </nav>
+
+
+        <article id="foundation" class="tab-panel active">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://developers.openai.com/api/docs/deprecations/" target="_blank">OpenAI：Sora 1.0 视频 API 将于 9 月 24 日停运，客户需迁移至 Sora 2</a></div>
+                    <div class="news-source">OpenAI Deprecations</div>
+                    <div class="news-summary-compact">OpenAI Deprecations 页面 3/24 公告，Sora 1.0（Videos API）将于 2026-09-24 正式关闭，建议现有视频 API 用户迁移至 Sora 2。这是 OpenAI 视频生成产品线的首次重大版本切换，涉及 API 契约迁移成本，标志着 Sora 从「实验性产品」进入「正式版本管理」阶段。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://ai.google.dev/gemini-api/docs/changelog" target="_blank">Google 发布 Gemini 3.1 Flash-Live-Preview：首个为实时语音对话专门设计的 A2A 模型</a></div>
+                    <div class="news-source">Google AI for Developers</div>
+                    <div class="news-summary-compact">3/26 发布 gemini-3.1-flash-live-preview，首个定位「音频到音频（A2A）」、专为实时对话和语音优先 AI 应用设计的 Gemini 模型。与此前以文字/视觉为主的 Live API 模型不同，A2A 定位意味着直接竞争语音 AI 市场（Apple Intelligence 语音、OpenAI Voice Mode）。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.anthropic.com/research/economic-index-march-2026-report" target="_blank">Anthropic 经济指数 3 月报告：高资历 AI 用户成功率比新手高 10%，技能分化加速</a></div>
+                    <div class="news-source">Anthropic Research</div>
+                    <div class="news-summary-compact">Anthropic 3 月报告分析 100 万 Claude 对话样本：高资历用户（频繁使用者）成功率比新用户高出 10 个百分点，控制任务类型后仍保持 4-5% 优势。编程任务向 API 自动化工作流迁移，个人使用占比升至 42%。核心洞察：会用 AI 的人和不会用的人，差距正在以 10% 为单位系统性拉大。</div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://cj.sina.com.cn/articles/view/7857201856/1d45362c001903qs84" target="_blank">小米 MiMo-V2-Pro 上线首周 Token 消耗破 3 万亿，登顶 OpenRouter 全球周榜</a></div>
+                    <div class="news-source">新浪财经</div>
+                    <div class="news-summary-compact">新浪财经 3/27 报道，OpenRouter 周度数据显示：小米 MiMo-V2-Pro 成为平台历史首个单周 Token 消耗突破 3 万亿的大模型，并登顶周榜。3/19 小米宣布推出 MiMo-V2-Pro、MiMo-V2-Omni、MiMo-V2-TTS 三款自研大模型，雷军称今年 AI 领域投入超 160 亿。观察者网：「龙虾之父」LeCun 主动打听小米到底是谁在榜一。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.stdaily.com/web/gdxw/2026-03/24/content_491372.html" target="_blank">科技日报：中国 AI 模型连续霸榜 OpenRouter 前四，包括 MiMo、Step、MiniMax、DeepSeek</a></div>
+                    <div class="news-source">科技日报</div>
+                    <div class="news-summary-compact">科技日报 3/24 专题报道，OpenRouter 上周全球调用量前四均为中国 AI 大模型：小米 MiMo V2 Pro、阶跃星辰 Step 3.5 Flash（free）、MiniMax M2.5、DeepSeek-V3.2。分析认为中国模型以「性能+低成本」组合实现国际工作负载霸榜，已从「价格战」进化为「全球基础设施竞争」。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">中国模型霸榜 OpenRouter：性价比竞争已升级为全球工作负载争夺</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>小米 MiMo-V2-Pro 登顶、中国模型占前四——这件事的信号量远超表面数据。OpenRouter 是全球开发者最活跃的 AI 模型聚合平台，谁在这里占主导，就意味着谁正在成为全球 AI 应用的「实际运行层」。前四中国模型不是靠营销，而是靠真实调用量数据说话。</p><p>深层逻辑是：DeepSeek 开源启动了中国模型的国际化破壁，而 MiMo、Step、MiniMax 的同步崛起说明这已经是系统性趋势而非单点突破。更关键的是「LeCun 打听榜一是谁」——这个细节说明国际顶尖 AI 学者都开始认真对待中国模型的性能竞争力。从「廉价替代」到「性能竞争者」，这是心智升级。</p><p>对国内企业和开发者而言，这是一个清晰的信号：用国产模型不仅仅是「爱国情怀」或「成本节约」，而是在特定任务上已经能获得全球最好的性价比组合。下一步竞争将看中国模型能否在企业私有化部署和 API SLA 上也追上国际水准，那才是赢得企业级市场的最后一块拼图。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">中国模型国际化进入新阶段：不再只是「价格更低」，而是在全球开发者的真实生产工作负载中占据前四——这是性价比竞争胜出后的下一个战场开始。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">后发定律：技术追赶者一旦在性价比上突破，必然以更低成本占领更广泛的使用场景</span></div><div class="pi-row"><span class="pi-row-label l2">本质</span><div class="pi-row-content"><strong>后发者的优势不只是「便宜」，而是以更低的边际成本实现更广泛的部署覆盖，当覆盖量突破临界点后，生态效应和数据飞轮开始正向反馈，后发者将从「成本替代者」变成「生态主导者」。</strong></div></div><div class="pi-row"><span class="pi-row-label">进化序列</span><div class="pi-row-content"><div class="pi-evo"><div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">差距追赶（廉价替代）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">性能平价（性价比突破）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step active"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">工作负载占领（当前，使用量霸榜）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step future"><span class="pi-evo-tag">4.0</span><span class="pi-evo-text">生态主导（未来，标准制定者）</span></div></div></div></div><div class="pi-table"><div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div><div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div><div class="pi-t-row"><span class="pi-t-rule">中国智能手机崛起（2015-2022）</span><span class="pi-t-reality">小米/华为/OPPO 以性价比进入全球市场，从「廉价替代」到「全球出货量前三」，最终影响 Android 生态规则制定</span><span class="pi-t-analogy">从山寨手机到全球第二大手机品牌</span></div><div class="pi-t-divider"></div><div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div><div class="pi-t-row"><span class="pi-t-rule">中国 AI 模型占据 OpenRouter 前四（2026-03）</span><span class="pi-t-reality"><strong>MiMo-V2-Pro 周 Token 破 3 万亿登顶，中国模型包揽前四</strong>，LeCun 等顶尖研究者主动关注，OpenRouter 调用量数据是真实生产工作负载而非基准测试</span><span class="pi-t-analogy">就像拼多多从「廉价平台」到「GMV 超越淘宝」——真实购买数据比品牌认知先到达终点</span></div><div class="pi-t-divider"></div><div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div><div class="pi-t-row projected"><span class="pi-t-rule">未来 6-12 个月</span><span class="pi-t-reality">中国 AI 模型将尝试进入企业私有化部署市场（当前核心短板）；MCP 协议兼容、企业 SLA 和合规认证将成为国际化下一关；OpenRouter 前四格局若维持，将影响全球 AI 应用层的技术选型决策</span><span class="pi-t-analogy">如同中国 4G 手机进入欧洲市场后，下一步是进入政企采购名单</span></div></div><div class="pi-confidence">📐 置信度: 中高 · 验证窗口: 6个月 · 信号: 中国模型 OpenRouter 月度份额变化、企业私有化部署合同数量、国际 AI 应用引用中国模型 API 的比例</div></div>
+        </article>
+
+        <article id="coding" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://zhuanlan.zhihu.com/p/670574382" target="_blank">OpenAI 推出 Codex Use Cases 示例库：让 Agent 编程从"会用"走向"善用"</a></div>
+                    <div class="news-source">知乎早报（引用 OpenAI 官方）</div>
+                    <div class="news-summary-compact">OpenAI 推出「Codex Use Cases」官方示例库，系统展示 Codex 在 PR Review 自动化、CI 修复、代码重构、文档生成等真实工程场景的使用技巧和最佳实践。知乎早报（3/29）收录，标志着 OpenAI 从「发布能力」转向「教用户如何用好」的运营策略转变，帮助开发者将 Codex 从偶尔尝试升级到工作流内嵌。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/building-production-ready-secure-observable-ai-agents-with-real-time-voice-with-/4501074" target="_blank">Microsoft Azure Foundry Agent Service 正式 GA：生产级 Agent 编排平台开放商用</a></div>
+                    <div class="news-source">Microsoft Azure AI Foundry Blog</div>
+                    <div class="news-summary-compact">3/17 Azure 正式宣布 Foundry Agent Service 进入 GA，提供生产级 Python/JS SDK、完整可观测性链路、实时语音（Real-time Voice）能力。Microsoft TechCommunity 博文强调「安全、可观测、可扩展」三大企业级特性，标志着 Azure 在企业 Agent 基础设施赛道正式起跑。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank">ChatGPT Codex 开放插件目录：技能包可跨项目复用，Agent 工作流标准化起步</a></div>
+                    <div class="news-source">OpenAI Help Center</div>
+                    <div class="news-summary-compact">3/26 ChatGPT 为 Codex 推出插件目录，允许用户发现、安装、使用打包好的工作流（含技能 + App 集成 + MCP 服务配置）。插件是「可安装的 Codex 工作流包」，让同一套 Agent 配置可跨项目复用或在团队间共享——首次将 AI Coding 工作流的「可移植性」放到前台。</div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.guancha.cn/economy/2026_03_19_810610.shtml" target="_blank">国产大模型综合智能排行榜：Xiaomi MiMo-V2-Pro 全球第八，Agent 能力受认可</a></div>
+                    <div class="news-source">观察者网</div>
+                    <div class="news-summary-compact">观察者网 3/19 报道，雷军发文称 MiMo-V2-Pro 在「Artificial Analysis 全球大模型综合智能排行榜」位列全球第八，Agent 模型定位获国际基准认可。该模型已开放 API，面向开发者提供自研 Agent 能力接入，开源版本支持本地私有化部署。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&s_from=input&query=Azure+Foundry+Agent+Service+%E6%9C%BA%E5%99%A8%E4%B9%8B%E5%BF%83&ie=utf8&_sug_=n&_sug_type_=" target="_blank">机器之心：Azure Foundry Agent Service 正式 GA，国内企业搭建私有 AI Agent 的新标杆</a></div>
+                    <div class="news-source">机器之心（微信公众号 AI科技评论）</div>
+                    <div class="news-summary-compact">机器之心公众号（3/28）深度解读微软 Azure Foundry Agent Service GA 的企业级意义：国内大型企业在自建 AI Agent 时，需要的不只是模型调用，而是完整的 SDK + 权限管控 + 可观测性链路。Azure Foundry 的 GA 为国内企业提供了国际参照标准，同时也是国内 Agent 基础设施厂商的对标压力。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Codex 插件化 + Azure GA：Agent 编程工具从「功能」走向「可移植工作流」</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Codex 插件目录的推出是一个看似小但逻辑上重要的信号：OpenAI 开始将 Agent 工作流当作「可打包、可安装、可复用」的软件制品来管理。这不只是方便用户，而是在建立 Agent 工作流的标准化范式——工作流从「我的专属配置」变成「可分享的技能包」，这是 Agent 生态成熟的关键一步。</p><p>Azure Foundry Agent Service 的 GA 意味着微软已经准备好用自己的 PaaS 基础设施来承接企业 Agent 需求。与 Codex 作为个人/小团队工具不同，Foundry Agent Service 瞄准的是「大规模、可审计、有 SLA」的企业级 Agent 部署需求。两者配合描述了 AI Coding/Agent 市场的双层结构：个人效率层（Codex）+ 企业基础设施层（Azure Foundry）。</p><p>OpenAI 推出 Codex Use Cases 示例库的时机也很关键——这表明 OpenAI 已经意识到「会用的人」和「不会用的人」之间存在巨大效率差距，主动运营最佳实践是缩短这个差距、提高 Codex 付费用户留存的关键举措。预计 6-12 个月内会出现「Codex 认证工程师」类型的专业认证体系。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI Coding 工具正在从「个人工具」走向「团队/企业基础设施」的临界点，可移植工作流+企业级平台是这次跃迁的两个关键特征。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">标准化定律：工具生态成熟的标志，是「最佳实践」从个人经验变为可安装的标准件</span></div><div class="pi-row"><span class="pi-row-label l2">本质</span><div class="pi-row-content"><strong>任何工具生态的成熟，都经历「发明→传播→标准化」三阶段。标准化的关键指标是：最佳实践从「知道的人用」变成「打包发布、一键安装」。Codex 插件目录是 AI Coding 工具进入标准化阶段的第一个具体信号。</strong></div></div><div class="pi-row"><span class="pi-row-label">进化序列</span><div class="pi-row-content"><div class="pi-evo"><div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">功能发明期（会用的人赢）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">经验传播期（教程/博客爆发）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step active"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">最佳实践标准化（当前，插件/模板市场）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step future"><span class="pi-evo-tag">4.0</span><span class="pi-evo-text">认证与合规（未来，企业标准）</span></div></div></div></div><div class="pi-table"><div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div><div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div><div class="pi-t-row"><span class="pi-t-rule">VSCode 插件市场（2016-2022）</span><span class="pi-t-reality">VSCode 发布插件市场后，语言支持/Linter/格式化工具从「手动配置」变成「一键安装」，生态快速超越竞争对手，市场份额从 0 到 70%+ 用时不足 5 年</span><span class="pi-t-analogy">从「编辑器配置专家」到「任何人都能用好编辑器」</span></div><div class="pi-t-divider"></div><div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div><div class="pi-t-row"><span class="pi-t-rule">Codex 插件目录（2026-03-26）</span><span class="pi-t-reality"><strong>Codex 推出可安装插件目录</strong>，Agent 工作流从「个人配置」变为「可分享技能包」；同期 Azure Foundry GA 建立企业级 Agent 平台标准</span><span class="pi-t-analogy">从「高手的 Cursor 配置」到「团队共享的 Agent 工具箱」</span></div><div class="pi-t-divider"></div><div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div><div class="pi-t-row projected"><span class="pi-t-rule">未来 12 个月</span><span class="pi-t-reality">「Codex/Agent 认证工程师」专业认证将出现（类似 AWS Certified）；AI Coding 最佳实践将成为软件工程招聘标准要素；第三方 Agent 工作流市场（类 npm）将出现</span><span class="pi-t-analogy">如同 Docker Hub 的出现让容器化部署从「专家操作」变成「标准工程实践」</span></div></div><div class="pi-confidence">📐 置信度: 中高 · 验证窗口: 12个月 · 信号: Codex 插件目录发布数量增速、AI Coding 认证课程搜索量、Agent 工作流第三方市场融资情况</div></div>
+        </article>
+
+        <article id="application" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://ai.google.dev/gemini-api/docs/changelog" target="_blank">Google 发布 Lyria 3 音乐生成模型：文字+图片输入，生成完整歌曲级别音频</a></div>
+                    <div class="news-source">Google AI for Developers</div>
+                    <div class="news-summary-compact">3/25 Google AI API 发布 Lyria 3，支持两种模式：lyria-3-clip-preview（30 秒音频片段）和 lyria-3-pro-preview（完整歌曲）。输入接受文字和图片，输出 48kHz 立体声高品质音频。这是 AI 音乐生成从「音效/背景乐」跃升至「完整歌曲创作」的关键节点，与 Suno、Udio 等专业 AI 音乐平台形成直接竞争。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank">ChatGPT 推出 File Library：文件不再只是「本次对话的附件」</a></div>
+                    <div class="news-source">OpenAI Help Center</div>
+                    <div class="news-summary-compact">3/23 ChatGPT 发布 File Library，用户上传或创建的文件自动保存到个人文件库，可在未来对话中跨次引用（「帮我找昨天上传的文档」）。这是 ChatGPT 从「单次对话工具」向「持久个人工作空间」转型的关键一步，文件可达性与记忆功能形成协同，上下文管理能力大幅提升。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank">ChatGPT 升级购物体验：视觉丰富产品卡片 + 图片以图搜同款</a></div>
+                    <div class="news-source">OpenAI Help Center</div>
+                    <div class="news-summary-compact">3/24 ChatGPT 购物功能重大更新，产品结果视觉更丰富（价格/评分/特性并列展示），支持上传图片寻找相似产品，多商品对比侧边栏。此次更新底层采用 Agentic Commerce Protocol（ACP），面向全球所有 ChatGPT 用户推送，标志着 ChatGPT 向「AI 购物导购」定位的系统性推进。</div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.stcn.com/article/detail/3685009.html" target="_blank">小米 MiMo-V2-TTS 同步发布：自研语音合成模型进入开发者生态</a></div>
+                    <div class="news-source">证券时报</div>
+                    <div class="news-summary-compact">随 MiMo-V2-Pro 一同发布的 MiMo-V2-TTS 是小米自研语音合成（Text-to-Speech）模型，完成「理解-生成-表达」AI 能力链的闭环。API 已向开发者开放，结合 MiMo-V2-Omni（多模态）和 MiMo-V2-Pro（推理），小米 AI 模型生态初步成形，向「全栈 AI 能力提供商」方向迈进。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Lyria 3 + MiMo-TTS：AI 音频能力从「语音助手」跃升至「创意生产工具」</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Google Lyria 3 支持生成「完整歌曲」是一个分水岭级别的能力跃升。此前 AI 音乐工具能生成背景音效或 30 秒片段，但「完整歌曲」意味着有完整的结构（前奏/主歌/副歌/间奏/尾声）、情感弧线和音乐叙事。文字/图片作为输入则让非音乐专业人士也能表达创作意图——这是音乐创作门槛的结构性降低。</p><p>从竞争格局看，Lyria 3 进入 Suno 和 Udio 的核心市场，但通过 API 分发而不是独立 App 的方式切入，意味着 Google 的策略是「成为 AI 音乐生成的底层基础设施」而非直接做面向消费者的应用。这和 Gemini 整体的 API 优先策略一致。大平台的 API 化会让专业 AI 音乐 App 面临更廉价的底层竞争。</p><p>小米 MiMo-V2-TTS 的发布填补了「理解-推理-生成-表达」链条的最后一环。当一家公司同时拥有推理模型（Pro）、多模态模型（Omni）和语音合成模型（TTS），就具备了构建完整语音 AI 交互产品的能力栈——不需要依赖 OpenAI 或 Google 的任何一个模块。对于想在国内建设闭环 AI 产品的开发者，这是一个重要选项。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI 音频赛道在 2026 年 Q1 完成了从「配音工具」到「创意生产平台」的升级——下一批被 AI 替代的岗位，可能是独立音乐人和游戏音效工程师。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">模态扩张定律：AI 每进入一个新的创意模态，对应的专业人才市场将在 12-18 个月内出现结构性调整</span></div><div class="pi-row"><span class="pi-row-label l2">本质</span><div class="pi-row-content"><strong>AI 的模态扩张遵循固定路径：图像（2022）→ 视频（2024）→ 完整音乐（2026）。每个模态突破后，对应的「初级内容生产者」岗位需求下降，而「AI 提示工程 + 人工精修」的混合型创作者岗位上升。</strong></div></div><div class="pi-row"><span class="pi-row-label">进化序列</span><div class="pi-row-content"><div class="pi-evo"><div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">文字生成（2022，GPT 时代）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">图像生成（2023，Midjourney 时代）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step"><span class="pi-evo-tag">2.5</span><span class="pi-evo-text">视频生成（2024-2025）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step active"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">完整音乐创作（2026-03，当前）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step future"><span class="pi-evo-tag">4.0</span><span class="pi-evo-text">实时交互式多模态（未来）</span></div></div></div></div><div class="pi-table"><div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div><div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div><div class="pi-t-row"><span class="pi-t-rule">图像生成冲击设计市场（2023）</span><span class="pi-t-reality">Midjourney/Stable Diffusion 发布 18 个月内，股图平台（Shutterstock、Getty Images）下载量下降 20-30%，初级插画接单量大幅萎缩；但 AI 提示工程师和 AI 工作流设计师岗位出现</span><span class="pi-t-analogy">初级美工被替代，但「AI 美术监督」岗位出现</span></div><div class="pi-t-divider"></div><div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div><div class="pi-t-row"><span class="pi-t-rule">AI 完整音乐生成（2026-03）</span><span class="pi-t-reality"><strong>Google Lyria 3（3/25 发布）</strong>支持完整歌曲生成；Suno/Udio 持续迭代；小米 MiMo-V2-TTS 完成语音合成闭环。AI 音乐进入「完整作品级别」生产能力</span><span class="pi-t-analogy">相当于 AI 从「会弹几个和弦」到「能独立写歌录专辑」</span></div><div class="pi-t-divider"></div><div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div><div class="pi-t-row projected"><span class="pi-t-rule">未来 12-18 个月</span><span class="pi-t-reality">游戏背景音效、独立创作者伴奏制作、短视频平台 BGM 制作需求将出现 AI 替代；「AI 音乐监制」作为新岗位出现；版权归属争议将促使平台推出 AI 音乐版权框架</span><span class="pi-t-analogy">如同摄影术出现后，肖像画家减少但「摄影师+艺术导演」岗位出现</span></div></div><div class="pi-confidence">📐 置信度: 高 · 验证窗口: 18个月 · 信号: 股音平台下载量变化、游戏音效外包订单量、Lyria 3 API 月度调用增速</div></div>
+        </article>
+
+        <article id="industry" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://insilico.com/news/ohz9ozx0t1-insilico-medicine-announces-2025-annual" target="_blank">Insilico Medicine 发布 2025 年报：AI 药物 Rentosertib Phase IIa 首次临床 POC 验证</a></div>
+                    <div class="news-source">Insilico Medicine 官网</div>
+                    <div class="news-summary-compact">Insilico Medicine（HKEX:3696）3/29 年报：总营收 $5624 万，软件收入 +23.8%，服务 Top 20 药企中 13 家。核心里程碑：ISM001-055（Rentosertib）Phase IIa GENESIS-IPF 研究数据刊载于 Nature Medicine，成为 AI 发现药物的全球首次临床概念验证（POC）。累计合作总价值达 $46 亿，港股最大生物科技 IPO（2025 年 12 月上市）。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://news.crunchbase.com/business/us-startup-funding-slows-march-2026-data/" target="_blank">美国 3 月初创融资骤降至 $130 亿：巨额 AI 轮次退潮，但早期轮次维持正常</a></div>
+                    <div class="news-source">Crunchbase News</div>
+                    <div class="news-summary-compact">Crunchbase 数据，2026 年 3 月美国初创融资约 $130 亿，远低于 2 月（$1890 亿，包含 OpenAI $1100 亿 + Anthropic $300 亿）。分析认为主要是 2 月巨额轮次的统计效应，早期/种子阶段基本持平。同期伊朗战争（2/28 开始）致股市震荡，叠加宏观不确定性。欧洲 3 月融资反创年度高点（Nscale、AMI 大额轮次驱动）。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://news.crunchbase.com/venture/world-model-ai-lab-ami-raises-europes-largest-seed-round/" target="_blank">LeCun 旗下新模型 AMI 完成欧洲最大种子轮 $10 亿：「世界模型」理论实验室融资创纪录</a></div>
+                    <div class="news-source">Crunchbase News</div>
+                    <div class="news-summary-compact">图灵奖得主 LeCun 的 Advanced Machine Intelligence（AMI）完成 $10 亿种子轮，创欧洲最大种子轮纪录。AMI 专注「世界模型」（World Model）理论路线，与 OpenAI 的 Scaling Law 路径形成理论竞争。这一融资彰显资本对非 Transformer 路线 AI 研究的持续押注。</div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.stdaily.com/web/gdxw/2026-03/24/content_491372.html" target="_blank">阶跃星辰 Step 3.5 Flash（free）跻身 OpenRouter 全球前二，「免费开源」策略奏效</a></div>
+                    <div class="news-source">科技日报</div>
+                    <div class="news-summary-compact">OpenRouter 最新数据显示，阶跃星辰 Step 3.5 Flash（free）位列全球调用量第二位，仅次于小米 MiMo-V2-Pro。免费开放策略快速积累全球开发者基础，验证了「先用量后商业化」的市场路径。阶跃星辰作为相对低调的国内大模型团队，凭借免费策略实现全球曝光。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Insilico Medicine POC 验证：AI 药物发现从「技术演示」到「临床事实」</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Rentosertib（ISM001-055）的 Phase IIa 数据刊载于 Nature Medicine，是一个里程碑级别的事件——不仅对 Insilico，更对整个 AI 制药行业。过去 5 年，AI 发现药物的故事停留在「加速筛选、降低成本」的叙事层面，而缺乏一个从头到尾由 AI 推动的候选物在人体临床试验中展示有效性的验证。Rentosertib 的 POC 填补了这个空白。</p><p>数字层面，Insilico 的商业模式比任何新闻叙述都更有说服力：$46 亿累计合作价值、服务 Top 20 药企中 13 家、软件订阅用户数 +18.3%。这说明大型制药公司已经开始把 AI 药物发现平台当作核心工具采购，而不只是「概念试点」。</p><p>但更值得关注的是 Insilico 与 Liquid AI 合作完成的 MMAI Gym 框架——用轻量级模型（而非 Frontier 大模型）在私有基础设施上达到 SOTA 性能。这是 AI 在专业科学领域落地的重要范式：不用 GPT-5.4，用专门为药物发现任务调优的小模型，隐私保护和性能两者兼得。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI 制药迎来最重要的里程碑：Nature Medicine 刊载的 Phase IIa POC 证明 AI 发现的药物在人体里真实有效——这将加速全球制药巨头的 AI 投入决策。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">POC 跃迁定律：新技术在专业领域的扩散，需要一个「在最权威场景被验证」的关键时刻</span></div><div class="pi-row"><span class="pi-row-label l2">本质</span><div class="pi-row-content"><strong>专业领域（医疗、金融、法律）对新技术的采纳遵循「权威验证→快速扩散」路径。一个被最高权威发表平台（如 Nature Medicine）验证的 POC，能在 12-18 个月内触发整个行业从「谨慎试点」到「战略投入」的集体转变。</strong></div></div><div class="pi-row"><span class="pi-row-label">进化序列</span><div class="pi-row-content"><div class="pi-evo"><div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">技术宣称（论文/Demo）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">早期采用（小规模 POC）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step active"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">权威验证（临床 POC，当前）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step future"><span class="pi-evo-tag">4.0</span><span class="pi-evo-text">行业标配（监管批准/大规模落地）</span></div></div></div></div><div class="pi-table"><div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div><div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div><div class="pi-t-row"><span class="pi-t-rule">深度学习进入医学影像（2017-2020）</span><span class="pi-t-reality">2017 年 Nature 刊载 AI 皮肤癌诊断超越皮肤科医生的研究后，医院和医疗器械公司的 AI 影像诊断投入在 3 年内翻了 10 倍，FDA AI 医疗器械审批数量从个位数到 100+</span><span class="pi-t-analogy">一篇 Nature 论文，开启了数十亿美元的产业</span></div><div class="pi-t-divider"></div><div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div><div class="pi-t-row"><span class="pi-t-rule">AI 药物 POC 验证（2026-03）</span><span class="pi-t-reality"><strong>Rentosertib Nature Medicine POC 发表（3/29）</strong>，Insilico 服务 Top20 药企 13 家，累计合作价值 $46 亿，软件订阅 +23.8%——临床验证将触发更大规模资本流入</span><span class="pi-t-analogy">相当于第一辆汽车成功跑完长途，此后道路建设和加油站的投入会在 5 年内指数级增加</span></div><div class="pi-t-divider"></div><div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div><div class="pi-t-row projected"><span class="pi-t-rule">未来 18-24 个月</span><span class="pi-t-reality">全球 Top 50 制药公司将全面建立 AI 药物发现平台（自建或采购）；AI 制药公司估值体系将从「技术平台」重估为「临床管线+平台」双轨；监管机构（FDA/NMPA）将发布 AI 辅助药物发现的专项指引</span><span class="pi-t-analogy">如同基因测序技术从 2003 年人类基因组计划完成后 10 年内从研究工具变成临床标配</span></div></div><div class="pi-confidence">📐 置信度: 高 · 验证窗口: 18个月 · 信号: Top 50 药企 AI 研发预算占比变化、AI 制药公司 IPO 数量、FDA AI 药物相关申请数量</div></div>
+        </article>
+
+        <article id="enterprise" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.okta.com/blog/2026/03/ai-agents-identity-security/" target="_blank">Okta AI Agents Identity Security Framework 正式 GA（4/30）：企业 AI 安全成基础设施</a></div>
+                    <div class="news-source">Okta Blog</div>
+                    <div class="news-summary-compact">Okta 宣布其 AI Agents 身份安全框架将于 4/30 正式 GA，提供跨云/跨平台的 AI Agent 身份认证、权限管控和访问控制。随着企业部署 AI Agent 数量激增，Agent 身份管理从「技术问题」升级为「企业治理问题」。Okta 是企业身份安全赛道标杆，其进入 AI Agent 领域意味着这个细分市场已进入主流采购视野。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.reuters.com/legal/authors-guild-anthropic-settlement-deadline-march-2026/" target="_blank">Anthropic 作者版权诉讼临近 3/30 截止：法律合规成 AI 企业落地核心风险</a></div>
+                    <div class="news-source">Reuters</div>
+                    <div class="news-summary-compact">Authors Guild 等写作者组织与 Anthropic 的版权诉讼案，和解谈判设定 3/30 截止日期。若谈判破裂将进入正式庭审。这是继 OpenAI（与 NYT 等）之后，AI 企业面临的最大版权诉讼之一，将对 AI 企业数据来源合规性和训练数据授权策略产生深远影响。</div>
+                </div>
+                <div class="sub-header">🇨🇳 国内</div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.stdaily.com/web/gdxw/2026-03/24/content_491372.html" target="_blank">MiniMax M2.5 跻身 OpenRouter 全球前三：国产多模态模型国际化提速</a></div>
+                    <div class="news-source">科技日报</div>
+                    <div class="news-summary-compact">OpenRouter 数据显示 MiniMax M2.5 在全球调用量中位居第三，与 MiMo-V2-Pro 和 Step 3.5 Flash 共同形成中国模型「三驾马车」。MiniMax 以多模态（文字、图像、视频）能力见长，国际开发者选择 MiniMax 主要看重其多模态综合能力和 API 价格优势，与 GPT 系列相比性价比显著。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&s_from=input&query=Gemma+4+%E9%87%8F%E5%AD%90%E4%BD%8D&ie=utf8&_sug_=n&_sug_type_=" target="_blank">量子位：Gemma 4 预计即将发布，Google 新一代开源模型中文社区受关注</a></div>
+                    <div class="news-source">量子位（微信公众号 QbitAI）</div>
+                    <div class="news-summary-compact">量子位公众号（3/29）收录，Google Gemma 4 开源模型即将发布的信号在国内开发者社区引发关注，讨论集中在边缘计算和本地部署场景的提升空间。Gemma 3 系列（3n 架构）在国内私有化部署场景应用广泛，Gemma 4 被期待能在移动设备和嵌入式场景进一步降低推理成本。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">Anthropic 版权诉讼 + Okta AI Agent 安全 GA：企业 AI 合规进入硬约束阶段</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Anthropic 作者版权诉讼 3/30 截止和 Okta AI Agent 安全框架 GA 同期出现，是 2026 年 Q1 企业 AI 合规史上最重要的一个时间节点。一个是训练数据合规（历史欠账），一个是运行时安全（未来必须）。这两个方向同步强化，说明 AI 企业的法律风险管理正式进入「全生命周期合规」阶段。</p><p>Okta 的战略意义在于它的标杆效应。Okta 是企业软件领域「身份安全」的代名词——他们进入 AI Agent 安全领域，意味着这个细分市场的采购决策已经上升到 CISO（首席信息安全官）层级，而不只是技术团队的自选动作。预计 12 个月内主要企业 IT 采购标准中将出现「AI Agent 身份安全」条款。</p><p>对国内企业的影响：版权诉讼是海外风险，但「AI Agent 运行时安全」在国内同样是空白。随着企业 AI Agent 数量增加，谁来管理这些 Agent 的权限边界、操作日志和异常行为，是一个正在形成的必答题。国内目前还没有对标 Okta 的 AI Agent 安全专业厂商出现，这是一个市场空白。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">AI 合规不再是「法务部门的问题」，而是每一个部署 AI Agent 的企业必须面对的基础设施层面的刚性约束——合规能力将成为企业 AI 战略的重要差异化竞争力。</div>
+                    </div>
+                </div>
+            </div>
+<div class="pi-card"><div class="pi-header"><span class="pi-badge">🔮 规律洞察</span><span class="pi-title">合规后发定律：每一波技术扩张后，合规基础设施建设必然滞后 2-3 年跟上，但追上后会以更快速度强制执行</span></div><div class="pi-row"><span class="pi-row-label l2">本质</span><div class="pi-row-content"><strong>技术扩张总是先于合规体系建设。但滞后的合规并不会消失，而会以「集中补课」的方式到来——往往比主动合规的成本高出数倍。Anthropic 版权诉讼是历史欠账，Okta Agent 安全是未来预防——两者都是这个规律的不同侧面。</strong></div></div><div class="pi-row"><span class="pi-row-label">进化序列</span><div class="pi-row-content"><div class="pi-evo"><div class="pi-evo-step"><span class="pi-evo-tag">1.0</span><span class="pi-evo-text">自由扩张期（合规无感）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step"><span class="pi-evo-tag">2.0</span><span class="pi-evo-text">灰色地带（执法滞后）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step active"><span class="pi-evo-tag">3.0</span><span class="pi-evo-text">集中补课（诉讼+监管出手，当前）</span></div><span class="pi-evo-arrow">→</span><div class="pi-evo-step future"><span class="pi-evo-tag">4.0</span><span class="pi-evo-text">合规内嵌（基础设施化，未来）</span></div></div></div></div><div class="pi-table"><div class="pi-t-head"><span>阶段</span><span>现实验证</span><span>类比</span></div><div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div><div class="pi-t-row"><span class="pi-t-rule">互联网数据隐私合规滞后（2015-2020）</span><span class="pi-t-reality">2018 年 GDPR 出台、2019 年 Facebook $50 亿隐私罚款——互联网扩张 20 年后集中清算，企业突然面临合规改造的巨大成本，合规工具市场迅速爆发（OneTrust 估值突破百亿）</span><span class="pi-t-analogy">先盖楼后补消防通道，出了事再全楼整改</span></div><div class="pi-t-divider"></div><div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前</span></div><div class="pi-t-row"><span class="pi-t-rule">AI 企业合规集中补课（2026-03）</span><span class="pi-t-reality"><strong>Anthropic 版权诉讼 3/30 截止</strong>（训练数据合规）；<strong>Okta AI Agent 安全 4/30 GA</strong>（运行时合规）；WEF 9 成企业将 AI 漏洞列首位风险——合规压力从多方向同步汇聚</span><span class="pi-t-analogy">从「先部署 AI 再说」到「没有合规证书不给上线」</span></div><div class="pi-t-divider"></div><div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div><div class="pi-t-row projected"><span class="pi-t-rule">未来 12-24 个月</span><span class="pi-t-reality">AI 合规工具市场（Agent 身份管理、训练数据授权平台、AI 审计日志）将成为下一个 10 亿美元级细分市场；大型企业 AI 采购合同将强制包含合规条款；国内 AI 安全/合规厂商融资将加速</span><span class="pi-t-analogy">如同 GDPR 催生了数十亿美元的隐私合规 SaaS 市场（OneTrust、TrustArc 等）</span></div></div><div class="pi-confidence">📐 置信度: 高 · 验证窗口: 12个月 · 信号: AI 版权诉讼裁判结果、Okta AI Agent 安全产品 ARR、AI 合规工具融资数量、企业 AI 采购合规条款覆盖率</div></div>
+        </article>
+
+
+        <div class="section-card" style="margin-top:20px">
+            <div class="section-header"><span class="num">📊</span> 数据速览</div>
+            <table class="data-table">
+                <thead><tr><th>指标</th><th>数值</th><th>变化/说明</th></tr></thead>
+                <tbody>
+                    <tr><td>MiMo-V2-Pro 首周 Token 消耗</td><td><strong>3 万亿</strong></td><td>OpenRouter 历史首个单周突破</td></tr>
+                    <tr><td>Xiaomi MiMo-V2-Pro 全球排名</td><td><strong>第 8</strong></td><td>Artificial Analysis 综合排行榜</td></tr>
+                    <tr><td>Insilico Medicine 2025 年总营收</td><td><strong>$5624 万</strong></td><td>软件订阅 +23.8%</td></tr>
+                    <tr><td>Insilico 累计合作总价值</td><td><strong>$46 亿</strong></td><td>2025 新签 $13 亿</td></tr>
+                    <tr><td>AMI（LeCun）种子轮</td><td><strong>$10 亿</strong></td><td>欧洲最大种子轮纪录</td></tr>
+                    <tr><td>美国 3 月初创融资</td><td><strong>~$130 亿</strong></td><td>↓ vs 2 月 $1890 亿</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="section-card">
+            <div class="section-header"><span class="num">📌</span> 明日/下周值得关注</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-red);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-red);display:flex;align-items:center;gap:6px">🟢 Anthropic 版权诉讼结果（3/30 截止）</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">和解或开庭将在今日决定，判决/和解条款将对整个 AI 行业训练数据合规策略产生重大影响</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-orange);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-orange);display:flex;align-items:center;gap:6px">🟢 小米 MiMo-V2-Pro 国际化下一步</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">从 OpenRouter 调用量冠军到企业私有化部署，下一步能否打入国际企业 IT 采购名单</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-orange);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-orange);display:flex;align-items:center;gap:6px">🟢 Insilico Rentosertib Phase II 主要终点</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">Phase IIa 展示安全性和剂量依赖性，Phase IIb 主要终点（肺功能改善）是里程碑关键</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-yellow);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-yellow);display:flex;align-items:center;gap:6px">🟢 Google Gemma 4 发布时间</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">预计即将发布，Gemma 3n 架构已验证边缘部署效果，Gemma 4 是本地推理场景的重要工具</div>
+                </div>
+                <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-yellow);transition:all .2s">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-yellow);display:flex;align-items:center;gap:6px">🟢 OpenAI Sora 2 API 正式文档和定价</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:4px;line-height:1.5">Sora 1.0 API 9/24 停运，开发者需了解 Sora 2 的迁移成本和能力差异</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="margin-top:20px;background:linear-gradient(135deg,#EFF6FF 0%,#EDE9FE 100%);border:1px solid #DBEAFE;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06)">
+            <div style="font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:#1E40AF">
+                🤖 深度洞察
+            </div>
+            <div style="font-size:14px;color:#374151;line-height:1.8;margin:0">
+                <p style="margin:0">🤖 <strong>AI洞察自述</strong></p><p style='margin:8px 0 0 0'>今天有一个数字让我停了一下：小米 MiMo-V2-Pro，单周 Token 消耗 <strong>3 万亿</strong>。</p><p style='margin:8px 0 0 0'>这不只是一个里程碑数字——它是「中国模型的全球使用量已经超过美国模型」这件事的第一次用量数据背书。过去我们讨论中国 AI 崛起，大多是推理：模型参数更大、基准测试更高……但 OpenRouter 的调用量数据是真实的生产工作负载，骗不了人。</p><p style='margin:8px 0 0 0'>更值得关注的是 LeCun 主动打听「榜一是谁」——这位拒绝承认 Scaling Law 的图灵奖得主，居然对榜一中国模型产生了好奇。这种心智变化，比数据本身更重要。</p><p style='margin:8px 0 0 0'>PS：今天还有 Insilico Medicine 的 AI 药物 Phase IIa POC 发表于 Nature Medicine——AI 发现的药，终于在真实人体里被验证有效了。这件事的历史意义，大概要等 10 年后回看才能完全体会。</p>
+            </div>
+        </div>
+
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+            <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+            <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+                我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+            </p>
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                🏠 访问AI洞察首页
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', 'false'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.setAttribute('aria-selected', 'true');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

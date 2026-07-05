@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI助手平台 案例示意图生成器</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; padding: 40px; }
+        
+        .diagram { 
+            background: white; 
+            border-radius: 16px; 
+            padding: 32px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            max-width: 800px;
+        }
+        
+        .diagram-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        /* 对话样式 */
+        .conversation {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .message {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        
+        .user .avatar { background: #e3f2fd; }
+        .ai .avatar { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        
+        .bubble {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 12px 16px;
+            max-width: 85%;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .user .bubble { background: #e3f2fd; }
+        .ai .bubble { background: #f3e8ff; }
+        
+        .step-label {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+        
+        /* 对比表格 */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .comparison-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .before { color: #ef4444; }
+        .after { color: #10b981; }
+        .reduction { 
+            background: #dcfce7; 
+            color: #166534; 
+            padding: 4px 8px; 
+            border-radius: 4px; 
+            font-weight: 600;
+            font-size: 12px;
+        }
+        
+        /* 流程图 */
+        .flow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .flow-step {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .flow-step.failed {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .flow-step.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .flow-arrow {
+            color: #999;
+            font-size: 20px;
+        }
+        
+        /* PPT预览 */
+        .ppt-preview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        
+        .ppt-slide {
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #1e2761, #3b5998);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 11px;
+            text-align: center;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .ppt-slide.light {
+            background: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .slide-num {
+            font-size: 9px;
+            opacity: 0.7;
+            margin-bottom: 4px;
+        }
+        
+        .slide-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        
+        /* 统计卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+        
+        /* Agent列表 */
+        .agent-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .agent-card {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .agent-icon {
+            font-size: 24px;
+        }
+        
+        .agent-info h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .agent-pct {
+            font-size: 11px;
+            color: #666;
+        }
+        
+        /* 进度条 */
+        .progress-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 图1: D3.js关系图开发对话 -->
+<div class="diagram" id="diagram-d3">
+    <div class="diagram-title">案例1：D3.js 关系图可视化开发 - 对话过程</div>
+    <div class="conversation">
+        <div class="message user">
+            <div class="avatar">👤</div>
+            <div>
+                <div class="step-label">第一步：描述需求</div>
+                <div class="bubble">帮我实现一个关系图可视化功能，展示工作任务和Agent类型的关系</div>
+            </div>
+        </div>
+        <div class="message ai">
+            <div class="avatar">🤖</div>
+            <div class="bubble">好的，我来创建一个基于D3.js的力导向关系图...<br>✅ 创建 network-graph.js<br>✅ 实现节点拖拽交互<br>✅ 添加连线高亮效果</div>
+        </div>
+        <div class="message user">
+            <div class="avatar">👤</div>
+            <div>
+                <div class="step-label">第二步：迭代细化</div>
+                <div class="bubble">添加缩放控制功能，支持放大/缩小/重置/适应窗口</div>
+            </div>
+        </div>
+        <div class="message ai">
+            <div class="avatar">🤖</div>
+            <div class="bubble">✅ 添加缩放控件（30%-200%）<br>✅ 支持Ctrl+滚轮交互<br>✅ 添加适应窗口按钮</div>
+        </div>
+        <div class="message user">
+            <div class="avatar">👤</div>
+            <div>
+                <div class="step-label">第三步：调试优化</div>
+                <div class="bubble">节点有点挤，帮我调整一下布局</div>
+            </div>
+        </div>
+        <div class="message ai">
+            <div class="avatar">🤖</div>
+            <div class="bubble">✅ 优化力导向参数<br>✅ 调整节点间距<br>✅ 完成！</div>
+        </div>
+    </div>
+</div>
+
+<!-- 图2: 性能优化对比 -->
+<div class="diagram" id="diagram-perf">
+    <div class="diagram-title">案例9：网站性能优化 - 优化前后对比</div>
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>资源类型</th>
+                <th>优化前</th>
+                <th>优化后</th>
+                <th>效果</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>🖼️ 图片</td>
+                <td class="before">16 MB (4096×4096 PNG)</td>
+                <td class="after">483 KB (1200×1200 JPG)</td>
+                <td><span class="reduction">-97%</span></td>
+            </tr>
+            <tr>
+                <td>🎨 CSS</td>
+                <td class="before">130 KB (5个文件)</td>
+                <td class="after">95 KB (压缩后)</td>
+                <td><span class="reduction">-27%</span></td>
+            </tr>
+            <tr>
+                <td>📜 JavaScript</td>
+                <td class="before">63 KB (2个文件)</td>
+                <td class="after">34 KB (压缩后)</td>
+                <td><span class="reduction">-46%</span></td>
+            </tr>
+            <tr>
+                <td>🔤 字体</td>
+                <td class="before">Google Fonts (国外)</td>
+                <td class="after">fonts.loli.net (国内CDN)</td>
+                <td><span class="reduction">访问提速 3-5x</span></td>
+            </tr>
+            <tr>
+                <td>⚡ 总体</td>
+                <td class="before">~16.2 MB</td>
+                <td class="after">~613 KB</td>
+                <td><span class="reduction">-96%</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 图3: 部署流程 -->
+<div class="diagram" id="diagram-deploy">
+    <div class="diagram-title">案例8：多平台部署 - 自动尝试替代方案</div>
+    <div class="flow">
+        <div class="flow-step failed">Gitee Pages<br><small>❌ 已关闭新注册</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step failed">腾讯云<br><small>❌ 需要验证</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step failed">Cloudflare<br><small>❌ 安全验证</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step success">GitHub Pages<br><small>✅ 成功！</small></div>
+    </div>
+    <div style="margin-top: 20px; padding: 16px; background: #f0fdf4; border-radius: 8px; border-left: 4px solid #10b981;">
+        <div style="font-weight: 600; color: #166534; margin-bottom: 8px;">💡 AI助手平台 的特点</div>
+        <div style="font-size: 13px; color: #166534;">遇到问题时不会停止，会自动尝试替代方案，直到找到可行的解决办法</div>
+    </div>
+</div>
+
+<!-- 图4: PPT预览 -->
+<div class="diagram" id="diagram-ppt">
+    <div class="diagram-title">案例7：PPT制作 - 8页幻灯片预览</div>
+    <div class="ppt-preview">
+        <div class="ppt-slide">
+            <div class="slide-num">1</div>
+            <div class="slide-icon">🚀</div>
+            封面页
+        </div>
+        <div class="ppt-slide light">
+            <div class="slide-num">2</div>
+            <div class="slide-icon">😰</div>
+            问题痛点
+        </div>
+        <div class="ppt-slide light">
+            <div class="slide-num">3</div>
+            <div class="slide-icon">🔄</div>
+            三位一体框架
+        </div>
+        <div class="ppt-slide light">
+            <div class="slide-num">4</div>
+            <div class="slide-icon">🔍</div>
+            场景分析详情
+        </div>
+        <div class="ppt-slide light">
+            <div class="slide-num">5</div>
+            <div class="slide-icon">🎨</div>
+            产品设计
+        </div>
+        <div class="ppt-slide light">
+            <div class="slide-num">6</div>
+            <div class="slide-icon">⚙️</div>
+            技术架构
+        </div>
+        <div class="ppt-slide">
+            <div class="slide-num">7</div>
+            <div class="slide-icon">💎</div>
+            核心价值
+        </div>
+        <div class="ppt-slide">
+            <div class="slide-num">8</div>
+            <div class="slide-icon">🎉</div>
+            结束页
+        </div>
+    </div>
+</div>
+
+<!-- 图5: 场景分析统计 -->
+<div class="diagram" id="diagram-stats">
+    <div class="diagram-title">案例4-6：项目核心数据</div>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">48</div>
+            <div class="stat-label">工作任务</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">9</div>
+            <div class="stat-label">Agent类型</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">6</div>
+            <div class="stat-label">架构层级</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">场景覆盖</div>
+        </div>
+    </div>
+</div>
+
+<!-- 图6: Agent类型分布 -->
+<div class="diagram" id="diagram-agents">
+    <div class="diagram-title">9种Agent类型覆盖率分布</div>
+    <div class="agent-list">
+        <div class="agent-card">
+            <div class="agent-icon">💻</div>
+            <div class="agent-info">
+                <h4>Coding Agent</h4>
+                <div class="agent-pct">覆盖 47% 工作时长</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 94%"></div></div>
+            </div>
+        </div>
+        <div class="agent-card">
+            <div class="agent-icon">💬</div>
+            <div class="agent-info">
+                <h4>Chatbot Agent</h4>
+                <div class="agent-pct">覆盖 15% 工作时长</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 30%"></div></div>
+            </div>
+        </div>
+        <div class="agent-card">
+            <div class="agent-icon">⚙️</div>
+            <div class="agent-info">
+                <h4>Workflow Agent</h4>
+                <div class="agent-pct">覆盖 15% 工作时长</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 30%"></div></div>
+            </div>
+        </div>
+        <div class="agent-card">
+            <div class="agent-icon">🔬</div>
+            <div class="agent-info">
+                <h4>Research Agent</h4>
+                <div class="agent-pct">覆盖 8% 工作时长</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 16%"></div></div>
+            </div>
+        </div>
+        <div class="agent-card">
+            <div class="agent-icon">🎨</div>
+            <div class="agent-info">
+                <h4>Design Agent</h4>
+                <div class="agent-pct">覆盖 4% 工作时长</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 8%"></div></div>
+            </div>
+        </div>
+        <div class="agent-card">
+            <div class="agent-icon">📊</div>
+            <div class="agent-info">
+                <h4>Data Agent</h4>
+                <div class="agent-pct">覆盖 4% 工作时长</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 8%"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 图7: 文档审校流程 -->
+<div class="diagram" id="diagram-review">
+    <div class="diagram-title">案例4：技术文档审校 - 对话过程</div>
+    <div class="conversation">
+        <div class="message user">
+            <div class="avatar">👤</div>
+            <div class="bubble">检查这篇文档中的错别字、格式错误、描述错误和语句不通顺问题<br><small style="color:#666">[粘贴文档内容]</small></div>
+        </div>
+        <div class="message ai">
+            <div class="avatar">🤖</div>
+            <div class="bubble">
+                <strong>发现问题：</strong><br>
+                ❌ 1处描述错误（包含关系表述错误）<br>
+                ❌ 1处格式错误（列表编号顺序颠倒）<br>
+                ⚠️ 数据表述不一致（"40%+"写法）<br><br>
+                <strong>验证数据：</strong><br>
+                ✅ 62.51% 提升率计算正确<br>
+                ✅ 180.21% 提升率计算正确
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 图8: 场景分类总览 -->
+<div class="diagram" id="diagram-overview">
+    <div class="diagram-title">AI助手平台 使用场景分类</div>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <div style="background: #dbeafe; padding: 20px; border-radius: 12px; border-left: 4px solid #3b82f6;">
+            <div style="font-size: 24px; margin-bottom: 8px;">🖥️</div>
+            <div style="font-weight: 700; color: #1e40af; margin-bottom: 4px;">开发类</div>
+            <div style="font-size: 13px; color: #3730a3;">前端开发、可视化、UI设计</div>
+            <div style="font-size: 12px; color: #666; margin-top: 8px;">5+ 个项目</div>
+        </div>
+        <div style="background: #dcfce7; padding: 20px; border-radius: 12px; border-left: 4px solid #10b981;">
+            <div style="font-size: 24px; margin-bottom: 8px;">📄</div>
+            <div style="font-weight: 700; color: #166534; margin-bottom: 4px;">文档类</div>
+            <div style="font-size: 13px; color: #15803d;">文档审校、文案撰写、技术调研</div>
+            <div style="font-size: 12px; color: #666; margin-top: 8px;">4+ 个项目</div>
+        </div>
+        <div style="background: #fef3c7; padding: 20px; border-radius: 12px; border-left: 4px solid #f59e0b;">
+            <div style="font-size: 24px; margin-bottom: 8px;">🎨</div>
+            <div style="font-weight: 700; color: #b45309; margin-bottom: 4px;">创意类</div>
+            <div style="font-size: 13px; color: #a16207;">PPT制作、配图生成</div>
+            <div style="font-size: 12px; color: #666; margin-top: 8px;">2+ 个项目</div>
+        </div>
+        <div style="background: #f3e8ff; padding: 20px; border-radius: 12px; border-left: 4px solid #8b5cf6;">
+            <div style="font-size: 24px; margin-bottom: 8px;">🚀</div>
+            <div style="font-weight: 700; color: #6d28d9; margin-bottom: 4px;">运维类</div>
+            <div style="font-size: 13px; color: #7c3aed;">网站部署、性能优化</div>
+            <div style="font-size: 12px; color: #666; margin-top: 8px;">3+ 个项目</div>
+        </div>
+    </div>
+</div>
+
+<!-- 图10: 记忆功能示意 -->
+<div class="diagram" id="diagram-memory">
+    <div class="diagram-title">案例11：记忆功能 —— 越用越懂我</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="background: #f0f9ff; padding: 20px; border-radius: 12px; border-left: 4px solid #3b82f6;">
+            <div style="font-size: 20px; margin-bottom: 8px;">🧠</div>
+            <div style="font-weight: 700; color: #1e40af; margin-bottom: 8px;">自动推荐项目主题</div>
+            <div style="font-size: 12px; color: #1e3a8a; background: white; padding: 12px; border-radius: 8px; font-family: monospace;">
+                <div style="color: #666;">我：帮我创建一个 PPT</div>
+                <div style="margin-top: 8px; color: #3b82f6;">AI助手平台：根据您最近的项目，我可以帮您创建：</div>
+                <div style="margin-left: 12px; margin-top: 4px;">1. 企业AI工程师产品体系</div>
+                <div style="margin-left: 12px;">2. Agent Infra 技术架构</div>
+                <div style="margin-left: 12px;">3. 某公司AI研发范式解读</div>
+            </div>
+        </div>
+        <div style="background: #f0fdf4; padding: 20px; border-radius: 12px; border-left: 4px solid #10b981;">
+            <div style="font-size: 20px; margin-bottom: 8px;">📝</div>
+            <div style="font-weight: 700; color: #166534; margin-bottom: 8px;">记住项目上下文</div>
+            <div style="font-size: 12px; color: #14532d; background: white; padding: 12px; border-radius: 8px; font-family: monospace;">
+                <div style="color: #666;">[两天前] 检查这篇文章的错误</div>
+                <div style="color: #666; margin-top: 4px;">[今天] 那篇某公司的文章，生成公众号文案</div>
+                <div style="margin-top: 8px; color: #10b981;">AI助手平台：好的，基于《某公司 万人组织 AI研发范式》...</div>
+                <div style="margin-left: 12px; margin-top: 4px;">✅ 记住了文档名称</div>
+                <div style="margin-left: 12px;">✅ 记住了核心数据</div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 16px; padding: 12px 16px; background: #eff6ff; border-radius: 8px; display: flex; align-items: center; gap: 12px;">
+        <div style="font-size: 24px;">💡</div>
+        <div style="font-size: 13px; color: #1e40af;"><strong>效果</strong>：多用几次，AI助手平台 会越来越懂你，自动记住你的项目、偏好和工作习惯</div>
+    </div>
+</div>
+
+<!-- 图11: Duet Space并行模式 -->
+<div class="diagram" id="diagram-duet">
+    <div class="diagram-title">案例12：Duet Space 模式 —— 多任务并行</div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px;">
+        <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 16px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 24px; margin-bottom: 8px;">🎯</div>
+            <div style="font-weight: 700; margin-bottom: 4px;">会话 A</div>
+            <div style="font-size: 11px; opacity: 0.9;">网站性能优化</div>
+            <div style="font-size: 10px; margin-top: 8px; padding: 4px 8px; background: rgba(255,255,255,0.2); border-radius: 4px;">压缩图片 → CSS优化 → JS压缩</div>
+        </div>
+        <div style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 16px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 24px; margin-bottom: 8px;">📊</div>
+            <div style="font-weight: 700; margin-bottom: 4px;">会话 B</div>
+            <div style="font-size: 11px; opacity: 0.9;">创建 PPT</div>
+            <div style="font-size: 10px; margin-top: 8px; padding: 4px 8px; background: rgba(255,255,255,0.2); border-radius: 4px;">设计配色 → 创建幻灯片</div>
+        </div>
+        <div style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 16px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 24px; margin-bottom: 8px;">🚀</div>
+            <div style="font-weight: 700; margin-bottom: 4px;">会话 C</div>
+            <div style="font-size: 11px; opacity: 0.9;">部署到 GitHub</div>
+            <div style="font-size: 10px; margin-top: 8px; padding: 4px 8px; background: rgba(255,255,255,0.2); border-radius: 4px;">创建仓库 → 推送 → 启用Pages</div>
+        </div>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; padding: 16px; background: #f8fafc; border-radius: 8px;">
+        <div style="text-align: center;">
+            <div style="font-size: 11px; color: #666;">传统串行</div>
+            <div style="font-size: 20px; font-weight: 800; color: #ef4444;">65分钟</div>
+        </div>
+        <div style="font-size: 24px; color: #10b981;">→</div>
+        <div style="text-align: center;">
+            <div style="font-size: 11px; color: #666;">Duet Space 并行</div>
+            <div style="font-size: 20px; font-weight: 800; color: #10b981;">25分钟</div>
+        </div>
+        <div style="background: #dcfce7; color: #166534; padding: 6px 12px; border-radius: 16px; font-size: 12px; font-weight: 600;">节省 60%+</div>
+    </div>
+</div>
+
+<!-- 图9: Agent架构调研流程 -->
+<div class="diagram" id="diagram-research">
+    <div class="diagram-title">案例7：Agent 架构技术调研 - 对话过程</div>
+    <div class="conversation">
+        <div class="message user">
+            <div class="avatar">👤</div>
+            <div>
+                <div class="step-label">第一步：明确调研范围</div>
+                <div class="bubble">帮我调研目前业界主流的 Agent 架构设计，包括分层结构、核心组件等</div>
+            </div>
+        </div>
+        <div class="message ai">
+            <div class="avatar">🤖</div>
+            <div class="bubble">
+                <strong>业界主流Agent框架分析：</strong><br>
+                ✅ LangChain - 链式调用，工具集成<br>
+                ✅ AutoGPT - 自主规划，目标分解<br>
+                ✅ MetaGPT - 多角色协作，SOP驱动<br>
+                ✅ CrewAI - 团队协作模式
+            </div>
+        </div>
+        <div class="message user">
+            <div class="avatar">👤</div>
+            <div>
+                <div class="step-label">第二步：深入某个方向</div>
+                <div class="bubble">重点分析一下编排层的设计，包括 Multi-Agent 协作模式</div>
+            </div>
+        </div>
+        <div class="message ai">
+            <div class="avatar">🤖</div>
+            <div class="bubble">
+                <strong>编排层核心组件：</strong><br>
+                🔀 Agent Router - 智能意图识别与路由<br>
+                ⚙️ Workflow Engine - 复杂任务编排<br>
+                🤝 Multi-Agent - 主从/对等/层级协作模式<br>
+                📊 Context Manager - 上下文状态管理
+            </div>
+        </div>
+        <div class="message user">
+            <div class="avatar">👤</div>
+            <div>
+                <div class="step-label">第三步：生成可视化成果</div>
+                <div class="bubble">根据调研结果，设计一个6层的 Agent Infra 理想架构</div>
+            </div>
+        </div>
+        <div class="message ai">
+            <div class="avatar">🤖</div>
+            <div class="bubble">✅ 创建6层架构设计页面<br>✅ 包含30+核心组件<br>✅ 已部署到 Vercel</div>
+        </div>
+    </div>
+</div>
+
+<!-- 图12: Skills技能系统 -->
+<div class="diagram" id="diagram-skills">
+    <div class="diagram-title">案例13：Skills 技能系统 - 专业技能提升效果</div>
+    
+    <!-- 技能包列表 -->
+    <div style="margin-bottom: 24px;">
+        <div style="font-weight: 600; margin-bottom: 12px; color: #333;">📦 已安装的技能包 (16个)</div>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+            <div style="background: linear-gradient(135deg, #e0f2fe, #bae6fd); padding: 10px; border-radius: 8px; text-align: center; font-size: 12px;">
+                <div style="font-size: 20px; margin-bottom: 4px;">📄</div>
+                <div style="font-weight: 600;">docx</div>
+                <div style="color: #666; font-size: 11px;">Word文档</div>
+            </div>
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 10px; border-radius: 8px; text-align: center; font-size: 12px;">
+                <div style="font-size: 20px; margin-bottom: 4px;">📊</div>
+                <div style="font-weight: 600;">pptx</div>
+                <div style="color: #666; font-size: 11px;">PPT制作</div>
+            </div>
+            <div style="background: linear-gradient(135deg, #fce7f3, #fbcfe8); padding: 10px; border-radius: 8px; text-align: center; font-size: 12px;">
+                <div style="font-size: 20px; margin-bottom: 4px;">📕</div>
+                <div style="font-weight: 600;">pdf</div>
+                <div style="color: #666; font-size: 11px;">PDF处理</div>
+            </div>
+            <div style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); padding: 10px; border-radius: 8px; text-align: center; font-size: 12px;">
+                <div style="font-size: 20px; margin-bottom: 4px;">📈</div>
+                <div style="font-weight: 600;">xlsx</div>
+                <div style="color: #666; font-size: 11px;">Excel表格</div>
+            </div>
+            <div style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); padding: 10px; border-radius: 8px; text-align: center; font-size: 12px;">
+                <div style="font-size: 20px; margin-bottom: 4px;">🎨</div>
+                <div style="font-weight: 600;">frontend-design</div>
+                <div style="color: #666; font-size: 11px;">前端设计</div>
+            </div>
+            <div style="background: linear-gradient(135deg, #e0e7ff, #c7d2fe); padding: 10px; border-radius: 8px; text-align: center; font-size: 12px;">
+                <div style="font-size: 20px; margin-bottom: 4px;">🔧</div>
+                <div style="font-weight: 600;">mcp-builder</div>
+                <div style="color: #666; font-size: 11px;">MCP服务器</div>
+            </div>
+            <div style="background: linear-gradient(135deg, #cffafe, #a5f3fc); padding: 10px; border-radius: 8px; text-align: center; font-size: 12px;">
+                <div style="font-size: 20px; margin-bottom: 4px;">🧪</div>
+                <div style="font-weight: 600;">webapp-testing</div>
+                <div style="color: #666; font-size: 11px;">Web测试</div>
+            </div>
+            <div style="background: linear-gradient(135deg, #f3e8ff, #e9d5ff); padding: 10px; border-radius: 8px; text-align: center; font-size: 12px;">
+                <div style="font-size: 20px; margin-bottom: 4px;">✨</div>
+                <div style="font-weight: 600;">+9 more</div>
+                <div style="color: #666; font-size: 11px;">更多技能</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 效果对比 -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div style="background: #fef2f2; border-radius: 12px; padding: 16px; border-left: 4px solid #ef4444;">
+            <div style="font-weight: 600; color: #b91c1c; margin-bottom: 8px;">❌ 没有技能时</div>
+            <div style="font-size: 13px; color: #666; line-height: 1.6;">
+                我：帮我做一个PPT<br>
+                AI：[生成HTML代码]<br>
+                <span style="color: #999;">需要自己转换格式...</span>
+            </div>
+        </div>
+        <div style="background: #f0fdf4; border-radius: 12px; padding: 16px; border-left: 4px solid #22c55e;">
+            <div style="font-weight: 600; color: #166534; margin-bottom: 8px;">✅ 安装 pptx 技能后</div>
+            <div style="font-size: 13px; color: #666; line-height: 1.6;">
+                我：帮我做一个PPT<br>
+                AI：[use_skill(pptx)]<br>
+                <span style="color: #166534; font-weight: 600;">直接生成 .pptx 文件!</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 技能价值 -->
+    <div style="margin-top: 16px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; padding: 16px; color: white;">
+        <div style="font-weight: 600; margin-bottom: 8px;">🎯 技能的价值</div>
+        <div style="display: flex; gap: 16px; font-size: 12px;">
+            <div>📚 专业知识库</div>
+            <div>🔧 正确工具选择</div>
+            <div>⚠️ 避坑指南</div>
+            <div>📝 代码模板</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

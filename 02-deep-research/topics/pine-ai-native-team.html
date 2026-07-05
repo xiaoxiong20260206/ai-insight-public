@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度调研：Pine AI创业实践与AI原生开发范式</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23059669'/><text x='16' y='23' text-anchor='middle' font-size='20'>🤖</text></svg>">
+    <style>
+        :root {
+            --color-success: #059669;
+            --color-success-light: #10B981;
+            --color-success-dark: #047857;
+            --color-success-50: #ECFDF5;
+            --color-danger: #E11D48;
+            --color-danger-light: #F43F5E;
+            --color-warning: #D97706;
+            --color-warning-light: #F59E0B;
+            --color-info: #2563EB;
+            --color-info-light: #3B82F6;
+            --color-info-50: #EFF6FF;
+            --color-purple: #7C3AED;
+            --color-purple-light: #8B5CF6;
+            --color-purple-50: #F5F3FF;
+            --color-text-primary: #1C1917;
+            --color-text-secondary: #57534E;
+            --color-text-muted: #78716C;
+            --color-border: #E7E5E4;
+            --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB;
+            --color-bg-card: #FFFFFF;
+            --color-bg-table-header: #FAFAF9;
+            --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
+            --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
+            --gradient-highlight: linear-gradient(135deg, rgba(5,150,105,0.08) 0%, rgba(5,150,105,0.03) 100%);
+            --gradient-mesh:
+                radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+            --shadow-glow-success: 0 4px 14px rgba(5,150,105,0.15);
+            --shadow-hover: 0 6px 16px rgba(5,150,105,0.15), 0 2px 6px rgba(5,150,105,0.1);
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 40px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+            --font-family: -apple-system, "SF Pro Display", "system-ui", "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-family);
+            font-size: 15px;
+            line-height: 1.65;
+            color: var(--color-text-secondary);
+            background: var(--color-bg);
+            background-image: var(--gradient-mesh);
+            background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
+        }
+        ::selection { background: rgba(5, 150, 105, 0.2); }
+        .container { max-width: 980px; margin: 0 auto; padding: 24px 16px 48px; }
+
+        /* Tab Navigation */
+        .tab-nav {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px) saturate(1.8);
+            border-radius: var(--radius-lg);
+            padding: 6px;
+            display: flex;
+            gap: 4px;
+            margin-bottom: var(--spacing-lg);
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0,0,0,0.06);
+            overflow-x: auto;
+        }
+        .tab-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            transition: all var(--transition-normal);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .tab-btn:hover { background: rgba(5,150,105,0.06); color: var(--color-text-primary); }
+        .tab-btn.active {
+            background: var(--gradient-success);
+            color: white;
+            box-shadow: var(--shadow-glow-success);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+            overflow: hidden;
+            padding: var(--spacing-2xl) 0;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-hero);
+        }
+        .badge {
+            display: inline-block;
+            background: var(--gradient-badge);
+            color: var(--color-info);
+            padding: var(--spacing-xs) 14px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: var(--spacing-md);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+        }
+        .main-title {
+            font-size: 34px;
+            font-weight: 800;
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.02em;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle { color: var(--color-text-secondary); font-size: 15px; }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        .stat-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            transition: all var(--transition-normal);
+        }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .stat-value { font-size: 24px; font-weight: 700; }
+        .stat-value.success { color: var(--color-success); }
+        .stat-value.danger { color: var(--color-danger); }
+        .stat-value.warning { color: var(--color-warning); }
+        .stat-value.info { color: var(--color-info); }
+        .stat-value.purple { color: var(--color-purple); }
+        .stat-label { font-size: 11px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+        /* Section Card */
+        .section-card {
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: var(--spacing-md);
+        }
+        .section-header h2 { font-size: 16px; font-weight: 700; color: var(--color-text-primary); }
+        .section-number {
+            background: var(--gradient-success);
+            color: white;
+            width: 32px; height: 32px;
+            border-radius: var(--radius-md);
+            font-size: 14px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .section-content p { margin-bottom: var(--spacing-md); }
+        .section-content h3 {
+            font-size: 15px; font-weight: 700;
+            color: var(--color-text-primary);
+            margin: 20px 0 10px;
+        }
+        .section-content ul { padding-left: 20px; margin-bottom: var(--spacing-md); }
+        .section-content li { margin-bottom: 6px; }
+
+        /* Components */
+        .quote-box {
+            background: var(--color-bg-table-header);
+            border-left: 3px solid var(--color-info);
+            padding: var(--spacing-md) 20px;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: var(--spacing-md) 0;
+        }
+        .insight-box {
+            border-left: 3px solid var(--color-warning);
+            background: rgba(191, 135, 0, 0.06);
+            padding: var(--spacing-md) 20px;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: var(--spacing-md) 0;
+        }
+        .insight-box .insight-title { font-weight: 600; color: #92400E; margin-bottom: var(--spacing-sm); }
+        .key-insight {
+            border-left: 3px solid var(--color-purple);
+            background: rgba(124, 58, 237, 0.05);
+            padding: var(--spacing-md) 20px;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: var(--spacing-md) 0;
+        }
+        .key-insight .insight-title { font-weight: 600; color: var(--color-purple); margin-bottom: var(--spacing-sm); }
+        .comparison-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-md); }
+        @media (max-width: 768px) { .comparison-grid { grid-template-columns: 1fr; } }
+        .correct-path {
+            border-left: 3px solid rgba(5, 150, 105, 0.5);
+            background: rgba(5, 150, 105, 0.04);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+        }
+        .correct-path .path-title { color: var(--color-success); font-weight: 600; margin-bottom: var(--spacing-md); }
+        .wrong-path {
+            border-left: 3px solid rgba(207, 34, 46, 0.5);
+            background: rgba(207, 34, 46, 0.04);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+        }
+        .wrong-path .path-title { color: var(--color-danger); font-weight: 600; margin-bottom: var(--spacing-md); }
+
+        /* Table */
+        table { border-collapse: collapse; width: 100%; margin: var(--spacing-md) 0; }
+        th {
+            background: var(--color-bg-table-header);
+            color: var(--color-text-secondary);
+            padding: 12px 16px;
+            font-weight: 600;
+            text-align: left;
+            font-size: 13px;
+        }
+        td { padding: 12px 16px; border-bottom: 1px solid var(--color-border-light); font-size: 14px; }
+        tbody tr:hover { background: rgba(0, 0, 0, 0.02); }
+        .status { display: inline-flex; padding: 2px 8px; border-radius: var(--radius-full); font-size: 11px; font-weight: 500; }
+        .status-success { background: rgba(5, 150, 105, 0.12); color: var(--color-success); }
+        .status-warning { background: rgba(191, 135, 0, 0.12); color: #92400E; }
+        .status-danger { background: rgba(207, 34, 46, 0.2); color: var(--color-danger); }
+        .status-info { background: rgba(9, 105, 218, 0.12); color: var(--color-info); }
+        .status-purple { background: rgba(124, 58, 237, 0.12); color: var(--color-purple); }
+
+        /* Text styles */
+        .text-success { color: var(--color-success); }
+        .text-danger { color: var(--color-danger); }
+        .text-warning { color: var(--color-warning); }
+        .text-info { color: var(--color-info); }
+        .text-purple { color: var(--color-purple); }
+        .text-bold { font-weight: 700; color: var(--color-text-primary); }
+        .text-highlight { border-bottom: 2px solid var(--color-danger); }
+        strong { color: var(--color-text-primary); }
+
+        /* Timeline */
+        .timeline { position: relative; padding-left: 24px; margin: var(--spacing-md) 0; }
+        .timeline::before { content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px; background: var(--color-border); }
+        .timeline-item { position: relative; margin-bottom: 16px; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px; top: 6px;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--color-success);
+            border: 2px solid white;
+            box-shadow: var(--shadow-sm);
+        }
+        .timeline-item .time { font-size: 12px; color: var(--color-text-muted); font-weight: 500; }
+        .timeline-item .event { font-size: 14px; color: var(--color-text-primary); }
+
+        /* Person card */
+        .person-card {
+            background: linear-gradient(135deg, var(--color-success-50) 0%, var(--color-info-50) 100%);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        .person-name { font-size: 20px; font-weight: 700; color: var(--color-text-primary); }
+        .person-title { font-size: 14px; color: var(--color-text-muted); margin-top: 4px; }
+        .person-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+        .person-tag {
+            padding: 3px 10px; border-radius: var(--radius-full);
+            font-size: 11px; font-weight: 500;
+            background: rgba(5,150,105,0.1); color: var(--color-success);
+        }
+
+        /* SVG overview */
+        .chapter-overview {
+            margin: var(--spacing-md) 0 var(--spacing-lg);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .chapter-overview svg { display: block; width: 100%; }
+
+        /* Footer */
+        .learn-more {
+            margin-top: 24px;
+            background: linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);
+            border: 1px solid #F5F5F4;
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);
+        }
+        .learn-more-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .learn-more p { font-size: 14px; color: #57534E; line-height: 1.7; margin: 0 0 12px 0; }
+        .learn-more .cta-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg,#059669 0%,#10B981 100%);
+            color: #fff; border-radius: 999px; font-size: 13px; font-weight: 600;
+            text-decoration: none;
+        }
+        .learn-more .resource-list { border-top: 1px solid #E7E5E4; padding-top: 12px; margin-top: 12px; }
+        .learn-more .resource-list h4 { font-size: 13px; font-weight: 600; color: #1C1917; margin-bottom: 8px; }
+        .learn-more .resource-list ul { list-style: none; padding: 0; margin: 0; font-size: 13px; }
+        .learn-more .resource-list li { margin-bottom: 6px; }
+        .learn-more .resource-list a { color: #2563EB; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <span class="badge">AI-Insight 深度调研 | 2026.03.12</span>
+            <h1 class="main-title">Pine AI 创业实践与AI原生开发范式</h1>
+            <p class="subtitle">20人团队如何做出50人产出？从华为天才少年到 AI Native 创业的方法论拆解</p>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value success">20人</div>
+                <div class="stat-label">团队规模</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value info">~50人</div>
+                <div class="stat-label">等效产出</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value warning">2.5x</div>
+                <div class="stat-label">人效倍增</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value purple">2024.12</div>
+                <div class="stat-label">创立时间</div>
+            </div>
+        </div>
+
+        <!-- Tab Nav -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('background')">研究背景</button>
+            <button class="tab-btn" onclick="switchTab('findings')">核心发现</button>
+            <button class="tab-btn" onclick="switchTab('practice')">工程实践</button>
+            <button class="tab-btn" onclick="switchTab('qa')">关键讨论</button>
+            <button class="tab-btn" onclick="switchTab('trend')">趋势判断</button>
+            <button class="tab-btn" onclick="switchTab('refs')">参考来源</button>
+        </nav>
+
+        <!-- Tab 1: 研究背景 -->
+        <div id="tab-background" class="tab-content active">
+            <!-- Person Card -->
+            <div class="person-card">
+                <div class="person-name">李博杰（Dr. Bojie Li）</div>
+                <div class="person-title">Pine AI 首席科学家 / 联合创始人</div>
+                <div class="person-tags">
+                    <span class="person-tag">中科大少年班 2010</span>
+                    <span class="person-tag">MSRA 博士</span>
+                    <span class="person-tag">华为天才少年</span>
+                    <span class="person-tag">SIGCOMM x3</span>
+                    <span class="person-tag">ACM 优博</span>
+                    <span class="person-tag">MSRA Fellow</span>
+                </div>
+            </div>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">1</span>
+                    <h2>研究背景与方法</h2>
+                </div>
+                <div class="section-content">
+                    <p>本报告基于一场<strong>某公司主站技术部与 Pine AI 创始人李博杰的深度技术对话</strong>（约2万字文字稿），结合外部公开资料整理而成。对话涵盖 AI 原生团队建设、AI 编程工具演进、Evaluation 体系、组织架构转型等多个议题。</p>
+
+                    <h3>Pine AI 是什么？</h3>
+                    <p>Pine AI 是一家 AI Native 创业公司，主攻<strong>海外市场</strong>，为美国用户提供 <span class="text-bold">AI 代打电话办事服务</span>。核心产品融合了实时语音技术、快慢推理（fast/slow reasoning）、强化学习、知识系统和 computer use 等多项能力。可以理解为 <span class="text-info">Manus + 打电话能力</span>。</p>
+
+                    <p>两大核心系统：</p>
+                    <ul>
+                        <li><strong>语音通话 Agent</strong> — 实时语音交互，处理客服电话中的各类复杂场景</li>
+                        <li><strong>知识库系统</strong> — 沉淀各类事务办理的行业知识（如保险理赔话术、争取赔付策略等）</li>
+                    </ul>
+
+                    <div class="quote-box">
+                        <p><strong>关键数据</strong>：团队 20 人（基础团队 12 人），实际产出约等于 50 人传统团队。每位成员的工作量相当于传统公司中 5-10 人小团队总和。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">2</span>
+                    <h2>AI 编程工具演进时间线</h2>
+                </div>
+                <div class="section-content">
+                    <p>李博杰从亲身实践角度，回顾了 AI 编程工具从 2024 年到 2026 年的能力跃迁：</p>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="time">2024.08</div>
+                            <div class="event"><strong>Claude 3.5 Sonnet</strong> — 单文件生成，Cursor 开始流行</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">2024.10</div>
+                            <div class="event"><strong>Sonnet 3.6</strong> — 从单文件理解到<span class="text-success">跨文件系统级理解</span></div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">2025 Q1</div>
+                            <div class="event"><strong>Sonnet 3.7</strong> — 能写代码 + 执行命令 + 自动生成文档 + 运行测试</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">2025 H2</div>
+                            <div class="event"><strong>Opus 4</strong> — PR 级别（1000+ 行）代码修改，能遵守项目规范</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">2026</div>
+                            <div class="event"><strong>Opus 4.6</strong> — 在 evaluation 完善的前提下，<span class="text-danger">几乎可以完全独立承担工程项目</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab 2: 核心发现 -->
+        <div id="tab-findings" class="tab-content">
+            <!-- Chapter Overview SVG -->
+            <div class="chapter-overview">
+                <svg viewBox="0 0 940 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#059669;stop-opacity:0.1"/>
+                            <stop offset="100%" style="stop-color:#2563EB;stop-opacity:0.05"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="940" height="200" rx="12" fill="url(#g1)"/>
+                    <text x="470" y="30" text-anchor="middle" fill="#1C1917" font-size="16" font-weight="700">核心发现全景</text>
+                    <g transform="translate(30,55)">
+                        <rect width="200" height="120" rx="10" fill="white" stroke="#059669" stroke-width="1.5"/>
+                        <text x="100" y="30" text-anchor="middle" fill="#059669" font-size="13" font-weight="600">发现 1</text>
+                        <text x="100" y="52" text-anchor="middle" fill="#1C1917" font-size="12" font-weight="700">概念完整性革命</text>
+                        <text x="100" y="72" text-anchor="middle" fill="#57534E" font-size="11">1人+AI 端到端完成</text>
+                        <text x="100" y="90" text-anchor="middle" fill="#57534E" font-size="11">消灭沟通损耗</text>
+                        <text x="100" y="108" text-anchor="middle" fill="#059669" font-size="11">效率提升 5-10x</text>
+                    </g>
+                    <g transform="translate(250,55)">
+                        <rect width="200" height="120" rx="10" fill="white" stroke="#2563EB" stroke-width="1.5"/>
+                        <text x="100" y="30" text-anchor="middle" fill="#2563EB" font-size="13" font-weight="600">发现 2</text>
+                        <text x="100" y="52" text-anchor="middle" fill="#1C1917" font-size="12" font-weight="700">架构师不可替代</text>
+                        <text x="100" y="72" text-anchor="middle" fill="#57534E" font-size="11">隐性约束 undocumented</text>
+                        <text x="100" y="90" text-anchor="middle" fill="#57534E" font-size="11">历史坑点 only human knows</text>
+                        <text x="100" y="108" text-anchor="middle" fill="#2563EB" font-size="11">人的 thinking 不可获知</text>
+                    </g>
+                    <g transform="translate(470,55)">
+                        <rect width="200" height="120" rx="10" fill="white" stroke="#7C3AED" stroke-width="1.5"/>
+                        <text x="100" y="30" text-anchor="middle" fill="#7C3AED" font-size="13" font-weight="600">发现 3</text>
+                        <text x="100" y="52" text-anchor="middle" fill="#1C1917" font-size="12" font-weight="700">三类未来人才</text>
+                        <text x="100" y="72" text-anchor="middle" fill="#57534E" font-size="11">0→1 创造者(导演)</text>
+                        <text x="100" y="90" text-anchor="middle" fill="#57534E" font-size="11">1→100 维护者(规划师)</text>
+                        <text x="100" y="108" text-anchor="middle" fill="#7C3AED" font-size="11">前沿竞赛者(F1赛车手)</text>
+                    </g>
+                    <g transform="translate(690,55)">
+                        <rect width="200" height="120" rx="10" fill="white" stroke="#D97706" stroke-width="1.5"/>
+                        <text x="100" y="30" text-anchor="middle" fill="#D97706" font-size="13" font-weight="600">发现 4</text>
+                        <text x="100" y="52" text-anchor="middle" fill="#1C1917" font-size="12" font-weight="700">四大障碍与解法</text>
+                        <text x="100" y="72" text-anchor="middle" fill="#57534E" font-size="11">知识未文档化 → MD+Git</text>
+                        <text x="100" y="90" text-anchor="middle" fill="#57534E" font-size="11">缺少沙盒 → 环境隔离</text>
+                        <text x="100" y="108" text-anchor="middle" fill="#D97706" font-size="11">缺少记忆 → Ralph Loop</text>
+                    </g>
+                </svg>
+            </div>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">1</span>
+                    <h2>AI 解决了《人月神话》的"概念完整性"问题</h2>
+                </div>
+                <div class="section-content">
+                    <p>李博杰提出了一个极具洞察力的观点：<span class="text-bold">AI 最关键的价值，在于解决了《人月神话》中提出的概念完整性问题。</span></p>
+                    <p>过去团队协作效率低下的根本原因是<strong>沟通成本</strong>：多人协作导致 context 碎片化，每个人只了解系统的一部分，架构师忙于协调而非创造。Brooks 法则指出，增加人手只会进一步加剧这种混乱。</p>
+
+                    <div class="key-insight">
+                        <div class="insight-title">核心洞察</div>
+                        <p>AI 时代的"概念完整性"不再需要依赖"外科手术队伍"模式 — <strong>一个人 + AI 可以端到端完成整个模块</strong>，天然保持概念完整性。12人团队，每人独立负责一个核心模块，几乎不需要开会对齐。</p>
+                    </div>
+
+                    <p>这篇 <a href="https://lqhl.me/blog/the-mythical-man-month-and-ai-programming/" target="_blank" style="color: var(--color-info);">《从人月神话到AI编程》</a> 的独立分析也印证了这一判断：<em>"未来的高效团队可能演变为人类架构师加 AI Agent 群的模式"</em>。</p>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">2</span>
+                    <h2>AI 不能取代优秀架构师的三个原因</h2>
+                </div>
+                <div class="section-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>原因</th>
+                                <th>解释</th>
+                                <th>AI 的局限</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>隐性约束</strong></td>
+                                <td>需求背后的设计意图往往来自 offline 闲聊，不在设计文档里</td>
+                                <td><span class="status status-danger">无法获知</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>历史坑点</strong></td>
+                                <td>屎山代码里的坑不会记录在文档中，但一旦踩进去就半天出不来</td>
+                                <td><span class="status status-warning">部分可搜索</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>内心想法 undocumented</strong></td>
+                                <td>autonomous system 的内在 thinking 不可被外部完全获知</td>
+                                <td><span class="status status-danger">原理性限制</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="insight-box">
+                        <div class="insight-title">莫拉维克悖论的新演绎</div>
+                        <p>AI 能写很好的代码（"简单"的事），但理解需求、感知政治、做权衡决策（"困难"的事）才是人类的独特价值。软件工程师的角色将向 <strong>架构师 + 产品经理 + 项目经理三位一体</strong> 转变。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">3</span>
+                    <h2>软件行业范式转变：三类未来人才</h2>
+                </div>
+                <div class="section-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>类型</th>
+                                <th>角色比喻</th>
+                                <th>工作内容</th>
+                                <th>核心能力</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="text-success">0→1 创造者</span></td>
+                                <td>电影导演</td>
+                                <td>快速讨论 → 启动开发 → MVP → 反馈迭代</td>
+                                <td>产品直觉、快速验证</td>
+                            </tr>
+                            <tr>
+                                <td><span class="text-info">1→100 维护者</span></td>
+                                <td>城市规划师</td>
+                                <td>管理历史债务、架构演进、稳定性保障</td>
+                                <td>系统理解、耐心重构</td>
+                            </tr>
+                            <tr>
+                                <td><span class="text-purple">前沿竞赛者</span></td>
+                                <td>F1赛车手</td>
+                                <td>基模公司、Benchmark 竞赛、极致性能</td>
+                                <td>深度技术、极限优化</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="quote-box">
+                        <p><strong>产品 Sense 的重要性</strong>：李博杰发现，有些工程师在设计订阅系统时，不会主动思考"用户从按量付费突然转为订阅制，已有的 session 如何平滑过渡？订阅到一半用户取消了怎么办？"如果不具备产品思维，交付产物必然有问题。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">4</span>
+                    <h2>AI 作为数字员工的四大障碍及解法</h2>
+                </div>
+                <div class="section-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>障碍</th>
+                                <th>现状</th>
+                                <th>Pine AI 的解法</th>
+                                <th>状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>知识未文档化</strong></td>
+                                <td>很多知识在飞书/口头，AI 无法获取</td>
+                                <td>全部 Markdown + GitHub 托管</td>
+                                <td><span class="status status-success">已解决</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>工具只有 GUI</strong></td>
+                                <td>computer use 准确率和效率不够高</td>
+                                <td>等待技术成熟，当前人工补位</td>
+                                <td><span class="status status-warning">进行中</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>没有测试环境</strong></td>
+                                <td>staging 环境争抢，AI 无法自主获取</td>
+                                <td>环境隔离 + CI/CD 自动化</td>
+                                <td><span class="status status-success">已解决</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>缺少长期记忆</strong></td>
+                                <td>AI 没有跨 session 的持续记忆</td>
+                                <td>Multi-agent + Ralph Loop</td>
+                                <td><span class="status status-info">持续优化</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab 3: 工程实践 -->
+        <div id="tab-practice" class="tab-content">
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">1</span>
+                    <h2>先 Plan 再实现（Spec-Driven Development）</h2>
+                </div>
+                <div class="section-content">
+                    <p>Pine AI 的核心开发流程是：<strong>在设计文档上花时间，确认架构后再交给 AI 写代码</strong>。Plan 最多几百行，便于人工 review；而一旦生成数千行代码，人工几乎无法有效 review。</p>
+
+                    <div class="comparison-grid">
+                        <div class="correct-path">
+                            <div class="path-title">Pine AI 的做法</div>
+                            <p style="font-size:14px">① 人写 Plan（需求+架构+约束）<br>② AI 基于 Plan 生成代码<br>③ AI 自动运行测试<br>④ 人 review Plan 和测试结果</p>
+                        </div>
+                        <div class="wrong-path">
+                            <div class="path-title">常见错误做法</div>
+                            <p style="font-size:14px">① 直接让 AI 写代码<br>② 产出上万行无法 review<br>③ 发现 bug 再反复修<br>④ 越修越乱，最终推倒重来</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">2</span>
+                    <h2>Ralph Loop（反复自审机制）</h2>
+                </div>
+                <div class="section-content">
+                    <p>让 AI 反复 review 自己的代码，类似于 <a href="https://dev.to/ibrahimpima/the-ralf-wiggum-breakdown-3mko" target="_blank" style="color:var(--color-info)">Ralph Wiggum Technique</a>（业界对自循环 AI 代码审查的称呼）：</p>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="time">Round 1</div>
+                            <div class="event">完成初始实现</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">Round 2</div>
+                            <div class="event">自审发现 <span class="text-danger">10个 bug</span></div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">Round 3</div>
+                            <div class="event">再审发现 <span class="text-warning">5个 bug</span></div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">Round N</div>
+                            <div class="event">仅剩 <span class="text-success">minor issues</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">3</span>
+                    <h2>Checkpoint 机制 & 禁止 Reward Hacking</h2>
+                </div>
+                <div class="section-content">
+                    <h3>Checkpoint 机制</h3>
+                    <p>测试通过立即 commit，持续失败则回退到上一个 checkpoint 重试。避免运行时间过长导致状态混乱。</p>
+
+                    <h3>禁止 Reward Hacking</h3>
+                    <p>Prompt 中明确禁止 AI 修改测试用例。Review 阶段专门检查有没有为测试用例定制的 hack 代码。</p>
+
+                    <div class="insight-box">
+                        <div class="insight-title">为什么这很关键？</div>
+                        <p>AI 像人一样会"偷懒"——如果允许修改测试，AI 会让测试通过而非修复真正的 bug。这本质上是 RL 中的 reward hacking 问题。Pine AI 的做法是在 prompt 层面设置<strong>硬约束</strong>，而非依赖 AI 的自觉性。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">4</span>
+                    <h2>Code Owner 模式 & Evaluation 体系</h2>
+                </div>
+                <div class="section-content">
+                    <h3>Code Owner 模式</h3>
+                    <p>每个 repo 有 owner 负责架构质量。开发者可跨 repo 提 PR。Owner 重点不是验证功能实现是否正确，而是确保变更<strong>未破坏现有架构稳定性</strong>。</p>
+
+                    <h3>Evaluation 体系（类高考作文评分细则）</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>维度</th>
+                                <th>类型</th>
+                                <th>阈值</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>结果指标</td>
+                                <td>是否给用户省钱</td>
+                                <td>核心KPI</td>
+                                <td>同时也是计费依据</td>
+                            </tr>
+                            <tr>
+                                <td>过程指标（一票否决）</td>
+                                <td>信息安全、合规</td>
+                                <td>≥99%</td>
+                                <td>不可容忍</td>
+                            </tr>
+                            <tr>
+                                <td>过程指标（越高越好）</td>
+                                <td>对话流畅度、决策合理性等</td>
+                                <td>≥90%</td>
+                                <td>20+维度 LLM as Judge</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>测试用例来自<strong>线上真实 session</strong>，不靠 AI 编造。</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab 4: 关键讨论 -->
+        <div id="tab-qa" class="tab-content">
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">1</span>
+                    <h2>存量代码转型：先文档化，再AI化</h2>
+                </div>
+                <div class="section-content">
+                    <p>屎山代码用 AI 直接改造效果差。正确路径是：</p>
+                    <ol>
+                        <li>让 AI 先扫描整理文档（context 建设）</li>
+                        <li>人工校正文档准确性</li>
+                        <li>文档完善后 AI 开发效率显著提升</li>
+                    </ol>
+                    <p>最理想的方式是<strong>新团队/新项目先跑起来</strong>，用成果说服其他人。</p>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">2</span>
+                    <h2>Claude Code vs Cursor：可能是颠覆关系</h2>
+                </div>
+                <div class="section-content">
+                    <div class="comparison-grid">
+                        <div class="correct-path" style="border-left-color: rgba(37,99,235,0.5); background: rgba(37,99,235,0.04);">
+                            <div class="path-title" style="color: var(--color-info);">Cursor 模式</div>
+                            <p style="font-size:14px"><strong>假设</strong>：AI 写的代码人需要看、人需要改<br><strong>交互</strong>：人在 IDE 中与 AI 协作<br><strong>适合</strong>：当前阶段，模型能力有限</p>
+                        </div>
+                        <div class="correct-path" style="border-left-color: rgba(124,58,237,0.5); background: rgba(124,58,237,0.04);">
+                            <div class="path-title" style="color: var(--color-purple);">Claude Code 模式</div>
+                            <p style="font-size:14px"><strong>假设</strong>：人发布任务，AI 自主执行，人无需干预代码<br><strong>交互</strong>：终端命令式，人盯 5-10 个 agent<br><strong>适合</strong>：未来，模型能力持续提升</p>
+                        </div>
+                    </div>
+
+                    <div class="key-insight">
+                        <div class="insight-title">趋势判断</div>
+                        <p>随着模型能力持续提升，Cursor 模式可能逐渐过时。最终形态是 <strong>1 个人主导 5-10 个 agent 的 virtual team</strong>，类似于一个项目经理管理多个远程外包团队。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">3</span>
+                    <h2>组织架构 = 技术架构（康威定律）</h2>
+                </div>
+                <div class="section-content">
+                    <p>国内企业细分工模式（前端/后端/测试/产品严格分离）是 AI 落地的<strong>最大卡点</strong>。</p>
+                    <ul>
+                        <li><strong>国外</strong>：全栈工程师负责完整链路，AI 天然适配</li>
+                        <li><strong>国内</strong>：一个人只负责链路的一段，AI 跨职能协调难</li>
+                    </ul>
+                    <p>建议：至少在协作层面推动<strong>前后端职能聚合</strong>，让一个人对更完整的 context 负责。</p>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">4</span>
+                    <h2>先锋队模式：用结果说服组织</h2>
+                </div>
+                <div class="section-content">
+                    <p>不要试图一次性改变整个组织。正确做法是<strong>找拥抱 AI 的人先跑出 case</strong>。</p>
+
+                    <div class="quote-box">
+                        <p><strong>实例</strong>：李博杰带3个人用一周完成了其他同事多人花1-2个月的任务。这个 case 成功转变了团队思想 — "原来这么有用，我也要用"。</p>
+                    </div>
+
+                    <p>对于大企业的组织变革，对话中某公司侧也提到了关键挑战：</p>
+                    <ul>
+                        <li><strong>认知鸿沟</strong>：60%+ 高层认为 AI 已推动组织变革，但 60%+ 一线员工认为变化不大</li>
+                        <li><strong>交付压力</strong>：既要保现有业绩，又要学AI，双重负担</li>
+                        <li><strong>文化阻碍</strong>：对创新风险的态度、开放度、文档共享习惯</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab 5: 趋势判断 -->
+        <div id="tab-trend" class="tab-content">
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">1</span>
+                    <h2>趋势判断与建议</h2>
+                </div>
+                <div class="section-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>判断</th>
+                                <th>时间窗口</th>
+                                <th>置信度</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>AI 短期内无法取代 SaaS（稳定性不够 + 成本太高）</td>
+                                <td>2026-2027</td>
+                                <td><span class="status status-success">高</span></td>
+                            </tr>
+                            <tr>
+                                <td>GUI 操作和身份认证问题解决后，AI 将实现"简单任务数字员工闭环"</td>
+                                <td>2027-2028</td>
+                                <td><span class="status status-info">中高</span></td>
+                            </tr>
+                            <tr>
+                                <td>软件行业从劳动密集型 → 精英驱动模式</td>
+                                <td>3-5年</td>
+                                <td><span class="status status-success">高</span></td>
+                            </tr>
+                            <tr>
+                                <td>1个人可主导 5-10 个 agent 的 virtual team</td>
+                                <td>2027+</td>
+                                <td><span class="status status-info">中</span></td>
+                            </tr>
+                            <tr>
+                                <td>AI 应用层难出"巨无霸"，垂直领域更易构建护城河</td>
+                                <td>长期</td>
+                                <td><span class="status status-warning">中</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">2</span>
+                    <h2>对企业的行动建议</h2>
+                </div>
+                <div class="section-content">
+                    <h3>立即可做</h3>
+                    <ul>
+                        <li><strong>文档化</strong>：将所有知识从 IM/口头 迁移到 Markdown + Git</li>
+                        <li><strong>先锋队</strong>：找拥抱 AI 的人组建先锋小队，不要全员推进</li>
+                        <li><strong>Evaluation 先行</strong>：先建好测试/评估体系，再让 AI 大规模接入</li>
+                    </ul>
+                    <h3>中期布局</h3>
+                    <ul>
+                        <li><strong>组织调整</strong>：推动职能聚合，让开发者负责更完整的链路</li>
+                        <li><strong>沙盒环境</strong>：为 AI agent 构建独立的测试/开发环境</li>
+                        <li><strong>Spec-Driven</strong>：建立"先写 Plan 再写代码"的开发流程</li>
+                    </ul>
+                    <h3>长期准备</h3>
+                    <ul>
+                        <li><strong>人才转型</strong>：培养"架构师+产品经理+项目经理"三位一体的复合人才</li>
+                        <li><strong>知识系统</strong>：构建可被 AI 消费的结构化知识库</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">3</span>
+                    <h2>一句话总结</h2>
+                </div>
+                <div class="section-content">
+                    <div class="key-insight">
+                        <div class="insight-title">核心结论</div>
+                        <p style="font-size: 16px; line-height: 1.8;">AI 时代的核心竞争力是 <strong>context</strong>（上下文理解），最佳工作模式是 <strong>1 个人 + N 个 AI agent</strong> 的 virtual team，关键前提是<span class="text-highlight">文档化</span>、<span class="text-highlight">沙盒化</span>、<span class="text-highlight">evaluation 体系完善</span>。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab 6: 参考来源 -->
+        <div id="tab-refs" class="tab-content">
+            <section class="section-card">
+                <div class="section-header">
+                    <span class="section-number">📚</span>
+                    <h2>参考来源</h2>
+                </div>
+                <div class="section-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>来源</th>
+                                <th>类型</th>
+                                <th>链接</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pine AI x 某公司主站技术部 深度技术对话（文字稿）</td>
+                                <td><span class="status status-success">一手资料</span></td>
+                                <td><span style="color:var(--color-muted)">内部文档</span></td>
+                            </tr>
+                            <tr>
+                                <td>李博杰个人主页 (01.me)</td>
+                                <td><span class="status status-success">一手资料</span></td>
+                                <td><a href="https://01.me/en/whoami/" target="_blank" style="color:var(--color-info)">01.me</a></td>
+                            </tr>
+                            <tr>
+                                <td>AI Native Team（李博杰 2025 演讲）</td>
+                                <td><span class="status status-success">一手资料</span></td>
+                                <td><a href="https://01.me/2025/04/ai-native-team/" target="_blank" style="color:var(--color-info)">博客</a></td>
+                            </tr>
+                            <tr>
+                                <td>从《人月神话》到 AI 编程：软件工程的困境与演进</td>
+                                <td><span class="status status-info">深度分析</span></td>
+                                <td><a href="https://lqhl.me/blog/the-mythical-man-month-and-ai-programming/" target="_blank" style="color:var(--color-info)">lqhl.me</a></td>
+                            </tr>
+                            <tr>
+                                <td>Self-Improving Coding Agents (Addy Osmani)</td>
+                                <td><span class="status status-info">深度分析</span></td>
+                                <td><a href="https://addyosmani.com/blog/self-improving-agents/" target="_blank" style="color:var(--color-info)">addyosmani.com</a></td>
+                            </tr>
+                            <tr>
+                                <td>When AI writes almost all code (Pragmatic Engineer)</td>
+                                <td><span class="status status-info">深度分析</span></td>
+                                <td><a href="https://newsletter.pragmaticengineer.com/p/when-ai-writes-almost-all-code-what" target="_blank" style="color:var(--color-info)">pragmaticengineer.com</a></td>
+                            </tr>
+                            <tr>
+                                <td>Claude Code vs Cursor vs OpenAI Codex 2026</td>
+                                <td><span class="status status-purple">行业对比</span></td>
+                                <td><a href="https://medium.com/@writertripathi/claude-code-vs-cursor-vs-openai-codex-which-ai-coding-tool-should-you-use-in-2026-8f124e43c6fd" target="_blank" style="color:var(--color-info)">Medium</a></td>
+                            </tr>
+                            <tr>
+                                <td>AI can 10x developers...in creating tech debt (StackOverflow)</td>
+                                <td><span class="status status-warning">行业报道</span></td>
+                                <td><a href="https://stackoverflow.blog/2026/01/23/ai-can-10x-developers-in-creating-tech-debt/" target="_blank" style="color:var(--color-info)">stackoverflow.blog</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- 了解更多 - 统一模块 -->
+        <div class="learn-more">
+            <div class="learn-more-title">💡 了解更多</div>
+            <p>
+                我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+            </p>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+                <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" class="cta-btn">
+                    🏠 访问AI洞察首页
+                </a>
+            </div>
+            <div class="resource-list">
+                <h4>📚 相关资源</h4>
+                <ul>
+                    <li><a href="https://01.me/en/whoami/" target="_blank">🧑‍💻 李博杰 (Dr. Bojie Li) 个人主页</a></li>
+                    <li><a href="https://www.19pine.ai/" target="_blank">🌲 Pine AI 官网</a></li>
+                    <li><a href="https://lqhl.me/blog/the-mythical-man-month-and-ai-programming/" target="_blank">📖 从《人月神话》到 AI 编程</a></li>
+                    <li><a href="https://newsletter.pragmaticengineer.com/p/when-ai-writes-almost-all-code-what" target="_blank">📰 When AI writes almost all code</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 - 2026年3月9日 (v3.1)</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231A7F37'/><circle cx='16' cy='14' r='6' fill='none' stroke='white' stroke-width='2'/><path d='M12 12h8M16 10v4M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+    <style>
+        :root {
+            --color-success:#059669;--color-success-light:#10B981;--color-danger:#E11D48;--color-danger-light:#FF7B72;--color-warning:#D97706;--color-info:#2563EB;--color-info-light:#54AEFF;--color-purple:#7C3AED;--color-orange:#EA580C;--color-text-primary:#1C1917;--color-text-secondary:#57534E;--color-text-muted:#78716C;--color-border:#E7E5E4;--color-border-light:#F5F5F4;--color-bg:#F8FAFB;--color-bg-card:#FFFFFF;--color-bg-table-header:#FAFAF9;--gradient-success:linear-gradient(135deg,#059669 0%,#10B981 100%);--gradient-orange:linear-gradient(135deg,#EA580C 0%,#F97316 100%);--gradient-purple:linear-gradient(135deg,#7C3AED 0%,#6D28D9 50%,#5B21B6 100%);--gradient-china:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);--shadow-card:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-full:999px;--font-family:-apple-system,"system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;--transition-normal:200ms cubic-bezier(.4,0,.2,1);--content-max-width:980px;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font-family);background:var(--color-bg);color:var(--color-text-primary);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+        .container{max-width:var(--content-max-width);margin:0 auto;padding:24px 20px}
+        .header{background:var(--gradient-success);color:#fff;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px}
+        .header-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:12px}
+        .header-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+        .header-date{font-size:14px;opacity:.85}
+        .version-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:700;margin-left:8px}
+        .overview{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-card)}
+        .overview-title{font-size:18px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .overview-grid.five-cols{grid-template-columns:1fr 1fr 1fr}
+        .overview-item{padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--color-border-light);background:var(--color-bg)}
+        .overview-item-header{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+        .overview-item-icon{font-size:16px}
+        .overview-item-label{font-size:13px;font-weight:700;color:var(--color-success-light);letter-spacing:.3px}
+        .overview-item-label.orange{color:var(--color-orange)}
+        .overview-headline{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:6px;line-height:1.4}
+        .overview-item-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+        /* Heat Trend Table */
+        .heat-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow-card)}
+        .heat-header{background:linear-gradient(135deg,#EA580C 0%,#DC2626 50%,#B91C1C 100%);color:#fff;padding:18px 24px}
+        .heat-header-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .heat-header-title{font-size:17px;font-weight:800;margin-top:4px}
+        .heat-body{padding:16px 20px}
+        .heat-body p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-top:12px}
+        .heat-body p strong{color:var(--color-text-primary)}
+        .heat-table{width:100%;border-collapse:collapse;font-size:13px}
+        .heat-table th{padding:8px 10px;text-align:left;background:#FEF2F2;font-weight:700;color:#991B1B;border-bottom:2px solid #FECACA;font-size:12px}
+        .heat-table td{padding:10px;border-bottom:1px solid var(--color-border-light);vertical-align:top}
+        .heat-table tr:last-child td{border-bottom:none}
+        .heat-table tr:hover{background:rgba(234,88,12,.02)}
+        .heat-bar{display:flex;gap:2px;align-items:center}
+        .heat-bar-fill{width:10px;height:14px;border-radius:2px;background:linear-gradient(135deg,#EA580C,#DC2626)}
+        .heat-bar-empty{width:10px;height:14px;border-radius:2px;background:#F5F5F4}
+        .heat-trend-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .heat-trend-tag.up{background:#EFFDF5;color:#059669}
+        .heat-trend-tag.stable{background:#EFF6FF;color:#2563EB}
+        .heat-trend-tag.burst{background:#FEF2F2;color:#DC2626}
+        .tab-nav{display:flex;gap:4px;margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:4px;box-shadow:var(--shadow-card);flex-wrap:wrap}
+        .tab-btn{flex:1;padding:10px 8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-muted);border-radius:var(--radius-sm);transition:var(--transition-normal);font-family:var(--font-family);min-width:80px}
+        .tab-btn:hover{color:var(--color-text-primary);background:var(--color-bg)}
+        .tab-btn[aria-selected="true"]{background:var(--gradient-success);color:#fff}
+        .tab-btn.orange[aria-selected="true"]{background:var(--gradient-orange)}
+        .tab-panel{display:none}.tab-panel.active{display:block}
+        .section-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;box-shadow:var(--shadow-card)}
+        .section-header{font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--color-border-light);display:flex;align-items:center;gap:8px}
+        .section-header .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gradient-success);color:#fff;font-size:12px;font-weight:700}
+        .section-header .num.orange{background:var(--gradient-orange)}
+        .sub-header{font-size:14px;font-weight:700;color:var(--color-text-muted);margin:14px 0 10px;padding-left:4px;letter-spacing:.5px}
+        .sub-header:first-child{margin-top:0}
+        .news-item{padding:12px 0;border-bottom:1px solid var(--color-border-light)}
+        .news-item:last-child{border-bottom:none}
+        .news-tag{display:inline-block;padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600}
+        .tag-hot{background:#FEF2F2;color:var(--color-danger)}
+        .tag-new{background:#EFFDF5;color:var(--color-success)}
+        .tag-funding{background:#E0F2FE;color:#0284C7}
+        .tag-policy{background:#FFF7ED;color:var(--color-orange)}
+        .tag-practice{background:#ECFDF5;color:#059669}
+        .tag-cn{background:#FEF2F2;color:#DC2626}
+        .news-title{font-size:15px;font-weight:600;margin:4px 0 3px}
+        .news-title a{color:var(--color-text-primary);text-decoration:none}
+        .news-title a:hover{color:var(--color-success)}
+        .news-source{font-size:12px;color:var(--color-text-muted)}
+        .news-detail{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+        .news-detail-row{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.6}
+        .news-detail-label{flex-shrink:0;font-weight:700;color:var(--color-success);font-size:12px;padding:1px 0;min-width:60px}
+        .news-detail-label.orange{color:var(--color-orange)}
+        .news-detail-label.china{color:#DC2626}
+        .news-detail-value{color:var(--color-text-secondary);flex:1}
+        .news-detail-value strong{color:var(--color-text-primary);font-weight:600}
+        .news-data-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+        .news-data-chip{display:inline-flex;align-items:center;padding:2px 10px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--radius-full);font-size:12px;font-weight:500;color:#166534}
+        .news-data-chip.orange{background:#FFF7ED;border-color:#FED7AA;color:#9A3412}
+        .news-data-chip.china{background:#FEF2F2;border-color:#FECACA;color:#991B1B}
+        .news-summary-compact{font-size:13.5px;color:var(--color-text-secondary);margin-top:6px;line-height:1.6}
+        .deep-focus-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:0;margin-bottom:16px;box-shadow:var(--shadow-card);overflow:hidden}
+        .deep-focus-header{background:var(--gradient-purple);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:10px}
+        .deep-focus-header.orange-theme{background:linear-gradient(135deg,#EA580C 0%,#DC2626 100%)}
+        .deep-focus-header.china-theme{background:linear-gradient(135deg,#DC2626 0%,#B91C1C 50%,#991B1B 100%)}
+        .deep-focus-label{font-size:13px;font-weight:600;opacity:.85;letter-spacing:.5px}
+        .deep-focus-title{font-size:17px;font-weight:800;margin-top:4px;line-height:1.4}
+        .deep-focus-body{padding:20px 24px}
+        .deep-focus-body p{font-size:14.5px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:14px}
+        .deep-focus-body p:last-child{margin-bottom:0}
+        .deep-focus-body p strong{color:var(--color-text-primary)}
+        .deep-focus-takeaway{margin-top:16px;padding:14px 16px;background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%);border-radius:var(--radius-md);border-left:4px solid var(--color-purple)}
+        .deep-focus-takeaway.orange-theme{background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border-left-color:var(--color-orange)}
+        .deep-focus-takeaway.china-theme{background:linear-gradient(135deg,#FEF2F2 0%,#FEE2E2 100%);border-left-color:#DC2626}
+        .deep-focus-takeaway-label{font-size:12px;font-weight:700;color:var(--color-purple);margin-bottom:6px;letter-spacing:.5px}
+        .deep-focus-takeaway-label.orange{color:var(--color-orange)}
+        .deep-focus-takeaway-label.china{color:#DC2626}
+        .deep-focus-takeaway-text{font-size:13.5px;color:var(--color-text-secondary);line-height:1.7}
+        .deep-focus-takeaway-text strong{color:var(--color-text-primary)}
+        /* Pattern Insight Card */
+        .pi-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow-card);transition:all .25s cubic-bezier(.4,0,.2,1)}
+        .pi-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+        .pi-header{display:flex;align-items:center;gap:12px;padding:14px 20px;background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%);border-bottom:1px solid #FDE68A}
+        .pi-badge{display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 10px;border-radius:8px;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,#B45309 0%,#D97706 100%);white-space:nowrap}
+        .pi-title{font-size:16px;font-weight:700;color:var(--color-text-primary);flex:1;letter-spacing:-.01em;line-height:1.4}
+        .pi-row{display:flex;padding:14px 20px;border-bottom:1px solid var(--color-border-light);gap:14px}
+        .pi-row:last-child{border-bottom:none}
+        .pi-row.highlight{background:linear-gradient(135deg,rgba(217,119,6,.04) 0%,rgba(217,119,6,.01) 100%)}
+        .pi-row-label{width:56px;flex-shrink:0;font-size:12px;font-weight:700;color:#A8A29E;padding-top:2px;letter-spacing:.02em}
+        .pi-row-label.l2{color:#D97706}
+        .pi-row-content{flex:1;font-size:14px;color:var(--color-text-secondary);line-height:1.7}
+        .pi-row-content strong{color:var(--color-text-primary);font-weight:700}
+        .pi-evo{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+        .pi-evo-step{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--color-bg-table-header);border-radius:8px;border:1px solid var(--color-border-light);transition:all .15s}
+        .pi-evo-step.active{background:rgba(217,119,6,.08);border-color:#D97706}
+        .pi-evo-step.future{background:rgba(124,58,237,.06);border-color:#8B5CF6}
+        .pi-evo-tag{font-size:10px;font-weight:800;color:#D97706;padding:2px 7px;background:rgba(217,119,6,.1);border-radius:4px;letter-spacing:.02em}
+        .pi-evo-step.future .pi-evo-tag{color:#7C3AED;background:rgba(124,58,237,.1)}
+        .pi-evo-text{font-size:12px;color:var(--color-text-secondary)}
+        .pi-evo-arrow{color:#A8A29E;font-weight:700;font-size:14px}
+        .pi-table{padding:10px 20px 16px;border-top:1px solid var(--color-border-light)}
+        .pi-t-head{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-bottom:2px solid var(--color-border-light);margin-bottom:4px}
+        .pi-t-head span{font-size:11px;font-weight:700;color:#A8A29E;text-transform:uppercase;letter-spacing:.06em}
+        .pi-t-section{padding:6px 10px 2px}
+        .pi-t-section-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;letter-spacing:.03em}
+        .pi-t-section.verified .pi-t-section-tag{color:#047857;background:rgba(5,150,105,.08)}
+        .pi-t-section.current .pi-t-section-tag{color:#D97706;background:rgba(217,119,6,.08)}
+        .pi-t-section.projected .pi-t-section-tag{color:#7C3AED;background:rgba(124,58,237,.08)}
+        .pi-t-row{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;padding:6px 10px;border-radius:6px;font-size:13px;line-height:1.6;transition:background .15s}
+        .pi-t-row:hover{background:rgba(0,0,0,.02)}
+        .pi-t-row.projected{background:rgba(124,58,237,.02)}
+        .pi-t-row.projected:hover{background:rgba(124,58,237,.05)}
+        .pi-t-rule{font-weight:600;color:#B45309;font-size:12px;padding-top:1px}
+        .pi-t-row.projected .pi-t-rule{color:#7C3AED}
+        .pi-t-reality{color:var(--color-text-primary);font-weight:500}
+        .pi-t-analogy{color:var(--color-text-secondary);padding-left:10px;border-left:2px solid var(--color-border-light)}
+        .pi-t-divider{border-top:2px dashed var(--color-border-light);margin:8px 10px}
+        .pi-t-verify{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(5,150,105,.06);border-radius:6px;font-size:12px;font-weight:600;color:#047857}
+        .pi-confidence{display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 10px;background:rgba(124,58,237,.04);border-radius:6px;border-left:3px solid #8B5CF6;font-size:11px;font-weight:500;color:#7C3AED;letter-spacing:.02em}
+        .data-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+        .data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--color-border-light)}
+        .data-table th{background:var(--color-bg-table-header);font-weight:600;color:var(--color-text-secondary)}
+        .data-table td{color:var(--color-text-primary)}
+        .data-table tr:last-child td{border-bottom:none}
+        .coverage-bar{margin-bottom:20px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:16px;font-size:13px}
+        .coverage-bar .label{font-weight:700;color:var(--color-text-muted)}
+        .coverage-bar .bar{flex:1;height:8px;background:#E7E5E4;border-radius:4px;overflow:hidden;display:flex}
+        .coverage-bar .bar-overseas{background:var(--gradient-success);height:100%}
+        .coverage-bar .bar-china{background:var(--gradient-china);height:100%}
+        .coverage-bar .stats{display:flex;gap:12px;font-weight:600}
+        .coverage-bar .stat-overseas{color:var(--color-success)}
+        .coverage-bar .stat-china{color:#DC2626}
+        .footer{text-align:center;padding:24px;font-size:12px;color:var(--color-text-muted);border-top:1px solid var(--color-border-light);margin-top:24px}
+        @media(max-width:768px){
+            .overview-grid,.overview-grid.five-cols{grid-template-columns:1fr}
+            .tab-btn{font-size:11px;padding:8px 4px;min-width:60px}
+            .news-detail-row{flex-direction:column;gap:2px}
+            .news-detail-label{min-width:auto}
+            .deep-focus-header{padding:14px 18px}
+            .deep-focus-body{padding:16px 18px}
+            .coverage-bar{flex-direction:column;gap:8px}
+            .heat-table{font-size:12px}
+            .heat-table th,.heat-table td{padding:6px 4px}
+            .pi-evo{flex-direction:column;align-items:flex-start}
+            .pi-evo-arrow{display:none}
+            .pi-t-head{display:none}
+            .pi-t-row{grid-template-columns:1fr;gap:2px;padding:6px 10px;border-left:3px solid var(--color-border-light);margin-bottom:4px}
+            .pi-t-row.projected{border-left-color:rgba(124,58,237,.3)}
+            .pi-t-analogy{border-left:none;padding-left:0;font-size:12px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-badge">📡 AI行业洞察项目 - AI日报</div>
+            <div class="header-title">AI 日报 <span class="version-badge">v3.1</span></div>
+            <div class="header-date">2026年3月9日 星期一 | 五大板块：大模型 · AI Coding · AI应用 · AI行业 · 企业转型</div>
+        </div>
+
+        <div class="coverage-bar">
+            <span class="label">📊 覆盖均衡</span>
+            <div class="bar">
+                <div class="bar-overseas" style="width:56%"></div>
+                <div class="bar-china" style="width:44%"></div>
+            </div>
+            <div class="stats">
+                <span class="stat-overseas">🌏 海外 10条</span>
+                <span class="stat-china">🇨🇳 国内 8条</span>
+            </div>
+        </div>
+
+        <div class="overview">
+            <div class="overview-title">📋 全文概览</div>
+            <div class="overview-grid five-cols">
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🧠</span><span class="overview-item-label">大模型</span></div>
+                    <div class="overview-headline">Claude Opus 4.6攻克图论猜想，高德纳震惊发文</div>
+                    <div class="overview-item-text">仅31步独立构造解法，AI数学从"计算工具"变"创造性合作者"。🇨🇳 国产模型跌出LMSYS全球前十。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">⌨️</span><span class="overview-item-label">AI Coding</span></div>
+                    <div class="overview-headline">Claude Code 8个月登顶，95%工程师每周用AI</div>
+                    <div class="overview-item-text">906人调查：55%常用Agent，Staff+工程师63.5%使用率最高。Figma集成GitHub Copilot打通设计开发。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">📱</span><span class="overview-item-label">AI 应用</span></div>
+                    <div class="overview-headline">ChatGPT for Excel发布 | 🇨🇳 千问AI眼镜首销</div>
+                    <div class="overview-item-text">投行建模准确率翻倍至87.3%。千问G1到手价1997元，Mooni M1月销10万台成今年首个AI硬件爆款。</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-item-header"><span class="overview-item-icon">🏭</span><span class="overview-item-label">AI 行业</span></div>
+                    <div class="overview-headline">🇨🇳 具身智能一周融资35亿，两家估值破百亿</div>
+                    <div class="overview-item-text">银河通用25亿+星动纪元10亿，国资大举入场。OpenAI洽谈与北约AI合作，AI军事化路线分化。</div>
+                </div>
+                <div class="overview-item" style="grid-column: span 2;">
+                    <div class="overview-item-header"><span class="overview-item-icon">🔄</span><span class="overview-item-label orange">企业AI转型</span></div>
+                    <div class="overview-headline">淘宝"白泽"开源：垂直行业AI的教科书 | Deloitte发布2026企业AI现状</div>
+                    <div class="overview-item-text">餐饮AI大模型累计调用超10亿次，Token消耗破万亿。8B参数专精模型在特定场景完全胜任，成本仅为通用大模型百分之一。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Heat Trend Card -->
+        <div class="heat-card">
+            <div class="heat-header">
+                <div class="heat-header-label">🔥 热度趋势</div>
+                <div class="heat-header-title">近7期日报交叉分析（3/3-3/9）</div>
+            </div>
+            <div class="heat-body">
+                <table class="heat-table">
+                    <thead>
+                        <tr>
+                            <th>排名</th>
+                            <th>话题</th>
+                            <th>热度</th>
+                            <th>天数</th>
+                            <th>趋势</th>
+                            <th>核心信号</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🥇</td>
+                            <td><strong>OpenAI GPT-5.x生态扩张</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>7天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>Excel金融集成+NATO合作+Codex爆发增长</td>
+                        </tr>
+                        <tr>
+                            <td>🥈</td>
+                            <td><strong>AI Coding工具格局剧变</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>7天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>Claude Code登顶+55%工程师常用Agent</td>
+                        </tr>
+                        <tr>
+                            <td>🥉</td>
+                            <td><strong>具身智能融资井喷</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>6天</td>
+                            <td><span class="heat-trend-tag up">📈 攀升</span></td>
+                            <td>银河通用25亿+星动纪元10亿，单周破35亿</td>
+                        </tr>
+                        <tr>
+                            <td>4️⃣</td>
+                            <td><strong>AI就业冲击实证化</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>5天</td>
+                            <td><span class="heat-trend-tag stable">➡️ 高位</span></td>
+                            <td>Block裁员+Anthropic研究持续发酵</td>
+                        </tr>
+                        <tr>
+                            <td>5️⃣</td>
+                            <td><strong>中国AI硬件+应用加速</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>4天</td>
+                            <td><span class="heat-trend-tag burst">⚡ 飙升</span></td>
+                            <td>千问眼镜首销+白泽开源+Mooni爆款</td>
+                        </tr>
+                        <tr>
+                            <td>6️⃣</td>
+                            <td><strong>AI数学/科研能力突破</strong></td>
+                            <td><div class="heat-bar"><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-fill"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span><span class="heat-bar-empty"></span></div></td>
+                            <td>3天</td>
+                            <td><span class="heat-trend-tag burst">🆕 新兴</span></td>
+                            <td>Claude攻克图论猜想+高德纳背书</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><strong>热度解读</strong>: 本期最强信号是<strong>OpenAI生态的全方位扩张</strong>——GPT-5.4不仅继续在技术指标上刷新纪录（Excel建模87.3%），更在场景（金融/国防/NATO）和工具链（Codex爆发增长达Cursor 60%）上快速铺开。<strong>具身智能融资</strong>进入"周融资35亿"的密集期，银河通用和星动纪元估值均破百亿。突发飙升的是<strong>中国AI硬件+应用</strong>——千问眼镜、Mooni M1、白泽大模型集中涌现，显示国内AI正从模型能力竞争转向终端落地竞争。</p>
+            </div>
+        </div>
+
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn" role="tab" aria-selected="true" data-tab="foundation">🧠 大模型</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="coding">⌨️ AI Coding</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="application">📱 AI 应用</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="industry">🏭 AI 行业</button>
+            <button class="tab-btn orange" role="tab" aria-selected="false" data-tab="enterprise">🔄 企业转型</button>
+        </nav>
+
+        <!-- ==================== 大模型 Tab ==================== -->
+        <article id="foundation" class="tab-panel active">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.anthropic.com/research/claude-math-breakthroughs" target="_blank">Claude Opus 4.6独立攻克图论猜想，高德纳连写"Shock！Shock！"</a></div>
+                    <div class="news-source">Anthropic / Stanford · 2026-03-07</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">Claude Opus 4.6仅用<strong>31次迭代探索</strong>，独立提出构造性解法，攻克困扰算法泰斗高德纳数周的三维环形网格哈密顿环分解问题</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip">31次迭代</span>
+                                    <span class="news-data-chip">"纤维分解"+"bump规则"通解</span>
+                                    <span class="news-data-chip">88岁高德纳震惊背书</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">影响判断</span>
+                            <span class="news-detail-value">AI数学能力从"辅助计算"升级到<strong>"独立提出创造性解法"</strong>，AI作为数学研究合作者的角色正式成立</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://newsletter.pragmaticengineer.com/p/ai-tooling-2026" target="_blank">Pragmatic Engineer调查：Anthropic模型主导编码任务</a></div>
+                    <div class="news-source">The Pragmatic Engineer · 2026-03-04</div>
+                    <div class="news-summary-compact">906名工程师调查显示，Anthropic的Opus和Sonnet在编码任务中的使用提及次数超过所有其他模型总和。ChatGPT/Claude/Gemini聊天机器人三足鼎立。</div>
+                </div>
+
+                <div class="sub-header">🇨🇳 国内</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="https://zhuanlan.zhihu.com/p/670574382" target="_blank">GPT-5.4携Thinking加入LMSYS战场，国产模型跌出前十</a></div>
+                    <div class="news-source">知乎·大模型跟踪 · 2026-03-06</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">GPT-5.4及其Thinking模式加入LMSYS竞技场后，<strong>国产大模型全部跌出全球总榜前十</strong>，仅智谱GLM-5以1452分勉强进入前八</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip china">GPT-5.4 Thinking登顶</span>
+                                    <span class="news-data-chip china">国产模型跌出Top 10</span>
+                                    <span class="news-data-chip china">智谱GLM-5唯一进前八</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">GPT-5.4形成的能力代差正在拉大中美大模型差距</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="http://field.10jqka.com.cn/20260302/c675000614.shtml" target="_blank">阿里通义千问3.5发布：3970亿参数，API低至0.8元/百万Token</a></div>
+                    <div class="news-source">同花顺·券商观点 · 2026-03-02</div>
+                    <div class="news-summary-compact">阿里2月发布通义千问3.5系列，总参数3970亿但激活参数仅170亿（MoE架构），API定价颠覆性地压到0.8元/百万Token。</div>
+                </div>
+            </div>
+
+            <!-- Deep Focus Card -->
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">AI独立攻克数学猜想——从"计算工具"到"创造性合作者"的质变</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>Claude Opus 4.6仅用31步就构造性解决了三维环形网格的哈密顿环分解问题——这不是暴力搜索的胜利，而是<strong>创造性洞察</strong>。它发现了"纤维分解"方法和简洁的"bump规则"，这种抽象直觉此前只有极少数人类数学家具备。更令人震惊的是评审人：88岁的高德纳（Donald Knuth），计算机科学的"算法祖师爷"，在斯坦福论文开篇连写"Shock！Shock！"。</p>
+                    <p>这标志着AI数学能力的一个关键跃迁：从Phase 1（计算验证）→ Phase 2（模式搜索）→ <strong>Phase 3（创造性构造：提出全新解法）</strong>。类比科学发展：望远镜让人类"看到"更远的宇宙，但伽利略提出日心说需要的是创造性思维。AI正在从"望远镜"变成"伽利略"。</p>
+                    <p>但需要清醒认识到：这仍然是在人类提出的明确问题框架内的突破。AI尚未展现出"提出正确问题"的能力——而这是数学创新中更本质的能力。"人类提问+AI求解"的协作模式可以立即开始用，但AI完全替代数学家仍然遥远。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">如果你在做需要复杂推理的工作，现在就值得测试<strong>Claude Opus 4.6</strong>在你的专业问题上的表现。"AI作为高级研究助手"的时代已经到来。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pattern Insight Card -->
+            <div class="pi-card">
+                <div class="pi-header">
+                    <span class="pi-badge">🔮 规律洞察</span>
+                    <span class="pi-title">"工具→助手→合作者"三阶段规律：技术赋能人类的通用路径</span>
+                </div>
+                <div class="pi-row highlight">
+                    <span class="pi-row-label l2">📐 规律</span>
+                    <span class="pi-row-content">每一次重大技术突破都遵循从"被动工具"到"主动合作者"的进化路径。AI数学能力正在走完这条路——从<strong>计算工具</strong>到<strong>智能助手</strong>再到<strong>创造性合作者</strong>。</span>
+                </div>
+                <div class="pi-row">
+                    <span class="pi-row-label">进化流</span>
+                    <span class="pi-row-content">
+                        <div class="pi-evo">
+                            <div class="pi-evo-step">
+                                <span class="pi-evo-tag">1.0</span>
+                                <span class="pi-evo-text">计算工具（Mathematica）</span>
+                            </div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step">
+                                <span class="pi-evo-tag">2.0</span>
+                                <span class="pi-evo-text">智能助手（AlphaFold/Copilot）</span>
+                            </div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step active">
+                                <span class="pi-evo-tag">3.0</span>
+                                <span class="pi-evo-text">创造性合作者（Claude攻克猜想）</span>
+                            </div>
+                            <span class="pi-evo-arrow">→</span>
+                            <div class="pi-evo-step future">
+                                <span class="pi-evo-tag">4.0</span>
+                                <span class="pi-evo-text">主动提出研究问题</span>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+                <div class="pi-table">
+                    <div class="pi-t-head">
+                        <span></span>
+                        <span>现实验证</span>
+                        <span>类比</span>
+                    </div>
+                    <div class="pi-t-section verified"><span class="pi-t-section-tag">✅ 已验证</span></div>
+                    <div class="pi-t-row">
+                        <span class="pi-t-rule">1.0→2.0</span>
+                        <span class="pi-t-reality">AlphaFold预测蛋白质结构、Copilot生成代码——AI主动建议但人类决策</span>
+                        <span class="pi-t-analogy">导航仪建议路线，司机决定采纳</span>
+                    </div>
+                    <div class="pi-t-section current"><span class="pi-t-section-tag">📍 当前映射</span></div>
+                    <div class="pi-t-row">
+                        <span class="pi-t-rule">2.0→3.0</span>
+                        <span class="pi-t-reality">Claude Opus 4.6独立提出构造性解法，高德纳验证通过——AI不仅"算"还在"创造"</span>
+                        <span class="pi-t-analogy">从"自动驾驶辅助"到"自动驾驶代驾"</span>
+                    </div>
+                    <div class="pi-t-divider"></div>
+                    <div class="pi-t-section projected"><span class="pi-t-section-tag">🔮 趋势推演</span></div>
+                    <div class="pi-t-row projected">
+                        <span class="pi-t-rule">3.0→3.5</span>
+                        <span class="pi-t-reality">2026年底前AI将在≥3个数学子领域独立提出新定理</span>
+                        <span class="pi-t-analogy">从"代驾"到"主动规划出行路线"</span>
+                    </div>
+                    <div class="pi-confidence">📊 置信度: 中高 | 验证窗口: 6-12个月 | 信号: 数学顶刊AI论文数量、Fields Medal讨论中是否涉及AI辅助</div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ==================== AI Coding Tab ==================== -->
+        <article id="coding" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://newsletter.pragmaticengineer.com/p/ai-tooling-2026" target="_blank">906人调查：Claude Code仅8个月登顶，95%工程师每周用AI</a></div>
+                    <div class="news-source">The Pragmatic Engineer · 2026-03-04</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">906名资深工程师调查显示，<strong>Claude Code从发布到登顶仅8个月</strong>，超越GitHub Copilot和Cursor成为最常用AI编程工具</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip">95%每周用AI</span>
+                                    <span class="news-data-chip">56%用AI完成≥70%工作</span>
+                                    <span class="news-data-chip">55%常用AI Agent</span>
+                                    <span class="news-data-chip">Claude Code 46%最受欢迎</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">影响判断</span>
+                            <span class="news-detail-value">AI编程已从"尝鲜"进入"生产力标配"阶段，<strong>Agent使用率过半标志着开发范式根本转变</strong></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.figma.com/release-notes/" target="_blank">Figma集成GitHub Copilot：设计到开发工作流打通</a></div>
+                    <div class="news-source">Figma · 2026-03-06</div>
+                    <div class="news-summary-compact">Figma正式推出GitHub Copilot to Figma插件，支持在设计工具中直接使用MCP协议连接AI编程能力。设计师和开发者的工作流壁垒进一步消融。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://newsletter.pragmaticengineer.com/p/ai-tooling-2026" target="_blank">OpenAI Codex爆发增长：已达Cursor 60%使用量</a></div>
+                    <div class="news-source">The Pragmatic Engineer · 2026-03-04</div>
+                    <div class="news-summary-compact">尽管Codex推出时间更晚，其使用量已达到Cursor的60%，成为增速最快的AI编程工具。Cursor自身也增长了35%，整个赛道呈爆发态势。</div>
+                </div>
+
+                <div class="sub-header">🇨🇳 国内</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="https://www.21jingji.com/article/20260116/herald/fef4d1e443221e4b9898a75ade90c8b2.html" target="_blank">国内AI Coding大厂全面入局：字节Trae、阿里通义灵码、腾讯CodeBuddy、百度Comate四方角力</a></div>
+                    <div class="news-source">21财经 · 2026-01-16</div>
+                    <div class="news-summary-compact">阿里、腾讯、字节等大厂纷纷推出AI原生IDE，以高性价比和深度场景集成抢占市场。字节Trae（原MarsCode）SOLO模式用户渗透率达44%；腾讯CodeBuddy主打微信生态；通义灵码深度适配企业级Java/Go场景。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">8个月颠覆格局：Claude Code崛起揭示了AI Coding竞争的真正胜负手</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>906名资深工程师的调查结果令人震惊：Claude Code从零到第一仅用8个月。GitHub Copilot花了3年建立的领先地位，在不到一年内被颠覆。更重要的数字是<strong>55%的工程师已经常用AI Agent</strong>——这意味着AI编程已经从"智能补全"进化到"自主执行"，而后者正是Claude Code的核心优势。</p>
+                    <p>为什么Claude Code赢了？调查揭示了关键洞察：<strong>Staff+级别工程师是AI Agent最重拥趸</strong>（63.5%使用率），且Agent用户对AI的兴奋度是非Agent用户的2倍。这颠覆了"AI主要帮助初级开发者"的假设——恰恰是最有经验的工程师最善于利用Agent来放大生产力。</p>
+                    <p>但企业端存在明显滞后：大公司(10K+员工)中56%仍在用GitHub Copilot，原因是"企业采购流程"而非"工具偏好"。70%的工程师同时使用2-4个工具，说明大家在对冲——不把鸡蛋放一个篮子里。</p>
+                    <div class="deep-focus-takeaway">
+                        <div class="deep-focus-takeaway-label">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">如果你还没试过AI Agent模式的编程工具，现在就该开始了。核心不是"哪个工具好"，而是<strong>"Agent范式"本身带来的范式转变</strong>——从"写代码"到"指导AI写代码"。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ==================== AI 应用 Tab ==================== -->
+        <article id="application" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://openai.com/index/chatgpt-for-excel/" target="_blank">ChatGPT for Excel正式发布：投行建模准确率翻倍</a></div>
+                    <div class="news-source">OpenAI · 2026-03-05</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">OpenAI发布Excel插件，GPT-5.4驱动，直接嵌入Excel工作簿执行建模、分析、场景推演。同步接入<strong>FactSet、Dow Jones等9大金融数据源</strong></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip">BigLaw Bench 43.7%→87.3%</span>
+                                    <span class="news-data-chip">9大金融数据源</span>
+                                    <span class="news-data-chip">支持MCP接入私有数据</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">影响判断</span>
+                            <span class="news-detail-value">金融行业工作流即将被重构——<strong>"AI+Excel+实时数据源"三位一体</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.qualcomm.com/news/releases/2026/03/qualcomm-snapdragon-wearable-platform-elite" target="_blank">高通MWC发布可穿戴AI平台：20亿参数大模型装入手表</a></div>
+                    <div class="news-source">Qualcomm · 2026-03-03</div>
+                    <div class="news-summary-compact">3nm工艺、双NPU架构、10TOPS算力，支持本地运行20亿参数大模型。不依赖云端API，毫秒级响应+隐私保护。将赋能Galaxy Watch等智能手表和AI眼镜。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://github.com/AustrianCodeWriter/OpenClaw" target="_blank">OpenClaw登顶GitHub星标历史第一，100天超越Linux</a></div>
+                    <div class="news-source">GitHub · 持续更新</div>
+                    <div class="news-summary-compact">开源AI Agent框架OpenClaw仅用约100天斩获超24万星标，超越React和Linux，成为GitHub历史最热项目。主打"完全本地运行、零云端依赖"。</div>
+                </div>
+
+                <div class="sub-header">🇨🇳 国内</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E5%8D%83%E9%97%AEAI%E7%9C%BC%E9%95%9C%E6%AD%A3%E5%BC%8F%E5%8F%91%E5%94%AE%EF%BC%9AG1%E5%88%B0%E6%89%8B%E4%BB%B71997%E5%85%83%EF%BC%8C%E8%B5%B0%E5%87%BA%E6%89%8B%E6%9C%BA%E8%BF%9B%E5%85%A5%E7%89%A9%E7%90%86%E4%B8%96%E7%95%8C" target="_blank">千问AI眼镜正式发售：G1到手价1997元，走出手机进入物理世界</a></div>
+                    <div class="news-source">多来源 · 2026-03-08</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">阿里千问首款AI眼镜正式发售，搭载千问大模型，支持AI翻译、会议记录、识图识物。旗舰G1<strong>双芯双系统、5麦+骨传导、40g超轻</strong></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip china">G1到手价1997元</span>
+                                    <span class="news-data-chip china">3K视频+AI超分4K</span>
+                                    <span class="news-data-chip china">64GB存储</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">阿里软硬一体战略落地里程碑，<strong>千问从App走向多终端</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=Mooni%20M1%E6%88%902026%E5%B9%B4%E9%A6%96%E4%B8%AAAI%E7%A1%AC%E4%BB%B6%E7%88%86%E6%AC%BE%EF%BC%9A%E6%9C%88%E9%94%8010%E4%B8%87%E5%8F%B0%E7%99%BB%E9%A1%B6%E5%A4%9A%E5%B9%B3%E5%8F%B0" target="_blank">Mooni M1成2026年首个AI硬件爆款：月销10万台登顶多平台</a></div>
+                    <div class="news-source">多来源 · 2026-03</div>
+                    <div class="news-summary-compact">前腾讯大模型科学家担任首席科学家的AI儿童硬件"Mooni M1"，登顶抖音国补带货榜Top1。以"挂件"形态定位K12"AI Pin"，拒绝制造"上瘾"转向激发"主动使用"。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header orange-theme">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">AI+Excel：当"最不性感的软件"遇上最强模型，金融行业的地震开始了</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>ChatGPT for Excel看似只是一个插件，实则是一场精心策划的"特洛伊木马"战略。Excel在全球有超过10亿用户，是金融行业的"事实标准操作系统"。把GPT-5.4直接嵌入Excel，等于<strong>把AI送到了"最后一公里"的工作现场</strong>。</p>
+                    <p>更关键的是同步宣布的9大金融数据源集成。此前金融AI的最大瓶颈不是模型能力，而是数据可达性——分析师需要在Bloomberg终端、各数据平台、Excel之间反复切换。现在<strong>"数据获取+AI分析+Excel建模"三合一</strong>，BigLaw Bench从43.7%翻倍到87.3%就是直接后果。</p>
+                    <p>对金融行业从业者的冲击是双面的：初级分析师的"数据搬运"工作大部分可以被自动化；但资深分析师的"判断力"短期内不可替代。这与Anthropic上周发布的"理论覆盖94%但实际使用33%"的研究结论完全吻合。</p>
+                    <div class="deep-focus-takeaway orange-theme">
+                        <div class="deep-focus-takeaway-label orange">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">如果你在金融行业工作，现在就注册ChatGPT for Excel的beta。<strong>不是为了替代你的工作，而是为了建立"AI+Excel"的复合技能壁垒。</strong></div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ==================== AI 行业 Tab ==================== -->
+        <article id="industry" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.wsj.com/" target="_blank">OpenAI正洽谈与北约AI合作，已接入美国防部机密网络</a></div>
+                    <div class="news-source">WSJ · 2026-03-05</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">核心发现</span>
+                            <span class="news-detail-value">OpenAI正洽谈将AI部署至<strong>北约32国共用的"非机密"网络</strong>，此前一周刚接入美国防部"机密网络"。Anthropic被叫停合作——因拒绝AI用于国内监控</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip">北约32国非机密网络</span>
+                                    <span class="news-data-chip">美国防部机密网络</span>
+                                    <span class="news-data-chip">禁止对美公民监控</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label">影响判断</span>
+                            <span class="news-detail-value">AI军事化应用路线分化——<strong>OpenAI拥抱国防、Anthropic坚守红线</strong>，长期影响深远</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-funding">💰</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=Lotus%20Health%20AI%E8%8E%B7%244200%E4%B8%87%E8%9E%8D%E8%B5%84%EF%BC%9AAI%E9%87%8D%E6%9E%84%E5%88%9D%E7%BA%A7%E5%8C%BB%E7%96%97" target="_blank">Lotus Health AI获$4200万融资：AI重构初级医疗</a></div>
+                    <div class="news-source">多来源 · 2026-03</div>
+                    <div class="news-summary-compact">AI医疗创业公司获$4200万融资，打造"免费+医生把关"平台——AI分析健康数据生成方案（准确率比基准高142%），斯坦福/约翰霍普金斯医生审核。典型案例：被误诊35年的患者数小时内找到真正病因。</div>
+                </div>
+
+                <div class="sub-header">🇨🇳 国内</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E9%93%B6%E6%B2%B3%E9%80%9A%E7%94%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%8C%E6%88%9025%E4%BA%BF%E8%9E%8D%E8%B5%84%EF%BC%9A%E5%85%B7%E8%BA%AB%E6%99%BA%E8%83%BD%E5%8D%95%E8%BD%AE%E8%9E%8D%E8%B5%84%E6%96%B0%E9%AB%98" target="_blank">银河通用机器人完成25亿融资：具身智能单轮融资新高</a></div>
+                    <div class="news-source">多来源 · 2026-03</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">成立仅两年完成25亿元融资，<strong>创国内具身智能单轮融资新高</strong>。国家AI产业基金、中国石化等国资联合加持</span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip china">25亿元单轮</span>
+                                    <span class="news-data-chip china">估值超$30亿</span>
+                                    <span class="news-data-chip china">百亿级合成数据</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">国资大举进入具身智能赛道，<strong>"能交付"是获得认可的核心标准</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E6%98%9F%E5%8A%A8%E7%BA%AA%E5%85%83%E5%AE%8C%E6%88%9010%E4%BA%BF%E8%9E%8D%E8%B5%84%EF%BC%8C%E4%BC%B0%E5%80%BC%E7%A0%B4%E7%99%BE%E4%BA%BF%EF%BC%9A%E5%85%B7%E8%BA%AB%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%85%A8%E7%90%83%E7%AC%AC%E4%B8%80" target="_blank">星动纪元完成10亿融资，估值破百亿：具身大模型全球第一</a></div>
+                    <div class="news-source">多来源 · 2026-03</div>
+                    <div class="news-summary-compact">仅隔2个月再融资，超额认购。联合斯坦福团队的Ctrl-World世界模型拿下WorldArena具身任务全球第一；自研ERA-42是全球首个全身+灵巧手端到端操作模型。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header china-theme">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">一周35亿：具身智能为什么突然成了"国家队"的最爱？</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>银河通用25亿+星动纪元10亿，一周内中国具身智能赛道融资35亿元。更值得关注的不是金额，而是投资方阵容——<strong>国家AI产业基金、中国石化、上汽金控等清一色国资和产业资本</strong>。这在AI领域极为罕见。</p>
+                    <p>背后的逻辑是：具身智能是"AI+制造业"的交汇点。中国有全球最大的制造业体系（占全球30%+），但面临劳动力成本上升和人口老龄化的双重压力。具身智能机器人是解决这个<strong>结构性矛盾的"国家级方案"</strong>。</p>
+                    <p>两家公司的技术路线也代表了赛道的两条快车道：银河通用走"仿真数据为主"（自建银河星坊），星动纪元走"联合斯坦福学术合作"（Ctrl-World世界模型全球第一）。数据vs算法的竞争将定义2026-2027年技术走向。</p>
+                    <div class="deep-focus-takeaway china-theme">
+                        <div class="deep-focus-takeaway-label china">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">具身智能正在复制2015-2016年自动驾驶的融资狂潮。对创业者：<strong>"能交付"是唯一的入场券</strong>。对投资者：关注"场景落地数据"而非"技术指标"。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ==================== 企业AI转型 Tab ==================== -->
+        <article id="enterprise" class="tab-panel">
+            <div class="section-card">
+                <div class="section-header"><span class="num orange">1</span> 最近动态</div>
+                <div class="sub-header">🌏 海外实践</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-hot">HOT</span>
+                    <div class="news-title"><a href="https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html" target="_blank">Deloitte发布2026企业AI现状报告：AI投资回报开始兑现</a></div>
+                    <div class="news-source">Deloitte · 2026-03</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label orange">核心发现</span>
+                            <span class="news-detail-value">企业AI投资正从"实验"转向"规模化"，<strong>提升生产力和效率是最主要的已实现收益</strong></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label orange">影响判断</span>
+                            <span class="news-detail-value">"AI能不能用"的争论结束，<strong>"怎么用好"成为主话题</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://newsroom.ibm.com/next-generation-ibm-flashsystem-portfolio" target="_blank">IBM推出Agentic AI驱动的FlashSystem自主存储</a></div>
+                    <div class="news-source">IBM · 2026-02</div>
+                    <div class="news-summary-compact">IBM在新一代FlashSystem中引入Agentic AI概念，存储系统可自主诊断、优化和自愈。Agentic AI从软件层扩展到基础设施层。</div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-new">NEW</span>
+                    <div class="news-title"><a href="https://www.pwc.com/us/en/tech-effect/ai-analytics/ai-predictions.html" target="_blank">PwC 2026 AI业务预测：AI投资需匹配企业优先级</a></div>
+                    <div class="news-source">PwC · 2026-03</div>
+                    <div class="news-summary-compact">PwC警告：多数企业AI项目"众包式"推进导致与战略脱节，建议以精准执行替代广撒网。</div>
+                </div>
+
+                <div class="sub-header">🇨🇳 国内</div>
+                
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="https://weixin.sogou.com/weixin?type=2&query=%E6%B7%98%E5%AE%9D%E9%97%AA%E8%B4%AD%E5%BC%80%E6%BA%90%E9%A4%90%E9%A5%AEAI%E5%A4%A7%E6%A8%A1%E5%9E%8B%22%E7%99%BD%E6%B3%BD%22%EF%BC%9A%E7%B4%AF%E8%AE%A1%E8%B0%83%E7%94%A8%E8%B6%8510%E4%BA%BF%E6%AC%A1" target="_blank">淘宝闪购开源餐饮AI大模型"白泽"：累计调用超10亿次</a></div>
+                    <div class="news-source">多来源 · 2026-03-02</div>
+                    <div class="news-detail">
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">核心发现</span>
+                            <span class="news-detail-value">开源发布餐饮零售专属AI大模型"白泽"(Ostrakon-VL)，基于Qwen3-VL-8B深度优化，<strong>24小时智能分析后厨直播视频</strong></span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">关键数据</span>
+                            <span class="news-detail-value">
+                                <div class="news-data-chips">
+                                    <span class="news-data-chip china">超100个场景</span>
+                                    <span class="news-data-chip china">调用超10亿次</span>
+                                    <span class="news-data-chip china">Token消耗破万亿</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="news-detail-row">
+                            <span class="news-detail-label china">影响判断</span>
+                            <span class="news-detail-value">垂直行业AI大模型的教科书案例——<strong>不追求通用能力，在特定场景做到极致</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <span class="news-tag tag-cn">🇨🇳</span>
+                    <div class="news-title"><a href="https://www.qbitai.com/2026/03/384449.html" target="_blank">无问智科发布首个物理AI数据基座平台</a></div>
+                    <div class="news-source">量子位 · 2026-03-06</div>
+                    <div class="news-summary-compact">在德清发布业界首个物理AI数据基座平台，填补行业物理AI数据基座空白。长三角具身智能数据采集训练场同步揭幕。</div>
+                </div>
+            </div>
+
+            <div class="deep-focus-card">
+                <div class="deep-focus-header orange-theme">
+                    <div>
+                        <div class="deep-focus-label">💡 深度聚焦</div>
+                        <div class="deep-focus-title">"白泽"模式：垂直行业AI的正确打开方式</div>
+                    </div>
+                </div>
+                <div class="deep-focus-body">
+                    <p>淘宝闪购的"白泽"大模型为企业AI转型提供了一个教科书级的成功路径。它做了三个关键决策：1）基于已有开源模型（Qwen3-VL-8B）深度优化——<strong>省下巨额训练成本</strong>；2）聚焦单一垂直场景（餐饮食品安全）——100个细分场景做到极致；3）开源共享——构建生态而非围墙花园。</p>
+                    <p>结果令人印象深刻：累计调用超10亿次、Token消耗破万亿，在"后厨直播"场景中已能24小时自动分析视频流。甚至能通过"一镜到底"视频验真来揪出AI伪造内容。这是一个<strong>"3+1+AI"共治体系</strong>（平台+监管+商家+骑士随手拍+AI）的完美落地。</p>
+                    <p>对其他行业的启示：不要等通用大模型"万能化"再开始——现在就选一个高频、高价值、数据充足的垂直场景，基于开源模型做深度优化。<strong>8B参数的专精模型在特定场景可以完全胜任</strong>，训练成本只是通用大模型的百分之一。</p>
+                    <div class="deep-focus-takeaway orange-theme">
+                        <div class="deep-focus-takeaway-label orange">💡 TAKEAWAY</div>
+                        <div class="deep-focus-takeaway-text">审视你所在行业最大的"合规/质量/效率"痛点，评估是否适合<strong>开源模型+垂直微调</strong>的方式解决。餐饮食品安全只是开始——建筑安全、医疗质控、金融合规都是同类场景。</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Data Snapshot -->
+        <div class="section-card" style="margin-top:20px">
+            <div class="section-header"><span class="num">📊</span> 数据速览</div>
+            <table class="data-table">
+                <thead>
+                    <tr><th>指标</th><th>数值</th><th>变化/说明</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Claude Code从发布到登顶</td><td><strong>8个月</strong></td><td>超越Copilot和Cursor</td></tr>
+                    <tr><td>工程师每周使用AI比例</td><td><strong>95%</strong></td><td>906人调查</td></tr>
+                    <tr><td>工程师AI完成≥70%工作</td><td><strong>56%</strong></td><td>工作流渗透深度</td></tr>
+                    <tr><td>AI Agent常用比例</td><td><strong>55%</strong></td><td>Staff+工程师63.5%</td></tr>
+                    <tr><td>GPT-5.4投行基准</td><td><strong>87.3%</strong></td><td>vs此前43.7%</td></tr>
+                    <tr><td>银河通用单轮融资</td><td><strong>25亿元</strong></td><td>具身智能新高，估值>$30亿</td></tr>
+                    <tr><td>星动纪元融资</td><td><strong>10亿元</strong></td><td>估值破100亿元</td></tr>
+                    <tr><td>白泽模型累计调用</td><td><strong>>10亿次</strong></td><td>Token消耗破万亿</td></tr>
+                    <tr><td>千问AI春节DAU峰值</td><td><strong>7352万</strong></td><td>增幅940%</td></tr>
+                    <tr><td>Claude Opus攻克猜想步数</td><td><strong>31步</strong></td><td>高德纳困扰数周的问题</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tomorrow Preview -->
+        <div class="section-card">
+            <div class="section-header"><span class="num">📌</span> 明日/下周值得关注</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="padding:10px 14px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light)">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success)">NVIDIA GTC 2026</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:2px">3月16-19日 · Jensen Huang主题演讲</div>
+                </div>
+                <div style="padding:10px 14px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light)">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success)">AWE 2026</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:2px">3月12-15日 · AI科技·慧享未来</div>
+                </div>
+                <div style="padding:10px 14px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light)">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success)">华为合作伙伴大会2026</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:2px">3月19-20日 · 因聚而升融智有为</div>
+                </div>
+                <div style="padding:10px 14px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light)">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-danger)">千问AI眼镜新功能</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-top:2px">3月底 · 上线订外卖、订酒店等功能</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+            <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+            <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+                我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+            </p>
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+                🏠 访问AI洞察首页
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', 'false'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.setAttribute('aria-selected', 'true');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

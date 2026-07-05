@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Skill 设计模式：让AI稳定输出的5种内容架构</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232563EB'/><text x='16' y='23' text-anchor='middle' font-size='20'>🧩</text></svg>">
+    <style>
+        :root {
+            --color-success: #059669; --color-success-light: #10B981; --color-success-dark: #047857; --color-success-50: #ECFDF5;
+            --color-danger: #E11D48; --color-danger-light: #F43F5E;
+            --color-warning: #D97706; --color-warning-light: #F59E0B;
+            --color-info: #2563EB; --color-info-light: #3B82F6; --color-info-50: #EFF6FF;
+            --color-purple: #7C3AED; --color-purple-light: #8B5CF6; --color-purple-50: #F5F3FF;
+            --color-text-primary: #1C1917; --color-text-secondary: #57534E; --color-text-muted: #78716C;
+            --color-border: #E7E5E4; --color-border-light: #F5F5F4;
+            --color-bg: #F8FAFB; --color-bg-card: #FFFFFF; --color-bg-table-header: #FAFAF9;
+            --gradient-info: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+            --gradient-hero: linear-gradient(135deg, #1D4ED8 0%, #2563EB 40%, #7C3AED 100%);
+            --gradient-badge: linear-gradient(135deg, #EFF6FF 0%, #F5F3FF 100%);
+            --gradient-highlight: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(37,99,235,0.03) 100%);
+            --gradient-mesh: radial-gradient(at 20% 20%, rgba(37,99,235,0.08) 0%, transparent 50%), radial-gradient(at 80% 80%, rgba(124,58,237,0.06) 0%, transparent 50%), radial-gradient(at 50% 50%, rgba(5,150,105,0.04) 0%, transparent 50%);
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04); --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+            --shadow-glow: 0 4px 14px rgba(37,99,235,0.2);
+            --spacing-xs:4px; --spacing-sm:8px; --spacing-md:16px; --spacing-lg:24px; --spacing-xl:32px; --spacing-2xl:40px; --spacing-3xl:56px;
+            --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-xl:20px; --radius-full:9999px;
+            --font-family: -apple-system,"SF Pro Display","system-ui","Segoe UI","Noto Sans SC",Helvetica,Arial,sans-serif;
+            --transition-fast:150ms cubic-bezier(0.4,0,0.2,1); --transition-normal:200ms cubic-bezier(0.4,0,0.2,1);
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:var(--font-family);font-size:15px;line-height:1.65;color:var(--color-text-secondary);background:var(--color-bg);background-image:var(--gradient-mesh);background-attachment:fixed;-webkit-font-smoothing:antialiased;}
+        ::selection{background:rgba(37,99,235,0.2);}
+        .container{max-width:980px;margin:0 auto;padding:24px 16px 48px;}
+        .tab-nav{background:rgba(255,255,255,0.85);backdrop-filter:blur(20px) saturate(1.8);border-radius:var(--radius-lg);padding:6px;display:flex;gap:4px;margin-bottom:var(--spacing-lg);position:sticky;top:12px;z-index:100;box-shadow:var(--shadow-md);border:1px solid rgba(0,0,0,0.06);overflow-x:auto;}
+        .tab-btn{padding:8px 16px;border:none;background:transparent;border-radius:var(--radius-md);cursor:pointer;font-size:13px;font-weight:500;color:var(--color-text-muted);white-space:nowrap;transition:all var(--transition-fast);}
+        .tab-btn:hover{background:rgba(37,99,235,0.06);color:var(--color-info);}
+        .tab-btn.active{background:var(--gradient-info);color:white;box-shadow:var(--shadow-glow);}
+        .tab-panel{display:none;}.tab-panel.active{display:block;}
+        .hero{background:var(--gradient-hero);border-radius:var(--radius-xl);padding:40px 36px;margin-bottom:var(--spacing-lg);position:relative;overflow:hidden;color:white;}
+        .hero::before{content:'';position:absolute;top:-40%;right:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 70%);border-radius:50%;}
+        .hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:var(--radius-full);font-size:12px;font-weight:600;color:rgba(255,255,255,0.9);margin-bottom:16px;backdrop-filter:blur(8px);}
+        .hero h1{font-size:clamp(22px,3vw,30px);font-weight:800;line-height:1.25;margin-bottom:12px;letter-spacing:-0.5px;}
+        .hero-sub{font-size:15px;color:rgba(255,255,255,0.8);line-height:1.6;max-width:640px;margin-bottom:24px;}
+        .hero-meta{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:rgba(255,255,255,0.7);}
+        .hero-meta-item{display:flex;align-items:center;gap:5px;}
+        .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--spacing-md);margin-bottom:var(--spacing-lg);}
+        .stat-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:18px 20px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow-sm);transition:all var(--transition-normal);}
+        .stat-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px);}
+        .stat-icon{width:44px;height:44px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+        .stat-icon.blue{background:linear-gradient(135deg,#EFF6FF,#DBEAFE);}
+        .stat-icon.purple{background:linear-gradient(135deg,#F5F3FF,#EDE9FE);}
+        .stat-icon.green{background:linear-gradient(135deg,#ECFDF5,#D1FAE5);}
+        .stat-icon.amber{background:linear-gradient(135deg,#FFFBEB,#FEF3C7);}
+        .stat-value{font-size:22px;font-weight:800;color:var(--color-text-primary);line-height:1;}
+        .stat-label{font-size:12px;color:var(--color-text-muted);margin-top:3px;}
+        .section-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:var(--spacing-lg) var(--spacing-xl);margin-bottom:var(--spacing-md);box-shadow:var(--shadow-sm);}
+        .section-title{font-size:17px;font-weight:700;color:var(--color-text-primary);display:flex;align-items:center;gap:8px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--color-border-light);}
+        .section-title-icon{width:32px;height:32px;background:var(--gradient-badge);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:16px;}
+        .pattern-card{border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:var(--spacing-md);box-shadow:var(--shadow-sm);transition:all var(--transition-normal);}
+        .pattern-card:hover{box-shadow:var(--shadow-md);}
+        .pattern-header{padding:20px 24px 16px;display:flex;align-items:flex-start;gap:16px;}
+        .pattern-num{width:42px;height:42px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:white;flex-shrink:0;}
+        .pattern-num.p1{background:linear-gradient(135deg,#2563EB,#3B82F6);}
+        .pattern-num.p2{background:linear-gradient(135deg,#059669,#10B981);}
+        .pattern-num.p3{background:linear-gradient(135deg,#D97706,#F59E0B);}
+        .pattern-num.p4{background:linear-gradient(135deg,#7C3AED,#8B5CF6);}
+        .pattern-num.p5{background:linear-gradient(135deg,#E11D48,#F43F5E);}
+        .pattern-title{font-size:18px;font-weight:700;color:var(--color-text-primary);margin-bottom:4px;}
+        .pattern-sub{font-size:13px;color:var(--color-text-muted);font-style:italic;}
+        .pattern-body{padding:0 24px 20px;}
+        .pattern-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+        .pattern-tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+        .tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:var(--radius-full);font-size:11px;font-weight:600;}
+        .tag-blue{background:#EFF6FF;color:#1D4ED8;border:1px solid #DBEAFE;}
+        .tag-green{background:#ECFDF5;color:#047857;border:1px solid #D1FAE5;}
+        .tag-amber{background:#FFFBEB;color:#B45309;border:1px solid #FEF3C7;}
+        .tag-purple{background:#F5F3FF;color:#6D28D9;border:1px solid #EDE9FE;}
+        .tag-red{background:#FFF1F2;color:#BE123C;border:1px solid #FFE4E6;}
+        .tag-gray{background:#F5F5F4;color:#57534E;border:1px solid #E7E5E4;}
+        .info-box{border-radius:var(--radius-md);padding:14px 16px;font-size:13.5px;line-height:1.6;margin-top:12px;}
+        .info-box-blue{background:var(--color-info-50);border-left:3px solid var(--color-info);color:#1e3a8a;}
+        .info-box-green{background:var(--color-success-50);border-left:3px solid var(--color-success);color:#065f46;}
+        .info-box-amber{background:#FFFBEB;border-left:3px solid var(--color-warning);color:#78350f;}
+        .info-box-purple{background:var(--color-purple-50);border-left:3px solid var(--color-purple);color:#4C1D95;}
+        .code-block{background:#1e293b;border-radius:var(--radius-md);padding:16px 18px;font-family:"SF Mono","Fira Code","Consolas",monospace;font-size:12.5px;line-height:1.7;color:#e2e8f0;overflow-x:auto;margin-top:12px;}
+        .code-block .c-key{color:#93c5fd;} .code-block .c-str{color:#86efac;} .code-block .c-cmt{color:#64748b;font-style:italic;} .code-block .c-kw{color:#f9a8d4;} .code-block .c-hl{background:rgba(255,255,255,0.07);border-radius:3px;padding:0 4px;}
+        .comp-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px;}
+        .comp-table th{background:var(--color-bg-table-header);padding:10px 14px;text-align:left;font-size:12px;font-weight:600;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--color-border);}
+        .comp-table td{padding:11px 14px;border-bottom:1px solid var(--color-border-light);color:var(--color-text-secondary);vertical-align:top;}
+        .comp-table tr:last-child td{border-bottom:none;}
+        .comp-table tr:hover td{background:rgba(37,99,235,0.02);}
+        .comp-table td:first-child{font-weight:600;color:var(--color-text-primary);}
+        .dtree{background:#0f172a;border-radius:var(--radius-lg);padding:20px 24px;font-family:"SF Mono","Fira Code",monospace;font-size:13px;line-height:2;color:#94a3b8;overflow-x:auto;margin-top:14px;}
+        .dtree .dt-q{color:#93c5fd;font-weight:600;} .dtree .dt-yes{color:#4ade80;} .dtree .dt-no{color:#f87171;} .dtree .dt-result{color:#fbbf24;font-weight:700;} .dtree .dt-branch{color:#64748b;}
+        .insight-strip{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:var(--spacing-md);border:1px solid rgba(255,255,255,0.06);position:relative;overflow:hidden;}
+        .insight-strip::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-hero);}
+        .insight-strip-title{font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+        .insight-strip p{font-size:14px;color:#94a3b8;line-height:1.7;}
+        .insight-strip strong{color:#e2e8f0;}
+        .mapping-row{display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--color-border-light);}
+        .mapping-row:last-child{border-bottom:none;}
+        .mapping-pattern{width:130px;flex-shrink:0;font-size:13px;font-weight:700;color:var(--color-text-primary);}
+        .mapping-arrow{color:var(--color-text-muted);font-size:16px;}
+        .mapping-examples{font-size:13px;color:var(--color-text-secondary);}
+        .mapping-examples code{background:var(--color-bg-table-header);padding:2px 7px;border-radius:5px;font-family:"SF Mono",monospace;font-size:11.5px;color:var(--color-info);margin-right:6px;}
+        .academic-row{display:grid;grid-template-columns:40px 1fr 1.2fr 1fr;gap:12px;padding:11px 14px;border-bottom:1px solid var(--color-border-light);font-size:13px;align-items:center;}
+        .academic-row:first-child{background:var(--color-bg-table-header);font-size:11px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.5px;}
+        .academic-row:last-child{border-bottom:none;}
+        .benchmark-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;}
+        .bm-card{background:var(--color-bg);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:16px;text-align:center;}
+        .bm-val{font-size:28px;font-weight:800;line-height:1;margin-bottom:6px;}
+        .bm-val.pos{color:var(--color-success);} .bm-val.neg{color:var(--color-danger);} .bm-val.neu{color:var(--color-info);}
+        .bm-label{font-size:12px;color:var(--color-text-muted);}
+        .upgrade-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:var(--spacing-sm);box-shadow:var(--shadow-xs);display:flex;gap:16px;}
+        .upgrade-icon{width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+        .upgrade-title{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:6px;}
+        .upgrade-desc{font-size:13.5px;color:var(--color-text-secondary);line-height:1.6;}
+        @media(max-width:768px){.stats-bar{grid-template-columns:repeat(2,1fr);}.pattern-grid{grid-template-columns:1fr;}.benchmark-grid{grid-template-columns:repeat(2,1fr);}.academic-row{grid-template-columns:1fr 1fr;}.hero{padding:28px 20px;}}
+        @media(max-width:480px){.stats-bar{grid-template-columns:1fr 1fr;}.benchmark-grid{grid-template-columns:1fr;}}
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('patterns')">🧩 五种模式详解</button>
+        <button class="tab-btn" onclick="switchTab('comparison')">📊 模式对比与选型</button>
+        <button class="tab-btn" onclick="switchTab('insight')">💡 本质洞察</button>
+        <button class="tab-btn" onclick="switchTab('applied')">⚙️ 我们做了什么</button>
+        <button class="tab-btn" onclick="switchTab('academic')">📚 学术背景</button>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-badge">🔬 AI洞察 · 专题调研</div>
+        <h1>Agent Skill 设计模式<br>让AI稳定输出的5种内容架构</h1>
+        <p class="hero-sub">格式统一之后，真正的竞争在于"技能定义文件里写什么"。Google ADK团队在构建50+ Skill后，总结出5种反复出现的结构性规律——这是关于如何在高度不确定的LLM推理过程中，在关键节点施加结构性约束的系统性答案。</p>
+        <div class="hero-meta">
+            <span class="hero-meta-item">📅 2026-03-24</span>
+            <span class="hero-meta-item">✍️ 来源：Google Cloud Tech · Lavi Nigam</span>
+            <span class="hero-meta-item">🔗 arXiv SoK:2602.20867</span>
+            <span class="hero-meta-item">⚙️ 已落地到AI洞察Skill体系</span>
+        </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div class="stat-icon blue">🧩</div>
+            <div><div class="stat-value">5</div><div class="stat-label">设计模式</div></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green">📈</div>
+            <div><div class="stat-value">+16.2pp</div><div class="stat-label">精选Skill提升Agent成功率</div></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon amber">⭐</div>
+            <div><div class="stat-value">+245%</div><div class="stat-label">代码质量分数改善幅度</div></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon purple">🔬</div>
+            <div><div class="stat-value">7</div><div class="stat-label">学术论文系统级模式对照</div></div>
+        </div>
+    </div>
+
+    <!-- ===== TAB 1: 五种模式详解 ===== -->
+    <div id="tab-patterns" class="tab-panel active">
+
+        <!-- Pattern 1 -->
+        <div class="pattern-card">
+            <div class="pattern-header">
+                <div class="pattern-num p1">1</div>
+                <div>
+                    <div class="pattern-title">Tool Wrapper &nbsp;<span style="font-size:14px;font-weight:400;color:var(--color-text-muted)">工具包装器</span></div>
+                    <div class="pattern-sub">类比：给Agent一张"小抄"，让它遇到特定技术时自动变成领域专家</div>
+                </div>
+            </div>
+            <div class="pattern-body">
+                <p style="font-size:14px;line-height:1.7;color:var(--color-text-secondary);">把某个库/框架/工具的最佳实践打包到 <code style="background:#F5F5F4;padding:2px 6px;border-radius:4px;font-size:12.5px;">references/</code>，Agent触发时按需加载，无需始终占用上下文。是五种模式中<strong style="color:var(--color-text-primary)">最简单</strong>的结构——只用 references/，无模板无脚本。</p>
+
+                <div class="pattern-grid">
+                    <div>
+                        <div style="font-size:12px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">核心机制</div>
+                        <div style="font-size:13.5px;line-height:1.7;color:var(--color-text-secondary);">
+                            • <strong>description</strong> = Agent搜索索引，必须含具体关键词<br>
+                            • <strong>references/</strong> 存放实际规则，保持基线上下文小<br>
+                            • 每个Skill启动时约 ~100 tokens，其余按需加载<br>
+                            • 无模板、无脚本，纯指令+引用文件
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:12px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">技能定义文件 结构示例</div>
+                        <div class="code-block" style="margin-top:0;">
+<span class="c-key">---</span>
+<span class="c-key">name:</span> <span class="c-str">fastapi-expert</span>
+<span class="c-key">description:</span> <span class="c-str">FastAPI best practices.</span>
+  <span class="c-str">Use when building, reviewing,</span>
+  <span class="c-str">or debugging FastAPI/REST/Pydantic.</span>
+<span class="c-key">metadata:</span>
+  <span class="c-key">pattern:</span> <span class="c-hl">tool-wrapper</span>
+<span class="c-key">---</span>
+
+<span class="c-cmt">## Core Conventions</span>
+Load <span class="c-str">'references/conventions.md'</span>
+for the complete FastAPI best practices.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box info-box-blue" style="margin-top:14px;">
+                    ⚠️ <strong>最重要的一行</strong>：description 字段是 Agent 的搜索索引。<code style="background:rgba(37,99,235,0.1);padding:2px 6px;border-radius:4px;">"FastAPI development best practices"</code> 能触发，<code style="background:rgba(37,99,235,0.1);padding:2px 6px;border-radius:4px;">"Helps with APIs"</code> 不会触发。好的 description 必须包含具体关键词（技术名称、使用场景、典型触发词），而非笼统描述。
+                </div>
+
+                <div class="pattern-tag-row">
+                    <span class="tag tag-blue">📁 只用 references/</span>
+                    <span class="tag tag-gray">复杂度：低</span>
+                    <span class="tag tag-blue">约束维度：知识来源</span>
+                    <span style="font-size:13px;color:var(--color-text-muted);margin-left:4px;">AI洞察示例：</span>
+                    <code style="background:#F5F5F4;padding:2px 8px;border-radius:5px;font-size:12px;color:var(--color-info);">ks-kmodel</code>
+                    <code style="background:#F5F5F4;padding:2px 8px;border-radius:5px;font-size:12px;color:var(--color-info);">ks-commit-msg</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pattern 2 -->
+        <div class="pattern-card">
+            <div class="pattern-header">
+                <div class="pattern-num p2">2</div>
+                <div>
+                    <div class="pattern-title">Generator &nbsp;<span style="font-size:14px;font-weight:400;color:var(--color-text-muted)">生成器</span></div>
+                    <div class="pattern-sub">类比：给Agent一张"表格"让它填写——结构固定，每次内容不同</div>
+                </div>
+            </div>
+            <div class="pattern-body">
+                <p style="font-size:14px;line-height:1.7;color:var(--color-text-secondary);">按可复用模板生成结构化输出，每次结果格式一致，内容不同。<code style="background:#F5F5F4;padding:2px 6px;border-radius:4px;font-size:12.5px;">assets/</code> 存放输出模板（固定结构），<code style="background:#F5F5F4;padding:2px 6px;border-radius:4px;font-size:12.5px;">references/</code> 存放风格指南（质量规则）。换任意一个文件即可改变输出，无需修改指令。</p>
+
+                <div class="pattern-grid">
+                    <div>
+                        <div style="font-size:12px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">核心机制</div>
+                        <div style="font-size:13.5px;line-height:1.7;color:var(--color-text-secondary);">
+                            • <strong>assets/</strong> 决定结构，references/ 决定质量<br>
+                            • 一致性优先于创造性<br>
+                            • 换模板文件即可改变输出格式，无需改指令<br>
+                            • 适合"每次输出格式相同，内容随任务变化"场景
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:12px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">指令步骤示例</div>
+                        <div class="code-block" style="margin-top:0;font-size:12px;">
+Step 1: Load <span class="c-str">'references/style-guide.md'</span>
+        for tone and formatting rules.
+Step 2: Load <span class="c-str">'assets/report-template.md'</span>
+        for the required output structure.
+Step 3: Ask user for missing information
+        (Topic, Key findings, Audience).
+Step 4: Fill the template following
+        the style guide. Every section
+        must be present.
+Step 5: Return completed report as
+        single Markdown document.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box info-box-green" style="margin-top:14px;">
+                    💡 <strong>与 Tool Wrapper 的本质区别</strong>：Generator 增加了<strong>模板约束</strong>，让 AI 在创作时有一个固定的结构框架可以填充，而不是从零开始自由生成。结构固定 = 结果可预期。
+                </div>
+
+                <div class="pattern-tag-row">
+                    <span class="tag tag-green">📁 assets/ + references/</span>
+                    <span class="tag tag-gray">复杂度：中</span>
+                    <span class="tag tag-green">约束维度：输出结构</span>
+                    <span style="font-size:13px;color:var(--color-text-muted);margin-left:4px;">AI洞察示例：</span>
+                    <code style="background:#F5F5F4;padding:2px 8px;border-radius:5px;font-size:12px;color:var(--color-info);">baoyu-infographic</code>
+                    <code style="background:#F5F5F4;padding:2px 8px;border-radius:5px;font-size:12px;color:var(--color-info);">html-screenshot</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pattern 3 -->
+        <div class="pattern-card">
+            <div class="pattern-header">
+                <div class="pattern-num p3">3</div>
+                <div>
+                    <div class="pattern-title">Reviewer &nbsp;<span style="font-size:14px;font-weight:400;color:var(--color-text-muted)">评审者</span></div>
+                    <div class="pattern-sub">类比：给Agent一张"评分量表"——输入任何代码/内容，按量表打分出报告</div>
+                </div>
+            </div>
+            <div class="pattern-body">
+                <p style="font-size:14px;line-height:1.7;color:var(--color-text-secondary);">用 <code style="background:#F5F5F4;padding:2px 6px;border-radius:4px;font-size:12.5px;">references/</code> 中的清单驱动评估，产出按严重等级分组的发现报告。<strong>核心洞察</strong>：把"检查什么"（清单文件）和"如何检查"（评审协议，写在指令里）分离。换一个清单文件 = 完全不同的评审，结构无需改动。</p>
+
+                <div class="pattern-grid">
+                    <div>
+                        <div style="font-size:12px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">评审协议（指令骨架）</div>
+                        <div class="code-block" style="margin-top:0;font-size:12px;">
+Step 1: Load <span class="c-str">'references/review-checklist.md'</span>
+Step 2: Read user's code carefully.
+        Understand purpose before critique.
+Step 3: For every violation found:
+        - Note line number
+        - Classify: <span class="c-kw">error</span>/<span class="c-key">warning</span>/<span class="c-str">info</span>
+        - Explain WHY, not just WHAT
+        - Suggest specific fix
+Step 4: Produce structured review:
+        Summary / Findings / Score / Top3
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:12px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">真实效果</div>
+                        <div class="benchmark-grid" style="grid-template-columns:1fr 1fr;margin-top:0;">
+                            <div class="bm-card">
+                                <div class="bm-val pos">99%</div>
+                                <div class="bm-label">引入Reviewer后代码质量通过率</div>
+                            </div>
+                            <div class="bm-card">
+                                <div class="bm-val neg">29%</div>
+                                <div class="bm-label">引入前的基线通过率</div>
+                            </div>
+                        </div>
+                        <div style="font-size:12px;color:var(--color-text-muted);margin-top:8px;text-align:center;">来源：Giorgio Crivellari 实测（Google ADK团队引用）</div>
+                    </div>
+                </div>
+
+                <div class="info-box info-box-amber" style="margin-top:14px;">
+                    🔑 <strong>可替换性是核心</strong>：把 <code style="background:rgba(217,119,6,0.1);padding:2px 6px;border-radius:4px;">review-checklist.md</code> 换成 <code style="background:rgba(217,119,6,0.1);padding:2px 6px;border-radius:4px;">security-checklist.md</code> 就变成安全审计技能，指令一字不改。这是"检查什么 vs 如何检查"解耦的威力。
+                </div>
+
+                <div class="pattern-tag-row">
+                    <span class="tag tag-amber">📁 只用 references/（内容是清单）</span>
+                    <span class="tag tag-gray">复杂度：中</span>
+                    <span class="tag tag-amber">约束维度：评估标准</span>
+                    <span style="font-size:13px;color:var(--color-text-muted);margin-left:4px;">AI洞察示例：</span>
+                    <code style="background:#F5F5F4;padding:2px 8px;border-radius:5px;font-size:12px;color:var(--color-info);">link-skill-evaluator</code>
+                    <code style="background:#F5F5F4;padding:2px 8px;border-radius:5px;font-size:12px;color:var(--color-info);">ks-promotion-review-sabcd</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pattern 4 -->
+        <div class="pattern-card">
+            <div class="pattern-header">
+                <div class="pattern-num p4">4</div>
+                <div>
+                    <div class="pattern-title">Inversion &nbsp;<span style="font-size:14px;font-weight:400;color:var(--color-text-muted)">反转式</span></div>
+                    <div class="pattern-sub">类比：Agent先"采访"你，然后才动笔——防止凭假设生成</div>
+                </div>
+            </div>
+            <div class="pattern-body">
+                <p style="font-size:14px;line-height:1.7;color:var(--color-text-secondary);">翻转典型的 Agent 交互：在产出任何内容之前，Skill 先通过分阶段结构化问题采集足够上下文。核心门控指令：<strong style="color:var(--color-text-primary);">"DO NOT start building until all phases are complete"</strong>——这是阻止 AI 基于假设过早输出的关键。</p>
+
+                <div class="pattern-grid">
+                    <div>
+                        <div style="font-size:12px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">三阶段结构</div>
+                        <div style="font-size:13.5px;line-height:1.9;color:var(--color-text-secondary);">
+                            <strong style="color:#7C3AED;">Phase 1 · 问题探索</strong><br>
+                            &nbsp;&nbsp;↓ 用户是谁？问题是什么？规模期望？<br>
+                            <strong style="color:#7C3AED;">Phase 2 · 技术约束</strong><br>
+                            &nbsp;&nbsp;↓ 部署环境？技术栈偏好？硬性要求？<br>
+                            <strong style="color:#7C3AED;">Phase 3 · 综合输出</strong><br>
+                            &nbsp;&nbsp;↓ 加载模板 → 填写 → 用户确认迭代
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:12px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">关键门控指令</div>
+                        <div class="code-block" style="margin-top:0;font-size:12px;">
+<span class="c-cmt"># 顶部全局门控（防止AI急于输出）</span>
+You are conducting a structured
+requirements interview.
+<span class="c-kw">DO NOT start building or designing</span>
+<span class="c-kw">until all phases are complete.</span>
+
+<span class="c-cmt">## Phase 2</span>
+<span class="c-cmt"># 阶段间门控（严格顺序）</span>
+<span class="c-key">(only after Phase 1 is fully answered)</span>
+...
+
+<span class="c-cmt">## Phase 3 - Synthesis</span>
+<span class="c-key">(only after ALL questions answered)</span>
+Load <span class="c-str">'assets/plan-template.md'</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box info-box-purple" style="margin-top:14px;">
+                    🧠 <strong>Inversion 解决的根本问题</strong>：LLM 天然倾向于"立刻给答案"。不加门控的 Agent 会在得到第一个问题后就开始生成详细方案，充满假设。Inversion 模式通过<strong>结构性门控指令</strong>强制打断这个模式，先收集信息再行动。这是五种模式中唯一对 AI "天然倾向"做反向约束的。
+                </div>
+
+                <div class="pattern-tag-row">
+                    <span class="tag tag-purple">📁 assets/（综合阶段模板）</span>
+                    <span class="tag tag-gray">复杂度：中（多轮）</span>
+                    <span class="tag tag-purple">约束维度：信息收集顺序</span>
+                    <span style="font-size:13px;color:var(--color-text-muted);margin-left:4px;">AI洞察示例：</span>
+                    <code style="background:#F5F5F4;padding:2px 8px;border-radius:5px;font-size:12px;color:var(--color-info);">ks-kate-prd-understand</code>
+                    <code style="background:#F5F5F4;padding:2px 8px;border-radius:5px;font-size:12px;color:var(--color-info);">ks-promotion-coaching</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pattern 5 -->
+        <div class="pattern-card">
+            <div class="pattern-header">
+                <div class="pattern-num p5">5</div>
+                <div>
+                    <div class="pattern-title">Pipeline &nbsp;<span style="font-size:14px;font-weight:400;color:var(--color-text-muted)">流水线</span></div>
+                    <div class="pattern-sub">类比：有签字确认环节的"食谱"——跳过任何一步都会导致失败</div>
+                </div>
+            </div>
+            <div class="pattern-body">
+                <p style="font-size:14px;line-height:1.7;color:var(--color-text-secondary);">定义有依赖关系的顺序工作流，每步之间有显式门控条件阻止跳步。五种模式中最复杂，同时使用 references/、assets/ 和 scripts/（未来）三个目录。指令本身就是工作流定义。</p>
+
+                <div style="margin-top:14px;">
+                    <div style="font-size:12px;font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">四步工作流 + 门控结构</div>
+                    <div class="code-block">
+<span class="c-cmt"># 顶部全局禁止跳步</span>
+Execute each step in order.
+<span class="c-kw">Do NOT skip steps or proceed if step fails.</span>
+
+<span class="c-key">## Step 1</span> — Parse &amp; Inventory
+Analyze code → extract public API.
+Present as checklist. Ask: "Is this complete?"
+
+<span class="c-key">## Step 2</span> — Generate Docstrings
+Load <span class="c-str">'references/docstring-style.md'</span>
+For each function without docstring → generate.
+<span class="c-kw">Do NOT proceed to Step 3 until user confirms.</span>
+
+<span class="c-key">## Step 3</span> — Assemble Documentation
+Load <span class="c-str">'assets/api-doc-template.md'</span>
+Compile all into single API reference.
+
+<span class="c-key">## Step 4</span> — Quality Check
+Review against <span class="c-str">'references/quality-checklist.md'</span>
+Report results. Fix issues before presenting.
+                    </div>
+                </div>
+
+                <div class="info-box info-box-blue" style="margin-top:14px;">
+                    ⚡ <strong>门控指令 = Pipeline 的灵魂</strong>：<code style="background:rgba(37,99,235,0.1);padding:2px 6px;border-radius:4px;">"Do NOT proceed to Step 3 until user confirms"</code> 这类指令是 Pipeline 模式与其他模式的本质差别。没有门控，AI 会一气呵成跳过所有验证步骤；有门控，每个检查点都能实际发挥作用。AI洞察的 <code style="background:rgba(37,99,235,0.1);padding:2px 6px;border-radius:4px;">meta-execution</code> 技能的 P-1→P0→P1→P2 流程，就是典型的 Pipeline 模式。
+                </div>
+
+                <div class="pattern-tag-row">
+                    <span class="tag tag-red">📁 references/ + assets/ + scripts/</span>
+                    <span class="tag tag-gray">复杂度：高</span>
+                    <span class="tag tag-red">约束维度：执行顺序+验证点</span>
+                    <span style="font-size:13px;color:var(--color-text-muted);margin-left:4px;">AI洞察示例：</span>
+                    <code style="background:#F5F5F4;padding:2px 8px;border-radius:5px;font-size:12px;color:var(--color-info);">link-meta-execution</code>
+                    <code style="background:#F5F5F4;padding:2px 8px;border-radius:5px;font-size:12px;color:var(--color-info);">sl-ai-insight（日报工作流）</code>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /tab-patterns -->
+
+    <!-- ===== TAB 2: 模式对比与选型 ===== -->
+    <div id="tab-comparison" class="tab-panel">
+
+        <div class="section-card">
+            <div class="section-title"><div class="section-title-icon">📊</div>五种模式速查对比表</div>
+            <table class="comp-table">
+                <thead>
+                    <tr>
+                        <th>模式</th>
+                        <th>使用场景</th>
+                        <th>目录使用</th>
+                        <th>核心约束维度</th>
+                        <th>复杂度</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="tag tag-blue">Tool Wrapper</span></td>
+                        <td>Agent 需要某个库/工具的专家级知识</td>
+                        <td><code style="font-size:12px;background:#F5F5F4;padding:1px 5px;border-radius:4px;">references/</code></td>
+                        <td>知识来源</td>
+                        <td>⭐ 低</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-green">Generator</span></td>
+                        <td>输出必须每次符合固定结构</td>
+                        <td><code style="font-size:12px;background:#F5F5F4;padding:1px 5px;border-radius:4px;">assets/ + references/</code></td>
+                        <td>输出结构</td>
+                        <td>⭐⭐ 中</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-amber">Reviewer</span></td>
+                        <td>代码/内容需要对照标准评审打分</td>
+                        <td><code style="font-size:12px;background:#F5F5F4;padding:1px 5px;border-radius:4px;">references/（清单）</code></td>
+                        <td>评估标准</td>
+                        <td>⭐⭐ 中</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-purple">Inversion</span></td>
+                        <td>Agent 必须先收集上下文才能行动</td>
+                        <td><code style="font-size:12px;background:#F5F5F4;padding:1px 5px;border-radius:4px;">assets/（综合模板）</code></td>
+                        <td>信息收集顺序</td>
+                        <td>⭐⭐ 中（多轮）</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-red">Pipeline</span></td>
+                        <td>工作流有依赖关系+需要验证门控</td>
+                        <td><code style="font-size:12px;background:#F5F5F4;padding:1px 5px;border-radius:4px;">references/ + assets/ + scripts/</code></td>
+                        <td>执行顺序+验证点</td>
+                        <td>⭐⭐⭐ 高</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title"><div class="section-title-icon">🌳</div>选型决策树</div>
+            <p style="font-size:13.5px;color:var(--color-text-secondary);margin-bottom:4px;">不确定用哪个模式时，顺着这棵树往下走：</p>
+            <div class="dtree">
+<span class="dt-q">输出是否需要遵循固定模板/结构？</span>
+<span class="dt-branch">├─</span> <span class="dt-yes">是</span> → <span class="dt-q">在输出之前需要先向用户提问收集信息？</span>
+<span class="dt-branch">│   ├─</span> <span class="dt-yes">是</span> → <span class="dt-result">Inversion</span> <span class="dt-branch">（先采访后填模板）</span>
+<span class="dt-branch">│   └─</span> <span class="dt-no">否</span> → <span class="dt-result">Generator</span> <span class="dt-branch">（直接按模板生成）</span>
+<span class="dt-branch">└─</span> <span class="dt-no">否</span> → <span class="dt-q">任务包含需要顺序执行且有验证点的多个步骤？</span>
+<span class="dt-branch">    ├─</span> <span class="dt-yes">是</span> → <span class="dt-result">Pipeline</span> <span class="dt-branch">（多步骤+门控）</span>
+<span class="dt-branch">    └─</span> <span class="dt-no">否</span> → <span class="dt-q">需要对提交的内容做评审/评分？</span>
+<span class="dt-branch">        ├─</span> <span class="dt-yes">是</span> → <span class="dt-result">Reviewer</span> <span class="dt-branch">（对照清单评审）</span>
+<span class="dt-branch">        └─</span> <span class="dt-no">否</span> → <span class="dt-result">Tool Wrapper</span> <span class="dt-branch">（专家知识包装，从这里起步）</span>
+            </div>
+            <div class="info-box info-box-blue" style="margin-top:14px;">
+                💡 <strong>实践建议</strong>：从 <strong>Tool Wrapper</strong> 起步——最简单，覆盖面最广。大多数 Skill 都适合从包装知识+规范开始。当你发现 AI 的输出结构乱、跳步骤、急于行动时，再升级到对应更复杂的模式。
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title"><div class="section-title-icon">🔗</div>模式可以组合使用</div>
+            <p style="font-size:13.5px;color:var(--color-text-secondary);margin-bottom:14px;">arXiv 论文数据：生产环境中每个 Skill 的中位数组合模式数量为 <strong style="color:var(--color-text-primary);">2种</strong>。常见的组合方式：</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div style="border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:14px 16px;background:var(--color-bg);">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-text-primary);margin-bottom:8px;">Pipeline + Reviewer</div>
+                    <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;">在流水线的某一步中嵌入评审清单。例如：文档生成Pipeline的 Step 4 就是一个 Reviewer 步骤，对照 quality-checklist 评估输出。</div>
+                </div>
+                <div style="border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:14px 16px;background:var(--color-bg);">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-text-primary);margin-bottom:8px;">Inversion + Generator</div>
+                    <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;">先通过问答采集需求（Inversion），再按模板生成交付物（Generator）。AI洞察的 ks-kate-brief-design 就是这种组合。</div>
+                </div>
+                <div style="border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:14px 16px;background:var(--color-bg);">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-text-primary);margin-bottom:8px;">Pipeline + Inversion + Generator</div>
+                    <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;">ADK Agent 上线全流程：采访需求（Inversion）→ 生成脚手架（Generator）→ 对照规范验证（Reviewer），三模式一体化。</div>
+                </div>
+                <div style="border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:14px 16px;background:var(--color-bg);">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-text-primary);margin-bottom:8px;">Tool Wrapper 内嵌于 Pipeline</div>
+                    <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;">在流水线的某步中，通过 references/ 加载专家知识。本质上就是把 Tool Wrapper 当成 Pipeline 某步的资源文件使用。</div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /tab-comparison -->
+
+    <!-- ===== TAB 3: 本质洞察 ===== -->
+    <div id="tab-insight" class="tab-panel">
+
+        <div class="insight-strip">
+            <div class="insight-strip-title">🧠 AI洞察的本质洞察</div>
+            <p><strong>表面</strong>：Google 总结了5种 技能定义文件 内容设计模式，帮助开发者写出更好的 Skill。</p>
+            <p style="margin-top:10px;"><strong>本质</strong>：这5种模式，本质上是5种<strong style="color:#e2e8f0;">在 LLM 不确定性中施加结构性约束的策略</strong>。</p>
+            <p style="margin-top:10px;">LLM 有两大天然"缺陷"：① 急于输出（不问清楚就开始生成）；② 漂移输出（格式随机，每次不一样）。五种模式分别从<strong style="color:#e2e8f0;">知识来源、输出结构、评估标准、信息收集顺序、执行顺序</strong>五个维度施加约束，让 AI 在"必要的不确定性"（创造性）之外的地方变得<strong style="color:#e2e8f0;">确定且可预期</strong>。</p>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title"><div class="section-title-icon">🔍</div>类比：软件架构模式的 AI 版本</div>
+            <p style="font-size:14px;line-height:1.7;color:var(--color-text-secondary);margin-bottom:14px;">这5种 Skill 设计模式，和软件工程领域的设计模式（GoF、企业应用架构模式）有高度的结构性对应：</p>
+            <table class="comp-table">
+                <thead><tr><th>Skill 设计模式</th><th>软件工程类比</th><th>解决的核心问题</th></tr></thead>
+                <tbody>
+                    <tr><td>Tool Wrapper</td><td>Facade / Adapter 模式</td><td>把复杂规则封装成简单接口，Agent 无需记住所有细节</td></tr>
+                    <tr><td>Generator</td><td>Template Method 模式</td><td>骨架固定，细节可变；结构一致性由框架保证</td></tr>
+                    <tr><td>Reviewer</td><td>Strategy 模式</td><td>算法（评审标准）与执行（评审协议）分离，可独立替换</td></tr>
+                    <tr><td>Inversion</td><td>Builder 模式 / 依赖注入</td><td>先收集所有依赖（信息），再组装输出，避免提前绑定假设</td></tr>
+                    <tr><td>Pipeline</td><td>Chain of Responsibility / Saga 模式</td><td>每步有明确的 Pre/Post 条件，失败可定位，流程可审计</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title"><div class="section-title-icon">📈</div>趋势推演</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+                <div style="padding:16px;background:var(--color-info-50);border-radius:var(--radius-md);border:1px solid #DBEAFE;">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-info);margin-bottom:8px;">📦 短期：标准化</div>
+                    <div style="font-size:13px;color:#1e3a8a;line-height:1.6;">主流 Agent 工具会形成固定模式的 Skill 市场，就像 npm 包一样。你描述"我需要一个 Reviewer 风格的代码审查 Skill"，AI 自动从市场匹配安装。</div>
+                </div>
+                <div style="padding:16px;background:var(--color-success-50);border-radius:var(--radius-md);border:1px solid #D1FAE5;">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-success-dark);margin-bottom:8px;">🔧 中期：自动生成</div>
+                    <div style="font-size:13px;color:#065f46;line-height:1.6;">AI 能够分析一段对话记录，自动识别"这里需要 Inversion 模式"并生成对应 技能定义文件。Skill 创建本身将被 AI 自动化。</div>
+                </div>
+                <div style="padding:16px;background:var(--color-purple-50);border-radius:var(--radius-md);border:1px solid #EDE9FE;">
+                    <div style="font-size:13px;font-weight:700;color:var(--color-purple);margin-bottom:8px;">🌐 长期：生态融合</div>
+                    <div style="font-size:13px;color:#4C1D95;line-height:1.6;">跨 Agent 工具的 Skill 生态互通将成熟。在 Claude Code 写的 Skill，可以直接在 Gemini CLI、Cursor 里运行——就像 npm 包跨 Node 项目共享。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title"><div class="section-title-icon">💼</div>对团队的实践启示</div>
+            <div style="font-size:14px;line-height:1.9;color:var(--color-text-secondary);">
+                <p style="margin-bottom:10px;">🎯 <strong style="color:var(--color-text-primary);">构建 Agent 工具时，先问自己：这是哪种模式？</strong> 不同模式决定了 技能定义文件 的内容结构、需要的目录（assets/references/scripts）以及指令的写法。</p>
+                <p style="margin-bottom:10px;">📝 <strong style="color:var(--color-text-primary);">description 字段是第一优先级。</strong> 一个写得好的 description 决定 Skill 是否被正确触发。包含具体关键词（技术名称/场景/触发词），避免笼统描述。</p>
+                <p style="margin-bottom:10px;">🔗 <strong style="color:var(--color-text-primary);">模式可组合，不必非此即彼。</strong> 生产级 Skill 通常组合 2-3 种模式。先单模式起步，遇到问题再升级。</p>
+                <p>🛡️ <strong style="color:var(--color-text-primary);">门控指令是 Pipeline/Inversion 的核心。</strong> "DO NOT proceed until..." 类指令看似简单，却是防止 AI 漂移、确保流程质量的核心机制。每个关键验证点都值得一个显式门控。</p>
+            </div>
+        </div>
+
+    </div><!-- /tab-insight -->
+
+    <!-- ===== TAB 4: 我们做了什么 ===== -->
+    <div id="tab-applied" class="tab-panel">
+
+        <div class="insight-strip" style="margin-bottom:16px;">
+            <div class="insight-strip-title">⚙️ 本次优化：将理论转化为AI洞察体系的实际改进</div>
+            <p>研究完成后，我们（AI洞察+）不只是"看了一篇文章"，而是立刻将 Google 总结的5种模式<strong style="color:#e2e8f0;">落地到AI洞察自身的 Skill 创建体系</strong>中，形成可复用的元技能。</p>
+        </div>
+
+        <div class="upgrade-card">
+            <div class="upgrade-icon" style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE);">📄</div>
+            <div>
+                <div class="upgrade-title">创建了 skill-design-patterns.md 元技能文档</div>
+                <div class="upgrade-desc">
+                    路径：<code style="background:#F5F5F4;padding:2px 7px;border-radius:5px;font-size:12px;">~/.cf/skills/link-skill-creator/references/skill-design-patterns.md</code><br><br>
+                    内容包含：5种模式速查表、选型决策树、每种模式的完整 技能定义文件 示例、<code style="background:#F5F5F4;padding:2px 5px;border-radius:4px;font-size:12px;">metadata.pattern</code> 标签规范、合规检查清单。这份文档让"如何设计 Skill 内容结构"从一种隐性知识变成<strong>显式可查的元技能规范</strong>。
+                </div>
+            </div>
+        </div>
+
+        <div class="upgrade-card">
+            <div class="upgrade-icon" style="background:linear-gradient(135deg,#ECFDF5,#D1FAE5);">🔧</div>
+            <div>
+                <div class="upgrade-title">升级了 link-skill-creator 技能定义文件（v1.3.0 → v1.3.1）</div>
+                <div class="upgrade-desc">
+                    在"如何写 技能定义文件 内容"章节之前，新增了 <strong>"Content Design — Which Skill Pattern Should I Use?"</strong> 章节，提供5种模式的快速速查卡和选型入口。同时把 skill-design-patterns.md 加入 references 目录。<br><br>
+                    效果：以后每次创建 Skill 时，AI洞察会<strong>主动根据使用场景选择合适的内容结构模式</strong>，而不再是凭感觉随机组合。从"无意识使用正确模式"升级为"有意识地按模式设计"。
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title"><div class="section-title-icon">🗺️</div>模式在AI洞察现有 Skill 体系中的分布</div>
+            <p style="font-size:13.5px;color:var(--color-text-secondary);margin-bottom:14px;">用新的视角回望AI洞察已有的 80+ 个 Skill，可以看到大多数都隐式对应某种模式：</p>
+            <div class="mapping-row">
+                <div class="mapping-pattern"><span class="tag tag-blue">Tool Wrapper</span></div>
+                <div class="mapping-arrow">→</div>
+                <div class="mapping-examples"><code>ks-kmodel</code><code>ks-commit-msg</code><code>error-handling-patterns</code><code>vercel-react-best-practices</code><code>ks-kstack</code> 等约 30+ 个知识/规范类 Skill</div>
+            </div>
+            <div class="mapping-row">
+                <div class="mapping-pattern"><span class="tag tag-green">Generator</span></div>
+                <div class="mapping-arrow">→</div>
+                <div class="mapping-examples"><code>baoyu-infographic</code><code>html-screenshot</code><code>baoyu-xhs-images</code><code>baoyu-format-markdown</code><code>link-ks-kim-send-message（卡片模板）</code></div>
+            </div>
+            <div class="mapping-row">
+                <div class="mapping-pattern"><span class="tag tag-amber">Reviewer</span></div>
+                <div class="mapping-arrow">→</div>
+                <div class="mapping-examples"><code>link-skill-evaluator</code><code>ks-promotion-review-sabcd</code><code>web-design-guidelines</code><code>seo-audit</code></div>
+            </div>
+            <div class="mapping-row">
+                <div class="mapping-pattern"><span class="tag tag-purple">Inversion</span></div>
+                <div class="mapping-arrow">→</div>
+                <div class="mapping-examples"><code>ks-kate-prd-understand</code><code>ks-promotion-coaching</code><code>ks-meeting-room-booking</code><code>personal-assistant</code></div>
+            </div>
+            <div class="mapping-row">
+                <div class="mapping-pattern"><span class="tag tag-red">Pipeline</span></div>
+                <div class="mapping-arrow">→</div>
+                <div class="mapping-examples"><code>link-meta-execution</code><code>sl-ai-insight（日报工作流）</code><code>link-daily-reflection-evolution</code><code>web-dev-workflow</code><code>ks-promotion-coaching（端到端）</code></div>
+            </div>
+        </div>
+
+    </div><!-- /tab-applied -->
+
+    <!-- ===== TAB 5: 学术背景 ===== -->
+    <div id="tab-academic" class="tab-panel">
+
+        <div class="section-card">
+            <div class="section-title"><div class="section-title-icon">📚</div>学术背书：arXiv SoK 论文</div>
+            <p style="font-size:14px;line-height:1.7;color:var(--color-text-secondary);margin-bottom:14px;">Google ADK 团队引用的 arXiv 论文 <strong>SoK: Agentic Skills — Beyond Tool Use in LLM Agents</strong>（2026年2月）在生产系统中识别出 7 种系统级 Skill 设计模式，与 Google 的5种实践模式高度对应：</p>
+            <div style="border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;">
+                <div class="academic-row">
+                    <div>#</div><div>论文系统级模式</div><div>对应 Google 实践模式</div><div>核心机制</div>
+                </div>
+                <div class="academic-row"><div style="font-weight:700;color:var(--color-info);">1</div><div>Metadata-Driven Disclosure</div><div><span class="tag tag-blue">Tool Wrapper</span></div><div>按需加载，渐进式上下文</div></div>
+                <div class="academic-row"><div style="font-weight:700;color:var(--color-success);">2</div><div>Template Instantiation</div><div><span class="tag tag-green">Generator</span></div><div>固定结构，可变内容</div></div>
+                <div class="academic-row"><div style="font-weight:700;color:var(--color-warning);">3</div><div>Criterion-Based Evaluation</div><div><span class="tag tag-amber">Reviewer</span></div><div>标准与协议解耦</div></div>
+                <div class="academic-row"><div style="font-weight:700;color:var(--color-purple);">4</div><div>Contextual Elicitation</div><div><span class="tag tag-purple">Inversion</span></div><div>先收集再行动</div></div>
+                <div class="academic-row"><div style="font-weight:700;color:var(--color-danger);">5</div><div>Gated Sequencing</div><div><span class="tag tag-red">Pipeline</span></div><div>顺序门控，步骤依赖</div></div>
+                <div class="academic-row"><div style="font-weight:700;">6</div><div>Marketplace Distribution</div><div><span class="tag tag-gray">生态层</span></div><div>skills.sh、NPX安装</div></div>
+                <div class="academic-row"><div style="font-weight:700;">7</div><div>Self-Modification</div><div><span class="tag tag-gray">元层</span></div><div>Skill 创建 Skill</div></div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title"><div class="section-title-icon">📊</div>量化数据</div>
+            <div class="benchmark-grid">
+                <div class="bm-card">
+                    <div class="bm-val neu">30+</div>
+                    <div class="bm-label">采纳 Agent Skills 规范的主流 Agent 工具</div>
+                </div>
+                <div class="bm-card">
+                    <div class="bm-val neu">86K+</div>
+                    <div class="bm-label">skills.sh 社区 Skill 总安装量</div>
+                </div>
+                <div class="bm-card">
+                    <div class="bm-val pos">+16.2pp</div>
+                    <div class="bm-label">精选 Skill 对 Agent 任务成功率的提升幅度</div>
+                </div>
+                <div class="bm-card">
+                    <div class="bm-val pos">+245%</div>
+                    <div class="bm-label">Reviewer 模式对代码质量分数的改善（29%→99%）</div>
+                </div>
+                <div class="bm-card">
+                    <div class="bm-val neu">~100</div>
+                    <div class="bm-label">每个 Skill 启动时占用的 tokens（L1基线）</div>
+                </div>
+                <div class="bm-card">
+                    <div class="bm-val neu">2</div>
+                    <div class="bm-label">生产级 Skill 平均组合的模式数量（中位数）</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title"><div class="section-title-icon">🌐</div>官方生态参考</div>
+            <table class="comp-table">
+                <thead><tr><th>来源</th><th>Skill 名称</th><th>模式类型</th><th>亮点</th></tr></thead>
+                <tbody>
+                    <tr><td>Google Official</td><td>adk-core-skills（6个）</td><td>Tool Wrapper</td><td>教 AI 如何写 ADK 代码，可一键安装到任意 Agent</td></tr>
+                    <tr><td>Vercel</td><td>react-best-practices</td><td>Tool Wrapper</td><td>40+ React/Next.js 规则，按影响力分级（CRITICAL→LOW）</td></tr>
+                    <tr><td>Supabase</td><td>postgres-best-practices</td><td>Tool Wrapper</td><td>8类 Postgres 优化准则，按需加载</td></tr>
+                    <tr><td>Anthropic</td><td>pptx / docx / pdf / xlsx</td><td>Generator</td><td>文档生成4件套，86,500 stars</td></tr>
+                    <tr><td>Community</td><td>code-reviewer（示例）</td><td>Reviewer</td><td>代码质量 29%→99%，可替换清单文件</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div><!-- /tab-academic -->
+
+    <!-- 了解更多 -->
+    <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+        <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+            我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+            <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">🏠 访问AI洞察首页</a>
+        </div>
+        <div style="border-top:1px solid #E7E5E4;padding-top:12px;margin-top:4px;">
+            <div style="font-size:13px;font-weight:600;color:#1C1917;margin-bottom:8px;">📚 相关资源</div>
+            <ul style="list-style:none;padding:0;margin:0;font-size:13px;">
+                <li style="margin-bottom:6px;"><a href="https://lavinigam.com/posts/adk-skill-design-patterns/" target="_blank" style="color:#2563EB;text-decoration:none;">📄 原文：5 Agent Skill Design Patterns Every ADK Developer Should Know（Lavi Nigam）</a></li>
+                <li style="margin-bottom:6px;"><a href="https://arxiv.org/html/2602.20867v1" target="_blank" style="color:#2563EB;text-decoration:none;">🔬 arXiv：SoK: Agentic Skills — Beyond Tool Use in LLM Agents（2026-02）</a></li>
+                <li style="margin-bottom:6px;"><a href="https://google.github.io/adk-docs/skills/" target="_blank" style="color:#2563EB;text-decoration:none;">📖 Google ADK 官方 Skills 文档</a></li>
+                <li style="margin-bottom:6px;"><a href="https://agentskills.io/specification" target="_blank" style="color:#2563EB;text-decoration:none;">📋 Agent Skills 开放规范（agentskills.io）</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+}
+// Fix: delegate click to each tab btn with its own name
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const idx = Array.from(this.parentNode.children).indexOf(this);
+        const names = ['patterns','comparison','insight','applied','academic'];
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('tab-' + names[idx]).classList.add('active');
+    });
+});
+</script>
+</body>
+</html>

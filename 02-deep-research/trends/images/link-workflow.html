@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI洞察工作流</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 1100px;
+            height: 850px;
+            overflow: hidden;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #0d0d1a 100%);
+            padding: 40px;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 26px;
+            margin-bottom: 12px;
+        }
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+        
+        .workflow {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .step {
+            display: flex;
+            align-items: stretch;
+            gap: 20px;
+        }
+        .step-num {
+            width: 60px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .step-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .step:nth-child(1) .step-circle { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .step:nth-child(2) .step-circle { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .step:nth-child(3) .step-circle { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .step:nth-child(4) .step-circle { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .step:nth-child(5) .step-circle { background: linear-gradient(135deg, #fa709a, #fee140); }
+        
+        .step-line {
+            flex: 1;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+            margin: 8px 0;
+        }
+        
+        .step-content {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .step-title {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .step-desc {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .tool {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.9);
+            font-family: 'Monaco', monospace;
+        }
+        
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-top: 32px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .stat-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+        }
+        
+        .signature {
+            text-align: center;
+            margin-top: 32px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(102,126,234,0.3);
+        }
+        .signature .name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .signature .desc {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AI洞察的工作流程</h1>
+        <div class="subtitle">基于 AI助手平台 打造的数字分身</div>
+        
+        <div class="workflow">
+            <div class="step">
+                <div class="step-num">
+                    <div class="step-circle">1</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="step-content">
+                    <div class="step-title">📋 任务理解与规划</div>
+                    <div class="step-desc">明确用户需求，分解任务结构：9位大神 × 11篇内容 → 趋势报告</div>
+                    <div class="tools">
+                        <span class="tool">create_plan</span>
+                        <span class="tool">write_todo</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">
+                    <div class="step-circle">2</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="step-content">
+                    <div class="step-title">🔍 并行信息采集</div>
+                    <div class="step-desc">同时获取多个来源内容，节省等待时间，最大化效率</div>
+                    <div class="tools">
+                        <span class="tool">fetch_web × 8</span>
+                        <span class="tool">search_web × 6</span>
+                        <span class="tool">read_file × 2</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">
+                    <div class="step-circle">3</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="step-content">
+                    <div class="step-title">🧠 深度阅读与洞察提炼</div>
+                    <div class="step-desc">逐篇分析核心观点 → 交叉对比识别共识 → 抽象底层原理</div>
+                    <div class="tools">
+                        <span class="tool">模式识别</span>
+                        <span class="tool">共识提取</span>
+                        <span class="tool">原理抽象</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">
+                    <div class="step-circle">4</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="step-content">
+                    <div class="step-title">📝 结构化输出</div>
+                    <div class="step-desc">来源清单 + 趋势洞察 + 原理洞察 + 全文总结 + 可视化图表</div>
+                    <div class="tools">
+                        <span class="tool">write_to_file</span>
+                        <span class="tool">HTML图表生成</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">
+                    <div class="step-circle">5</div>
+                </div>
+                <div class="step-content">
+                    <div class="step-title">🚀 自动化发布</div>
+                    <div class="step-desc">使用 Skills 技能自动发布到 内部文档，无需手动操作</div>
+                    <div class="tools">
+                        <span class="tool">ks-kim-docs-shuttle</span>
+                        <span class="tool">push.py</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-value">11</div>
+                <div class="stat-label">篇核心文章</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">150K+</div>
+                <div class="stat-label">字原文阅读</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">6</div>
+                <div class="stat-label">核心共识</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">4</div>
+                <div class="stat-label">底层原理</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">~30</div>
+                <div class="stat-label">分钟完成</div>
+            </div>
+        </div>
+        
+        <div class="signature">
+            <div class="name">AI洞察 Link</div>
+            <div class="desc">基于 AI助手平台 打造的数字分身 · 专注AI研究与知识管理</div>
+        </div>
+    </div>
+</body>
+</html>

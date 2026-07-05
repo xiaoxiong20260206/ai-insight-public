@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>底层原理</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 1100px;
+            height: 800px;
+            overflow: hidden;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 40px;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 40px;
+        }
+        .principles {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        .principle {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 28px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.15);
+            position: relative;
+        }
+        .principle-num {
+            position: absolute;
+            top: -15px;
+            left: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .principle:nth-child(1) .principle-num { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .principle:nth-child(2) .principle-num { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .principle:nth-child(3) .principle-num { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .principle:nth-child(4) .principle-num { background: linear-gradient(135deg, #fa709a, #fee140); }
+        
+        .principle-title {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            margin-top: 8px;
+        }
+        .principle-core {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-left: 3px solid rgba(255,255,255,0.3);
+        }
+        .principle-core p {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+        .formula {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            color: #4facfe;
+            font-size: 13px;
+            text-align: center;
+        }
+        .implications {
+            color: rgba(255,255,255,0.8);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        .implications strong {
+            color: #fff;
+        }
+        
+        .center-box {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            border: 2px solid rgba(255,255,255,0.2);
+            text-align: center;
+            padding: 32px;
+        }
+        .center-box .big-text {
+            color: #fff;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .center-box .diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .node {
+            padding: 12px 20px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .node.model { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .node.task { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .node.env { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .node.feedback { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .arrow {
+            color: rgba(255,255,255,0.5);
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔮 四大底层原理：透过现象看本质</h1>
+        
+        <div class="principles">
+            <div class="principle">
+                <div class="principle-num">1</div>
+                <div class="principle-title">复杂度守恒定律</div>
+                <div class="principle-core">
+                    <p>问题的本质复杂度是守恒的，它只能被转移，不能被消除。</p>
+                </div>
+                <div class="formula">
+                    AI开发 = 设计Prompt + 管理Context + Review代码 + 测试验证
+                </div>
+                <div class="implications">
+                    <strong>启示：</strong>资深工程师用AI更有效，因为他们能更好地管理转移后的复杂度。
+                </div>
+            </div>
+            
+            <div class="principle">
+                <div class="principle-num">2</div>
+                <div class="principle-title">泛化的本质是压缩</div>
+                <div class="principle-core">
+                    <p>语言是人类发明的最高效泛化工具，因为它实现了最高效的信息压缩。</p>
+                </div>
+                <div class="formula">
+                    泛化能力 = 压缩率 × 解压精度
+                </div>
+                <div class="implications">
+                    <strong>启示：</strong>Prompt Engineering本质是高效压缩；代码比自然语言有更高的解压精度。
+                </div>
+            </div>
+            
+            <div class="principle">
+                <div class="principle-num">3</div>
+                <div class="principle-title">反馈环路是智能的必要条件</div>
+                <div class="principle-core">
+                    <p>任何形式的智能都需要与环境的反馈环路。</p>
+                </div>
+                <div class="formula">
+                    智能 = f(模型能力, 环境反馈质量, 迭代速度)
+                </div>
+                <div class="implications">
+                    <strong>启示：</strong>Coding是Agent甜点（测试=完美反馈）；TDD在AI时代复兴。
+                </div>
+            </div>
+            
+            <div class="principle">
+                <div class="principle-num">4</div>
+                <div class="principle-title">抽象层级决定适用范围</div>
+                <div class="principle-core">
+                    <p>越高层的抽象越通用但越难正确使用；越低层越专用但越易验证。</p>
+                </div>
+                <div class="formula">
+                    高抽象 → 高通用 + 低可控 | 低抽象 → 低通用 + 高可控
+                </div>
+                <div class="implications">
+                    <strong>启示：</strong>生产环境倾向基础组件而非框架；Skills比完整Agent更受欢迎。
+                </div>
+            </div>
+            
+            <div class="principle center-box">
+                <div class="big-text">🎯 "下半场"的核心转变</div>
+                <div class="diagram">
+                    <div class="node model">模型能力</div>
+                    <div class="arrow">→</div>
+                    <div class="node task">任务定义</div>
+                    <div class="arrow">+</div>
+                    <div class="node env">环境构建</div>
+                    <div class="arrow">+</div>
+                    <div class="node feedback">反馈循环</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编排层 - Agent Infra架构深度解析</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="../index.html">🏠 首页</a>
+            <span>/</span>
+            <span class="current">🔀 编排层</span>
+        </nav>
+
+        <header class="header">
+            <h1>🔀 编排层 (Orchestration Layer)</h1>
+            <p>Multi-Agent协作与任务编排 <span class="tag tag-new">NEW</span></p>
+        </header>
+
+        <section class="content-section">
+            <h2 class="section-title">📖 层级概述</h2>
+            <div class="layer-overview">
+                <h3>为什么需要编排层？</h3>
+                <p class="description">
+                    随着Agent数量增加和任务复杂度提升，单一Agent难以独立完成所有工作。
+                    编排层解决的核心问题是：<strong>如何让多个Agent协同工作</strong>，
+                    包括任务路由、上下文共享、冲突解决、工作流编排等。这是原架构中缺失的关键层级。
+                </p>
+                <div class="key-points">
+                    <div class="key-point">
+                        <h4>🎯 智能路由</h4>
+                        <p>根据用户意图自动选择最合适的Agent</p>
+                    </div>
+                    <div class="key-point">
+                        <h4>🔄 状态协调</h4>
+                        <p>多Agent间的状态同步与上下文共享</p>
+                    </div>
+                    <div class="key-point">
+                        <h4>⚡ 工作流引擎</h4>
+                        <p>支持复杂的DAG/状态机编排模式</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">🧩 核心组件深度分析</h2>
+
+            <div class="component-grid">
+                <!-- Agent Router -->
+                <div class="component-card theme-orchestration" id="agent-router">
+                    <div class="component-header">
+                        <span class="icon">🧭</span>
+                        <h3>Agent Router</h3>
+                    </div>
+                    <div class="component-body">
+                        <h4>定位与价值</h4>
+                        <p>意图识别与Agent路由分发，将用户请求智能分发到最合适的Agent处理。</p>
+                        
+                        <div class="deep-analysis">
+                            <h4>💡 深度解读</h4>
+                            <div class="insight">
+                                <strong>核心挑战：</strong>用户表达的意图可能模糊或跨越多个Agent职责范围。Router需要具备意图分类、意图澄清、多意图拆分的能力。准确率是核心指标。
+                            </div>
+                            <div class="industry-practice">
+                                <strong>实现方案：</strong>1) 基于规则的路由（简单但维护成本高）；2) 基于Embedding的语义匹配；3) LLM直接分类（效果好但成本高）。实践中通常混合使用：规则优先 + LLM兜底。
+                            </div>
+                        </div>
+                        
+                        <h4>关键功能</h4>
+                        <ul>
+                            <li>意图分类与识别</li>
+                            <li>多意图拆分</li>
+                            <li>模糊意图澄清</li>
+                            <li>路由策略配置</li>
+                            <li>Fallback处理</li>
+                        </ul>
+                        
+                        <a href="https://python.langchain.com/docs/how_to/#agents" target="_blank" class="learn-more">了解更多：LangChain Multi-Agent</a>
+                    </div>
+                </div>
+
+                <!-- Workflow Engine -->
+                <div class="component-card theme-orchestration" id="workflow-engine">
+                    <div class="component-header">
+                        <span class="icon">🔄</span>
+                        <h3>Workflow Engine</h3>
+                    </div>
+                    <div class="component-body">
+                        <h4>定位与价值</h4>
+                        <p>DAG/状态机编排引擎，支持复杂的多步骤、多分支工作流定义与执行。</p>
+                        
+                        <div class="deep-analysis">
+                            <h4>💡 深度解读</h4>
+                            <div class="insight">
+                                <strong>为什么需要状态机：</strong>传统的线性Flow难以处理循环、条件分支、人工介入等复杂场景。状态机模型（如LangGraph）允许定义任意拓扑的执行图，支持回退、重试、等待等模式。
+                            </div>
+                            <div class="industry-practice">
+                                <strong>业界标杆：</strong>LangGraph 是目前最成熟的Agent工作流引擎，核心概念包括：State（状态）、Node（处理节点）、Edge（转移条件）。支持持久化状态、人机交互、时间旅行调试。
+                            </div>
+                        </div>
+                        
+                        <h4>关键功能</h4>
+                        <ul>
+                            <li>可视化工作流设计</li>
+                            <li>条件分支与循环</li>
+                            <li>人工审批节点</li>
+                            <li>状态持久化</li>
+                            <li>执行历史回溯</li>
+                        </ul>
+                        
+                        <a href="https://www.langchain.com/langgraph" target="_blank" class="learn-more">了解更多：LangGraph</a>
+                    </div>
+                </div>
+
+                <!-- Context Manager -->
+                <div class="component-card theme-orchestration" id="context-manager">
+                    <div class="component-header">
+                        <span class="icon">📋</span>
+                        <h3>Context Manager</h3>
+                    </div>
+                    <div class="component-body">
+                        <h4>定位与价值</h4>
+                        <p>跨Agent上下文共享与状态同步，确保多个Agent能够访问一致的信息。</p>
+                        
+                        <div class="deep-analysis">
+                            <h4>💡 深度解读</h4>
+                            <div class="insight">
+                                <strong>核心问题：</strong>当任务在多个Agent间流转时，如何传递上下文？如何避免信息丢失？如何处理上下文冲突（不同Agent对同一信息的不同理解）？
+                            </div>
+                            <div class="industry-practice">
+                                <strong>实现模式：</strong>1) 共享黑板（Blackboard）：所有Agent读写同一个状态对象；2) 消息传递：Agent间通过消息交换信息；3) 混合模式：核心状态共享 + 局部消息传递。LangGraph采用共享State模式。
+                            </div>
+                        </div>
+                        
+                        <h4>关键功能</h4>
+                        <ul>
+                            <li>上下文注入与提取</li>
+                            <li>跨Agent状态同步</li>
+                            <li>上下文版本管理</li>
+                            <li>敏感信息过滤</li>
+                            <li>上下文压缩与摘要</li>
+                        </ul>
+                        
+                        <a href="https://langchain-ai.github.io/langgraph/concepts/" target="_blank" class="learn-more">了解更多：LangGraph State</a>
+                    </div>
+                </div>
+
+                <!-- Conflict Resolver -->
+                <div class="component-card theme-orchestration" id="conflict-resolver">
+                    <div class="component-header">
+                        <span class="icon">⚖️</span>
+                        <h3>Conflict Resolver</h3>
+                    </div>
+                    <div class="component-body">
+                        <h4>定位与价值</h4>
+                        <p>多Agent冲突检测与仲裁，处理多个Agent给出矛盾建议的情况。</p>
+                        
+                        <div class="deep-analysis">
+                            <h4>💡 深度解读</h4>
+                            <div class="insight">
+                                <strong>冲突场景：</strong>1) 资源竞争（多个Agent同时修改同一文件）；2) 建议冲突（开发Agent和安全Agent意见不一致）；3) 优先级冲突（紧急任务与常规任务）。
+                            </div>
+                            <div class="industry-practice">
+                                <strong>解决策略：</strong>1) 优先级规则（安全 > 功能 > 性能）；2) 投票机制（多数决）；3) 人工仲裁（关键决策升级）；4) 协商对话（让冲突Agent自行协商）。AutoGen采用对话式协商模式。
+                            </div>
+                        </div>
+                        
+                        <h4>关键功能</h4>
+                        <ul>
+                            <li>冲突自动检测</li>
+                            <li>优先级仲裁</li>
+                            <li>人工介入升级</li>
+                            <li>冲突历史记录</li>
+                            <li>策略可配置</li>
+                        </ul>
+                        
+                        <a href="https://microsoft.github.io/autogen/" target="_blank" class="learn-more">了解更多：AutoGen</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">🎯 Multi-Agent协作模式</h2>
+            <div class="component-grid">
+                <div class="component-card" style="border-color: #4facfe;">
+                    <div class="component-body">
+                        <h4>🔗 顺序协作 (Sequential)</h4>
+                        <p>Agent按顺序执行，前一个的输出是后一个的输入。适用于流水线式任务。</p>
+                        <p><strong>例如：</strong>需求分析Agent → 设计Agent → 开发Agent → 测试Agent</p>
+                    </div>
+                </div>
+                <div class="component-card" style="border-color: #4facfe;">
+                    <div class="component-body">
+                        <h4>🌐 并行协作 (Parallel)</h4>
+                        <p>多个Agent同时执行，结果合并。适用于可并行的独立子任务。</p>
+                        <p><strong>例如：</strong>同时让代码Agent、文档Agent、测试Agent处理同一需求</p>
+                    </div>
+                </div>
+                <div class="component-card" style="border-color: #4facfe;">
+                    <div class="component-body">
+                        <h4>🔄 对话协作 (Conversational)</h4>
+                        <p>Agent之间通过对话交换信息，动态决定下一步。适用于探索性任务。</p>
+                        <p><strong>例如：</strong>开发Agent和审核Agent来回讨论方案直到达成一致</p>
+                    </div>
+                </div>
+                <div class="component-card" style="border-color: #4facfe;">
+                    <div class="component-body">
+                        <h4>👑 层级协作 (Hierarchical)</h4>
+                        <p>主Agent分配任务给子Agent，汇总结果。适用于复杂任务分解。</p>
+                        <p><strong>例如：</strong>架构Agent将大任务拆分给多个开发Agent，最后汇总检查</p>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <a href="https://www.blog.langchain.com/langgraph-multi-agent-workflows/" target="_blank" class="learn-more">了解更多：LangGraph Multi-Agent Workflows</a>
+            </div>
+        </section>
+
+        <!-- 章节导航 -->
+        <div style="margin-top:24px;padding-top:16px;border-top:1px solid #F5F5F4;display:flex;justify-content:flex-end;align-items:center;gap:12px;flex-wrap:wrap">
+            <a href="../index.html" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500">← 返回架构总览</a>
+        </div>
+
+        <!-- 了解更多 -->
+        <div style="margin-top:24px;background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #F5F5F4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06),0 1px 2px rgba(31,35,40,.04)">
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px">💡 了解更多</div>
+        <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">
+        我是 <strong>AI洞察</strong>，的AI洞察。AI洞察是的一个项目，目标是系统化追踪AI行业动态，每日/每周输出调研洞察，帮助你保持对AI行业的全局视野。覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。
+        </p>
+        <a href="https://xiaoxiong20260206.github.io/ai-insight-public/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#059669 0%,#10B981 100%);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">
+        🏠 访问AI洞察首页
+        </a>
+        </div>
+    </div>
+</body>
+</html>
