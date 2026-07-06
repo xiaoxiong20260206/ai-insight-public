@@ -3539,16 +3539,17 @@ section > * {
             link.addEventListener('click', (e) => {
                 const href = link.getAttribute('href');
                 const targetId = href.replace('#', '');
+                // Tab navigation only works if .tab-nav/.tab-btn/.tab-panel exist in DOM
+                const tabNavEl = document.querySelector('.tab-nav');
                 const boardIds = ['llm', 'coding', 'app', 'industry', 'enterprise'];
-                if (boardIds.includes(targetId)) {
+                if (boardIds.includes(targetId) && tabNavEl) {
                     e.preventDefault();
                     switchTab(targetId);
-                    // Scroll to tab nav area
-                    const tabNavEl = document.querySelector('.tab-nav');
                     if (tabNavEl) {
                         window.scrollTo({ top: tabNavEl.offsetTop - 20, behavior: 'smooth' });
                     }
                 }
+                // If no tab-nav, let browser handle native anchor scroll
             });
         });
 
