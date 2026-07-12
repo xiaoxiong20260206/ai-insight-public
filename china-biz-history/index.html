@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>激荡·沸腾·新十年 — 中国商业史四十年规律图谱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Serif+SC:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0d0f;
+  --bg2: #141418;
+  --bg3: #1c1c22;
+  --red: #c8102e;
+  --gold: #c9a84c;
+  --cream: #e8e0d0;
+  --muted: #888880;
+  --border: #2a2a30;
+  --mono: 'JetBrains Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--cream); font-family: 'Noto Serif SC', serif; line-height: 1.7; overflow-x: hidden; }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 100; background: rgba(13,13,15,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; align-items: center; gap: 32px; height: 52px; }
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--red); letter-spacing: 2px; white-space: nowrap; }
+.nav-links { display: flex; gap: 24px; overflow-x: auto; scrollbar-width: none; }
+.nav-links a { font-size: 12px; color: var(--muted); text-decoration: none; letter-spacing: 1px; white-space: nowrap; transition: color .2s; }
+.nav-links a:hover { color: var(--cream); }
+
+/* HERO */
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 80px 60px; position: relative; overflow: hidden; }
+.hero::before {
+  content: '1978 1984 1992 1994 1998 1999 2000 2001 2003 2005 2008 2009 2010 2011 2013 2014 2016 2017 2018 2019';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  font-family: var(--mono); font-size: 11px; color: rgba(200,16,46,0.04);
+  word-break: break-all; line-height: 1.8; padding: 20px;
+  pointer-events: none;
+}
+.hero-tag { font-family: var(--mono); font-size: 11px; color: var(--red); letter-spacing: 3px; margin-bottom: 28px; }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px,6vw,88px); font-weight: 900; line-height: 1.05; margin-bottom: 28px; }
+.hero h1 em { font-style: normal; color: var(--red); }
+.hero-desc { font-size: 16px; color: var(--muted); max-width: 520px; margin-bottom: 48px; line-height: 1.8; }
+.books-bar { display: flex; gap: 0; flex-wrap: wrap; }
+.book-item { border: 1px solid var(--border); padding: 16px 24px; position: relative; }
+.book-item + .book-item { border-left: none; }
+.book-item:first-child { border-right: 1px solid var(--border); }
+.book-period { font-family: var(--mono); font-size: 10px; color: var(--red); letter-spacing: 2px; margin-bottom: 4px; }
+.book-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+.book-author { font-size: 11px; color: var(--muted); }
+.scroll-hint { position: absolute; bottom: 40px; left: 60px; font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 2px; display: flex; align-items: center; gap: 12px; }
+.scroll-hint::before { content: ''; display: block; width: 40px; height: 1px; background: var(--muted); }
+
+/* SECTIONS */
+section { padding: 96px 60px; max-width: 1100px; margin: 0 auto; }
+.sec-header { margin-bottom: 56px; display: flex; align-items: flex-start; gap: 24px; }
+.sec-num { font-family: var(--mono); font-size: 11px; color: var(--red); letter-spacing: 2px; margin-top: 6px; min-width: 60px; }
+.sec-titles h2 { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; margin-bottom: 8px; }
+.sec-titles p { font-size: 14px; color: var(--muted); }
+
+/* LAWS */
+.laws-grid { display: grid; gap: 2px; }
+.law-item { background: var(--bg2); padding: 28px 32px; display: grid; grid-template-columns: 48px 1fr; gap: 20px; align-items: start; border-left: 3px solid transparent; transition: border-color .3s, background .3s; cursor: default; }
+.law-item:hover { border-left-color: var(--red); background: var(--bg3); }
+.law-num { font-family: var(--mono); font-size: 28px; font-weight: 600; color: rgba(200,16,46,0.25); line-height: 1; margin-top: 4px; }
+.law-content h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+.law-content p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 14px; }
+.law-evidence { display: flex; flex-wrap: wrap; gap: 6px; }
+.ev-tag { font-family: var(--mono); font-size: 10px; background: rgba(200,16,46,0.1); color: var(--red); padding: 3px 10px; border-radius: 2px; letter-spacing: 1px; }
+
+/* TIMELINE */
+.tl-container { position: relative; }
+.tl-phase { margin-bottom: 48px; }
+.tl-phase-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 3px; padding: 10px 0; border-top: 1px solid var(--border); margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+.tl-phase-label span { color: var(--red); }
+.tl-events { display: grid; gap: 2px; }
+.tl-event { display: grid; grid-template-columns: 52px 1fr; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(42,42,48,0.5); align-items: start; }
+.tl-year { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--gold); padding-top: 2px; }
+.tl-body { }
+.tl-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.tl-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* THREADS */
+.threads { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2px; }
+.thread { background: var(--bg2); padding: 32px; }
+.thread-icon { font-size: 24px; margin-bottom: 16px; }
+.thread h3 { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.thread-sub { font-family: var(--mono); font-size: 10px; color: var(--red); letter-spacing: 2px; margin-bottom: 16px; }
+.thread p { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.8; }
+.thread-mstones { display: flex; flex-direction: column; gap: 6px; }
+.ms { font-size: 12px; padding: 6px 12px; background: var(--bg3); color: var(--cream); border-left: 2px solid var(--border); }
+.ms strong { color: var(--gold); }
+
+/* PEOPLE */
+.people-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(230px,1fr)); gap: 2px; }
+.person { background: var(--bg2); padding: 24px; border-top: 2px solid transparent; transition: border-color .2s; }
+.person:hover { border-top-color: var(--red); }
+.p-cat { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 2px; margin-bottom: 10px; }
+.person h4 { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+.p-desc { font-size: 12px; color: var(--muted); line-height: 1.75; margin-bottom: 10px; }
+.p-legacy { font-size: 12px; color: var(--gold); font-style: italic; line-height: 1.6; }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--border); padding: 40px 60px; text-align: center; }
+footer p { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+
+@media (max-width: 700px) {
+  nav { padding: 0 20px; }
+  .hero { padding: 80px 24px; }
+  section { padding: 64px 24px; }
+  .sec-header { flex-direction: column; gap: 8px; }
+  .law-item { grid-template-columns: 1fr; gap: 8px; }
+  .law-num { font-size: 18px; }
+  footer { padding: 32px 24px; }
+}
+
+/* TURNING POINTS */
+.tp-card { background: var(--bg2); display: grid; grid-template-columns: 120px 1fr; gap: 32px; padding: 32px; border-left: 3px solid transparent; transition: border-color .3s; margin-bottom: 2px; }
+.tp-card:hover { border-left-color: var(--red); }
+.tp-meta { display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
+.tp-year { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 900; color: rgba(200,16,46,0.2); line-height: 1; }
+.tp-tag { font-family: var(--mono); font-size: 10px; color: var(--red); letter-spacing: 2px; }
+.tp-body h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; margin-bottom: 14px; }
+.tp-body p { font-size: 13px; color: var(--muted); line-height: 1.85; margin-bottom: 12px; }
+.tp-stats { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+.tp-stat { background: var(--bg3); padding: 10px 16px; min-width: 140px; }
+.ts-n { display: block; font-family: var(--mono); font-size: 15px; font-weight: 600; color: var(--gold); margin-bottom: 2px; }
+.ts-l { display: block; font-size: 11px; color: var(--muted); }
+
+/* GENERATIONS */
+.gen-card { background: var(--bg3); padding: 32px; }
+.gen-era { font-family: var(--mono); font-size: 10px; color: var(--red); letter-spacing: 2px; margin-bottom: 10px; }
+.gen-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.gen-sub { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+.gen-section { margin-bottom: 16px; }
+.gen-label { font-family: var(--mono); font-size: 10px; color: var(--gold); letter-spacing: 1px; margin-bottom: 5px; }
+.gen-section p { font-size: 13px; color: var(--muted); line-height: 1.75; }
+
+/* WINNERS vs LOSERS */
+.wl-row { background: var(--bg2); padding: 28px 32px; margin-bottom: 2px; }
+.wl-era { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: baseline; }
+.wl-era span { font-family: var(--mono); font-size: 11px; color: var(--muted); font-weight: 400; }
+.wl-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.wl-label { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; padding: 4px 10px; display: inline-block; margin-bottom: 12px; }
+.wl-label.win { background: rgba(100,200,100,0.1); color: #6dc26d; }
+.wl-label.lose { background: rgba(200,16,46,0.1); color: var(--red); }
+.wl-item { font-size: 13px; color: var(--muted); padding: 8px 0; border-bottom: 1px solid var(--border); line-height: 1.7; }
+.wl-item strong { color: var(--cream); }
+.wl-item:last-child { border-bottom: none; }
+
+@media (max-width: 700px) {
+  .tp-card { grid-template-columns: 1fr; gap: 12px; }
+  .tp-year { font-size: 28px; }
+  .wl-cols { grid-template-columns: 1fr; }
+}
+
+
+/* INSIGHT PANELS */
+.wl-insight { background: var(--bg3); border-left: 3px solid var(--gold); padding: 24px 28px; margin-top: 2px; }
+.wi-title { font-family: var(--mono); font-size: 10px; color: var(--gold); letter-spacing: 2px; margin-bottom: 14px; }
+.wi-essence { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; margin-bottom: 12px; line-height: 1.5; }
+.wi-essence em { font-style: normal; color: var(--gold); }
+.wi-body { font-size: 13px; color: var(--muted); line-height: 1.85; margin-bottom: 18px; }
+.wi-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; }
+.wi-table th { background: rgba(201,168,76,0.1); color: var(--gold); font-family: var(--mono); font-size: 10px; letter-spacing: 1px; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 600; }
+.wi-table td { padding: 10px 12px; border-bottom: 1px solid rgba(42,42,48,0.7); vertical-align: top; line-height: 1.65; }
+.wi-table tr:last-child td { border-bottom: none; }
+.wi-table .col-stage { color: var(--cream); font-weight: 600; white-space: nowrap; }
+.wi-table .col-reality { color: var(--muted); }
+.wi-table .col-analogy { color: rgba(201,168,76,0.75); font-style: italic; }
+.wi-table tr.verified td { }
+.wi-table tr.evolve td { opacity: 0.85; }
+.wi-table tr.predict td { opacity: 0.7; }
+.wi-sep { border: none; border-top: 1px dashed var(--border); margin: 4px 0; }
+.wi-seg-label { font-family: var(--mono); font-size: 9px; letter-spacing: 1px; padding: 4px 12px; color: var(--muted); background: rgba(20,20,24,0.5); }
+.analogy-card { display: inline-block; background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.2); padding: 8px 16px; border-radius: 2px; font-size: 13px; margin-top: 10px; }
+.analogy-card strong { color: var(--gold); }
+
+
+/* META RULES SECTION */
+.meta-section { background: #0a0a0c; padding: 96px 60px; max-width: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.meta-inner { max-width: 1100px; margin: 0 auto; }
+.meta-intro { font-size: 15px; color: var(--muted); max-width: 680px; line-height: 1.9; margin-bottom: 64px; }
+.meta-intro strong { color: var(--cream); }
+
+/* triangle */
+.force-triangle { display: flex; flex-direction: column; align-items: center; margin-bottom: 72px; }
+.triangle-visual { position: relative; width: 380px; height: 320px; margin-bottom: 32px; }
+.triangle-svg { width: 100%; height: 100%; }
+.force-node { position: absolute; text-align: center; }
+.force-node.top { top: 0; left: 50%; transform: translateX(-50%); }
+.force-node.bl { bottom: 20px; left: 0; }
+.force-node.br { bottom: 20px; right: 0; }
+.fn-icon { font-size: 28px; margin-bottom: 6px; }
+.fn-label { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; }
+.fn-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+.triangle-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+.tc-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 2px; margin-bottom: 6px; }
+.tc-value { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 700; color: var(--red); line-height: 1.4; }
+
+/* friction law */
+.friction-law { margin-bottom: 72px; }
+.fl-header { margin-bottom: 28px; }
+.fl-header h3 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+.fl-header .fl-sub { font-family: var(--mono); font-size: 11px; color: var(--red); letter-spacing: 2px; }
+.fl-desc { font-size: 14px; color: var(--muted); max-width: 680px; line-height: 1.85; margin-bottom: 32px; }
+.fl-timeline { display: grid; gap: 2px; }
+.fl-row { display: grid; grid-template-columns: 160px 1fr 1fr; gap: 0; background: var(--bg2); }
+.fl-row:first-child .fl-cell { border-top: none; }
+.fl-cell { padding: 18px 20px; border-top: 1px solid var(--border); }
+.fl-era { font-family: var(--mono); font-size: 11px; color: var(--gold); }
+.fl-friction { font-size: 13px; font-weight: 600; color: var(--cream); }
+.fl-how { font-size: 13px; color: var(--muted); }
+.fl-bar-wrap { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+.fl-bar { height: 4px; background: var(--red); border-radius: 2px; }
+.fl-pct { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.fl-next { background: rgba(200,16,46,0.06); border-left: 3px solid var(--red); }
+.fl-next .fl-friction { color: var(--red); }
+
+/* middle layer law */
+.midlayer-law { margin-bottom: 0; }
+.ml-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2px; margin-top: 24px; }
+.ml-card { background: var(--bg2); padding: 24px; }
+.ml-wave { font-family: var(--mono); font-size: 10px; color: var(--red); letter-spacing: 1px; margin-bottom: 10px; }
+.ml-compressed { font-size: 15px; font-weight: 700; font-family: 'Playfair Display', serif; margin-bottom: 8px; text-decoration: line-through; text-decoration-color: rgba(200,16,46,0.5); }
+.ml-who { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+.ml-go { font-size: 12px; color: var(--gold); }
+.ml-go::before { content: '→ '; }
+
+/* analogy box */
+.meta-analogy { background: rgba(200,16,46,0.05); border: 1px solid rgba(200,16,46,0.15); padding: 24px 28px; margin-top: 28px; }
+.ma-label { font-family: var(--mono); font-size: 10px; color: var(--red); letter-spacing: 2px; margin-bottom: 10px; }
+.ma-text { font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.75; color: var(--cream); }
+.ma-text em { font-style: normal; color: var(--gold); }
+
+/* human desire */
+.desire-law { margin-top: 72px; }
+.desire-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 2px; margin-top: 24px; }
+.desire-card { background: var(--bg2); padding: 22px; position: relative; overflow: hidden; }
+.desire-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; }
+.dc-era { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 1px; margin-bottom: 8px; }
+.dc-layer { font-size: 14px; font-weight: 700; font-family: 'Playfair Display', serif; margin-bottom: 6px; }
+.dc-desire { font-size: 12px; color: var(--gold); margin-bottom: 8px; }
+.dc-example { font-size: 12px; color: var(--muted); line-height: 1.65; }
+
+@media (max-width: 700px) {
+  .meta-section { padding: 64px 24px; }
+  .triangle-visual { width: 280px; height: 240px; }
+  .fl-row { grid-template-columns: 1fr; }
+  .fl-cell:not(:last-child) { border-bottom: none; }
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">激荡·沸腾</div>
+  <div class="nav-links">
+    <a href="#meta">元规律</a>
+    <a href="#laws">核心规律</a>
+    <a href="#timeline">时间线</a>
+    <a href="#turning">关键拐点</a>
+    <a href="#threads">三条主线</a>
+    <a href="#generations">三代图谱</a>
+    <a href="#winlose">赢家对照</a>
+    <a href="#people">关键人物</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">中国商业史三部曲 · 1978—2019</div>
+  <h1>激荡、<em>沸腾</em>、<br>新十年</h1>
+  <p class="hero-desc">基于《激荡三十年》《沸腾十五年》《沸腾新十年》三部经典，梳理四十年商业进化的完整图谱——时间线之外，更重要的是穿透事件的规律。</p>
+  <div class="books-bar">
+    <div class="book-item">
+      <div class="book-period">1978 — 2008</div>
+      <div class="book-title">《激荡三十年》</div>
+      <div class="book-author">吴晓波 · 企业编年史</div>
+    </div>
+    <div class="book-item">
+      <div class="book-period">1995 — 2009</div>
+      <div class="book-title">《沸腾十五年》</div>
+      <div class="book-author">林军 · 互联网创业群像</div>
+    </div>
+    <div class="book-item">
+      <div class="book-period">2009 — 2019</div>
+      <div class="book-title">《沸腾新十年》</div>
+      <div class="book-author">林军等 · 移动互联网实录</div>
+    </div>
+  </div>
+  <div class="scroll-hint">向下滚动</div>
+</div>
+
+
+<!-- META RULES -->
+<div class="meta-section" id="meta">
+<div class="meta-inner">
+  <div class="sec-header">
+    <div class="sec-num">00</div>
+    <div class="sec-titles">
+      <h2>元规律：驱动一切变化的底层力量</h2>
+      <p>事件是表象，规律是结构，驱动力才是根本</p>
+    </div>
+  </div>
+  <p class="meta-intro">四十年的商业史，表面上是一个个事件的叠加，但穿透表象之后，<strong>只有三股力量在驱动一切变化</strong>——它们形成一个三角，缺一角机会就不存在。三角之上，还有一条贯穿始终的底层方向。</p>
+
+  <!-- Force Triangle -->
+  <div class="force-triangle">
+    <div class="triangle-visual">
+      <svg class="triangle-svg" viewBox="0 0 380 320">
+        <polygon points="190,30 30,290 350,290" fill="none" stroke="rgba(200,16,46,0.25)" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <line x1="190" y1="30" x2="190" y2="200" stroke="rgba(201,168,76,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="30" y1="290" x2="190" y2="200" stroke="rgba(201,168,76,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="350" y1="290" x2="190" y2="200" stroke="rgba(201,168,76,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
+        <circle cx="190" cy="200" r="36" fill="rgba(200,16,46,0.08)" stroke="rgba(200,16,46,0.3)" stroke-width="1"/>
+      </svg>
+      <div class="force-node top">
+        <div class="fn-icon">🏛️</div>
+        <div class="fn-label">政策</div>
+        <div class="fn-sub">被允许做什么</div>
+      </div>
+      <div class="force-node bl">
+        <div class="fn-icon">⚡</div>
+        <div class="fn-label">技术</div>
+        <div class="fn-sub">能做到什么</div>
+      </div>
+      <div class="force-node br">
+        <div class="fn-icon">🧬</div>
+        <div class="fn-label">人性</div>
+        <div class="fn-sub">想要什么</div>
+      </div>
+      <div class="triangle-center">
+        <div class="tc-label">交集 = 机会</div>
+        <div class="tc-value">商业<br>窗口</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);max-width:560px;text-align:center;line-height:1.8;">每次有新的商业机会，是因为<strong style="color:var(--cream)">技术扩大了"能做"的边界</strong>，和/或<strong style="color:var(--cream)">政策扩大了"允许做"的边界</strong>——而<strong style="color:var(--gold)">人性的欲望一直都在</strong>，从未改变，只是之前没有被满足的条件。</p>
+  </div>
+
+  <!-- Friction Law -->
+  <div class="friction-law">
+    <div class="fl-header">
+      <h3>底层方向：摩擦力递减定律</h3>
+      <div class="fl-sub">THE FRICTION REDUCTION LAW</div>
+    </div>
+    <p class="fl-desc">三股力量驱动方向不同，但最终的合力指向同一个方向：<strong style="color:var(--cream)">消除用户与欲望之间的摩擦</strong>。四十年商业史，本质上是一部不断消除交易摩擦的历史——每一轮商业革命，都是在某个维度上消除了之前被视为"理所当然"的阻力。</p>
+    <div class="fl-timeline">
+      <div class="fl-row">
+        <div class="fl-cell"><div class="fl-era">1978—1992</div><div class="fl-friction">消除生产摩擦</div></div>
+        <div class="fl-cell"><div class="fl-how">能造出来、能买到——供给端从匮乏到丰盛，联想/海尔解决的是"有没有"的问题</div><div class="fl-bar-wrap"><div class="fl-bar" style="width:15%"></div><div class="fl-pct">摩擦消除程度（相对）</div></div></div>
+        <div class="fl-cell"><div class="fl-how" style="font-style:italic;">旧摩擦：商品稀缺，计划分配，买不到</div></div>
+      </div>
+      <div class="fl-row">
+        <div class="fl-cell"><div class="fl-era">1994—2005</div><div class="fl-friction">消除信息摩擦</div></div>
+        <div class="fl-cell"><div class="fl-how">能找到——从"不知道有什么"到"搜索什么就有什么"，百度/淘宝解决的是"找不到"的问题</div><div class="fl-bar-wrap"><div class="fl-bar" style="width:35%"></div><div class="fl-pct">摩擦消除程度（相对）</div></div></div>
+        <div class="fl-cell"><div class="fl-how" style="font-style:italic;">旧摩擦：信息不对称，中间商赚差价，用户无法比价</div></div>
+      </div>
+      <div class="fl-row">
+        <div class="fl-cell"><div class="fl-era">2009—2015</div><div class="fl-friction">消除场景摩擦</div></div>
+        <div class="fl-cell"><div class="fl-how">随时随地——从"坐下来才能用"到"随时随地可用"，微信/滴滴解决的是"不方便"的问题</div><div class="fl-bar-wrap"><div class="fl-bar" style="width:60%"></div><div class="fl-pct">摩擦消除程度（相对）</div></div></div>
+        <div class="fl-cell"><div class="fl-how" style="font-style:italic;">旧摩擦：地点/时间限制，必须在特定场景才能完成</div></div>
+      </div>
+      <div class="fl-row">
+        <div class="fl-cell"><div class="fl-era">2015—2019</div><div class="fl-friction">消除决策摩擦</div></div>
+        <div class="fl-cell"><div class="fl-how">不需要主动选择——从"我要找什么"到"系统推给你"，抖音/拼多多解决的是"选择负担"的问题</div><div class="fl-bar-wrap"><div class="fl-bar" style="width:80%"></div><div class="fl-pct">摩擦消除程度（相对）</div></div></div>
+        <div class="fl-cell"><div class="fl-how" style="font-style:italic;">旧摩擦：用户需要主动输入意图、关注账号、做决定</div></div>
+      </div>
+      <div class="fl-row fl-next">
+        <div class="fl-cell"><div class="fl-era">2020— 下一轮</div><div class="fl-friction">消除执行摩擦</div></div>
+        <div class="fl-cell"><div class="fl-how">AI替你做完整件事——不只推荐，直接执行。从"帮你决定"到"替你行动"，这是ChatGPT/Agent指向的方向</div><div class="fl-bar-wrap"><div class="fl-bar" style="width:95%"></div><div class="fl-pct">预测趋势</div></div></div>
+        <div class="fl-cell"><div class="fl-how" style="font-style:italic;">当前摩擦：用户知道想要什么结果，但执行链路还要自己走</div></div>
+      </div>
+    </div>
+    <div class="meta-analogy">
+      <div class="ma-label">类比</div>
+      <div class="ma-text">想象你想吃一顿饭：<em>1980年代</em>你得先去种地，<em>1990年代</em>你能去市场买食材，<em>2000年代</em>你能在网上查菜谱，<em>2010年代</em>你能用手机叫外卖，<em>2015年后</em>系统猜到你想吃什么直接推给你，<em>下一步</em>AI帮你下单付款整件事做完。每一步，都是在消除你和"吃到饭"之间的一层阻力。</div>
+    </div>
+  </div>
+
+  <!-- Middle Layer Law -->
+  <div class="midlayer-law" style="margin-top:72px;">
+    <div class="fl-header">
+      <h3>副规律：中间层消失定律</h3>
+      <div class="fl-sub">THE MIDDLEMAN COMPRESSION LAW</div>
+    </div>
+    <p class="fl-desc">每一轮技术革命都会压缩一个中间层——原本靠"信息不对称"或"流程把持"生存的角色，在摩擦消除之后失去存在价值。这不是偶然，而是必然：<strong style="color:var(--cream)">中间层本质上是旧摩擦的制度化</strong>，摩擦消除，中间层自然凋落。</p>
+    <div class="ml-grid">
+      <div class="ml-card">
+        <div class="ml-wave">PC互联网时代</div>
+        <div class="ml-compressed">信息中间层</div>
+        <div class="ml-who">媒体编辑、广告公司、传统出版商——靠"控制信息流通"生存</div>
+        <div class="ml-go">迁移到内容创作（自媒体）或数据分析</div>
+      </div>
+      <div class="ml-card">
+        <div class="ml-wave">电商时代</div>
+        <div class="ml-compressed">流通中间层</div>
+        <div class="ml-who">经销商、代理商、实体零售商——靠"渠道把持"收取通道费</div>
+        <div class="ml-go">迁移到品牌（DTC）或物流/仓储服务</div>
+      </div>
+      <div class="ml-card">
+        <div class="ml-wave">移动支付时代</div>
+        <div class="ml-compressed">金融中间层</div>
+        <div class="ml-who">银行柜台、POS机运营商、汇款中间商——靠"支付通道"收取手续费</div>
+        <div class="ml-go">迁移到金融科技或高净值财富管理</div>
+      </div>
+      <div class="ml-card">
+        <div class="ml-wave">算法时代</div>
+        <div class="ml-compressed">内容中间层</div>
+        <div class="ml-who">传统策划、内容编辑、KOL经纪——靠"内容分发把持"收取流量费</div>
+        <div class="ml-go">迁移到创作者本身或算法训练数据</div>
+      </div>
+      <div class="ml-card" style="background:rgba(200,16,46,0.05);border-left:2px solid var(--red);">
+        <div class="ml-wave" style="color:var(--red);">AI时代（进行中）</div>
+        <div class="ml-compressed" style="text-decoration:none;color:var(--red);">认知中间层</div>
+        <div class="ml-who">咨询顾问、分析师、中低端律师/会计——靠"专业知识壁垒"收取认知溢价</div>
+        <div class="ml-go">迁移到创意判断、复杂决策或人际信任维度</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Human Desire -->
+  <div class="desire-law">
+    <div class="fl-header">
+      <h3>人性维度：被解放的欲望层级</h3>
+      <div class="fl-sub">THE DESIRE LIBERATION SEQUENCE</div>
+    </div>
+    <p class="fl-desc">技术和政策决定"能做什么"，但<strong style="color:var(--cream)">商业史的内容</strong>是由人性欲望决定的。四十年里，被商业化的欲望层级在不断上升——从生存需求到社交需求到娱乐需求，每一级的解放都对应一个商业时代。欲望没有变，只是之前没有被满足的条件。</p>
+    <div class="desire-grid">
+      <div class="desire-card">
+        <div class="dc-era">1978—1992</div>
+        <div class="dc-layer">生存与安全</div>
+        <div class="dc-desire">欲望：能买到好东西</div>
+        <div class="dc-example">联想电脑、海尔冰箱、万科住宅——供给稀缺时代，有货即王道</div>
+      </div>
+      <div class="desire-card">
+        <div class="dc-era">1994—2003</div>
+        <div class="dc-layer">信息与连接</div>
+        <div class="dc-desire">欲望：能知道/能联系</div>
+        <div class="dc-example">门户获取资讯、QQ联系朋友——互联网第一次让普通人接入"世界"</div>
+      </div>
+      <div class="desire-card">
+        <div class="dc-era">2003—2010</div>
+        <div class="dc-layer">表达与认同</div>
+        <div class="dc-desire">欲望：能说出来/被看见</div>
+        <div class="dc-example">博客、论坛、微博——普通人第一次有了公开发声的渠道</div>
+      </div>
+      <div class="desire-card">
+        <div class="dc-era">2010—2015</div>
+        <div class="dc-layer">便利与即时</div>
+        <div class="dc-desire">欲望：现在就要</div>
+        <div class="dc-example">外卖、打车、即时通讯——"等待"变成了可以被商业消除的成本</div>
+      </div>
+      <div class="desire-card">
+        <div class="dc-era">2015—2019</div>
+        <div class="dc-layer">娱乐与沉浸</div>
+        <div class="dc-desire">欲望：让我停不下来</div>
+        <div class="dc-example">短视频、直播、游戏——不再是满足需求，而是创造无限消费</div>
+      </div>
+      <div class="desire-card" style="background:rgba(200,16,46,0.05);border-left:2px solid var(--red);">
+        <div class="dc-era">2020— 下一轮</div>
+        <div class="dc-layer" style="color:var(--red);">自主与代理</div>
+        <div class="dc-desire">欲望：帮我把事做完</div>
+        <div class="dc-example">AI Agent——从"替我查"到"替我做"，人类欲望上升到"不想亲自动手"</div>
+      </div>
+    </div>
+    <div class="meta-analogy" style="margin-top:28px;">
+      <div class="ma-label">底线洞察</div>
+      <div class="ma-text">三条规律的共同指向：商业史的方向，永远是<em>「把人从低级劳动中解放出来」</em>——从体力劳动（生产）到信息劳动（搜索）到决策劳动（选择）到执行劳动（行动），每一轮革命都把人从一种"不得不做的事"里解放出来，让他们去做更高层级的事。<em>这不会停止。</em></div>
+    </div>
+  </div>
+
+</div>
+</div>
+<!-- END META RULES -->
+
+<!-- LAWS -->
+<section id="laws">
+  <div class="sec-header">
+    <div class="sec-num">01 / 04</div>
+    <div class="sec-titles">
+      <h2>六条核心规律</h2>
+      <p>时间线之外，穿透四十年的底层逻辑</p>
+    </div>
+  </div>
+  <div class="laws-grid">
+
+    <div class="law-item">
+      <div class="law-num">01</div>
+      <div class="law-content">
+        <h3>政策窗口决定起跑时机</h3>
+        <p>每一波创业潮都跟在一次政策解禁之后。中国商业史本质上是一部政策节奏的跟随史——在窗口期敢于入场的人，比能力强者更先到达。</p>
+        <div class="law-evidence">
+          <span class="ev-tag">1984 公司元年</span>
+          <span class="ev-tag">1992 南巡讲话</span>
+          <span class="ev-tag">2001 WTO</span>
+          <span class="ev-tag">2009 3G牌照</span>
+          <span class="ev-tag">2015 双创政策</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="law-item">
+      <div class="law-num">02</div>
+      <div class="law-content">
+        <h3>危机是加速器，不是终结者</h3>
+        <p>非典造就淘宝，金融危机倒逼内需，纳斯达克泡沫洗出BAT。危机淘汰跟风者、留下真需求——它不是历史的终点，是下一轮力量的分水岭。</p>
+        <div class="law-evidence">
+          <span class="ev-tag">2000 互联网泡沫→BAT胜出</span>
+          <span class="ev-tag">2003 非典→电商爆发</span>
+          <span class="ev-tag">2008 金融危机→内需转型</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="law-item">
+      <div class="law-num">03</div>
+      <div class="law-content">
+        <h3>范式跃迁必然洗牌，前代冠军很难赢下一局</h3>
+        <p>门户时代的赢家在搜索时代失速，PC巨头在移动时代失位。护城河是当期的，跃迁是结构性的——已有优势往往是转型的最大阻力。</p>
+        <div class="law-evidence">
+          <span class="ev-tag">搜狐：门户→搜索失速</span>
+          <span class="ev-tag">百度：PC→移动失位</span>
+          <span class="ev-tag">腾讯：PC→微信自我颠覆</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="law-item">
+      <div class="law-num">04</div>
+      <div class="law-content">
+        <h3>模仿→本土化→原创超越，是中国互联网的三段式</h3>
+        <p>从照搬美国模式到微信支付、短视频反向输出全球，中国互联网用二十年完成了Copy to China→China Innovation→Inspire the World的完整路径。</p>
+        <div class="law-evidence">
+          <span class="ev-tag">早期：Google/eBay/ICQ中国版</span>
+          <span class="ev-tag">中期：微信支付超越PayPal</span>
+          <span class="ev-tag">后期：TikTok全球第一</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="law-item">
+      <div class="law-num">05</div>
+      <div class="law-content">
+        <h3>资本加速但不创造价值，终须回归商业本质</h3>
+        <p>O2O补贴大战、共享单车大战、百团大战，每一轮都以资本驱动"赢家通吃"收场——最后活下来的要么找到真实商业模式，要么在巨头合并中消失。</p>
+        <div class="law-evidence">
+          <span class="ev-tag">2015 O2O烧钱→洗牌</span>
+          <span class="ev-tag">2016 摩拜/ofo→破产/收购</span>
+          <span class="ev-tag">美团：团购→本地生活</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="law-item">
+      <div class="law-num">06</div>
+      <div class="law-content">
+        <h3>合法性始终是中国民营企业最底层的变量</h3>
+        <p>每一代企业家都要先解决"被允许做生意"的问题，再谈做大。年广久的雇工、史玉柱的债务、马云的牌照——政策认可的时机往往比商业判断更决定命运。</p>
+        <div class="law-evidence">
+          <span class="ev-tag">年广久：雇工是否剥削</span>
+          <span class="ev-tag">民营银行牌照博弈</span>
+          <span class="ev-tag">2018 平台监管收紧</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline" style="background:var(--bg2); max-width:none; padding:96px 60px;">
+<div style="max-width:1100px;margin:0 auto;">
+  <div class="sec-header">
+    <div class="sec-num">02 / 04</div>
+    <div class="sec-titles">
+      <h2>时间线大事记</h2>
+      <p>1978—2019年，六阶段，约50个关键节点</p>
+    </div>
+  </div>
+  <div class="tl-container">
+
+    <div class="tl-phase">
+      <div class="tl-phase-label">改革开放元年 <span>1978 — 1984</span></div>
+      <div class="tl-events">
+        <div class="tl-event"><div class="tl-year">1978</div><div class="tl-body"><div class="tl-title">十一届三中全会</div><div class="tl-desc">确立改革开放基本国策，市场化改革正式启动，中国经济转型历史起点</div></div></div>
+        <div class="tl-event"><div class="tl-year">1980</div><div class="tl-body"><div class="tl-title">四大经济特区设立</div><div class="tl-desc">深圳、珠海、汕头、厦门正式设立，标志性制度创新，奠定沿海开放格局</div></div></div>
+        <div class="tl-event"><div class="tl-year">1984</div><div class="tl-body"><div class="tl-title">中国公司元年</div><div class="tl-desc">联想、海尔（砸冰箱）、万科、TCL同年诞生；柳传志、张瑞敏、王石、李东生登场</div></div></div>
+      </div>
+    </div>
+
+    <div class="tl-phase">
+      <div class="tl-phase-label">第一次创业潮 <span>1985 — 1992</span></div>
+      <div class="tl-events">
+        <div class="tl-event"><div class="tl-year">1987</div><div class="tl-body"><div class="tl-title">任正非创立华为</div><div class="tl-desc">以2.1万元起家代理交换机；同年王石注册万科</div></div></div>
+        <div class="tl-event"><div class="tl-year">1990</div><div class="tl-body"><div class="tl-title">上海证券交易所开业</div><div class="tl-desc">中国资本市场正式建立，A股元年，企业融资渠道开通</div></div></div>
+        <div class="tl-event"><div class="tl-year">1992</div><div class="tl-body"><div class="tl-title">邓小平南巡讲话</div><div class="tl-desc">第二次改革开放提速，"下海潮"全面爆发，民营经济获历史性政策空间</div></div></div>
+      </div>
+    </div>
+
+    <div class="tl-phase">
+      <div class="tl-phase-label">互联网元年与泡沫 <span>1994 — 2001</span></div>
+      <div class="tl-events">
+        <div class="tl-event"><div class="tl-year">1994</div><div class="tl-body"><div class="tl-title">中国接入国际互联网</div><div class="tl-desc">64K专线接入，互联网时代的技术门打开</div></div></div>
+        <div class="tl-event"><div class="tl-year">1998</div><div class="tl-body"><div class="tl-title">BAT的T诞生</div><div class="tl-desc">马化腾创立腾讯；新浪、搜狐同期成立；三大门户格局初现</div></div></div>
+        <div class="tl-event"><div class="tl-year">1999</div><div class="tl-body"><div class="tl-title">阿里巴巴·百度创立</div><div class="tl-desc">马云在杭州创立阿里B2B；李彦宏回国筹建百度；BAT三家均在1998-2000年诞生</div></div></div>
+        <div class="tl-event"><div class="tl-year">2000</div><div class="tl-body"><div class="tl-title">纳斯达克泡沫破裂</div><div class="tl-desc">互联网泡沫洗礼，大批公司倒闭；幸存者 = 真需求</div></div></div>
+        <div class="tl-event"><div class="tl-year">2001</div><div class="tl-body"><div class="tl-title">中国加入WTO</div><div class="tl-desc">外资涌入，跨国公司与本土企业正面交锋，本土企业被迫升级</div></div></div>
+      </div>
+    </div>
+
+    <div class="tl-phase">
+      <div class="tl-phase-label">互联网商业化突破 <span>2002 — 2009</span></div>
+      <div class="tl-events">
+        <div class="tl-event"><div class="tl-year">2003</div><div class="tl-body"><div class="tl-title">淘宝·支付宝上线</div><div class="tl-desc">非典疫情意外推动电商，阿里奠定C2C帝国基础；非典是中国电商的"天选之难"</div></div></div>
+        <div class="tl-event"><div class="tl-year">2005</div><div class="tl-body"><div class="tl-title">百度纳斯达克上市</div><div class="tl-desc">首日暴涨354%；同年阿里打败eBay，本土平台确立主导权</div></div></div>
+        <div class="tl-event"><div class="tl-year">2008</div><div class="tl-body"><div class="tl-title">北京奥运·全球金融危机</div><div class="tl-desc">奥运带动品牌营销；金融危机倒逼外向型经济向内需转型；天猫前身上线</div></div></div>
+        <div class="tl-event"><div class="tl-year">2009</div><div class="tl-body"><div class="tl-title">3G牌照·微博元年</div><div class="tl-desc">移动互联网基础设施就位；新浪微博上线，社交媒体时代开启</div></div></div>
+      </div>
+    </div>
+
+    <div class="tl-phase">
+      <div class="tl-phase-label">移动互联网爆发 <span>2010 — 2016</span></div>
+      <div class="tl-events">
+        <div class="tl-event"><div class="tl-year">2010</div><div class="tl-body"><div class="tl-title">微信立项·美团·小米</div><div class="tl-desc">张小龙主导微信立项；美团、小米成立——移动互联网新物种时代开启</div></div></div>
+        <div class="tl-event"><div class="tl-year">2011</div><div class="tl-body"><div class="tl-title">微信推出·手机超越PC</div><div class="tl-desc">微信1月上线；手机上网用户首次超过PC；滴滴、快手同年成立</div></div></div>
+        <div class="tl-event"><div class="tl-year">2013</div><div class="tl-body"><div class="tl-title">余额宝·微信支付</div><div class="tl-desc">互联网金融颠覆传统银行；移动支付生态构建；4G商用试点</div></div></div>
+        <div class="tl-event"><div class="tl-year">2014</div><div class="tl-body"><div class="tl-title">阿里美国最大IPO</div><div class="tl-desc">融资250亿美元刷新记录；滴滴崛起；共享经济元年</div></div></div>
+        <div class="tl-event"><div class="tl-year">2016</div><div class="tl-body"><div class="tl-title">直播经济爆发</div><div class="tl-desc">斗鱼/虎牙崛起；共享单车ofo/摩拜大战；资本驱动进入极端模式</div></div></div>
+      </div>
+    </div>
+
+    <div class="tl-phase">
+      <div class="tl-phase-label">新经济格局 <span>2017 — 2019</span></div>
+      <div class="tl-events">
+        <div class="tl-event"><div class="tl-year">2017</div><div class="tl-body"><div class="tl-title">抖音上线·新零售</div><div class="tl-desc">今日头条孵化抖音；马云提出新零售；线上线下融合时代开启</div></div></div>
+        <div class="tl-event"><div class="tl-year">2018</div><div class="tl-body"><div class="tl-title">拼多多上市·平台监管</div><div class="tl-desc">下沉市场被重新发现；滴滴安全事件推动平台监管收紧；抖音用户破4亿</div></div></div>
+        <div class="tl-event"><div class="tl-year">2019</div><div class="tl-body"><div class="tl-title">字节跳动·5G商用</div><div class="tl-desc">字节跳动估值750亿美元成全球最大独角兽；5G牌照发放，下一周期开启</div></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+
+<!-- ═══ TURNING POINTS ═══ -->
+<section id="turning" style="padding:96px 60px; max-width:none;">
+<div style="max-width:1100px;margin:0 auto;">
+  <div class="sec-header">
+    <div class="sec-num">02.5</div>
+    <div class="sec-titles">
+      <h2>关键拐点深度解读</h2>
+      <p>每个拐点背后：为什么那个时刻是转折，它改变了什么</p>
+    </div>
+  </div>
+  <div style="display:grid;gap:2px;">
+
+    <div class="tp-card">
+      <div class="tp-meta">
+        <div class="tp-year">1992</div>
+        <div class="tp-tag">政策拐点</div>
+      </div>
+      <div class="tp-body">
+        <h3>南巡讲话：从"不允许"到"被鼓励"</h3>
+        <p>1992年之前，民营经济是在"灰色地带"生长的——1981年年广久雇了12个工人，全国争论了将近十年"这算不算剥削"。南巡讲话彻底松开了这根弦：生产力标准代替了成分标准，民营资本第一次在意识形态上获得正当性。</p>
+        <p>直接效果：当年下半年全国新注册企业数量激增，第一批真正意义上的企业家群体在这一年形成。柳传志、史玉柱、冯仑等人的扩张都在此后提速。</p>
+        <div class="tp-stats">
+          <div class="tp-stat"><span class="ts-n">1992</span><span class="ts-l">全国私营企业突破 14 万家</span></div>
+          <div class="tp-stat"><span class="ts-n">10年</span><span class="ts-l">年广久雇工争论持续时长</span></div>
+          <div class="tp-stat"><span class="ts-n">首次</span><span class="ts-l">市场经济写入国家战略</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-card">
+      <div class="tp-meta">
+        <div class="tp-year">2000</div>
+        <div class="tp-tag">淘汰拐点</div>
+      </div>
+      <div class="tp-body">
+        <h3>互联网泡沫破裂：洗牌不是终结，是过滤</h3>
+        <p>2000年纳斯达克崩盘，中国三大门户股价暴跌超80%，大批烧钱但没有商业模式的公司在这一年倒下。但这场危机做了一件重要的事：它强迫活下来的公司必须找到真实的收入来源。</p>
+        <p>危机后，腾讯靠QQ增值服务活下来，百度发现竞价排名，网易靠短信SP扭亏，阿里靠收费会员熬过去。每家BAT的商业模式，都是在泡沫之后被逼出来的。</p>
+        <div class="tp-stats">
+          <div class="tp-stat"><span class="ts-n">-80%</span><span class="ts-l">三大门户股价最大跌幅</span></div>
+          <div class="tp-stat"><span class="ts-n">1亿+</span><span class="ts-l">腾讯QQ泡沫期用户数</span></div>
+          <div class="tp-stat"><span class="ts-n">2003</span><span class="ts-l">网易率先靠游戏扭亏</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-card">
+      <div class="tp-meta">
+        <div class="tp-year">2003</div>
+        <div class="tp-tag">危机拐点</div>
+      </div>
+      <div class="tp-body">
+        <h3>非典：中国电商的意外加速器</h3>
+        <p>非典让人们不得不待在家里购物。淘宝在2003年5月上线，第一批用户是因为出不了门才去网上买东西的。这个"被迫行为"让电商的用户教育成本大幅降低。</p>
+        <p>更重要的是，支付宝在同年推出——非典期间人们对陌生人的信任度下降，阿里用担保交易解决了这个心理门槛，这成了中国电商基础设施最关键的一块。eBay虽然在中国有先发优势，但没有意识到"担保交易"对中国用户的必要性，这直接导致两年后被淘宝打败。</p>
+        <div class="tp-stats">
+          <div class="tp-stat"><span class="ts-n">2003.5</span><span class="ts-l">淘宝上线时间</span></div>
+          <div class="tp-stat"><span class="ts-n">2005</span><span class="ts-l">eBay中国被淘宝击败</span></div>
+          <div class="tp-stat"><span class="ts-n">担保交易</span><span class="ts-l">支付宝核心创新点</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-card">
+      <div class="tp-meta">
+        <div class="tp-year">2010</div>
+        <div class="tp-tag">代际拐点</div>
+      </div>
+      <div class="tp-body">
+        <h3>微信立项：PC巨头的一次自我颠覆</h3>
+        <p>2010年，张小龙在广州的团队写了一封内部邮件给马化腾，提出做一个基于手机通讯录的即时通讯产品。这在当时是腾讯内部的"边缘项目"，QQ才是摇钱树。</p>
+        <p>这是中国互联网史上最重要的内部决策之一。腾讯选择用微信"蚕食"自己的QQ，而不是等外部竞争者来颠覆——微博时代新浪是手机用户的入口，而腾讯用微信把这个入口夺了回来。移动互联网时代，腾讯是极少数在代际跃迁中不但没有失速反而加强了护城河的公司。</p>
+        <div class="tp-stats">
+          <div class="tp-stat"><span class="ts-n">2011.1</span><span class="ts-l">微信正式上线时间</span></div>
+          <div class="tp-stat"><span class="ts-n">10亿+</span><span class="ts-l">微信全球日活跃用户</span></div>
+          <div class="tp-stat"><span class="ts-n">自我颠覆</span><span class="ts-l">腾讯在PC→移动跃迁中的关键选择</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-card">
+      <div class="tp-meta">
+        <div class="tp-year">2015</div>
+        <div class="tp-tag">泡沫拐点</div>
+      </div>
+      <div class="tp-body">
+        <h3>O2O大战：资本不能代替商业本质</h3>
+        <p>2015年，O2O补贴大战打到了荒诞的程度：用1块钱打车，用几毛钱叫外卖，烧钱速度以亿计。背后逻辑是"用户习惯一旦养成就回不去了"——但问题是，用户习惯的是"便宜"，不是你的产品。</p>
+        <p>共享单车ofo的结局更极端：融资超过130亿，最后因为挪用押金无法退款而崩盘。这一轮大战的教训是：用资本换时间可以，但商业模式本身必须成立，不然烧钱只是延迟了清算。美团的胜出是因为它早于竞争对手找到了可以盈利的业务结构。</p>
+        <div class="tp-stats">
+          <div class="tp-stat"><span class="ts-n">130亿</span><span class="ts-l">ofo历史融资总额（人民币）</span></div>
+          <div class="tp-stat"><span class="ts-n">2018</span><span class="ts-l">ofo开始大规模裁员/退款危机</span></div>
+          <div class="tp-stat"><span class="ts-n">2015</span><span class="ts-l">O2O投资额同比增长超300%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-card">
+      <div class="tp-meta">
+        <div class="tp-year">2017</div>
+        <div class="tp-tag">格局拐点</div>
+      </div>
+      <div class="tp-body">
+        <h3>抖音崛起：BAT格局被打破的开始</h3>
+        <p>2012年今日头条用算法分发新闻，被当时的互联网主流视为"没有内容壁垒的分发工具"；2016年抖音上线，被大多数人认为是"又一个短视频app"。但到2018年，抖音日活突破1.5亿，字节跳动成为可以和BAT抗衡的第四极。</p>
+        <p>这次崛起最重要的意义是：它说明了"算法即产品"这个判断。用户不需要知道内容从哪来，只要内容让他停下来刷下去就够了。这个逻辑颠覆了依赖"关系链"（微信）和"搜索意图"（百度）的传统流量逻辑，开辟了第三条路——推荐流。</p>
+        <div class="tp-stats">
+          <div class="tp-stat"><span class="ts-n">2017.9</span><span class="ts-l">抖音月活突破1亿</span></div>
+          <div class="tp-stat"><span class="ts-n">750亿$</span><span class="ts-l">2019年字节跳动估值</span></div>
+          <div class="tp-stat"><span class="ts-n">算法即产品</span><span class="ts-l">字节跳动核心方法论</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══ GENERATIONAL MAP ═══ -->
+<section id="generations" style="background:var(--bg2);padding:96px 60px;max-width:none;">
+<div style="max-width:1100px;margin:0 auto;">
+  <div class="sec-header">
+    <div class="sec-num">05</div>
+    <div class="sec-titles">
+      <h2>三代创业者图谱</h2>
+      <p>每一代有不同的时代背景、核心能力和历史局限</p>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px;">
+    <div class="gen-card">
+      <div class="gen-era">第一代 · 1980s-1990s</div>
+      <h3 class="gen-title">实业创业者</h3>
+      <div class="gen-sub">柳传志 · 任正非 · 张瑞敏 · 王石 · 史玉柱</div>
+      <div class="gen-section">
+        <div class="gen-label">时代背景</div>
+        <p>计划经济刚松动，从政策缝隙里找机会，核心挑战是"被允许"而非"如何做"</p>
+      </div>
+      <div class="gen-section">
+        <div class="gen-label">核心能力</div>
+        <p>政策理解力、人脉资源、在灰色地带生存的韧性、工厂管理与制造能力</p>
+      </div>
+      <div class="gen-section">
+        <div class="gen-label">历史局限</div>
+        <p>互联网转型慢，大多数没能抓住数字化机会；政商关系依赖性强</p>
+      </div>
+      <div class="gen-section">
+        <div class="gen-label">留下什么</div>
+        <p>华为、联想、海尔、万科——中国制造业和实体经济的基础设施</p>
+      </div>
+    </div>
+    <div class="gen-card">
+      <div class="gen-era">第二代 · 1995-2010</div>
+      <h3 class="gen-title">PC互联网创业者</h3>
+      <div class="gen-sub">马云 · 马化腾 · 李彦宏 · 张朝阳 · 丁磊</div>
+      <div class="gen-section">
+        <div class="gen-label">时代背景</div>
+        <p>美国互联网模式传入中国，本土化改造是主旋律；资本市场开始参与创业</p>
+      </div>
+      <div class="gen-section">
+        <div class="gen-label">核心能力</div>
+        <p>技术背景+海外视野，善于将美国成熟商业模式本土化；风险承受力强</p>
+      </div>
+      <div class="gen-section">
+        <div class="gen-label">历史局限</div>
+        <p>PC思维深，移动互联网时代初期普遍失速；对"算法驱动"的范式转变反应慢</p>
+      </div>
+      <div class="gen-section">
+        <div class="gen-label">留下什么</div>
+        <p>BAT格局，中国互联网商业的基础设施和"连接一切"的基本逻辑</p>
+      </div>
+    </div>
+    <div class="gen-card">
+      <div class="gen-era">第三代 · 2010s-</div>
+      <h3 class="gen-title">移动/内容创业者</h3>
+      <div class="gen-sub">张一鸣 · 王兴 · 程维 · 黄峥 · 雷军</div>
+      <div class="gen-section">
+        <div class="gen-label">时代背景</div>
+        <p>移动互联网红利期，流量成本低，资本充裕；BAT平台生态已成型，需要从缝隙突围</p>
+      </div>
+      <div class="gen-section">
+        <div class="gen-label">核心能力</div>
+        <p>数据驱动决策、产品和算法能力极强；敢于挑战已有格局，不怕和巨头正面竞争</p>
+      </div>
+      <div class="gen-section">
+        <div class="gen-label">历史局限</div>
+        <p>流量红利消退后增长压力大；部分公司商业模式依赖补贴，盈利能力存疑</p>
+      </div>
+      <div class="gen-section">
+        <div class="gen-label">留下什么</div>
+        <p>抖音/TikTok、美团、滴滴、拼多多——打破BAT格局，开辟中国互联网新纪元</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ WINNERS vs LOSERS ═══ -->
+<section id="winlose" style="padding:96px 60px;max-width:none;">
+<div style="max-width:1100px;margin:0 auto;">
+  <div class="sec-header">
+    <div class="sec-num">06</div>
+    <div class="sec-titles">
+      <h2>跃迁赢家 vs 落败者</h2>
+      <p>每次范式转换，护城河失效，新的胜负手浮现</p>
+    </div>
+  </div>
+  <div style="display:grid;gap:2px;">
+
+    <div class="wl-row">
+      <div class="wl-era">门户→搜索时代 <span>2000—2006</span></div>
+      <div class="wl-cols">
+        <div class="wl-win">
+          <div class="wl-label win">赢家</div>
+          <div class="wl-item"><strong>百度</strong> — 搜索广告找到可持续商业模式，技术护城河深</div>
+          <div class="wl-item"><strong>腾讯</strong> — QQ用户体量转化为增值服务收入，不依赖广告</div>
+          <div class="wl-item"><strong>阿里</strong> — 电商场景构建独立于搜索入口的流量体系</div>
+        </div>
+        <div class="wl-lose">
+          <div class="wl-label lose">失速</div>
+          <div class="wl-item"><strong>搜狐</strong> — 门户优势在搜索时代失效，错过搜索布局</div>
+          <div class="wl-item"><strong>新浪</strong> — 广告模式受挤压，转型社交（微博）才重获存在感</div>
+          <div class="wl-item"><strong>网易</strong> — 靠游戏维持，门户地位大幅下滑</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wl-insight">
+      <div class="wi-title">⬡ 本质洞察</div>
+      <div class="wi-essence">范式转变：从<em>「编辑主权」</em>到<em>「用户主权」</em></div>
+      <div class="wi-body">
+        门户时代的权力在编辑手里——谁控制首页，谁就控制用户的注意力。搜索时代把这个权力还给了用户：你想找什么就找什么，平台只是通道，不是守门人。<br><br>
+        这解释了所有的赢输：百度从一开始就是"用户主权"的工具，天然对齐新范式；搜狐/新浪的基因是"我知道什么对你好"，基因跟不上范式只能失速。腾讯能穿越是因为它做的是"关系链"而非内容——关系链不参与信息争夺，它的护城河没有被搜索侵蚀。
+      </div>
+      <div class="analogy-card"><strong>类比：</strong>门户是「图书馆管理员」，你问他推荐什么书；搜索是「图书馆目录」，你自己决定找什么。从"让别人替你选"到"自己选"，这才是本质跃迁。</div>
+      <table class="wi-table" style="margin-top:20px;">
+        <tr><th>阶段</th><th>现实</th><th>类比</th></tr>
+        <tr class="verified"><td class="col-stage">✅ 已验证</td><td class="col-reality" colspan="2" style="color:var(--gold);font-size:11px;font-family:var(--mono);">以下案例逐一验证"用户主权"规律</td></tr>
+        <tr class="verified"><td class="col-stage">编辑主权</td><td class="col-reality">搜狐/新浪编辑决定首页内容，用户被动消费，门户期流量第一</td><td class="col-analogy">图书馆管理员推荐书单</td></tr>
+        <tr class="verified"><td class="col-stage">用户主权</td><td class="col-reality">百度"竞价+搜索"，用户主动输入意图，2005年上市首日涨354%</td><td class="col-analogy">图书馆目录，自己检索</td></tr>
+        <tr class="verified"><td class="col-stage">关系链免疫</td><td class="col-reality">腾讯QQ靠增值服务而非内容存活，关系链不参与"谁控制信息"的争夺</td><td class="col-analogy">电话公司——不管你聊什么，只管你能不能打通</td></tr>
+        <tr><td colspan="3" class="wi-sep"></td></tr>
+        <tr><td colspan="3" class="wi-seg-label">🔄 阶段演变</td></tr>
+        <tr class="evolve"><td class="col-stage">编辑主权</td><td class="col-reality">不消亡，转移到"内容生态运营"——今日头条、微信公众号仍需编辑运营</td><td class="col-analogy">管理员还在，但变成后台</td></tr>
+        <tr class="evolve"><td class="col-stage">用户主权</td><td class="col-reality">搜索框成标配，竞争转向"谁的结果更准"——百度被精准意图广告主导</td><td class="col-analogy">目录成基础设施，不再是差异化</td></tr>
+        <tr><td colspan="3" class="wi-sep"></td></tr>
+        <tr><td colspan="3" class="wi-seg-label">🔮 预测延伸</td></tr>
+        <tr class="predict"><td class="col-stage">算法主权</td><td class="col-reality">连"主动输入意图"也不需要了——推荐系统直接预判你的意图（今日头条→抖音）</td><td class="col-analogy">图书馆自动把你想看的书放到你面前</td></tr>
+        <tr class="predict"><td class="col-stage">AI主权</td><td class="col-reality">AI替你做完整个"检索+决策"链路，用户只需确认结果（AI搜索）</td><td class="col-analogy">管家帮你从图书馆借好书，你只管读</td></tr>
+      </table>
+    </div>
+
+    <div class="wl-row">
+      <div class="wl-era">PC→移动时代 <span>2010—2015</span></div>
+      <div class="wl-cols">
+        <div class="wl-win">
+          <div class="wl-label win">赢家</div>
+          <div class="wl-item"><strong>腾讯/微信</strong> — 张小龙以"内部创业"自我颠覆，赢得移动端社交入口</div>
+          <div class="wl-item"><strong>小米</strong> — 从零起步，互联网模式做硬件，占据移动入口</div>
+          <div class="wl-item"><strong>滴滴/美团</strong> — 原生移动应用，无PC包袱，线下场景全覆盖</div>
+        </div>
+        <div class="wl-lose">
+          <div class="wl-label lose">失速</div>
+          <div class="wl-item"><strong>百度</strong> — 移动端无法复制搜索框逻辑，流量被微信/今日头条侵蚀</div>
+          <div class="wl-item"><strong>传统手机品牌</strong> — 诺基亚/联想手机在智能机时代全面失守</div>
+          <div class="wl-item"><strong>人人网</strong> — SNS社交在微信朋友圈面前快速失血</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wl-insight">
+      <div class="wi-title">⬡ 本质洞察</div>
+      <div class="wi-essence">范式转变：从<em>「目的性使用」</em>到<em>「连续场景覆盖」</em></div>
+      <div class="wi-body">
+        PC是"目的性使用"——我要查信息，打开电脑，打开浏览器，搜索，关电脑。每一次使用都有明确的"进场"和"离场"动作，信息消费是阶段性的。移动是"连续场景覆盖"——手机随时在口袋里，等地铁、睡前、饭桌上，使用是无缝的、持续的。<br><br>
+        核心问题不是"PC和手机哪个屏幕大"，而是<strong style="color:var(--cream);">用户的行为方式是否发生了根本变化</strong>。百度的搜索框需要"目的性输入"——你得知道你想搜什么才能用它，但碎片化的移动场景里用户不想打字、想刷；微信的通讯录是移动场景的天然起点；小米直接从硬件入手，控制了用户进入移动互联网的第一块屏。
+      </div>
+      <div class="analogy-card"><strong>类比：</strong>PC是「去图书馆」——你专门跑一趟，目的明确；移动是「图书馆跟着你走」——它在你的口袋里，随时可用。能"跟着用户走"的赢，只能"等用户来"的输。</div>
+      <table class="wi-table" style="margin-top:20px;">
+        <tr><th>阶段</th><th>现实</th><th>类比</th></tr>
+        <tr class="verified"><td class="col-stage">✅ 已验证</td><td class="col-reality" colspan="2" style="color:var(--gold);font-size:11px;font-family:var(--mono);">以下案例验证"连续场景覆盖"规律</td></tr>
+        <tr class="verified"><td class="col-stage">目的性使用</td><td class="col-reality">百度搜索框依赖"主动意图输入"，PC端日均搜索60亿次；移动端流量被微信/头条侵蚀</td><td class="col-analogy">去图书馆——需要专门跑一趟</td></tr>
+        <tr class="verified"><td class="col-stage">关系链迁移</td><td class="col-reality">微信基于手机通讯录，天然移动场景，2年用户破1亿——QQ花了10年</td><td class="col-analogy">电话本换了介质，关系跟着走</td></tr>
+        <tr class="verified"><td class="col-stage">硬件入口</td><td class="col-reality">小米以低价智能机控制移动入口，3年成中国最大手机厂，MIUI预装即流量</td><td class="col-analogy">地产商——控制地皮才控制人流</td></tr>
+        <tr class="verified"><td class="col-stage">场景失配</td><td class="col-reality">人人网社交图谱在PC上强大，但移动场景下"刷朋友圈"和"发状态"体验不如微信</td><td class="col-analogy">图书馆装到了轮椅上——能走，但不够快</td></tr>
+        <tr><td colspan="3" class="wi-sep"></td></tr>
+        <tr><td colspan="3" class="wi-seg-label">🔄 阶段演变</td></tr>
+        <tr class="evolve"><td class="col-stage">目的性使用</td><td class="col-reality">搜索不消亡，变成"深度需求"场景——碎片需求被推荐替代，复杂需求仍靠搜索</td><td class="col-analogy">图书馆还在，但日常买书去便利店了</td></tr>
+        <tr class="evolve"><td class="col-stage">连续场景</td><td class="col-reality">场景越来越碎，从分钟级（微博）到秒级（抖音），注意力窗口持续压缩</td><td class="col-analogy">图书馆变成了自动贩卖机</td></tr>
+        <tr><td colspan="3" class="wi-sep"></td></tr>
+        <tr><td colspan="3" class="wi-seg-label">🔮 预测延伸</td></tr>
+        <tr class="predict"><td class="col-stage">环境融合</td><td class="col-reality">穿戴设备/空间计算消除"打开App"动作，使用场景进一步连续化（Apple Vision Pro方向）</td><td class="col-analogy">图书馆变成了空气——无处不在，无需专程</td></tr>
+      </table>
+    </div>
+
+    <div class="wl-row">
+      <div class="wl-era">流量→内容算法时代 <span>2016—2019</span></div>
+      <div class="wl-cols">
+        <div class="wl-win">
+          <div class="wl-label win">赢家</div>
+          <div class="wl-item"><strong>字节跳动/抖音</strong> — "算法即产品"打破关系链依赖，无冷启动障碍</div>
+          <div class="wl-item"><strong>拼多多</strong> — 社交裂变+极致低价开辟下沉市场蓝海</div>
+          <div class="wl-item"><strong>快手</strong> — 短视频+社区，下沉用户粘性极强</div>
+        </div>
+        <div class="wl-lose">
+          <div class="wl-label lose">承压</div>
+          <div class="wl-item"><strong>微信公众号</strong> — 订阅式内容分发被算法推荐替代，阅读率大降</div>
+          <div class="wl-item"><strong>微博</strong> — 短视频崛起后流量增速放缓，内容生态边缘化</div>
+          <div class="wl-item"><strong>传统电商（天猫/京东）</strong> — 下沉市场被拼多多低价策略撕开缺口</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wl-insight">
+      <div class="wi-title">⬡ 本质洞察</div>
+      <div class="wi-essence">范式转变：从<em>「用户主动选择」</em>到<em>「系统替你选择」</em></div>
+      <div class="wi-body">
+        搜索和关系链时代有一个共同前提：用户必须知道自己想要什么——要么输入搜索词，要么关注一个人。这个前提在算法时代被彻底打破：你不需要知道你想要什么，系统通过你的行为数据推断出来，然后喂给你。<br><br>
+        这是一次<strong style="color:var(--cream);">认知门槛的清零</strong>。微信公众号的订阅制需要用户做一个预先决定（"我觉得这个号值得关注"），算法推荐不需要——你只需要刷，停留时间就是反馈。这也解释了拼多多的崛起：社交裂变本质上是"朋友替你选择"，同样清零了用户的决策成本。
+      </div>
+      <div class="analogy-card"><strong>类比：</strong>关系链是「你自己点菜」——你得知道你想吃什么；算法推荐是「厨师根据你的口味决定上什么菜」——厨师比你更懂你想吃什么。从主动决策到被动接受，这才是短视频碾压公众号的根本原因。</div>
+      <table class="wi-table" style="margin-top:20px;">
+        <tr><th>阶段</th><th>现实</th><th>类比</th></tr>
+        <tr class="verified"><td class="col-stage">✅ 已验证</td><td class="col-reality" colspan="2" style="color:var(--gold);font-size:11px;font-family:var(--mono);">以下案例验证"系统替你选择"规律</td></tr>
+        <tr class="verified"><td class="col-stage">主动订阅</td><td class="col-reality">微信公众号阅读率从均值10%跌至2%——关注了但不看，因为算法推荐的更"合口味"</td><td class="col-analogy">自己点菜——点了不一定最想吃</td></tr>
+        <tr class="verified"><td class="col-stage">算法推荐</td><td class="col-reality">今日头条无冷启动：不需要关注任何人也能获得个性化内容，用户粘性迅速超越门户</td><td class="col-analogy">厨师根据口味上菜——你什么都不用说</td></tr>
+        <tr class="verified"><td class="col-stage">社交裂变</td><td class="col-reality">拼多多拼团：朋友拉你进来=朋友替你做了选择，决策成本清零，3年GMV超京东</td><td class="col-analogy">朋友帮你点菜——信任比算法成本更低</td></tr>
+        <tr class="verified"><td class="col-stage">注意力全占</td><td class="col-reality">抖音平均单次使用时长76分钟，日活超微博三倍——无限滚动+算法消除了"离场"动机</td><td class="col-analogy">厨师无限续菜，你停不下筷子</td></tr>
+        <tr><td colspan="3" class="wi-sep"></td></tr>
+        <tr><td colspan="3" class="wi-seg-label">🔄 阶段演变</td></tr>
+        <tr class="evolve"><td class="col-stage">主动订阅</td><td class="col-reality">订阅制不消亡，向"高信任/高价值"内容收缩——用户愿意主动选择的只剩少数意见领袖</td><td class="col-analogy">私厨——你只为极少数厨师点菜</td></tr>
+        <tr class="evolve"><td class="col-stage">算法推荐</td><td class="col-reality">算法从"猜你喜欢"到"创造你喜欢"——内容形式/长度/节奏都被算法优化驱动</td><td class="col-analogy">厨师开始研究你的微表情来决定下一道菜</td></tr>
+        <tr class="evolve"><td class="col-stage">社交裂变</td><td class="col-reality">从"砍一刀"到内容裂变（二创/挑战赛），裂变从价格维度扩展到内容维度</td><td class="col-analogy">从帮你点菜到帮你推荐餐厅</td></tr>
+        <tr><td colspan="3" class="wi-sep"></td></tr>
+        <tr><td colspan="3" class="wi-seg-label">🔮 预测延伸</td></tr>
+        <tr class="predict"><td class="col-stage">AI生成选择</td><td class="col-reality">AI不只推荐已有内容，而是即时生成"专属于你"的内容——选择空间无限扩大</td><td class="col-analogy">厨师为你一个人创作新菜，只做一次</td></tr>
+        <tr class="predict"><td class="col-stage">意图预判</td><td class="col-reality">在你意识到需求之前，系统已经准备好——从被动满足到主动预判（如Siri Proactive方向）</td><td class="col-analogy">厨师在你饿之前就开始备菜</td></tr>
+      </table>
+    </div>
+
+
+  </div>
+</div>
+</section>
+
+
+<!-- THREADS -->
+<section id="threads">
+  <div class="sec-header">
+    <div class="sec-num">03 / 04</div>
+    <div class="sec-titles">
+      <h2>三条主线</h2>
+      <p>商业史、互联网史、政策史的交织与共振</p>
+    </div>
+  </div>
+  <div class="threads">
+    <div class="thread">
+      <div class="thread-icon">🏭</div>
+      <h3>商业史主线</h3>
+      <div class="thread-sub">合法性获取史 · 吴晓波视角</div>
+      <p>民营企业从"投机倒把"到"社会主义建设者"，始终在政策模糊地带摸索前行。政策敏感性是中国商业特有的变量。</p>
+      <div class="thread-mstones">
+        <div class="ms"><strong>1984</strong> 公司元年，联想海尔万科同年诞生</div>
+        <div class="ms"><strong>1992</strong> 南巡讲话，真正的企业家群体形成</div>
+        <div class="ms"><strong>2001</strong> WTO加入，本土企业被迫全球竞争</div>
+        <div class="ms"><strong>2008</strong> 奥运+金融危机，内需驱动转型</div>
+      </div>
+    </div>
+    <div class="thread">
+      <div class="thread-icon">🌐</div>
+      <h3>互联网史主线</h3>
+      <div class="thread-sub">范式跃迁史 · 林军视角</div>
+      <p>每5-7年一次跃迁：门户→搜索→社交→移动→内容。每次洗牌，前代赢家未必是新赢家。船大难转向是结构性陷阱。</p>
+      <div class="thread-mstones">
+        <div class="ms"><strong>1995—2000</strong> 门户时代，信息分发入口</div>
+        <div class="ms"><strong>2000—2005</strong> 泡沫后商业化，BAT找到模式</div>
+        <div class="ms"><strong>2010—2015</strong> 微信/小米，移动互联网爆发</div>
+        <div class="ms"><strong>2015—2019</strong> 短视频/算法，内容经济主导</div>
+      </div>
+    </div>
+    <div class="thread">
+      <div class="thread-icon">🏛️</div>
+      <h3>政策主线</h3>
+      <div class="thread-sub">最重要的外部变量</div>
+      <p>政策既是推动力也是约束力。读懂政策节奏，是理解中国商业史最底层的钥匙。</p>
+      <div class="thread-mstones">
+        <div class="ms"><strong>1978—1992</strong> 特区试点，从边缘创新</div>
+        <div class="ms"><strong>1992—2001</strong> 市场经济确立，国企改革</div>
+        <div class="ms"><strong>2008—2015</strong> 互联网纳入国家战略</div>
+        <div class="ms"><strong>2015—2019</strong> 双创热潮 + 平台监管收紧</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PEOPLE -->
+<section id="people" style="background:var(--bg2); max-width:none; padding:96px 60px;">
+<div style="max-width:1100px;margin:0 auto;">
+  <div class="sec-header">
+    <div class="sec-num">04 / 04</div>
+    <div class="sec-titles">
+      <h2>关键人物速写</h2>
+      <p>18位亲历者，每人三句话：是谁、做了什么、留下什么</p>
+    </div>
+  </div>
+  <div class="people-grid">
+    <div class="person"><div class="p-cat">政治家</div><h4>邓小平</h4><div class="p-desc">改革开放总设计师，1978年确立改革路线，1992年南巡打破意识形态禁区。</div><div class="p-legacy">"摸着石头过河"的渐进改革方法论</div></div>
+    <div class="person"><div class="p-cat">科技 · 联想</div><h4>柳传志</h4><div class="p-desc">1984年以20万元创立联想，从代理汉卡到自主品牌PC，建成中国最大PC企业。</div><div class="p-legacy">"搭班子、定战略、带队伍"管理三要素</div></div>
+    <div class="person"><div class="p-cat">制造业 · 海尔</div><h4>张瑞敏</h4><div class="p-desc">1984年接手濒临倒闭的青岛冰箱厂，砸掉76台不合格冰箱，震动全国。</div><div class="p-legacy">"人单合一"成为管理学经典案例</div></div>
+    <div class="person"><div class="p-cat">科技 · 华为</div><h4>任正非</h4><div class="p-desc">1987年以2.1万元创立华为，坚持研发投入超10%，三十年建成通信设备巨头。</div><div class="p-legacy">美国制裁下的技术自主，是中国企业韧性的标本</div></div>
+    <div class="person"><div class="p-cat">地产 · 万科</div><h4>王石</h4><div class="p-desc">1984年创立万科，聚焦住宅开发，提出"不行贿、不囤地"经营理念。</div><div class="p-legacy">2016年万宝之争成为公司治理标志案例</div></div>
+    <div class="person"><div class="p-cat">互联网 · 阿里</div><h4>马云</h4><div class="p-desc">1999年创立阿里巴巴，从B2B到淘宝到支付宝，构建电商-金融-云计算生态。</div><div class="p-legacy">"让天下没有难做的生意"，推动中小企业数字化</div></div>
+    <div class="person"><div class="p-cat">互联网 · 腾讯</div><h4>马化腾</h4><div class="p-desc">1998年创立腾讯，从QQ到微信，三次缔造国民级产品，以"连接"为核心战略。</div><div class="p-legacy">微信生态成为中国最大数字社交基础设施</div></div>
+    <div class="person"><div class="p-cat">互联网 · 百度</div><h4>李彦宏</h4><div class="p-desc">2000年创立百度，凭超链接分析专利打赢搜索大战，建立最大中文搜索引擎。</div><div class="p-legacy">移动时代失速后押注AI自动驾驶，战略转型中</div></div>
+    <div class="person"><div class="p-cat">互联网 · 搜狐</div><h4>张朝阳</h4><div class="p-desc">1996年从MIT回国创立搜狐，第一批海归互联网创业者，带动"海归+VC"范式。</div><div class="p-legacy">门户时代开创者，移动时代逐渐式微</div></div>
+    <div class="person"><div class="p-cat">互联网 · 网易</div><h4>丁磊</h4><div class="p-desc">1997年创立网易，靠短信SP业务度过寒冬，以免费游戏改变门户商业模式。</div><div class="p-legacy">网易云音乐证明"有情怀的产品"可以持续竞争</div></div>
+    <div class="person"><div class="p-cat">产品 · 微信</div><h4>张小龙</h4><div class="p-desc">2010年主导微信立项，"用完即走"极简哲学，创造日活10亿的超级应用。</div><div class="p-legacy">重新定义移动互联网时代的社交、支付、内容全链路</div></div>
+    <div class="person"><div class="p-cat">硬件 · 小米</div><h4>雷军</h4><div class="p-desc">2010年创立小米，互联网模式+硬件打破传统手机壁垒，极致性价比+粉丝经济。</div><div class="p-legacy">小米生态链成为物联网时代重要基础设施</div></div>
+    <div class="person"><div class="p-cat">出行 · 滴滴</div><h4>程维</h4><div class="p-desc">2012年创立滴滴，两轮补贴大战打败快的、Uber中国，建立网约车主导地位。</div><div class="p-legacy">共享经济从兴起到规范的完整样本</div></div>
+    <div class="person"><div class="p-cat">O2O · 美团</div><h4>王兴</h4><div class="p-desc">三次创业（校内→饭否→美团），"无边界"战略从团购延伸至外卖、酒旅、出行。</div><div class="p-legacy">被誉为"中国互联网最能打的创业者"之一</div></div>
+    <div class="person"><div class="p-cat">内容 · 字节</div><h4>张一鸣</h4><div class="p-desc">2012年创立今日头条，算法推荐重分流量；2016年孵化抖音，颠覆内容消费。</div><div class="p-legacy">TikTok改写全球内容消费格局，第三代创业者最强代表</div></div>
+    <div class="person"><div class="p-cat">电商 · 拼多多</div><h4>黄峥</h4><div class="p-desc">2015年创立拼多多，拼团+社交裂变+极致低价重新发现下沉市场，三年内上市。</div><div class="p-legacy">证明存量时代仍然存在颠覆性机会</div></div>
+    <div class="person"><div class="p-cat">传奇 · 巨人</div><h4>史玉柱</h4><div class="p-desc">1989年创业，巨人大厦债务危机几乎将其摧毁，靠脑白金+网游东山再起。</div><div class="p-legacy">中国企业史最戏剧性的失败-复活案例</div></div>
+    <div class="person"><div class="p-cat">记录者</div><h4>吴晓波</h4><div class="p-desc">财经作家，以严肃文学笔法为中国企业史立传，《激荡三十年》《大败局》等。</div><div class="p-legacy">填补了中国没有企业史写作传统的空白</div></div>
+  </div>
+</div>
+</section>
+
+<footer>
+  <p>基于《激荡三十年》《沸腾十五年》《沸腾新十年》整理 · 仅供学习交流 · 2026-07-10</p>
+</footer>
+
+</body>
+</html>
