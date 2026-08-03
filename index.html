@@ -2160,7 +2160,116 @@
             text-decoration: underline;
             text-underline-offset: 3px;
         }
-    </style>
+    
+/* === #157 对齐精致化 v1.1 === */
+
+/* 间距token补全 */
+:root {
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 40px;
+    --space-3xl: 48px;
+}
+
+/* 卡片hover微上浮 */
+.news-card:hover,
+.weekly-news-card:hover,
+.insight-card:hover,
+.report-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.news-card,
+.weekly-news-card,
+.insight-card,
+.report-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Callout 左边条对齐（统一4px）*/
+.callout {
+    border-left-width: 4px !important;
+    border-left-style: solid !important;
+}
+
+/* 表格行hover一致性 */
+.board-table tbody tr:hover {
+    background: rgba(5,150,105,0.04);
+    transition: background 0.15s ease;
+}
+
+/* Tab按钮hover增强 */
+.tab-btn:hover {
+    background: var(--color-bg);
+    transform: translateY(-1px);
+    transition: all 0.15s ease;
+}
+
+/* 日报/周报 doc-header 底部间距统一 */
+.doc-header {
+    padding-bottom: var(--space-xl) !important;
+    margin-bottom: var(--space-xl) !important;
+}
+
+/* section标题统一间距 */
+section > h2 {
+    margin-top: var(--space-2xl) !important;
+    margin-bottom: var(--space-md) !important;
+}
+
+/* callout间距统一 */
+.callout + .callout {
+    margin-top: var(--space-md) !important;
+}
+
+/* 新闻卡片内部padding统一 */
+.news-card,
+.weekly-news-card {
+    padding: var(--space-md) var(--space-lg) !important;
+}
+
+/* stat/card数字对齐 */
+.stat-value, .stat-number {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+}
+
+/* 深度聚焦区域段落间距统一 */
+.deep-focus-body p {
+    margin-bottom: var(--space-md) !important;
+    line-height: 1.8 !important;
+}
+
+
+/* 首页滚动入场动画 */
+.report-card,
+.subscribe-section,
+.pill-item,
+.hero-badge {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.report-card.visible,
+.subscribe-section.visible,
+.pill-item.visible,
+.hero-badge.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* 卡片交错入场 */
+.report-card:nth-child(1) { transition-delay: 0ms; }
+.report-card:nth-child(2) { transition-delay: 60ms; }
+.report-card:nth-child(3) { transition-delay: 120ms; }
+.report-card:nth-child(4) { transition-delay: 180ms; }
+.report-card:nth-child(5) { transition-delay: 240ms; }
+.report-card:nth-child(6) { transition-delay: 300ms; }
+
+</style>
 </head>
 <body>
     <div class="container">
@@ -4215,5 +4324,18 @@
         })();
 
     </script>
+
+<script>
+// #157 首页滚动入场
+(function() {
+    const targets = document.querySelectorAll('.report-card, .subscribe-section, .pill-item, .hero-badge');
+    if (!targets.length) return;
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(t => obs.observe(t));
+})();
+</script>
+
 </body>
 </html>
