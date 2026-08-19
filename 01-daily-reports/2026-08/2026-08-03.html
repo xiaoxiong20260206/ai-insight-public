@@ -10,88 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}
-/* === #157 对齐精致化 v1.1 === */
-
-/* 间距token补全 */
-:root {
-    --space-xs: 4px;
-    --space-sm: 8px;
-    --space-md: 16px;
-    --space-lg: 24px;
-    --space-xl: 32px;
-    --space-2xl: 40px;
-    --space-3xl: 48px;
-}
-
-/* 卡片hover微上浮 */
-.news-card:hover,
-.weekly-news-card:hover,
-.insight-card:hover,
-.report-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.news-card,
-.weekly-news-card,
-.insight-card,
-.report-card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Callout 左边条对齐（统一4px）*/
-.callout {
-    border-left-width: 4px !important;
-    border-left-style: solid !important;
-}
-
-/* 表格行hover一致性 */
-.board-table tbody tr:hover {
-    background: rgba(5,150,105,0.04);
-    transition: background 0.15s ease;
-}
-
-/* Tab按钮hover增强 */
-.tab-btn:hover {
-    background: var(--color-bg);
-    transform: translateY(-1px);
-    transition: all 0.15s ease;
-}
-
-/* 日报/周报 doc-header 底部间距统一 */
-.doc-header {
-    padding-bottom: var(--space-xl) !important;
-    margin-bottom: var(--space-xl) !important;
-}
-
-/* section标题统一间距 */
-section > h2 {
-    margin-top: var(--space-2xl) !important;
-    margin-bottom: var(--space-md) !important;
-}
-
-/* callout间距统一 */
-.callout + .callout {
-    margin-top: var(--space-md) !important;
-}
-
-/* 新闻卡片内部padding统一 */
-.news-card,
-.weekly-news-card {
-    padding: var(--space-md) var(--space-lg) !important;
-}
-
-/* stat/card数字对齐 */
-.stat-value, .stat-number {
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -0.02em;
-}
-
-/* 深度聚焦区域段落间距统一 */
-.deep-focus-body p {
-    margin-bottom: var(--space-md) !important;
-    line-height: 1.8 !important;
-}
+:root{--text-xs:10px;--text-sm:12px;--text-sm-md:13px;--text-base:14px;--text-base-lg:15px;--text-md:16px;--text-lg:18px;--text-xl:20px;--text-2xl:24px;--text-3xl:28px;}
 
 </style></noscript>
     <style>
@@ -198,20 +117,6 @@ section > h2 {
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-
-/* === #157 字号token（对齐精致化）=== */
-:root {
-    --text-xs: 10px;
-    --text-sm: 12px;
-    --text-sm-md: 13px;
-    --text-base: 14px;
-    --text-base-lg: 15px;
-    --text-md: 16px;
-    --text-lg: 18px;
-    --text-xl: 20px;
-    --text-2xl: 24px;
-    --text-3xl: 28px;
-}
 }
 
 /* ==================== 基础重置 ==================== */
@@ -2203,6 +2108,11 @@ body.mobile-preview-mode .global-controls {
         .deep-focus-takeaway-label.china { color: #DC2626; }
         .deep-focus-takeaway-text { font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.7; font-family: var(--font-family-cn); }
         .deep-focus-takeaway-text strong { color: var(--color-text-primary); }
+        .deep-focus-source { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; color: var(--color-purple); font-size: 13px; font-weight: 600; text-decoration: none; }
+        .deep-focus-source:hover { text-decoration: underline; color: var(--color-purple-dark, #6D28D9); }
+        .narrative-card { padding: 20px 24px; }
+        .narrative-heading { display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); font-size: 16px; font-weight: 800; margin-bottom: 10px; }
+        .narrative-text { margin: 0; color: var(--color-text-secondary); font-size: 14px; line-height: 1.85; }
 
         /* ===== PATTERN INSIGHT (pi) ===== */
         .pi-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow-card); transition: all .25s cubic-bezier(.4,0,.2,1); }
@@ -3341,6 +3251,8 @@ section > * {
         </div>
             </section>
 
+
+
             <!-- TAB NAVIGATION (v4.0 — 毛玻璃Tab栏，点击切换板块) -->
             <nav class="tab-nav" role="tablist" aria-label="板块导航">
             <button class="tab-btn active" data-tab="llm" role="tab" aria-selected="true"><span class="tab-icon"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y1="12" x2="12" y2="18"/></svg></span><span class="tab-label">大模型</span></button>
@@ -3449,6 +3361,7 @@ section > * {
                         <div class="deep-focus-takeaway-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> TAKEAWAY</div>
                         <div class="deep-focus-takeaway-text">多智能体协同正从实验室突破走向工程化落地，但底层架构可能正在酝酿新一轮重构。现在投资多智能体能力的团队，需要同时关注「能力当下可用」和「架构长期赌注」两个维度。</div>
                     </div>
+                    <a class="deep-focus-source" href="https://k.sina.cn/article_7857201856_1d45362c001908hyoe.html" target="_blank" rel="noopener noreferrer"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.07.07l2-2a5 5 0 0 0-7.07-7.07l-1.15 1.15"/><path d="M14 11a5 5 0 0 0-7.07-.07l-2 2A5 5 0 0 0 12 20l1.15-1.15"/></svg> 原文链接</a>
                 </div>
             </div>
 <div class="pi-card"><div class="pi-title">规律洞察</div><div class="pi-content">本板块暂无规律洞察，关注后续更新。</div></div>
@@ -3582,6 +3495,7 @@ section > * {
                         <div class="deep-focus-takeaway-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> TAKEAWAY</div>
                         <div class="deep-focus-takeaway-text">如果你的AI应用还在靠「功能新颖」留住用户，你在和一个越来越低的门槛赛跑。真正的护城河是上下文记忆深度所带来的迁移成本——这是Midjourney收购Co-Star、混元接入记忆系统的共同逻辑。</div>
                     </div>
+                    <a class="deep-focus-source" href="https://www.sohu.com/a/1055478416_455313?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334" target="_blank" rel="noopener noreferrer"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.07.07l2-2a5 5 0 0 0-7.07-7.07l-1.15 1.15"/><path d="M14 11a5 5 0 0 0-7.07-.07l-2 2A5 5 0 0 0 12 20l1.15-1.15"/></svg> 原文链接</a>
                 </div>
             </div>
 <div class="pi-card"><div class="pi-title">规律洞察</div><div class="pi-content">本板块暂无规律洞察，关注后续更新。</div></div>
@@ -3667,6 +3581,7 @@ section > * {
                         <div class="deep-focus-takeaway-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> TAKEAWAY</div>
                         <div class="deep-focus-takeaway-text">AI资本化的「赢家」不是参数最大或用户最多的公司，而是能把「技术能力」转化为「可量化企业价值」的公司。Anthropic的安全叙事+欧盟监管周期，是经典的「技术深度×垂直合规」变现路径。</div>
                     </div>
+                    <a class="deep-focus-source" href="https://fortune.com/2026/07/11/why-2026-ipo-boom-broaden-beyond-ai-mega-deals" target="_blank" rel="noopener noreferrer"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.07.07l2-2a5 5 0 0 0-7.07-7.07l-1.15 1.15"/><path d="M14 11a5 5 0 0 0-7.07-.07l-2 2A5 5 0 0 0 12 20l1.15-1.15"/></svg> 原文链接</a>
                 </div>
             </div>
 <div class="pi-card"><div class="pi-title">规律洞察</div><div class="pi-content">本板块暂无规律洞察，关注后续更新。</div></div>
@@ -3752,6 +3667,7 @@ section > * {
                         <div class="deep-focus-takeaway-label"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> TAKEAWAY</div>
                         <div class="deep-focus-takeaway-text">问「AI能帮我们做什么」之前，先问「我们想变成什么样的组织」。工具选择服务于组织转型方向。自主型AI触发机制的重构，才是从个人效率跃升为组织ROI的关键。</div>
                     </div>
+                    <a class="deep-focus-source" href="https://writer.com/blog/enterprise-ai-adoption-2026" target="_blank" rel="noopener noreferrer"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.07.07l2-2a5 5 0 0 0-7.07-7.07l-1.15 1.15"/><path d="M14 11a5 5 0 0 0-7.07-.07l-2 2A5 5 0 0 0 12 20l1.15-1.15"/></svg> 原文链接</a>
                 </div>
             </div>
 <div class="pi-card"><div class="pi-title">规律洞察</div><div class="pi-content">本板块暂无规律洞察，关注后续更新。</div></div>
@@ -3785,24 +3701,24 @@ section > * {
             <div class="section-header"><span class="num"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> 明日/下周值得关注</div>
             <div class="watch-grid">
                 <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
-                    <div style="font-size:var(--text-sm, 13px);font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 OpenAI</div>
-                    <div style="font-size:var(--text-sm, 12px);color:var(--color-text-muted);margin-top:4px;line-height:1.5">（Astra多智能体内测，政策布局华盛顿）</div>
+                    <div style="font-size:var(--text-sm-md,13px);font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 OpenAI</div>
+                    <div style="font-size:var(--text-sm,12px);color:var(--color-text-muted);margin-top:4px;line-height:1.5">（Astra多智能体内测，政策布局华盛顿）</div>
                 </div>
                 <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
-                    <div style="font-size:var(--text-sm, 13px);font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 小米</div>
-                    <div style="font-size:var(--text-sm, 12px);color:var(--color-text-muted);margin-top:4px;line-height:1.5">（MiMo-V2.5登顶OpenRouter，AI模型商业化路径）</div>
+                    <div style="font-size:var(--text-sm-md,13px);font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 小米</div>
+                    <div style="font-size:var(--text-sm,12px);color:var(--color-text-muted);margin-top:4px;line-height:1.5">（MiMo-V2.5登顶OpenRouter，AI模型商业化路径）</div>
                 </div>
                 <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
-                    <div style="font-size:var(--text-sm, 13px);font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 Midjourney</div>
-                    <div style="font-size:var(--text-sm, 12px);color:var(--color-text-muted);margin-top:4px;line-height:1.5">（V8.2+Co-Star收购，独立App+多元化战略）</div>
+                    <div style="font-size:var(--text-sm-md,13px);font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 Midjourney</div>
+                    <div style="font-size:var(--text-sm,12px);color:var(--color-text-muted);margin-top:4px;line-height:1.5">（V8.2+Co-Star收购，独立App+多元化战略）</div>
                 </div>
                 <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
-                    <div style="font-size:var(--text-sm, 13px);font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 Anthropic</div>
-                    <div style="font-size:var(--text-sm, 12px);color:var(--color-text-muted);margin-top:4px;line-height:1.5">（IPO路径，$1T估值，欧盟合规周期受益）</div>
+                    <div style="font-size:var(--text-sm-md,13px);font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 Anthropic</div>
+                    <div style="font-size:var(--text-sm,12px);color:var(--color-text-muted);margin-top:4px;line-height:1.5">（IPO路径，$1T估值，欧盟合规周期受益）</div>
                 </div>
                 <div style="padding:12px 16px;background:var(--color-bg);border-radius:var(--radius-md);border:1px solid var(--color-border-light);border-left:3px solid var(--color-success);transition:all .2s">
-                    <div style="font-size:var(--text-sm, 13px);font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 美团</div>
-                    <div style="font-size:var(--text-sm, 12px);color:var(--color-text-muted);margin-top:4px;line-height:1.5">（LongCat 2.0开源+CatPaw，企业Agent规模化样本）</div>
+                    <div style="font-size:var(--text-sm-md,13px);font-weight:700;color:var(--color-success);display:flex;align-items:center;gap:6px">🟢 美团</div>
+                    <div style="font-size:var(--text-sm,12px);color:var(--color-text-muted);margin-top:4px;line-height:1.5">（LongCat 2.0开源+CatPaw，企业Agent规模化样本）</div>
                 </div>
             </div>
         </div>
@@ -3811,7 +3727,7 @@ section > * {
             <!-- CAPABILITY UPDATE / DEEP INSIGHT -->
 
         <div class="insight-block animate-on-scroll">
-            <div class="insight-block-title"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> 深度洞察</div>
+            <div class="insight-block-title"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> 今日判断</div>
             <div class="insight-block-body">
                 <p style="margin:0">本期核心信号：OpenRouter调用量榜前五全部中国模型（小米MiMo-V2.5登顶，10.5万亿Token/周），中国开源模型下载量首超美国占全球41%；黄仁勋联合纳德拉等70+机构发起开源公开信、唯Anthropic未签；OpenAI Astra多智能体内测用~2000美元算力破解十年数学难题；Midjourney V8.2发布并收购占星应用Co-Star拓展独立App；美团LongCat 2.0全量开源（1.6T参数，国产算力验证）+CatPaw企业Agent平台覆盖9万员工。</p>
             </div>

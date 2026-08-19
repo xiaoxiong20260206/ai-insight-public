@@ -9,7 +9,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-    <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+    <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}
+:root{--text-xs:10px;--text-sm:12px;--text-sm-md:13px;--text-base:14px;--text-base-lg:15px;--text-md:16px;--text-lg:18px;--text-xl:20px;--text-2xl:24px;--text-3xl:28px;}
+
+</style></noscript>
     <style>
 /**
  * 清爽调研报告风格 - 基础样式表
@@ -2105,6 +2108,11 @@ body.mobile-preview-mode .global-controls {
         .deep-focus-takeaway-label.china { color: #DC2626; }
         .deep-focus-takeaway-text { font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.7; font-family: var(--font-family-cn); }
         .deep-focus-takeaway-text strong { color: var(--color-text-primary); }
+        .deep-focus-source { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; color: var(--color-purple); font-size: 13px; font-weight: 600; text-decoration: none; }
+        .deep-focus-source:hover { text-decoration: underline; color: var(--color-purple-dark, #6D28D9); }
+        .narrative-card { padding: 20px 24px; }
+        .narrative-heading { display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); font-size: 16px; font-weight: 800; margin-bottom: 10px; }
+        .narrative-text { margin: 0; color: var(--color-text-secondary); font-size: 14px; line-height: 1.85; }
 
         /* ===== PATTERN INSIGHT (pi) ===== */
         .pi-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow-card); transition: all .25s cubic-bezier(.4,0,.2,1); }
@@ -2791,15 +2799,61 @@ div[class*="learn-more"] {
 
 /* ── 13. footer ── */
 .doc-footer {
-    margin-top: 48px;
-    padding-top: 24px;
+    margin-top: 64px;
+    padding: 48px 0 32px;
+    text-align: center;
     border-top: 1px solid var(--color-border-light);
-    color: #78716C;
-    font-size: 12px;
-    line-height: 1.8;
 }
-.doc-footer a { color: #2563EB; text-decoration: none; }
-.doc-footer a:hover { text-decoration: underline; }
+.doc-footer .footer-brand {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1C1917;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+}
+.doc-footer .footer-desc {
+    font-size: 13px;
+    color: #78716C;
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 24px;
+}
+.doc-footer .footer-divider {
+    width: 24px;
+    height: 1px;
+    background: var(--color-border);
+    margin: 0 auto 24px;
+}
+.doc-footer .footer-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 28px;
+    background: #1C1917;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: all .2s ease;
+    letter-spacing: 0.01em;
+}
+.doc-footer .footer-home-btn:hover {
+    background: #2563EB;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37,99,235,0.25);
+}
+.doc-footer .footer-home-btn svg {
+    opacity: 0.7;
+}
+.doc-footer .footer-meta {
+    margin-top: 32px;
+    font-size: 12px;
+    color: #A8A29E;
+    letter-spacing: 0.02em;
+}
+.doc-footer a { color: inherit; text-decoration: none; }
+.doc-footer a:hover { color: #2563EB; }
 
 /* ── 14. 内容区宽度优化（sidebar 228px → 减小到 200px） ── */
 :root { --sidebar-width: 200px; }
@@ -3197,6 +3251,8 @@ section > * {
         </div>
             </section>
 
+
+
             <!-- TAB NAVIGATION (v4.0 — 毛玻璃Tab栏，点击切换板块) -->
             <nav class="tab-nav" role="tablist" aria-label="板块导航">
             <button class="tab-btn active" data-tab="llm" role="tab" aria-selected="true"><span class="tab-icon"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y1="12" x2="12" y2="18"/></svg></span><span class="tab-label">大模型</span></button>
@@ -3255,7 +3311,7 @@ section > * {
                     </div>
                 </div>
             </div>
-<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:14px;line-height:1.7"><b>📊 模式洞察</b><br/>Anthropic同日发生「差评如潮（产品）」和「企业份额超越OpenAI（商业）」——这不是矛盾，而是客户分层的结果。Fable 5面向企业Agent，Sonnet面向消费者。产品评价和商业成功可以同时发生，只要目标客户是不同的人。</div>
+<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:var(--text-base,14px);line-height:1.7"><b>📊 模式洞察</b><br/>Anthropic同日发生「差评如潮（产品）」和「企业份额超越OpenAI（商业）」——这不是矛盾，而是客户分层的结果。Fable 5面向企业Agent，Sonnet面向消费者。产品评价和商业成功可以同时发生，只要目标客户是不同的人。</div>
             </section>
             </article>
 
@@ -3306,7 +3362,7 @@ section > * {
                     </div>
                 </div>
             </div>
-<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:14px;line-height:1.7"><b>📊 模式洞察</b><br/>AI Coding工具的定价战已经结束，哲学战才刚开始。Cursor赢在体验，Devin赢在自主度，TRAE赢在免费+中文，Claude Code赢在企业级可靠性。选工具的标准变成了「你相信AI到什么程度」。</div>
+<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:var(--text-base,14px);line-height:1.7"><b>📊 模式洞察</b><br/>AI Coding工具的定价战已经结束，哲学战才刚开始。Cursor赢在体验，Devin赢在自主度，TRAE赢在免费+中文，Claude Code赢在企业级可靠性。选工具的标准变成了「你相信AI到什么程度」。</div>
             </section>
             </article>
 
@@ -3352,7 +3408,7 @@ section > * {
                     </div>
                 </div>
             </div>
-<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:14px;line-height:1.7"><b>📊 模式洞察</b><br/>AI应用的商业化分水岭正在显现：靠补贴撑起的日活和靠价值撑起的ARR是两个完全不同的商业模式。天工用ARR证明价值路线可行，MiniMax用解禁压力展示流量路线的脆弱性。</div>
+<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:var(--text-base,14px);line-height:1.7"><b>📊 模式洞察</b><br/>AI应用的商业化分水岭正在显现：靠补贴撑起的日活和靠价值撑起的ARR是两个完全不同的商业模式。天工用ARR证明价值路线可行，MiniMax用解禁压力展示流量路线的脆弱性。</div>
             </section>
             </article>
 
@@ -3403,7 +3459,7 @@ section > * {
                     </div>
                 </div>
             </div>
-<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:14px;line-height:1.7"><b>📊 模式洞察</b><br/>AI行业正在从「谁的模型最厉害」进入「谁的模型最赚钱」的评价维度切换。WAIC是这场切换的年度确认仪式——带着ARR数据来的公司，话语权将远大于带着benchmark来的公司。</div>
+<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:var(--text-base,14px);line-height:1.7"><b>📊 模式洞察</b><br/>AI行业正在从「谁的模型最厉害」进入「谁的模型最赚钱」的评价维度切换。WAIC是这场切换的年度确认仪式——带着ARR数据来的公司，话语权将远大于带着benchmark来的公司。</div>
             </section>
             </article>
 
@@ -3454,7 +3510,7 @@ section > * {
                     </div>
                 </div>
             </div>
-<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:14px;line-height:1.7"><b>📊 模式洞察</b><br/>企业AI采购逻辑正在从「谁的模型好」转向「谁的生态稳」。Anthropic赢在企业API+安全合规，OpenAI赢在芯片成本控制+消费者粘性，谷歌赢在基础设施+工具链。企业选供应商的维度越来越接近「选云厂商」。</div>
+<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:var(--text-base,14px);line-height:1.7"><b>📊 模式洞察</b><br/>企业AI采购逻辑正在从「谁的模型好」转向「谁的生态稳」。Anthropic赢在企业API+安全合规，OpenAI赢在芯片成本控制+消费者粘性，谷歌赢在基础设施+工具链。企业选供应商的维度越来越接近「选云厂商」。</div>
             </section>
             </article>
 
@@ -3471,7 +3527,7 @@ section > * {
             <!-- CAPABILITY UPDATE / DEEP INSIGHT -->
 
         <div class="insight-block animate-on-scroll">
-            <div class="insight-block-title"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> 深度洞察</div>
+            <div class="insight-block-title"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> 今日判断</div>
             <div class="insight-block-body">
                 <p style="margin:0">AI洞察视角：今天最值得深想的矛盾是Fable 5同日发生的两件事：差评如潮（产品端）vs企业AI支出份额超越OpenAI（商业端）。这说明Fable 5的目标客户根本不是ChatGPT用户——面向企业的模型可以「拒答普通问题」，因为企业部署的是有明确边界的Agent，不是通用助手。Anthropic在有意做客户分层：Mythos 5给政府/国防，Fable 5给企业Agent，Sonnet/Haiku给消费者。差评如潮恰恰是因为消费者拿企业模型当日常工具用，错位了。</p><p style='margin:8px 0 0 0'>Kimi K2.6的时机感很好。Fable 5正在失去部分开发者信任的窗口期，Kimi以「长程代码能力+指令遵循」为主打切入，正面迎击Fable 5在AI Coding领域的核心用例。这不是碰巧，是有意的竞争节奏。</p><p style='margin:8px 0 0 0'>天工ARR 8亿美元值得单独记住。中国AI公司中非BAT系能做到这个量级的极少，天工的路径是「通用AI+垂直场景深耕+To B化」，而不是靠流量烧出来的。对某公司AI洞察的参考：To C产品的ARR积累需要在体验上持续做到差异化，不能只靠积分补贴。</p><p style='margin:8px 0 0 0'>OpenAI Jalapeño自研芯片是战略性动作：专为LLM推理优化，联合博通量产，目标是把推理成本从NVIDIA手中夺回来。AI公司垂直整合的终局是：谁控制了芯片→模型→应用全链路，谁就在成本结构上有不可复制的优势。</p>
             </div>
@@ -3479,10 +3535,11 @@ section > * {
 
             <!-- FOOTER -->
             <footer class="doc-footer animate-on-scroll">
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-                    <span>AI洞察 · 系统化追踪AI行业动态 · 五大板块每日更新</span>
-                </div>
-                <p style="margin-top:6px"><a href="../.." target="_blank"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10l9-7 9 7v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg> 访问AI洞察首页，获取更多深度分析</a></p>
+                <div class="footer-brand">AI洞察</div>
+                <p class="footer-desc">系统化追踪AI行业动态，每日/每周输出调研洞察<br>覆盖大模型、AI Coding、AI应用、投融资、企业AI转型</p>
+                <div class="footer-divider"></div>
+                <a href="../.." target="_top" class="footer-home-btn"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10l9-7 9 7v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg> 访问AI洞察首页</a>
+                <p class="footer-meta">AI洞察 · 日报 · 2026-07-05 · 5板块</p>
             </footer>
 
         </div>
@@ -3565,6 +3622,17 @@ section > * {
             }
         }
 
+        // ===== TOC CLICK HANDLER =====
+        document.querySelectorAll('.toc-link[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' });
+                }
+            });
+        });
+
         // ===== TOC SCROLL SPY =====
         const tocLinks = document.querySelectorAll('.toc-link[href^="#"]');
         const sections = Array.from(tocLinks)
@@ -3572,17 +3640,18 @@ section > * {
             .filter(Boolean);
 
         function updateToc() {
-            // Skip scroll spy for tab-managed sections (they're hidden/shown by tab)
-            const boardIds = ['llm', 'coding', 'app', 'industry', 'enterprise'];
-            const activeTabId = document.querySelector('.tab-btn.active')?.dataset.tab || '';
+            // Conditional boardIds: only skip if tab UI exists (daily reports have tabs, weekly reports don't)
+            const hasTabUI = document.querySelector('.tab-btn') !== null;
+            const boardIds = hasTabUI ? ['llm', 'coding', 'app', 'industry', 'enterprise'] : [];
+            const activeTabId = hasTabUI ? document.querySelector('.tab-btn.active')?.dataset.tab || '' : '';
             
             let active = null;
             const scrollY = window.scrollY + 120;
             for (const sec of sections) {
                 if (!sec) continue;
                 const secId = sec.id;
-                // For board sections, only mark active if it's the current tab
-                if (boardIds.includes(secId)) {
+                // For board sections, only mark active if it's the current tab (tab UI only)
+                if (boardIds.length > 0 && boardIds.includes(secId)) {
                     if (secId === activeTabId) {
                         active = sec;
                     }
@@ -3595,8 +3664,8 @@ section > * {
             tocLinks.forEach(l => {
                 const target = document.querySelector(l.getAttribute('href'));
                 const targetId = target?.id;
-                // Don't change active for tab-managed sections (that's Tab's job)
-                if (boardIds.includes(targetId)) return;
+                // Don't change active for tab-managed sections (that's Tab's job) — only when tab UI exists
+                if (boardIds.length > 0 && boardIds.includes(targetId)) return;
                 l.classList.toggle('toc-active', target === active);
             });
         }

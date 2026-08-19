@@ -9,7 +9,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-    <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}</style></noscript>
+    <noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important;}
+:root{--text-xs:10px;--text-sm:12px;--text-sm-md:13px;--text-base:14px;--text-base-lg:15px;--text-md:16px;--text-lg:18px;--text-xl:20px;--text-2xl:24px;--text-3xl:28px;}
+
+</style></noscript>
     <style>
 /**
  * 清爽调研报告风格 - 基础样式表
@@ -2105,6 +2108,11 @@ body.mobile-preview-mode .global-controls {
         .deep-focus-takeaway-label.china { color: #DC2626; }
         .deep-focus-takeaway-text { font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.7; font-family: var(--font-family-cn); }
         .deep-focus-takeaway-text strong { color: var(--color-text-primary); }
+        .deep-focus-source { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; color: var(--color-purple); font-size: 13px; font-weight: 600; text-decoration: none; }
+        .deep-focus-source:hover { text-decoration: underline; color: var(--color-purple-dark, #6D28D9); }
+        .narrative-card { padding: 20px 24px; }
+        .narrative-heading { display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); font-size: 16px; font-weight: 800; margin-bottom: 10px; }
+        .narrative-text { margin: 0; color: var(--color-text-secondary); font-size: 14px; line-height: 1.85; }
 
         /* ===== PATTERN INSIGHT (pi) ===== */
         .pi-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow-card); transition: all .25s cubic-bezier(.4,0,.2,1); }
@@ -2791,15 +2799,61 @@ div[class*="learn-more"] {
 
 /* ── 13. footer ── */
 .doc-footer {
-    margin-top: 48px;
-    padding-top: 24px;
+    margin-top: 64px;
+    padding: 48px 0 32px;
+    text-align: center;
     border-top: 1px solid var(--color-border-light);
-    color: #78716C;
-    font-size: 12px;
-    line-height: 1.8;
 }
-.doc-footer a { color: #2563EB; text-decoration: none; }
-.doc-footer a:hover { text-decoration: underline; }
+.doc-footer .footer-brand {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1C1917;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+}
+.doc-footer .footer-desc {
+    font-size: 13px;
+    color: #78716C;
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 24px;
+}
+.doc-footer .footer-divider {
+    width: 24px;
+    height: 1px;
+    background: var(--color-border);
+    margin: 0 auto 24px;
+}
+.doc-footer .footer-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 28px;
+    background: #1C1917;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: all .2s ease;
+    letter-spacing: 0.01em;
+}
+.doc-footer .footer-home-btn:hover {
+    background: #2563EB;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37,99,235,0.25);
+}
+.doc-footer .footer-home-btn svg {
+    opacity: 0.7;
+}
+.doc-footer .footer-meta {
+    margin-top: 32px;
+    font-size: 12px;
+    color: #A8A29E;
+    letter-spacing: 0.02em;
+}
+.doc-footer a { color: inherit; text-decoration: none; }
+.doc-footer a:hover { color: #2563EB; }
 
 /* ── 14. 内容区宽度优化（sidebar 228px → 减小到 200px） ── */
 :root { --sidebar-width: 200px; }
@@ -3158,6 +3212,8 @@ section > * {
         </div>
             </section>
 
+
+
             <!-- TAB NAVIGATION (v4.0 — 毛玻璃Tab栏，点击切换板块) -->
             <nav class="tab-nav" role="tablist" aria-label="板块导航">
             <button class="tab-btn active" data-tab="llm" role="tab" aria-selected="true"><span class="tab-icon"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y1="12" x2="12" y2="18"/></svg></span><span class="tab-label">大模型</span></button>
@@ -3216,7 +3272,7 @@ section > * {
                     </div>
                 </div>
             </div>
-<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:14px;line-height:1.7"><b>📊 模式洞察</b><br/>大模型竞争的另一条战线正在打响：谁能做到"全链路国产化"。LongCat-2.0证明这不是理论可能，而是生产级现实。接下来12个月，国产算力上运行的前沿模型数量将成为中国AI自主性的关键指标。</div>
+<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:var(--text-base,14px);line-height:1.7"><b>📊 模式洞察</b><br/>大模型竞争的另一条战线正在打响：谁能做到"全链路国产化"。LongCat-2.0证明这不是理论可能，而是生产级现实。接下来12个月，国产算力上运行的前沿模型数量将成为中国AI自主性的关键指标。</div>
             </section>
             </article>
 
@@ -3262,7 +3318,7 @@ section > * {
                     </div>
                 </div>
             </div>
-<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:14px;line-height:1.7"><b>📊 模式洞察</b><br/>AI Coding市场正在经历「工具竞争」到「生态标准竞争」的范式切换。技能定义文件的跨工具兼容意味着开发者的投资不再锁定在单一工具——这对工具厂商是压力，对开发者是自由。</div>
+<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:var(--text-base,14px);line-height:1.7"><b>📊 模式洞察</b><br/>AI Coding市场正在经历「工具竞争」到「生态标准竞争」的范式切换。技能定义文件的跨工具兼容意味着开发者的投资不再锁定在单一工具——这对工具厂商是压力，对开发者是自由。</div>
             </section>
             </article>
 
@@ -3308,7 +3364,7 @@ section > * {
                     </div>
                 </div>
             </div>
-<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:14px;line-height:1.7"><b>📊 模式洞察</b><br/>中国AI监管正在从「框架立法」进入「场景分治」阶段：情感AI严管、工具AI畅行，这是与欧盟全面风险分级完全不同的监管路径。中国式分类监管将塑造出与海外截然不同的AI产品形态生态。</div>
+<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:var(--text-base,14px);line-height:1.7"><b>📊 模式洞察</b><br/>中国AI监管正在从「框架立法」进入「场景分治」阶段：情感AI严管、工具AI畅行，这是与欧盟全面风险分级完全不同的监管路径。中国式分类监管将塑造出与海外截然不同的AI产品形态生态。</div>
             </section>
             </article>
 
@@ -3359,7 +3415,7 @@ section > * {
                     </div>
                 </div>
             </div>
-<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:14px;line-height:1.7"><b>📊 模式洞察</b><br/>AI行业正在经历从「投资驱动」到「收入驱动」的结构性转变。收入首次超过折旧是一个里程碑，但Palantir的警告也值得铭记：如果AI价值不能被量化，按Token收费的模式本身就是价值转移而非创造。</div>
+<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:var(--text-base,14px);line-height:1.7"><b>📊 模式洞察</b><br/>AI行业正在经历从「投资驱动」到「收入驱动」的结构性转变。收入首次超过折旧是一个里程碑，但Palantir的警告也值得铭记：如果AI价值不能被量化，按Token收费的模式本身就是价值转移而非创造。</div>
             </section>
             </article>
 
@@ -3405,7 +3461,7 @@ section > * {
                     </div>
                 </div>
             </div>
-<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:14px;line-height:1.7"><b>📊 模式洞察</b><br/>企业AI落地正在进入「路径选择」阶段——不再讨论"用不用"，而是讨论"怎么用、谁来主导、从哪个场景切入"。这个阶段的关键能力不是AI技术本身，而是「业务场景识别+ROI快速验证+组织变革管理」。</div>
+<div class="pi-card" style="padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:var(--text-base,14px);line-height:1.7"><b>📊 模式洞察</b><br/>企业AI落地正在进入「路径选择」阶段——不再讨论"用不用"，而是讨论"怎么用、谁来主导、从哪个场景切入"。这个阶段的关键能力不是AI技术本身，而是「业务场景识别+ROI快速验证+组织变革管理」。</div>
             </section>
             </article>
 
@@ -3422,7 +3478,7 @@ section > * {
             <!-- CAPABILITY UPDATE / DEEP INSIGHT -->
 
         <div class="insight-block animate-on-scroll">
-            <div class="insight-block-title"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> 深度洞察</div>
+            <div class="insight-block-title"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> 今日判断</div>
             <div class="insight-block-body">
                 <p style="margin:0">AI洞察视角：今天最值得反复读的信号是「豆包+千问+元宝同步下线智能体」。这不是单个平台的战略调整，而是整个行业面对监管压力的集体响应。《AI拟人化互动服务管理暂行办法》7月15日施行，平台主动在施行前完成整改——说明监管信号已经足够清晰，没有人赌可以"先上车"。</p><p style='margin:8px 0 0 0'>这对某公司AI产品线的参考价值是：AI洞察的智能体功能需要尽早梳理合规边界，特别是涉及持续性情感互动的场景（《办法》的核心约束）。工具类智能体（工作助手/知识问答/学习教育）明确不适用《办法》，这是可以重点发力的安全区域。</p><p style='margin:8px 0 0 0'>美团LongCat-2.0的意义被低估了。国产算力支撑万亿模型，不是「差不多能跑」而是「月调用量多场景登顶OpenRouter」——真实流量验证，不是PPT。这对中国AI基础设施独立性的意义比任何benchmark数字都重要。如果这条路走通，OpenRouter调用数据会是比任何白皮书都可靠的指标。</p><p style='margin:8px 0 0 0'>Claude Sonnet 5的发布在昨天是最重要的大模型动态，但搜索结果显示这条消息6天前已发布（不在今日时间窗口内），应归入近期持续追踪而非今日突发信号。</p>
             </div>
@@ -3430,10 +3486,11 @@ section > * {
 
             <!-- FOOTER -->
             <footer class="doc-footer animate-on-scroll">
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-                    <span>AI洞察 · 系统化追踪AI行业动态 · 五大板块每日更新</span>
-                </div>
-                <p style="margin-top:6px"><a href="../.." target="_blank"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10l9-7 9 7v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg> 访问AI洞察首页，获取更多深度分析</a></p>
+                <div class="footer-brand">AI洞察</div>
+                <p class="footer-desc">系统化追踪AI行业动态，每日/每周输出调研洞察<br>覆盖大模型、AI Coding、AI应用、投融资、企业AI转型</p>
+                <div class="footer-divider"></div>
+                <a href="../.." target="_top" class="footer-home-btn"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10l9-7 9 7v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg> 访问AI洞察首页</a>
+                <p class="footer-meta">AI洞察 · 日报 · 2026-07-06 · 5板块</p>
             </footer>
 
         </div>
@@ -3516,6 +3573,17 @@ section > * {
             }
         }
 
+        // ===== TOC CLICK HANDLER =====
+        document.querySelectorAll('.toc-link[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' });
+                }
+            });
+        });
+
         // ===== TOC SCROLL SPY =====
         const tocLinks = document.querySelectorAll('.toc-link[href^="#"]');
         const sections = Array.from(tocLinks)
@@ -3523,17 +3591,18 @@ section > * {
             .filter(Boolean);
 
         function updateToc() {
-            // Skip scroll spy for tab-managed sections (they're hidden/shown by tab)
-            const boardIds = ['llm', 'coding', 'app', 'industry', 'enterprise'];
-            const activeTabId = document.querySelector('.tab-btn.active')?.dataset.tab || '';
+            // Conditional boardIds: only skip if tab UI exists (daily reports have tabs, weekly reports don't)
+            const hasTabUI = document.querySelector('.tab-btn') !== null;
+            const boardIds = hasTabUI ? ['llm', 'coding', 'app', 'industry', 'enterprise'] : [];
+            const activeTabId = hasTabUI ? document.querySelector('.tab-btn.active')?.dataset.tab || '' : '';
             
             let active = null;
             const scrollY = window.scrollY + 120;
             for (const sec of sections) {
                 if (!sec) continue;
                 const secId = sec.id;
-                // For board sections, only mark active if it's the current tab
-                if (boardIds.includes(secId)) {
+                // For board sections, only mark active if it's the current tab (tab UI only)
+                if (boardIds.length > 0 && boardIds.includes(secId)) {
                     if (secId === activeTabId) {
                         active = sec;
                     }
@@ -3546,8 +3615,8 @@ section > * {
             tocLinks.forEach(l => {
                 const target = document.querySelector(l.getAttribute('href'));
                 const targetId = target?.id;
-                // Don't change active for tab-managed sections (that's Tab's job)
-                if (boardIds.includes(targetId)) return;
+                // Don't change active for tab-managed sections (that's Tab's job) — only when tab UI exists
+                if (boardIds.length > 0 && boardIds.includes(targetId)) return;
                 l.classList.toggle('toc-active', target === active);
             });
         }

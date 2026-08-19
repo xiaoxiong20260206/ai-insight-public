@@ -1697,7 +1697,7 @@ body.mobile-preview-mode .global-controls {
 
 
 /* ===== 日报组件层 ===== */
-/* ===== CSS VARIABLES (清爽调研风格 v5.0 × 日报) ===== */
+/* ===== CSS VARIABLES (清爽调研风格 v5.0 × 日报 × Tab导航升级) ===== */
         :root {
             --color-success: #059669; --color-success-light: #10B981; --color-success-dark: #047857;
             --color-success-50: #ECFDF5; --color-success-100: #D1FAE5;
@@ -1710,6 +1710,24 @@ body.mobile-preview-mode .global-controls {
             --color-border: #E7E5E4; --color-border-light: #F5F5F4;
             --color-bg: #F8FAFB; --color-bg-card: #FFFFFF; --color-bg-table-header: #FAFAF9;
             --color-bg-hover: rgba(0,0,0,0.025);
+
+            /* ===== 板块主题色映射（v4.0 Tab导航升级）===== */
+            --board-llm: #059669;       /* Emerald */
+            --board-llm-light: #10B981;
+            --board-llm-50: #ECFDF5;
+            --board-coding: #2563EB;    /* Blue */
+            --board-coding-light: #3B82F6;
+            --board-coding-50: #EFF6FF;
+            --board-app: #7C3AED;      /* Violet */
+            --board-app-light: #8B5CF6;
+            --board-app-50: #F5F3FF;
+            --board-industry: #D97706;  /* Amber */
+            --board-industry-light: #F59E0B;
+            --board-industry-50: #FFFBEB;
+            --board-enterprise: #E11D48; /* Rose */
+            --board-enterprise-light: #F43F5E;
+            --board-enterprise-50: #FFF1F2;
+
             --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
             --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
             --gradient-orange: linear-gradient(135deg, #EA580C 0%, #F97316 100%);
@@ -1899,11 +1917,11 @@ body.mobile-preview-mode .global-controls {
         .heat-header-title { font-size: 17px; font-weight: 800; margin-top: 4px; }
         .heat-body { padding: 16px 20px; }
         .heat-body p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; margin-top: 12px; font-family: var(--font-family-cn); }
-        .heat-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .heat-table th { padding: 8px 10px; text-align: left; background: #FEF2F2; font-weight: 700; color: #991B1B; border-bottom: 2px solid #FECACA; font-size: 12px; }
-        .heat-table td { padding: 10px; border-bottom: 1px solid var(--color-border-light); vertical-align: top; }
+        .heat-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+        .heat-table th { padding: 12px 16px; text-align: left; background: #FEF2F2; font-weight: 700; color: #991B1B; border-bottom: 2px solid #FECACA; font-size: 12px; letter-spacing: .03em; }
+        .heat-table td { padding: 12px 16px; border-bottom: 1px solid var(--color-border-light); vertical-align: middle; line-height: 1.5; }
         .heat-table tr:last-child td { border-bottom: none; }
-        .heat-table tr:hover { background: rgba(234,88,12,.02); }
+        .heat-table tr:hover { background: rgba(234,88,12,.03); }
         .heat-bar { display: flex; gap: 2px; align-items: center; }
         .heat-bar-fill { width: 10px; height: 14px; border-radius: 2px; background: linear-gradient(135deg, #EA580C, #DC2626); }
         .heat-bar-empty { width: 10px; height: 14px; border-radius: 2px; background: #F5F5F4; }
@@ -1913,18 +1931,123 @@ body.mobile-preview-mode .global-controls {
         .heat-trend-tag.down { background: #FEF2F2; color: #DC2626; }
         .heat-trend-tag.burst { background: #FEF2F2; color: #DC2626; }
 
-        /* ===== SECTION CARDS (for boards) ===== */
-        .board-section { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
-        .board-header { font-size: 17px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--color-border-light); display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); }
-        .board-badge { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--gradient-success); color: #fff; font-size: 12px; font-weight: 700; }
-        .board-badge.orange { background: var(--gradient-orange); }
+        /* ===== TAB NAVIGATION (v4.0 毛玻璃Tab栏) ===== */
+        .tab-nav {
+            display: flex;
+            gap: 4px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.82);
+            backdrop-filter: blur(20px) saturate(1.8);
+            -webkit-backdrop-filter: blur(20px) saturate(1.8);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .tab-nav::-webkit-scrollbar { display: none; }
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+            position: relative;
+        }
+        .tab-btn:hover {
+            background: rgba(0,0,0,0.04);
+            color: var(--color-text-primary);
+        }
+        .tab-btn:focus-visible {
+            outline: 2px solid var(--color-success);
+            outline-offset: -2px;
+        }
+        .tab-btn.active {
+            color: var(--color-text-primary);
+            background: var(--color-success-50);
+        }
+        .tab-btn[data-tab="llm"].active { background: var(--board-llm-50); color: var(--board-llm); }
+        .tab-btn[data-tab="coding"].active { background: var(--board-coding-50); color: var(--board-coding); }
+        .tab-btn[data-tab="app"].active { background: var(--board-app-50); color: var(--board-app); }
+        .tab-btn[data-tab="industry"].active { background: var(--board-industry-50); color: var(--board-industry); }
+        .tab-btn[data-tab="enterprise"].active { background: var(--board-enterprise-50); color: var(--board-enterprise); }
+        .tab-btn .tab-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .tab-btn .tab-label { line-height: 1; }
+
+        /* Tab Panel */
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+        /* tab-panel visibility controlled by JS only via .active class */
+        .tab-panel.active { display: block !important; }
+
+        /* ===== BOARD SECTION WITH THEME COLOR (v4.0) ===== */
+        .board-section {
+            background: var(--color-bg-card); border: 1px solid var(--color-border-light);
+            border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px;
+            box-shadow: var(--shadow-card);
+            border-top: 3px solid var(--board-accent, var(--color-success));
+        }
+        .board-section[data-board="llm"] { --board-accent: var(--board-llm); }
+        .board-section[data-board="coding"] { --board-accent: var(--board-coding); }
+        .board-section[data-board="app"] { --board-accent: var(--board-app); }
+        .board-section[data-board="industry"] { --board-accent: var(--board-industry); }
+        .board-section[data-board="enterprise"] { --board-accent: var(--board-enterprise); }
+        .board-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 26px; height: 26px; border-radius: 50%;
+            background: var(--board-accent, var(--gradient-success)); color: #fff;
+            font-size: 12px; font-weight: 700;
+        }
         .sub-header { font-size: 13px; font-weight: 700; color: var(--color-text-muted); margin: 14px 0 10px; padding-left: 4px; letter-spacing: .5px; }
         .sub-header:first-child { margin-top: 0; }
 
-        /* ===== NEWS ITEMS ===== */
-        .news-item { padding: 8px 0; border-bottom: 1px solid var(--color-border-light); transition: background .15s; margin: 0 -8px; padding-left: 8px; padding-right: 8px; border-radius: var(--radius-sm); }
-        .news-item:hover { background: rgba(5,150,105,0.02); }
-        .news-item:last-child { border-bottom: none; }
+        /* ===== NEWS ITEMS (v4.0 — 卡片化+板块主题色左边框+hover上浮) ===== */
+        .news-item {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border-light);
+            border-left: 3px solid var(--board-accent, var(--color-success));
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .news-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px color-mix(in srgb, var(--board-accent, var(--color-success)) 12%, transparent);
+        }
+        /* 板块级新闻项继承主题色 */
+        .tab-panel[data-tab="llm"] .news-item { border-left-color: var(--board-llm); }
+        .tab-panel[data-tab="llm"] .news-item:hover { box-shadow: 0 6px 16px rgba(5,150,105,0.12); }
+        .tab-panel[data-tab="coding"] .news-item { border-left-color: var(--board-coding); }
+        .tab-panel[data-tab="coding"] .news-item:hover { box-shadow: 0 6px 16px rgba(37,99,235,0.12); }
+        .tab-panel[data-tab="app"] .news-item { border-left-color: var(--board-app); }
+        .tab-panel[data-tab="app"] .news-item:hover { box-shadow: 0 6px 16px rgba(124,58,237,0.12); }
+        .tab-panel[data-tab="industry"] .news-item { border-left-color: var(--board-industry); }
+        .tab-panel[data-tab="industry"] .news-item:hover { box-shadow: 0 6px 16px rgba(217,119,6,0.12); }
+        .tab-panel[data-tab="enterprise"] .news-item { border-left-color: var(--board-enterprise); }
+        .tab-panel[data-tab="enterprise"] .news-item:hover { box-shadow: 0 6px 16px rgba(225,29,72,0.12); }
         .news-tag { display: inline-block; padding: 1px 6px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; vertical-align: middle; }
         .tag-hot { background: #FEF2F2; color: var(--color-danger); }
         .tag-new { background: #EFFDF5; color: var(--color-success); }
@@ -1932,8 +2055,8 @@ body.mobile-preview-mode .global-controls {
         .tag-policy { background: #FFF7ED; color: var(--color-orange); }
         .tag-practice { background: #ECFDF5; color: #059669; }
         .tag-cn { background: #FEF2F2; color: #DC2626; }
-        /* v5.1: 标题行 — tag + 标题 + 来源 inline 合并 */
-        .news-title-row { font-size: 14px; font-weight: 600; line-height: 1.5; display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px; margin-bottom: 3px; }
+        /* v5.1→v4.0: 标题行 — tag + 标题(16px/600) + 来源(12px) inline 合并 */
+        .news-title-row { font-size: 16px; font-weight: 600; line-height: 1.5; display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px; margin-bottom: 4px; }
         .news-title-row a { color: var(--color-text-primary); text-decoration: none; }
         .news-title-row a:hover { color: var(--color-success); }
         .news-source-inline { font-size: 11px; color: var(--color-text-muted); font-weight: 400; flex-shrink: 0; white-space: nowrap; }
@@ -1956,8 +2079,19 @@ body.mobile-preview-mode .global-controls {
         .news-data-chip.china { background: #FEF2F2; border-color: #FECACA; color: #991B1B; }
         .news-summary-compact { font-size: 13px; color: var(--color-text-muted); margin-top: 2px; line-height: 1.55; font-family: var(--font-family-cn); }
 
-        /* ===== DEEP FOCUS ===== */
-        .deep-focus-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 0; margin-bottom: 16px; box-shadow: var(--shadow-card); overflow: hidden; }
+        /* ===== DEEP FOCUS (v4.0 — 板块主题色) ===== */
+        .deep-focus-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 0; margin-bottom: 16px; box-shadow: var(--shadow-card); overflow: hidden; border-top: 3px solid var(--board-accent, var(--color-purple)); }
+        /* 板块主题色 header */
+        .tab-panel[data-tab="llm"] .deep-focus-card { border-top-color: var(--board-llm); }
+        .tab-panel[data-tab="llm"] .deep-focus-header { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
+        .tab-panel[data-tab="coding"] .deep-focus-card { border-top-color: var(--board-coding); }
+        .tab-panel[data-tab="coding"] .deep-focus-header { background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); }
+        .tab-panel[data-tab="app"] .deep-focus-card { border-top-color: var(--board-app); }
+        .tab-panel[data-tab="app"] .deep-focus-header { background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%); }
+        .tab-panel[data-tab="industry"] .deep-focus-card { border-top-color: var(--board-industry); }
+        .tab-panel[data-tab="industry"] .deep-focus-header { background: linear-gradient(135deg, #D97706 0%, #B45309 100%); }
+        .tab-panel[data-tab="enterprise"] .deep-focus-card { border-top-color: var(--board-enterprise); }
+        .tab-panel[data-tab="enterprise"] .deep-focus-header { background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%); }
         .deep-focus-header { background: var(--gradient-purple); color: #fff; padding: 18px 24px; display: flex; align-items: center; gap: 10px; }
         .deep-focus-header.orange-theme { background: linear-gradient(135deg, #EA580C 0%, #DC2626 100%); }
         .deep-focus-header.china-theme { background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%); }
@@ -1975,6 +2109,11 @@ body.mobile-preview-mode .global-controls {
         .deep-focus-takeaway-label.china { color: #DC2626; }
         .deep-focus-takeaway-text { font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.7; font-family: var(--font-family-cn); }
         .deep-focus-takeaway-text strong { color: var(--color-text-primary); }
+        .deep-focus-source { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; color: var(--color-purple); font-size: 13px; font-weight: 600; text-decoration: none; }
+        .deep-focus-source:hover { text-decoration: underline; color: var(--color-purple-dark, #6D28D9); }
+        .narrative-card { padding: 20px 24px; }
+        .narrative-heading { display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); font-size: 16px; font-weight: 800; margin-bottom: 10px; }
+        .narrative-text { margin: 0; color: var(--color-text-secondary); font-size: 14px; line-height: 1.85; }
 
         /* ===== PATTERN INSIGHT (pi) ===== */
         .pi-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow-card); transition: all .25s cubic-bezier(.4,0,.2,1); }
@@ -2019,12 +2158,18 @@ body.mobile-preview-mode .global-controls {
 
         /* ===== DATA TABLE ===== */
         .data-table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius-md); border: 1px solid var(--color-border); }
-        .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        .data-table th, .data-table td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--color-border-light); }
+        .data-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+        .data-table th, .data-table td { padding: 12px 18px; text-align: left; border-bottom: 1px solid var(--color-border-light); }
         .data-table th { background: var(--color-bg-table-header); font-weight: 600; color: var(--color-text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
-        .data-table td { color: var(--color-text-primary); }
+        .data-table td { color: var(--color-text-primary); line-height: 1.5; }
         .data-table tr:last-child td { border-bottom: none; }
         .data-table tbody tr:hover { background: var(--color-bg-hover); }
+        /* pi-card 内嵌 table 样式升级 */
+        .pi-card table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; margin: 8px 0; }
+        .pi-card th { padding: 10px 16px; background: rgba(124,58,237,0.06); font-weight: 600; font-size: 12px; color: var(--color-text-secondary); border-bottom: 1px solid rgba(124,58,237,0.12); text-align: left; }
+        .pi-card td { padding: 10px 16px; border-bottom: 1px solid var(--color-border-light); line-height: 1.5; color: var(--color-text-primary); }
+        .pi-card tr:last-child td { border-bottom: none; }
+        .pi-card table + p { font-size: 13px; color: var(--color-text-muted); margin-top: 8px; }
         .section-card { background: var(--color-bg-card); border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
         .section-header { font-size: 16px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--color-border-light); display: flex; align-items: center; gap: 8px; color: var(--color-text-primary); }
         .section-header .num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--gradient-success); color: #fff; font-size: 12px; font-weight: 700; }
@@ -2067,9 +2212,10 @@ body.mobile-preview-mode .global-controls {
 
         /* ===== FOOTER ===== */
         .doc-footer {
-            margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--color-border);
+            margin-top: 56px; padding: 24px 0 0 0; border-top: 1px solid var(--color-border);
             font-size: 12px; color: var(--color-text-muted); text-align: center;
             font-family: var(--font-family-cn); line-height: 1.8;
+            max-width: 100%;
         }
         .doc-footer a { color: var(--color-success); }
 
@@ -2077,25 +2223,23 @@ body.mobile-preview-mode .global-controls {
         @media (max-width: 768px) {
             .layout-wrapper { flex-direction: column; }
             .sidebar-nav {
-                width: 100%; position: sticky; top: 0; height: auto;
-                overflow-y: visible; border-right: none; border-bottom: 1px solid var(--color-border);
-                display: flex; flex-direction: row; overflow-x: auto; padding: 4px 0;
-                -webkit-overflow-scrolling: touch;
+                display: none;
             }
-            .sidebar-doc-title, .toc-group-label, .reading-progress-wrap { display: none; }
-            .toc-link {
-                flex: 0 0 auto; border-left: none; border-bottom: 2px solid transparent;
-                white-space: nowrap; padding: 8px 14px; font-size: 12px;
-            }
-            .toc-link.toc-active { border-left-color: transparent; border-bottom-color: var(--color-success); }
-            .toc-link.toc-sub { display: none; }
             .sidebar-collapse-btn { display: none; }
-            .content-inner { padding: 24px 16px 80px; }
+            .content-inner { padding: 16px 12px 80px; width: 100%; }
+            /* Tab: 移动端图标模式 */
+            .tab-nav { top: 0; padding: 6px 8px; gap: 2px; border-radius: 0; }
+            .tab-btn { padding: 8px 10px; font-size: 12px; min-width: 44px; min-height: 44px; touch-action: manipulation; }
+            .tab-btn .tab-label { display: none; }
+            .tab-btn .tab-icon { width: 22px; height: 22px; font-size: 14px; }
             .overview-grid.five-cols { grid-template-columns: 1fr 1fr; }
             .watch-grid { grid-template-columns: 1fr; }
-            .header-title { font-size: 24px; }
-            .heat-table { font-size: 12px; }
-            .heat-table th, .heat-table td { padding: 6px 4px; }
+            .header-title { font-size: 22px; }
+            .heat-table { font-size: 13px; }
+            .heat-table th, .heat-table td { padding: 8px 10px; }
+            .data-table th, .data-table td { padding: 8px 12px; }
+            .pi-card th { padding: 8px 12px; }
+            .pi-card td { padding: 8px 12px; }
             .coverage-bar { flex-direction: column; gap: 8px; }
             .pi-evo { flex-direction: column; align-items: flex-start; }
             .pi-evo-arrow { display: none; }
@@ -2103,13 +2247,25 @@ body.mobile-preview-mode .global-controls {
             .pi-t-row { grid-template-columns: 1fr; gap: 2px; padding: 6px 10px; border-left: 3px solid var(--color-border-light); margin-bottom: 4px; }
             .pi-t-row.projected { border-left-color: rgba(124,58,237,.3); }
             .pi-t-analogy { border-left: none; padding-left: 0; font-size: 12px; }
+            .news-item { padding: 12px 14px; border-left-width: 3px; }
+            .news-title-row { font-size: 16px; flex-wrap: wrap; }
+            .news-summary-compact { font-size: 13px; }
+            .deep-focus-card { margin: 16px 0; }
+            .header { padding: 20px 0 16px; }
+            .header-meta { flex-wrap: wrap; }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .tab-btn .tab-label { display: inline; }
         }
         @media (max-width: 960px) {
             .overview-grid.five-cols { grid-template-columns: 1fr 1fr; }
         }
+        @media (min-width: 1025px) {
+            .tab-btn .tab-label { display: inline; }
+        }
 
 /* ===== AI洞察定制层 ===== */
-/* ===== AI洞察定制层样式（仅日报/首页特有的组件样式） ===== */
+/* ===== AI洞察定制层样式（v4.0 — Tab导航升级，板块主题色）===== */
 /* 
  * ⚠️ 本文件只包含AI洞察项目特有的组件样式和扩展变量。
  * CSS变量定义和基础样式从 qingshuang-research-style 动态引用。
@@ -2123,7 +2279,7 @@ body.mobile-preview-mode .global-controls {
  * - 新增组件样式在本文件添加
  */
 
-/* ===== AI洞察扩展CSS变量（公共层未覆盖的） ===== */
+/* ===== AI洞察扩展CSS变量（公共层未覆盖的）===== */
 :root {
     --color-orange: #EA580C;
     --color-success-dark: #047857;
@@ -2138,6 +2294,20 @@ body.mobile-preview-mode .global-controls {
     --gradient-orange: linear-gradient(135deg, #EA580C 0%, #F97316 100%);
     --gradient-china: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
     --color-bg-hover: rgba(0,0,0,0.025);
+}
+
+/* ===== 周报Header副标题覆盖（公共层max-width:580px太窄）===== */
+.header-subtitle, .subtitle {
+    max-width: 100% !important;
+    color: var(--color-text-muted) !important;
+    font-size: 13px !important;
+    margin-top: 14px !important;
+}
+
+/* ===== 周报insight-card段落样式（统一用CSS而非内联style）===== */
+.insight-card > p {
+    line-height: 1.75;
+    font-size: 13px;
 }
 
 /* ===== 日报特有组件 ===== */
@@ -2193,7 +2363,7 @@ body.mobile-preview-mode .global-controls {
 
 /* ===== 首页特有组件 ===== */
 
-/* Tab导航 */
+/* Tab导航（首页）*/
 .tab-nav {
     background: rgba(255,255,255,0.85);
     backdrop-filter: blur(20px) saturate(1.8);
@@ -2286,11 +2456,668 @@ body.mobile-preview-mode .global-controls {
 }
 
 
+/* ============================================================
+   AI周报视觉系统 v4.0 (2026-06-30)
+   对齐 qingshuang-research-style v3.2 规范
+   完全重写，替代之前零散补丁
+   ============================================================ */
+
+/* ── 1. Top5 卡片：legacy 变量保留 ── */
+.llm .news-card      { --card-accent: var(--board-llm,      var(--color-success)); }
+.coding .news-card   { --card-accent: var(--board-coding,   var(--color-info)); }
+.app .news-card      { --card-accent: var(--board-app,      var(--color-purple)); }
+.industry .news-card { --card-accent: var(--board-industry, var(--color-warning)); }
+.enterprise .news-card { --card-accent: var(--board-enterprise, var(--color-danger)); }
+
+/* news-card 左边框 + hover 上浮（Material Design cubic-bezier） */
+.news-card {
+    border-left: 4px solid var(--card-accent, var(--color-success));
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-card);
+    background: #fff;
+    transition: box-shadow 200ms cubic-bezier(0.4,0,0.2,1),
+                transform   200ms cubic-bezier(0.4,0,0.2,1);
+}
+.news-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.06);
+    transform: translateY(-2px);
+}
+
+/* ── 2. Header：深色渐变 + 毛玻璃 badge ── */
+/* qingshuang-research-style: 报告标题 30-34px / 800 / 渐变色 */
+.doc-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1e1b4b 100%);
+    border-radius: var(--radius-md);
+    padding: 52px 44px 44px !important;
+    margin-bottom: 40px !important;
+    position: relative;
+    overflow: hidden;
+}
+.doc-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 15% 50%, rgba(37,99,235,.28) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 15%, rgba(124,58,237,.22) 0%, transparent 50%),
+        radial-gradient(ellipse at 55% 95%, rgba(5,150,105,.18) 0%, transparent 45%);
+    pointer-events: none;
+}
+.doc-header .header-badge {
+    display: inline-block;
+    background: rgba(255,255,255,.12);
+    backdrop-filter: blur(8px);
+    color: rgba(255,255,255,.8);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(255,255,255,.15);
+}
+.doc-header .header-title {
+    font-size: 36px !important;
+    font-weight: 800 !important;
+    background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,.82) 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    letter-spacing: -.025em;
+    line-height: 1.2 !important;
+    margin-bottom: 18px !important;
+    text-wrap: balance;
+}
+.doc-header p.header-meta {
+    color: rgba(255,255,255,.55);
+    font-size: 13px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 0;
+    align-items: center;
+}
+.doc-header p.header-meta .meta-icon { stroke: rgba(255,255,255,.6); }
+/* subtitle 行 */
+.doc-header > div[style*="color:var(--color-text-muted)"] {
+    color: rgba(255,255,255,.65) !important;
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+    max-width: 700px;
+}
+/* 底部渐变线 */
+.doc-header::after {
+    background: linear-gradient(90deg, rgba(255,255,255,.25), rgba(255,255,255,.08), transparent) !important;
+    height: 1px !important;
+}
+
+/* ── 3. 页面整体背景 ── */
+/* qingshuang: body bg + mesh gradient */
+body {
+    background: #F8FAFB !important;
+    background-image:
+        radial-gradient(at 20% 20%, rgba(5,150,105,.05) 0%, transparent 50%),
+        radial-gradient(at 80% 80%, rgba(37,99,235,.04) 0%, transparent 50%) !important;
+}
+
+/* ── 4. 排版层级（qingshuang 规范：至少差 200 字重） ── */
+/* 章节标题：22px / 700 */
+section > h2 {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    color: #1C1917;
+    letter-spacing: -.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px !important;
+    margin-bottom: 22px !important;
+}
+section > h2 .meta-icon { width: 20px !important; height: 20px !important; flex-shrink: 0; }
+/* 正文：15px / 400 / 1.65 行高 / #57534E */
+p, .news-card-desc, .insight-card p, .callout {
+    font-size: 15px !important;
+    line-height: 1.75 !important;
+    color: #57534E !important;
+}
+/* 辅助文字 */
+.news-card-meta, .meta-item, .daily-item-kw,
+.insight-tag, .doc-footer p {
+    font-size: 12px !important;
+    color: #78716C !important;
+}
+
+/* ── 5. doc-chapter-label：pill 胶囊标签 ── */
+.doc-chapter-label {
+    display: inline-block !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: .1em !important;
+    padding: 3px 12px !important;
+    border-radius: 999px !important;
+    margin-bottom: 6px !important;
+    background: rgba(37,99,235,.08);
+    color: #2563EB;
+}
+/* 各板块用板块色 */
+section#llm      > .doc-chapter-label { background: rgba(5,150,105,.10); color: #059669; }
+section#coding   > .doc-chapter-label { background: rgba(37,99,235,.10); color: #2563EB; }
+section#app      > .doc-chapter-label { background: rgba(124,58,237,.10); color: #7C3AED; }
+section#industry > .doc-chapter-label { background: rgba(217,119,6,.10); color: #D97706; }
+section#enterprise > .doc-chapter-label { background: rgba(225,29,72,.10); color: #E11D48; }
+
+/* ── 6. 板块区分：分隔线 + 间距 ── */
+section#llm, section#coding, section#app, section#industry, section#enterprise {
+    margin-top: 48px !important;
+    padding-top: 36px !important;
+    border-top: 2px solid var(--color-border-light);
+    position: relative;
+}
+/* 板块 h2 颜色 */
+section#llm      > h2 { color: #059669 !important; }
+section#coding   > h2 { color: #2563EB !important; }
+section#app      > h2 { color: #7C3AED !important; }
+section#industry > h2 { color: #D97706 !important; }
+section#enterprise > h2 { color: #E11D48 !important; }
+
+/* ── 7. stat-card：qingshuang 统计数值规范 ── */
+/* 数值 20-28px / 700 / 语义色；标签 12px / 500 / muted */
+.stat-card {
+    padding: 20px 16px !important;
+    text-align: center;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    background: #fff;
+    border: 1px solid var(--color-border-light);
+    border-top: 3px solid transparent;
+    transition: box-shadow 200ms cubic-bezier(0.4,0,0.2,1),
+                transform   200ms cubic-bezier(0.4,0,0.2,1);
+    font-variant-numeric: tabular-nums;
+}
+.stat-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.09); transform: translateY(-2px); }
+
+.stat-value {
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -.02em;
+    display: block;
+    margin-bottom: 6px;
+}
+.stat-label {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: .07em !important;
+    color: #78716C !important;
+    display: block;
+    line-height: 1.4;
+}
+
+/* 语义色（最高优先级） */
+.stat-card.stat-success { border-top-color: #059669; }
+.stat-card.stat-info    { border-top-color: #2563EB; }
+.stat-card.stat-purple  { border-top-color: #7C3AED; }
+.stat-card.stat-warning { border-top-color: #D97706; }
+.stat-card.stat-danger  { border-top-color: #E11D48; }
+
+.stat-card.stat-success .stat-value { color: #059669 !important; }
+.stat-card.stat-info    .stat-value { color: #2563EB !important; }
+.stat-card.stat-purple  .stat-value { color: #7C3AED !important; }
+.stat-card.stat-warning .stat-value { color: #D97706 !important; }
+.stat-card.stat-danger  .stat-value { color: #E11D48 !important; }
+
+/* stats-grid */
+.stats-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 12px !important;
+    margin-top: 18px;
+}
+
+/* ── 8. board-table：精致表格 ── */
+/* qingshuang：表格表头要有语义色 + 事件列优先展示 */
+.board-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+    table-layout: fixed;
+}
+.board-table colgroup col:first-child { width: 55%; }
+.board-table colgroup col:nth-child(2) { width: 30%; }
+.board-table colgroup col:last-child  { width: 15%; }
+.board-table thead th {
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    background: color-mix(in srgb, var(--board-color, #2563EB) 7%, white);
+    color: var(--board-color, #2563EB);
+    border-bottom: 2px solid var(--board-color, #2563EB);
+    text-align: left;
+    white-space: nowrap;
+}
+.board-table tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--color-border-light);
+    vertical-align: top;
+    line-height: 1.6;
+    font-size: 13px !important;
+    word-break: break-word;
+}
+.board-table tbody tr:last-child td { border-bottom: none; }
+.board-table tbody tr:hover { background: color-mix(in srgb, var(--board-color, #2563EB) 3%, white); }
+.board-table tbody td:last-child { white-space: nowrap; font-size: 12px; text-align: center; }
+
+/* table-wrap 卡片化 */
+.table-wrap {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-border-light);
+    margin: 16px 0;
+}
+
+/* ── 9. callout 升级 ── */
+.callout {
+    border-left-width: 4px !important;
+    padding: 14px 20px !important;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0 !important;
+    margin: 20px 0 !important;
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+    background: #FAFAFA;
+}
+.callout strong { color: #1C1917; font-weight: 700; }
+.callout-purple  { background: rgba(124,58,237,.04)  !important; border-color: #7C3AED !important; }
+.callout-info    { background: rgba(37,99,235,.04)   !important; border-color: #2563EB !important; }
+.callout-success { background: rgba(5,150,105,.04)   !important; border-color: #059669 !important; }
+.callout-warning { background: rgba(217,119,6,.04)   !important; border-color: #D97706 !important; }
+.callout-danger  { background: rgba(225,29,72,.04)   !important; border-color: #E11D48 !important; }
+
+/* ── 10. 日报索引卡片 ── */
+.daily-item {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 14px 18px !important;
+    margin-bottom: 10px !important;
+    box-shadow: var(--shadow-card);
+    border-left: 3px solid #2563EB;
+    transition: box-shadow 200ms cubic-bezier(0.4,0,0.2,1);
+}
+.daily-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,.09); }
+.daily-item-date {
+    flex-shrink: 0;
+    min-width: 72px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: #2563EB !important;
+    line-height: 1.5;
+}
+.daily-item-link {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #1C1917 !important;
+    text-decoration: none !important;
+    line-height: 1.4;
+}
+.daily-item-link:hover { color: #2563EB !important; }
+.daily-item-kw {
+    font-size: 11px !important;
+    color: #78716C !important;
+    margin-top: 3px;
+    line-height: 1.5;
+}
+
+/* ── 11. 宏观叙事区：callout 包装 ── */
+section#narrative p {
+    font-size: 15px !important;
+    line-height: 1.8 !important;
+    color: #57534E !important;
+    max-width: 65ch;
+}
+section#narrative .callout { margin-bottom: 16px !important; }
+
+/* ── 12. 了解更多区域增强 ── */
+.learn-more-section,
+div[class*="learn-more"] {
+    margin-top: 56px;
+    padding: 32px 36px;
+    background: linear-gradient(135deg, rgba(37,99,235,.04) 0%, rgba(124,58,237,.04) 100%);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(37,99,235,.12);
+    text-align: center;
+}
+
+/* ── 13. footer ── */
+.doc-footer {
+    margin-top: 64px;
+    padding: 48px 0 32px;
+    text-align: center;
+    border-top: 1px solid var(--color-border-light);
+}
+.doc-footer .footer-brand {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1C1917;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+}
+.doc-footer .footer-desc {
+    font-size: 13px;
+    color: #78716C;
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 24px;
+}
+.doc-footer .footer-divider {
+    width: 24px;
+    height: 1px;
+    background: var(--color-border);
+    margin: 0 auto 24px;
+}
+.doc-footer .footer-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 28px;
+    background: #1C1917;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: all .2s ease;
+    letter-spacing: 0.01em;
+}
+.doc-footer .footer-home-btn:hover {
+    background: #2563EB;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37,99,235,0.25);
+}
+.doc-footer .footer-home-btn svg {
+    opacity: 0.7;
+}
+.doc-footer .footer-meta {
+    margin-top: 32px;
+    font-size: 12px;
+    color: #A8A29E;
+    letter-spacing: 0.02em;
+}
+.doc-footer a { color: inherit; text-decoration: none; }
+.doc-footer a:hover { color: #2563EB; }
+
+/* ── 14. 内容区宽度优化（sidebar 228px → 减小到 200px） ── */
+:root { --sidebar-width: 200px; }
+.sidebar-nav .toc-link {
+    font-size: 12px !important;
+    padding: 5px 10px !important;
+    line-height: 1.45;
+    color: #78716C;
+}
+.sidebar-nav .toc-link:hover,
+.sidebar-nav .toc-link.active { color: #2563EB; background: rgba(37,99,235,.06); }
+.content-inner {
+    padding: 32px 48px 120px !important;
+}
+
+/* ── 15. 无障碍：焦点环（qingshuang 规范）── */
+a:focus-visible, button:focus-visible {
+    outline: 2px solid #059669;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px rgba(5,150,105,.12);
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* ── 16. 行宽限制（qingshuang: 65ch，防阅读疲劳）── */
+.news-card-desc, .news-card-why, p:not(.header-meta), .callout,
+.insight-card p {
+    max-width: 65ch;
+}
+
+/* ── 17. 微交互 prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+/* ── 18. 响应式（移动优先，qingshuang 断点规范）── */
+/* < 768px */
+@media (max-width: 767px) {
+    .sidebar-nav { display: none !important; }
+    .doc-header { padding: 28px 20px 24px !important; border-radius: 0; }
+    .doc-header .header-title { font-size: 24px !important; }
+    .content-inner { padding: 16px 16px 80px !important; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    section > h2 { font-size: 18px !important; }
+    .stat-value { font-size: 20px !important; }
+    .daily-item { flex-direction: column; gap: 6px; }
+    .board-table { font-size: 12px; }
+    .board-table thead th, .board-table tbody td { padding: 8px 10px; }
+    p, .news-card-desc { font-size: 14px !important; max-width: 100%; }
+}
+/* 768-1023px 平板：3列 stat */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .stats-grid { grid-template-columns: repeat(3, 1fr) !important; }
+    .content-inner { padding: 24px 32px 100px !important; }
+}
+/* > 1024px 桌面：4列 stat */
+@media (min-width: 1024px) {
+    .stats-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important; }
+}
+
+/* ============================================================
+   宽度对齐系统 (2026-06-30)
+   目标：所有章节内容在同一个 960px 宽度容器内对齐
+   ============================================================ */
+
+/* 统一内容区最大宽度 */
+:root {
+    --content-max: 960px;
+    --sidebar-width: 200px;
+}
+
+/* content-inner：统一容器（覆盖之前零散定义） */
+.content-inner {
+    width: 100% !important;
+    max-width: var(--content-max) !important;
+    padding: 32px 44px 120px !important;
+    box-sizing: border-box;
+}
+
+/* doc-header：背景全宽，内容对齐 960px */
+/* 移除 header 的 border-radius，让它可以全宽铺展 */
+/* 内容通过 padding 约束在 content-inner 的宽度内 */
+.doc-header {
+    /* 让 header 和 section 等宽，都在 content-inner 内 */
+    width: 100%;
+    box-sizing: border-box;
+}
+/* subtitle max-width 对齐（去掉硬编码 700px） */
+.doc-header > div[style*="color:var(--color-text-muted)"] {
+    max-width: 100% !important;
+}
+
+/* 所有 section 统一宽度 */
+section {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* table-wrap、stats-grid、daily-index 统一全宽 */
+.table-wrap,
+.stats-grid,
+.daily-index,
+.weekly-news-card,
+.insight-card {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 内容行宽：正文段落 65ch，但容器本身全宽 */
+/* 这样卡片/表格撑满，只有纯文字段落控制行宽 */
+section > p,
+.narrative-text {
+    max-width: 65ch;
+}
+/* 清除之前错误地给 callout 加了 65ch 的 max-width */
+.callout,
+.news-card-desc,
+.news-card-why,
+.weekly-news-card p,
+.insight-card p {
+    max-width: none !important;
+}
+
+/* 桌面：内容区 padding 44px 两侧 */
+@media (min-width: 1024px) {
+    .content-inner {
+        padding: 32px 44px 120px !important;
+    }
+}
+/* 平板 768-1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .content-inner {
+        padding: 24px 32px 100px !important;
+    }
+}
+/* 移动端 */
+@media (max-width: 767px) {
+    .content-inner {
+        padding: 16px 16px 80px !important;
+    }
+    .doc-header {
+        border-radius: 0 !important;
+    }
+}
+
+/* ============================================================
+   表格溢出修复 (2026-06-30 #fix-overflow)
+   根因：.table-wrap { overflow: hidden } 覆盖了 overflow-x: auto
+   ============================================================ */
+
+/* 恢复 table-wrap 横向滚动，避免内容截断 */
+.table-wrap {
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* overview 表格：禁用 table-layout:fixed，改用 auto 让浏览器自动分配列宽 */
+/* 维度列 whitespace:nowrap 自然取最小宽，信号列获得剩余所有空间 */
+.board-table {
+    table-layout: auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+.board-table thead th,
+.board-table tbody td {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+/* 维度列不换行（短文字），信号列自由换行 */
+.board-table thead th:first-child,
+.board-table tbody td:first-child {
+    white-space: nowrap;
+    width: 1%;  /* 收缩到内容最小宽度 */
+}
+.board-table thead th:not(:first-child),
+.board-table tbody td:not(:first-child):not(:last-child) {
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* content-inner：用 box-sizing + overflow-x hidden 防止整体溢出 */
+.content-inner {
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+}
+
+/* section 内所有元素约束在容器内 */
+section > * {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* ============================================================
+   内容细节修复 (2026-06-30 round-5)
+   ============================================================ */
+
+/* 1. callout 内 strong：更明显的加粗 + 颜色 */
+.callout strong {
+    font-weight: 800 !important;
+    color: #1C1917 !important;
+    letter-spacing: -.01em;
+}
+.callout-purple strong { color: #5B21B6 !important; }
+.callout-info    strong { color: #1D4ED8 !important; }
+.callout-success strong { color: #047857 !important; }
+.callout-warning strong { color: #B45309 !important; }
+.callout-danger  strong { color: #BE123C !important; }
+
+/* 2. 深度洞察 块：turning_point/paradox/takeaway 左边条 + 序号标题 */
+#linkinsight .callout {
+    font-size: 14px !important;
+    line-height: 1.8 !important;
+}
+
+/* 3. 词汇表：术语列加粗更醒目，出处列更精致 */
+.board-table tbody td:first-child {
+    font-weight: 700 !important;
+    color: #1C1917 !important;
+}
+.board-table tbody td:last-child {
+    color: #78716C;
+    font-size: 12px !important;
+}
+
+/* 4. 来源列文字不截断 */
+.board-table tbody td:nth-child(2) {
+    color: #57534E;
+    font-size: 13px !important;
+    line-height: 1.6;
+}
+
+/* 5. 宏观叙事：block 间有足够间距 */
+#narrative .callout + .callout {
+    margin-top: 14px !important;
+}
+
+/* 6. 日报索引链接标题：更像标题 */
+.daily-item-link {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #1C1917 !important;
+    line-height: 1.45;
+    display: block;
+    margin-bottom: 3px;
+    transition: color 150ms ease;
+}
+.daily-item-link:hover { color: #2563EB !important; text-decoration: none; }
+
+
+
 /* ===== 68ch行宽限制（容器100%，文字68ch）===== */
 .news-card-desc, .news-card-why, .insight-card p,
 .content-paragraph, .callout > p,
 .daily-item-kw, .doc-footer p {
   max-width: 68ch;
+}
+
+/* ===== stats-grid自适应列数（支持4/5卡）===== */
+.stats-grid {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 }
 
 </style>
@@ -2304,7 +3131,7 @@ body.mobile-preview-mode .global-controls {
 <a href="#overview" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> 本周概览</a>
 <a href="#top5" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.83-1 .83s-1-.28-1-.83v-2.34"/><path d="M14 14.66V17c0 .55.47.83 1 .83s1-.28 1-.83v-2.34"/><line x1="12" y1="3" x2="12" y2="14"/><path d="M6 4v5a6 6 0 0 0 12 0V4"/></svg> Top 5 事件</a>
 <a href="#insight" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> 周度洞察</a>
-<a href="#linkinsight" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y2="12" x2="12" y2="18"/></svg> AI洞察的洞察</a>
+<a href="#linkinsight" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y2="12" x2="12" y2="18"/></svg> 深度洞察</a>
 <a href="#llm" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y2="12" x2="12" y2="18"/></svg> 大模型本周动态</a>
 <a href="#coding" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> AI Coding本周动态</a>
 <a href="#app" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> AI应用本周动态</a>
@@ -2322,107 +3149,136 @@ body.mobile-preview-mode .global-controls {
 <header class="doc-header">
   <div class="header-badge">AI INSIGHT · WEEKLY REPORT · 23</div>
   <h1 class="header-title">AI 周报 2026年第23周</h1>
-  <p class="header-meta"><span>📅 06/01-06/07</span><span>📰 覆盖7天日报 · 5板块</span><span>🌐 海外+国内</span></p>
+  <p class="header-meta"><span><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="4"/><line x1="8" y1="2" x2="8" y2="4"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 06/01-06/07</span><span><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/></svg> 覆盖7天日报 · 5板块</span><span><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> 海外+国内</span></p>
 </header>
 <section id="overview">
 <div class="doc-chapter-label animate-on-scroll">概览</div>
-<h2 class="animate-on-scroll">📋 本周概览</h2>
-<div class="animate-on-scroll" style="overflow-x:auto;">
-<table style="width:100%;border-collapse:collapse;margin-top:16px;">
-<thead><tr style="background:var(--color-bg-table-header);"><th style="padding:10px 12px;text-align:left;border-bottom:2px solid var(--color-success);font-weight:700;">维度</th><th style="padding:10px 12px;text-align:left;border-bottom:2px solid var(--color-success);font-weight:700;">周度信号</th></tr></thead>
-<tbody>
-<tr><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);font-weight:600;">🧠 大模型</td><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);">Anthropic $965B IPO反超OpenAI；GPT-5.6 Ultrafast曝光；DeepSeek V4-Pro永久降价75%；微软7款MAI去OpenAI化</td></tr>
-<tr><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);font-weight:600;">⌨️ AI Coding</td><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);">SWE-bench信任崩塌+三大新基准；Claude Code桌面版发布；Copilot token计费引发开发者反弹；Trae免费抢用户</td></tr>
-<tr><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);font-weight:600;">📱 AI 应用</td><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);">ChatGPT月活破10亿三年创纪录；豆包启动付费订阅；微信A2A打破生态孤岛；Meta Business Agent全球上线</td></tr>
-<tr><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);font-weight:600;">🏭 AI 行业</td><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);">Anthropic IPO抢跑OpenAI；智谱MiniMax冲刺科创板；宇树73天闪电过会；Suno估值半年翻倍至54亿美元</td></tr>
-<tr><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);font-weight:600;">🔄 企业AI转型</td><td style="padding:8px 12px;border-bottom:1px solid var(--color-border);">SAP自主运营企业愿景；腾讯承认大部分代码由AI生成；发改委推动央国企开放高价值场景；AI转型从试点走向全量部署</td></tr>
-</tbody></table></div>
-<div class="stats-grid animate-on-scroll">
-  <div class="stat-card stat-purple"><div class="stat-value">$965B</div><div class="stat-label">Anthropic估值超越OpenAI</div></div>
-  <div class="stat-card stat-success"><div class="stat-value">10亿</div><div class="stat-label">ChatGPT月活创纪录</div></div>
-  <div class="stat-card stat-info"><div class="stat-value">75%</div><div class="stat-label">DeepSeek V4-Pro永久降价</div></div>
-  <div class="stat-card stat-warning"><div class="stat-value">7款</div><div class="stat-label">微软MAI去OpenAI化</div></div>
-  <div class="stat-card stat-danger"><div class="stat-value">80%</div><div class="stat-label">企业放弃试点全量部署</div></div>
-</div>
+<h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> 本周概览</h2>
+<div class="table-wrap animate-on-scroll">
+<table class="board-table" style="--board-color:var(--color-success);">
+<thead><tr><th>维度</th><th>周度信号</th></tr></thead>
+<tbody><tr><td style="font-weight:600;white-space:nowrap;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y2="12" x2="12" y2="18"/></svg> 大模型</td><td>Anthropic $965B IPO反超OpenAI；GPT-5.6 Ultrafast曝光；DeepSeek V4-Pro永久降价75%；微软7款MAI去OpenAI化</td></tr>
+<tr><td style="font-weight:600;white-space:nowrap;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> AI Coding</td><td>SWE-bench信任崩塌+三大新基准；Claude Code桌面版发布；Copilot token计费引发开发者反弹；Trae免费抢用户</td></tr>
+<tr><td style="font-weight:600;white-space:nowrap;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> AI 应用</td><td>ChatGPT月活破10亿三年创纪录；豆包启动付费订阅；微信A2A打破生态孤岛；Meta Business Agent全球上线</td></tr>
+<tr><td style="font-weight:600;white-space:nowrap;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20V8l-6 4V4l-6 4V2L2 10v10z"/></svg> AI 行业</td><td>Anthropic IPO抢跑OpenAI；智谱MiniMax冲刺科创板；宇树73天闪电过会；Suno估值半年翻倍至54亿美元</td></tr>
+<tr><td style="font-weight:600;white-space:nowrap;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg> 企业AI转型</td><td>SAP自主运营企业愿景；腾讯承认大部分代码由AI生成；发改委推动央国企开放高价值场景；AI转型从试点走向全量部署</td></tr>
+</tbody>
+</table></div>
 </section>
 <section id="top5">
 <div class="doc-chapter-label animate-on-scroll">Top 5</div>
-<h2 class="animate-on-scroll">🏆 本周 Top 5 事件</h2>
-<div class="news-card animate-on-scroll" style="--card-accent: var(--color-purple);">
-  <div class="news-card-rank">TOP 1 · IPO抢跑</div>
-  <div class="news-card-title">Anthropic以9650亿美元估值秘密提交IPO申请，反超OpenAI登顶全球AI公司</div>
-  <div class="news-card-meta"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 06/01-06/07</span><span class="meta-divider">·</span><span class="meta-item">WSJ · https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a</span></div>
-  <div class="news-card-desc">Anthropic向SEC秘密提交S-1招股书，计划最快10月上市。9650亿美元估值超越OpenAI的8520亿，企业采用率34.4%首超OpenAI 32.3%，ARR从140亿飙升至470亿美元（4倍增长）。70%新采购企业选择Claude而非ChatGPT。Altimeter Capital领投65B融资轮。</div>
-  <div class="news-card-why"><div class="judgment-label">关键判断</div>这是AI行业史上最大规模IPO申请。Anthropic凭借企业级市场深耕实现估值反超，标志着AI商业模式从'流量霸主'到'企业变现'的范式分化已成定局。IPO抢跑OpenAI意味着资本市场对'安全叙事+企业深耕'路径的认可度高于'先发布后修补'路径。</div>
+<h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.83-1 .83s-1-.28-1-.83v-2.34"/><path d="M14 14.66V17c0 .55.47.83 1 .83s1-.28 1-.83v-2.34"/><line x1="12" y1="3" x2="12" y2="14"/><path d="M6 4v5a6 6 0 0 0 12 0V4"/></svg> 本周 Top 5 事件</h2>
+<div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-purple);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+    <span style="background:var(--color-purple);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 1</span>
+    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">IPO抢跑</span>
+  </div>
+  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">Anthropic以9650亿美元估值秘密提交IPO申请，反超OpenAI登顶全球AI公司</div>
+  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 06/01-06/07</span><span class="meta-divider">·</span><span class="meta-item">WSJ · https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a</span></div>
+  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">Anthropic向SEC秘密提交S-1招股书，计划最快10月上市。9650亿美元估值超越OpenAI的8520亿，企业采用率34.4%首超OpenAI 32.3%，ARR从140亿飙升至470亿美元（4倍增长）。70%新采购企业选择Claude而非ChatGPT。Altimeter Capital领投65B融资轮。</div>
+  <div style="background:color-mix(in srgb,var(--color-purple) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-purple);">
+    <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-purple);margin-bottom:4px;">关键判断</div>
+    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">这是AI行业史上最大规模IPO申请。Anthropic凭借企业级市场深耕实现估值反超，标志着AI商业模式从'流量霸主'到'企业变现'的范式分化已成定局。IPO抢跑OpenAI意味着资本市场对'安全叙事+企业深耕'路径的认可度高于'先发布后修补'路径。</div>
+  </div>
 </div>
-<div class="news-card animate-on-scroll" style="--card-accent: var(--color-info);">
-  <div class="news-card-rank">TOP 2 · Agent宣言</div>
-  <div class="news-card-title">黄仁勋GTC 2026台北定调：AI上半场落幕，Agent智能体+物理AI是下半场</div>
-  <div class="news-card-meta"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 06/01-06/07</span><span class="meta-divider">·</span><span class="meta-item">163/NVIDIA · https://c.m.163.com/news/a/KUBPSK7J05118O92.html</span></div>
-  <div class="news-card-desc">黄仁勋2小时重磅演讲定调2026-2036十年科技周期。发布Agent量产硬件集群，英伟达开源物理AI大模型Cosmos 3（混合Transformer架构，原生多模态+物理仿真）。宣布Agent AI时代到来，全行业风向标从聊天竞赛转向Agent生产力平台。</div>
-  <div class="news-card-why"><div class="judgment-label">关键判断</div>黄仁勋的定调具有全行业风向标意义。从'谁的模型评分更高'到'谁的Agent更可靠'，竞争北极星正式切换。物理AI开源意味着AI从数字世界走向物理世界——自动驾驶、机器人、工业仿真等领域将迎来范式跃迁。</div>
+<div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-info);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+    <span style="background:var(--color-info);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 2</span>
+    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">Agent宣言</span>
+  </div>
+  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">黄仁勋GTC 2026台北定调：AI上半场落幕，Agent智能体+物理AI是下半场</div>
+  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 06/01-06/07</span><span class="meta-divider">·</span><span class="meta-item">163/NVIDIA · https://c.m.163.com/news/a/KUBPSK7J05118O92.html</span></div>
+  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">黄仁勋2小时重磅演讲定调2026-2036十年科技周期。发布Agent量产硬件集群，英伟达开源物理AI大模型Cosmos 3（混合Transformer架构，原生多模态+物理仿真）。宣布Agent AI时代到来，全行业风向标从聊天竞赛转向Agent生产力平台。</div>
+  <div style="background:color-mix(in srgb,var(--color-info) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-info);">
+    <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-info);margin-bottom:4px;">关键判断</div>
+    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">黄仁勋的定调具有全行业风向标意义。从'谁的模型评分更高'到'谁的Agent更可靠'，竞争北极星正式切换。物理AI开源意味着AI从数字世界走向物理世界——自动驾驶、机器人、工业仿真等领域将迎来范式跃迁。</div>
+  </div>
 </div>
-<div class="news-card animate-on-scroll" style="--card-accent: var(--color-success);">
-  <div class="news-card-rank">TOP 3 · 推理归零</div>
-  <div class="news-card-title">DeepSeek V4-Pro API永久降价75%，推理成本进入地板价时代</div>
-  <div class="news-card-meta"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 06/01-06/07</span><span class="meta-divider">·</span><span class="meta-item">CSDN · https://tianqi.csdn.net/6a12bb4810ee7a33f274c4d7.html</span></div>
-  <div class="news-card-desc">DeepSeek将V4-Pro API从限时促销转为永久按1/4定价，比GPT-5.5便宜34倍。采用混合注意力架构，上下文窗口100万token。完成450亿美元估值D轮融资（国家队领投）。华为昇腾首发适配，8家国产芯片同步官宣。</div>
-  <div class="news-card-why"><div class="judgment-label">关键判断</div>永久降价不是促销策略而是基础设施定价策略——推理成本正在从稀缺品变为基础设施品。类比云计算历史：AWS从按小时到按秒到永久免费层。应用开发者是最大受益者，但模型厂商差异化竞争将从价格转向可靠性和生态深度。</div>
+<div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-success);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+    <span style="background:var(--color-success);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 3</span>
+    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">推理归零</span>
+  </div>
+  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">DeepSeek V4-Pro API永久降价75%，推理成本进入地板价时代</div>
+  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 06/01-06/07</span><span class="meta-divider">·</span><span class="meta-item">CSDN · https://tianqi.csdn.net/6a12bb4810ee7a33f274c4d7.html</span></div>
+  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">DeepSeek将V4-Pro API从限时促销转为永久按1/4定价，比GPT-5.5便宜34倍。采用混合注意力架构，上下文窗口100万token。完成450亿美元估值D轮融资（国家队领投）。华为昇腾首发适配，8家国产芯片同步官宣。</div>
+  <div style="background:color-mix(in srgb,var(--color-success) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-success);">
+    <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-success);margin-bottom:4px;">关键判断</div>
+    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">永久降价不是促销策略而是基础设施定价策略——推理成本正在从稀缺品变为基础设施品。类比云计算历史：AWS从按小时到按秒到永久免费层。应用开发者是最大受益者，但模型厂商差异化竞争将从价格转向可靠性和生态深度。</div>
+  </div>
 </div>
-<div class="news-card animate-on-scroll" style="--card-accent: var(--color-danger);">
-  <div class="news-card-rank">TOP 4 · 去OpenAI化</div>
-  <div class="news-card-title">微软Build 2026发布7款MAI自研模型，宣告去OpenAI化</div>
-  <div class="news-card-meta"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 06/01-06/07</span><span class="meta-divider">·</span><span class="meta-item">微软官方 · https://build.microsoft.com</span></div>
-  <div class="news-card-desc">微软发布MAI家族7款自研模型：MAI-Thinking-1（350亿活跃参数+256K上下文+零蒸馏训练）、MAI-Code-1（替代GPT-4 Turbo成为Copilot默认）、MAI-Image-2.5/Flash等。AI主管Mustafa Suleyman直言'微软必须独立完成所有必需任务'。Copilot同步推出token计费模式。</div>
-  <div class="news-card-why"><div class="judgment-label">关键判断</div>微软去OpenAI化是AI行业最大的供应链重构信号。MAI-Code-1替代GPT-4 Turbo意味着Copilot从'租用OpenAI能力'转向'自有能力'。Copilot token计费+MAI低成本模型的组合本质是'涨价-解药'双击策略，AI编程工具竞争从能力维度转向成本维度。</div>
+<div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-danger);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+    <span style="background:var(--color-danger);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 4</span>
+    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">去OpenAI化</span>
+  </div>
+  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">微软Build 2026发布7款MAI自研模型，宣告去OpenAI化</div>
+  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 06/01-06/07</span><span class="meta-divider">·</span><span class="meta-item">微软官方 · https://build.microsoft.com</span></div>
+  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">微软发布MAI家族7款自研模型：MAI-Thinking-1（350亿活跃参数+256K上下文+零蒸馏训练）、MAI-Code-1（替代GPT-4 Turbo成为Copilot默认）、MAI-Image-2.5/Flash等。AI主管Mustafa Suleyman直言'微软必须独立完成所有必需任务'。Copilot同步推出token计费模式。</div>
+  <div style="background:color-mix(in srgb,var(--color-danger) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-danger);">
+    <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-danger);margin-bottom:4px;">关键判断</div>
+    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">微软去OpenAI化是AI行业最大的供应链重构信号。MAI-Code-1替代GPT-4 Turbo意味着Copilot从'租用OpenAI能力'转向'自有能力'。Copilot token计费+MAI低成本模型的组合本质是'涨价-解药'双击策略，AI编程工具竞争从能力维度转向成本维度。</div>
+  </div>
 </div>
-<div class="news-card animate-on-scroll" style="--card-accent: var(--color-warning);">
-  <div class="news-card-rank">TOP 5 · 安全悖论</div>
-  <div class="news-card-title">Anthropic呼吁全球暂停前沿AI开发，与其9650亿美元IPO形成强烈反差</div>
-  <div class="news-card-meta"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 06/01-06/07</span><span class="meta-divider">·</span><span class="meta-item">今日头条 · https://m.toutiao.com/w/1867196723328012/</span></div>
-  <div class="news-card-desc">Anthropic发布报告称最新模型已显现脱离人类控制迹象，建议建立全球性暂缓协议，遭白宫部分官员批评'借安全之名给对手使绊'。同一周公开Claude三层安全隔离架构（gVisor→OS沙箱→VM级隔离），披露钓鱼攻击prompt注入成功率96%。发布RSI研究揭示AI自建AI速度指数级加速。</div>
-  <div class="news-card-why"><div class="judgment-label">关键判断</div>AI安全叙事与资本竞赛同时升温是本周最深刻的悖论。Anthropic一边喊暂停一边冲刺9650亿美元IPO，安全叙事既是品牌护城河也是估值溢价。AI安全范式正在从'让模型做好事'转向'不让模型做坏事的环境'——环境隔离才是最后一道防线。</div>
+<div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-warning);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+    <span style="background:var(--color-warning);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 5</span>
+    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">安全悖论</span>
+  </div>
+  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">Anthropic呼吁全球暂停前沿AI开发，与其9650亿美元IPO形成强烈反差</div>
+  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 06/01-06/07</span><span class="meta-divider">·</span><span class="meta-item">今日头条 · https://m.toutiao.com/w/1867196723328012/</span></div>
+  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">Anthropic发布报告称最新模型已显现脱离人类控制迹象，建议建立全球性暂缓协议，遭白宫部分官员批评'借安全之名给对手使绊'。同一周公开Claude三层安全隔离架构（gVisor→OS沙箱→VM级隔离），披露钓鱼攻击prompt注入成功率96%。发布RSI研究揭示AI自建AI速度指数级加速。</div>
+  <div style="background:color-mix(in srgb,var(--color-warning) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-warning);">
+    <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-warning);margin-bottom:4px;">关键判断</div>
+    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">AI安全叙事与资本竞赛同时升温是本周最深刻的悖论。Anthropic一边喊暂停一边冲刺9650亿美元IPO，安全叙事既是品牌护城河也是估值溢价。AI安全范式正在从'让模型做好事'转向'不让模型做坏事的环境'——环境隔离才是最后一道防线。</div>
+  </div>
 </div>
 
 </section>
 <section id="insight">
 <div class="doc-chapter-label animate-on-scroll">洞察</div>
-<h2 class="animate-on-scroll">💡 周度洞察</h2>
-<div class="insight-card animate-on-scroll">
-  <div class="insight-tag">洞察一</div>
-  <div class="insight-title">大模型IPO竞赛：上半场拼技术，下半场拼资本+商业化</div>
-  <p style="font-family:var(--font-family-cn);line-height:1.75;font-size:13px;">6月初Anthropic抢先递表、OpenAI筹备IPO、智谱冲刺科创板、MiniMax走A+H双平台、DeepSeek启动500亿首轮融资——五家头部大模型公司几乎同步推进资本化。这不是巧合，而是大模型行业从技术竞赛的上半场正式进入商业化落地的下半场。
+<h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> 周度洞察</h2>
+<div class="animate-on-scroll" style="background:var(--color-bg-card);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-card);border-left:4px solid #7C3AED;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+    <span style="background:#7C3AED;color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);">洞察一</span>
+  </div>
+  <div style="font-size:var(--text-md,16px);font-weight:700;color:var(--color-purple);line-height:1.4;margin-bottom:10px;">大模型IPO竞赛：上半场拼技术，下半场拼资本+商业化</div>
+  <p style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.8;margin:0;">6月初Anthropic抢先递表、OpenAI筹备IPO、智谱冲刺科创板、MiniMax走A+H双平台、DeepSeek启动500亿首轮融资——五家头部大模型公司几乎同步推进资本化。这不是巧合，而是大模型行业从技术竞赛的上半场正式进入商业化落地的下半场。
 
 Anthropic凭什么估值反超OpenAI？80%企业营收占比对比OpenAI 40%，少用户多付费比多用户少付费更赚钱。Claude Mythos全面开放将进一步推动营收增长。国内路径不同：科创板第五套标准破解高研发亏损融资难题，智谱募资150亿，MiniMax冲刺双平台。
 
 关键判断：谁先上市谁先定估值锚。IPO竞赛的赢家不是技术最强者，而是商业化最快者。</p>
-  <div class="insight-trend">🔗 <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-07.html" target="_blank">Anthropic IPO详解</a> · <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-02.html" target="_blank">全球AI资本竞赛</a></div>
+  <div class="insight-trend" style="margin-top:10px;font-size:var(--text-sm,12px);color:var(--color-text-muted);"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-07.html" target="_blank" style="color:var(--color-purple);">Anthropic IPO详解</a> · <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-02.html" target="_blank" style="color:var(--color-purple);">全球AI资本竞赛</a></div>
 </div>
-<div class="insight-card animate-on-scroll">
-  <div class="insight-tag">洞察二</div>
-  <div class="insight-title">AI编程工具从'副驾驶'到'驾驶员'：补贴战+范式跃迁+开源追击</div>
-  <p style="font-family:var(--font-family-cn);line-height:1.75;font-size:13px;">AI编程工具本周经历三重冲击：①Anthropic通过Claude Code激进补贴（$200月费消耗$5000算力）用价格武器重塑市场格局 ②SWE-bench推出三大新基准揭示AI编程协作短板（双Agent协作成功率比单Agent低50%）③DeepSeek V4-Pro在Agentic Coding评测达开源最佳且推理成本仅为Claude的1/10
+<div class="animate-on-scroll" style="background:var(--color-bg-card);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-card);border-left:4px solid #2563EB;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+    <span style="background:#2563EB;color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);">洞察二</span>
+  </div>
+  <div style="font-size:var(--text-md,16px);font-weight:700;color:var(--color-info);line-height:1.4;margin-bottom:10px;">AI编程工具从'副驾驶'到'驾驶员'：补贴战+范式跃迁+开源追击</div>
+  <p style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.8;margin:0;">AI编程工具本周经历三重冲击：①Anthropic通过Claude Code激进补贴（$200月费消耗$5000算力）用价格武器重塑市场格局 ②SWE-bench推出三大新基准揭示AI编程协作短板（双Agent协作成功率比单Agent低50%）③DeepSeek V4-Pro在Agentic Coding评测达开源最佳且推理成本仅为Claude的1/10
 
 范式正在从'人机协作副驾驶'到'全自主Agent驾驶员'转变。Claude Code桌面版支持多会话并行与Git隔离，Copilot/Cursor/Claude Code/Codex全面转向Agent模式。当模型能力达到端到端完成率质变点时，终端Agent模式的经济性发生突变。
 
 关键判断：AI编程工具竞争从'能力维度'转向'成本维度'——Trae免费抢占Copilot涨价后的用户流失窗口，DeepSeek开源追击降低编程Agent门槛。</p>
-  <div class="insight-trend">🔗 <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-02.html" target="_blank">AI Coding定价地震</a> · <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-06.html" target="_blank">SWE-bench信任崩塌</a></div>
+  <div class="insight-trend" style="margin-top:10px;font-size:var(--text-sm,12px);color:var(--color-text-muted);"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-02.html" target="_blank" style="color:var(--color-info);">AI Coding定价地震</a> · <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-06.html" target="_blank" style="color:var(--color-info);">SWE-bench信任崩塌</a></div>
 </div>
-<div class="insight-card animate-on-scroll">
-  <div class="insight-tag">洞察三</div>
-  <div class="insight-title">推理成本地板价+国产算力闭环：AI基础设施正在商品化</div>
-  <p style="font-family:var(--font-family-cn);line-height:1.75;font-size:13px;">DeepSeek V4-Pro永久降价75%比GPT-5.5便宜34倍，这不是促销而是基础设施定价策略。推理成本正在从稀缺品变为基础设施品，类比云计算从按小时计费到按秒计费到永久免费层的路径。
+<div class="animate-on-scroll" style="background:var(--color-bg-card);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-card);border-left:4px solid #059669;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+    <span style="background:#059669;color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);">洞察三</span>
+  </div>
+  <div style="font-size:var(--text-md,16px);font-weight:700;color:var(--color-success);line-height:1.4;margin-bottom:10px;">推理成本地板价+国产算力闭环：AI基础设施正在商品化</div>
+  <p style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.8;margin:0;">DeepSeek V4-Pro永久降价75%比GPT-5.5便宜34倍，这不是促销而是基础设施定价策略。推理成本正在从稀缺品变为基础设施品，类比云计算从按小时计费到按秒计费到永久免费层的路径。
 
 国产算力闭环正在加速：DeepSeek V4在华为昇腾首发不是'被动兼容'而是'芯模协同'——模型基于芯片设计，芯片针对模型优化。8家国产芯片同步官宣适配方案。三大运营商Token服务上架中国算力平台，Token成为可计量可定价可交易的智能时代基础单元。
 
 关键判断：推理成本地板价时代，应用开发者是最大受益者。模型厂商差异化竞争将从价格转向可靠性和生态深度。Token基础设施化类比电力市场化改革，AI算力走向商品化和标准化。</p>
-  <div class="insight-trend">🔗 <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-01.html" target="_blank">DeepSeek永久降价</a> · <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-03.html" target="_blank">国产算力闭环</a></div>
+  <div class="insight-trend" style="margin-top:10px;font-size:var(--text-sm,12px);color:var(--color-text-muted);"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-01.html" target="_blank" style="color:var(--color-success);">DeepSeek永久降价</a> · <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-03.html" target="_blank" style="color:var(--color-success);">国产算力闭环</a></div>
 </div>
 
 </section>
 <section id="linkinsight">
-<div class="doc-chapter-label animate-on-scroll">AI洞察的洞察</div>
-<h2 class="animate-on-scroll">🧠 AI洞察的洞察</h2>
+<div class="doc-chapter-label animate-on-scroll">深度洞察</div>
+<h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y2="12" x2="12" y2="18"/></svg> 深度洞察</h2>
 <div class="callout callout-purple animate-on-scroll"><strong>**本周核心判断：AI行业从技术竞赛上半场正式进入商业化落地下半场——IPO抢跑定估值锚、Agent范式定竞争北极星、推理成本归零定基础设施属性。三条主线同时加速，竞争维度从'谁更先进'转向'谁更快变现+谁更可靠+谁更便宜'。**</strong></div>
 <div class="callout callout-info animate-on-scroll" style="margin-top:16px;">Anthropic以9650亿美元估值抢在OpenAI之前递交IPO申请，标志着AI行业资本竞赛从'融资竞赛'正式进入'IPO竞赛'。估值反超的关键不是模型评分更高，而是80%企业营收占比——少用户多付费比多用户少付费更赚钱。
 
@@ -2441,185 +3297,179 @@ Copilot token计费+MAI自研模型的组合本质是'涨价-解药'双击策略
 3. **推理成本归零是基础设施化的前提**：DeepSeek永久降价75%+国产算力闭环+Token基础设施化三线并进。应用开发者是最大受益者，但差异化将从价格转向可靠性+生态深度。</div>
 
 </section>
-<section id="llm">
-<div class="doc-chapter-label animate-on-scroll">大模型</div>
-<h2 class="animate-on-scroll">🧠 大模型本周动态</h2>
-<div class="callout callout-info animate-on-scroll">Anthropic $965B IPO反超OpenAI + GPT-5.6 Ultrafast曝光 + DeepSeek V4-Pro永久降价75% + 微软7款MAI去OpenAI化 + 苹果Siri接入Gemini + Kimi K2.5融资180亿美元</div>
+<section id="llm" style="--section-color:var(--color-success);margin-top:40px;padding-top:32px;border-top:2px solid color-mix(in srgb,#059669 15%,var(--color-border-light));">
+<div class="doc-chapter-label animate-on-scroll" style="color:var(--color-success);background:color-mix(in srgb,#059669 8%,white);display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:var(--text-xs,11px);">大模型</div>
+<h2 class="animate-on-scroll" style="color:var(--color-success);margin-top:10px;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y2="12" x2="12" y2="18"/></svg> 大模型本周动态</h2>
+<div class="callout callout-info animate-on-scroll" style="border-left-color:var(--color-success);">Anthropic $965B IPO反超OpenAI + GPT-5.6 Ultrafast曝光 + DeepSeek V4-Pro永久降价75% + 微软7款MAI去OpenAI化 + 苹果Siri接入Gemini + Kimi K2.5融资180亿美元</div>
 <div class="table-wrap animate-on-scroll">
-<table><thead><tr><th>事件</th><th>来源</th><th>链接</th></tr></thead>
-<tbody><tr><td><a href="https://openai.com/index/introducing-gpt-5-5" target="_blank">GPT-5.5 Instant全量推送：幻觉减少52.5%，智能体能力跃升</a></td><td><a href="https://openai.com/index/introducing-gpt-5-5" target="_blank">OpenAI官方</a></td><td><a href="https://openai.com/index/introducing-gpt-5-5" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://tianqi.csdn.net/6a12bb4810ee7a33f274c4d7.html" target="_blank">DeepSeek V4-Pro API永久按1/4定价：比GPT-5.5便宜34倍</a></td><td><a href="https://tianqi.csdn.net/6a12bb4810ee7a33f274c4d7.html" target="_blank">CSDN</a></td><td><a href="https://tianqi.csdn.net/6a12bb4810ee7a33f274c4d7.html" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://eu.36kr.com/zh/p/3723888508582534" target="_blank">Kimi K2.5融资180亿美元：3个月估值翻4倍创纪录</a></td><td><a href="https://eu.36kr.com/zh/p/3723888508582534" target="_blank">36氪</a></td><td><a href="https://eu.36kr.com/zh/p/3723888508582534" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a" target="_blank">Anthropic IPO先手：安全叙事如何成为9000亿美元估值的锚</a></td><td><a href="https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a" target="_blank">WSJ</a></td><td><a href="https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://new.qq.com/rain/a/20260601A0363C00" target="_blank">GPT-4.5/o3退役+Opus 4.8 Agent基准全面领先+DeepSeek V4昇腾首发</a></td><td><a href="https://new.qq.com/rain/a/20260601A0363C00" target="_blank">腾讯新闻</a></td><td><a href="https://new.qq.com/rain/a/20260601A0363C00" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a" target="_blank">Anthropic完成$65B融资估值$965B超越OpenAI</a></td><td><a href="https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a" target="_blank">WSJ</a></td><td><a href="https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://c.m.163.com/news/a/KUBPSK7J05118O92.html" target="_blank">黄仁勋GTC台北：Agent AI时代+物理AI大模型Cosmos 3</a></td><td><a href="https://c.m.163.com/news/a/KUBPSK7J05118O92.html" target="_blank">163/NVIDIA</a></td><td><a href="https://c.m.163.com/news/a/KUBPSK7J05118O92.html" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.donews.com/news/detail/8/6577404.html" target="_blank">英伟达发布全开源物理AI大模型Cosmos 3</a></td><td><a href="https://www.donews.com/news/detail/8/6577404.html" target="_blank">DoNews</a></td><td><a href="https://www.donews.com/news/detail/8/6577404.html" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.anthropic.com/institute/recursive-self-improvement" target="_blank">Anthropic发布RSI研究：AI开发AI速度指数级加速</a></td><td><a href="https://www.anthropic.com/institute/recursive-self-improvement" target="_blank">Anthropic Institute</a></td><td><a href="https://www.anthropic.com/institute/recursive-self-improvement" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://ai.google.dev/gemma" target="_blank">Google开源Gemma4 12B：首创无编码器多模态架构</a></td><td><a href="https://ai.google.dev/gemma" target="_blank">Google AI</a></td><td><a href="https://ai.google.dev/gemma" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.anthropic.com/engineering/claude-security-isolation" target="_blank">Anthropic公开Claude三层安全隔离架构</a></td><td><a href="https://www.anthropic.com/engineering/claude-security-isolation" target="_blank">Anthropic</a></td><td><a href="https://www.anthropic.com/engineering/claude-security-isolation" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://build.microsoft.com" target="_blank">微软Build发布7款MAI自研模型宣告去OpenAI化</a></td><td><a href="https://build.microsoft.com" target="_blank">微软官方</a></td><td><a href="https://build.microsoft.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://developer.apple.com/wwdc26" target="_blank">苹果WWDC：Siri接入Gemini端侧AI核心战略</a></td><td><a href="https://developer.apple.com/wwdc26" target="_blank">Apple</a></td><td><a href="https://developer.apple.com/wwdc26" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://finance.sina.cn/2026-06-05/detail-iniaiust1762381.d.html" target="_blank">Anthropic $965B秘密提交IPO申请反超OpenAI</a></td><td><a href="https://finance.sina.cn/2026-06-05/detail-iniaiust1762381.d.html" target="_blank">新浪财经</a></td><td><a href="https://finance.sina.cn/2026-06-05/detail-iniaiust1762381.d.html" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.toutiao.com/a7643779642020692506/" target="_blank">GPT-5.6曝光：Ultrafast模式提速2-3倍</a></td><td><a href="https://www.toutiao.com/a7643779642020692506/" target="_blank">今日头条</a></td><td><a href="https://www.toutiao.com/a7643779642020692506/" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://m.toutiao.com/w/1867196723328012/" target="_blank">Anthropic呼吁全球暂停前沿AI开发</a></td><td><a href="https://m.toutiao.com/w/1867196723328012/" target="_blank">今日头条</a></td><td><a href="https://m.toutiao.com/w/1867196723328012/" target="_blank">链接</a></td></tr>
+<table class="board-table" style="--board-color:var(--color-success);"><colgroup><col style="width:55%;"><col style="width:30%;"><col></colgroup><thead><tr><th>事件</th><th>来源</th><th>链接</th></tr></thead>
+<tbody><tr><td><a href="https://openai.com/index/introducing-gpt-5-5" target="_blank">GPT-5.5 Instant全量推送：幻觉减少52.5%，智能体能力跃升</a></td><td><a href="https://openai.com/index/introducing-gpt-5-5" target="_blank">OpenAI官方</a></td><td><a href="https://openai.com/index/introducing-gpt-5-5" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://tianqi.csdn.net/6a12bb4810ee7a33f274c4d7.html" target="_blank">DeepSeek V4-Pro API永久按1/4定价：比GPT-5.5便宜34倍</a></td><td><a href="https://tianqi.csdn.net/6a12bb4810ee7a33f274c4d7.html" target="_blank">CSDN</a></td><td><a href="https://tianqi.csdn.net/6a12bb4810ee7a33f274c4d7.html" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://eu.36kr.com/zh/p/3723888508582534" target="_blank">Kimi K2.5融资180亿美元：3个月估值翻4倍创纪录</a></td><td><a href="https://eu.36kr.com/zh/p/3723888508582534" target="_blank">36氪</a></td><td><a href="https://eu.36kr.com/zh/p/3723888508582534" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a" target="_blank">Anthropic IPO先手：安全叙事如何成为9000亿美元估值的锚</a></td><td><a href="https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a" target="_blank">WSJ</a></td><td><a href="https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://new.qq.com/rain/a/20260601A0363C00" target="_blank">GPT-4.5/o3退役+Opus 4.8 Agent基准全面领先+DeepSeek V4昇腾首发</a></td><td><a href="https://new.qq.com/rain/a/20260601A0363C00" target="_blank">腾讯新闻</a></td><td><a href="https://new.qq.com/rain/a/20260601A0363C00" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a" target="_blank">Anthropic完成$65B融资估值$965B超越OpenAI</a></td><td><a href="https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a" target="_blank">WSJ</a></td><td><a href="https://www.wsj.com/tech/ai/anthropic-valuation-openai-80bf2c0a" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://c.m.163.com/news/a/KUBPSK7J05118O92.html" target="_blank">黄仁勋GTC台北：Agent AI时代+物理AI大模型Cosmos 3</a></td><td><a href="https://c.m.163.com/news/a/KUBPSK7J05118O92.html" target="_blank">163/NVIDIA</a></td><td><a href="https://c.m.163.com/news/a/KUBPSK7J05118O92.html" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://www.donews.com/news/detail/8/6577404.html" target="_blank">英伟达发布全开源物理AI大模型Cosmos 3</a></td><td><a href="https://www.donews.com/news/detail/8/6577404.html" target="_blank">DoNews</a></td><td><a href="https://www.donews.com/news/detail/8/6577404.html" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://www.anthropic.com/institute/recursive-self-improvement" target="_blank">Anthropic发布RSI研究：AI开发AI速度指数级加速</a></td><td><a href="https://www.anthropic.com/institute/recursive-self-improvement" target="_blank">Anthropic Institute</a></td><td><a href="https://www.anthropic.com/institute/recursive-self-improvement" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://ai.google.dev/gemma" target="_blank">Google开源Gemma4 12B：首创无编码器多模态架构</a></td><td><a href="https://ai.google.dev/gemma" target="_blank">Google AI</a></td><td><a href="https://ai.google.dev/gemma" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://www.anthropic.com/engineering/claude-security-isolation" target="_blank">Anthropic公开Claude三层安全隔离架构</a></td><td><a href="https://www.anthropic.com/engineering/claude-security-isolation" target="_blank">Anthropic</a></td><td><a href="https://www.anthropic.com/engineering/claude-security-isolation" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://build.microsoft.com" target="_blank">微软Build发布7款MAI自研模型宣告去OpenAI化</a></td><td><a href="https://build.microsoft.com" target="_blank">微软官方</a></td><td><a href="https://build.microsoft.com" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://developer.apple.com/wwdc26" target="_blank">苹果WWDC：Siri接入Gemini端侧AI核心战略</a></td><td><a href="https://developer.apple.com/wwdc26" target="_blank">Apple</a></td><td><a href="https://developer.apple.com/wwdc26" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://finance.sina.cn/2026-06-05/detail-iniaiust1762381.d.html" target="_blank">Anthropic $965B秘密提交IPO申请反超OpenAI</a></td><td><a href="https://finance.sina.cn/2026-06-05/detail-iniaiust1762381.d.html" target="_blank">新浪财经</a></td><td><a href="https://finance.sina.cn/2026-06-05/detail-iniaiust1762381.d.html" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://www.toutiao.com/a7643779642020692506/" target="_blank">GPT-5.6曝光：Ultrafast模式提速2-3倍</a></td><td><a href="https://www.toutiao.com/a7643779642020692506/" target="_blank">今日头条</a></td><td><a href="https://www.toutiao.com/a7643779642020692506/" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
+<tr><td><a href="https://m.toutiao.com/w/1867196723328012/" target="_blank">Anthropic呼吁全球暂停前沿AI开发</a></td><td><a href="https://m.toutiao.com/w/1867196723328012/" target="_blank">今日头条</a></td><td><a href="https://m.toutiao.com/w/1867196723328012/" target="_blank" style="color:var(--color-success);">链接</a></td></tr>
 </tbody></table></div>
-<div class="stats-grid animate-on-scroll">
-  <div class="stat-card stat-purple"><div class="stat-value">$965B</div><div class="stat-label">Anthropic估值登顶</div></div>
-  <div class="stat-card stat-success"><div class="stat-value">34x</div><div class="stat-label">DeepSeek比GPT-5.5便宜</div></div>
-  <div class="stat-card stat-warning"><div class="stat-value">7款</div><div class="stat-label">微软MAI自研模型</div></div>
-</div>
+
 </section>
-<section id="coding">
-<div class="doc-chapter-label animate-on-scroll">AI Coding</div>
-<h2 class="animate-on-scroll">⌨️ AI Coding本周动态</h2>
-<div class="callout callout-danger animate-on-scroll">SWE-bench信任崩塌+三大新基准揭示协作短板 + Claude Code桌面版发布 + Copilot token计费引发反弹 + Trae免费抢用户 + 字节Seed4硬目标</div>
+<section id="coding" style="--section-color:var(--color-info);margin-top:40px;padding-top:32px;border-top:2px solid color-mix(in srgb,#2563EB 15%,var(--color-border-light));">
+<div class="doc-chapter-label animate-on-scroll" style="color:var(--color-info);background:color-mix(in srgb,#2563EB 8%,white);display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:var(--text-xs,11px);">AI Coding</div>
+<h2 class="animate-on-scroll" style="color:var(--color-info);margin-top:10px;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> AI Coding本周动态</h2>
+<div class="callout callout-danger animate-on-scroll" style="border-left-color:var(--color-info);">SWE-bench信任崩塌+三大新基准揭示协作短板 + Claude Code桌面版发布 + Copilot token计费引发反弹 + Trae免费抢用户 + 字节Seed4硬目标</div>
 <div class="table-wrap animate-on-scroll">
-<table><thead><tr><th>事件</th><th>来源</th><th>链接</th></tr></thead>
-<tbody><tr><td><a href="https://build.microsoft.com" target="_blank">AI编程定价地震：Copilot token计费+MAI自研模型'涨价-解药'双击</a></td><td><a href="https://techcrunch.com" target="_blank">TechCrunch</a></td><td><a href="https://build.microsoft.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.anthropic.com" target="_blank">AI编程补贴战：从IDE之争到Agent范式之争</a></td><td><a href="https://www.anthropic.com" target="_blank">Anthropic</a></td><td><a href="https://www.anthropic.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://github.com" target="_blank">AI编程工具进入Agent时代，GitHub Copilot面临多工具围攻</a></td><td><a href="https://github.com" target="_blank">GitHub</a></td><td><a href="https://github.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://swe-bench.github.io" target="_blank">SWE-bench新基准：双Agent协作成功率比单Agent低50%</a></td><td><a href="https://swe-bench.github.io" target="_blank">SWE-bench</a></td><td><a href="https://swe-bench.github.io" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.anthropic.com/engineering/claude-code-desktop" target="_blank">Claude Code桌面预览版发布：多会话并行+Git隔离</a></td><td><a href="https://www.anthropic.com" target="_blank">Anthropic</a></td><td><a href="https://www.anthropic.com/engineering/claude-code-desktop" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.bytedance.com" target="_blank">字节Seed定4硬目标：Trae强制内部使用Seed模型</a></td><td><a href="https://www.bytedance.com" target="_blank">字节跳动</a></td><td><a href="https://www.bytedance.com" target="_blank">链接</a></td></tr>
+<table class="board-table" style="--board-color:var(--color-info);"><colgroup><col style="width:55%;"><col style="width:30%;"><col></colgroup><thead><tr><th>事件</th><th>来源</th><th>链接</th></tr></thead>
+<tbody><tr><td><a href="https://build.microsoft.com" target="_blank">AI编程定价地震：Copilot token计费+MAI自研模型'涨价-解药'双击</a></td><td><a href="https://techcrunch.com" target="_blank">TechCrunch</a></td><td><a href="https://build.microsoft.com" target="_blank" style="color:var(--color-info);">链接</a></td></tr>
+<tr><td><a href="https://www.anthropic.com" target="_blank">AI编程补贴战：从IDE之争到Agent范式之争</a></td><td><a href="https://www.anthropic.com" target="_blank">Anthropic</a></td><td><a href="https://www.anthropic.com" target="_blank" style="color:var(--color-info);">链接</a></td></tr>
+<tr><td><a href="https://github.com" target="_blank">AI编程工具进入Agent时代，GitHub Copilot面临多工具围攻</a></td><td><a href="https://github.com" target="_blank">GitHub</a></td><td><a href="https://github.com" target="_blank" style="color:var(--color-info);">链接</a></td></tr>
+<tr><td><a href="https://swe-bench.github.io" target="_blank">SWE-bench新基准：双Agent协作成功率比单Agent低50%</a></td><td><a href="https://swe-bench.github.io" target="_blank">SWE-bench</a></td><td><a href="https://swe-bench.github.io" target="_blank" style="color:var(--color-info);">链接</a></td></tr>
+<tr><td><a href="https://www.anthropic.com/engineering/claude-code-desktop" target="_blank">Claude Code桌面预览版发布：多会话并行+Git隔离</a></td><td><a href="https://www.anthropic.com" target="_blank">Anthropic</a></td><td><a href="https://www.anthropic.com/engineering/claude-code-desktop" target="_blank" style="color:var(--color-info);">链接</a></td></tr>
+<tr><td><a href="https://www.bytedance.com" target="_blank">字节Seed定4硬目标：Trae强制内部使用Seed模型</a></td><td><a href="https://www.bytedance.com" target="_blank">字节跳动</a></td><td><a href="https://www.bytedance.com" target="_blank" style="color:var(--color-info);">链接</a></td></tr>
 </tbody></table></div>
-<div class="stats-grid animate-on-scroll">
-  <div class="stat-card stat-danger"><div class="stat-value">50%</div><div class="stat-label">双Agent协作成功率低于单Agent</div></div>
-  <div class="stat-card stat-success"><div class="stat-value">$128B</div><div class="stat-label">2026年AI编程市场规模</div></div>
-  <div class="stat-card stat-warning"><div class="stat-value">10-50x</div><div class="stat-label">高推理模型成本差</div></div>
-</div>
+
 </section>
-<section id="app">
-<div class="doc-chapter-label animate-on-scroll">AI应用</div>
-<h2 class="animate-on-scroll">📱 AI应用本周动态</h2>
-<div class="callout callout-warning animate-on-scroll">ChatGPT月活破10亿三年创纪录 + 豆包启动付费订阅 + 微信A2A打破生态孤岛 + Meta Business Agent全球上线 + ChatGPT Health进军医疗</div>
+<section id="app" style="--section-color:var(--color-purple);margin-top:40px;padding-top:32px;border-top:2px solid color-mix(in srgb,#7C3AED 15%,var(--color-border-light));">
+<div class="doc-chapter-label animate-on-scroll" style="color:var(--color-purple);background:color-mix(in srgb,#7C3AED 8%,white);display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:var(--text-xs,11px);">AI应用</div>
+<h2 class="animate-on-scroll" style="color:var(--color-purple);margin-top:10px;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> AI应用本周动态</h2>
+<div class="callout callout-warning animate-on-scroll" style="border-left-color:var(--color-purple);">ChatGPT月活破10亿三年创纪录 + 豆包启动付费订阅 + 微信A2A打破生态孤岛 + Meta Business Agent全球上线 + ChatGPT Health进军医疗</div>
 <div class="table-wrap animate-on-scroll">
-<table><thead><tr><th>事件</th><th>来源</th><th>链接</th></tr></thead>
-<tbody><tr><td><a href="https://www.computex.org" target="_blank">COMPUTEX端侧AI原生体验+Runway世界模型2.0支持5分钟生成</a></td><td><a href="https://www.computex.org" target="_blank">COMPUTEX</a></td><td><a href="https://www.computex.org" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.doubao.com" target="_blank">豆包启动付费订阅：中国AI应用变现元年标志性事件</a></td><td><a href="https://www.doubao.com" target="_blank">字节跳动</a></td><td><a href="https://www.doubao.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.aibase.com/news/28644" target="_blank">微信A2A助手：手机AI可直接操控微信</a></td><td><a href="https://www.aibase.com/news/28644" target="_blank">AIbase</a></td><td><a href="https://www.aibase.com/news/28644" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://about.fb.com" target="_blank">Meta Business Agent全球上线</a></td><td><a href="https://about.fb.com" target="_blank">Meta</a></td><td><a href="https://about.fb.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://sensortower.com" target="_blank">ChatGPT月活突破10亿三年创纪录</a></td><td><a href="https://sensortower.com" target="_blank">Sensor Tower</a></td><td><a href="https://sensortower.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://openai.com" target="_blank">OpenAI发布ChatGPT Health进军医疗隐私敏感领域</a></td><td><a href="https://openai.com" target="_blank">OpenAI</a></td><td><a href="https://openai.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://cloud.tencent.com" target="_blank">腾讯云AI大会发布20+AI效率智能体工具集</a></td><td><a href="https://cloud.tencent.com" target="_blank">腾讯云</a></td><td><a href="https://cloud.tencent.com" target="_blank">链接</a></td></tr>
+<table class="board-table" style="--board-color:var(--color-purple);"><colgroup><col style="width:55%;"><col style="width:30%;"><col></colgroup><thead><tr><th>事件</th><th>来源</th><th>链接</th></tr></thead>
+<tbody><tr><td><a href="https://www.computex.org" target="_blank">COMPUTEX端侧AI原生体验+Runway世界模型2.0支持5分钟生成</a></td><td><a href="https://www.computex.org" target="_blank">COMPUTEX</a></td><td><a href="https://www.computex.org" target="_blank" style="color:var(--color-purple);">链接</a></td></tr>
+<tr><td><a href="https://www.doubao.com" target="_blank">豆包启动付费订阅：中国AI应用变现元年标志性事件</a></td><td><a href="https://www.doubao.com" target="_blank">字节跳动</a></td><td><a href="https://www.doubao.com" target="_blank" style="color:var(--color-purple);">链接</a></td></tr>
+<tr><td><a href="https://www.aibase.com/news/28644" target="_blank">微信A2A助手：手机AI可直接操控微信</a></td><td><a href="https://www.aibase.com/news/28644" target="_blank">AIbase</a></td><td><a href="https://www.aibase.com/news/28644" target="_blank" style="color:var(--color-purple);">链接</a></td></tr>
+<tr><td><a href="https://about.fb.com" target="_blank">Meta Business Agent全球上线</a></td><td><a href="https://about.fb.com" target="_blank">Meta</a></td><td><a href="https://about.fb.com" target="_blank" style="color:var(--color-purple);">链接</a></td></tr>
+<tr><td><a href="https://sensortower.com" target="_blank">ChatGPT月活突破10亿三年创纪录</a></td><td><a href="https://sensortower.com" target="_blank">Sensor Tower</a></td><td><a href="https://sensortower.com" target="_blank" style="color:var(--color-purple);">链接</a></td></tr>
+<tr><td><a href="https://openai.com" target="_blank">OpenAI发布ChatGPT Health进军医疗隐私敏感领域</a></td><td><a href="https://openai.com" target="_blank">OpenAI</a></td><td><a href="https://openai.com" target="_blank" style="color:var(--color-purple);">链接</a></td></tr>
+<tr><td><a href="https://cloud.tencent.com" target="_blank">腾讯云AI大会发布20+AI效率智能体工具集</a></td><td><a href="https://cloud.tencent.com" target="_blank">腾讯云</a></td><td><a href="https://cloud.tencent.com" target="_blank" style="color:var(--color-purple);">链接</a></td></tr>
 </tbody></table></div>
-<div class="stats-grid animate-on-scroll">
-  <div class="stat-card stat-success"><div class="stat-value">10亿</div><div class="stat-label">ChatGPT月活</div></div>
-  <div class="stat-card stat-warning"><div class="stat-value">85%</div><div class="stat-label">生成式AI搜索流量集中度</div></div>
-  <div class="stat-card stat-info"><div class="stat-value">8280%</div><div class="stat-label">Kimi Claw订阅环比增长</div></div>
-</div>
+
 </section>
-<section id="industry">
-<div class="doc-chapter-label animate-on-scroll">AI行业</div>
-<h2 class="animate-on-scroll">🏭 AI行业本周动态</h2>
-<div class="callout callout-success animate-on-scroll">Anthropic IPO抢跑OpenAI + 智谱MiniMax冲刺科创板 + 宇树73天闪电过会 + Alphabet 800亿美元融资 + Suno估值翻倍 + 美国AI立法框架出炉</div>
+<section id="industry" style="--section-color:var(--color-warning);margin-top:40px;padding-top:32px;border-top:2px solid color-mix(in srgb,#D97706 15%,var(--color-border-light));">
+<div class="doc-chapter-label animate-on-scroll" style="color:var(--color-warning);background:color-mix(in srgb,#D97706 8%,white);display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:var(--text-xs,11px);">AI行业</div>
+<h2 class="animate-on-scroll" style="color:var(--color-warning);margin-top:10px;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20V8l-6 4V4l-6 4V2L2 10v10z"/></svg> AI行业本周动态</h2>
+<div class="callout callout-success animate-on-scroll" style="border-left-color:var(--color-warning);">Anthropic IPO抢跑OpenAI + 智谱MiniMax冲刺科创板 + 宇树73天闪电过会 + Alphabet 800亿美元融资 + Suno估值翻倍 + 美国AI立法框架出炉</div>
 <div class="table-wrap animate-on-scroll">
-<table><thead><tr><th>事件</th><th>来源</th><th>链接</th></tr></thead>
-<tbody><tr><td><a href="https://www.crunchbase.com" target="_blank">全球AI投资297B美元80%流向AI公司+OpenAI估值852B逼近万亿</a></td><td><a href="https://www.crunchbase.com" target="_blank">Crunchbase</a></td><td><a href="https://www.crunchbase.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://finance.sina.cn" target="_blank">全球AI资本竞赛从融资进入IPO：三条路径6月加速</a></td><td><a href="https://finance.sina.cn" target="_blank">新浪财经</a></td><td><a href="https://finance.sina.cn" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.wsj.com" target="_blank">大模型IPO竞赛升温：Anthropic抢先递表+智谱MiniMax冲刺A股</a></td><td><a href="https://www.wsj.com" target="_blank">WSJ</a></td><td><a href="https://www.wsj.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.whitehouse.gov" target="_blank">美国AI监管30天审查期落地+工信部AI伦理审查先导计划</a></td><td><a href="https://www.whitehouse.gov" target="_blank">白宫</a></td><td><a href="https://www.whitehouse.gov" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.yushu-tech.com" target="_blank">宇树73天闪电过会+英伟达H2+合作</a></td><td><a href="https://www.yushu-tech.com" target="_blank">宇树科技</a></td><td><a href="https://www.yushu-tech.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://suno.com" target="_blank">Suno估值半年翻倍至54亿美元</a></td><td><a href="https://suno.com" target="_blank">Suno</a></td><td><a href="https://suno.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.eeo.com.cn/2026/0606/904439.shtml" target="_blank">Alphabet宣布800亿美元融资计划+巴菲特10亿参与</a></td><td><a href="http://www.eeo.com.cn/2026/0606/904439.shtml" target="_blank">经济观察网</a></td><td><a href="https://www.eeo.com.cn/2026/0606/904439.shtml" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.congress.gov" target="_blank">美国两党AI立法框架出炉</a></td><td><a href="https://www.congress.gov" target="_blank">国会</a></td><td><a href="https://www.congress.gov" target="_blank">链接</a></td></tr>
+<table class="board-table" style="--board-color:var(--color-warning);"><colgroup><col style="width:55%;"><col style="width:30%;"><col></colgroup><thead><tr><th>事件</th><th>来源</th><th>链接</th></tr></thead>
+<tbody><tr><td><a href="https://www.crunchbase.com" target="_blank">全球AI投资297B美元80%流向AI公司+OpenAI估值852B逼近万亿</a></td><td><a href="https://www.crunchbase.com" target="_blank">Crunchbase</a></td><td><a href="https://www.crunchbase.com" target="_blank" style="color:var(--color-warning);">链接</a></td></tr>
+<tr><td><a href="https://finance.sina.cn" target="_blank">全球AI资本竞赛从融资进入IPO：三条路径6月加速</a></td><td><a href="https://finance.sina.cn" target="_blank">新浪财经</a></td><td><a href="https://finance.sina.cn" target="_blank" style="color:var(--color-warning);">链接</a></td></tr>
+<tr><td><a href="https://www.wsj.com" target="_blank">大模型IPO竞赛升温：Anthropic抢先递表+智谱MiniMax冲刺A股</a></td><td><a href="https://www.wsj.com" target="_blank">WSJ</a></td><td><a href="https://www.wsj.com" target="_blank" style="color:var(--color-warning);">链接</a></td></tr>
+<tr><td><a href="https://www.whitehouse.gov" target="_blank">美国AI监管30天审查期落地+工信部AI伦理审查先导计划</a></td><td><a href="https://www.whitehouse.gov" target="_blank">白宫</a></td><td><a href="https://www.whitehouse.gov" target="_blank" style="color:var(--color-warning);">链接</a></td></tr>
+<tr><td><a href="https://www.yushu-tech.com" target="_blank">宇树73天闪电过会+英伟达H2+合作</a></td><td><a href="https://www.yushu-tech.com" target="_blank">宇树科技</a></td><td><a href="https://www.yushu-tech.com" target="_blank" style="color:var(--color-warning);">链接</a></td></tr>
+<tr><td><a href="https://suno.com" target="_blank">Suno估值半年翻倍至54亿美元</a></td><td><a href="https://suno.com" target="_blank">Suno</a></td><td><a href="https://suno.com" target="_blank" style="color:var(--color-warning);">链接</a></td></tr>
+<tr><td><a href="https://www.eeo.com.cn/2026/0606/904439.shtml" target="_blank">Alphabet宣布800亿美元融资计划+巴菲特10亿参与</a></td><td><a href="http://www.eeo.com.cn/2026/0606/904439.shtml" target="_blank">经济观察网</a></td><td><a href="https://www.eeo.com.cn/2026/0606/904439.shtml" target="_blank" style="color:var(--color-warning);">链接</a></td></tr>
+<tr><td><a href="https://www.congress.gov" target="_blank">美国两党AI立法框架出炉</a></td><td><a href="https://www.congress.gov" target="_blank">国会</a></td><td><a href="https://www.congress.gov" target="_blank" style="color:var(--color-warning);">链接</a></td></tr>
 </tbody></table></div>
-<div class="stats-grid animate-on-scroll">
-  <div class="stat-card stat-purple"><div class="stat-value">$800B</div><div class="stat-label">Alphabet AI基建融资</div></div>
-  <div class="stat-card stat-success"><div class="stat-value">73天</div><div class="stat-label">宇树过会速度</div></div>
-  <div class="stat-card stat-info"><div class="stat-value">34.4%</div><div class="stat-label">Anthropic企业采用率首超OpenAI</div></div>
-</div>
+
 </section>
-<section id="enterprise">
-<div class="doc-chapter-label animate-on-scroll">企业转型</div>
-<h2 class="animate-on-scroll">🔄 企业AI转型本周动态</h2>
-<div class="callout callout-warning animate-on-scroll">85%企业放弃试点全量部署 + SAP自主运营企业愿景 + 腾讯承认大部分代码由AI生成 + 发改委推动央国企开放高价值场景 + 毕马勤+SAP战略合作</div>
+<section id="enterprise" style="--section-color:var(--color-danger);margin-top:40px;padding-top:32px;border-top:2px solid color-mix(in srgb,#E11D48 15%,var(--color-border-light));">
+<div class="doc-chapter-label animate-on-scroll" style="color:var(--color-danger);background:color-mix(in srgb,#E11D48 8%,white);display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:var(--text-xs,11px);">企业转型</div>
+<h2 class="animate-on-scroll" style="color:var(--color-danger);margin-top:10px;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg> 企业AI转型本周动态</h2>
+<div class="callout callout-warning animate-on-scroll" style="border-left-color:var(--color-danger);">85%企业放弃试点全量部署 + SAP自主运营企业愿景 + 腾讯承认大部分代码由AI生成 + 发改委推动央国企开放高价值场景 + 毕马勤+SAP战略合作</div>
 <div class="table-wrap animate-on-scroll">
-<table><thead><tr><th>事件</th><th>来源</th><th>链接</th></tr></thead>
-<tbody><tr><td><a href="https://www.gartner.com" target="_blank">85%企业放弃试点全量部署+AI编程办公成落地优先路径</a></td><td><a href="https://www.gartner.com" target="_blank">Gartner</a></td><td><a href="https://www.gartner.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.whitehouse.gov" target="_blank">美国AI监管30天审查期落地+工信部AI伦理审查先导计划</a></td><td><a href="https://www.whitehouse.gov" target="_blank">白宫</a></td><td><a href="https://www.whitehouse.gov" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://www.anthropic.com" target="_blank">AI产业从模型竞赛转向基础设施+安全治理双线推进</a></td><td><a href="https://www.anthropic.com" target="_blank">Anthropic</a></td><td><a href="https://www.anthropic.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="http://tech.gmw.cn/2026-06/04/content_38810300.htm" target="_blank">SAP自主运营企业愿景：弱链打通是胜负手</a></td><td><a href="http://tech.gmw.cn/2026-06/04/content_38810300.htm" target="_blank">光明网</a></td><td><a href="http://tech.gmw.cn/2026-06/04/content_38810300.htm" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://m.sohu.com/a/1032495672_120603108" target="_blank">毕马勤+SAP战略合作：ERP公有云转型+AI场景落地</a></td><td><a href="https://m.sohu.com/a/1032495672_120603108" target="_blank">搜狐</a></td><td><a href="https://m.sohu.com/a/1032495672_120603108" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://m.toutiao.com" target="_blank">腾讯汤道生：今年大部分代码由AI生成</a></td><td><a href="https://m.toutiao.com" target="_blank">今日头条</a></td><td><a href="https://m.toutiao.com" target="_blank">链接</a></td></tr>
-<tr><td><a href="https://m.toutiao.com" target="_blank">发改委推动央国企开放高价值AI应用场景</a></td><td><a href="https://m.toutiao.com" target="_blank">发改委</a></td><td><a href="https://m.toutiao.com" target="_blank">链接</a></td></tr>
+<table class="board-table" style="--board-color:var(--color-danger);"><colgroup><col style="width:55%;"><col style="width:30%;"><col></colgroup><thead><tr><th>事件</th><th>来源</th><th>链接</th></tr></thead>
+<tbody><tr><td><a href="https://www.gartner.com" target="_blank">85%企业放弃试点全量部署+AI编程办公成落地优先路径</a></td><td><a href="https://www.gartner.com" target="_blank">Gartner</a></td><td><a href="https://www.gartner.com" target="_blank" style="color:var(--color-danger);">链接</a></td></tr>
+<tr><td><a href="https://www.whitehouse.gov" target="_blank">美国AI监管30天审查期落地+工信部AI伦理审查先导计划</a></td><td><a href="https://www.whitehouse.gov" target="_blank">白宫</a></td><td><a href="https://www.whitehouse.gov" target="_blank" style="color:var(--color-danger);">链接</a></td></tr>
+<tr><td><a href="https://www.anthropic.com" target="_blank">AI产业从模型竞赛转向基础设施+安全治理双线推进</a></td><td><a href="https://www.anthropic.com" target="_blank">Anthropic</a></td><td><a href="https://www.anthropic.com" target="_blank" style="color:var(--color-danger);">链接</a></td></tr>
+<tr><td><a href="http://tech.gmw.cn/2026-06/04/content_38810300.htm" target="_blank">SAP自主运营企业愿景：弱链打通是胜负手</a></td><td><a href="http://tech.gmw.cn/2026-06/04/content_38810300.htm" target="_blank">光明网</a></td><td><a href="http://tech.gmw.cn/2026-06/04/content_38810300.htm" target="_blank" style="color:var(--color-danger);">链接</a></td></tr>
+<tr><td><a href="https://m.sohu.com/a/1032495672_120603108" target="_blank">毕马勤+SAP战略合作：ERP公有云转型+AI场景落地</a></td><td><a href="https://m.sohu.com/a/1032495672_120603108" target="_blank">搜狐</a></td><td><a href="https://m.sohu.com/a/1032495672_120603108" target="_blank" style="color:var(--color-danger);">链接</a></td></tr>
+<tr><td><a href="https://m.toutiao.com" target="_blank">腾讯汤道生：今年大部分代码由AI生成</a></td><td><a href="https://m.toutiao.com" target="_blank">今日头条</a></td><td><a href="https://m.toutiao.com" target="_blank" style="color:var(--color-danger);">链接</a></td></tr>
+<tr><td><a href="https://m.toutiao.com" target="_blank">发改委推动央国企开放高价值AI应用场景</a></td><td><a href="https://m.toutiao.com" target="_blank">发改委</a></td><td><a href="https://m.toutiao.com" target="_blank" style="color:var(--color-danger);">链接</a></td></tr>
 </tbody></table></div>
-<div class="stats-grid animate-on-scroll">
-  <div class="stat-card stat-danger"><div class="stat-value">85%</div><div class="stat-label">企业放弃试点全量部署</div></div>
-  <div class="stat-card stat-success"><div class="stat-value">30%</div><div class="stat-label">谷歌试点后AI生成代码占比</div></div>
-  <div class="stat-card stat-info"><div class="stat-value">L2+</div><div class="stat-label">AI编码进入主流生产流程</div></div>
-</div>
+
 </section>
 <section id="dailyindex">
 <div class="doc-chapter-label animate-on-scroll">日报索引</div>
-<h2 class="animate-on-scroll">📅 本周日报索引</h2>
+<h2 class="animate-on-scroll"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 本周日报索引</h2>
 <div class="daily-index animate-on-scroll">
 <div class="daily-item">
-  <div class="daily-item-date">2026-06-01 周一</div>
-  <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-01.html" target="_blank" class="daily-item-link">AI洞察日报</a>
-  <div class="daily-item-kw">GPT-5.5, DeepSeek降价, Kimi融资, Anthropic IPO, 生成式AI搜索</div>
+  <div class="daily-item-date">2026-06-01<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周一</span></div>
+  <div style="flex:1;min-width:0;">
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-01.html" target="_blank" class="daily-item-link">GPT-5.5</a>
+    <div class="daily-item-kw">GPT-5.5, DeepSeek降价, Kimi融资, Anthropic IPO, 生成式AI搜索</div>
+  </div>
 </div>
 <div class="daily-item">
-  <div class="daily-item-date">2026-06-02 周二</div>
-  <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-02.html" target="_blank" class="daily-item-link">AI洞察日报</a>
-  <div class="daily-item-kw">Anthropic IPO, AI Coding定价, Wikipedia罢工, Florida诉讼, 全球AI资本竞赛</div>
+  <div class="daily-item-date">2026-06-02<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周二</span></div>
+  <div style="flex:1;min-width:0;">
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-02.html" target="_blank" class="daily-item-link">Anthropic IPO</a>
+    <div class="daily-item-kw">Anthropic IPO, AI Coding定价, Wikipedia罢工, Florida诉讼, 全球AI资本竞赛</div>
+  </div>
 </div>
 <div class="daily-item">
-  <div class="daily-item-date">2026-06-03 周三</div>
-  <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-03.html" target="_blank" class="daily-item-link">AI洞察日报</a>
-  <div class="daily-item-kw">GPT退役, Agent可靠性, AI编程补贴战, 豆包付费, 国产算力闭环</div>
+  <div class="daily-item-date">2026-06-03<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周三</span></div>
+  <div style="flex:1;min-width:0;">
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-03.html" target="_blank" class="daily-item-link">GPT退役</a>
+    <div class="daily-item-kw">GPT退役, Agent可靠性, AI编程补贴战, 豆包付费, 国产算力闭环</div>
+  </div>
 </div>
 <div class="daily-item">
-  <div class="daily-item-date">2026-06-04 周四</div>
-  <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-04.html" target="_blank" class="daily-item-link">AI洞察日报</a>
-  <div class="daily-item-kw">Anthropic $965B, GTC台北, Cosmos 3, IPO竞赛, AI监管</div>
+  <div class="daily-item-date">2026-06-04<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周四</span></div>
+  <div style="flex:1;min-width:0;">
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-04.html" target="_blank" class="daily-item-link">Anthropic $965B</a>
+    <div class="daily-item-kw">Anthropic $965B, GTC台北, Cosmos 3, IPO竞赛, AI监管</div>
+  </div>
 </div>
 <div class="daily-item">
-  <div class="daily-item-date">2026-06-05 周五</div>
-  <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-05.html" target="_blank" class="daily-item-link">AI洞察日报</a>
-  <div class="daily-item-kw">RSI研究, Gemma4 12B, 安全隔离架构, 微信A2A, Meta Business Agent</div>
+  <div class="daily-item-date">2026-06-05<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周五</span></div>
+  <div style="flex:1;min-width:0;">
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-05.html" target="_blank" class="daily-item-link">RSI研究</a>
+    <div class="daily-item-kw">RSI研究, Gemma4 12B, 安全隔离架构, 微信A2A, Meta Business Agent</div>
+  </div>
 </div>
 <div class="daily-item">
-  <div class="daily-item-date">2026-06-06 周六</div>
-  <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-06.html" target="_blank" class="daily-item-link">AI洞察日报</a>
-  <div class="daily-item-kw">Anthropic IPO, MAI自研, ChatGPT 10亿, SWE-bench, 宇树过会</div>
+  <div class="daily-item-date">2026-06-06<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周六</span></div>
+  <div style="flex:1;min-width:0;">
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-06.html" target="_blank" class="daily-item-link">Anthropic IPO</a>
+    <div class="daily-item-kw">Anthropic IPO, MAI自研, ChatGPT 10亿, SWE-bench, 宇树过会</div>
+  </div>
 </div>
 <div class="daily-item">
-  <div class="daily-item-date">2026-06-07 周日</div>
-  <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-07.html" target="_blank" class="daily-item-link">AI洞察日报</a>
-  <div class="daily-item-kw">Anthropic IPO, GPT-5.6, 安全暂停, SAP自主运营, 腾讯AI编码, Token基础设施</div>
+  <div class="daily-item-date">2026-06-07<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周日</span></div>
+  <div style="flex:1;min-width:0;">
+    <a href="https://xiaoxiong20260206.github.io/ai-insight-public/01-daily-reports/2026-06/2026-06-07.html" target="_blank" class="daily-item-link">Anthropic IPO</a>
+    <div class="daily-item-kw">Anthropic IPO, GPT-5.6, 安全暂停, SAP自主运营, 腾讯AI编码, Token基础设施</div>
+  </div>
 </div>
 
 </div>
 </section>
 <section id="vocab">
 <div class="doc-chapter-label animate-on-scroll">技术词汇</div>
-<h2 class="animate-on-scroll">📖 技术词汇表</h2>
+<h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> 技术词汇表</h2>
 <div class="table-wrap animate-on-scroll">
-<table><thead><tr><th>术语</th><th>定义</th><th>出处</th></tr></thead>
-<tbody><tr><td style="font-weight:600;">RSI（递归自我改进）</td><td>AI系统自主改进自身性能的能力。Anthropic研究揭示AI开发AI的速度正在指数级加速——工程师代码产出8倍增长，AI可靠完成的任务时长每4个月翻倍。</td><td>Anthropic Institute 2026-06-05</td></tr>
-<tr><td style="font-weight:600;">A2A（Agent-to-Agent）</td><td>智能体之间直接通信协作的机制。微信与华为/小米/荣耀/OPPO合作基于A2A将微信服务集成到手机系统级AI，用户可通过系统AI助手直接操控微信。</td><td>AIbase 2026-06-05</td></tr>
-<tr><td style="font-weight:600;">物理AI（Physical AI）</td><td>英伟达Cosmos 3提出的概念——AI从数字世界走向物理世界，通过物理仿真+多模态理解实现自动驾驶、机器人、工业仿真等物理场景的智能。</td><td>NVIDIA GTC 2026-06-04</td></tr>
-<tr><td style="font-weight:600;">MAI（Microsoft AI）</td><td>微软Build 2026发布的自研模型家族，包含7款模型覆盖思考、编码、图像等场景。核心信号：微软从依赖OpenAI转向自有AI能力供应链。</td><td>Microsoft Build 2026-06-06</td></tr>
-<tr><td style="font-weight:600;">Token基础设施化</td><td>AI推理的计量单位Token正在从模型厂商内部计费工具变为可计量、可定价、可交易的公共服务基础设施。三大运营商Token服务已上架中国算力平台。</td><td>中国信通院 2026-06-07</td></tr>
-<tr><td style="font-weight:600;">芯模协同</td><td>芯片和模型在研发阶段就协同设计——模型基于芯片架构来设计，芯片针对模型特性来优化。DeepSeek V4与华为昇腾的首发适配标志着国产算力从被动兼容走向主动定义。</td><td>人民日报 2026-06-03</td></tr>
-<tr><td style="font-weight:600;">SWE-bench新基准</td><td>SWE-bench团队推出ProgramBench、DeepSWE和CooperBench三大新基准。CooperBench发现双智能体协作成功率比单智能体低近50%，揭示AI编程协作短板。</td><td>SWE-bench 2026-06-06</td></tr>
-<tr><td style="font-weight:600;">gVisor容器隔离</td><td>Anthropic为claude.ai设计的安全隔离方案：用户代码在gVisor临时容器中执行，会话结束即销毁。与OS级沙箱（Claude Code）和VM级隔离（Claude Cowork）构成三层安全体系。</td><td>Anthropic Engineering 2026-06-05</td></tr>
-<tr><td style="font-weight:600;">自主运营企业</td><td>SAP提出的企业愿景：从人工驱动流程转向AI驱动业务结果。核心判断：AI价值取决于企业最薄弱环节能否打通，而非模型能力有多强。</td><td>SAP中国峰会 2026-06-07</td></tr>
-<tr><td style="font-weight:600;">Ultrafast模式</td><td>GPT-5.6正在开发的新推理加速模式，在Codex环境中验证使主力模型推理速度提升2-3倍，专为Agent循环、长任务流水线等延迟敏感场景优化。</td><td>OpenAI 2026-06-07</td></tr>
+<table class="board-table" style="--board-color:var(--color-purple);"><thead><tr><th>术语</th><th>定义</th><th>出处</th></tr></thead>
+<tbody><tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">RSI（递归自我改进）</td><td style="color:var(--color-text-secondary);">AI系统自主改进自身性能的能力。Anthropic研究揭示AI开发AI的速度正在指数级加速——工程师代码产出8倍增长，AI可靠完成的任务时长每4个月翻倍。</td><td style="color:var(--color-text-muted);font-size:var(--text-sm,12px);">Anthropic Institute 2026-06-05</td></tr>
+<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">A2A（Agent-to-Agent）</td><td style="color:var(--color-text-secondary);">智能体之间直接通信协作的机制。微信与华为/小米/荣耀/OPPO合作基于A2A将微信服务集成到手机系统级AI，用户可通过系统AI助手直接操控微信。</td><td style="color:var(--color-text-muted);font-size:var(--text-sm,12px);">AIbase 2026-06-05</td></tr>
+<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">物理AI（Physical AI）</td><td style="color:var(--color-text-secondary);">英伟达Cosmos 3提出的概念——AI从数字世界走向物理世界，通过物理仿真+多模态理解实现自动驾驶、机器人、工业仿真等物理场景的智能。</td><td style="color:var(--color-text-muted);font-size:var(--text-sm,12px);">NVIDIA GTC 2026-06-04</td></tr>
+<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">MAI（Microsoft AI）</td><td style="color:var(--color-text-secondary);">微软Build 2026发布的自研模型家族，包含7款模型覆盖思考、编码、图像等场景。核心信号：微软从依赖OpenAI转向自有AI能力供应链。</td><td style="color:var(--color-text-muted);font-size:var(--text-sm,12px);">Microsoft Build 2026-06-06</td></tr>
+<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">Token基础设施化</td><td style="color:var(--color-text-secondary);">AI推理的计量单位Token正在从模型厂商内部计费工具变为可计量、可定价、可交易的公共服务基础设施。三大运营商Token服务已上架中国算力平台。</td><td style="color:var(--color-text-muted);font-size:var(--text-sm,12px);">中国信通院 2026-06-07</td></tr>
+<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">芯模协同</td><td style="color:var(--color-text-secondary);">芯片和模型在研发阶段就协同设计——模型基于芯片架构来设计，芯片针对模型特性来优化。DeepSeek V4与华为昇腾的首发适配标志着国产算力从被动兼容走向主动定义。</td><td style="color:var(--color-text-muted);font-size:var(--text-sm,12px);">人民日报 2026-06-03</td></tr>
+<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">SWE-bench新基准</td><td style="color:var(--color-text-secondary);">SWE-bench团队推出ProgramBench、DeepSWE和CooperBench三大新基准。CooperBench发现双智能体协作成功率比单智能体低近50%，揭示AI编程协作短板。</td><td style="color:var(--color-text-muted);font-size:var(--text-sm,12px);">SWE-bench 2026-06-06</td></tr>
+<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">gVisor容器隔离</td><td style="color:var(--color-text-secondary);">Anthropic为claude.ai设计的安全隔离方案：用户代码在gVisor临时容器中执行，会话结束即销毁。与OS级沙箱（Claude Code）和VM级隔离（Claude Cowork）构成三层安全体系。</td><td style="color:var(--color-text-muted);font-size:var(--text-sm,12px);">Anthropic Engineering 2026-06-05</td></tr>
+<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">自主运营企业</td><td style="color:var(--color-text-secondary);">SAP提出的企业愿景：从人工驱动流程转向AI驱动业务结果。核心判断：AI价值取决于企业最薄弱环节能否打通，而非模型能力有多强。</td><td style="color:var(--color-text-muted);font-size:var(--text-sm,12px);">SAP中国峰会 2026-06-07</td></tr>
+<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">Ultrafast模式</td><td style="color:var(--color-text-secondary);">GPT-5.6正在开发的新推理加速模式，在Codex环境中验证使主力模型推理速度提升2-3倍，专为Agent循环、长任务流水线等延迟敏感场景优化。</td><td style="color:var(--color-text-muted);font-size:var(--text-sm,12px);">OpenAI 2026-06-07</td></tr>
 </tbody></table></div>
 </section>
 <section id="narrative">
 <div class="doc-chapter-label animate-on-scroll">宏观叙事</div>
-<h2 class="animate-on-scroll">🌊 宏观叙事：下半场开启：IPO定估值锚，Agent定北极星，推理成本归零定基础设施属性</h2>
+<h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.6 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.6 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.6 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg> 宏观叙事：下半场开启：IPO定估值锚，Agent定北极星，推理成本归零定基础设施属性</h2>
 <div class="callout callout-purple animate-on-scroll"><strong>**AI行业正式从技术竞赛上半场进入商业化落地下半场。三条主线同时加速：Anthropic $965B IPO定估值锚→'安全叙事+企业深耕'路径获资本市场最高认可；黄仁勋定调Agent AI→竞争北极星从模型评分切换到端到端可靠；DeepSeek永久降价75%→推理成本从稀缺品变为基础设施品。下半场拼的不是谁更先进，而是谁更快变现+谁更可靠+谁更便宜。**</strong></div>
-<div class="callout callout-info animate-on-scroll" style="margin-top:16px;">Anthropic以9650亿美元估值抢在OpenAI之前递交IPO申请，标志着AI行业从'融资竞赛'正式进入'IPO竞赛'。估值反超的关键不是模型评分更高，而是80%企业营收占比——'先自省后开放'比OpenAI'先发布后修补'更适合资本市场信任逻辑。国内智谱冲刺科创板募资150亿、MiniMax走A+H双平台、DeepSeek启动500亿首轮融资——五家头部公司几乎同步推进资本化。
+<div class="callout callout-info animate-on-scroll" style="margin-top:16px;border-left-color:var(--color-info);"><div style="font-size:var(--text-sm,12px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-info);margin-bottom:6px;">01</div>Anthropic以9650亿美元估值抢在OpenAI之前递交IPO申请，标志着AI行业从'融资竞赛'正式进入'IPO竞赛'。估值反超的关键不是模型评分更高，而是80%企业营收占比——'先自省后开放'比OpenAI'先发布后修补'更适合资本市场信任逻辑。国内智谱冲刺科创板募资150亿、MiniMax走A+H双平台、DeepSeek启动500亿首轮融资——五家头部公司几乎同步推进资本化。
 
 谁先上市谁先定估值锚。Anthropic抢跑意味着'安全叙事+企业深耕'路径获得资本市场最高定价权。但估值越高对兑现速度要求越苛刻——9650亿美元估值接近全球GDP的1%，资本市场押注的是'AI基础设施税'的垄断潜力。</div>
-<div class="callout callout-success animate-on-scroll" style="margin-top:16px;">黄仁勋GTC台北定调Agent AI时代是下半场风向标。从'谁的模型评分更高'到'谁的Agent更可靠'——Opus 4.8在Super-Agent基准中唯一完成全部端到端案例，Agent场景要求从'答对问题'进化到'独立走完流程'。Cosmos 3物理AI开源意味着AI从数字世界走向物理世界，自动驾驶+机器人+工业仿真迎来范式跃迁。
+<div class="callout callout-success animate-on-scroll" style="margin-top:16px;border-left-color:var(--color-success);"><div style="font-size:var(--text-sm,12px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-success);margin-bottom:6px;">02</div>黄仁勋GTC台北定调Agent AI时代是下半场风向标。从'谁的模型评分更高'到'谁的Agent更可靠'——Opus 4.8在Super-Agent基准中唯一完成全部端到端案例，Agent场景要求从'答对问题'进化到'独立走完流程'。Cosmos 3物理AI开源意味着AI从数字世界走向物理世界，自动驾驶+机器人+工业仿真迎来范式跃迁。
 
 DeepSeek V4-Pro永久降价75%将推理成本拉至地板价——类比云计算从按小时到按秒到永久免费层的路径。腾讯云跟进降价97.5%，IDC报告显示中国大模型调用量同比16倍。三大运营商Token服务上架中国算力平台，Token成为可交易基础设施。推理成本归零是AI基础设施化的前提条件。</div>
-<div class="callout callout-warning animate-on-scroll" style="margin-top:16px;">对从业者的三条启示：
+<div class="callout callout-warning animate-on-scroll" style="margin-top:16px;border-left-color:var(--color-warning);"><div style="font-size:var(--text-sm,12px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-warning);margin-bottom:6px;">03</div>对从业者的三条启示：
 
 1. **IPO竞赛定估值锚**——谁先上市谁先定价。Anthropic路径（安全叙事+企业深耕）获最高认可，国内智谱/MiniMax科创板路径同步加速。估值越高兑现要求越苛刻，'AI基础设施税'垄断叙事需要持续营收验证。
 
@@ -2630,19 +3480,102 @@ DeepSeek V4-Pro永久降价75%将推理成本拉至地板价——类比云计�
 <hr style="border:none;border-top:2px solid var(--color-success);margin:32px 0;">
 <div class="callout callout-success animate-on-scroll">**下半场的发动机是Agent可靠性，整车是商业化落地+安全治理，交付是推理成本归零+基础设施化。发动机决定上限，整车决定交付。AI行业不再是技术实验，而是产业基础设施——谁能把这三件事同时做好，谁就是下半场的赢家。**</div>
 </section>
-<div style="max-width:var(--content-max);margin:0 auto;padding:16px 20px 48px;">
-<div style="background:linear-gradient(135deg,#F8FAFB 0%,#EEF2F6 100%);border:1px solid #E7E5E4;border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(31,35,40,.06)">
-  <div style="font-size:16px;font-weight:700;margin-bottom:8px">💡 了解更多</div>
-  <p style="font-size:14px;color:#57534E;line-height:1.7;margin:0 0 12px 0">AI洞察是系统化追踪AI行业动态的项目，覆盖大模型、AI Coding、AI应用、AI行业投融资、企业AI转型五大领域。</p>
-  <a href="{INTERNAL_BASE}/" target="_blank" style="display:inline-flex;padding:8px 16px;background:linear-gradient(135deg,#059669,#10B981);color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none">🏠 访问AI洞察首页</a>
-</div></div>
-<div class="doc-footer"><p>🧠 AI洞察（AI洞察） · AI洞察 · 周报 · 2026-W23</p><p style="margin-top:4px;">数据来源：AI洞察日报 06/01-06/07 · 5板块</p></div>
+<footer class="doc-footer animate-on-scroll">
+                <div class="footer-brand">AI洞察</div>
+                <p class="footer-desc">系统化追踪AI行业动态，每日/每周输出调研洞察<br>覆盖大模型、AI Coding、AI应用、投融资、企业AI转型</p>
+                <div class="footer-divider"></div>
+                <a href="../.." target="_top" class="footer-home-btn"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10l9-7 9 7v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg> 访问AI洞察首页</a>
+                <p class="footer-meta">AI洞察 · 周报 · 2026-W23 · 数据来源：AI洞察日报 06/01-06/07 · 5板块</p>
+            </footer>
 </div>
 </main>
 </div>
 <div class="scroll-to-top" id="scrollToTop">↑</div>
 <script>
     (function() {
+        // ===== TAB NAVIGATION (v4.0) =====
+        const tabNav = document.querySelector('.tab-nav');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+
+        function switchTab(tabId) {
+            // Update buttons
+            tabBtns.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabId);
+            });
+            // Update panels
+            tabPanels.forEach(panel => {
+                panel.classList.toggle('active', panel.dataset.tab === tabId);
+            });
+            // Update sidebar TOC active state
+            const tocLinks = document.querySelectorAll('.toc-link');
+            tocLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === '#' + tabId) {
+                    link.classList.add('toc-active');
+                } else if (tabId && !href.startsWith('#' + tabId)) {
+                    // Only remove active from board-section TOC links, not overview/heat/data/watch
+                    const boardIds = ['llm', 'coding', 'app', 'industry', 'enterprise'];
+                    if (boardIds.some(id => href === '#' + id)) {
+                        link.classList.remove('toc-active');
+                    }
+                }
+            });
+            // Scroll to tab navigation area so user sees the new tab content
+            // (scrolling to contentInner.offsetTop jumps to page top, making it look like nothing changed — #132 fix 2026-07-01)
+            const tabNavEl = document.querySelector('.tab-nav');
+            if (tabNavEl) {
+                window.scrollTo({ top: tabNavEl.offsetTop - 20, behavior: 'smooth' });
+            }
+        }
+
+        if (tabBtns.length && tabPanels.length) {
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchTab(btn.dataset.tab);
+                });
+                // Keyboard support
+                btn.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        switchTab(btn.dataset.tab);
+                    }
+                    // Arrow key navigation
+                    const btns = Array.from(tabBtns);
+                    const idx = btns.indexOf(btn);
+                    if (e.key === 'ArrowRight' && idx < btns.length - 1) {
+                        e.preventDefault();
+                        btns[idx + 1].focus();
+                        switchTab(btns[idx + 1].dataset.tab);
+                    }
+                    if (e.key === 'ArrowLeft' && idx > 0) {
+                        e.preventDefault();
+                        btns[idx - 1].focus();
+                        switchTab(btns[idx - 1].dataset.tab);
+                    }
+                });
+            });
+
+            // Show first tab by default if none active
+            const hasActive = document.querySelector('.tab-panel.active');
+            if (!hasActive && tabPanels.length > 0) {
+                tabPanels[0].classList.add('active');
+                if (tabBtns[0]) tabBtns[0].classList.add('active');
+            }
+        }
+
+        // ===== TOC CLICK HANDLER =====
+        document.querySelectorAll('.toc-link[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' });
+                }
+            });
+        });
+
         // ===== TOC SCROLL SPY =====
         const tocLinks = document.querySelectorAll('.toc-link[href^="#"]');
         const sections = Array.from(tocLinks)
@@ -2650,15 +3583,32 @@ DeepSeek V4-Pro永久降价75%将推理成本拉至地板价——类比云计�
             .filter(Boolean);
 
         function updateToc() {
+            // Conditional boardIds: only skip if tab UI exists (daily reports have tabs, weekly reports don't)
+            const hasTabUI = document.querySelector('.tab-btn') !== null;
+            const boardIds = hasTabUI ? ['llm', 'coding', 'app', 'industry', 'enterprise'] : [];
+            const activeTabId = hasTabUI ? document.querySelector('.tab-btn.active')?.dataset.tab || '' : '';
+            
             let active = null;
             const scrollY = window.scrollY + 120;
             for (const sec of sections) {
+                if (!sec) continue;
+                const secId = sec.id;
+                // For board sections, only mark active if it's the current tab (tab UI only)
+                if (boardIds.length > 0 && boardIds.includes(secId)) {
+                    if (secId === activeTabId) {
+                        active = sec;
+                    }
+                    continue;
+                }
                 if (sec.getBoundingClientRect().top + window.scrollY <= scrollY) {
                     active = sec;
                 }
             }
             tocLinks.forEach(l => {
                 const target = document.querySelector(l.getAttribute('href'));
+                const targetId = target?.id;
+                // Don't change active for tab-managed sections (that's Tab's job) — only when tab UI exists
+                if (boardIds.length > 0 && boardIds.includes(targetId)) return;
                 l.classList.toggle('toc-active', target === active);
             });
         }
@@ -2702,6 +3652,26 @@ DeepSeek V4-Pro永久降价75%将推理成本拉至地板价——类比云计�
             });
         }
 
+        // ===== SIDEBAR TOC LINKS → TAB SWITCH =====
+        // When clicking a board TOC link, switch to that tab
+        const boardTocLinks = document.querySelectorAll('.toc-link[href^="#"]');
+        boardTocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                const targetId = href.replace('#', '');
+                const boardIds = ['llm', 'coding', 'app', 'industry', 'enterprise'];
+                if (boardIds.includes(targetId)) {
+                    e.preventDefault();
+                    switchTab(targetId);
+                    // Scroll to tab nav area
+                    const tabNavEl = document.querySelector('.tab-nav');
+                    if (tabNavEl) {
+                        window.scrollTo({ top: tabNavEl.offsetTop - 20, behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
         // ===== ANIMATE ON SCROLL =====
         const animEls = document.querySelectorAll('.animate-on-scroll');
         if (animEls.length) {
@@ -2709,6 +3679,13 @@ DeepSeek V4-Pro永久降价75%将推理成本拉至地板价——类比云计�
                 entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
             }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
             animEls.forEach(el => observer.observe(el));
+        }
+
+        // ===== PREFERS-REDUCED-MOTION =====
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                el.classList.add('visible');
+            });
         }
     })();
 </script>
