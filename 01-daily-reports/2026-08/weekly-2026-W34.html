@@ -1355,10 +1355,35 @@ section > p,
     -webkit-overflow-scrolling: touch;
 }
 
-/* overview 表格：禁用 table-layout:fixed，改用 auto 让浏览器自动分配列宽 */
-/* 维度列 whitespace:nowrap 自然取最小宽，信号列获得剩余所有空间 */
+/* ============================================================
+   表格布局作用域修复 (2026-08-25 #fix-board-table-scope)
+   根因：旧规则用裸 .board-table 把 table-layout:auto + 首列 nowrap
+        无差别应用到所有表格，污染了「事件表」（3列/含colgroup/首列为长文本），
+        导致事件列被强制不换行、行高被撑到 ~187px、卡片中间大片空白。
+   策略：
+   - 事件表（有 <colgroup> 定义列宽 55/30/15）→ 恢复 table-layout:fixed，
+     让 colgroup 生效、首列长文本自由换行填满列宽。
+   - overview / vocab 表（无 <colgroup>，首列为短词）→ 仅对这类表启用
+     table-layout:auto + 首列 nowrap，用 :not(:has(colgroup)) 精确限定作用域。
+   :has() 不支持的旧浏览器会回退到默认安全态（fixed），事件表仍正确。
+   ============================================================ */
+
+/* 事件表：含 colgroup，恢复 fixed 让列宽定义生效，首列长文本自由换行 */
+.board-table:has(colgroup) {
+    table-layout: fixed !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+.board-table:has(colgroup) thead th,
+.board-table:has(colgroup) tbody td {
+    white-space: normal !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    width: auto;  /* 覆盖旧的 width:1%，宽度交给 colgroup */
+}
+
+/* 默认安全态（无 colgroup 或 :has 不支持时）：宽度自适应，允许换行 */
 .board-table {
-    table-layout: auto !important;
     width: 100% !important;
     min-width: 0 !important;
 }
@@ -1367,14 +1392,18 @@ section > p,
     word-break: break-word;
     overflow-wrap: anywhere;
 }
-/* 维度列不换行（短文字），信号列自由换行 */
-.board-table thead th:first-child,
-.board-table tbody td:first-child {
+
+/* overview / vocab 表：无 colgroup，首列为短词 → auto 布局 + 首列 nowrap */
+.board-table:not(:has(colgroup)) {
+    table-layout: auto !important;
+}
+.board-table:not(:has(colgroup)) thead th:first-child,
+.board-table:not(:has(colgroup)) tbody td:first-child {
     white-space: nowrap;
     width: 1%;  /* 收缩到内容最小宽度 */
 }
-.board-table thead th:not(:first-child),
-.board-table tbody td:not(:first-child):not(:last-child) {
+.board-table:not(:has(colgroup)) thead th:not(:first-child),
+.board-table:not(:has(colgroup)) tbody td:not(:first-child):not(:last-child) {
     white-space: normal;
     word-break: break-word;
 }
@@ -1413,12 +1442,12 @@ section > * {
     line-height: 1.8 !important;
 }
 
-/* 3. 词汇表：术语列加粗更醒目，出处列更精致 */
-.board-table tbody td:first-child {
+/* 3. 词汇表/overview（无 colgroup）：术语列加粗更醒目，出处列更精致 */
+.board-table:not(:has(colgroup)) tbody td:first-child {
     font-weight: 700 !important;
     color: #1C1917 !important;
 }
-.board-table tbody td:last-child {
+.board-table:not(:has(colgroup)) tbody td:last-child {
     color: #78716C;
     font-size: 12px !important;
 }
