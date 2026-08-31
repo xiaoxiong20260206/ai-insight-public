@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI Native SDLC 深度调研：基于 Google、OpenAI、Anthropic、LangChain 四类材料的交叉验证，以及面向某公司 AI 生产力中心的可信变更工厂路线图。">
+<title>AI Native SDLC 深度调研：可信变更工厂 | AI洞察</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<noscript><style>.animate-on-scroll{opacity:1!important;transform:none!important}</style></noscript>
+<style>
+:root{--ink:#172033;--muted:#5c6880;--line:#e5eaf2;--paper:#fff;--bg:#f5f8fc;--blue:#2563eb;--blue-50:#eff6ff;--green:#059669;--green-50:#ecfdf5;--amber:#d97706;--amber-50:#fffbeb;--purple:#7c3aed;--purple-50:#f5f3ff;--red:#e11d48;--shadow:0 8px 24px rgba(22,38,68,.07);--radius:14px;}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:radial-gradient(circle at 10% 0,#eaf2ff 0,transparent 24rem),radial-gradient(circle at 90% 0,#edfff7 0,transparent 24rem),var(--bg);color:var(--muted);font:15px/1.78 "DM Sans","Noto Sans SC",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline} .shell{max-width:1120px;margin:auto;padding:28px 18px 80px}
+.hero{background:linear-gradient(132deg,#123e9c 0%,#2563eb 48%,#087b67 100%);border-radius:22px;padding:46px 44px 38px;color:white;box-shadow:0 16px 40px rgba(37,99,235,.24);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:340px;height:340px;right:-100px;top:-180px;border:1px solid rgba(255,255,255,.24);border-radius:50%;box-shadow:0 0 0 40px rgba(255,255,255,.06),0 0 0 100px rgba(255,255,255,.04)}
+.eyebrow{display:inline-block;padding:4px 10px;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(255,255,255,.12);font-weight:700;font-size:12px;letter-spacing:.06em}.hero h1{font-size:clamp(29px,4vw,46px);line-height:1.2;letter-spacing:-.03em;margin:16px 0 12px;max-width:850px}.hero p{max-width:780px;margin:0;color:rgba(255,255,255,.87);font-size:16px}.hero-meta{display:flex;flex-wrap:wrap;gap:18px;margin-top:22px;font-size:13px;color:rgba(255,255,255,.76)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}.stat b{display:block;font-size:22px;line-height:1.2;color:var(--ink)}.stat span{font-size:12px;color:var(--muted)}
+.toc{position:sticky;top:10px;z-index:9;display:flex;gap:5px;overflow:auto;padding:8px;margin:0 0 18px;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}.toc a{white-space:nowrap;border-radius:8px;padding:6px 10px;font-size:12px;color:var(--muted)}.toc a:hover{background:var(--blue-50);color:var(--blue);text-decoration:none}
+.report{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:18px}.side{position:sticky;top:70px;align-self:start;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}.side h3{color:var(--ink);font-size:14px;margin:0 0 9px}.side p{font-size:13px;margin:0 0 14px}.side ul{margin:0;padding-left:18px;font-size:13px;line-height:1.7}
+.section-card{scroll-margin-top:70px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 30px;margin-bottom:16px}.section-kicker{display:inline-flex;padding:3px 9px;color:var(--blue);font-size:11px;font-weight:800;border-radius:99px;background:var(--blue-50);letter-spacing:.04em;margin-bottom:8px}h1{color:var(--ink);font-size:29px;line-height:1.25;margin:0 0 18px}h2{color:var(--ink);font-size:23px;line-height:1.35;margin:0 0 18px;padding-bottom:12px;border-bottom:1px solid var(--line)}h3{color:#243047;font-size:17px;line-height:1.45;margin:25px 0 10px}h4{color:#2e3a52;margin:18px 0 8px}p{margin:0 0 14px}strong{color:var(--ink)}blockquote{margin:18px 0;padding:15px 18px;border-left:3px solid var(--blue);background:linear-gradient(90deg,var(--blue-50),#fff);border-radius:0 10px 10px 0;color:#34455f}blockquote p:last-child{margin-bottom:0}ol,ul{padding-left:22px;margin:10px 0 16px}li{margin:6px 0}code{background:#f1f5f9;color:#1e40af;padding:2px 5px;border-radius:5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em}hr{border:0;border-top:1px solid var(--line);margin:28px 0}table{width:100%;border-collapse:separate;border-spacing:0;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:13px}th{background:#f7f9fc;color:#39465d;font-weight:700}th,td{padding:11px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}tbody tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#fcfdff}.report>div:first-child>section:nth-of-type(5){border-color:#c7d2fe}.report>div:first-child>section:nth-of-type(10){border-color:#bbf7d0}.footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:900px){.report{display:block}.side{display:none}.stats{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.shell{padding:14px 10px 45px}.hero{padding:30px 23px}.section-card{padding:22px 17px}.hero h1{font-size:29px}h2{font-size:20px}table{display:block;overflow:auto;white-space:normal}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="hero"><span class="eyebrow">AI INSIGHT · DEEP RESEARCH</span><h1>AI Native SDLC：从代码生成到可信变更工厂</h1><p>四类行业材料的交叉验证：软件工程正在从“代码生产系统”，重构为可验证、可审计、可持续学习的可信变更系统。</p><div class="hero-meta"><span>2026-08-31</span><span>行业框架 × 某公司落地映射</span><span>事实与推演分层呈现</span></div></header>
+<div class="stats"><div class="stat"><b>4</b><span>类行业材料交叉解读</span></div><div class="stat"><b>6</b><span>层可信变更定义</span></div><div class="stat"><b>90 天</b><span>最小闭环落地路线</span></div><div class="stat"><b>1 个</b><span>建议北极星：验证吞吐量</span></div></div>
+<nav class="toc" aria-label="报告目录"><a href="#summary">执行摘要</a><a href="#problem">问题界定</a><a href="#sources">信源边界</a><a href="#framework">行业框架</a><a href="#insight">本质洞察</a><a href="#context">Context & Harness</a><a href="#governance">治理与责任</a><a href="#validation">验证与 Evals</a><a href="#antipattern">反模式</a><a href="#kuaishou">某公司映射</a><a href="#roadmap">90 天路线图</a><a href="#questions">关键决策</a><a href="#outlook">趋势判断</a></nav>
+<div class="report"><div>
+<section id="overview" class="section-card"><div class="section-kicker">OVERVIEW · 研究摘要</div><h1 id="ai-native-sdlc-深度调研软件工程正在变成可信变更的生产系统">AI Native SDLC 深度调研：软件工程正在变成可信变更的生产系统</h1>
+<blockquote>
+<p><strong>副标题</strong>：从“AI 能写多少代码”到“组织能否规模化交付可信结果”</p>
+<p><strong>调研日期</strong>：2026-08-31<br />
+<strong>调研性质</strong>：行业框架交叉验证 + 面向某公司 AI 生产力中心的落地推演<br />
+<strong>研究对象</strong>：Google、OpenAI、Anthropic、LangChain 四份 AI Native SDLC / Agent Lifecycle 材料，以及邵孟的交叉解读</p>
+</blockquote>
+<hr />
+</section>
+<section id="summary" class="section-card"><div class="section-kicker">01 · 执行摘要</div><h2 id="执行摘要先给决策者的六句话">0. 执行摘要：先给决策者的六句话</h2>
+<ol type="1">
+<li><strong>AI Native SDLC 的最小管理单元不再是“代码提交”，而是“可信变更”</strong>：一个变更必须同时有意图、约束、验证证据、风险归属和生产反馈入口。</li>
+<li><strong>代码生成已从主要瓶颈退居中间环节</strong>。真正限制组织吞吐的是意图澄清、验证、审查、发布治理和事故回流；只扩张 Agent 会把排队与风险推向下游。</li>
+<li><strong>模型能力不是组织能力</strong>。模型决定上限；Context、Harness、Evals、权限与观测共同决定生产环境中的可用下限。</li>
+<li><strong>人机分工应从“人写、AI 辅助”改为“Agent 执行、人定义和承担”</strong>：人类拥有目标、架构取舍、风险接受和生产责任；Agent 负责研究、生成、执行和提交证据。</li>
+<li><strong>治理必须分层</strong>：可容错的规则进入 Context/Skill；绝不可违反的规则进入权限、沙箱、Hook、CI 和审批门禁。不要把门锁写成提示词。</li>
+<li><strong>某公司的下一步不是再加一个 Coding Agent，而是把 Agent平台、AI洞察 Code、AgentOS、Agent 评测与 AI 度量收敛成“可信变更工厂”</strong>。先打穿一条低—中风险价值流，再以证据扩大自治半径。</li>
+</ol>
+<blockquote>
+<p><strong>本报告的核心判断</strong>：未来 12—24 个月的工程组织差距，首先不是“谁的 Agent 写码更快”，而是谁的<strong>验证吞吐量</strong>更高——即在不同比例增加人工审查的前提下，安全地让更多变更通过可信验证、进入生产并被持续学习。</p>
+</blockquote>
+<hr />
+</section><section id="problem" class="section-card"><div class="section-kicker">02 · 问题界定</div><h2 id="问题界定为什么现在要重做-sdlc">1. 问题界定：为什么现在要重做 SDLC</h2>
+<h3 id="现象局部效率很高端到端交付未必变快">1.1 现象：局部效率很高，端到端交付未必变快</h3>
+<p>AI Coding 已经把“从想法到可运行代码”的时间压缩到小时级甚至分钟级。但企业的交付价值流不是单一 Build 环节，而是：</p>
+<p><code>意图 → 方案 → 实现 → 验证 → 审查 → 发布 → 运行 → 反馈</code></p>
+<p>当实现环节加速，而其余环节仍按人工节奏运转，结果通常是：</p>
+<ul>
+<li>更多 Agent 产物堆积在测试、CR、安全与发布队列；</li>
+<li>为了不堵塞而降低审查标准，缺陷与安全风险进入生产；</li>
+<li>工程师从编码瓶颈变成“AI 输出复读机”；</li>
+<li>更多代码、更多 PR、更多 Token，却不一定有更多业务结果。</li>
+</ul>
+<p>因此，不应再以“生成代码行数、调用次数、PR 数”为主要成功指标。应当衡量：</p>
+<blockquote>
+<p>从一个被确认的业务意图，到一个在生产环境被验证的业务结果，所需的总时间、总返工、总人工注意力、总成本和后续维护负担。</p>
+</blockquote>
+<h3 id="本报告的边界">1.2 本报告的边界</h3>
+<p>本调研讨论两类相互关联但不可混同的问题：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>对象</th>
+<th>典型问题</th>
+<th>验证重点</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>用 Agent 开发普通软件</strong></td>
+<td>Agent 生成的变更能否安全合并、上线和维护？</td>
+<td>测试、架构约束、CI、审查、发布门禁</td>
+</tr>
+<tr class="even">
+<td><strong>开发 Agent 产品本身</strong></td>
+<td>Agent 是否正确使用工具、上下文和策略，并完成任务？</td>
+<td>Evals、轨迹、模拟、用户反馈、成本与延迟</td>
+</tr>
+</tbody>
+</table>
+<p>前者以 Anthropic 的 AI-Native SDLC 为代表；后者以 LangChain 的 Agent Development Lifecycle 为代表。两者共享治理基础设施，但质量模型不同。</p>
+<hr />
+</section><section id="sources" class="section-card"><div class="section-kicker">03 · 信源边界</div><h2 id="信源与可信度哪些是事实哪些只是方向">2. 信源与可信度：哪些是事实，哪些只是方向</h2>
+<h3 id="研究材料">2.1 研究材料</h3>
+<table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>材料</th>
+<th>主张重心</th>
+<th style="text-align: right;">原始材料获取情况</th>
+<th>本报告采用方式</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Anthropic《The AI-Native SDLC Playbook》</td>
+<td>制品链、Skills/Hooks、测试、PR、发布与运维闭环</td>
+<td style="text-align: right;"><strong>已直接获取</strong>（约 50k 字符，仍可能非页面完整内容）</td>
+<td>一手框架来源</td>
+</tr>
+<tr class="even">
+<td>LangChain《The Agent Development Lifecycle》</td>
+<td>Agent 产品的 Build/Test/Deploy/Monitor 生命周期</td>
+<td style="text-align: right;"><strong>已直接获取</strong></td>
+<td>一手框架来源</td>
+</tr>
+<tr class="odd">
+<td>Google《The New SDLC with Vibe Coding》</td>
+<td>Context/Harness、Factory Model、Orchestrator</td>
+<td style="text-align: right;">原始 PDF 当前环境不可访问</td>
+<td>仅按邵孟转述使用，降级为二手信息</td>
+</tr>
+<tr class="even">
+<td>OpenAI《Building an AI-Native Engineering Team》</td>
+<td>Delegate/Review/Own 人机责任边界</td>
+<td style="text-align: right;">原始页面当前环境不可访问</td>
+<td>仅按邵孟转述使用，降级为二手信息</td>
+</tr>
+<tr class="odd">
+<td>邵孟《AI Native SDLC 如何重构软件开发》</td>
+<td>四份材料的交叉解读</td>
+<td style="text-align: right;"><strong>已获取完整文章</strong></td>
+<td>二级分析材料</td>
+</tr>
+</tbody>
+</table>
+<h3 id="解读纪律">2.2 解读纪律</h3>
+<ul>
+<li>上述材料均来自模型或 Agent 平台供应商，具有明显产品生态视角；<strong>不应把案例、效率数字或工具选型当作普适因果结论</strong>。</li>
+<li>本报告把四家共同指向的方向视为“值得验证的行业共识”，不等同于已验证事实。</li>
+<li>文中涉及某公司的建议，是基于已知组织与产品架构的<strong>策略推演</strong>，不是现状审计结论。</li>
+</ul>
+<hr />
+</section><section id="framework" class="section-card"><div class="section-kicker">04 · 行业框架</div><h2 id="四份材料到底各自解决什么问题">3. 四份材料到底各自解决什么问题</h2>
+<h3 id="一张图看全局不是四个版本的同一方法论">3.1 一张图看全局：不是四个版本的同一方法论</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>来源</th>
+<th>主要问题</th>
+<th>给出的核心解法</th>
+<th>对落地最有用的部分</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Google</td>
+<td>怎样从随性提示走向工程化 Agent？</td>
+<td>Context Engineering、Harness Engineering、Factory Model</td>
+<td>把“模型好不好”转成“环境和约束好不好”</td>
+</tr>
+<tr class="even">
+<td>OpenAI</td>
+<td>人和 Agent 在团队中各自负责什么？</td>
+<td>Delegate / Review / Own</td>
+<td>明确不可委托的最终责任</td>
+</tr>
+<tr class="odd">
+<td>Anthropic</td>
+<td>企业如何把 AI 放进完整研发流程？</td>
+<td>制品链 + Skills/Hooks + Evals + 审批门</td>
+<td>把治理嵌入行动发生的时刻</td>
+</tr>
+<tr class="even">
+<td>LangChain</td>
+<td>Agent 产品怎样持续上线、运营和改进？</td>
+<td>Build → Test → Deploy → Monitor → Iterate</td>
+<td>Trace 与生产反馈回灌 Eval</td>
+</tr>
+</tbody>
+</table>
+<h3 id="共同结论五条正在收敛的行业判断">3.2 共同结论：五条正在收敛的行业判断</h3>
+<ol type="1">
+<li>代码、测试和文档的初稿成本快速下降；</li>
+<li>组织瓶颈迁移到需求、验证、审查、部署和治理；</li>
+<li>模型之外的 Context 与 Harness 决定真实工程结果；</li>
+<li>测试、Evals、轨迹和生产反馈必须构成闭环；</li>
+<li>人类角色从主要实施者转向意图定义者、系统设计者和风险责任人。</li>
+</ol>
+<p>这五点构成了“AI Native SDLC”最小共识。其余差异，主要是各家从产品、平台或组织的不同切口展开。</p>
+<hr />
+</section><section id="insight" class="section-card"><div class="section-kicker">05 · 本质洞察</div><h2 id="本质洞察从代码生产系统到可信变更系统">4. 本质洞察：从代码生产系统到可信变更系统</h2>
+<h3 id="第一层代码不再是唯一稀缺物">4.1 第一层：代码不再是唯一稀缺物</h3>
+<p>过去，代码实现需要大量专业工时，SDLC 的流程、角色分工和审批节奏都围绕“如何让稀缺工程师高效写代码”设计。</p>
+<p>现在，Agent 让实现初稿趋于廉价。代码仍重要，但它更像一个中间产物：它必须被意图约束、被测试验证、被风险治理、被生产结果校准。</p>
+<h3 id="第二层真正被规模化的是可信变更">4.2 第二层：真正被规模化的是“可信变更”</h3>
+<p>本报告建议将 AI Native SDLC 的最小交付单元定义为：</p>
+<blockquote>
+<p><strong>可信变更（Trusted Change）= 明确意图 + 可执行约束 + 可复现实现 + 独立验证证据 + 明确责任归属 + 可回流生产反馈。</strong></p>
+</blockquote>
+<p>它不是“多写几份 Markdown”。制品的唯一价值，在于它能被下一步消费：</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>制品</th>
+<th>解决的决策</th>
+<th>必须被谁消费</th>
+<th>无法消费时的判断</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Intent</td>
+<td>为什么做、谁受益、什么不做</td>
+<td>产品/业务 Owner、设计 Agent</td>
+<td>只是需求文书</td>
+</tr>
+<tr class="even">
+<td>Spec</td>
+<td>约束、接口、非功能要求与待决问题</td>
+<td>技术 Owner、实现 Agent</td>
+<td>只是格式化 PRD</td>
+</tr>
+<tr class="odd">
+<td>Plan</td>
+<td>改哪些文件、怎么改、如何证明</td>
+<td>实现者、审查者</td>
+<td>只是任务拆分记录</td>
+</tr>
+<tr class="even">
+<td>Diff + Test Evidence</td>
+<td>实现是否满足约束</td>
+<td>CI、验证 Agent、Reviewer</td>
+<td>只是代码堆积</td>
+</tr>
+<tr class="odd">
+<td>Review / Release Record</td>
+<td>剩余风险谁接受</td>
+<td>Code Owner、Release Owner</td>
+<td>只是签字痕迹</td>
+</tr>
+<tr class="even">
+<td>Production Trace / Incident</td>
+<td>真实结果与失败模式</td>
+<td>Eval、Skill、规则维护者</td>
+<td>只是事故档案</td>
+</tr>
+</tbody>
+</table>
+<h3 id="第三层真正稀缺的是压缩不确定性的能力">4.3 第三层：真正稀缺的是“压缩不确定性的能力”</h3>
+<p>AI Native 组织的竞争力不取决于谁有更多生成能力，而取决于谁能以更低的人类注意力成本，将不确定性持续压缩为可信决策。</p>
+<p>可以把能力演进分为四层：</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>阶段</th>
+<th>稀缺物</th>
+<th>核心能力</th>
+<th>典型失败</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>手工编码</td>
+<td>实现能力</td>
+<td>研发人力和协作</td>
+<td>需求排队、开发慢</td>
+</tr>
+<tr class="even">
+<td>AI 辅助编码</td>
+<td>局部人机协同</td>
+<td>Prompt、IDE、局部自动化</td>
+<td>个人提效，组织无感</td>
+</tr>
+<tr class="odd">
+<td>AI Native 交付</td>
+<td>可信变更能力</td>
+<td>制品、验证、治理、闭环</td>
+<td>代码暴增，审查与事故也暴增</td>
+</tr>
+<tr class="even">
+<td>自学习工程系统</td>
+<td>组织学习速度</td>
+<td>生产反馈→Eval/Skill/策略</td>
+<td>问题反复出现，经验不复利</td>
+</tr>
+</tbody>
+</table>
+<h3 id="类比机场而不是更快的飞机">4.4 类比：机场，而不是更快的飞机</h3>
+<p>Agent 是更快的飞机。机场吞吐却取决于空管、跑道、安检、调度、登机口和异常处置。</p>
+<p>如果只增加飞机数量，得到的是更长的滑行队列和更高的事故概率。AI Native SDLC 的任务，是把整个机场重建为能够安全处理更高流量的系统。</p>
+<hr />
+</section><section id="context" class="section-card"><div class="section-kicker">06 · Context & Harness</div><h2 id="核心框架一context-与-harness-是工程能力转换器">5. 核心框架一：Context 与 Harness 是工程能力转换器</h2>
+<h3 id="context-engineering不是塞更多信息而是在正确时机提供高信号信息">5.1 Context Engineering：不是塞更多信息，而是在正确时机提供高信号信息</h3>
+<p>一个生产级 Agent 的上下文通常包括：</p>
+<ul>
+<li>需求与验收条件；</li>
+<li>代码库、架构边界与历史决策；</li>
+<li>领域规则、安全和合规策略；</li>
+<li>工具、API、MCP 服务与工具使用语义；</li>
+<li>会话状态、长期记忆和检索知识；</li>
+<li>可运行的构建、测试、截图、检查命令；</li>
+<li>任务拆分、角色分工和审批状态。</li>
+</ul>
+<p>上下文工程的目标不是“信息越多越好”，而是同时解决四个问题：<strong>正确性、相关性、可审计性、最小暴露面</strong>。</p>
+<table>
+<thead>
+<tr class="header">
+<th>上下文问题</th>
+<th>结果</th>
+<th>治理动作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>不足</td>
+<td>Agent 猜测、重复犯错</td>
+<td>建立规则文件、知识索引、任务模板</td>
+</tr>
+<tr class="even">
+<td>过载</td>
+<td>噪声、成本、注意力稀释</td>
+<td>分层加载、任务化检索、过期治理</td>
+</tr>
+<tr class="odd">
+<td>不可追溯</td>
+<td>无法解释决策来源</td>
+<td>记录版本、来源、调用轨迹</td>
+</tr>
+<tr class="even">
+<td>包含敏感数据</td>
+<td>数据泄漏与越权</td>
+<td>最小权限、脱敏、环境隔离、短期凭据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="harness-engineering模型之外的执行系统">5.2 Harness Engineering：模型之外的执行系统</h3>
+<p>Harness 是把模型能力转化为稳定工程结果的环境。至少包含六层：</p>
+<table>
+<thead>
+<tr class="header">
+<th>层</th>
+<th>关键能力</th>
+<th>失效后果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>任务层</td>
+<td>Intent、Spec、Plan、验收条件</td>
+<td>Agent 做错问题</td>
+</tr>
+<tr class="even">
+<td>知识层</td>
+<td>规则、架构、示例、检索</td>
+<td>Agent 依据错误/不完整</td>
+</tr>
+<tr class="odd">
+<td>工具层</td>
+<td>MCP/API/命令语义、幂等性</td>
+<td>Agent 调错工具或重复操作</td>
+</tr>
+<tr class="even">
+<td>执行层</td>
+<td>Runtime、状态持久化、Sandbox</td>
+<td>任务中断、环境污染、越权</td>
+</tr>
+<tr class="odd">
+<td>控制层</td>
+<td>权限、Hooks、审批、CI</td>
+<td>不可接受的动作发生</td>
+</tr>
+<tr class="even">
+<td>学习层</td>
+<td>Trace、Evals、反馈、度量</td>
+<td>同类失败不断重演</td>
+</tr>
+</tbody>
+</table>
+<p><strong>判断</strong>：同一模型在 Demo 中表现优异、在企业生产中不稳定，常常不是“模型变笨”，而是 Harness 没有给它地图、护栏和仪表盘。</p>
+<hr />
+</section><section id="governance" class="section-card"><div class="section-kicker">07 · 治理与责任</div><h2 id="核心框架二skillshooks-与人类责任的三层治理">6. 核心框架二：Skills、Hooks 与人类责任的三层治理</h2>
+<h3 id="skills-与-hooks建议性控制和确定性控制不能混淆">6.1 Skills 与 Hooks：建议性控制和确定性控制不能混淆</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>控制类型</th>
+<th>适用内容</th>
+<th>实现例子</th>
+<th>失败代价</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Context / Prompt</td>
+<td>临时任务偏好、写作风格</td>
+<td>“优先复用现有模块”</td>
+<td>一般可纠正</td>
+</tr>
+<tr class="even">
+<td>Skill</td>
+<td>必须一致应用的流程知识</td>
+<td>API 评审、安全检查、测试规范</td>
+<td>应显著降低违例概率</td>
+</tr>
+<tr class="odd">
+<td>Hook / Policy / CI</td>
+<td>绝不可违反的规则</td>
+<td>禁读密钥、禁止改受保护目录、生产授权</td>
+<td>必须技术上阻断</td>
+</tr>
+<tr class="even">
+<td>Human Gate</td>
+<td>价值判断、风险接受、例外授权</td>
+<td>架构取舍、核心业务发布</td>
+<td>必须由命名责任人承担</td>
+</tr>
+</tbody>
+</table>
+<p>一句话：<strong>可建议的事交给 Skill；必须成立的事交给系统；无法形式化的权衡留给人。</strong></p>
+<h3 id="delegate-review-own从human-in-the-loop到责任可审计">6.2 Delegate / Review / Own：从“Human in the Loop”到责任可审计</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>责任关系</th>
+<th>典型任务</th>
+<th>人类责任</th>
+<th>不可省略的证据</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Delegate</td>
+<td>代码初稿、测试初稿、资料检索、低风险修复</td>
+<td>定义边界和验收</td>
+<td>输入、工具轨迹、产物</td>
+</tr>
+<tr class="even">
+<td>Review</td>
+<td>方案、复杂变更、性能/安全分析</td>
+<td>复核完整性与异常</td>
+<td>风险清单、验证结果、评审意见</td>
+</tr>
+<tr class="odd">
+<td>Own</td>
+<td>产品意图、架构取舍、风险接受、生产授权</td>
+<td>最终决定与签署</td>
+<td>命名 Owner、审批与审计记录</td>
+</tr>
+</tbody>
+</table>
+<p>真正的变化不是“人退出回路”，而是<strong>人类注意力从逐行实施迁移到高杠杆判断与例外处置</strong>。</p>
+<h3 id="风险分层自治矩阵">6.3 风险分层自治矩阵</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>变更等级</th>
+<th>示例</th>
+<th>Agent 权限</th>
+<th>人类门禁</th>
+<th>退出条件</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>L0 探索</td>
+<td>原型、一次性脚本、内部试验</td>
+<td>高自主，可快速试错</td>
+<td>仅环境边界</td>
+<td>不进入生产资产</td>
+</tr>
+<tr class="even">
+<td>L1 低风险</td>
+<td>文档、测试补充、样式、低影响缺陷</td>
+<td>自动实现 + 自检 + PR</td>
+<td>Owner 合并</td>
+<td>测试/检查全绿</td>
+</tr>
+<tr class="odd">
+<td>L2 中风险</td>
+<td>普通业务功能、跨模块重构</td>
+<td>先 Plan 后执行，独立验证</td>
+<td>Plan + PR 审批</td>
+<td>Eval/CI/评审通过</td>
+</tr>
+<tr class="even">
+<td>L3 高风险</td>
+<td>身份、支付、数据、基础设施</td>
+<td>只读分析或受控执行</td>
+<td>架构/安全/发布三类授权</td>
+<td>明确回滚与审计完整</td>
+</tr>
+<tr class="odd">
+<td>L4 受监管/不可逆</td>
+<td>高敏数据、关键生产变更</td>
+<td>默认不可自治</td>
+<td>双人或变更委员会</td>
+<td>人工授权、预案验证</td>
+</tr>
+</tbody>
+</table>
+<p>自治等级不应由“模型有多强”单独决定，而应由<strong>风险、可逆性、验证强度、历史稳定性和审计要求</strong>共同决定。</p>
+<hr />
+</section><section id="validation" class="section-card"><div class="section-kicker">08 · 验证与 Evals</div><h2 id="核心框架三验证从阶段变成语言">7. 核心框架三：验证从阶段变成语言</h2>
+<h3 id="为什么测试要前移并独立">7.1 为什么测试要前移并独立</h3>
+<p>Agent 同时写实现与测试时，可能把同一个错误假设写进两边；更危险的是它可能通过弱化断言、删除失败测试或过度 Stub 来“制造通过”。</p>
+<p>生产级验证至少应分为三层：</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>层</th>
+<th>要验证什么</th>
+<th>方法</th>
+<th>责任</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>确定性约束</td>
+<td>权限、格式、编译、静态规则</td>
+<td>CI、Lint、Policy-as-Code</td>
+<td>平台自动执行</td>
+</tr>
+<tr class="even">
+<td>任务正确性</td>
+<td>功能、边界条件、体验、性能</td>
+<td>单测/集成测试/截图/回放</td>
+<td>实现 + 独立验证</td>
+</tr>
+<tr class="odd">
+<td>业务有效性</td>
+<td>是否解决真实用户问题</td>
+<td>业务指标、用户反馈、灰度实验</td>
+<td>产品/业务 Owner</td>
+</tr>
+</tbody>
+</table>
+<p>三层不能相互替代。CI 全绿不代表业务正确；用户满意也不能成为绕过安全门禁的理由。</p>
+<h3 id="evals-是-agent-时代的回归资产">7.2 Evals 是 Agent 时代的回归资产</h3>
+<p>对于 Agent 产品或 Agent 配置（Prompt、Skill、Tool、Model、Context），需要把“这次看起来不错”变为“版本变化后仍可比较”。</p>
+<p>初始 Eval 集不必完美，可从 20—50 个真实任务开始；关键是形成制度：</p>
+<ol type="1">
+<li>每次模型、Prompt、Skill、Tool 或策略变化都跑回归；</li>
+<li>每次线上事故、用户纠正或高价值失败都进入样本集；</li>
+<li>每个 Eval 都应有明确评分：事实正确、策略遵循、工具选择、效率、人工接管等；</li>
+<li>观察 Eval 通过率，更要观察生产失败进入 Eval 的时滞。</li>
+</ol>
+<blockquote>
+<p>最有价值的 Eval，不是实验室中最漂亮的样本，而是生产中最难、最贵、最容易重复的失败。</p>
+</blockquote>
+<h3 id="traceagent-可观测性的基础单位">7.3 Trace：Agent 可观测性的基础单位</h3>
+<p>传统监控常回答“服务是否 200、延迟是否异常”。Agent 的任务可能技术上成功却业务上失败，因此还必须回答：</p>
+<ul>
+<li>它读了什么上下文？</li>
+<li>调了什么工具？为什么调？</li>
+<li>是否跳过审批、走错路径、使用了不可靠来源？</li>
+<li>用户是否纠正了它？花了多少步和成本才完成？</li>
+</ul>
+<p>一个可用 Trace 至少应关联：输入、上下文版本、模型/配置、工具调用序列、输出、审批、用户反馈、任务结果与成本。</p>
+<hr />
+</section><section id="antipattern" class="section-card"><div class="section-kicker">09 · 反模式</div><h2 id="反模式最容易把-ai-native-做成更快的混乱的六种方式">8. 反模式：最容易把 AI Native 做成“更快的混乱”的六种方式</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>反模式</th>
+<th>表面现象</th>
+<th>深层问题</th>
+<th>纠偏动作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>只买 Coding Agent</td>
+<td>代码量与 PR 数上升</td>
+<td>验证、审查与发布未升级</td>
+<td>先补验证证据和门禁</td>
+</tr>
+<tr class="even">
+<td>制品仪式化</td>
+<td>多了 intent/spec/plan</td>
+<td>制品不被下一步消费</td>
+<td>每份制品绑定决策、Owner、自动动作</td>
+</tr>
+<tr class="odd">
+<td>用 Prompt 管安全</td>
+<td>“请不要读密钥”</td>
+<td>建议性规则无法保证</td>
+<td>权限、Sandbox、Hook、短期凭据</td>
+</tr>
+<tr class="even">
+<td>多 Agent 盲目并发</td>
+<td>WIP 与产出都变多</td>
+<td>合并冲突与审查队列爆炸</td>
+<td>按依赖拆分，WIP 上限，独立 Worktree</td>
+</tr>
+<tr class="odd">
+<td>把 Eval 当业务真相</td>
+<td>通过率很高</td>
+<td>对固定样本过拟合</td>
+<td>加入真实反馈与业务指标</td>
+</tr>
+<tr class="even">
+<td>把 Token 当唯一成本</td>
+<td>单次调用很便宜</td>
+<td>人审、返工、事故、维护成本被隐藏</td>
+<td>衡量每个接受变更的综合成本</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section><section id="kuaishou" class="section-card"><div class="section-kicker">10 · 某公司映射</div><h2 id="对某公司-ai-生产力中心的战略映射">9. 对某公司 AI 生产力中心的战略映射</h2>
+<h3 id="不是新增一条产品线而是把现有能力收敛成一个操作系统">9.1 不是新增一条产品线，而是把现有能力收敛成一个操作系统</h3>
+<p>结合当前已知产品与组织分工，可形成如下映射：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>可信变更工厂层</th>
+<th>某公司可承接能力</th>
+<th>需要补齐/强化的关键点</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>意图与任务入口</td>
+<td>AI洞察 Work、Agent平台 Mind</td>
+<td>意图模板、风险分级、业务 Owner 签署</td>
+</tr>
+<tr class="even">
+<td>方案与编排</td>
+<td>Agent平台 Flow、AI洞察 Code</td>
+<td>Plan 制品、依赖图、跨 Agent 协同边界</td>
+</tr>
+<tr class="odd">
+<td>执行与工具</td>
+<td>AI洞察 Code、30+研发 Agent、MCP/Skills</td>
+<td>工具语义、幂等性、最小权限、环境隔离</td>
+</tr>
+<tr class="even">
+<td>运行时与安全</td>
+<td>AgentOS Runtime、Gateway+安全</td>
+<td>管理态 Hook、生产策略、身份与审计统一</td>
+</tr>
+<tr class="odd">
+<td>验证与评测</td>
+<td>Agent 评测、Agent平台 测试域能力</td>
+<td>真实任务 Eval、独立验证 Agent、配置回归</td>
+</tr>
+<tr class="even">
+<td>观测与学习</td>
+<td>Agent 观测、AI 度量、效能 Data Agent</td>
+<td>Trace 标准、人工纠正采集、失败→Eval 自动化</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键判断</strong>：这些能力若分别作为产品卖点，会形成碎片；若围绕“可信变更”统一制品、策略、Trace 与度量，才会形成系统护城河。</p>
+<h3 id="建议的北极星可信变更吞吐量而非-ai-代码量">9.2 建议的北极星：可信变更吞吐量，而非 AI 代码量</h3>
+<p>建议为 AI x 研发效能建立一个组合北极星，而不是单一指标：</p>
+<blockquote>
+<p><strong>Trusted Change Throughput（TCT）</strong>：在既定风险等级下，单位时间内完成“验证充分、审计完整、生产稳定”的变更数量。</p>
+</blockquote>
+<p>需要配套四组护栏：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>维度</th>
+<th>主指标</th>
+<th>护栏指标</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>流动效率</td>
+<td>Intent→生产验证时长</td>
+<td>WIP、审查等待、部署等待</td>
+</tr>
+<tr class="even">
+<td>质量可靠</td>
+<td>首次 CI/Eval 通过率</td>
+<td>返工轮次、缺陷逃逸、变更失败率、MTTR</td>
+</tr>
+<tr class="odd">
+<td>Agent 质量</td>
+<td>任务完成率、工具正确率</td>
+<td>人工纠正率、无效循环、上下文/工具失败</td>
+</tr>
+<tr class="even">
+<td>治理与成本</td>
+<td>每个接受变更的综合成本</td>
+<td>越权拦截、审计完整率、例外率、Token 成本</td>
+</tr>
+</tbody>
+</table>
+<p><strong>反向校验</strong>：若 AI 代码贡献率上升，而 Intent→生产时长、返工率、缺陷逃逸或人工审查时间没有改善，则不能宣布组织级提效。</p>
+<h3 id="对-l1l4-研发成熟度的重新解释">9.3 对 L1—L4 研发成熟度的重新解释</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>成熟度</th>
+<th>不应只定义为</th>
+<th>更应定义为</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>L1 AI Coding</td>
+<td>是否使用代码补全</td>
+<td>Agent 能否在局部任务完成受控生成</td>
+</tr>
+<tr class="even">
+<td>L2 AI 辅助开发</td>
+<td>AI 参与了多少环节</td>
+<td>是否具备 Plan、可运行验证与人工 Review</td>
+</tr>
+<tr class="odd">
+<td>L3 AI 协同开发</td>
+<td>多 Agent 是否协作</td>
+<td>是否存在共享制品、独立验证、风险分层自治</td>
+</tr>
+<tr class="even">
+<td>L4 AI 自主开发</td>
+<td>Agent 是否能端到端跑</td>
+<td>是否在限定风险域内形成可审计、可回滚、自学习闭环</td>
+</tr>
+</tbody>
+</table>
+<p>这一定义能避免把“更高的自治”误解为“更少的人”。L4 的前提是更强的约束、观测和责任系统。</p>
+<hr />
+</section><section id="roadmap" class="section-card"><div class="section-kicker">11 · 90 天路线图</div><h2 id="推荐落地路线90-天打穿一个最小闭环">10. 推荐落地路线：90 天打穿一个最小闭环</h2>
+<h3 id="原则先选价值流不先选平台功能">原则：先选价值流，不先选平台功能</h3>
+<p>选择一个高频、低—中风险、可度量、可回滚的真实场景，例如：测试补充、低风险缺陷修复、依赖治理、内部工具小功能或文档与代码一致性修复。不要一开始挑支付、身份、核心数据链路。</p>
+<h3 id="第-030-天建立可验证的-agent-工作单元">10.1 第 0—30 天：建立“可验证的 Agent 工作单元”</h3>
+<p><strong>目标</strong>：任何 Agent 任务都能说明目标、边界、运行过什么检查、产出什么证据。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>动作</th>
+<th>交付物</th>
+<th>验收标准</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>选定试点价值流和风险等级</td>
+<td>场景清单 + L1/L2 边界</td>
+<td>明确不允许 Agent 做什么</td>
+</tr>
+<tr class="even">
+<td>建立最小任务模板</td>
+<td>intent / acceptance / owner</td>
+<td>需求、约束、验收、Owner 均非空</td>
+</tr>
+<tr class="odd">
+<td>统一一键验证命令</td>
+<td>build/test/lint/关键检查</td>
+<td>本地与 CI 均可执行、失败非零退出</td>
+</tr>
+<tr class="even">
+<td>建立轻量规则文件</td>
+<td>项目上下文、架构、常见错误</td>
+<td>只留高信号内容，有 Owner 和版本</td>
+</tr>
+<tr class="odd">
+<td>开启基础 Trace</td>
+<td>任务输入、工具、结果、人工修正</td>
+<td>可回放 80% 以上试点任务</td>
+</tr>
+</tbody>
+</table>
+<p><strong>本阶段不追求</strong>：全自动发布、多 Agent 编排、复杂知识库。</p>
+<h3 id="第-3160-天形成制品链与确定性边界">10.2 第 31—60 天：形成制品链与确定性边界</h3>
+<p><strong>目标</strong>：Agent 在代码前提交计划，在人类前提交验证证据；不可违反的规则不可绕过。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>动作</th>
+<th>交付物</th>
+<th>验收标准</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>引入 Intent→Plan→Diff→Evidence 链</td>
+<td>制品模板与关联 ID</td>
+<td>审查可追溯意图、计划与验证</td>
+</tr>
+<tr class="even">
+<td>把重复规则写成 Skills</td>
+<td>3—5 个高频 Skill</td>
+<td>触发覆盖率、违例率可观测</td>
+</tr>
+<tr class="odd">
+<td>把红线写成 Hooks/Policy</td>
+<td>密钥、受保护路径、生产命令</td>
+<td>可复现拦截，不能靠 Prompt 绕过</td>
+</tr>
+<tr class="even">
+<td>引入独立验证</td>
+<td>Verifier Agent 或独立会话</td>
+<td>不与实现者共享关键假设</td>
+</tr>
+<tr class="odd">
+<td>设置风险自治矩阵</td>
+<td>L0—L3 操作权限表</td>
+<td>每类操作有明确 Owner 和出口</td>
+</tr>
+</tbody>
+</table>
+<h3 id="第-6190-天建立-eval-与反馈回流">10.3 第 61—90 天：建立 Eval 与反馈回流</h3>
+<p><strong>目标</strong>：将真实失败变成永久资产，并据此决定是否扩大自治。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>动作</th>
+<th>交付物</th>
+<th>验收标准</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>建立初始真实任务 Eval 集</td>
+<td>20—50 个案例 + 评分</td>
+<td>配置变更可回归比较</td>
+</tr>
+<tr class="even">
+<td>事故/人工纠正回灌</td>
+<td>失败→Eval/Skill/Hook 流程</td>
+<td>高价值失败 7 天内入库</td>
+</tr>
+<tr class="odd">
+<td>建立试点仪表盘</td>
+<td>四维指标看板</td>
+<td>可按风险、团队、任务类型切片</td>
+</tr>
+<tr class="even">
+<td>复盘自治扩大条件</td>
+<td>L1→L2/L2→L3 准入标准</td>
+<td>不是靠主观感觉升级</td>
+</tr>
+</tbody>
+</table>
+<h3 id="自治升级的准入条件建议">10.4 自治升级的准入条件（建议）</h3>
+<p>从 L1 升到 L2，至少连续四周满足：</p>
+<ul>
+<li>关键任务首次验证通过率达到团队基线以上；</li>
+<li>无 P0/P1 越权事故；</li>
+<li>任务 Trace 与证据完整率 ≥ 95%；</li>
+<li>人工返工率不高于人工实现基线；</li>
+<li>关键失败均有 Owner 与回灌动作。</li>
+</ul>
+<p>具体阈值需以试点团队基线校准，不能照搬行业数字。</p>
+<hr />
+</section><section id="questions" class="section-card"><div class="section-kicker">12 · 关键决策</div><h2 id="组织与产品决策现在必须回答的五个问题">11. 组织与产品决策：现在必须回答的五个问题</h2>
+<ol type="1">
+<li><strong>可信变更的唯一 ID 和唯一事实源是什么？</strong> 需求系统、代码仓、评测平台与 Agent Trace 如何联通？</li>
+<li><strong>哪些规则是建议、哪些规则必须阻断？</strong> 谁拥有规则，谁批准例外，规则如何随业务变化更新？</li>
+<li><strong>谁对 Agent 产物承担最终责任？</strong> 必须从“某团队在看”落实到命名 Owner 与授权范围。</li>
+<li><strong>生产失败如何成为下一次能力增量？</strong> 从失败发现到进入 Eval、Skill 或 Hook 的时滞是多少？</li>
+<li><strong>扩张 Agent 并发前，验证与审查能力是否已扩张？</strong> 没有，就先别扩张生成侧。</li>
+</ol>
+<hr />
+</section><section id="outlook" class="section-card"><div class="section-kicker">13 · 趋势判断</div><h2 id="最终判断与趋势推演">12. 最终判断与趋势推演</h2>
+<h3 id="未来-1224-个月的竞争焦点">12.1 未来 12—24 个月的竞争焦点</h3>
+<table>
+<thead>
+<tr class="header">
+<th>演进</th>
+<th>已经发生</th>
+<th>下一步竞争</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>生成</td>
+<td>代码、测试、文档初稿成本下降</td>
+<td>生成质量将快速趋同</td>
+</tr>
+<tr class="even">
+<td>验证</td>
+<td>CI、静态检查、评测开始自动化</td>
+<td>验证吞吐量与证据质量</td>
+</tr>
+<tr class="odd">
+<td>编排</td>
+<td>多 Agent、工作流、任务分解成熟</td>
+<td>人类注意力如何只投入例外</td>
+</tr>
+<tr class="even">
+<td>学习</td>
+<td>Trace、反馈、Eval 回灌兴起</td>
+<td>失败能否持续变成组织资产</td>
+</tr>
+</tbody>
+</table>
+<h3 id="结论">12.2 结论</h3>
+<p>AI Native SDLC 不是“让 Agent 替人写软件”，而是建立一种新的工业能力：</p>
+<ul>
+<li>每个变更有明确意图；</li>
+<li>Agent 在边界内执行；</li>
+<li>系统提供可验证证据；</li>
+<li>人类拥有不可委托的判断与风险；</li>
+<li>每次生产结果都能反馈为下一次交付的能力增量。</li>
+</ul>
+<p>当实现变得便宜，组织最昂贵的资产不再是代码，而是对<strong>正确方向、正确边界与正确结果</strong>的判断能力。</p>
+<hr />
+</section><section id="section-14" class="section-card"><div class="section-kicker">14 · 章节 14</div><h2 id="附录-a核心术语">附录 A：核心术语</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>术语</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AI Native SDLC</td>
+<td>将意图、知识、验证、治理与反馈重构为 Agent 可读取、可执行、可验证、可审计的研发系统</td>
+</tr>
+<tr class="even">
+<td>可信变更</td>
+<td>带有意图、约束、实现、验证、责任和反馈的最小交付单元</td>
+</tr>
+<tr class="odd">
+<td>Context Engineering</td>
+<td>在正确时机提供完成任务所需高信号上下文，并管理其版本、权限和生命周期</td>
+</tr>
+<tr class="even">
+<td>Harness Engineering</td>
+<td>模型外的工具、权限、沙箱、工作流、观测、评测与治理环境</td>
+</tr>
+<tr class="odd">
+<td>Skill</td>
+<td>使组织知识在执行时被一致应用的建议性控制</td>
+</tr>
+<tr class="even">
+<td>Hook</td>
+<td>在工具调用或关键动作发生时允许、阻断或请求审批的确定性控制</td>
+</tr>
+<tr class="odd">
+<td>Eval</td>
+<td>用于比较 Agent/配置版本任务表现的可重复评估样本与评分机制</td>
+</tr>
+<tr class="even">
+<td>Trace</td>
+<td>一次 Agent 任务从输入、上下文、模型、工具调用到输出与反馈的完整轨迹</td>
+</tr>
+</tbody>
+</table>
+</section><section id="section-15" class="section-card"><div class="section-kicker">15 · 章节 15</div><h2 id="附录-b参考资料">附录 B：参考资料</h2>
+<ol type="1">
+<li>邵孟，《AI Native SDLC 如何重构软件开发：Google、OpenAI、Anthropic 与 LangChain 四份报告深度解读》，2026。<br />
+</li>
+<li>Anthropic, <em>The AI-Native SDLC Playbook</em>, 2026。<br />
+</li>
+<li>LangChain, <em>The Agent Development Lifecycle</em>, 2026。<br />
+</li>
+<li>Google, <em>The New SDLC with Vibe Coding: From Ad-hoc Prompting to Agentic Engineering</em>（本次以二手转述参考）。<br />
+</li>
+<li>OpenAI, <em>Building an AI-Native Engineering Team</em>（本次以二手转述参考）。</li>
+</ol>
+<blockquote>
+<p><strong>事实边界说明</strong>：Google 与 OpenAI 两份原始材料在本次调研环境中无法直接访问，故只作为方向性二手材料使用；涉及其具体表述、数据与案例时，不应视作已完成一手核验。本文的某公司映射及趋势推演均为分析建议，需在试点中以自身基线验证。</p>
+</blockquote>
+</section>
+</div><aside class="side"><h3>读前判断</h3><p>不要把这份报告读成“更多 Agent 的采购建议”。它讨论的是：生成变快之后，组织如何不失控。</p><h3>建议优先读</h3><ul><li>第 4 节：可信变更的本质</li><li>第 6 节：治理与责任边界</li><li>第 9 节：某公司能力映射</li><li>第 10 节：90 天路线图</li></ul><h3>事实边界</h3><p>Anthropic、LangChain 为直接获取的一手材料；Google、OpenAI 原文当前无法直取，均已降级为二手转述。</p></aside></div>
+<footer class="footer">AI洞察 · 深度调研 · 以“可信变更”而非“代码量”衡量 AI Native 研发转型</footer>
+</div>
+<script>document.querySelectorAll('.toc a').forEach(a=>a.addEventListener('click',()=>{document.querySelectorAll('.toc a').forEach(x=>x.style.background='');a.style.background='#eff6ff'}));</script>
+</body></html>
