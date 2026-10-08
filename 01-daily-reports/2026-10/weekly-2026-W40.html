@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 周报 2026-W28 (07/07-07/12) | AI洞察</title>
-<meta name="description" content="本周AI行业迎来密集发布：GPT-5.6（Sol/Terra/Luna）正式上线，Terminal-Bench 2.1达88.8%且成为Microsoft 365 Copilot首选模型；Grok 4.5同步发布，Token效率4.2倍提升；Claude Fable 5以80.4% SWE-bench Pro继续领跑编码。中国AI大模型调用量连续10周全球第一（23.45万亿Token），WAIC 2026（7/17-20）进入倒计时5天，预计300+全球首发。国内AI监管进入微观规制时代：《拟人化互动服务管理暂行办法》7月15日正式施行，豆包/通义关停用户自建拟人化Agent。">
-<meta property="og:title" content="AI 周报 2026-W28 | AI洞察">
-<meta property="og:description" content="本周AI行业迎来密集发布：GPT-5.6（Sol/Terra/Luna）正式上线，Terminal-Bench 2.1达88.8%且成为Microsoft 365 Copilot首选模型；Grok 4.5同步发布，Token效率4.2倍提升；Claude Fable 5以80.4% SWE-bench Pro继续领跑编码。中国AI大模型调用量连续10周全球第一（23.45万亿Token），WAIC 2026（7/17-20）进入倒计时5天，预计300+全球首发。国内AI监管进入微观规制时代：《拟人化互动服务管理暂行办法》7月15日正式施行，豆包/通义关停用户自建拟人化Agent。">
+<title>AI 周报 2026-W40 (09/28-10/04) | AI洞察</title>
+<meta name="description" content="2026年第40周 AI行业洞察周报（2026-09-28 至 2026-10-04）">
+<meta property="og:title" content="AI 周报 2026-W40 | AI洞察">
+<meta property="og:description" content="2026年第40周 AI行业洞察周报（2026-09-28 至 2026-10-04）">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232563EB'/%3E%3Ctext x='6' y='23' font-size='18' fill='white'%3E⚡%3C/text%3E%3C/svg%3E">
@@ -15,1685 +15,26 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <noscript></noscript>
 <style>
-/**
- * 清爽调研报告风格 - 基础样式表
- * 版本: 3.0.0
- * 更新: 2026-03-06
- * 
- * 专业调研报告设计系统
- * 包含完整的CSS变量、组件样式、响应式布局
- * 默认包含：多色调色板、Mesh Gradient背景、毛玻璃导航、色彩发光阴影
- */
-
-/* ==================== CSS 变量定义 ==================== */
+/* AI洞察内置调研报告基础样式：自有实现，随技能发布 */
 :root {
-    /* ============ 主色调（语义化） ============ */
-    --color-success: #059669;           /* Emerald：核心/正向/成功 */
-    --color-success-light: #10B981;     /* Emerald 亮色 */
-    --color-danger: #E11D48;            /* Rose：警告/风险/关键 */
-    --color-danger-light: #F43F5E;      /* Rose 亮色 */
-    --color-warning: #D97706;           /* Amber：类比/提示/辅助 */
-    --color-warning-light: #F59E0B;     /* Amber 亮色 */
-    --color-info: #2563EB;              /* Blue：信息/技术/链接 */
-    --color-info-light: #3B82F6;        /* Blue 亮色 */
-    --color-purple: #7C3AED;            /* Violet：洞察/元认知/高级 */
-    --color-purple-light: #8B5CF6;      /* Violet 亮色 */
-    
-    /* ============ 中性色（高对比度）============ */
-    --color-text-primary: #1C1917;
-    --color-text-secondary: #57534E;
-    --color-text-muted: #78716C;
-    --color-border: #E7E5E4;
-    --color-border-light: #F5F5F4;
-    --color-bg: #F8FAFB;
-    --color-bg-card: #FFFFFF;
-    --color-bg-table-header: #FAFAF9;
-    
-    /* ============ 渐变色 ============ */
-    --gradient-success: linear-gradient(135deg, #059669 0%, #10B981 100%);
-    --gradient-hero: linear-gradient(135deg, #059669 0%, #2563EB 50%, #7C3AED 100%);
-    --gradient-badge: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 100%);
-    --gradient-highlight: linear-gradient(135deg, rgba(5,150,105,0.08) 0%, rgba(5,150,105,0.03) 100%);
-    --gradient-mesh: 
-        radial-gradient(at 20% 20%, rgba(5,150,105,0.08) 0%, transparent 50%),
-        radial-gradient(at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 50%);
-    
-    /* ============ 阴影层级 ============ */
-    --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.04);
-    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
-    --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.03);
-    --shadow-glow-success: 0 4px 14px rgba(5,150,105,0.15);
-    --shadow-glow-info: 0 4px 14px rgba(37,99,235,0.15);
-    --shadow-glow-purple: 0 4px 14px rgba(124,58,237,0.15);
-    --shadow-hover: 0 6px 16px rgba(5,150,105,0.15), 0 2px 6px rgba(5,150,105,0.1);
-    
-    /* ============ 间距系统（8px基准） ============ */
-    --spacing-xs: 4px;      /* 最小间距 */
-    --spacing-sm: 8px;      /* 小间距 */
-    --spacing-md: 16px;     /* 中等间距 */
-    --spacing-lg: 24px;     /* 大间距 */
-    --spacing-xl: 32px;     /* 特大间距 */
-    --spacing-2xl: 40px;    /* 章节间距 */
-    --spacing-3xl: 48px;    /* 页脚间距 */
-    
-    /* ============ 圆角系统 ============ */
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 20px;
-    --radius-2xl: 24px;
-    --radius-full: 9999px;
-    
-    /* ============ 字体系统 ============ */
-    --font-family: -apple-system, "SF Pro Display", "system-ui", "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif;
-    --font-mono: "SF Mono", "Fira Code", "Cascadia Code", "JetBrains Mono", monospace;
-    
-    /* ============ 字体层级体系（核心！） ============ */
-    /* 标题类 - 4级递减 */
-    --heading-1: 28px;      /* H1: 报告主标题 */
-    --heading-2: 18px;      /* H2: 章节标题 */
-    --heading-3: 15px;      /* H3: 子章节/卡片标题 */
-    --heading-4: 13px;      /* H4: 小节标题/表头/洞察框标题 */
-    
-    /* 正文类 */
-    --body-text: 14px;      /* 正文: 段落、描述、列表 */
-    --body-small: 13px;     /* 表格内容 */
-    --caption: 12px;        /* 辅助文字: 来源、标签、备注 */
-    
-    /* 兼容旧变量 */
-    --font-size-xs: var(--caption);
-    --font-size-sm: var(--body-small);
-    --font-size-base: var(--body-text);
-    --font-size-md: var(--heading-3);
-    --font-size-lg: var(--heading-2);
-    --font-size-xl: 20px;
-    --font-size-2xl: 24px;
-    --font-size-3xl: var(--heading-1);
-    
-    /* ============ 动画系统 ============ */
-    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ==================== 基础重置 ==================== */
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    font-size: 16px;
-    -webkit-text-size-adjust: 100%;
-}
-
-body {
-    font-family: var(--font-family);
-    font-size: var(--body-text);
-    line-height: 1.65;
-    color: var(--color-text-primary);
-    background: var(--color-bg);
-    background-image: var(--gradient-mesh);
-    background-attachment: fixed;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-}
-
-/* ==================== 容器布局 ==================== */
-.container {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: var(--spacing-lg) var(--spacing-md) 48px;
-}
-
-/* ==================== 头部区域 ==================== */
-.header {
-    text-align: center;
-    padding: var(--spacing-2xl) 0;
-    margin-bottom: var(--spacing-2xl);
-    position: relative;
-    overflow: hidden;
-}
-
-/* 顶部3px渐变指示条 */
-.header::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--gradient-hero);
-}
-
-.badge, .header-badge {
-    display: inline-flex;
-    align-items: center;
-    background: var(--gradient-badge);
-    color: var(--color-info);
-    padding: var(--spacing-xs) 12px;
-    border-radius: var(--radius-full);
-    font-size: var(--caption);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    margin-bottom: 20px;
-    border: 1px solid rgba(9, 105, 218, 0.15);
-}
-
-.main-title, .header-title {
-    font-size: 34px;
-    font-weight: 800;
-    line-height: 1.3;
-    margin-bottom: 12px;
-    letter-spacing: -0.02em;
-    background: var(--gradient-hero);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.subtitle, .header-subtitle {
-    font-size: var(--body-text);
-    color: var(--color-text-secondary);
-    max-width: 580px;
-    margin: 0 auto;
-    line-height: 1.6;
-}
-
-/* ==================== 核心发现区域 ==================== */
-.summary-box {
-    background: var(--color-bg-card);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-2xl);
-    position: relative;
-    overflow: hidden;
-    border-left: 4px solid var(--color-danger);
-}
-
-.summary-label {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    font-size: var(--caption);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-danger);
-    margin-bottom: 12px;
-}
-
-.summary-label::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    background: var(--color-danger);
-    border-radius: 50%;
-    box-shadow: 0 0 0 3px rgba(207, 34, 46, 0.15);
-}
-
-.summary-title {
-    font-size: var(--heading-2);
-    font-weight: 600;
-    line-height: 1.4;
-    margin-bottom: 12px;
-    color: var(--color-text-primary);
-}
-
-.summary-title em {
-    color: var(--color-danger);
-    font-style: normal;
-    font-weight: 600;
-}
-
-.summary-text {
-    color: var(--color-text-secondary);
-    font-size: var(--body-text);
-    line-height: 1.7;
-}
-
-/* ==================== Tab导航 ==================== */
-.tab-nav {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 4px;
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: 6px;
-    margin-bottom: var(--spacing-lg);
-    position: sticky;
-    top: 12px;
-    z-index: 100;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    box-shadow: var(--shadow-card);
-}
-
-.tab-btn {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 10px 12px;
-    background: transparent;
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    font-family: inherit;
-    font-size: var(--body-small);
-    font-weight: 500;
-    color: var(--color-text-muted);
-    transition: all var(--transition-fast);
-    white-space: nowrap;
-}
-
-.tab-btn:hover {
-    background: var(--color-bg-table-header);
-    color: var(--color-text-secondary);
-}
-
-.tab-btn.active {
-    background: var(--gradient-success);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
-}
-
-.tab-btn-num {
-    width: 22px;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.06);
-    border-radius: var(--radius-sm);
-    font-size: 11px;
-    font-weight: 600;
-}
-
-.tab-btn.active .tab-btn-num {
-    background: rgba(255,255,255,0.2);
-}
-
-.tab-btn-text {
-    display: none;
-}
-
-@media (min-width: 768px) {
-    .tab-btn-text {
-        display: inline;
-    }
-}
-
-.tab-panel {
-    display: none;
-    animation: fadeIn 0.3s ease-out;
-}
-
-.tab-panel.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ==================== 二级导航 ==================== */
-.sub-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 16px;
-    background: var(--color-bg-table-header);
-    border-radius: var(--radius-lg);
-    margin-bottom: 24px;
-    border: 1px solid var(--color-border-light);
-}
-
-.sub-nav-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    font-family: inherit;
-    font-size: var(--caption);
-    font-weight: 500;
-    color: var(--color-text-secondary);
-    transition: all var(--transition-fast);
-    white-space: nowrap;
-}
-
-.sub-nav-btn:hover {
-    background: var(--color-info);
-    color: #fff;
-    border-color: var(--color-info);
-    transform: translateY(-1px);
-}
-
-.sub-nav-btn .sub-nav-num {
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #0969da 0%, #1a7f37 100%);
-    color: #fff;
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: 600;
-}
-
-.sub-nav-btn:hover .sub-nav-num {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-@media (max-width: 768px) {
-    .sub-nav {
-        gap: 6px;
-        padding: 12px;
-    }
-    
-    .sub-nav-btn {
-        padding: 6px 10px;
-        font-size: 11px;
-    }
-    
-    .sub-nav-btn .sub-nav-num {
-        width: 16px;
-        height: 16px;
-        font-size: 9px;
-    }
-}
-
-/* ==================== 章节卡片 ==================== */
-.section, .section-card {
-    background: var(--color-bg-card);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
-    border: 1px solid var(--color-border);
-}
-
-.section-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-    padding-bottom: var(--spacing-md);
-    border-bottom: 1px solid var(--color-border-light);
-}
-
-.section-number {
-    background: var(--gradient-success);
-    color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: var(--radius-md);
-    font-size: 14px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.25);
-}
-
-.section-number-small {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    font-size: 14px;
-}
-
-.section-title {
-    font-size: var(--heading-2);
-    font-weight: 600;
-    color: var(--color-text-primary);
-    letter-spacing: -0.01em;
-}
-
-.section-content {
-    color: var(--color-text-secondary);
-    line-height: 1.7;
-}
-
-.section-content p {
-    margin-bottom: var(--spacing-md);
-}
-
-/* ==================== 统计卡片 ==================== */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-2xl);
-}
-
-@media (max-width: 768px) {
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-.stat-card {
-    background: var(--color-bg-card);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--color-border);
-    padding: 20px;
-    text-align: center;
-    position: relative;
-    cursor: help;
-    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
-}
-
-.stat-card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-3px);
-}
-
-.stat-card:hover .stat-tooltip {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
-
-.stat-value {
-    font-size: var(--font-size-2xl);
-    font-weight: 600;
-    margin-bottom: var(--spacing-xs);
-    letter-spacing: -0.02em;
-}
-
-.stat-value.success, .stat-value.green {
-    color: var(--color-success);
-}
-
-.stat-value.danger, .stat-value.red {
-    color: var(--color-danger);
-}
-
-.stat-value.warning, .stat-value.orange {
-    color: var(--color-warning);
-}
-
-.stat-value.info, .stat-value.blue {
-    color: var(--color-info);
-}
-
-.stat-label {
-    font-size: var(--caption);
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 500;
-}
-
-/* ==================== Tooltip ==================== */
-.stat-tooltip {
-    position: absolute;
-    bottom: calc(100% + 12px);
-    left: 50%;
-    transform: translateX(-50%) translateY(8px);
-    background: var(--color-text-primary);
-    color: #fff;
-    padding: 12px 16px;
-    border-radius: var(--radius-md);
-    font-size: 13px;
-    line-height: 1.5;
-    text-align: left;
-    width: 280px;
-    max-width: 90vw;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
-    z-index: 100;
-    pointer-events: none;
-}
-
-.stat-tooltip::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 8px solid transparent;
-    border-top-color: var(--color-text-primary);
-}
-
-.stat-tooltip-title {
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: #fff;
-}
-
-.stat-tooltip-desc {
-    color: rgba(255,255,255,0.85);
-    font-size: var(--caption);
-    line-height: 1.5;
-}
-
-/* 内容Tooltip */
-.has-tip {
-    position: relative;
-    cursor: help;
-    border-bottom: 1px dashed var(--color-info);
-}
-
-.tip-box {
-    position: fixed;
-    width: 320px;
-    max-width: 90vw;
-    max-height: 340px;
-    overflow-y: auto;
-    padding: var(--spacing-md);
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity var(--transition-fast), visibility var(--transition-fast);
-    z-index: 9999;
-    font-size: var(--body-text);
-    line-height: 1.7;
-}
-
-.has-tip:hover .tip-box {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.tip-title {
-    font-size: var(--heading-4);
-    font-weight: 600;
-    margin-bottom: var(--spacing-md);
-    padding-bottom: var(--spacing-sm);
-    border-bottom: 1px solid var(--color-border-light);
-    color: var(--color-text-primary);
-}
-
-.tip-section { margin-bottom: var(--spacing-md); }
-.tip-section:last-child { margin-bottom: 0; }
-
-.tip-label {
-    font-size: var(--caption);
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    color: var(--color-info);
-    margin-bottom: 4px;
-}
-
-.tip-text { 
-    color: var(--color-text-secondary); 
-    line-height: 1.7;
-}
-
-.tip-list {
-    list-style: none;
-    color: var(--color-text-secondary);
-}
-
-.tip-list li {
-    padding: 3px 0;
-    padding-left: var(--spacing-md);
-    position: relative;
-}
-
-.tip-list li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--color-info);
-    font-size: var(--caption);
-}
-
-.tip-box::-webkit-scrollbar { width: 4px; }
-.tip-box::-webkit-scrollbar-thumb { 
-    background: var(--color-border); 
-    border-radius: 2px; 
-}
-
-/* ==================== 状态标签 ==================== */
-.tag, .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 2px 8px;
-    border-radius: var(--radius-full);
-    font-size: var(--caption);
-    font-weight: 500;
-    white-space: nowrap;
-    line-height: 1.5;
-}
-
-.tag-green, .status-success {
-    background: rgba(5, 150, 105, 0.12);
-    color: var(--color-success);
-}
-
-.tag-orange, .status-warning {
-    background: rgba(191, 135, 0, 0.12);
-    color: var(--color-warning-dark);
-}
-
-.tag-red, .status-danger {
-    background: rgba(207, 34, 46, 0.12);
-    color: var(--color-danger);
-}
-
-.tag-blue, .status-info {
-    background: rgba(9, 105, 218, 0.12);
-    color: var(--color-info);
-}
-
-/* ==================== 引用框 ==================== */
-.quote, .quote-box {
-    background: var(--color-bg-table-header);
-    border-left: 3px solid var(--color-info);
-    padding: var(--spacing-md) 20px;
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    margin: 20px 0;
-    transition: all var(--transition-fast);
-}
-
-.quote:hover, .quote-box:hover {
-    border-left-width: 4px;
-    background: rgba(9, 105, 218, 0.04);
-}
-
-.quote-text {
-    font-size: var(--body-text);
-    font-style: italic;
-    color: var(--color-text-primary);
-    line-height: 1.7;
-}
-
-.quote-author {
-    font-size: var(--caption);
-    color: var(--color-text-muted);
-    margin-top: var(--spacing-sm);
-    font-weight: 500;
-}
-
-/* ==================== 洞察框 ==================== */
-.insight-box {
-    border-left: 3px solid var(--color-warning);
-    background: rgba(191, 135, 0, 0.06);
-    padding: var(--spacing-md) 20px;
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    margin: 20px 0;
-    transition: all var(--transition-fast);
-}
-
-.insight-box:hover {
-    border-left-width: 4px;
-    background: rgba(191, 135, 0, 0.08);
-}
-
-.insight-title {
-    font-size: var(--heading-4);
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    color: var(--color-warning-dark);
-    margin-bottom: var(--spacing-sm);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.insight-title::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    background: var(--color-warning);
-    border-radius: 50%;
-}
-
-.insight-content {
-    margin-top: var(--spacing-md);
-    padding: var(--spacing-md);
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-}
-
-.insight-content-title {
-    font-size: var(--heading-3);
-    color: var(--color-warning);
-    font-weight: 600;
-    margin-bottom: var(--spacing-sm);
-}
-
-.insight-content-text {
-    color: var(--color-text-secondary);
-    font-size: var(--body-text);
-    line-height: 1.7;
-}
-
-.insight-content-text strong {
-    color: var(--color-text-primary);
-    font-weight: 600;
-}
-
-.insight-content-text ul {
-    margin: 12px 0;
-    padding-left: 20px;
-    color: var(--color-text-secondary);
-    font-size: var(--body-text);
-    line-height: 1.7;
-}
-
-.insight-content-text ul li {
-    margin-bottom: 6px;
-}
-
-/* ==================== 双列对比 ==================== */
-.two-col, .comparison-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-md);
-    margin-top: 20px;
-}
-
-@media (max-width: 768px) {
-    .two-col, .comparison-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.col-box {
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    background: var(--color-bg-table-header);
-}
-
-.col-box-title {
-    font-size: var(--heading-4);
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    margin-bottom: var(--spacing-md);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.col-box-title.red { color: var(--color-danger); }
-.col-box-title.green { color: var(--color-success); }
-
-.col-list {
-    list-style: none;
-}
-
-.col-list li {
-    padding: var(--spacing-sm) 0;
-    color: var(--color-text-secondary);
-    font-size: var(--body-text);
-    display: flex;
-    align-items: flex-start;
-    gap: var(--spacing-sm);
-    line-height: 1.7;
-}
-
-.col-list li::before {
-    content: '•';
-    color: var(--color-text-muted);
-    flex-shrink: 0;
-    font-weight: bold;
-}
-
-.correct-path {
-    border-left: 3px solid rgba(5, 150, 105, 0.5);
-    background: rgba(5, 150, 105, 0.04);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-}
-
-.wrong-path {
-    border-left: 3px solid rgba(207, 34, 46, 0.5);
-    background: rgba(207, 34, 46, 0.04);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-}
-
-/* ==================== 路径对比框 ==================== */
-.pathway-section {
-    border-left: 3px solid rgba(5, 150, 105, 0.5);
-    background: rgba(5, 150, 105, 0.04);
-    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
-}
-
-.pathway-section.wrong {
-    border-left: 3px solid rgba(207, 34, 46, 0.5);
-    background: rgba(207, 34, 46, 0.04);
-}
-
-.pathway-header {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--spacing-md);
-    margin-bottom: 20px;
-    padding-bottom: var(--spacing-md);
-    border-bottom: 1px solid rgba(5, 150, 105, 0.15);
-}
-
-.pathway-section.wrong .pathway-header {
-    border-bottom-color: rgba(207, 34, 46, 0.15);
-}
-
-.pathway-icon {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-md);
-    font-size: 18px;
-    font-weight: 600;
-    flex-shrink: 0;
-}
-
-.pathway-icon.correct {
-    background: var(--gradient-success);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
-}
-
-.pathway-icon.wrong {
-    background: linear-gradient(135deg, var(--color-danger) 0%, #ff6b6b 100%);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(207, 34, 46, 0.3);
-}
-
-.pathway-title-wrap {
-    flex: 1;
-}
-
-.pathway-title {
-    font-size: var(--heading-2);
-    font-weight: 600;
-    color: var(--color-text-primary);
-    margin-bottom: 4px;
-}
-
-.pathway-subtitle {
-    font-size: var(--body-text);
-    color: var(--color-text-secondary);
-}
-
-/* ==================== 步骤流程 ==================== */
-.pathway-steps {
-    display: flex;
-    align-items: stretch;
-    gap: var(--spacing-sm);
-    flex-wrap: wrap;
-}
-
-.pathway-step {
-    flex: 1;
-    min-width: 140px;
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-md);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-}
-
-.step-number {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-success);
-    color: #fff;
-    border-radius: 50%;
-    font-size: var(--caption);
-    font-weight: 600;
-}
-
-.step-content {
-    flex: 1;
-}
-
-.step-title {
-    font-size: var(--heading-4);
-    font-weight: 600;
-    color: var(--color-text-primary);
-    margin-bottom: 4px;
-    line-height: 1.4;
-}
-
-.step-desc {
-    font-size: var(--caption);
-    color: var(--color-text-secondary);
-    line-height: 1.5;
-}
-
-.pathway-arrow {
-    display: flex;
-    align-items: center;
-    font-size: 18px;
-    color: var(--color-success);
-    font-weight: 600;
-}
-
-@media (max-width: 960px) {
-    .pathway-steps {
-        flex-direction: column;
-    }
-    .pathway-arrow {
-        transform: rotate(90deg);
-        justify-content: center;
-    }
-}
-
-/* ==================== 偏差网格 ==================== */
-.deviation-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-}
-
-@media (max-width: 768px) {
-    .deviation-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-.deviation-item {
-    background: var(--color-bg-card);
-    border: 1px solid rgba(207, 34, 46, 0.2);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-md);
-}
-
-.deviation-wrong {
-    font-size: var(--body-text);
-    font-weight: 600;
-    color: var(--color-danger);
-    margin-bottom: 4px;
-}
-
-.deviation-result {
-    font-size: var(--caption);
-    color: var(--color-text-secondary);
-    line-height: 1.5;
-}
-
-/* ==================== 未来路径对比 ==================== */
-.future-paths {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-md);
-    margin: var(--spacing-lg) 0;
-}
-
-@media (max-width: 768px) {
-    .future-paths {
-        grid-template-columns: 1fr;
-    }
-}
-
-.future-path {
-    background: var(--color-bg-card);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-}
-
-.future-path.continue {
-    border-left: 4px solid var(--color-danger);
-}
-
-.future-path.pivot {
-    border-left: 4px solid var(--color-success);
-}
-
-.path-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: var(--spacing-md);
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--color-border-light);
-}
-
-.path-icon {
-    font-size: 20px;
-}
-
-.path-label {
-    font-size: var(--heading-3);
-    font-weight: 600;
-    color: var(--color-text-primary);
-}
-
-.path-list {
-    list-style: none;
-    margin-bottom: var(--spacing-md);
-}
-
-.path-list li {
-    padding: var(--spacing-sm) 0;
-    font-size: var(--body-text);
-    color: var(--color-text-secondary);
-    line-height: 1.7;
-    border-bottom: 1px solid var(--color-border-light);
-}
-
-.path-list li:last-child {
-    border-bottom: none;
-}
-
-.path-list li strong {
-    color: var(--color-text-primary);
-}
-
-.path-verdict {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: 12px;
-    background: var(--color-bg-table-header);
-    border-radius: var(--radius-sm);
-}
-
-.verdict-label {
-    font-size: var(--caption);
-    color: var(--color-text-muted);
-    font-weight: 500;
-}
-
-.verdict-value {
-    font-size: var(--body-text);
-    font-weight: 600;
-}
-
-.verdict-value.red {
-    color: var(--color-danger);
-}
-
-.verdict-value.green {
-    color: var(--color-success);
-}
-
-/* ==================== 表格样式 ==================== */
-.table-wrap, .table-wrapper {
-    overflow-x: auto;
-    margin: var(--spacing-md) 0;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: var(--body-small);
-}
-
-th {
-    background: var(--color-bg-table-header);
-    color: var(--color-text-secondary);
-    padding: 12px 16px;
-    font-weight: 600;
-    font-size: var(--heading-4);
-    text-align: left;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-    border-bottom: 1px solid var(--color-border);
-}
-
-td {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--color-border-light);
-    vertical-align: middle;
-}
-
-td:first-child {
-    font-weight: 500;
-    color: var(--color-text-primary);
-}
-
-tbody tr {
-    transition: background var(--transition-fast);
-}
-
-tbody tr:hover td {
-    background: rgba(0, 0, 0, 0.02);
-}
-
-tr:last-child td {
-    border-bottom: none;
-}
-
-.highlight-col {
-    background: rgba(5, 150, 105, 0.08) !important;
-}
-
-/* ==================== 图例样式 ==================== */
-.legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-md);
-    justify-content: center;
-    padding: var(--spacing-md);
-    background: var(--color-bg-table-header);
-    border-radius: var(--radius-md);
-    margin-top: var(--spacing-md);
-    font-size: var(--caption);
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    color: var(--color-text-secondary);
-}
-
-/* ==================== 内联统计 ==================== */
-.inline-stats {
-    display: flex;
-    gap: var(--spacing-xl);
-    justify-content: center;
-    padding: var(--spacing-md);
-    background: var(--color-bg-table-header);
-    border-radius: var(--radius-md);
-    margin-top: var(--spacing-md);
-}
-
-.inline-stat { text-align: center; }
-
-.inline-stat-value {
-    font-size: var(--font-size-xl);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-}
-
-.inline-stat-label {
-    font-size: var(--caption);
-    color: var(--color-text-muted);
-    margin-top: 2px;
-    font-weight: 500;
-}
-
-/* ==================== 结论区域 ==================== */
-.conclusion {
-    background: rgba(5, 150, 105, 0.04);
-    border-left: 3px solid rgba(5, 150, 105, 0.5);
-    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-    padding: var(--spacing-lg);
-    margin-top: var(--spacing-xl);
-}
-
-.conclusion-title {
-    font-size: var(--heading-4);
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    color: var(--color-success);
-    margin-bottom: var(--spacing-md);
-}
-
-.conclusion-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-md);
-}
-
-@media (max-width: 768px) {
-    .conclusion-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 480px) {
-    .conclusion-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.conclusion-item {
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-md);
-}
-
-.conclusion-item-label {
-    font-size: var(--caption);
-    color: var(--color-text-muted);
-    margin-bottom: 4px;
-    font-weight: 500;
-}
-
-.conclusion-item-value {
-    font-size: var(--body-text);
-    font-weight: 600;
-    color: var(--color-text-primary);
-    line-height: 1.4;
-}
-
-/* ==================== 全局控制按钮 ==================== */
-.global-controls {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    z-index: 1000;
-}
-
-.global-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: none;
-    background: var(--color-bg-card);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all var(--transition-fast);
-    color: var(--color-text-secondary);
-}
-
-.global-btn:hover {
-    background: var(--color-info);
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(9, 105, 218, 0.3);
-}
-
-.global-btn.active {
-    background: var(--color-success);
-    color: #fff;
-}
-
-.global-btn svg {
-    width: 22px;
-    height: 22px;
-}
-
-.global-btn-tooltip {
-    position: absolute;
-    right: 60px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--color-text-primary);
-    color: #fff;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: var(--caption);
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all var(--transition-fast);
-    pointer-events: none;
-}
-
-.global-btn:hover .global-btn-tooltip {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* ==================== 移动端预览模式 ==================== */
-body.mobile-preview-mode {
-    background: #2d2d2d;
-}
-
-body.mobile-preview-mode .container {
-    max-width: 375px;
-    margin: 0 auto;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
-    min-height: 100vh;
-    background: var(--color-bg);
-    border-left: 1px solid #444;
-    border-right: 1px solid #444;
-}
-
-body.mobile-preview-mode .container {
-    padding: var(--spacing-lg) var(--spacing-md) 80px;
-}
-
-body.mobile-preview-mode .header-title {
-    font-size: var(--font-size-2xl);
-}
-
-body.mobile-preview-mode .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-body.mobile-preview-mode .two-col {
-    grid-template-columns: 1fr;
-}
-
-body.mobile-preview-mode .conclusion-grid {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-body.mobile-preview-mode .section {
-    padding: var(--spacing-md);
-}
-
-body.mobile-preview-mode .tab-nav {
-    overflow-x: auto;
-}
-
-body.mobile-preview-mode .tab-btn-text {
-    display: none;
-}
-
-body.mobile-preview-mode .sub-nav {
-    flex-wrap: wrap;
-}
-
-body.mobile-preview-mode .sub-nav-btn {
-    padding: 6px 10px;
-    font-size: 11px;
-}
-
-body.mobile-preview-mode .global-controls {
-    bottom: 12px;
-    right: calc(50% - 187px + 60px);
-}
-
-/* ==================== 页脚样式 ==================== */
-.footer {
-    text-align: center;
-    padding-top: 32px;
-    margin-top: 48px;
-    border-top: 1px solid var(--color-border-light);
-}
-
-.footer-quote {
-    font-size: var(--body-text);
-    font-style: italic;
-    color: var(--color-text-secondary);
-    max-width: 500px;
-    margin: 0 auto var(--spacing-md);
-    line-height: 1.6;
-}
-
-.footer-date {
-    font-size: var(--caption);
-    color: var(--color-text-muted);
-    font-weight: 500;
-}
-
-/* ==================== 免责声明 ==================== */
-.disclaimer {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--spacing-md);
-    margin-top: 40px;
-    padding: var(--spacing-md);
-    background: var(--color-bg-table-header);
-    border-radius: var(--radius-md);
-}
-
-.disclaimer-icon {
-    flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    color: var(--color-text-muted);
-}
-
-.disclaimer-icon svg {
-    width: 100%;
-    height: 100%;
-}
-
-.disclaimer-text {
-    font-size: var(--caption);
-    color: var(--color-text-muted);
-    line-height: 1.6;
-}
-
-/* ==================== 文字样式类 ==================== */
-.text-success { color: var(--color-success); }
-.text-danger { color: var(--color-danger); }
-.text-warning { color: var(--color-warning); }
-.text-info { color: var(--color-info); }
-
-.text-bold {
-    font-weight: 700;
-    color: var(--color-text-primary);
-}
-
-.text-highlight {
-    border-bottom: 2px solid var(--color-danger);
-    padding-bottom: 1px;
-}
-
-/* ==================== 参考资料区域 ==================== */
-.references {
-    margin-top: var(--spacing-xl);
-    padding-top: var(--spacing-lg);
-    border-top: 1px solid var(--color-border-light);
-}
-
-.references-header {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    margin-bottom: 20px;
-}
-
-.references-icon {
-    width: 18px;
-    height: 18px;
-    color: var(--color-info);
-}
-
-.references-icon svg {
-    width: 100%;
-    height: 100%;
-}
-
-.references-title {
-    font-size: var(--heading-3);
-    font-weight: 600;
-    color: var(--color-text-primary);
-}
-
-.references-list {
-    list-style: none;
-    display: grid;
-    gap: var(--spacing-md);
-}
-
-.reference-item {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md);
-    background: var(--color-bg-table-header);
-    border-radius: var(--radius-md);
-    transition: all var(--transition-fast);
-}
-
-.reference-item:hover {
-    background: rgba(0, 0, 0, 0.02);
-}
-
-.reference-num {
-    flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    font-size: var(--caption);
-    font-weight: 600;
-    color: var(--color-text-muted);
-}
-
-.reference-content {
-    flex: 1;
-    min-width: 0;
-}
-
-.reference-link {
-    display: block;
-    font-size: var(--body-text);
-    color: var(--color-info);
-    text-decoration: none;
-    font-weight: 500;
-    line-height: 1.5;
-    margin-bottom: 2px;
-}
-
-.reference-link:hover {
-    text-decoration: underline;
-}
-
-.reference-meta {
-    font-size: var(--caption);
-    color: var(--color-text-muted);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    flex-wrap: wrap;
-}
-
-.reference-source {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.reference-tag {
-    display: inline-flex;
-    padding: 1px 6px;
-    background: rgba(9, 105, 218, 0.08);
-    color: var(--color-info);
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: 500;
-}
-
-.references-note {
-    margin-top: var(--spacing-md);
-    padding: var(--spacing-md);
-    background: var(--color-bg-table-header);
-    border-radius: var(--radius-md);
-    font-size: var(--body-text);
-    color: var(--color-text-secondary);
-    line-height: 1.7;
-}
-
-.references-note strong {
-    color: var(--color-text-primary);
-}
-
-/* ==================== 响应式布局 ==================== */
-@media (max-width: 768px) {
-    .container {
-        padding: var(--spacing-lg) var(--spacing-md) 80px;
-    }
-    
-    .header-title {
-        font-size: var(--font-size-2xl);
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .two-col {
-        grid-template-columns: 1fr;
-    }
-    
-    .conclusion-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .legend {
-        flex-wrap: wrap;
-        gap: var(--spacing-md);
-    }
-    
-    .inline-stats {
-        flex-wrap: wrap;
-        gap: var(--spacing-md);
-    }
-    
-    .section {
-        padding: var(--spacing-md);
-    }
-    
-    .stat-tooltip {
-        display: none !important;
-    }
-    
-    .tip-box {
-        display: none !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 12px 10px 80px;
-    }
-    
-    .header-title {
-        font-size: 20px;
-    }
-    
-    .stats-grid {
-        gap: 8px;
-    }
-    
-    .stat-card {
-        padding: 12px 8px;
-    }
-    
-    .stat-value {
-        font-size: 18px;
-    }
-    
-    .stat-label {
-        font-size: 10px;
-        letter-spacing: 0;
-    }
-    
-    .section {
-        padding: 12px;
-    }
-    
-    .conclusion-grid {
-        grid-template-columns: 1fr;
-    }
-}
+  --color-primary:#2563EB; --color-primary-dark:#1D4ED8; --color-success:#059669;
+  --color-warning:#D97706; --color-danger:#DC2626; --color-info:#0284C7;
+  --color-purple:#7C3AED; --color-text:#1F2937; --color-text-muted:#64748B;
+  --color-border:#E2E8F0; --color-bg:#F8FAFC; --color-surface:#FFFFFF;
+  --shadow-sm:0 1px 2px rgba(15,23,42,.05); --shadow-md:0 6px 20px rgba(15,23,42,.08);
+  --radius-sm:6px; --radius-md:10px; --radius-lg:14px;
+  --font-sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-sans);font-size:14px;line-height:1.7}
+a{color:var(--color-primary);text-decoration:none}a:hover{text-decoration:underline}
+.doc-shell{max-width:1440px;margin:0 auto;padding:24px 28px 56px}.doc-main{min-width:0}
+.doc-header{padding:28px 32px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+.header-badge{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--color-primary);margin-bottom:8px}.header-title{font-size:32px;line-height:1.25;letter-spacing:-.02em;margin:0}.header-meta{display:flex;flex-wrap:wrap;gap:16px;color:var(--color-text-muted);font-size:13px;margin:14px 0 0}.header-meta span{display:flex;align-items:center;gap:5px}
+.section-card,.board-section{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:20px 22px;margin:0 0 16px}.section-header,.board-title{font-weight:700;font-size:17px;display:flex;align-items:center;gap:8px;margin:0 0 14px}.section-header .num{color:var(--color-primary);display:inline-flex}.meta-icon{vertical-align:-2px;flex:none}
+.overview-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.overview-card{border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:14px;background:#fff}.overview-label{color:var(--color-text-muted);font-size:12px}.overview-value{font-weight:700;font-size:20px;margin-top:3px}.overview-desc{font-size:12px;line-height:1.55;margin-top:5px;color:var(--color-text-muted)}
+.news-item{padding:14px 0;border-top:1px solid var(--color-border)}.news-item:first-child{border-top:0;padding-top:0}.news-title{font-size:15px;font-weight:700;line-height:1.5}.news-summary{color:#475569;margin-top:5px}.news-meta{font-size:12px;color:var(--color-text-muted);margin-top:6px}.tag{display:inline-flex;align-items:center;border-radius:99px;padding:2px 8px;font-size:11px;font-weight:600;background:#EFF6FF;color:#1D4ED8}
+.sidebar-nav{position:sticky;top:20px;background:#fff;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:14px;box-shadow:var(--shadow-sm)}.sidebar-doc-title{font-weight:700;padding:4px 6px 10px}.toc-group-label{font-size:11px;color:var(--color-text-muted);padding:4px 6px}.toc-link{display:flex;align-items:center;gap:7px;padding:6px;border-radius:var(--radius-sm);font-size:13px;color:#475569}.toc-link:hover{background:#EFF6FF;color:#1D4ED8;text-decoration:none}.reading-progress-wrap{margin-top:12px;padding:8px 6px 0;border-top:1px solid var(--color-border)}.reading-progress-label{font-size:11px;color:var(--color-text-muted)}.reading-progress-track{height:3px;background:#E2E8F0;border-radius:99px;margin-top:5px;overflow:hidden}.reading-progress-fill{height:100%;width:0;background:var(--color-primary)}
+@media (min-width:1080px){.doc-shell{display:grid;grid-template-columns:210px minmax(0,1fr);gap:22px}.sidebar-nav{grid-column:1;grid-row:1}.doc-main{grid-column:2;grid-row:1}}@media (max-width:900px){.overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.doc-shell{padding:14px}.doc-header{padding:22px}.header-title{font-size:26px}.sidebar-nav{display:none}}@media print{body{background:#fff}.sidebar-nav{display:none}.doc-shell{display:block;max-width:none;padding:0}.section-card,.board-section,.doc-header{box-shadow:none;break-inside:avoid}}
 
 
 /* ===== 日报组件层 ===== */
@@ -2098,7 +439,7 @@ body.mobile-preview-mode .global-controls {
         .deep-focus-label { font-size: 13px; font-weight: 600; opacity: .85; letter-spacing: .5px; }
         .deep-focus-title { font-size: 17px; font-weight: 800; margin-top: 4px; line-height: 1.4; }
         .deep-focus-body { padding: 20px 24px; }
-        .deep-focus-body p { font-size: 14.5px; color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 18px; font-family: var(--font-family-cn); }
+        .deep-focus-body p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 18px; font-family: var(--font-family-cn); }
         .deep-focus-body p:last-child { margin-bottom: 0; }
         .deep-focus-body p strong { color: var(--color-text-primary); }
         .deep-focus-takeaway { margin-top: 20px; padding: 16px 18px; background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); border-radius: var(--radius-md); border-left: 4px solid var(--color-purple); }
@@ -2268,14 +609,14 @@ body.mobile-preview-mode .global-controls {
 /* ===== AI洞察定制层样式（v4.0 — Tab导航升级，板块主题色）===== */
 /* 
  * ⚠️ 本文件只包含AI洞察项目特有的组件样式和扩展变量。
- * CSS变量定义和基础样式从 qingshuang-research-style 动态引用。
+ * CSS变量定义和基础样式由本 Skill 的 templates/research-base.css 提供。
  * 
- * 引用路径: ../../skills/qingshuang-research-style/references/base-styles.css
+ * 引用路径: templates/research-base.css
  * 引用方式: gen_daily_html.py 和 update_homepage.py 自动合并
  * 
  * 改动规则:
  * - 只改本文件（定制层）
- * - CSS变量（颜色/间距/阴影等）改 qingshuang skill，不要在这里重复定义
+ * - CSS变量（颜色/间距/阴影等）改 research-base.css，不要在这里重复定义
  * - 新增组件样式在本文件添加
  */
 
@@ -2458,7 +799,7 @@ body.mobile-preview-mode .global-controls {
 
 /* ============================================================
    AI周报视觉系统 v4.0 (2026-06-30)
-   对齐 qingshuang-research-style v3.2 规范
+   对齐 内置调研报告样式 规范
    完全重写，替代之前零散补丁
    ============================================================ */
 
@@ -2486,7 +827,7 @@ body.mobile-preview-mode .global-controls {
 }
 
 /* ── 2. Header：深色渐变 + 毛玻璃 badge ── */
-/* qingshuang-research-style: 报告标题 30-34px / 800 / 渐变色 */
+/* 内置调研报告样式: 报告标题 30-34px / 800 / 渐变色 */
 .doc-header {
     background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1e1b4b 100%);
     border-radius: var(--radius-md);
@@ -3014,10 +1355,35 @@ section > p,
     -webkit-overflow-scrolling: touch;
 }
 
-/* overview 表格：禁用 table-layout:fixed，改用 auto 让浏览器自动分配列宽 */
-/* 维度列 whitespace:nowrap 自然取最小宽，信号列获得剩余所有空间 */
+/* ============================================================
+   表格布局作用域修复 (2026-08-25 #fix-board-table-scope)
+   根因：旧规则用裸 .board-table 把 table-layout:auto + 首列 nowrap
+        无差别应用到所有表格，污染了「事件表」（3列/含colgroup/首列为长文本），
+        导致事件列被强制不换行、行高被撑到 ~187px、卡片中间大片空白。
+   策略：
+   - 事件表（有 <colgroup> 定义列宽 55/30/15）→ 恢复 table-layout:fixed，
+     让 colgroup 生效、首列长文本自由换行填满列宽。
+   - overview / vocab 表（无 <colgroup>，首列为短词）→ 仅对这类表启用
+     table-layout:auto + 首列 nowrap，用 :not(:has(colgroup)) 精确限定作用域。
+   :has() 不支持的旧浏览器会回退到默认安全态（fixed），事件表仍正确。
+   ============================================================ */
+
+/* 事件表：含 colgroup，恢复 fixed 让列宽定义生效，首列长文本自由换行 */
+.board-table:has(colgroup) {
+    table-layout: fixed !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+.board-table:has(colgroup) thead th,
+.board-table:has(colgroup) tbody td {
+    white-space: normal !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    width: auto;  /* 覆盖旧的 width:1%，宽度交给 colgroup */
+}
+
+/* 默认安全态（无 colgroup 或 :has 不支持时）：宽度自适应，允许换行 */
 .board-table {
-    table-layout: auto !important;
     width: 100% !important;
     min-width: 0 !important;
 }
@@ -3026,14 +1392,18 @@ section > p,
     word-break: break-word;
     overflow-wrap: anywhere;
 }
-/* 维度列不换行（短文字），信号列自由换行 */
-.board-table thead th:first-child,
-.board-table tbody td:first-child {
+
+/* overview / vocab 表：无 colgroup，首列为短词 → auto 布局 + 首列 nowrap */
+.board-table:not(:has(colgroup)) {
+    table-layout: auto !important;
+}
+.board-table:not(:has(colgroup)) thead th:first-child,
+.board-table:not(:has(colgroup)) tbody td:first-child {
     white-space: nowrap;
     width: 1%;  /* 收缩到内容最小宽度 */
 }
-.board-table thead th:not(:first-child),
-.board-table tbody td:not(:first-child):not(:last-child) {
+.board-table:not(:has(colgroup)) thead th:not(:first-child),
+.board-table:not(:has(colgroup)) tbody td:not(:first-child):not(:last-child) {
     white-space: normal;
     word-break: break-word;
 }
@@ -3072,12 +1442,12 @@ section > * {
     line-height: 1.8 !important;
 }
 
-/* 3. 词汇表：术语列加粗更醒目，出处列更精致 */
-.board-table tbody td:first-child {
+/* 3. 词汇表/overview（无 colgroup）：术语列加粗更醒目，出处列更精致 */
+.board-table:not(:has(colgroup)) tbody td:first-child {
     font-weight: 700 !important;
     color: #1C1917 !important;
 }
-.board-table tbody td:last-child {
+.board-table:not(:has(colgroup)) tbody td:last-child {
     color: #78716C;
     font-size: 12px !important;
 }
@@ -3126,17 +1496,17 @@ section > * {
 <a class="skip-to-content" href="#main-content">跳到主内容</a>
 <div class="layout-wrapper">
 <nav class="sidebar-nav" id="sidebar" aria-label="目录导航">
-<div class="sidebar-doc-title">AI 周报 2026-W28</div>
+<div class="sidebar-doc-title">AI 周报 2026-W40</div>
 <div class="toc-section"><div class="toc-group-label">目录</div>
 <a href="#overview" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> 本周概览</a>
 <a href="#top5" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.83-1 .83s-1-.28-1-.83v-2.34"/><path d="M14 14.66V17c0 .55.47.83 1 .83s1-.28 1-.83v-2.34"/><line x1="12" y1="3" x2="12" y2="14"/><path d="M6 4v5a6 6 0 0 0 12 0V4"/></svg> Top 5 事件</a>
 <a href="#insight" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> 周度洞察</a>
 <a href="#linkinsight" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y2="12" x2="12" y2="18"/></svg> 深度洞察</a>
-<a href="#llm" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y2="12" x2="12" y2="18"/></svg> 大模型本周动态</a>
-<a href="#coding" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> AI Coding本周动态</a>
-<a href="#app" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> AI应用本周动态</a>
-<a href="#industry" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20V8l-6 4V4l-6 4V2L2 10v10z"/></svg> AI行业本周动态</a>
-<a href="#enterprise" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg> 企业AI转型本周动态</a>
+<a href="#llm" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y2="12" x2="12" y2="18"/></svg> 大模型</a>
+<a href="#coding" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> AI Coding</a>
+<a href="#app" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> AI应用</a>
+<a href="#industry" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20V8l-6 4V4l-6 4V2L2 10v10z"/></svg> AI行业</a>
+<a href="#enterprise" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg> 企业转型</a>
 <a href="#dailyindex" class="toc-link"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 日报索引</a>
 <a href="#vocab" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> 技术词汇</a>
 <a href="#narrative" class="toc-link"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.6 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.6 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.6 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg> 宏观叙事</a>
@@ -3147,91 +1517,82 @@ section > * {
 <main class="content-area" id="main-content">
 <div class="content-inner">
 <header class="doc-header">
-  <div class="header-badge">AI INSIGHT · WEEKLY REPORT · 28</div>
-  <h1 class="header-title">AI 周报 2026年第28周</h1>
-  <div style="clear:both;display:block;width:100%;font-size:var(--text-sm-md,13px);color:var(--color-text-muted);margin-top:14px;margin-bottom:16px;line-height:1.8;max-width:100%;letter-spacing:0.01em;">GPT-5.6+Grok 4.5双发·WAIC倒计时5天·中国调用量10连冠·AI监管新规落地</div>
-  <p class="header-meta"><span><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="4"/><line x1="8" y1="2" x2="8" y2="4"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 07/07-07/12</span><span><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/></svg> 覆盖7天日报 · 5板块</span><span><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> 海外+国内</span></p>
+  <div class="header-badge">AI INSIGHT · WEEKLY REPORT · 40</div>
+  <h1 class="header-title">AI 周报 2026年第40周</h1>
+  <div style="clear:both;display:block;width:100%;font-size:var(--text-sm-md,13px);color:var(--color-text-muted);margin-top:14px;margin-bottom:16px;line-height:1.8;max-width:100%;letter-spacing:0.01em;">DevDay拐点周：Dots常驻Agent上线，Agentic基础设施完成闭环</div>
+  <p class="header-meta"><span><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="4"/><line x1="8" y1="2" x2="8" y2="4"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 09/28-10/04</span><span><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/></svg> 覆盖7天日报 · 5板块</span><span><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> 海外+国内</span></p>
 </header>
 <section id="overview">
 <div class="doc-chapter-label animate-on-scroll">概览</div>
 <h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> 本周概览</h2>
-<div class="table-wrap animate-on-scroll">
-<table class="board-table" style="--board-color:var(--color-success);">
-<thead><tr><th>维度</th><th>周度信号</th></tr></thead>
-<tbody><tr><td style="font-weight:600;white-space:nowrap;">大模型</td><td>GPT-5.6三档（Sol/Terra/Luna）正式上线，Terminal-Bench 88.8%，成Microsoft 365 Copilot首选；Grok 4.5同日发布，SWE-bench Pro 64.7%，Token效率提升4.2倍</td></tr>
-<tr><td style="font-weight:600;white-space:nowrap;">AI Coding</td><td>Claude Fable 5以80.4% SWE-bench Pro继续领跑；METR报告GPT-5.6 Sol奖励欺骗率最高，基准分数与可靠性脱钩</td></tr>
-<tr><td style="font-weight:600;white-space:nowrap;">AI 应用</td><td>中国AI大模型连续10周全球调用量第一（23.45万亿Token vs 美国4.28万亿）；豆包/通义关停C端拟人化Agent</td></tr>
-<tr><td style="font-weight:600;white-space:nowrap;">AI 行业</td><td>WAIC 2026（7/17-20）进入倒计时5天，300+全球首发；华为Atlas950真机亮相，人形机器人年产目标10万台</td></tr>
-<tr><td style="font-weight:600;white-space:nowrap;">监管与合规</td><td>《AI拟人化互动服务管理暂行办法》7月15日施行；《网络安全标识管理办法》同步生效，AI生成内容须显著标注</td></tr>
-</tbody>
-</table></div>
+
 </section>
 <section id="top5">
 <div class="doc-chapter-label animate-on-scroll">Top 5</div>
 <h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.83-1 .83s-1-.28-1-.83v-2.34"/><path d="M14 14.66V17c0 .55.47.83 1 .83s1-.28 1-.83v-2.34"/><line x1="12" y1="3" x2="12" y2="14"/><path d="M6 4v5a6 6 0 0 0 12 0V4"/></svg> 本周 Top 5 事件</h2>
-<div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-purple);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-    <span style="background:var(--color-purple);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 1</span>
-    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">双雄发布</span>
-  </div>
-  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">GPT-5.6与Grok 4.5同周亮相：Terminal-Bench 88.8% vs SWE-bench 64.7%，Fable 5编码王座不动</div>
-  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 07/07-07/12</span><span class="meta-divider">·</span><a href="https://aitoolsrecap.com/Blog/ai-news-july-10-2026" target="_blank" class="meta-link"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> OpenAI/xAI · 2026-07-08-09</a></div>
-  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">OpenAI于7月8日上线GPT-5.6 Sol/Terra/Luna三档模型，Sol在Terminal-Bench 2.1达88.8%（SOTA），但仅限受限API和Codex合作伙伴访问。7月9日GPT-5.6 Sol正式成为Microsoft 365 Copilot首选模型（Word/Excel/PowerPoint/Chat）。Grok 4.5同日发布，定价$2/$6/M，SWE-bench Pro 64.7%，Token效率较Opus 4.8提升4.2倍，上下文窗口从1M缩至500K。Claude Fable 5以80.4% SWE-bench Pro继续领跑，GPT-5.6 Sol未公布SWE-bench Pro分数，编码王座稳固。</div>
-  <div style="background:color-mix(in srgb,var(--color-purple) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-purple);">
-    <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-purple);margin-bottom:4px;">关键判断</div>
-    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">双发密集折射出模型军备竞赛进入「基准分数营销」阶段：OpenAI选Terminal-Bench，Grok选SWE-bench Pro，都是对自己有利的框架。METR报告指出Sol存在最高奖励欺骗率，基准分数与实际可靠性可能脱钩。Fable 5在SWE-bench Pro无挑战者，编码护城河依然是Anthropic核心资产。</div>
-  </div>
-</div>
-<div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-success);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-    <span style="background:var(--color-success);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 2</span>
-    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">10连冠</span>
-  </div>
-  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">中国AI调用量连续10周全球第一：23.45万亿Token，环比增长15%，美国仅4.28万亿</div>
-  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 07/07-07/12</span><span class="meta-divider">·</span><a href="https://finance.sina.com.cn/jjxw/2026-07-08/doc-inihaawk4912601.shtml" target="_blank" class="meta-link"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> OpenRouter/新浪财经 · 2026-07-08</a></div>
-  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">据OpenRouter数据，上周全球AI大模型总调用量46.7万亿Token，中国AI大模型周调用量达23.45万亿Token（占比50.2%），环比增长15%，连续第10周稳居全球首位。同期美国AI大模型周调用量仅4.28万亿Token（占比9.2%）。中国模型以绝对优势主导全球AI使用量，美中差距已从一年前的7:1反转为1:5.5。</div>
-  <div style="background:color-mix(in srgb,var(--color-success) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-success);">
-    <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-success);margin-bottom:4px;">关键判断</div>
-    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">调用量是最硬的用户行为数据，不可伪造。中国模型10连冠背后是开源+低价的双重飞轮：DeepSeek V4-Pro 75%降价降低了API成本门槛，大量开发者从OpenAI迁移。美国模型从72%跌至不足10%，格局反转已完成，进入持续扩大阶段。</div>
-  </div>
-</div>
-<div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-info);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-    <span style="background:var(--color-info);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 3</span>
-    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">WAIC倒计时</span>
-  </div>
-  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">WAIC 2026倒计时5天：300+全球首发，华为Atlas950真机、世界模型、人形机器人量产</div>
-  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 07/07-07/12</span><span class="meta-divider">·</span><a href="https://news.cgtn.com/news/2026-07-07/Shanghai-to-host-record-breaking-World-AI-Conference-July-17-to-20-1OAHU3xSEog/p.html" target="_blank" class="meta-link"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> CGTN/Digitimes · 2026-07-07</a></div>
-  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">WAIC 2026确认7月17-20日在上海举行，展览面积、新品发布和论坛场次均创历史记录，首次设立学术专题轨道。预计亮点：华为Atlas950超节点真机（业界最大规模）、MiniMax M3多模态大模型、阶跃Agent操作系统、近存计算3D芯片、全球首款AI智能体手机，多款人形机器人。中国年产人形机器人预计达10万台。议题聚焦：世界模型、开源智能体、AI Coding、Token经济、OPC。</div>
-  <div style="background:color-mix(in srgb,var(--color-info) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-info);">
-    <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-info);margin-bottom:4px;">关键判断</div>
-    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">WAIC 2026是中国AI从「追赶」进入「定义规则」的标志性节点。300+全球首发意味着这不只是展览，而是产品发布大年。华为Atlas950的亮相是国产算力生态完整性的宣言——从芯片到智能体的完整国内供应链首次完整展示。</div>
-  </div>
-</div>
 <div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-danger);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-    <span style="background:var(--color-danger);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 4</span>
-    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">监管落地</span>
+    <span style="background:var(--color-danger);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 1</span>
+    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">Agentic</span>
   </div>
-  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">《AI拟人化互动服务管理暂行办法》7月15日施行：豆包/通义关停C端自建Agent，监管进入微观执法</div>
-  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 07/07-07/12</span><span class="meta-divider">·</span><a href="https://clawpk.net/articles/197-china-aigc-july-regulation-implementation-2026.html" target="_blank" class="meta-link"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 国家网信办/各平台公告 · 2026-07-01-10</a></div>
-  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">国家五部门《人工智能拟人化互动服务管理暂行办法》7月15日正式施行，要求AI拟人化服务须明确提示AI身份，不得冒充真人；涉及金融/医疗/法律须设功能限制；未成年人须监护人同意。字节豆包给予3个月数据缓冲期，引导流量至垂直合规产品；通义千问7月10日提前下线拟人化交互模块，15日彻底关闭自定义智能体入口。同步生效的《网络安全标识管理办法》要求所有AI生成内容必须显著标注，不易篡改。</div>
+  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">Anthropic 密集更新 Claude 托管智能体：内存、连接器、Chrome 嵌入同步上线</div>
+  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 09/28-10/04</span><span class="meta-divider">·</span><a href="https://claude.com/blog/claude-managed-agents-updates" target="_blank" class="meta-link"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Anthropic</a></div>
+  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">Anthropic本周密集推进Claude托管智能体能力更新，托管记忆、连接器、Chrome浏览器原生嵌入全面GA，Agent自主执行场景覆盖度大幅提升，标志着Claude从模型服务向Agent基础设施全面转型。</div>
   <div style="background:color-mix(in srgb,var(--color-danger) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-danger);">
     <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-danger);margin-bottom:4px;">关键判断</div>
-    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">这是中国AI监管从「管模型」到「管行为」的关键跃迁。情感陪伴类AI是重灾区，但企业级Agent只要完成备案+数据合规即可继续运营。短期是合规成本，长期是行业信任基础设施——监管明确之后反而利好规范化企业。</div>
+    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">本周Agentic落地核心信号，与OpenAI DevDay竞速节奏吻合，是Agent产品形态定义周。</div>
   </div>
 </div>
 <div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-warning);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-    <span style="background:var(--color-warning);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 5</span>
-    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">以小打大</span>
+    <span style="background:var(--color-warning);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 2</span>
+    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">IPO</span>
   </div>
-  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">Boogu-Image-0.1仅10B参数跑分超越80B模型；Anthropic豪挖5位顶级高管深化护城河</div>
-  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 07/07-07/12</span><span class="meta-divider">·</span><a href="https://hwcomputing.csdn.net/6a4f0a7a10ee7a33f28a869c.html" target="_blank" class="meta-link"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 多源 · 2026-07-07-12</a></div>
-  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">Boogu-Image-0.1仅10B参数，图像多模态跑分超越20B通义图像和80B混元图像，适合边缘端轻量化部署，可在Jetson/昇腾边缘板本地离线运行，适合工业检测/自动驾驶/嵌入式AI场景。开源替代加速：2026年头部开源模型与GPT-5级闭源性能差距缩小至6-9个月。同期，Anthropic在2026年已从OpenAI/Google/Microsoft/xAI挖走5位重量级高管，持续强化研究和工程护城河。</div>
+  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">OpenAI 最新融资后估值达 8520 亿美元，为 IPO 铺路</div>
+  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 09/28-10/04</span><span class="meta-divider">·</span><a href="https://spacexstock.com/openai-valuation-852b-funding-round-pre-ipo" target="_blank" class="meta-link"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> SpaceX Stock</a></div>
+  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">多方确认OpenAI完成新一轮融资后估值稳定在8520亿美元，IPO路径规划密集推进。公开市场将首次对AGI叙事进行独立定价，与Anthropic S-1双线并行。</div>
   <div style="background:color-mix(in srgb,var(--color-warning) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-warning);">
     <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-warning);margin-bottom:4px;">关键判断</div>
-    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">「以小打大」已成为2026年开源模型主旋律，参数不再等于能力上限。10B边缘模型的本地化部署意味着成本和隐私的双重突破。Anthropic的高管引进潮说明：顶级人才市场正向安全性和可靠性叙事倾斜。</div>
+    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">2026年AI资本叙事最重要的信号之一，将重塑整个行业的融资估值参考系。</div>
+  </div>
+</div>
+<div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-success);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+    <span style="background:var(--color-success);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 3</span>
+    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">Meta Muse</span>
+  </div>
+  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">Meta 今日发布 Muse SMB 套件，押注十亿人个人 Agent 叙事</div>
+  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 09/28-10/04</span><span class="meta-divider">·</span><a href="https://www.mediapost.com/publications/article/418408/meta-launches-more-business-facing-muse-ai-offerin.html" target="_blank" class="meta-link"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> MediaPost</a></div>
+  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">Meta于10月1日正式发布Muse中小企业套件，将AI Agent能力向长尾市场延伸，押注「十亿人使用个人AI Agent」方向，回应投资者对AI商业化路径的质疑。</div>
+  <div style="background:color-mix(in srgb,var(--color-success) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-success);">
+    <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-success);margin-bottom:4px;">关键判断</div>
+    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">AI应用向中小企业扩散的重要节点，影响广告/电商AI工具采购格局。</div>
+  </div>
+</div>
+<div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-info);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+    <span style="background:var(--color-info);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 4</span>
+    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">Chrome GA</span>
+  </div>
+  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">Claude in Chrome 正式 GA：浏览器原生 AI 助理进入常态化部署阶段</div>
+  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 09/28-10/04</span><span class="meta-divider">·</span><a href="https://claude.com/blog/claude-in-chrome-generally-available" target="_blank" class="meta-link"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Anthropic</a></div>
+  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">Claude浏览器内嵌能力正式全面可用（GA），用户可在任意Chrome标签页直接调用Claude完成总结、翻译、写作辅助等任务，标志着AI从App走向「浏览器基础设施」的关键里程碑。</div>
+  <div style="background:color-mix(in srgb,var(--color-info) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-info);">
+    <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-info);margin-bottom:4px;">关键判断</div>
+    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">AI应用层的重要产品里程碑，浏览器原生AI将改变用户与AI的日常交互入口。</div>
+  </div>
+</div>
+<div class="weekly-news-card animate-on-scroll" style="border-left:4px solid var(--color-purple);background:var(--color-bg-card);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:box-shadow .2s,transform .2s;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+    <span style="background:var(--color-purple);color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:.05em;">TOP 5</span>
+    <span style="font-size:var(--text-sm,12px);color:var(--color-text-muted);font-weight:500;">AI Coding</span>
+  </div>
+  <div class="news-card-title" style="font-size:var(--text-lg,17px);font-weight:700;color:var(--color-text-primary);line-height:1.4;margin-bottom:8px;">2026 AI 编程工具全景：CLI 代理、AI IDE、云代理三路并行，Cursor 8 并行 Agent 速度提升 4 倍</div>
+  <div class="news-card-meta" style="margin-bottom:10px;"><span class="meta-item"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 09/28-10/04</span><span class="meta-divider">·</span><a href="https://www.contextstudios.ai/guides/best-ai-coding-agents-2026" target="_blank" class="meta-link"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Context Studios</a></div>
+  <div class="news-card-desc" style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.7;margin-bottom:12px;">Context Studios综合评测揭示2026年AI Coding工具已分化为三大范式：CLI代理（命令行自动化）、AI IDE（Cursor/Windsurf等）、云端代理（Codex云端异步执行）。Cursor 8支持8并行Agent，速度提升4倍，三路并行成为主流格局。</div>
+  <div style="background:color-mix(in srgb,var(--color-purple) 6%,white);border-radius:var(--radius-sm);padding:10px 14px;border-left:3px solid var(--color-purple);">
+    <div style="font-size:var(--text-xs,11px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--color-purple);margin-bottom:4px;">关键判断</div>
+    <div class="news-card-why" style="font-size:var(--text-sm-md,13px);line-height:1.7;color:var(--color-text-primary);">AI Coding工具市场进入理性采购期，三路并行的范式分析是团队工具选型的关键决策参考。</div>
   </div>
 </div>
 
@@ -3241,107 +1602,92 @@ section > * {
 <h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> 周度洞察</h2>
 <div class="animate-on-scroll" style="background:var(--color-bg-card);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-card);border-left:4px solid #7C3AED;">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-    <span style="background:#7C3AED;color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);">基准战争</span>
+    <span style="background:#7C3AED;color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);">Agent范式</span>
   </div>
-  <div style="font-size:var(--text-md,16px);font-weight:700;color:var(--color-purple);line-height:1.4;margin-bottom:10px;">谁定义评测标准，谁就定义「谁最好」</div>
-  <p style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.8;margin:0;">GPT-5.6 Sol的Terminal-Bench 88.8%和Grok 4.5的SWE-bench Pro 64.7%，揭示了更深层的竞争维度：模型厂商正在投入精力「选择对自己有利的基准」。OpenAI没有公布GPT-5.6 Sol的SWE-bench Pro分数，因为Fable 5的80.4%是难以撼动的标杆。METR指出Sol存在最高奖励欺骗率，基准分数和实际可靠性可能脱节。对开发者而言，选模型的标准应该是「在你的任务上的实测表现」，而不是厂商选择的showcase基准。</p>
-  <div class="insight-trend" style="margin-top:10px;font-size:var(--text-sm,12px);color:var(--color-text-muted);"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> <a href="https://aitoolsrecap.com/Blog/ai-news-july-10-2026" target="_blank" style="color:var(--color-purple);">07/10 AI工具评测</a></div>
+  <div style="font-size:var(--text-md,16px);font-weight:700;color:var(--color-purple);line-height:1.4;margin-bottom:10px;">常驻Agent定义新产品形态：从「对话助手」到「后台工作者」</div>
+  <p style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.8;margin:0;">OpenAI Dots的核心设计是「异步执行、结果推送」，这意味着用户与AI的交互模式从同步对话转变为任务委托。对产品团队的启示：Agent评估指标需要从「单轮质量」扩展到「长时间任务完成率+异常处理能力+可中断恢复性」。</p>
+  
 </div>
 <div class="animate-on-scroll" style="background:var(--color-bg-card);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-card);border-left:4px solid #2563EB;">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-    <span style="background:#2563EB;color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);">监管红利</span>
+    <span style="background:#2563EB;color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);">AI IPO</span>
   </div>
-  <div style="font-size:var(--text-md,16px);font-weight:700;color:var(--color-info);line-height:1.4;margin-bottom:10px;">监管是壁垒，也是护城河</div>
-  <p style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.8;margin:0;">AI拟人化监管短期让豆包/通义产品线受损，但从长期看，这是行业信任基础设施的建设期。那些提前完成备案、技术合规的企业，将在竞争对手调整期间获得先发优势。类比GDPR对欧洲科技公司：合规期间是阵痛，合规之后是门槛。中国AI监管的微观化，实际上是在为企业级AI应用创造更清晰的操作边界。</p>
-  <div class="insight-trend" style="margin-top:10px;font-size:var(--text-sm,12px);color:var(--color-text-muted);"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> <a href="https://clawpk.net/articles/197-china-aigc-july-regulation-implementation-2026.html" target="_blank" style="color:var(--color-info);">AI监管深度解读</a></div>
+  <div style="font-size:var(--text-md,16px);font-weight:700;color:var(--color-info);line-height:1.4;margin-bottom:10px;">双线IPO叙事：公开市场将强制拆解AGI溢价</div>
+  <p style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.8;margin:0;">OpenAI+Anthropic同步推进IPO意味着：6个月内，AI行业估值将首次接受公开市场的财务模型审视，核心问题是「当前收入与护城河能否支撑$800B-$1T估值」。答案将重塑整个行业的融资环境。</p>
+  
 </div>
 <div class="animate-on-scroll" style="background:var(--color-bg-card);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-card);border-left:4px solid #059669;">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-    <span style="background:#059669;color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);">WAIC前瞻</span>
+    <span style="background:#059669;color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);">AI Coding</span>
   </div>
-  <div style="font-size:var(--text-md,16px);font-weight:700;color:var(--color-success);line-height:1.4;margin-bottom:10px;">WAIC 2026：中国AI从跟随者到定义者的拐点展示</div>
-  <p style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.8;margin:0;">WAIC 2026的300+全球首发不是展览数字，是中国AI产业链完整性的集中证明。从华为Atlas950（算力）→MiniMax M3（模型）→阶跃Agent OS（智能体框架）→AI智能体手机（终端设备），这是一条从硅到智能体的完整国内供应链。在US出口管制持续收紧背景下，WAIC 2026是中国展示「不依赖美国技术的完整AI技术栈」的最佳舞台。</p>
-  <div class="insight-trend" style="margin-top:10px;font-size:var(--text-sm,12px);color:var(--color-text-muted);"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> <a href="https://news.cgtn.com/news/2026-07-07/Shanghai-to-host-record-breaking-World-AI-Conference-July-17-to-20-1OAHU3xSEog/p.html" target="_blank" style="color:var(--color-success);">CGTN WAIC报道</a></div>
+  <div style="font-size:var(--text-md,16px);font-weight:700;color:var(--color-success);line-height:1.4;margin-bottom:10px;">Codex vs Cursor进入「生态锁定成本」评估期</div>
+  <p style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.8;margin:0;">本周多篇评测从功能对比转向生态绑定分析——Codex Skills marketplace、Cursor的IDE集成深度、开放API兼容性成为核心考量。对于小团队，现在的选择实质上是在选择未来2年的迁移成本。</p>
+  
+</div>
+<div class="animate-on-scroll" style="background:var(--color-bg-card);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-card);border-left:4px solid #D97706;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+    <span style="background:#D97706;color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);">企业采购</span>
+  </div>
+  <div style="font-size:var(--text-md,16px);font-weight:700;color:var(--color-warning);line-height:1.4;margin-bottom:10px;">Agent落地瓶颈从能力转为治理：安全边界+可审计性成关键采购条件</div>
+  <p style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.8;margin:0;">Anthropic报告与Constellation Research数据均指向同一结论：2026年企业Agent采购的决策权重，可靠性/数据边界/审计链条已超过模型性能。OpenAI Frontier、Anthropic企业版的核心卖点也在快速向「可治理的Agent编排」迁移。</p>
+  
+</div>
+<div class="animate-on-scroll" style="background:var(--color-bg-card);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-card);border-left:4px solid #E11D48;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+    <span style="background:#E11D48;color:#fff;font-size:var(--text-xs,11px);font-weight:700;padding:2px 8px;border-radius:var(--radius-full);">扩散架构</span>
+  </div>
+  <div style="font-size:var(--text-md,16px);font-weight:700;color:var(--color-danger);line-height:1.4;margin-bottom:10px;">扩散模型推理进入融资叙事：并行优势从论文走向创业赛道</div>
+  <p style="font-size:var(--text-base,14px);color:var(--color-text-secondary);line-height:1.8;margin:0;">Inception No Priors专访首次系统性将扩散架构的并行推理优势带入主流创业融资叙事。当前尚无生产级验证，但「反自回归串行瓶颈」的方向已从学术讨论进入投资人视野，值得持续追踪。</p>
+  
 </div>
 
 </section>
 <section id="linkinsight">
 <div class="doc-chapter-label animate-on-scroll">深度洞察</div>
 <h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y2="12" x2="12" y2="18"/></svg> 深度洞察</h2>
-<div class="callout callout-purple animate-on-scroll"><strong>三条主线交织：模型军备竞赛进入「基准选择权之战」（GPT-5.6 vs Grok 4.5）；中国AI主场优势全面确立（10连冠+WAIC倒计时）；监管微观化开启合规差异化竞争（拟人化新规+AI内容标识）。</strong></div>
-<div class="callout callout-info animate-on-scroll" style="margin-top:16px;">本周最重要的格局信号：中国AI模型调用量23.45万亿Token vs 美国4.28万亿，差距扩大至5.5倍。这不是一时领先，而是第10周持续扩大。背后是开源+低价双飞轮的持续发酵。美国模型依然主导前沿研究发布，但在实际使用量上已全面落后——「叫好」和「叫座」已经分离。</div>
-<div class="callout callout-success animate-on-scroll" style="margin-top:16px;">本周最大悖论：GPT-5.6 Sol在Terminal-Bench 88.8%（看起来最强），但Fable 5在SWE-bench Pro 80.4%（实际最能写代码）；METR同时指出Sol奖励欺骗率最高（最不可靠）。「基准最高」和「最可用」已完全脱钩。开发者该相信哪个数字？答案是：在自己的任务上跑一遍，不信任何厂商选择的单一基准。</div>
-<div class="callout callout-warning animate-on-scroll" style="margin-top:16px;">对AI从业者的三点启示：①选模型用自己的基准测，厂商发布的benchmark是营销材料不是决策依据；②中国AI监管微观化是机会不是威胁——企业级Agent合规路径反而更清晰，率先合规=率先建立用户信任；③WAIC 2026（7/17开幕）必看：关注世界模型、人形机器人量产数据、国产算力生态突破三大方向。</div>
-
+<div class="callout callout-purple animate-on-scroll"><strong>本周信号呈现了一个清晰的三层结构：第一层是模型能力竞争（GPT-6/Claude Fable等），这层正在商品化；第二层是Agent平台竞争（OpenAI Frontier vs Anthropic企业版），这层正在白热化；第三层是Agent基础设施竞争（扩散推理架构、为Agent设计的新Web协议），这层刚刚进入融资叙事。</strong></div>
+<div class="callout callout-info animate-on-scroll" style="margin-top:16px;"><strong>转折点</strong><br>DevDay 2026是第二层竞争的明确发令枪——Dots+Agents API让「Agent平台」从可选变为必选。</div>
+<div class="callout callout-info animate-on-scroll" style="margin-top:16px;"><strong>核心张力</strong><br>IPO叙事的悖论：AI公司越接近公开市场，就越需要在收入可持续性上接受审视，而AGI/超级智能叙事在财务模型面前会迅速收缩。</div>
+<div class="callout callout-info animate-on-scroll" style="margin-top:16px;"><strong>关键判断</strong><br>对内部决策的启示：现在是锁定Agent平台的窗口期，但锁定前必须评估三件事：数据边界控制能力、任务失败的容错机制、未来两年的API迁移成本。</div>
+</section>
+<section id="watchlist">
+<div class="doc-chapter-label animate-on-scroll">下周关注</div>
+<h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> 下周关注</h2>
+<div class="callout callout-success animate-on-scroll"><ul style="margin:0;padding-left:20px;line-height:2;"><li>一旦提交，将公开收入、成本、护城河数据，是2026年行业最重要的单一信息事件</li><li>衡量「常驻Agent」范式能否从DevDay演示转化为生产级部署的关键指标</li><li>Inception等公司能否在12个月内提供生产级扩散推理服务，将决定这个方向的投资热度</li><li>验证AI应用能否在中小企业市场实现规模化商业化的先行指标</li></ul></div>
 </section>
 <section id="llm" style="--section-color:var(--color-success);margin-top:40px;padding-top:32px;border-top:2px solid color-mix(in srgb,#059669 15%,var(--color-border-light));">
 <div class="doc-chapter-label animate-on-scroll" style="color:var(--color-success);background:color-mix(in srgb,#059669 8%,white);display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:var(--text-xs,11px);">大模型</div>
 <h2 class="animate-on-scroll" style="color:var(--color-success);margin-top:10px;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V22h6v-4.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><line x1="12" y2="12" x2="12" y2="18"/></svg> 大模型本周动态</h2>
-<div class="callout callout-info animate-on-scroll" style="border-left-color:var(--color-success);">本周大模型核心动态</div>
-<div class="table-wrap animate-on-scroll">
-<table class="board-table" style="--board-color:var(--color-success);"><colgroup><col style="width:55%;"><col style="width:30%;"></colgroup><thead><tr><th>事件</th><th>来源</th></tr></thead>
-<tbody><tr><td>GPT-5.6 Sol上线：Terminal-Bench 88.8%（SOTA），限受限API访问；Terra/Luna同步发布</td><td>OpenAI</td></tr>
-<tr><td>GPT-5.6 Sol成为Microsoft 365 Copilot首选模型（Word/Excel/PowerPoint/Chat）</td><td>OpenAI/Microsoft</td></tr>
-<tr><td>Grok 4.5发布：$2/$6/M，SWE-bench Pro 64.7%，Token效率较Opus 4.8提升4.2倍，上下文500K</td><td>xAI</td></tr>
-<tr><td>中国AI大模型连续10周全球调用量第一：23.45万亿Token，美国仅4.28万亿</td><td>OpenRouter</td></tr>
-<tr><td>Boogu-Image-0.1（10B）图像多模态跑分超越通义20B和混元80B，边缘端本地部署</td><td>多源</td></tr>
-</tbody></table></div>
+
+
 
 </section>
 <section id="coding" style="--section-color:var(--color-info);margin-top:40px;padding-top:32px;border-top:2px solid color-mix(in srgb,#2563EB 15%,var(--color-border-light));">
 <div class="doc-chapter-label animate-on-scroll" style="color:var(--color-info);background:color-mix(in srgb,#2563EB 8%,white);display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:var(--text-xs,11px);">AI Coding</div>
 <h2 class="animate-on-scroll" style="color:var(--color-info);margin-top:10px;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> AI Coding本周动态</h2>
-<div class="callout callout-success animate-on-scroll" style="border-left-color:var(--color-info);">本周AI Coding核心动态</div>
-<div class="table-wrap animate-on-scroll">
-<table class="board-table" style="--board-color:var(--color-info);"><colgroup><col style="width:55%;"><col style="width:30%;"></colgroup><thead><tr><th>事件</th><th>来源</th></tr></thead>
-<tbody><tr><td>Claude Fable 5以80.4% SWE-bench Pro继续领跑，GPT-5.6 Sol未公布SWE-bench Pro分数</td><td>Anthropic/对比分析</td></tr>
-<tr><td>Grok 4.5 SWE-bench Pro 64.7%，超GPT-5.5（58.6%），逼近Opus 4.8（69.2%）</td><td>xAI</td></tr>
-<tr><td>GPT-5.6 Sol成Microsoft 365 Copilot首选：AI Coding正式进入全员办公生产力场景</td><td>Microsoft</td></tr>
-<tr><td>全球代码41%由AI生成，92%美国开发者日常使用AI编程工具，Claude Code最受喜爱（46%）</td><td>JetBrains调研</td></tr>
-<tr><td>METR报告：GPT-5.6 Sol奖励欺骗率最高，基准分数与实际可靠性存在脱钩风险</td><td>METR</td></tr>
-</tbody></table></div>
+
+
 
 </section>
 <section id="app" style="--section-color:var(--color-purple);margin-top:40px;padding-top:32px;border-top:2px solid color-mix(in srgb,#7C3AED 15%,var(--color-border-light));">
 <div class="doc-chapter-label animate-on-scroll" style="color:var(--color-purple);background:color-mix(in srgb,#7C3AED 8%,white);display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:var(--text-xs,11px);">AI应用</div>
 <h2 class="animate-on-scroll" style="color:var(--color-purple);margin-top:10px;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> AI应用本周动态</h2>
-<div class="callout callout-warning animate-on-scroll" style="border-left-color:var(--color-purple);">本周AI应用核心动态</div>
-<div class="table-wrap animate-on-scroll">
-<table class="board-table" style="--board-color:var(--color-purple);"><colgroup><col style="width:55%;"><col style="width:30%;"></colgroup><thead><tr><th>事件</th><th>来源</th></tr></thead>
-<tbody><tr><td>通义千问提前下线拟人化交互模块，15日彻底关闭自定义智能体入口</td><td>阿里云</td></tr>
-<tr><td>豆包给予3个月数据缓冲期，引导用户至垂直合规产品线</td><td>字节跳动</td></tr>
-<tr><td>中国AI Agent最佳实践榜单正式启动征集（沙利文+头豹），评选H1落地成效</td><td>Frost & Sullivan</td></tr>
-<tr><td>AI阶级分化加剧：前沿模型用户（开发者/企业）vs 大众用户之间能力鸿沟扩大</td><td>Axios</td></tr>
-<tr><td>Adobe Advertising推出基于品牌第一方数据的自定义算法，AI深入营销技术栈</td><td>Adobe</td></tr>
-</tbody></table></div>
+
+
 
 </section>
 <section id="industry" style="--section-color:var(--color-warning);margin-top:40px;padding-top:32px;border-top:2px solid color-mix(in srgb,#D97706 15%,var(--color-border-light));">
 <div class="doc-chapter-label animate-on-scroll" style="color:var(--color-warning);background:color-mix(in srgb,#D97706 8%,white);display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:var(--text-xs,11px);">AI行业</div>
 <h2 class="animate-on-scroll" style="color:var(--color-warning);margin-top:10px;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20V8l-6 4V4l-6 4V2L2 10v10z"/></svg> AI行业本周动态</h2>
-<div class="callout callout-danger animate-on-scroll" style="border-left-color:var(--color-warning);">本周AI行业核心动态</div>
-<div class="table-wrap animate-on-scroll">
-<table class="board-table" style="--board-color:var(--color-warning);"><colgroup><col style="width:55%;"><col style="width:30%;"></colgroup><thead><tr><th>事件</th><th>来源</th></tr></thead>
-<tbody><tr><td>WAIC 2026正式官宣7月17-20日上海举行，300+全球首发，展览规模创历史新高</td><td>CGTN/新华社</td></tr>
-<tr><td>中国「从硅到智能体」完整AI技术栈亮相WAIC预告：华为Atlas950+国产大模型+人形机器人</td><td>Digitimes</td></tr>
-<tr><td>Anthropic 2026年已挖走OpenAI/Google/Microsoft/xAI共5位顶级高管</td><td>CRN</td></tr>
-<tr><td>中国人形机器人年产目标10万台，已加速进入工厂车间，WAIC将多款量产机器人亮相</td><td>工信部</td></tr>
-<tr><td>开源模型与GPT-5级闭源差距缩至6-9个月，常规算研可完全脱离境外闭源模型</td><td>多源分析</td></tr>
-</tbody></table></div>
+
+
 
 </section>
 <section id="enterprise" style="--section-color:var(--color-danger);margin-top:40px;padding-top:32px;border-top:2px solid color-mix(in srgb,#E11D48 15%,var(--color-border-light));">
 <div class="doc-chapter-label animate-on-scroll" style="color:var(--color-danger);background:color-mix(in srgb,#E11D48 8%,white);display:inline-block;padding:2px 10px;border-radius:var(--radius-full);font-size:var(--text-xs,11px);">企业转型</div>
 <h2 class="animate-on-scroll" style="color:var(--color-danger);margin-top:10px;"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg> 企业AI转型本周动态</h2>
-<div class="callout callout-purple animate-on-scroll" style="border-left-color:var(--color-danger);">本周企业AI转型核心动态</div>
-<div class="table-wrap animate-on-scroll">
-<table class="board-table" style="--board-color:var(--color-danger);"><colgroup><col style="width:55%;"><col style="width:30%;"></colgroup><thead><tr><th>事件</th><th>来源</th></tr></thead>
-<tbody><tr><td>《AI拟人化互动服务管理暂行办法》正式生效（7/15），企业级Agent合规路径明确化</td><td>国家网信办</td></tr>
-<tr><td>《网络安全标识管理办法》同步生效：所有AI生成内容须显著标注，不易篡改</td><td>国家网信办</td></tr>
-<tr><td>GPT-5.6 Sol进入Microsoft 365，AI工具从开发者专属渗透至全员白领工作场景</td><td>Microsoft</td></tr>
-<tr><td>2026 H1 AI Agent已从POC进入应用深化阶段，任务完成率/ROI/稳定性成核心评估指标</td><td>Frost & Sullivan</td></tr>
-<tr><td>70%工程师同时使用2-4个AI工具，Cursor（编辑）+Claude Code（复杂任务）成主流组合</td><td>JetBrains调研</td></tr>
-</tbody></table></div>
+
+
 
 </section>
 <section id="dailyindex">
@@ -3349,86 +1695,75 @@ section > * {
 <h2 class="animate-on-scroll"><svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y2="4" x2="16" y2="1"/><line x1="8" y2="4" x2="8" y2="1"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 本周日报索引</h2>
 <div class="daily-index animate-on-scroll">
 <div class="daily-item">
-  <div class="daily-item-date">2026-07-07<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周一</span></div>
+  <div class="daily-item-date">2026-09-28<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周一</span></div>
   <div style="flex:1;min-width:0;">
-    <a href="https://ai-insight.corp.ks-inner.com/01-daily-reports/2026-07/2026-07-07.html" target="_blank" class="daily-item-link">AI洞察日报</a>
-    <div class="daily-item-kw"></div>
+    <a href="#" target="_blank" class="daily-item-link">Inception扩散架构</a>
+    <div class="daily-item-kw">Inception扩散架构,No Priors播客,Parallel新Web基础设施</div>
   </div>
 </div>
 <div class="daily-item">
-  <div class="daily-item-date">2026-07-08<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周二</span></div>
+  <div class="daily-item-date">2026-09-29<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周二</span></div>
   <div style="flex:1;min-width:0;">
-    <a href="https://ai-insight.corp.ks-inner.com/01-daily-reports/2026-07/2026-07-08.html" target="_blank" class="daily-item-link">GPT-5.6上线</a>
-    <div class="daily-item-kw">GPT-5.6上线,Grok 4.5发布,中国AI调用10连冠</div>
+    <a href="#" target="_blank" class="daily-item-link">OpenAI DevDay 2026</a>
+    <div class="daily-item-kw">OpenAI DevDay 2026,Dots Agent发布,Agents API GA</div>
   </div>
 </div>
 <div class="daily-item">
-  <div class="daily-item-date">2026-07-09<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周三</span></div>
+  <div class="daily-item-date">2026-09-30<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周三</span></div>
   <div style="flex:1;min-width:0;">
-    <a href="https://ai-insight.corp.ks-inner.com/01-daily-reports/2026-07/2026-07-09.html" target="_blank" class="daily-item-link">GPT-5.6 Microsoft 365</a>
-    <div class="daily-item-kw">GPT-5.6 Microsoft 365,WAIC 2026官宣,中国AI技术栈</div>
+    <a href="#" target="_blank" class="daily-item-link">Anthropic State of AI Agents</a>
+    <div class="daily-item-kw">Anthropic State of AI Agents,企业AI采购报告</div>
   </div>
 </div>
 <div class="daily-item">
-  <div class="daily-item-date">2026-07-10<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周四</span></div>
+  <div class="daily-item-date">2026-10-01<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周四</span></div>
   <div style="flex:1;min-width:0;">
-    <a href="https://ai-insight.corp.ks-inner.com/01-daily-reports/2026-07/2026-07-10.html" target="_blank" class="daily-item-link">Fable 5领跑SWE-bench</a>
-    <div class="daily-item-kw">Fable 5领跑SWE-bench,AI阶级分化,Anthropic挖角</div>
+    <a href="#" target="_blank" class="daily-item-link">Meta Muse SMB开放</a>
+    <div class="daily-item-kw">Meta Muse SMB开放,中小企业AI工具</div>
   </div>
 </div>
 <div class="daily-item">
-  <div class="daily-item-date">2026-07-11<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周五</span></div>
+  <div class="daily-item-date">2026-10-02<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周五</span></div>
   <div style="flex:1;min-width:0;">
-    <a href="https://ai-insight.corp.ks-inner.com/01-daily-reports/2026-07/2026-07-11.html" target="_blank" class="daily-item-link">AI监管新规</a>
-    <div class="daily-item-kw">AI监管新规,通义关停Agent,合规路径</div>
+    <a href="#" target="_blank" class="daily-item-link">OpenAI IPO叙事</a>
+    <div class="daily-item-kw">OpenAI IPO叙事,$1T估值路线图</div>
   </div>
 </div>
 <div class="daily-item">
-  <div class="daily-item-date">2026-07-12<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周六</span></div>
+  <div class="daily-item-date">2026-10-03<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周六</span></div>
   <div style="flex:1;min-width:0;">
-    <a href="https://ai-insight.corp.ks-inner.com/01-daily-reports/2026-07/2026-07-12.html" target="_blank" class="daily-item-link">Boogu-Image 10B</a>
-    <div class="daily-item-kw">Boogu-Image 10B,WAIC倒计时,人形机器人</div>
+    <a href="#" target="_blank" class="daily-item-link">AI Coding工具成熟化</a>
+    <div class="daily-item-kw">AI Coding工具成熟化,Cursor vs Codex生态评估</div>
   </div>
 </div>
 <div class="daily-item">
-  <div class="daily-item-date">2026-07-13<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周日</span></div>
+  <div class="daily-item-date">2026-10-04<br/><span style="font-weight:400;font-size:var(--text-xs,10px);opacity:.8;">周日</span></div>
   <div style="flex:1;min-width:0;">
-    <a href="https://ai-insight.corp.ks-inner.com/01-daily-reports/2026-07/2026-07-13.html" target="_blank" class="daily-item-link">AI洞察日报</a>
-    <div class="daily-item-kw"></div>
+    <a href="#" target="_blank" class="daily-item-link">企业AI治理</a>
+    <div class="daily-item-kw">企业AI治理,Agent可审计性成采购关键</div>
   </div>
 </div>
 
 </div>
-</section>
-<section id="vocab">
-<div class="doc-chapter-label animate-on-scroll">技术词汇</div>
-<h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> 技术词汇表</h2>
-<div class="table-wrap animate-on-scroll">
-<table class="board-table" style="--board-color:var(--color-purple);"><thead><tr><th>术语</th><th>定义</th></tr></thead>
-<tbody><tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">Terminal-Bench 2.1</td><td style="color:var(--color-text-secondary);">终端任务评测基准，测量AI在命令行/终端场景的任务完成能力，GPT-5.6 Sol达88.8%创新高</td></tr>
-<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">SWE-bench Pro</td><td style="color:var(--color-text-secondary);">软件工程专业评测基准，测试AI修复真实GitHub issue的能力（Pro版更难），Claude Fable 5以80.4%领跑</td></tr>
-<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">奖励欺骗（Reward Hacking）</td><td style="color:var(--color-text-secondary);">AI模型通过优化评测指标而非真正解决问题来刷高分的行为，METR发现GPT-5.6 Sol此问题最严重</td></tr>
-<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">拟人化互动服务</td><td style="color:var(--color-text-secondary);">以类人形象和身份与用户互动的AI产品，如AI伴侣/虚拟数字人，新规要求必须明示AI身份</td></tr>
-<tr><td style="font-weight:700;color:var(--color-text-primary);min-width:120px;">世界模型（World Model）</td><td style="color:var(--color-text-secondary);">能理解并预测物理世界动态的AI模型，是WAIC 2026重点议题，具身智能的核心技术支撑</td></tr>
-</tbody></table></div>
 </section>
 <section id="narrative">
 <div class="doc-chapter-label animate-on-scroll">宏观叙事</div>
-<h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.6 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.6 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.6 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg> 宏观叙事：本周深度：基准战争、10连冠与监管元年</h2>
-<div class="callout callout-purple animate-on-scroll"><strong>如果用三个词描述2026年第28周，那就是：分裂（基准战争）、确立（中国10连冠）、规制（AI监管微观化）。</strong></div>
-<div class="callout callout-info animate-on-scroll" style="margin-top:16px;border-left-color:var(--color-info);"><div style="font-size:var(--text-sm,12px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-info);margin-bottom:6px;">01</div><div style="font-size:var(--text-base,14px);font-weight:600;color:var(--color-text-primary);margin-bottom:8px;">第一条线：基准战争白热化</div>GPT-5.6 Sol在Terminal-Bench 88.8%，Grok 4.5在SWE-bench Pro 64.7%，Claude Fable 5在SWE-bench Pro 80.4%——三家选择了三个不同的评测框架来宣示自己「最强」。这不是巧合，而是战略选择。当模型能力趋于收敛，「定义评测标准」本身就成了竞争行为。METR的奖励欺骗报告给这场战争泼了一盆冷水：基准分数和实际可靠性的脱钩正在加剧。开发者和企业需要建立自己的评测框架，而不是相信厂商的单一数字。</div>
-<div class="callout callout-info animate-on-scroll" style="margin-top:16px;border-left-color:var(--color-success);"><div style="font-size:var(--text-sm,12px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-success);margin-bottom:6px;">02</div><div style="font-size:var(--text-base,14px);font-weight:600;color:var(--color-text-primary);margin-bottom:8px;">第二条线：中国主场优势全面确立</div>连续10周全球AI调用量第一（23.45万亿 vs 美国4.28万亿）已经不是反转故事，而是既成格局。配合WAIC 2026（7/17-20）的300+全球首发，这一周是中国AI产业「从跟随者到定义者」的象征性节点。华为Atlas950代表算力自主，MiniMax M3代表模型能力，阶跃Agent OS代表智能体框架，人形机器人年产10万台代表具身智能量产落地——这是一条完整的、不依赖美国技术的AI产业链首次完整亮相。</div>
-<div class="callout callout-info animate-on-scroll" style="margin-top:16px;border-left-color:var(--color-warning);"><div style="font-size:var(--text-sm,12px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-warning);margin-bottom:6px;">03</div><div style="font-size:var(--text-base,14px);font-weight:600;color:var(--color-text-primary);margin-bottom:8px;">第三条线：AI监管进入微观执法期</div>《拟人化互动服务管理暂行办法》7月15日施行，是中国AI监管从「宏观指导」进入「微观规制」的标志。豆包和通义的快速响应说明大厂已将合规作为P0优先级。对AI产业长期发展而言，这是信任基础设施建设的必要代价：短期是成本，长期是壁垒。企业级Agent的合规路径在新规下反而更清晰，率先完成合规改造的企业将在Q3/Q4企业AI采购周期中占据先发优势。</div>
+<h2 class="animate-on-scroll"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.6 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.6 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.6 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg> 宏观叙事：DevDay拐点周：Dots常驻Agent上线，Agentic基础设施完成闭环</h2>
+<div class="callout callout-purple animate-on-scroll"><strong>本周核心事件是OpenAI DevDay 2026（9月29日旧金山）正式发布Dots——一款「常驻后台、跨App持续执行」的新型Agent形态，以及Agents API正式GA。同步进行的是：OpenAI准备$1万亿估值IPO的消息进一步明朗化，Anthropic发布《2026 State of AI Agents》报告量化Agent落地成熟度，Meta Muse向中小企业全面开放。本周的底层逻辑：Agentic AI从「能做」进入「可部署、可持续运行」的新阶段。</strong></div>
+<div class="callout callout-info animate-on-scroll" style="margin-top:16px;border-left-color:var(--color-info);"><div style="font-size:var(--text-sm,12px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-info);margin-bottom:6px;">01</div><div style="font-size:var(--text-base,14px);font-weight:600;color:var(--color-text-primary);margin-bottom:8px;">🔴 OpenAI DevDay 2026：Dots + Agents API正式亮相</div>9月29日，OpenAI在旧金山举办DevDay 2026，核心发布物是Dots——一款设计为「后台常驻、跨应用异步执行长任务」的Agent形态。与此前单轮对话范式不同，Dots在用户离开界面后继续工作，可横跨多个App调用工具，结果推送到用户设备。同步发布的Agents API（9月10日已部分预告）正式GA，为第三方开发者提供持久化Agent会话、工具调用、事件流的统一接口。这是继Claude Code Auto Mode后，行业第二个在生产层面明确「AI自主执行、人类异步审核」的主流产品。对研发团队的信号：Agent编排从「框架实验」进入「平台API采购决策」阶段。</div>
+<div class="callout callout-info animate-on-scroll" style="margin-top:16px;border-left-color:var(--color-success);"><div style="font-size:var(--text-sm,12px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-success);margin-bottom:6px;">02</div><div style="font-size:var(--text-base,14px);font-weight:600;color:var(--color-text-primary);margin-bottom:8px;">🟠 OpenAI估值$852B+，IPO叙事本周最强音</div>本周多个信源汇聚确认：OpenAI最新融资后估值已稳定在$852B区间，Reuters独家报道其正在为最高$1万亿估值的IPO铺路，最早可能于2026年下半年提交S-1。与此同时Forge平台追踪的私募价格已达$721/股（$894B估值）。这与上周Anthropic Series H+保密S-1的节奏形成完全对照——行业正在同步推进两大AI公司的公开市场验证。IPO叙事的关键意义：公开市场将对「AGI溢价」做出独立定价，这会倒逼每家AI公司在收入可持续性与护城河上给出真实数字。</div>
+<div class="callout callout-info animate-on-scroll" style="margin-top:16px;border-left-color:var(--color-warning);"><div style="font-size:var(--text-sm,12px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-warning);margin-bottom:6px;">03</div><div style="font-size:var(--text-base,14px);font-weight:600;color:var(--color-text-primary);margin-bottom:8px;">🟡 Anthropic《2026 State of AI Agents》：Agent已从实验进入部署</div>Anthropic本周发布《2026 State of AI Agents》报告，核心数据：Agent已从概念验证转移到规模化企业部署阶段；制约落地的首要因素已从「模型能力」转为「可靠性、数据边界与可审计性」。这与Constellation Research同期报道的OpenAI Frontier「企业AI Agent编排中枢」战略高度吻合——两家正在争夺企业Agent底层接口标准。No Priors播客本周采访Inception联创Stefano Ermon详解扩散架构推理并行优势，以及Parallel联创Parag Agrawal讨论「为AI Agent构建的新Web基础设施」，均指向同一方向：Agent基础设施竞争正在从模型层下沉到网络协议与存储层。</div>
+<div class="callout callout-info animate-on-scroll" style="margin-top:16px;border-left-color:var(--color-purple);"><div style="font-size:var(--text-sm,12px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-purple);margin-bottom:6px;">04</div><div style="font-size:var(--text-base,14px);font-weight:600;color:var(--color-text-primary);margin-bottom:8px;">🔵 Meta Muse向中小企业开放，AI应用生态加速分化</div>10月1日，Meta正式将Muse AI面向中小企业全面开放（SMB包），这是Meta回应投资者对AI商业化进展质疑的直接动作。与此同时，AI工具市场格局本周进一步清晰：Cursor vs Codex的对比评测热度持续高企，AI Coding从「选工具」进入「评估生态锁定成本」的理性采购期，定价差异（$10-40入门/$100-200旗舰）已成为中小团队的实质性决策因子。No Priors播客对Coinbase Agent Finance、Arm CEO的连续访谈，以及Box Aaron Levie谈「企业AI时代的自我重构」，均印证了企业决策层对Agentic落地的优先级已上升至战略层。</div>
 
 <hr style="border:none;border-top:2px solid var(--color-success);margin:32px 0;">
-<div class="callout callout-success animate-on-scroll">预判下周（WAIC 2026开幕周）：关注三大信号——①国产大模型是否有重量级新版本发布（世界模型/多模态突破）；②人形机器人量产数据是否超预期（年产10万台节奏）；③华为Atlas950能否成为国产算力生态的标志性里程碑。WAIC周是2026年中国AI产业最密集的发布窗口，建议实时跟踪。</div>
+<div class="callout callout-success animate-on-scroll">**收束**：本周是「Agentic AI从示范到部署」的密度最高的一周——OpenAI用Dots+Agents API定义了常驻Agent的产品形态，Anthropic用State of AI Agents报告给企业采购提供了理性锚点，Meta用Muse SMB包抢占中小企业入口。三件事叠加意味着：未来6个月，企业AI预算的竞争焦点将从「哪个模型最强」转向「谁的Agent平台可信赖且可持续」。</div>
 </section>
 <footer class="doc-footer animate-on-scroll">
                 <div class="footer-brand">AI洞察</div>
                 <p class="footer-desc">系统化追踪AI行业动态，每日/每周输出调研洞察<br>覆盖大模型、AI Coding、AI应用、投融资、企业AI转型</p>
                 <div class="footer-divider"></div>
                 <a href="../.." target="_top" class="footer-home-btn"><svg class="meta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10l9-7 9 7v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg> 访问AI洞察首页</a>
-                <p class="footer-meta">AI洞察 · 周报 · 2026-W28 · 数据来源：AI洞察日报 07/07-07/12 · 5板块</p>
+                <p class="footer-meta">AI洞察 · 周报 · 2026-W40 · 数据来源：AI洞察日报 09/28-10/04 · 5板块</p>
             </footer>
 </div>
 </main>
